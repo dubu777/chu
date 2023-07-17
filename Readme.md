@@ -1,1 +1,1 @@
-### 인프라 구축, 배포 준비
+### for setup infra & distribution
