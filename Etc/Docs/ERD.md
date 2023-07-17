@@ -5,4 +5,4 @@
 
 https://www.erdcloud.com/d/5yzkmHjrgHuhqXxnQ
 
-![chu.png](./Readme_images/chu.png)
+![chu.png](./Readme_images/ERD.png)
