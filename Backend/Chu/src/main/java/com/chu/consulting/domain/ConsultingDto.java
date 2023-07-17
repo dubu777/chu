@@ -1,4 +1,4 @@
 package com.chu.consulting.domain;
 
-public class Consulting {
+public class ConsultingDto {
 }
