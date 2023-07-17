@@ -5,4 +5,4 @@
 
 https://www.erdcloud.com/d/5yzkmHjrgHuhqXxnQ
 
-![chu.png](경로)
+![chu.png](./Readme_images/chu.png)
