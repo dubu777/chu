@@ -32,5 +32,3 @@
 ![chu.png](../Readme_images/wireframe/30.png)
 ![chu.png](../Readme_images/wireframe/31.png)
 ![chu.png](../Readme_images/wireframe/32.png)
-![chu.png](../Readme_images/wireframe/33.png)
-![chu.png](../Readme_images/wireframe/34.png)
