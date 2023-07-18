@@ -27,7 +27,16 @@ public class CustomerServiceImpl implements CustomerService{
 
     @Override
     public boolean checkEmail(String email) {
-        return false;
+        boolean isSuccess = true;
+
+        // 로직
+
+        if(isSuccess){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     @Override
