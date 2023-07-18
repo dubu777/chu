@@ -50,7 +50,7 @@ public class CustomerController {
     
     // 회원 가입
     @PostMapping(value = "/customer/sign-up")
-    public ResponseEntity<ResponseDto> signUp(@ResponseBody CustomerDto customerDto){
+    public ResponseEntity<ResponseDto> signUp(@RequestBody CustomerDto customerDto){
         log.info(customerDto.toString());
         int isSuccess = customerService.signUp(customerDto);
 

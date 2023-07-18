@@ -1,12 +1,11 @@
 package com.chu.designer.controller;
+import com.chu.designer.domain.DesignerDto;
 import com.chu.designer.service.DesignerService;
 import com.chu.global.domain.ResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -44,6 +43,16 @@ public class DesignerController {
         else{
             ResponseDto responseDto = new ResponseDto(200, false);
             return ResponseEntity.ok(responseDto);
+        }
+    }
+
+    @PostMapping(value = "/designer/sign-up")
+    public ResponseEntity<ResponseDto> signUp(@RequestBody DesignerDto designerDto) {
+        log.info(designerDto.toString());
+        int isSuccess = designerService.signUp(designerDto);
+
+        if(isSuccess == 1){
+
         }
     }
 }

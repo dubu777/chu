@@ -1,5 +1,6 @@
 package com.chu.designer.service;
 
+import com.chu.designer.domain.DesignerDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,17 @@ public class DesignerServiceImpl implements DesignerService{
     public boolean checkEmail(String email) {
         boolean isSuccess = true;
         // 로직
+
+        return isSuccess;
+    }
+
+    @Override
+    public int signUp(DesignerDto designerDto) {
+        int isSuccess = 1;
+
+        // 로직
+
+        // 성공 시 row 1 반환
 
         return isSuccess;
     }
