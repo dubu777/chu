@@ -1,6 +1,8 @@
 package com.chu.designer.service;
 
+import com.chu.designer.domain.DesignerDetailDto;
 import com.chu.designer.domain.DesignerDto;
+import com.chu.global.domain.SignInDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -35,5 +37,24 @@ public class DesignerServiceImpl implements DesignerService{
         // 성공 시 row 1 반환
 
         return isSuccess;
+    }
+
+    // 로그인 실패는 0, 로그인
+    @Override
+    public int signIn(SignInDto signInDto) {
+        int isSuccess = 0;
+
+        // 로직
+
+        // 성공시 2 반환
+        return isSuccess;
+    }
+
+    @Override
+    public DesignerDetailDto getDesignerDetail(String id) {
+        DesignerDetailDto designerDetailDto = new DesignerDetailDto();
+
+
+        return designerDetailDto;
     }
 }

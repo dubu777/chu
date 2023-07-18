@@ -52,7 +52,12 @@ public class DesignerController {
         int isSuccess = designerService.signUp(designerDto);
 
         if(isSuccess == 1){
-
+            ResponseDto responseDto = new ResponseDto(200, null);
+            return ResponseEntity.ok(responseDto);
+        }
+        else{
+            ResponseDto responseDto = new ResponseDto(204, null);
+            return ResponseEntity.ok(responseDto);
         }
     }
 }
