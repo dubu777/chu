@@ -4,7 +4,6 @@ import com.chu.customer.service.CustomerService;
 import com.chu.global.domain.ResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,7 +28,7 @@ public class CustomerController {
             return ResponseEntity.ok(responseDto);
         }
         else{
-            ResponseDto responseDto = new ResponseDto(200, true);
+            ResponseDto responseDto = new ResponseDto(200, false);
             return ResponseEntity.ok(responseDto);
         }
     }
@@ -45,7 +44,7 @@ public class CustomerController {
             return ResponseEntity.ok(responseDto);
         }
         else{
-            ResponseDto responseDto = new ResponseDto(200, true);
+            ResponseDto responseDto = new ResponseDto(200, false);
             return ResponseEntity.ok(responseDto);
         }
     }
