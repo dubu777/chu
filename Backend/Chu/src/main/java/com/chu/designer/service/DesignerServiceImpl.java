@@ -1,5 +1,6 @@
 package com.chu.designer.service;
 
+import com.chu.designer.domain.DesignerDetailDto;
 import com.chu.designer.domain.DesignerDto;
 import com.chu.global.domain.SignInDto;
 import lombok.RequiredArgsConstructor;
@@ -47,5 +48,13 @@ public class DesignerServiceImpl implements DesignerService{
 
         // 성공시 2 반환
         return isSuccess;
+    }
+
+    @Override
+    public DesignerDetailDto getDesignerDetail(String id) {
+        DesignerDetailDto designerDetailDto = new DesignerDetailDto();
+
+
+        return designerDetailDto;
     }
 }

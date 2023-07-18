@@ -1,6 +1,8 @@
 package com.chu.global.controller;
 
+import com.chu.customer.domain.CustomerDetailDto;
 import com.chu.customer.service.CustomerService;
+import com.chu.designer.domain.DesignerDetailDto;
 import com.chu.designer.service.DesignerService;
 import com.chu.global.domain.ResponseDto;
 import com.chu.global.domain.SignInDto;
@@ -26,20 +28,26 @@ public class GlobalController {
         int isUser = 0;
         isUser = customerService.signIn(signInDto);
 
+        // 디자이너 고객 구분할 flag 추가
         // 고객일 경우
         if(isUser == 1){
-            customerService.getCustomerDetail(signInDto.getId());
+            CustomerDetailDto customerDetailDto = customerService.getCustomerDetail(signInDto.getId());
+            ResponseDto responseDto = new ResponseDto(200, customerDetailDto);
+            return ResponseEntity.ok(responseDto);
         }
         // 일단 고객은 아닌 경우
         else{
             isUser = designerService.signIn(signInDto);
             // 디자이너일 경우
             if(isUser == 2){
-                designerService.getDesignerDetail(signInDto.getId());
+                DesignerDetailDto designerDetailDto = designerService.getDesignerDetail(signInDto.getId());
+                ResponseDto responseDto = new ResponseDto(200, designerDetailDto);
+                return ResponseEntity.ok(responseDto);
             }
         }
         
         // 로그인 실패
-        
+        ResponseDto responseDto = new ResponseDto(200, null);
+        return ResponseEntity.ok(responseDto);
     }
 }
