@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class GloberController {
 
-    @GetMapping("/sign-in")
-    public ResponseEntity<ResponseDto> signIn(SignInDto signInDto){
-
-    }
+//    @GetMapping("/sign-in")
+//    public ResponseEntity<ResponseDto> signIn(SignInDto signInDto){
+//
+//    }
 }

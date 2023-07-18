@@ -17,12 +17,7 @@ public class CustomerServiceImpl implements CustomerService{
         boolean isSuccess = true;
         // 로직
 
-        if(isSuccess) {
-            return true;
-        }
-        else{
-            return false;
-        }
+        return isSuccess;
     }
 
     @Override
@@ -31,16 +26,16 @@ public class CustomerServiceImpl implements CustomerService{
 
         // 로직
 
-        if(isSuccess){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return isSuccess;
     }
 
     @Override
     public int signUp(CustomerDto customerDto) {
-        return 0;
+        int isSuccess = 1;
+        // 로직
+
+        //성공시 isSuccess 1 아니면 0이나 -1
+
+        return isSuccess;
     }
 }

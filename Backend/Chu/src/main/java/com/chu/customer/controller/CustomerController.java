@@ -1,13 +1,12 @@
 package com.chu.customer.controller;
 
+import com.chu.customer.domain.CustomerDto;
 import com.chu.customer.service.CustomerService;
 import com.chu.global.domain.ResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -48,4 +47,21 @@ public class CustomerController {
             return ResponseEntity.ok(responseDto);
         }
     }
+    
+    // 회원 가입
+    @PostMapping(value = "/customer/sign-up")
+    public ResponseEntity<ResponseDto> signUp(@ResponseBody CustomerDto customerDto){
+        log.info(customerDto.toString());
+        int isSuccess = customerService.signUp(customerDto);
+
+        if(isSuccess == 1){
+            ResponseDto responseDto = new ResponseDto(200, null);
+            return ResponseEntity.ok(responseDto);
+        }
+        else{
+            ResponseDto responseDto = new ResponseDto(204, null);
+            return ResponseEntity.ok(responseDto);
+        }
+    }
+
 }

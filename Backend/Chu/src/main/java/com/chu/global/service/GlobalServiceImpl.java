@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class GlobalServiceImpl implements GlobalService {
 
-    @Override
-    public boolean signIn(SignInDto signDto) {
-
-    }
+//    @Override
+//    public boolean signIn(SignInDto signDto) {
+//
+//    }
 }

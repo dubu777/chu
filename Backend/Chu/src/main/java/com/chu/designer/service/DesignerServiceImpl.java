@@ -14,12 +14,7 @@ public class DesignerServiceImpl implements DesignerService{
         boolean isSuccess = true;
         // 로직
 
-        if(isSuccess){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return isSuccess;
     }
 
     @Override
@@ -27,11 +22,6 @@ public class DesignerServiceImpl implements DesignerService{
         boolean isSuccess = true;
         // 로직
 
-        if(isSuccess){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return isSuccess;
     }
 }
