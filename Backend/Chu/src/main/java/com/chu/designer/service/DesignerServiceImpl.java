@@ -1,4 +1,12 @@
 package com.chu.designer.service;
 
-public class DesignerServiceImpl {
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class DesignerServiceImpl implements DesignerService{
+
 }
