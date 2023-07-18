@@ -1,12 +1,9 @@
 package com.chu.designer.controller;
-
-import com.chu.customer.service.CustomerService;
 import com.chu.designer.service.DesignerService;
 import com.chu.global.domain.ResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,6 +20,22 @@ public class DesignerController {
     public ResponseEntity<ResponseDto> checkId(@RequestParam String id){
         log.info("id = {id}", id);
         boolean isSuccess = designerService.checkId(id);
+
+        if(isSuccess){
+            ResponseDto responseDto = new ResponseDto(200, true);
+            return ResponseEntity.ok(responseDto);
+        }
+        else{
+            ResponseDto responseDto = new ResponseDto(200, false);
+            return ResponseEntity.ok(responseDto);
+        }
+    }
+
+    // 이메일 중복 확인
+    @GetMapping(value = "/designer/check-email")
+    public ResponseEntity<ResponseDto> checkEmail(@RequestParam String email){
+        log.info("email = {}", email);
+        boolean isSuccess = designerService.checkEmail(email);
 
         if(isSuccess){
             ResponseDto responseDto = new ResponseDto(200, true);
