@@ -9,6 +9,7 @@ function Header() {
   const navigate = useNavigate();
 
   <Logo onClick={() => navigate("/")}>Chu<Logo>
+}
 ```
 2. Router, Link
     - App.jsx에 해당페이지 import하고, 라우터 등록하기
