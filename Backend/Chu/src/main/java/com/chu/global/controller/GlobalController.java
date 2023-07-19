@@ -26,7 +26,6 @@ public class GlobalController {
     public ResponseEntity<ResponseDto> signIn(SignInDto signInDto){
 
         int isUser = 0;
-        isUser = customerService.signIn(signInDto);
 
         // 디자이너 고객 구분할 flag 추가
         // 고객일 경우

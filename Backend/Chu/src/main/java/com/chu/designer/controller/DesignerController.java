@@ -1,7 +1,9 @@
 package com.chu.designer.controller;
+import com.chu.designer.domain.DesignerDetailDto;
 import com.chu.designer.domain.DesignerDto;
 import com.chu.designer.service.DesignerService;
 import com.chu.global.domain.ResponseDto;
+import com.chu.global.domain.SignInDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -59,5 +61,25 @@ public class DesignerController {
             ResponseDto responseDto = new ResponseDto(204, null);
             return ResponseEntity.ok(responseDto);
         }
+    }
+
+    @GetMapping(value = "/designer/sign-in")
+    public ResponseEntity<ResponseDto> signIn(@RequestBody SignInDto signInDto){
+        boolean isDesigner = true;
+
+        isDesigner = designerService.signIn(signInDto);
+
+        // 로그인 성공
+        if(isDesigner){
+            DesignerDetailDto designerDetailDto = designerService.getDesignerDetail(signInDto.getId());
+            ResponseDto responseDto = new ResponseDto(200, designerDetailDto);
+            return ResponseEntity.ok(responseDto);
+        }
+        // 로그인 실패
+        else{
+            ResponseDto responseDto = new ResponseDto(200, null);
+            return ResponseEntity.ok(responseDto);
+        }
+
     }
 }

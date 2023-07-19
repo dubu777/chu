@@ -52,8 +52,8 @@ public class CustomerServiceImpl implements CustomerService{
 
     // 회원은 1반환 미용사는 2반환
     @Override
-    public int signIn(SignInDto signInDto) {
-        int isSuccess = 0;
+    public boolean signIn(SignInDto signInDto) {
+        boolean isSuccess = true;
 
         // 로직
         // 조건에 맞는 사용자 존재하는지?

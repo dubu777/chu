@@ -10,7 +10,7 @@ public interface DesignerService {
 
     int signUp(DesignerDto designerDto);
 
-    int signIn(SignInDto signInDto);
+    boolean signIn(SignInDto signInDto);
 
     DesignerDetailDto getDesignerDetail(String id);
 }
