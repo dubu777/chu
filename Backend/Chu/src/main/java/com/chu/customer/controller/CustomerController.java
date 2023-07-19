@@ -3,10 +3,7 @@ package com.chu.customer.controller;
 import com.chu.customer.domain.CustomerDetailDto;
 import com.chu.customer.domain.CustomerDto;
 import com.chu.customer.service.CustomerService;
-import com.chu.global.domain.FindIdDto;
-import com.chu.global.domain.FindPwdDto;
-import com.chu.global.domain.ResponseDto;
-import com.chu.global.domain.SignInDto;
+import com.chu.global.domain.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -17,13 +14,14 @@ import java.util.Map;
 
 @Slf4j
 @RestController
+@RequestMapping("/customer")
 @RequiredArgsConstructor
 public class CustomerController {
 
     private final CustomerService customerService;
     
     // 회원 가입
-    @PostMapping(value = "/customer/sign-up")
+    @PostMapping(value = "/sign-up")
     public ResponseEntity<ResponseDto> signUp(@RequestBody CustomerDto customerDto){
         log.info(customerDto.toString());
         int isSuccess = customerService.signUp(customerDto);
@@ -39,7 +37,7 @@ public class CustomerController {
     }
 
     // 로그인
-    @PostMapping(value = "/customer/sign-in")
+    @PostMapping(value = "/sign-in")
     public ResponseEntity<ResponseDto> signIn(@RequestBody SignInDto signInDto) {
 
         boolean isUser = customerService.signIn(signInDto);
@@ -57,7 +55,7 @@ public class CustomerController {
         }
     }
 
-    @GetMapping("/customer/find-id")
+    @GetMapping("/find-id")
     public ResponseEntity<ResponseDto> findId(@RequestParam String name, @RequestParam String email){
 
         FindIdDto findIdDto = new FindIdDto();
@@ -78,7 +76,7 @@ public class CustomerController {
         }
     }
 
-    @GetMapping("/customer/find-pwd")
+    @GetMapping("/find-pwd")
     public ResponseEntity<ResponseDto> findPwd(@RequestParam String id, @RequestParam String name, @RequestParam String email){
 
         FindPwdDto findPwdDto = new FindPwdDto();
@@ -93,6 +91,20 @@ public class CustomerController {
             HashMap<String, Integer> resultMap = new HashMap<>();
             resultMap.put("seq", seq);
             ResponseDto responseDto = new ResponseDto(200, resultMap);
+            return ResponseEntity.ok(responseDto);
+        }
+        else{
+            ResponseDto responseDto = new ResponseDto(204, null);
+            return ResponseEntity.ok(responseDto);
+        }
+    }
+
+    @PatchMapping("/change-pwd")
+    public ResponseEntity<ResponseDto> changePwd(@RequestBody ChangePwdDto changePwdDto) {
+        boolean isSuccess = customerService.changePwd(changePwdDto);
+
+        if(isSuccess){
+            ResponseDto responseDto = new ResponseDto(200, null);
             return ResponseEntity.ok(responseDto);
         }
         else{

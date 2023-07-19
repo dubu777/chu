@@ -108,4 +108,14 @@ public class CustomerServiceImpl implements CustomerService{
 
         return sequence;
     }
+
+    @Override
+    public boolean changePwd(ChangePwdDto changePwdDto) {
+        boolean isSuccess = true;
+
+        // 로직
+        // 고객 시퀀스넘버, 바꿀 비밀번호
+
+        return isSuccess;
+    }
 }

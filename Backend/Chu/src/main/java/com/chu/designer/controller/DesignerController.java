@@ -15,12 +15,13 @@ import java.util.HashMap;
 
 @Slf4j
 @RestController
+@RequestMapping("/customer")
 @RequiredArgsConstructor
 public class DesignerController {
     private final DesignerService designerService;
 
     // 회원 가입
-    @PostMapping(value = "/designer/sign-up")
+    @PostMapping(value = "/sign-up")
     public ResponseEntity<ResponseDto> signUp(@RequestBody DesignerDto designerDto) {
         log.info(designerDto.toString());
         int isSuccess = designerService.signUp(designerDto);
@@ -36,7 +37,7 @@ public class DesignerController {
     }
 
     // 로그인
-    @PostMapping(value = "/designer/sign-in")
+    @PostMapping(value = "/sign-in")
     public ResponseEntity<ResponseDto> signIn(@RequestBody SignInDto signInDto){
         boolean isDesigner = true;
 
@@ -55,7 +56,7 @@ public class DesignerController {
         }
     }
 
-    @GetMapping("/designer/find-id")
+    @GetMapping("/find-id")
     public ResponseEntity<ResponseDto> findId(@RequestParam String name, @RequestParam String email){
 
         FindIdDto findIdDto = new FindIdDto();
@@ -76,7 +77,7 @@ public class DesignerController {
         }
     }
 
-    @GetMapping("/designer/find-pwd")
+    @GetMapping("/find-pwd")
     public ResponseEntity<ResponseDto> findPwd(@RequestParam String id, @RequestParam String name, @RequestParam String email){
 
         FindPwdDto findPwdDto = new FindPwdDto();

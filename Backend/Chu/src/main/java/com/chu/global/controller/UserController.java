@@ -7,11 +7,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
+@RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
 
@@ -19,7 +21,7 @@ public class UserController {
     private final DesignerService designerService;
 
     // 아이디 중복확인
-    @GetMapping("/user/check-id")
+    @GetMapping("/check-id")
     public ResponseEntity<ResponseDto> checkId(@RequestParam String id){
         log.info("id = {id}", id);
 
@@ -40,7 +42,7 @@ public class UserController {
     }
 
     // 이메일 중복확인
-    @GetMapping("/user/check-email")
+    @GetMapping("/check-email")
     public ResponseEntity<ResponseDto> checkEmail(@RequestParam String email){
         log.info("email = {email}", email);
 
