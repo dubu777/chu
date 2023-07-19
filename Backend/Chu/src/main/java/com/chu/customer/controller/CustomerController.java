@@ -90,7 +90,7 @@ public class CustomerController {
         
         // 존재하는 유저일 경우
         if(seq == 1){
-            HashMap<String, String> resultMap = new HashMap<>();
+            HashMap<String, Integer> resultMap = new HashMap<>();
             resultMap.put("seq", seq);
             ResponseDto responseDto = new ResponseDto(200, resultMap);
             return ResponseEntity.ok(responseDto);

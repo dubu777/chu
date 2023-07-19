@@ -2,10 +2,7 @@ package com.chu.designer.service;
 
 import com.chu.designer.domain.DesignerDetailDto;
 import com.chu.designer.domain.DesignerDto;
-import com.chu.global.domain.AlertDto;
-import com.chu.global.domain.BestDesignerDto;
-import com.chu.global.domain.FindIdDto;
-import com.chu.global.domain.SignInDto;
+import com.chu.global.domain.*;
 import com.chu.worldcup.domain.WorldcupStatisticsInfoDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -88,5 +85,15 @@ public class DesignerServiceImpl implements DesignerService{
 
         // 이름, 이메일로 아이디 찾기
         return id;
+    }
+
+    @Override
+    public int isValidUser(FindPwdDto findPwdDto) {
+        int sequence = 0;
+
+        // 로직
+        // 이름, 아이디, 이메일로 존재하는 유저인지 확인
+
+        return sequence;
     }
 }

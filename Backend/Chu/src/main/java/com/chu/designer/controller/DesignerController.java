@@ -3,6 +3,7 @@ import com.chu.designer.domain.DesignerDetailDto;
 import com.chu.designer.domain.DesignerDto;
 import com.chu.designer.service.DesignerService;
 import com.chu.global.domain.FindIdDto;
+import com.chu.global.domain.FindPwdDto;
 import com.chu.global.domain.ResponseDto;
 import com.chu.global.domain.SignInDto;
 import lombok.RequiredArgsConstructor;
@@ -66,6 +67,29 @@ public class DesignerController {
         if(id != null){
             HashMap<String, String> resultMap = new HashMap<>();
             resultMap.put("id", id);
+            ResponseDto responseDto = new ResponseDto(200, resultMap);
+            return ResponseEntity.ok(responseDto);
+        }
+        else{
+            ResponseDto responseDto = new ResponseDto(204, null);
+            return ResponseEntity.ok(responseDto);
+        }
+    }
+
+    @GetMapping("/designer/find-pwd")
+    public ResponseEntity<ResponseDto> findPwd(@RequestParam String id, @RequestParam String name, @RequestParam String email){
+
+        FindPwdDto findPwdDto = new FindPwdDto();
+        findPwdDto.setName(name);
+        findPwdDto.setId(id);
+        findPwdDto.setEmail(email);
+
+        int seq = designerService.isValidUser(findPwdDto);
+
+        // 존재하는 유저일 경우
+        if(seq == 1){
+            HashMap<String, Integer> resultMap = new HashMap<>();
+            resultMap.put("seq", seq);
             ResponseDto responseDto = new ResponseDto(200, resultMap);
             return ResponseEntity.ok(responseDto);
         }
