@@ -35,7 +35,11 @@ public class CustomerController {
 
     // 로그인
     @GetMapping(value = "/customer/sign-in")
-    public ResponseEntity<ResponseDto> signIn(SignInDto signInDto) {
+    public ResponseEntity<ResponseDto> signIn(@RequestParam String id, @RequestParam String pwd) {
+        SignInDto signInDto = new SignInDto();
+        signInDto.setId(id);
+        signInDto.setPwd(pwd);
+
         boolean isUser = customerService.signIn(signInDto);
 
         // 로그인 성공

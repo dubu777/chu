@@ -33,8 +33,12 @@ public class DesignerController {
 
     // 로그인
     @GetMapping(value = "/designer/sign-in")
-    public ResponseEntity<ResponseDto> signIn(@RequestBody SignInDto signInDto){
+    public ResponseEntity<ResponseDto> signIn(@RequestParam String id, @RequestParam String pwd){
         boolean isDesigner = true;
+
+        SignInDto signInDto = new SignInDto();
+        signInDto.setId(id);
+        signInDto.setPwd(pwd);
 
         isDesigner = designerService.signIn(signInDto);
 
