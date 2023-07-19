@@ -17,6 +17,8 @@ public class DesignerServiceImpl implements DesignerService{
         boolean isSuccess = true;
         // 로직
 
+        // 존재하지 않으면 가능 -> true
+        // 이미 존재하면 불가능 -> false
         return isSuccess;
     }
 
@@ -46,7 +48,6 @@ public class DesignerServiceImpl implements DesignerService{
 
         // 로직
 
-        // 성공시 2 반환
         return isSuccess;
     }
 
