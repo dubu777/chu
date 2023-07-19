@@ -16,6 +16,7 @@ const WorldcupImg = styled.img`
 const Container = styled.div`
   margin-left: 150px;
   margin-right: 150px;
+  margin-top: 50px;
 `;
 
 const Wrapper = styled.div`
@@ -25,14 +26,20 @@ const Wrapper = styled.div`
 
 const Box = styled.div`
 `;
+const Title = styled.h1`
+  font-family: 'omyu_pretty'; 
+  font-size: 20px;
+`;
 const P = styled.p`
   font-family: 'omyu_pretty';
+  font-size: 20px;
 `;
 
 function ClickMenu(){
   return(
     <Container>
-    <h3>Style의 발견 🎁</h3>
+    <Title>Style의 발견 🎁</Title>
+    <br></br>
       <Wrapper>
         <Box>
           <ClickImg src="./img/listview.jpg"></ClickImg>
@@ -41,7 +48,7 @@ function ClickMenu(){
         <Box>
           <ClickImg src="./img/worldcupimg.png"></ClickImg>
           {/* <WorldcupImg src="worldcup1.jpg"></WorldcupImg> */}
-          <p>스타일 월드컵은 어때요?</p>
+          <P>스타일 월드컵은 어때요?</P>
         </Box>
       </Wrapper>
   </Container>

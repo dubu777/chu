@@ -9,7 +9,7 @@ const Wrapper = styled.div`
 
 const Main = styled.img`
   width: 100vw;
-  height: 100vh;
+  height: 110vh;
 `;
 const ImgText = styled.h2`
   font-family: 'Amiri';

@@ -9,11 +9,13 @@ const Nav = styled(motion.nav)`
   align-items: center;
   /* position: fixed; */
   width: 100%;
+  height: 45px;
   top: 0;
   font-size: 18px;
   padding: 20px 60px;
   color: white;
   background-color: rgb(100, 93, 81);
+  font-family: 'Cormorant Garamond';
 `;
 
 const Col = styled.div`
@@ -27,10 +29,8 @@ const Logo = styled(motion.div)`
   color: white;
   font-size: 20px;
   font-weight: bold;
+  cursor: pointer;
 `;
-
-
-
 
 const Items = styled.ul`
   display: flex;
@@ -117,7 +117,7 @@ function Header() {
               variants={logoVariants}
               whileHover="active"
               initial="nomal"
-              >Signup
+              >Sign up
             </Item>
           </Link>
           <Link to="/login">
@@ -125,7 +125,7 @@ function Header() {
               variants={logoVariants}
               whileHover="active"
               initial="nomal"
-              >LogIn
+              >Log in
             </Item>
           </Link>
         </Search>

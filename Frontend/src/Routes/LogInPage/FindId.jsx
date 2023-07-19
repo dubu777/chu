@@ -1,16 +1,12 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-
 const Container = styled.div`
-	background: url('./findid.jpg');
+	background: url('./img/findid.jpg');
 	filter: invert(5%);
-	/* background-repeat: no-repeat; */
-	/* background-position: top center; */
 	background-size: cover ;
-	/* width: 1000px;
-	height: 900px; */
-	/* width: 100%; */
-	height: 900px;
+	width: 100vw;
+  	height: 100vh;
 	display:flex;
 	justify-content: center;
 	flex-direction: column;
@@ -21,14 +17,13 @@ const Container = styled.div`
 const Wrapper = styled.div`
 	border: 0;
 	border-radius: 0.8rem;
-	width: 40%;
-	height: 40%;
+	width: 35%;
+	height: 45%;
 	background-color: rgb(242, 234, 211, 0.5);
-	/* opacity: 0.5; */
 	color: black;
 `;
 const Input = styled.input`
-	width: 70%;
+	width: 75%;
 	height: 50px;
 	border: 0;
 	border-radius: 0.4rem;
@@ -39,12 +34,18 @@ const Input = styled.input`
 	font-family: 'Cormorant Garamond';
 `;
 const Box = styled.div`
-	/* justify-content: center; */
+	justify-content: center;
 	display: flex;
 	align-items: center;
 	flex-direction: column;
 	margin-top: 20px;
 `;
+const Title = styled.h1`
+margin-top: 10px;
+margin-bottom: 15px;
+font-size: 30px;
+`;
+
 const Btn = styled.button`
 	border: 0;
 	border-radius: 0.3rem;
@@ -57,21 +58,23 @@ const Btn = styled.button`
 `;
 
 
-function Findid() {
+function FindId() {
 	return(
 		<Container>
 			<Wrapper>
 				<Box>
-					<h1>Find ID</h1>
+					<Title>Find ID</Title>
 					<br></br>
 					<Input placeholder="Name"></Input>
 					<br></br>
 					<Input type="email" placeholder="e-mail"></Input>
-					<Btn>확인</Btn>
+					<Btn type="submit">
+						<Link to="/foundid">확인</Link>
+					</Btn>
 				</Box>				
 			</Wrapper>
 		</Container>
 	);
 }
 
-export default Findid;
+export default FindId;
