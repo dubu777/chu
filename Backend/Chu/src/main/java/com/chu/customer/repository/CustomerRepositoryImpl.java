@@ -2,6 +2,7 @@ package com.chu.customer.repository;
 
 import com.chu.customer.domain.CustomerDetailDto;
 import com.chu.customer.domain.CustomerDto;
+import com.chu.customer.domain.CustomerSignUpDto;
 import com.chu.customer.domain.FaceInfoDto;
 import com.chu.global.domain.*;
 import com.chu.worldcup.domain.WorldcupStatisticsInfoDto;
@@ -34,7 +35,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     }
 
     @Override
-    public int signUp(CustomerDto customerDto) {
+    public int signUp(CustomerSignUpDto customerSignUpDto) {
         // 로직
         // 정상 가입인지
 

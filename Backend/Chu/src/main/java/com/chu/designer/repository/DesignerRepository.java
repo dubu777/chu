@@ -2,6 +2,7 @@ package com.chu.designer.repository;
 
 import com.chu.designer.domain.DesignerDetailDto;
 import com.chu.designer.domain.DesignerDto;
+import com.chu.designer.domain.DesignerSignUpDto;
 import com.chu.global.domain.ChangePwdDto;
 import com.chu.global.domain.FindIdDto;
 import com.chu.global.domain.FindPwdDto;
@@ -11,7 +12,7 @@ public interface DesignerRepository {
     boolean checkId(String id);
     boolean checkEmail(String email);
 
-    int signUp(DesignerDto designerDto);
+    int signUp(DesignerSignUpDto designerSignUpDto);
 
     boolean signIn(SignInDto signInDto);
 

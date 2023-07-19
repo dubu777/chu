@@ -2,6 +2,7 @@ package com.chu.designer.repository;
 
 import com.chu.designer.domain.DesignerDetailDto;
 import com.chu.designer.domain.DesignerDto;
+import com.chu.designer.domain.DesignerSignUpDto;
 import com.chu.global.domain.*;
 import com.chu.worldcup.domain.WorldcupStatisticsInfoDto;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +33,7 @@ public class DesignerRepositoryImpl implements DesignerRepository {
     }
 
     @Override
-    public int signUp(DesignerDto designerDto) {
+    public int signUp(DesignerSignUpDto designerSignUpDto) {
         // 로직
 
         // 성공 시 row 1 반환

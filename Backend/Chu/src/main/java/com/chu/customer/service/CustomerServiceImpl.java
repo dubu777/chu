@@ -2,6 +2,7 @@ package com.chu.customer.service;
 
 import com.chu.customer.domain.CustomerDetailDto;
 import com.chu.customer.domain.CustomerDto;
+import com.chu.customer.domain.CustomerSignUpDto;
 import com.chu.customer.repository.CustomerRepository;
 import com.chu.global.domain.*;
 import lombok.RequiredArgsConstructor;
@@ -27,8 +28,8 @@ public class CustomerServiceImpl implements CustomerService{
     }
 
     @Override
-    public int signUp(CustomerDto customerDto) {
-        return customerRepository.signUp(customerDto);
+    public int signUp(CustomerSignUpDto customerSignUpDto) {
+        return customerRepository.signUp(customerSignUpDto);
     }
 
     @Override

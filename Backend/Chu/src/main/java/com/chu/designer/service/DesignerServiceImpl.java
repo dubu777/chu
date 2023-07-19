@@ -2,6 +2,7 @@ package com.chu.designer.service;
 
 import com.chu.designer.domain.DesignerDetailDto;
 import com.chu.designer.domain.DesignerDto;
+import com.chu.designer.domain.DesignerSignUpDto;
 import com.chu.designer.repository.DesignerRepository;
 import com.chu.global.domain.*;
 import lombok.RequiredArgsConstructor;
@@ -28,8 +29,8 @@ public class DesignerServiceImpl implements DesignerService{
     }
 
     @Override
-    public int signUp(DesignerDto designerDto) {
-        return designerRepository.signUp(designerDto);
+    public int signUp(DesignerSignUpDto designerSignUpDto) {
+        return designerRepository.signUp(designerSignUpDto);
     }
     
     @Override

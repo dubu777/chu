@@ -2,6 +2,7 @@ package com.chu.customer.controller;
 
 import com.chu.customer.domain.CustomerDetailDto;
 import com.chu.customer.domain.CustomerDto;
+import com.chu.customer.domain.CustomerSignUpDto;
 import com.chu.customer.service.CustomerService;
 import com.chu.global.domain.*;
 import lombok.RequiredArgsConstructor;
@@ -21,9 +22,9 @@ public class CustomerController {
     
     // 회원 가입
     @PostMapping(value = "/sign-up")
-    public ResponseEntity<ResponseDto> signUp(@RequestBody CustomerDto customerDto){
-        log.info(customerDto.toString());
-        int isSuccess = customerService.signUp(customerDto);
+    public ResponseEntity<ResponseDto> signUp(@RequestBody CustomerSignUpDto customerSignUpDto){
+        log.info(customerSignUpDto.toString());
+        int isSuccess = customerService.signUp(customerSignUpDto);
 
         if(isSuccess == 1){
             ResponseDto responseDto = new ResponseDto(200, null);

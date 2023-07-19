@@ -1,6 +1,7 @@
 package com.chu.designer.controller;
 import com.chu.designer.domain.DesignerDetailDto;
 import com.chu.designer.domain.DesignerDto;
+import com.chu.designer.domain.DesignerSignUpDto;
 import com.chu.designer.service.DesignerService;
 import com.chu.global.domain.*;
 import lombok.RequiredArgsConstructor;
@@ -12,16 +13,16 @@ import java.util.HashMap;
 
 @Slf4j
 @RestController
-@RequestMapping("/customer")
+@RequestMapping("/designer")
 @RequiredArgsConstructor
 public class DesignerController {
     private final DesignerService designerService;
 
     // 회원 가입
     @PostMapping(value = "/sign-up")
-    public ResponseEntity<ResponseDto> signUp(@RequestBody DesignerDto designerDto) {
-        log.info(designerDto.toString());
-        int isSuccess = designerService.signUp(designerDto);
+    public ResponseEntity<ResponseDto> signUp(@RequestBody DesignerSignUpDto designerSignUpDto) {
+        log.info(designerSignUpDto.toString());
+        int isSuccess = designerService.signUp(designerSignUpDto);
 
         if(isSuccess == 1){
             ResponseDto responseDto = new ResponseDto(200, null);
