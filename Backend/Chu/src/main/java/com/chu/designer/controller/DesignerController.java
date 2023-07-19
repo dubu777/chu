@@ -2,12 +2,15 @@ package com.chu.designer.controller;
 import com.chu.designer.domain.DesignerDetailDto;
 import com.chu.designer.domain.DesignerDto;
 import com.chu.designer.service.DesignerService;
+import com.chu.global.domain.FindIdDto;
 import com.chu.global.domain.ResponseDto;
 import com.chu.global.domain.SignInDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
 
 @Slf4j
 @RestController
@@ -49,6 +52,26 @@ public class DesignerController {
             ResponseDto responseDto = new ResponseDto(204, null);
             return ResponseEntity.ok(responseDto);
         }
+    }
 
+    @GetMapping("/designer/find-id")
+    public ResponseEntity<ResponseDto> findId(@RequestParam String name, @RequestParam String email){
+
+        FindIdDto findIdDto = new FindIdDto();
+        findIdDto.setName(name);
+        findIdDto.setEmail(email);
+
+        String id = designerService.findId(findIdDto);
+
+        if(id != null){
+            HashMap<String, String> resultMap = new HashMap<>();
+            resultMap.put("id", id);
+            ResponseDto responseDto = new ResponseDto(200, resultMap);
+            return ResponseEntity.ok(responseDto);
+        }
+        else{
+            ResponseDto responseDto = new ResponseDto(204, null);
+            return ResponseEntity.ok(responseDto);
+        }
     }
 }

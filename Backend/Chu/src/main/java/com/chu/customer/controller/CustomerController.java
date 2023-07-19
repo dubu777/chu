@@ -75,6 +75,5 @@ public class CustomerController {
             ResponseDto responseDto = new ResponseDto(204, null);
             return ResponseEntity.ok(responseDto);
         }
-
     }
 }
