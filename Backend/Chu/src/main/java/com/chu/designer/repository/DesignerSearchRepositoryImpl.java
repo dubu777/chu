@@ -1,5 +1,6 @@
 package com.chu.designer.repository;
 
+import com.chu.designer.domain.DesignerSearchAreaDto;
 import com.chu.designer.domain.DesignerSearchDto;
 import com.chu.designer.domain.DesignerSearchResponseDto;
 import lombok.extern.slf4j.Slf4j;
@@ -50,6 +51,16 @@ public class DesignerSearchRepositoryImpl implements DesignerSearchRepository {
         // 고객이 좋아하는지
         
         // 좋아요 순으로 정렬
+        return list;
+    }
+
+    @Override
+    public ArrayList<DesignerSearchAreaDto> search2AllArea() {
+        ArrayList<DesignerSearchAreaDto> list = new ArrayList<>();
+        //필요 데이터 추출
+        // 디자이너
+
+        // 지역정보
         return list;
     }
 }
