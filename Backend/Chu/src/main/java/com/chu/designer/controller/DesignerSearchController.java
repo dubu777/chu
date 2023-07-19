@@ -40,7 +40,17 @@ public class DesignerSearchController {
 
     @GetMapping("/filter")
     public ResponseEntity<ResponseDto> search2Filter(@RequestParam("hairStyle") String[] hairStyle, @RequestParam int customerSeq){
-        
+        ArrayList<DesignerSearchDto> designerSearchDtoList = designerSearchService.search2Filter(customerSeq, hairStyle);
+
+        if(designerSearchDtoList.size() != 0){
+            DesignerSearchResponseDto designerSearchResponseDto = new DesignerSearchResponseDto();
+            designerSearchResponseDto.setDesignerListCnt(designerSearchDtoList.size());
+            designerSearchResponseDto.setDesignerList(designerSearchDtoList);
+            ResponseDto responseDto = new ResponseDto(200, designerSearchResponseDto);
+        }
+        else{
+            ResponseDto responseDto = new ResponseDto(204, null);
+        }
     }
 
 }

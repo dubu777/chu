@@ -17,11 +17,25 @@ public class DesignerSearchRepositoryImpl implements DesignerSearchRepository {
         //필요 데이터 추출
         // 디자이너
 
+        // 이름 조건 걸어서 검색
+
         // 좋아요 수
 
         // 고객이 좋아하는지
+        return list;
+    }
 
-        // 이름 조건 걸어서 검색
+    @Override
+    public ArrayList<DesignerSearchDto> search2Filter(int customerSeq, String[] hairStyle) {
+        ArrayList<DesignerSearchDto> list = new ArrayList<>();
+        //필요 데이터 추출
+        // 디자이너
+
+        // 디자이너 스타일 태그로 검색
+
+        // 좋아요 수
+
+        // 고객이 좋아하는지
         return list;
     }
 }

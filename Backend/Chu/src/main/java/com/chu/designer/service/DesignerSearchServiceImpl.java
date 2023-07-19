@@ -20,4 +20,9 @@ public class DesignerSearchServiceImpl implements  DesignerSearchService{
     public ArrayList<DesignerSearchDto> search2Name(int customerSeq, String name) {
         return designerSearchRepository.search2Name(customerSeq, name);
     }
+
+    @Override
+    public ArrayList<DesignerSearchDto> search2Filter(int customerSeq, String[] hairStyle) {
+        return designerSearchRepository.search2Filter(customerSeq, hairStyle);
+    }
 }
