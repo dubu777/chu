@@ -38,4 +38,18 @@ public class DesignerSearchRepositoryImpl implements DesignerSearchRepository {
         // 고객이 좋아하는지
         return list;
     }
+
+    @Override
+    public ArrayList<DesignerSearchDto> search2LikeCount(int customerSeq) {
+        ArrayList<DesignerSearchDto> list = new ArrayList<>();
+        //필요 데이터 추출
+        // 디자이너
+
+        // 좋아요 수
+
+        // 고객이 좋아하는지
+        
+        // 좋아요 순으로 정렬
+        return list;
+    }
 }

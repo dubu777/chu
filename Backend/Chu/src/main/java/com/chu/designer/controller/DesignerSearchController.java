@@ -32,9 +32,11 @@ public class DesignerSearchController {
             designerSearchResponseDto.setDesignerListCnt(designerSearchDtoList.size());
             designerSearchResponseDto.setDesignerList(designerSearchDtoList);
             ResponseDto responseDto = new ResponseDto(200, designerSearchResponseDto);
+            return ResponseEntity.ok(responseDto);
         }
         else{
             ResponseDto responseDto = new ResponseDto(204, null);
+            return ResponseEntity.ok(responseDto);
         }
     }
 
@@ -47,10 +49,28 @@ public class DesignerSearchController {
             designerSearchResponseDto.setDesignerListCnt(designerSearchDtoList.size());
             designerSearchResponseDto.setDesignerList(designerSearchDtoList);
             ResponseDto responseDto = new ResponseDto(200, designerSearchResponseDto);
+            return ResponseEntity.ok(responseDto);
         }
         else{
             ResponseDto responseDto = new ResponseDto(204, null);
+            return ResponseEntity.ok(responseDto);
         }
     }
 
+    @GetMapping("/like-cnt")
+    public ResponseEntity<ResponseDto> search2LikeCount(@RequestParam int customerSeq){
+        ArrayList<DesignerSearchDto> designerSearchDtoList = designerSearchService.search2LikeCount(customerSeq);
+
+        if(designerSearchDtoList.size() != 0){
+            DesignerSearchResponseDto designerSearchResponseDto = new DesignerSearchResponseDto();
+            designerSearchResponseDto.setDesignerListCnt(designerSearchDtoList.size());
+            designerSearchResponseDto.setDesignerList(designerSearchDtoList);
+            ResponseDto responseDto = new ResponseDto(200, designerSearchResponseDto);
+            return ResponseEntity.ok(responseDto);
+        }
+        else{
+            ResponseDto responseDto = new ResponseDto(204, null);
+            return ResponseEntity.ok(responseDto);
+        }
+    }
 }

@@ -11,4 +11,5 @@ public interface DesignerSearchService {
 
     ArrayList<DesignerSearchDto> search2Filter(int customerSeq, String[] hairStyle);
 
+    ArrayList<DesignerSearchDto> search2LikeCount(int customerSeq);
 }

@@ -9,4 +9,6 @@ public interface DesignerSearchRepository {
     ArrayList<DesignerSearchDto> search2Name(int customerSeq, String name);
 
     ArrayList<DesignerSearchDto> search2Filter(int customerSeq, String[] hairStyle);
+
+    ArrayList<DesignerSearchDto> search2LikeCount(int customerSeq);
 }
