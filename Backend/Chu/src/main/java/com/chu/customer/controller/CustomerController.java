@@ -11,6 +11,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -63,7 +66,9 @@ public class CustomerController {
         String id = customerService.findId(findIdDto);
 
         if(id != null){
-            ResponseDto responseDto = new ResponseDto(200, id);
+            HashMap<String, String> resultMap = new HashMap<>();
+            resultMap.put("id", id);
+            ResponseDto responseDto = new ResponseDto(200, resultMap);
             return ResponseEntity.ok(responseDto);
         }
         else{
