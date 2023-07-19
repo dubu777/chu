@@ -1,5 +1,6 @@
 package com.chu.designer.service;
 
+import com.chu.designer.domain.DesignerDetailInfoDto;
 import com.chu.designer.domain.DesignerSearchAreaDto;
 import com.chu.designer.domain.DesignerSearchDto;
 import com.chu.designer.domain.DesignerSearchResponseDto;
@@ -35,5 +36,10 @@ public class DesignerSearchServiceImpl implements  DesignerSearchService{
     @Override
     public ArrayList<DesignerSearchAreaDto> search2AllArea() {
         return designerSearchRepository.search2AllArea();
+    }
+
+    @Override
+    public DesignerDetailInfoDto getDesignerDetailInfo(int designerSeq, int customerSeq) {
+        return designerSearchRepository.getDesignerDetailInfo(designerSeq, customerSeq);
     }
 }

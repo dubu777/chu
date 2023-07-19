@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 public class DesignerSearchDto {
 
-
-
 //    "designerListCnt" : 10,
 //            "designerList" : [
 //    {

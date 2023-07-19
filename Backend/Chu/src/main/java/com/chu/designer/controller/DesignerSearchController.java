@@ -1,5 +1,6 @@
 package com.chu.designer.controller;
 
+import com.chu.designer.domain.DesignerDetailInfoDto;
 import com.chu.designer.domain.DesignerSearchAreaDto;
 import com.chu.designer.domain.DesignerSearchDto;
 import com.chu.designer.domain.DesignerSearchResponseDto;
@@ -8,10 +9,7 @@ import com.chu.global.domain.ResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
@@ -81,6 +79,21 @@ public class DesignerSearchController {
 
         if(designerSearchAreaDtoList.size() != 0){
             ResponseDto responseDto = new ResponseDto(200, designerSearchAreaDtoList);
+            return ResponseEntity.ok(responseDto);
+        }
+        else{
+            ResponseDto responseDto = new ResponseDto(204, null);
+            return ResponseEntity.ok(responseDto);
+        }
+    }
+
+    @GetMapping("/detail")
+    public ResponseEntity<ResponseDto> getDesignerDetailInfo(@PathVariable("designer-seq") int designerSeq, @RequestParam int customerSeq){
+
+        DesignerDetailInfoDto designerDetailInfoDto = designerSearchService.getDesignerDetailInfo(designerSeq, customerSeq);
+
+        if(){
+            ResponseDto responseDto = new ResponseDto(200, designerDetailInfoDto);
             return ResponseEntity.ok(responseDto);
         }
         else{
