@@ -26,6 +26,9 @@ public class CustomerServiceImpl implements CustomerService{
         // 로직
         // 아이디 중복이 있는지?
 
+        // 존재하지 않으면 가능 -> true
+        // 이미 존재하면 불가능 -> false
+
         return isSuccess;
     }
 
@@ -58,7 +61,6 @@ public class CustomerServiceImpl implements CustomerService{
         // 로직
         // 조건에 맞는 사용자 존재하는지?
 
-        // 성공시 1 반환
         return isSuccess;
     }
 
