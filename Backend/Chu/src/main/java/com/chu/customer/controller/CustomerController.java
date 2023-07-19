@@ -3,6 +3,7 @@ package com.chu.customer.controller;
 import com.chu.customer.domain.CustomerDetailDto;
 import com.chu.customer.domain.CustomerDto;
 import com.chu.customer.service.CustomerService;
+import com.chu.global.domain.FindIdDto;
 import com.chu.global.domain.ResponseDto;
 import com.chu.global.domain.SignInDto;
 import lombok.RequiredArgsConstructor;
@@ -52,4 +53,23 @@ public class CustomerController {
         }
     }
 
+    @GetMapping("/customer/find-id")
+    public ResponseEntity<ResponseDto> findId(@RequestParam String name, @RequestParam String email){
+
+        FindIdDto findIdDto = new FindIdDto();
+        findIdDto.setName(name);
+        findIdDto.setEmail(email);
+
+        String id = customerService.findId(findIdDto);
+
+        if(id != null){
+            ResponseDto responseDto = new ResponseDto(200, id);
+            return ResponseEntity.ok(responseDto);
+        }
+        else{
+            ResponseDto responseDto = new ResponseDto(204, null);
+            return ResponseEntity.ok(responseDto);
+        }
+
+    }
 }

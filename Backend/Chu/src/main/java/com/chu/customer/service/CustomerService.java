@@ -2,6 +2,7 @@ package com.chu.customer.service;
 
 import com.chu.customer.domain.CustomerDetailDto;
 import com.chu.customer.domain.CustomerDto;
+import com.chu.global.domain.FindIdDto;
 import com.chu.global.domain.SignInDto;
 
 public interface CustomerService {
@@ -13,4 +14,6 @@ public interface CustomerService {
     boolean signIn(SignInDto signInDto);
 
     CustomerDetailDto getCustomerDetail(String id);
+
+    String findId(FindIdDto findIdDto);
 }

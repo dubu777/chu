@@ -5,6 +5,7 @@ import com.chu.customer.domain.CustomerDto;
 import com.chu.customer.domain.FaceInfoDto;
 import com.chu.global.domain.AlertDto;
 import com.chu.global.domain.BestDesignerDto;
+import com.chu.global.domain.FindIdDto;
 import com.chu.global.domain.SignInDto;
 import com.chu.worldcup.domain.WorldcupStatisticsInfoDto;
 import lombok.RequiredArgsConstructor;
@@ -90,5 +91,14 @@ public class CustomerServiceImpl implements CustomerService{
         ArrayList<AlertDto> alertDtoList = new ArrayList<>();
 
         return customerDetailDto;
+    }
+
+    @Override
+    public String findId(FindIdDto findIdDto) {
+        String id = null;
+        // 로직
+
+        // 이름, 이메일로 아이디 찾기
+        return id;
     }
 }
