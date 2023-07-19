@@ -10,7 +10,7 @@ public interface CustomerService {
     boolean checkEmail(String email);
     int signUp(CustomerDto customerDto);
 
-    int signIn(SignInDto signInDto);
+    boolean signIn(SignInDto signInDto);
 
     CustomerDetailDto getCustomerDetail(String id);
 }

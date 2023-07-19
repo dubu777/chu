@@ -41,8 +41,8 @@ public class DesignerServiceImpl implements DesignerService{
 
     // 로그인 실패는 0, 로그인
     @Override
-    public int signIn(SignInDto signInDto) {
-        int isSuccess = 0;
+    public boolean signIn(SignInDto signInDto) {
+        boolean isSuccess = true;
 
         // 로직
 
