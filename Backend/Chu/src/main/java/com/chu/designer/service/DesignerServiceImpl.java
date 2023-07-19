@@ -96,4 +96,14 @@ public class DesignerServiceImpl implements DesignerService{
 
         return sequence;
     }
+
+    @Override
+    public boolean changePwd(ChangePwdDto changePwdDto) {
+        boolean isSuccess = true;
+
+        // 로직
+        // 디자이너 시퀀스넘버, 바꿀 비밀번호
+
+        return isSuccess;
+    }
 }

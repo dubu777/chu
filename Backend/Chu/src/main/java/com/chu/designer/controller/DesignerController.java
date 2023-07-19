@@ -2,10 +2,7 @@ package com.chu.designer.controller;
 import com.chu.designer.domain.DesignerDetailDto;
 import com.chu.designer.domain.DesignerDto;
 import com.chu.designer.service.DesignerService;
-import com.chu.global.domain.FindIdDto;
-import com.chu.global.domain.FindPwdDto;
-import com.chu.global.domain.ResponseDto;
-import com.chu.global.domain.SignInDto;
+import com.chu.global.domain.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -92,6 +89,20 @@ public class DesignerController {
             HashMap<String, Integer> resultMap = new HashMap<>();
             resultMap.put("seq", seq);
             ResponseDto responseDto = new ResponseDto(200, resultMap);
+            return ResponseEntity.ok(responseDto);
+        }
+        else{
+            ResponseDto responseDto = new ResponseDto(204, null);
+            return ResponseEntity.ok(responseDto);
+        }
+    }
+
+    @PatchMapping("/change-pwd")
+    public ResponseEntity<ResponseDto> changePwd(@RequestBody ChangePwdDto changePwdDto) {
+        boolean isSuccess = designerService.changePwd(changePwdDto);
+
+        if(isSuccess){
+            ResponseDto responseDto = new ResponseDto(200, null);
             return ResponseEntity.ok(responseDto);
         }
         else{
