@@ -31,7 +31,6 @@ public class CustomerServiceImpl implements CustomerService{
         return customerRepository.signUp(customerDto);
     }
 
-    // 회원은 1반환 미용사는 2반환
     @Override
     public boolean signIn(SignInDto signInDto) {
         return customerRepository.signIn(signInDto);
