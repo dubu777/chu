@@ -100,4 +100,9 @@ public class DesignerServiceImpl implements DesignerService{
         return designerRepository.getDesignerMyPageUpdateInfo(designerSeq);
     }
 
+    @Override
+    public boolean updateDesignerInfo(int designerSeq, DesignerInfoUpdateDto designerInfoUpdateDto) {
+        return designerRepository.updateDesignerInfo(designerSeq, designerInfoUpdateDto);
+    }
+
 }

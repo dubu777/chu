@@ -1,8 +1,5 @@
 package com.chu.designer.controller;
-import com.chu.designer.domain.DesignerDetailDto;=
-import com.chu.designer.domain.DesignerMyPageDto;
-import com.chu.designer.domain.DesignerMyPageUpdateShowDto;
-import com.chu.designer.domain.DesignerSignUpDto;
+import com.chu.designer.domain.*;=
 import com.chu.designer.service.DesignerService;
 import com.chu.global.domain.*;
 import lombok.RequiredArgsConstructor;
@@ -189,7 +186,7 @@ public class DesignerController {
         }
     }
 
-    @GetMapping("detail")
+    @GetMapping("/detail")
     public ResponseEntity<ResponseDto> getDesignerDetailInfo(@PathVariable("designer_seq") int designerSeq) {
         DesignerMyPageUpdateShowDto designerMyPageUpdateShowDto = new DesignerMyPageUpdateShowDto();
 
@@ -197,6 +194,21 @@ public class DesignerController {
 
         if(designerMyPageUpdateShowDto != null){
             ResponseDto responseDto = new ResponseDto(200, designerMyPageUpdateShowDto);
+            return ResponseEntity.ok(responseDto);
+        }
+        else{
+            ResponseDto responseDto = new ResponseDto(204, null);
+            return ResponseEntity.ok(responseDto);
+        }
+    }
+
+    @PutMapping("/detail")
+    public ResponseEntity<ResponseDto> updateDesignerInfo(@PathVariable("designer_seq") int designerSeq, @RequestBody DesignerInfoUpdateDto designerInfoUpdateDto) {
+
+        boolean isSuccess = designerService.updateDesignerInfo(designerSeq, designerInfoUpdateDto);
+
+        if(isSuccess){
+            ResponseDto responseDto = new ResponseDto(200, null);
             return ResponseEntity.ok(responseDto);
         }
         else{

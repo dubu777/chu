@@ -37,4 +37,6 @@ public interface DesignerService {
     boolean patchImg(int designerSeq, String img);
 
     DesignerMyPageUpdateShowDto getDesignerMyPageUpdateInfo(int designerSeq);
+
+    boolean updateDesignerInfo(int designerSeq, DesignerInfoUpdateDto designerInfoUpdateDto);
 }
