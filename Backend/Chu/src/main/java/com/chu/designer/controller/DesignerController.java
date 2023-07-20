@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 @Slf4j
@@ -104,6 +106,22 @@ public class DesignerController {
 
         if(isSuccess){
             ResponseDto responseDto = new ResponseDto(200, null);
+            return ResponseEntity.ok(responseDto);
+        }
+        else{
+            ResponseDto responseDto = new ResponseDto(204, null);
+            return ResponseEntity.ok(responseDto);
+        }
+    }
+
+    @GetMapping("/date")
+    public ResponseEntity<ResponseDto> getPossibleTimeOfDate(@PathVariable("designer_seq") int designerSeq, @RequestParam Date date) {
+        ArrayList<TimeStateDto> timeStateDtoList = new ArrayList<>();
+
+        timeStateDtoList = designerService.getTimeStateList(designerSeq, date);
+
+        if(timeStateDtoList.size() != 0){
+            ResponseDto responseDto = new ResponseDto(200, timeStateDtoList);
             return ResponseEntity.ok(responseDto);
         }
         else{

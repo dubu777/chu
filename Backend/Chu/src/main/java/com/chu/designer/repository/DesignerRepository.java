@@ -1,12 +1,11 @@
 package com.chu.designer.repository;
 
 import com.chu.designer.domain.DesignerDetailDto;
-import com.chu.designer.domain.DesignerDto;
 import com.chu.designer.domain.DesignerSignUpDto;
-import com.chu.global.domain.ChangePwdDto;
-import com.chu.global.domain.FindIdDto;
-import com.chu.global.domain.FindPwdDto;
-import com.chu.global.domain.SignInDto;
+import com.chu.global.domain.*;
+
+import java.sql.Date;
+import java.util.ArrayList;
 
 public interface DesignerRepository {
     boolean checkId(String id);
@@ -23,4 +22,6 @@ public interface DesignerRepository {
     int isValidUser(FindPwdDto findPwdDto);
 
     boolean changePwd(ChangePwdDto changePwdDto);
+
+    ArrayList<TimeStateDto> getTimeStateList(int designerSeq, Date date);
 }

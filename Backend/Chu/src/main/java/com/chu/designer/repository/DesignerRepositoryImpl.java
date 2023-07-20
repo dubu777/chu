@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.sql.Date;
 import java.util.ArrayList;
 
 @Slf4j
@@ -85,5 +86,17 @@ public class DesignerRepositoryImpl implements DesignerRepository {
         // 로직
         // 디자이너 시퀀스넘버, 바꿀 비밀번호
         return false;
+    }
+
+    @Override
+    public ArrayList<TimeStateDto> getTimeStateList(int designerSeq, Date date) {
+        ArrayList<TimeStateDto> result = new ArrayList<>();
+
+        // 디자이너 번호, 시간으로 가능 날짜 조회
+
+        // 상담 가능 시간에서 P, R 조회
+        // 아니라면 I 겠지!
+
+        return result;
     }
 }

@@ -9,6 +9,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+import java.util.ArrayList;
+
 
 @Slf4j
 @Service
@@ -57,5 +60,10 @@ public class DesignerServiceImpl implements DesignerService{
     @Override
     public boolean changePwd(ChangePwdDto changePwdDto) {
         return designerRepository.changePwd(changePwdDto);
+    }
+
+    @Override
+    public ArrayList<TimeStateDto> getTimeStateList(int designerSeq, Date date) {
+        return designerRepository.getTimeStateList(designerSeq, date);
     }
 }
