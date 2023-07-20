@@ -1,5 +1,6 @@
 package com.chu.consulting.service;
 
+import com.chu.consulting.domain.ConsultingRequestDto;
 import com.chu.consulting.domain.ConsultingResultDto;
 import com.chu.consulting.repository.ConsultingRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,11 @@ public class ConsultingServiceImpl implements ConsultingService {
     @Override
     public String participantConsulting(int consultingSeq) {
         return consultingRepository.participantConsulting(consultingSeq);
+    }
+
+    @Override
+    public int createConsulting(ConsultingRequestDto consultingRequestDto) {
+        return consultingRepository.createConsulting(consultingRequestDto);
     }
 
     @Override

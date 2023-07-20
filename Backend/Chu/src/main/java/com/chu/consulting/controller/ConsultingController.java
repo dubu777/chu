@@ -1,5 +1,6 @@
 package com.chu.consulting.controller;
 
+import com.chu.consulting.domain.ConsultingRequestDto;
 import com.chu.consulting.domain.ConsultingResultDto;
 import com.chu.consulting.service.ConsultingService;
 import com.chu.global.domain.ResponseDto;
@@ -24,6 +25,21 @@ public class ConsultingController {
 
         if(url != null){
             ResponseDto responseDto = new ResponseDto(200, url);
+            return ResponseEntity.ok(responseDto);
+        }
+        else{
+            ResponseDto responseDto = new ResponseDto(204, null);
+            return ResponseEntity.ok(responseDto);
+        }
+    }
+
+    @PostMapping("/")
+    public ResponseEntity<ResponseDto> postConsulting(@RequestBody ConsultingRequestDto consultingRequestDto){
+
+        int isSuccess = consultingService.createConsulting(consultingRequestDto);
+
+        if(isSuccess == 1){
+            ResponseDto responseDto = new ResponseDto(200, null);
             return ResponseEntity.ok(responseDto);
         }
         else{

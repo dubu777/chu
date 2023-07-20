@@ -1,5 +1,6 @@
 package com.chu.consulting.repository;
 
+import com.chu.consulting.domain.ConsultingRequestDto;
 import com.chu.consulting.domain.ConsultingResultDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +21,16 @@ public class ConsultingRepositoryImpl implements ConsultingRepository {
         // 해당 상담 seq url 반환
         
         return url;
+    }
+
+    @Override
+    public int createConsulting(ConsultingRequestDto consultingRequestDto) {
+        int row = 0;
+
+        // 로직
+        // 상담 등록 후 행 반환
+
+        return row;
     }
 
     @Override
