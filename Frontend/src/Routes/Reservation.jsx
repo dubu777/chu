@@ -1,7 +1,7 @@
 // 여기는 디자이너 예약 상세 페이지
 
 import {styled} from "styled-components";
-import css from "../font.css"
+// import css from "../font/font.css"
 import MyApp from "../components/ViewPageComponent/Calendar";
 
 const Container = styled.div`

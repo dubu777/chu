@@ -13,6 +13,7 @@ const Container = styled.div`
 	flex-direction: column;
 	padding-left: 150px;
 	font-family: 'Cormorant Garamond';
+	/* font-family: 'NanumSquareNeo-Variable'; */
 `;
 
 const Wrapper = styled.div`
@@ -33,7 +34,9 @@ const Title = styled.h1`
 const Text = styled.h3`
 	margin: 5px 0px;
 	font-size: 20px;
-
+	font-family: "Blue-road";
+	/* font-family: 'Pretendard-Regular'; */
+	/* font-family: 'NanumSquareNeo-Variable'; */
 `;
 const TopBox = styled.div`
 	/* justify-content: center; */
@@ -57,6 +60,7 @@ const Btn = styled.button`
 	cursor: pointer;
 	margin: 40px 10px;
 	font-family: 'Cormorant Garamond';
+	/* font-family: 'NanumSquareNeo-Variable'; */
 	font-size: 15px;
 `;
 

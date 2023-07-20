@@ -28,7 +28,10 @@ const Box = styled.div`
 `;
 const Title = styled.h1`
   font-family: 'omyu_pretty'; 
-  font-size: 20px;
+  font-size: 40px;
+  font-family: 'Pretendard-Regular';
+  font-weight: bold;
+
 `;
 const P = styled.p`
   font-family: 'omyu_pretty';

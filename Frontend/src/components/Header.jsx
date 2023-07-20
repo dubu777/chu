@@ -16,6 +16,7 @@ const Nav = styled(motion.nav)`
   color: white;
   background-color: rgb(100, 93, 81);
   font-family: 'Cormorant Garamond';
+  /* font-family: 'NanumSquareNeo-Variable'; */
 `;
 
 const Col = styled.div`

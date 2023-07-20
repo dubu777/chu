@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import css from "../font.css"
+import css from "../font/font.css"
 import ClickMenu from "../components/HomeComponent/ClickMenu";
 
 const Wrapper = styled.div`
