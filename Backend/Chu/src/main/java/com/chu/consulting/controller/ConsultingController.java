@@ -18,7 +18,17 @@ public class ConsultingController {
 
     @GetMapping("/")
     public ResponseEntity<ResponseDto> participantConsulting(@PathVariable("consulting_seq") int consultingSeq){
-        String url = consultingService.;
+
+        String url = consultingService.participantConsulting(consultingSeq);
+
+        if(url != null){
+            ResponseDto responseDto = new ResponseDto(200, url);
+            return ResponseEntity.ok(responseDto);
+        }
+        else{
+            ResponseDto responseDto = new ResponseDto(204, null);
+            return ResponseEntity.ok(responseDto);
+        }
     }
 
     @DeleteMapping("/")
@@ -35,5 +45,7 @@ public class ConsultingController {
             return ResponseEntity.ok(responseDto);
         }
     }
+
+    
 
 }

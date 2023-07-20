@@ -14,6 +14,11 @@ public class ConsultingServiceImpl implements ConsultingService {
 
 
     @Override
+    public String participantConsulting(int consultingSeq) {
+        return consultingRepository.participantConsulting(consultingSeq);
+    }
+
+    @Override
     public boolean deleteConsulting(int consultingSeq) {
         return consultingRepository.deleteConsulting(consultingSeq);
     }

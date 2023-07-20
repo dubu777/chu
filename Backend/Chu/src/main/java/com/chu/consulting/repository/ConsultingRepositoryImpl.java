@@ -13,6 +13,15 @@ public class ConsultingRepositoryImpl implements ConsultingRepository {
     // DB CONN
 
     @Override
+    public String participantConsulting(int consultingSeq) {
+        String url = null;
+        // 로직
+        // 해당 상담 seq url 반환
+        
+        return url;
+    }
+
+    @Override
     public boolean deleteConsulting(int consultingSeq) {
         boolean isSuccess = true;
 
