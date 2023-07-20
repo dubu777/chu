@@ -1,5 +1,6 @@
 package com.chu.consulting.repository;
 
+import com.chu.consulting.domain.ConsultingResultDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
@@ -31,5 +32,20 @@ public class ConsultingRepositoryImpl implements ConsultingRepository {
         // 상담 테이블에서 그 녀석 삭제 ( 삭제 하는게 맞는가 상태 컬럼 추가하는게 맞는가)
 
         return isSuccess;
+    }
+
+    @Override
+    public ConsultingResultDto getConsultingResult(int consultingSeq) {
+        ConsultingResultDto consultingResultDto = new ConsultingResultDto();
+
+        // 로직
+
+        // 상담 결과 반환
+
+        // 상담 결과 헤어스타일 반환
+
+        // 상담 결과 사진들 반환
+
+        return consultingResultDto;
     }
 }

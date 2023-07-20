@@ -1,5 +1,6 @@
 package com.chu.consulting.controller;
 
+import com.chu.consulting.domain.ConsultingResultDto;
 import com.chu.consulting.service.ConsultingService;
 import com.chu.global.domain.ResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -46,6 +47,19 @@ public class ConsultingController {
         }
     }
 
-    
+    @GetMapping("/result")
+    public ResponseEntity<ResponseDto> getConsultingResult(@PathVariable("consulting-seq") int consultingSeq){
+
+        ConsultingResultDto consultingResultDto = consultingService.;
+
+        if(consultingResultDto != null){
+            ResponseDto responseDto = new ResponseDto(200, consultingResultDto);
+            return ResponseEntity.ok(responseDto);
+        }
+        else{
+            ResponseDto responseDto = new ResponseDto(204, null);
+            return ResponseEntity.ok(responseDto);
+        }
+    }
 
 }
