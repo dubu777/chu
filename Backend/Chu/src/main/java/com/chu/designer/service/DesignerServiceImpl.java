@@ -76,4 +76,9 @@ public class DesignerServiceImpl implements DesignerService{
     public boolean createAlert(AlertCreateDto alertCreateDto) {
         return designerRepository.createAlert(alertCreateDto);
     }
+
+    @Override
+    public boolean readAlert(AlertReadDto alertReadDto) {
+        return designerRepository.readAlert(alertReadDto);
+    }
 }

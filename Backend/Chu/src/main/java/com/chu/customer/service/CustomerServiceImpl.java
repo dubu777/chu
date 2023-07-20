@@ -92,4 +92,9 @@ public class CustomerServiceImpl implements CustomerService{
     public boolean createAlert(AlertCreateDto alertCreateDto) {
         return customerRepository.createAlert(alertCreateDto);
     }
+
+    @Override
+    public boolean readAlert(AlertReadDto alertReadDto) {
+        return customerRepository.readAlert(alertReadDto);
+    }
 }

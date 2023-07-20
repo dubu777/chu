@@ -34,4 +34,6 @@ public interface CustomerService {
     ArrayList<AlertCustomerDto> getAlertList(int customerSeq);
 
     boolean createAlert(AlertCreateDto alertCreateDto);
+
+    boolean readAlert(AlertReadDto alertReadDto);
 }

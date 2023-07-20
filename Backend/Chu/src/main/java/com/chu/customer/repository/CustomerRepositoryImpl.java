@@ -170,4 +170,15 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
         return isSuccess;
     }
+
+    @Override
+    public boolean readAlert(AlertReadDto alertReadDto) {
+        boolean isSuccess = true;
+
+        // 로직
+
+        // 알림 읽기
+
+        return isSuccess;
+    }
 }
