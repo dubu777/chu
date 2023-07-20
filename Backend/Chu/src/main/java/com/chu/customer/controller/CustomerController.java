@@ -211,4 +211,18 @@ public class CustomerController {
             return ResponseEntity.ok(responseDto);
         }
     }
+
+    @GetMapping("alert")
+    public ResponseEntity<ResponseDto> getAlert(@PathVariable("designer_seq") int designerSeq){
+        ArrayList<AlertCustomerDto> AlertCustomerDtoList = customerService.getAlertList(designerSeq);
+
+        if(AlertCustomerDtoList.size() != 0){
+            ResponseDto responseDto = new ResponseDto(200, null);
+            return ResponseEntity.ok(responseDto);
+        }
+        else{
+            ResponseDto responseDto = new ResponseDto(204, null);
+            return ResponseEntity.ok(responseDto);
+        }
+    }
 }

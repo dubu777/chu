@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 
 @Slf4j
 @Service
@@ -79,5 +81,10 @@ public class CustomerServiceImpl implements CustomerService{
     @Override
     public boolean putCustomerDetailInfo(int customerSeq, CustomerDetailChangeDto customerDetailChangeDto) {
         return customerRepository.putCustomerDetailInfo(customerSeq, customerDetailChangeDto);
+    }
+
+    @Override
+    public ArrayList<AlertCustomerDto> getAlertList(int customerSeq) {
+        return customerRepository.getAlertList(customerSeq);
     }
 }

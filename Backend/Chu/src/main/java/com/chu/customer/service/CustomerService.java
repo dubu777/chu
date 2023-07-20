@@ -1,10 +1,9 @@
 package com.chu.customer.service;
 
 import com.chu.customer.domain.*;
-import com.chu.global.domain.ChangePwdDto;
-import com.chu.global.domain.FindIdDto;
-import com.chu.global.domain.FindPwdDto;
-import com.chu.global.domain.SignInDto;
+import com.chu.global.domain.*;
+
+import java.util.ArrayList;
 
 public interface CustomerService {
 
@@ -31,4 +30,6 @@ public interface CustomerService {
     CustomerDetailInfoDto getCustomerDetailInfo(int customerSeq);
 
     boolean putCustomerDetailInfo(int customerSeq, CustomerDetailChangeDto customerDetailChangeDto);
+
+    ArrayList<AlertCustomerDto> getAlertList(int customerSeq);
 }

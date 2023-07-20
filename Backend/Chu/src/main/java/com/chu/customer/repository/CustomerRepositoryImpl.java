@@ -150,4 +150,14 @@ public class CustomerRepositoryImpl implements CustomerRepository {
         
         return isSuccess;
     }
+
+    @Override
+    public ArrayList<AlertCustomerDto> getAlertList(int customerSeq) {
+        ArrayList<AlertCustomerDto> alertList = new ArrayList<>();
+
+        // 로직
+        // 고객 번호로 알림 조회
+
+        return alertList;
+    }
 }
