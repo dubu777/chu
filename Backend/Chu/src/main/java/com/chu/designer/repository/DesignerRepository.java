@@ -2,6 +2,7 @@ package com.chu.designer.repository;
 
 import com.chu.designer.domain.DesignerDetailDto;
 import com.chu.designer.domain.DesignerMyPageDto;
+import com.chu.designer.domain.DesignerMyPageUpdateShowDto;
 import com.chu.designer.domain.DesignerSignUpDto;
 import com.chu.global.domain.*;
 
@@ -37,4 +38,6 @@ public interface DesignerRepository {
     boolean patchIntroduction(int designerSeq, String introduction);
 
     boolean patchImg(int designerSeq, String img);
+
+    DesignerMyPageUpdateShowDto getDesignerMyPageUpdateInfo(int designerSeq);
 }

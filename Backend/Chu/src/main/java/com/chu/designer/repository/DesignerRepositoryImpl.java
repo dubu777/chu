@@ -1,9 +1,6 @@
 package com.chu.designer.repository;
 
-import com.chu.designer.domain.DesignerDetailDto;
-import com.chu.designer.domain.DesignerDto;
-import com.chu.designer.domain.DesignerMyPageDto;
-import com.chu.designer.domain.DesignerSignUpDto;
+import com.chu.designer.domain.*;
 import com.chu.global.domain.*;
 import com.chu.worldcup.domain.WorldcupStatisticsInfoDto;
 import lombok.extern.slf4j.Slf4j;
@@ -161,5 +158,26 @@ public class DesignerRepositoryImpl implements DesignerRepository {
         // 디자이너 대표 사진 변경
 
         return isSuccess;
+    }
+
+    @Override
+    public DesignerMyPageUpdateShowDto getDesignerMyPageUpdateInfo(int designerSeq) {
+        DesignerMyPageUpdateShowDto designerMyPageUpdateShowDto = new DesignerMyPageUpdateShowDto();
+
+        // 로직
+
+        // 디자이너 정보 삽입
+
+        // 디자이너 지역 정보 삽입
+
+        // 컷 정보 삽입
+
+        // 펌 정보 삽입
+
+        // 디자이너가 잘하는 컷 정보 삽입
+
+        // 디자이너가 잘하는 펌 정보 삽입
+
+        return designerMyPageUpdateShowDto;
     }
 }

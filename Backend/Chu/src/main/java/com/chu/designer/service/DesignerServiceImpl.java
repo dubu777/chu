@@ -1,9 +1,6 @@
 package com.chu.designer.service;
 
-import com.chu.designer.domain.DesignerDetailDto;
-import com.chu.designer.domain.DesignerDto;
-import com.chu.designer.domain.DesignerMyPageDto;
-import com.chu.designer.domain.DesignerSignUpDto;
+import com.chu.designer.domain.*;
 import com.chu.designer.repository.DesignerRepository;
 import com.chu.global.domain.*;
 import lombok.RequiredArgsConstructor;
@@ -96,6 +93,11 @@ public class DesignerServiceImpl implements DesignerService{
     @Override
     public boolean patchImg(int designerSeq, String img) {
         return designerRepository.patchImg(designerSeq, img);
+    }
+
+    @Override
+    public DesignerMyPageUpdateShowDto getDesignerMyPageUpdateInfo(int designerSeq) {
+        return designerRepository.getDesignerMyPageUpdateInfo(designerSeq);
     }
 
 }

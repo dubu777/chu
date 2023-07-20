@@ -1,6 +1,7 @@
 package com.chu.designer.controller;
 import com.chu.designer.domain.DesignerDetailDto;=
 import com.chu.designer.domain.DesignerMyPageDto;
+import com.chu.designer.domain.DesignerMyPageUpdateShowDto;
 import com.chu.designer.domain.DesignerSignUpDto;
 import com.chu.designer.service.DesignerService;
 import com.chu.global.domain.*;
@@ -180,6 +181,22 @@ public class DesignerController {
 
         if(isSuccess){
             ResponseDto responseDto = new ResponseDto(200, img);
+            return ResponseEntity.ok(responseDto);
+        }
+        else{
+            ResponseDto responseDto = new ResponseDto(204, null);
+            return ResponseEntity.ok(responseDto);
+        }
+    }
+
+    @GetMapping("detail")
+    public ResponseEntity<ResponseDto> getDesignerDetailInfo(@PathVariable("designer_seq") int designerSeq) {
+        DesignerMyPageUpdateShowDto designerMyPageUpdateShowDto = new DesignerMyPageUpdateShowDto();
+
+        designerMyPageUpdateShowDto = designerService.getDesignerMyPageUpdateInfo(designerSeq);
+
+        if(designerMyPageUpdateShowDto != null){
+            ResponseDto responseDto = new ResponseDto(200, designerMyPageUpdateShowDto);
             return ResponseEntity.ok(responseDto);
         }
         else{

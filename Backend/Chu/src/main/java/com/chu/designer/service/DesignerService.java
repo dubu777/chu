@@ -1,9 +1,6 @@
 package com.chu.designer.service;
 
-import com.chu.designer.domain.DesignerDetailDto;
-import com.chu.designer.domain.DesignerDto;
-import com.chu.designer.domain.DesignerMyPageDto;
-import com.chu.designer.domain.DesignerSignUpDto;
+import com.chu.designer.domain.*;
 import com.chu.global.domain.*;
 
 import java.sql.Date;
@@ -38,4 +35,6 @@ public interface DesignerService {
     boolean patchIntroduction(int designerSeq, String introduction);
 
     boolean patchImg(int designerSeq, String img);
+
+    DesignerMyPageUpdateShowDto getDesignerMyPageUpdateInfo(int designerSeq);
 }
