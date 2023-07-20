@@ -14,4 +14,6 @@ public interface DesignerSearchService {
     ArrayList<DesignerSearchAreaDto> search2AllArea();
 
     DesignerDetailInfoDto getDesignerDetailInfo(int designerSeq, int customerSeq);
+
+    ArrayList<DesignerSearchDto> search2Like(int customerSeq);
 }

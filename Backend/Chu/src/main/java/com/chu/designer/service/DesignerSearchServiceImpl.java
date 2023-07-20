@@ -42,4 +42,9 @@ public class DesignerSearchServiceImpl implements  DesignerSearchService{
     public DesignerDetailInfoDto getDesignerDetailInfo(int designerSeq, int customerSeq) {
         return designerSearchRepository.getDesignerDetailInfo(designerSeq, customerSeq);
     }
+
+    @Override
+    public ArrayList<DesignerSearchDto> search2Like(int customerSeq) {
+        return designerSearchRepository.search2Like(customerSeq);
+    }
 }

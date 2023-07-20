@@ -1,5 +1,6 @@
 package com.chu.designer.domain;
 
+// 디자이너 상세 (예약 ) 페이지 사용
 public class DesignerDetailInfoDto {
 
 //    "designerSeq" : 1,

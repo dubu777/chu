@@ -2,12 +2,17 @@ package com.chu.customer.controller;
 
 import com.chu.customer.domain.*;
 import com.chu.customer.service.CustomerService;
+import com.chu.designer.domain.DesignerSearchDto;
+import com.chu.designer.domain.DesignerSearchResponseDto;
+import com.chu.designer.service.DesignerSearchService;
+import com.chu.designer.service.DesignerService;
 import com.chu.global.domain.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 @Slf4j
@@ -17,6 +22,7 @@ import java.util.HashMap;
 public class CustomerController {
 
     private final CustomerService customerService;
+    private final DesignerSearchService designerSearchService;
     
     // 회원 가입
     @PostMapping(value = "/sign-up")
@@ -183,6 +189,24 @@ public class CustomerController {
             ResponseDto responseDto = new ResponseDto(200, null);
             return ResponseEntity.ok(responseDto);
         } else {
+            ResponseDto responseDto = new ResponseDto(204, null);
+            return ResponseEntity.ok(responseDto);
+        }
+    }
+
+    @GetMapping("/like")
+    public ResponseEntity<ResponseDto> getLikeDesignerInfo(@PathVariable("customer_seq") int customerSeq){
+
+        ArrayList<DesignerSearchDto> designerSearchDtoList = designerSearchService.search2Like(customerSeq);
+
+        if(designerSearchDtoList.size() != 0){
+            DesignerSearchResponseDto designerSearchResponseDto = new DesignerSearchResponseDto();
+            designerSearchResponseDto.setDesignerListCnt(designerSearchDtoList.size());
+            designerSearchResponseDto.setDesignerList(designerSearchDtoList);
+            ResponseDto responseDto = new ResponseDto(200, designerSearchResponseDto);
+            return ResponseEntity.ok(responseDto);
+        }
+        else{
             ResponseDto responseDto = new ResponseDto(204, null);
             return ResponseEntity.ok(responseDto);
         }

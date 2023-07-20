@@ -1,5 +1,6 @@
 package com.chu.designer.domain;
 
+// 리스트뷰 띄울 때 사용
 public class DesignerDetailDto {
 //"designerSeq" : 1,
 //        "name" : "김싸피",

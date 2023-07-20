@@ -76,4 +76,14 @@ public class DesignerSearchRepositoryImpl implements DesignerSearchRepository {
         //    리뷰들 정보
         return designerDetailInfoDto;
     }
+
+    @Override
+    public ArrayList<DesignerSearchDto> search2Like(int customerSeq) {
+        ArrayList<DesignerSearchDto> list = new ArrayList<>();
+        //필요 데이터 추출
+        // 고객이 좋아하는 디자이너 idx
+
+        // -> 디자이너 정보
+        return list;
+    }
 }
