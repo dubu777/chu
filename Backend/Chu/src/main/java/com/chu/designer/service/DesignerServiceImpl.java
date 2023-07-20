@@ -2,6 +2,7 @@ package com.chu.designer.service;
 
 import com.chu.designer.domain.DesignerDetailDto;
 import com.chu.designer.domain.DesignerDto;
+import com.chu.designer.domain.DesignerMyPageDto;
 import com.chu.designer.domain.DesignerSignUpDto;
 import com.chu.designer.repository.DesignerRepository;
 import com.chu.global.domain.*;
@@ -80,5 +81,10 @@ public class DesignerServiceImpl implements DesignerService{
     @Override
     public boolean readAlert(AlertReadDto alertReadDto) {
         return designerRepository.readAlert(alertReadDto);
+    }
+
+    @Override
+    public DesignerMyPageDto getMyPageInfo(int designerSeq) {
+        return designerRepository.getMyPageInfo(designerSeq);
     }
 }

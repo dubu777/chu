@@ -1,6 +1,7 @@
 package com.chu.designer.repository;
 
 import com.chu.designer.domain.DesignerDetailDto;
+import com.chu.designer.domain.DesignerMyPageDto;
 import com.chu.designer.domain.DesignerSignUpDto;
 import com.chu.global.domain.*;
 
@@ -30,4 +31,6 @@ public interface DesignerRepository {
     boolean createAlert(AlertCreateDto alertCreateDto);
 
     boolean readAlert(AlertReadDto alertReadDto);
+
+    DesignerMyPageDto getMyPageInfo(int designerSeq);
 }

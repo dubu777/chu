@@ -2,6 +2,7 @@ package com.chu.designer.repository;
 
 import com.chu.designer.domain.DesignerDetailDto;
 import com.chu.designer.domain.DesignerDto;
+import com.chu.designer.domain.DesignerMyPageDto;
 import com.chu.designer.domain.DesignerSignUpDto;
 import com.chu.global.domain.*;
 import com.chu.worldcup.domain.WorldcupStatisticsInfoDto;
@@ -126,5 +127,18 @@ public class DesignerRepositoryImpl implements DesignerRepository {
         // 알림 읽기
 
         return isSuccess;
+    }
+
+    @Override
+    public DesignerMyPageDto getMyPageInfo(int designerSeq) {
+        DesignerMyPageDto designerMyPageDto = new DesignerMyPageDto();
+
+        // 디자이너 정보
+        
+        // 디자이너가 잘하는 머리 스타일
+        
+        // 디자이너가 그날 가능한 시간
+
+        return designerMyPageDto;
     }
 }

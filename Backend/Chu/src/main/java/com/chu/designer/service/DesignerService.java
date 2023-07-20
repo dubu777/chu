@@ -2,6 +2,7 @@ package com.chu.designer.service;
 
 import com.chu.designer.domain.DesignerDetailDto;
 import com.chu.designer.domain.DesignerDto;
+import com.chu.designer.domain.DesignerMyPageDto;
 import com.chu.designer.domain.DesignerSignUpDto;
 import com.chu.global.domain.*;
 
@@ -31,4 +32,6 @@ public interface DesignerService {
     boolean createAlert(AlertCreateDto alertCreateDto);
 
     boolean readAlert(AlertReadDto alertReadDto);
+
+    DesignerMyPageDto getMyPageInfo(int designerSeq);
 }
