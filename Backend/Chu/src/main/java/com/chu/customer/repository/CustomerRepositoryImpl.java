@@ -1,9 +1,6 @@
 package com.chu.customer.repository;
 
-import com.chu.customer.domain.CustomerDetailDto;
-import com.chu.customer.domain.CustomerDto;
-import com.chu.customer.domain.CustomerSignUpDto;
-import com.chu.customer.domain.FaceInfoDto;
+import com.chu.customer.domain.*;
 import com.chu.global.domain.*;
 import com.chu.worldcup.domain.WorldcupStatisticsInfoDto;
 import lombok.extern.slf4j.Slf4j;
@@ -96,4 +93,19 @@ public class CustomerRepositoryImpl implements CustomerRepository {
         // 고객 시퀀스넘버, 바꿀 비밀번호
         return false;
     }
+
+    @Override
+    public int changeLikeInfo(LikeDto likeDto) {
+        int likeCount = 0;
+
+        // 아직 고객, 디자이너 좋아요 관계 없다면 데이터 삽입
+
+        // 이미 고객, 디자이너 관계 있다면 상태만 변경
+
+
+        // 디자이너 좋아요 개수 반환
+        return likeCount;
+    }
+
+
 }

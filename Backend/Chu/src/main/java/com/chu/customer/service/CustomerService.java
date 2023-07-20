@@ -3,6 +3,7 @@ package com.chu.customer.service;
 import com.chu.customer.domain.CustomerDetailDto;
 import com.chu.customer.domain.CustomerDto;
 import com.chu.customer.domain.CustomerSignUpDto;
+import com.chu.customer.domain.LikeDto;
 import com.chu.global.domain.ChangePwdDto;
 import com.chu.global.domain.FindIdDto;
 import com.chu.global.domain.FindPwdDto;
@@ -23,4 +24,6 @@ public interface CustomerService {
     int isValidUser(FindPwdDto findPwdDto);
 
     boolean changePwd(ChangePwdDto changePwdDto);
+
+    int changeLikeInfo(LikeDto likeDto);
 }

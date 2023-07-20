@@ -92,7 +92,7 @@ public class DesignerSearchController {
 
         DesignerDetailInfoDto designerDetailInfoDto = designerSearchService.getDesignerDetailInfo(designerSeq, customerSeq);
 
-        if(){
+        if(designerDetailInfoDto != null){
             ResponseDto responseDto = new ResponseDto(200, designerDetailInfoDto);
             return ResponseEntity.ok(responseDto);
         }

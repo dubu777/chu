@@ -1,8 +1,6 @@
 package com.chu.customer.controller;
 
-import com.chu.customer.domain.CustomerDetailDto;
-import com.chu.customer.domain.CustomerDto;
-import com.chu.customer.domain.CustomerSignUpDto;
+import com.chu.customer.domain.*;
 import com.chu.customer.service.CustomerService;
 import com.chu.global.domain.*;
 import lombok.RequiredArgsConstructor;
@@ -112,4 +110,25 @@ public class CustomerController {
             return ResponseEntity.ok(responseDto);
         }
     }
+
+    @PostMapping("/like")
+    public ResponseEntity<ResponseDto> changeLikeInfo(@RequestBody LikeDto likeDto){
+
+        int likeCount = customerService.changeLikeInfo(likeDto);
+
+        LikeResponseDto likeResponseDto = new LikeResponseDto();
+        likeResponseDto.setLikeCnt(likeCount);
+        likeResponseDto.setIsLike(likeDto.getIsLike());
+
+        // 예외 처리 다시 필요
+        if(likeResponseDto != null){
+            ResponseDto responseDto = new ResponseDto(200, likeResponseDto);
+            return ResponseEntity.ok(responseDto);
+        }
+        else{
+            ResponseDto responseDto = new ResponseDto(204, null);
+            return ResponseEntity.ok(responseDto);
+        }
+    }
+
 }

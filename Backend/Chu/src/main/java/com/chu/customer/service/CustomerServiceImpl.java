@@ -3,6 +3,7 @@ package com.chu.customer.service;
 import com.chu.customer.domain.CustomerDetailDto;
 import com.chu.customer.domain.CustomerDto;
 import com.chu.customer.domain.CustomerSignUpDto;
+import com.chu.customer.domain.LikeDto;
 import com.chu.customer.repository.CustomerRepository;
 import com.chu.global.domain.*;
 import lombok.RequiredArgsConstructor;
@@ -56,5 +57,10 @@ public class CustomerServiceImpl implements CustomerService{
     @Override
     public boolean changePwd(ChangePwdDto changePwdDto) {
         return customerRepository.changePwd(changePwdDto);
+    }
+
+    @Override
+    public int changeLikeInfo(LikeDto likeDto) {
+        return customerRepository.changeLikeInfo(likeDto);
     }
 }
