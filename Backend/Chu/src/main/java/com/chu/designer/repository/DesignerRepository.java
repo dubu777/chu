@@ -33,4 +33,6 @@ public interface DesignerRepository {
     boolean readAlert(AlertReadDto alertReadDto);
 
     DesignerMyPageDto getMyPageInfo(int designerSeq);
+
+    boolean patchIntroduction(int designerSeq, String introduction);
 }

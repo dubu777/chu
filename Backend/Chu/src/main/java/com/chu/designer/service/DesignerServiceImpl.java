@@ -87,4 +87,10 @@ public class DesignerServiceImpl implements DesignerService{
     public DesignerMyPageDto getMyPageInfo(int designerSeq) {
         return designerRepository.getMyPageInfo(designerSeq);
     }
+
+    @Override
+    public boolean patchIntroduction(int designerSeq, String introduction) {
+        return designerRepository.patchIntroduction(designerSeq, introduction);
+    }
+
 }

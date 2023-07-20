@@ -1,6 +1,5 @@
 package com.chu.designer.controller;
-import com.chu.designer.domain.DesignerDetailDto;
-import com.chu.designer.domain.DesignerDto;
+import com.chu.designer.domain.DesignerDetailDto;=
 import com.chu.designer.domain.DesignerMyPageDto;
 import com.chu.designer.domain.DesignerSignUpDto;
 import com.chu.designer.service.DesignerService;
@@ -151,6 +150,21 @@ public class DesignerController {
 
         if(designerMyPageDto != null){
             ResponseDto responseDto = new ResponseDto(200, designerMyPageDto);
+            return ResponseEntity.ok(responseDto);
+        }
+        else{
+            ResponseDto responseDto = new ResponseDto(204, null);
+            return ResponseEntity.ok(responseDto);
+        }
+    }
+
+    @PatchMapping("/introduction")
+    public ResponseEntity<ResponseDto> patchIntroduction(@PathVariable("designer_seq") int designerSeq, @RequestParam String introduction){
+
+        boolean isSuccess = designerService.patchIntroduction(designerSeq, introduction);
+
+        if(isSuccess){
+            ResponseDto responseDto = new ResponseDto(200, introduction);
             return ResponseEntity.ok(responseDto);
         }
         else{
