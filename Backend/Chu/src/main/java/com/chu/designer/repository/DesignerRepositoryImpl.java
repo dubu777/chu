@@ -188,6 +188,8 @@ public class DesignerRepositoryImpl implements DesignerRepository {
         // 로직
 
         // 디자이너 정보 수정
+        
+        // 디자이너 지역 정보 수정
 
         // 디자이너가 잘하는 컷, 펌 삽입
 
