@@ -1,9 +1,6 @@
 package com.chu.customer.service;
 
-import com.chu.customer.domain.CustomerDetailDto;
-import com.chu.customer.domain.CustomerLoginDetailDto;
-import com.chu.customer.domain.CustomerSignUpDto;
-import com.chu.customer.domain.LikeDto;
+import com.chu.customer.domain.*;
 import com.chu.global.domain.ChangePwdDto;
 import com.chu.global.domain.FindIdDto;
 import com.chu.global.domain.FindPwdDto;
@@ -30,4 +27,6 @@ public interface CustomerService {
     CustomerDetailDto getCustomerDetail(int customerSeq);
 
     boolean patchImage(String imgName);
+
+    CustomerDetailInfoDto getCustomerDetailInfo(int customerSeq);
 }

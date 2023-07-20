@@ -159,6 +159,20 @@ public class CustomerController {
             ResponseDto responseDto = new ResponseDto(204, null);
             return ResponseEntity.ok(responseDto);
         }
-
     }
+
+    @GetMapping("/detail")
+    public ResponseEntity<ResponseDto> getCustomerDetailInfo(@PathVariable("customer_seq") int customerSeq){
+        CustomerDetailInfoDto customerDetailInfoDto = customerService.getCustomerDetailInfo(customerSeq);
+
+        if (customerDetailInfoDto != null) {
+            ResponseDto responseDto = new ResponseDto(200, customerDetailInfoDto);
+            return ResponseEntity.ok(responseDto);
+        }
+        else{
+            ResponseDto responseDto = new ResponseDto(204, null);
+            return ResponseEntity.ok(responseDto);
+        }
+    }
+
 }

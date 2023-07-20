@@ -1,9 +1,6 @@
 package com.chu.customer.service;
 
-import com.chu.customer.domain.CustomerDetailDto;
-import com.chu.customer.domain.CustomerLoginDetailDto;
-import com.chu.customer.domain.CustomerSignUpDto;
-import com.chu.customer.domain.LikeDto;
+import com.chu.customer.domain.*;
 import com.chu.customer.repository.CustomerRepository;
 import com.chu.global.domain.*;
 import lombok.RequiredArgsConstructor;
@@ -72,5 +69,10 @@ public class CustomerServiceImpl implements CustomerService{
     @Override
     public boolean patchImage(String imgName) {
         return customerRepository.patchImage(imgName);
+    }
+
+    @Override
+    public CustomerDetailInfoDto getCustomerDetailInfo(int customerSeq) {
+        return customerRepository.getCustomerDetailInfo(customerSeq);
     }
 }
