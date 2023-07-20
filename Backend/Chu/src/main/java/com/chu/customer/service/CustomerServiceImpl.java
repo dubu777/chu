@@ -1,7 +1,7 @@
 package com.chu.customer.service;
 
 import com.chu.customer.domain.CustomerDetailDto;
-import com.chu.customer.domain.CustomerDto;
+import com.chu.customer.domain.CustomerLoginDetailDto;
 import com.chu.customer.domain.CustomerSignUpDto;
 import com.chu.customer.domain.LikeDto;
 import com.chu.customer.repository.CustomerRepository;
@@ -39,9 +39,9 @@ public class CustomerServiceImpl implements CustomerService{
     }
 
     @Override
-    public CustomerDetailDto getCustomerDetail(String id) {
+    public CustomerLoginDetailDto getLoginCustomerDetail(String id) {
         // 이건 서비스 로직에서 db 여러번 접근하는게 나을지도
-        return customerRepository.getCustomerDetail(id);
+        return customerRepository.getLoginCustomerDetail(id);
     }
 
     @Override
@@ -62,5 +62,10 @@ public class CustomerServiceImpl implements CustomerService{
     @Override
     public int changeLikeInfo(LikeDto likeDto) {
         return customerRepository.changeLikeInfo(likeDto);
+    }
+
+    @Override
+    public CustomerDetailDto getCustomerDetail(int customerSeq) {
+        return customerRepository.getCustomerDetail(customerSeq);
     }
 }

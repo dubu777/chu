@@ -42,8 +42,8 @@ public class CustomerController {
 
         // 로그인 성공
         if(isUser){
-            CustomerDetailDto customerDetailDto = customerService.getCustomerDetail(signInDto.getId());
-            ResponseDto responseDto = new ResponseDto(200, customerDetailDto);
+            CustomerLoginDetailDto customerLoginDetailDto = customerService.getLoginCustomerDetail(signInDto.getId());
+            ResponseDto responseDto = new ResponseDto(200, customerLoginDetailDto);
             return ResponseEntity.ok(responseDto);
         }
         // 로그인 실패
@@ -131,4 +131,18 @@ public class CustomerController {
         }
     }
 
+    @GetMapping("/")
+    public ResponseEntity<ResponseDto> getCustomerDetail(@PathVariable("customer_seq") int customerSeq) {
+
+        CustomerDetailDto customerDetailDto = customerService.getCustomerDetail(customerSeq);
+
+        if(customerDetailDto != null){
+            ResponseDto responseDto = new ResponseDto(200, customerDetailDto);
+            return ResponseEntity.ok(responseDto);
+        }
+        else{
+            ResponseDto responseDto = new ResponseDto(204, null);
+            return ResponseEntity.ok(responseDto);
+        }
+    }
 }

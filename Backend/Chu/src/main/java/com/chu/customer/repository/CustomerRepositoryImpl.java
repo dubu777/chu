@@ -48,7 +48,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     }
 
     @Override
-    public CustomerDetailDto getCustomerDetail(String id) {
+    public CustomerLoginDetailDto getLoginCustomerDetail(String id) {
         // 고객 정보
         // 고객 테이블에서 정보 다 끌어오기
 
@@ -105,6 +105,18 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
         // 디자이너 좋아요 개수 반환
         return likeCount;
+    }
+
+    @Override
+    public CustomerDetailDto getCustomerDetail(int customerSeq) {
+        CustomerDetailDto customerDetailDto = new CustomerDetailDto();
+        // 회원 정보 조회
+
+        // 이전 상담 내역 조회
+
+        // 예약 상담 내역 조회
+
+        return customerDetailDto;
     }
 
 

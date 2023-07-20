@@ -1,7 +1,7 @@
 package com.chu.customer.repository;
 
 import com.chu.customer.domain.CustomerDetailDto;
-import com.chu.customer.domain.CustomerDto;
+import com.chu.customer.domain.CustomerLoginDetailDto;
 import com.chu.customer.domain.CustomerSignUpDto;
 import com.chu.customer.domain.LikeDto;
 import com.chu.global.domain.ChangePwdDto;
@@ -17,7 +17,7 @@ public interface CustomerRepository {
 
     boolean signIn(SignInDto signInDto);
 
-    CustomerDetailDto getCustomerDetail(String id);
+    CustomerLoginDetailDto getLoginCustomerDetail(String id);
 
     String findId(FindIdDto findIdDto);
 
@@ -26,4 +26,6 @@ public interface CustomerRepository {
     boolean changePwd(ChangePwdDto changePwdDto);
 
     int changeLikeInfo(LikeDto likeDto);
+
+    CustomerDetailDto getCustomerDetail(int customerSeq);
 }

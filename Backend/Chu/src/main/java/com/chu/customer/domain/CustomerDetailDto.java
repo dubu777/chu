@@ -1,56 +1,22 @@
 package com.chu.customer.domain;
 
+import com.chu.consulting.domain.FutureConsultingDto;
+import com.chu.consulting.domain.PastConsultingDto;
+
+import java.util.ArrayList;
+
 public class CustomerDetailDto {
-//    {
-//        "customerSeq" : 1,
+//    "customerSeq" : 1,
 //            "name" : "김싸피",
-//            "bestDesigner" : [
-//        {
-//            "img" : "designer1.png",
-//                "name" : "재현"
-//            "designerIdx" : 1
-//        },
-//        {
-//            "img" : "designer2.png",
-//                "name" : "지윤"
-//            "designerIdx" : 2
-//        },
-//        {
-//            "img" : "designer3.png",
-//                "name" : "민지"
-//            "designerIdx" : 3
-//        },
-//                    ],
-//        "faceSeq" : "둥근 얼굴형",
-//            "faceImg" : [
-//        "faceImg1.png",
-//                "faceImg2.png",
-//                "faceImg3.png",
-//                    ],
-//        "statistics" : [
-//        "faceImg4.png",
-//                "faceImg5.png",
-//                "faceImg6.png",
-//                    ],
-//        "alert" : [
-//        {
-//            "alertSeq" : 1,
-//                "content" : "알림 11111",
-//                "check" : "N"
-//        },
-//        {
-//            "alertSeq" : 2,
-//                "content" : "알림 22222",
-//                "check" : "Y"
-//        },
-//        {
-//            "alertSeq" : 3,
-//                "content" : "알림 33333",
-//                "check" : "Y"
-//        }
-//
-//                    ],
-//
-//        "profileImg" : "profileImg1.png"
-//    }
+//            "id" : "ssafy",
+//            "email" : "ssafy@gmail.com",
+//            "img" : "img1.png",
+//            "hairCondition" : [
+//            "얇은 모발",
+//            "굵은 모발"
+//            ],
+//            "face" : "계란형",
+
+    ArrayList<FutureConsultingDto> futureConsultingDtoList = new ArrayList<>();
+    ArrayList<PastConsultingDto> pastConsultingDtoList = new ArrayList<>();
 }
