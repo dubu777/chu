@@ -129,4 +129,18 @@ public class DesignerController {
             return ResponseEntity.ok(responseDto);
         }
     }
+
+    @GetMapping("alert")
+    public ResponseEntity<ResponseDto> getAlert(@PathVariable("designer_seq") int designerSeq){
+        ArrayList<AlertDesignerDto> AlertDesignerDtoList = designerService.getAlertList(designerSeq);
+
+        if(AlertDesignerDtoList.size() != 0){
+            ResponseDto responseDto = new ResponseDto(200, null);
+            return ResponseEntity.ok(responseDto);
+        }
+        else{
+            ResponseDto responseDto = new ResponseDto(204, null);
+            return ResponseEntity.ok(responseDto);
+        }
+    }
 }

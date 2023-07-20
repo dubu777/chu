@@ -24,4 +24,6 @@ public interface DesignerRepository {
     boolean changePwd(ChangePwdDto changePwdDto);
 
     ArrayList<TimeStateDto> getTimeStateList(int designerSeq, Date date);
+
+    ArrayList<AlertDesignerDto> getAlertList(int designerSeq);
 }

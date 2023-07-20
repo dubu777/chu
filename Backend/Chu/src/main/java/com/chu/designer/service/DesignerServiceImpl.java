@@ -66,4 +66,9 @@ public class DesignerServiceImpl implements DesignerService{
     public ArrayList<TimeStateDto> getTimeStateList(int designerSeq, Date date) {
         return designerRepository.getTimeStateList(designerSeq, date);
     }
+
+    @Override
+    public ArrayList<AlertDesignerDto> getAlertList(int designerSeq) {
+        return designerRepository.getAlertList(designerSeq);
+    }
 }

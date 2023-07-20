@@ -99,4 +99,14 @@ public class DesignerRepositoryImpl implements DesignerRepository {
 
         return result;
     }
+
+    @Override
+    public ArrayList<AlertDesignerDto> getAlertList(int designerSeq) {
+        ArrayList<AlertDesignerDto> alertList = new ArrayList<>();
+
+        // 로직
+        // 디자이너 번호로 알림 조회
+
+        return alertList;
+    }
 }
