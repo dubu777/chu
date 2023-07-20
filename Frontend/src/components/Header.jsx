@@ -92,7 +92,7 @@ function Header() {
               >Home
             </Item>
           </Link>
-          <Link to="tv">
+          <Link to="reservation">
             <Item 
               variants={logoVariants}
               whileHover="active"

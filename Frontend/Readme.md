@@ -33,3 +33,8 @@ npm install sweetalert --save
 onClick={()=> swal("메세지")}
 
 ```
+
+#### React Calender 
+
+1. ```npm install react-calendar```
+2. ```npm install moment --save ```

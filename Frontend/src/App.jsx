@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Home from "./Routes/Home";
+import Reservation from "./Routes/Reservation";
 import SignUp from "./Routes/SignUpPage/SignUp";
 import LogIn from "./Routes/LogInPage/LogIn";
 import FindId from "./Routes/LogInPage/FindId";
@@ -24,6 +25,7 @@ function App() {
         <Route path="authnum" element={<AuthNum/>} />
         <Route path="foundid" element={<FoundId/>} />
         <Route path="changepw" element={<ChangePw/>} />
+        <Route path="reservation" element={<Reservation/>} />
       </Routes>
     </Router>
   )
