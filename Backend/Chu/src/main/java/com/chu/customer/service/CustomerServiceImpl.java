@@ -68,4 +68,9 @@ public class CustomerServiceImpl implements CustomerService{
     public CustomerDetailDto getCustomerDetail(int customerSeq) {
         return customerRepository.getCustomerDetail(customerSeq);
     }
+
+    @Override
+    public boolean patchImage(String imgName) {
+        return customerRepository.patchImage(imgName);
+    }
 }

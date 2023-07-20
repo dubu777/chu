@@ -119,5 +119,14 @@ public class CustomerRepositoryImpl implements CustomerRepository {
         return customerDetailDto;
     }
 
+    @Override
+    public boolean patchImage(String imgName) {
+        boolean isSuccess = true;
+        // 회원 이미지 정보 수정
+
+
+        return isSuccess;
+    }
+
 
 }

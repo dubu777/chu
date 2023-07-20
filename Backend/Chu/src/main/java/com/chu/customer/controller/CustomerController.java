@@ -145,4 +145,20 @@ public class CustomerController {
             return ResponseEntity.ok(responseDto);
         }
     }
+
+    @PatchMapping("/img")
+    public ResponseEntity<ResponseDto> patchImg(@RequestParam("img") String imgName){
+
+        boolean isSuccess = customerService.patchImage(imgName);
+
+        if (isSuccess) {
+            ResponseDto responseDto = new ResponseDto(200, imgName);
+            return ResponseEntity.ok(responseDto);
+        }
+        else{
+            ResponseDto responseDto = new ResponseDto(204, null);
+            return ResponseEntity.ok(responseDto);
+        }
+
+    }
 }

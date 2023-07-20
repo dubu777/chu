@@ -28,4 +28,6 @@ public interface CustomerService {
     int changeLikeInfo(LikeDto likeDto);
 
     CustomerDetailDto getCustomerDetail(int customerSeq);
+
+    boolean patchImage(String imgName);
 }
