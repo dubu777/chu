@@ -175,4 +175,16 @@ public class CustomerController {
         }
     }
 
+    @PutMapping("/detail")
+    public ResponseEntity<ResponseDto> putCustomerDetailInfo(@PathVariable("customer_seq") int customerSeq, @RequestBody CustomerDetailChangeDto customerDetailChangeDto) {
+        boolean isSuccess = customerService.putCustomerDetailInfo(customerSeq, customerDetailChangeDto);
+
+        if (isSuccess) {
+            ResponseDto responseDto = new ResponseDto(200, null);
+            return ResponseEntity.ok(responseDto);
+        } else {
+            ResponseDto responseDto = new ResponseDto(204, null);
+            return ResponseEntity.ok(responseDto);
+        }
+    }
 }

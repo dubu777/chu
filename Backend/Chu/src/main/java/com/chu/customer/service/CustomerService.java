@@ -29,4 +29,6 @@ public interface CustomerService {
     boolean patchImage(String imgName);
 
     CustomerDetailInfoDto getCustomerDetailInfo(int customerSeq);
+
+    boolean putCustomerDetailInfo(int customerSeq, CustomerDetailChangeDto customerDetailChangeDto);
 }

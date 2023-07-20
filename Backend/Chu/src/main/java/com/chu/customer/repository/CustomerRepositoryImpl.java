@@ -140,5 +140,14 @@ public class CustomerRepositoryImpl implements CustomerRepository {
         return customerDetailInfoDto;
     }
 
+    @Override
+    public boolean putCustomerDetailInfo(int customerSeq, CustomerDetailChangeDto customerDetailChangeDto) {
+        boolean isSuccess = true;
 
+        // 고객정보, 얼굴형 수정
+        
+        // 모발상태 수정
+        
+        return isSuccess;
+    }
 }
