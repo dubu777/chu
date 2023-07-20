@@ -93,4 +93,9 @@ public class DesignerServiceImpl implements DesignerService{
         return designerRepository.patchIntroduction(designerSeq, introduction);
     }
 
+    @Override
+    public boolean patchImg(int designerSeq, String img) {
+        return designerRepository.patchImg(designerSeq, img);
+    }
+
 }

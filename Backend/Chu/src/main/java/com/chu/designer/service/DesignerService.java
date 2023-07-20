@@ -36,4 +36,6 @@ public interface DesignerService {
     DesignerMyPageDto getMyPageInfo(int designerSeq);
 
     boolean patchIntroduction(int designerSeq, String introduction);
+
+    boolean patchImg(int designerSeq, String img);
 }

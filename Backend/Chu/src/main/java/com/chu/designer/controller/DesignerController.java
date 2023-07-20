@@ -172,4 +172,19 @@ public class DesignerController {
             return ResponseEntity.ok(responseDto);
         }
     }
+
+    @PatchMapping("/img")
+    public ResponseEntity<ResponseDto> patchImg(@PathVariable("designer_seq") int designerSeq, @RequestParam String img){
+
+        boolean isSuccess = designerService.patchImg(designerSeq, img);
+
+        if(isSuccess){
+            ResponseDto responseDto = new ResponseDto(200, img);
+            return ResponseEntity.ok(responseDto);
+        }
+        else{
+            ResponseDto responseDto = new ResponseDto(204, null);
+            return ResponseEntity.ok(responseDto);
+        }
+    }
 }
