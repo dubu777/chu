@@ -109,4 +109,13 @@ public class DesignerRepositoryImpl implements DesignerRepository {
 
         return alertList;
     }
+
+    @Override
+    public boolean createAlert(AlertCreateDto alertCreateDto) {
+        boolean isSuccess = true;
+
+        // 로직
+
+        return isSuccess;
+    }
 }

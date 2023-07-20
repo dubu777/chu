@@ -2,14 +2,12 @@ package com.chu.global.controller;
 
 import com.chu.customer.service.CustomerService;
 import com.chu.designer.service.DesignerService;
+import com.chu.global.domain.AlertCreateDto;
 import com.chu.global.domain.ResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -61,4 +59,33 @@ public class UserController {
             return ResponseEntity.ok(responseDto);
         }
     }
+
+    @PostMapping("/alert")
+    public ResponseEntity<ResponseDto> creatAlert(@RequestBody AlertCreateDto alertCreateDto) {
+
+        String userType = alertCreateDto.getUserType();
+
+        boolean customerSuccess = false;
+        boolean designerSuccess = false;
+
+        if(userType.equals("customer")){
+            boolean isSuccess = customerService.createAlert(alertCreateDto);
+            if(isSuccess) customerSuccess = true;
+        }
+        else if(userType.equals("designer")){
+            boolean isSuccess = designerService.createAlert(alertCreateDto);
+            if(isSuccess) designerSuccess = true;
+        }
+
+        if(customerSuccess || designerSuccess){
+            ResponseDto responseDto = new ResponseDto(200, null);
+            return ResponseEntity.ok(responseDto);
+        }
+        else{
+            ResponseDto responseDto = new ResponseDto(204, null);
+            return ResponseEntity.ok(responseDto);
+        }
+
+    }
+
 }

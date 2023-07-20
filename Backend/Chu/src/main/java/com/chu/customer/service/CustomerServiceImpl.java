@@ -87,4 +87,9 @@ public class CustomerServiceImpl implements CustomerService{
     public ArrayList<AlertCustomerDto> getAlertList(int customerSeq) {
         return customerRepository.getAlertList(customerSeq);
     }
+
+    @Override
+    public boolean createAlert(AlertCreateDto alertCreateDto) {
+        return customerRepository.createAlert(alertCreateDto);
+    }
 }

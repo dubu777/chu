@@ -71,4 +71,9 @@ public class DesignerServiceImpl implements DesignerService{
     public ArrayList<AlertDesignerDto> getAlertList(int designerSeq) {
         return designerRepository.getAlertList(designerSeq);
     }
+
+    @Override
+    public boolean createAlert(AlertCreateDto alertCreateDto) {
+        return designerRepository.createAlert(alertCreateDto);
+    }
 }

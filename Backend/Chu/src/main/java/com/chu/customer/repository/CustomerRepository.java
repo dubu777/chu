@@ -32,4 +32,6 @@ public interface CustomerRepository {
     boolean putCustomerDetailInfo(int customerSeq, CustomerDetailChangeDto customerDetailChangeDto);
 
     ArrayList<AlertCustomerDto> getAlertList(int customerSeq);
+
+    boolean createAlert(AlertCreateDto alertCreateDto);
 }
