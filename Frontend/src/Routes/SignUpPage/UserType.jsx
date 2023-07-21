@@ -1,6 +1,8 @@
 import { styled } from "styled-components";
 import Step from "../../components/SignUpComponent/Step";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -35,10 +37,10 @@ const Box = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 450px;
-  height: 450px;
+  width: 400px;
+  height: 400px;
   margin-top: 30px;
-  border-radius: 20px;
+  border-radius: 10px;
   background-color: rgb(249,245,240);
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
 `;
@@ -49,24 +51,28 @@ const Title = styled.span`
   margin: 40px 0 30px 0;
 `;
 const Text = styled.span`
-  font-size: 25px;
+  font-size: 22px;
   font-weight: bold;
-  margin: 15px;
+  margin-top: 15px;
 `;
-
+const SubText = styled.span`
+  font-size: 15px;
+  font-weight: bold;
+  margin: 10px 0 40px 0;
+`;
 const Hr = styled.div`
   margin-top: 20px;
   border-bottom : 2px solid rgb(242,234,211);
 `;
 const DesignerImg = styled.img`
-  margin-left: 25px;
-  width: 150px;
-  height: 200px;
+  margin-left: 50px;
+  width: 120px;
+  height: 170px;
 `;
 
 const CustomerImg = styled.img`
-  width: 150px;
-  height: 200px;
+  width: 120px;
+  height: 170px;
 `;
 
 const Btn = styled(motion.button)`
@@ -74,17 +80,20 @@ const Btn = styled(motion.button)`
   color: black;
   padding: 10px 55px;
   border: 0;
-  border-radius: 15px;
-  font-size: 22px;
+  border-radius: 10px;
+  font-size: 18px;
   font-weight: bold;
   transition: background-color 0.3s ease;
   &:hover {
   background-color: rgb(244,153,26);
+  color: #f7f5e1;
   }
 `;
 
 
 function UserTypeComponet() {
+  const navigate = useNavigate();
+
   return (
     <Container>
       <StepWrapper>
@@ -100,12 +109,14 @@ function UserTypeComponet() {
           <Box>
             <DesignerImg src="./icon/hair-cutting.png"/>
             <Text>디자이너</Text>
+            <SubText>디자이너가 홈페이지에 가입하는 경우</SubText>
             <Btn>회원가입</Btn>
           </Box>
           <Box>
             <CustomerImg src="./icon/woman.png"/>
             <Text>일반 회원</Text>
-            <Btn>회원가입</Btn>
+            <SubText>일반 회원이 홈페이지에 가입하는 경우</SubText>
+            <Btn onClick={() => navigate('/signup')}>회원가입</Btn>
           </Box>
         </Wrapper>
       </TypeWrapper>

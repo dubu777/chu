@@ -2,12 +2,13 @@ import { styled } from "styled-components";
 
 const InputWrapper = styled.div`
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   margin-bottom: 25px;
 `;
 
 const Input = styled.input`
+  flex: 1;
   width: 70%;
   height: 35px;
   border: 0;
