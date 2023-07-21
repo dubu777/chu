@@ -24,6 +24,7 @@ public class DesignerSearchServiceImpl implements  DesignerSearchService{
 
     @Override
     public ArrayList<DesignerSearchDto> search2Filter(int customerSeq, String[] hairStyle) {
+        // 조인으로 처리할 수는 있을 것 같은데 힘들면 함수 빼서 스타일 태그번호 갖고 디자이너 상세로 갈 수 있게 짜면 될듯
         return designerSearchRepository.search2Filter(customerSeq, hairStyle);
     }
 
