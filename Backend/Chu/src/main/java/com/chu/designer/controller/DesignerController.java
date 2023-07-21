@@ -85,9 +85,7 @@ public class DesignerController {
 
         // 존재하는 유저일 경우
         if (seq == 1) {
-            HashMap<String, Integer> resultMap = new HashMap<>();
-            resultMap.put("seq", seq);
-            ResponseDto responseDto = new ResponseDto(200, resultMap);
+            ResponseDto responseDto = new ResponseDto(200, seq);
             return ResponseEntity.ok(responseDto);
         } else {
             ResponseDto responseDto = new ResponseDto(204, null);
