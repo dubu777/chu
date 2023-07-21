@@ -263,4 +263,21 @@ public class DesignerController {
             return ResponseEntity.ok(responseDto);
         }
     }
+
+    @GetMapping("/portfolio")
+    public ResponseEntity<ResponseDto> getPortfolio(@PathVariable("designer-seq") int designerSeq){
+
+        ArrayList<ImageDto> portfolioList = designerService.getPortfolio(designerSeq);
+
+        if(portfolioList.size() != 0){
+            ResponseDto responseDto = new ResponseDto(200, portfolioList);
+            return ResponseEntity.ok(responseDto);
+        }
+        else{
+            ResponseDto responseDto = new ResponseDto(204, null);
+            return ResponseEntity.ok(responseDto);
+        }
+
+    }
+
 }

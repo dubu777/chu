@@ -121,4 +121,9 @@ public class DesignerServiceImpl implements DesignerService{
         return designerRepository.getReservationList(designerSeq);
     }
 
+    @Override
+    public ArrayList<ImageDto> getPortfolio(int designerSeq) {
+        return designerRepository.getPortfolio(designerSeq);
+    }
+
 }
