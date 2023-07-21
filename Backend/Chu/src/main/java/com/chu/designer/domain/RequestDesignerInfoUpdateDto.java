@@ -1,6 +1,6 @@
 package com.chu.designer.domain;
 
-public class DesignerInfoUpdateDto {
+public class RequestDesignerInfoUpdateDto {
 //        "name" : "재현",
 //                "email" : "ssafy@ssafy.com",
 //                "price" : "5000",

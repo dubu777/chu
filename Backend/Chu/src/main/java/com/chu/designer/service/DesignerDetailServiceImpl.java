@@ -1,9 +1,6 @@
 package com.chu.designer.service;
 
-import com.chu.designer.domain.DesignerDto;
-import com.chu.designer.domain.ResponseDesignerAreaInfo;
-import com.chu.designer.domain.ResponseDesignerMyPageUpdateShowDto;
-import com.chu.designer.domain.ResponseDesignerMyPageDto;
+import com.chu.designer.domain.*;
 import com.chu.designer.repository.DesignerDetailRepository;
 import com.chu.global.domain.ResponseHairStyleDto;
 import com.chu.global.domain.ResponseHairStyleLabelDto;
@@ -55,6 +52,8 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
 
         DesignerDto designerDto = designerDetailRepository.getDesignerInfo(designerSeq);
 
+        // 생각해보니 디자이너 지역이 디자이너 안에 있네.. 이거 한 번 고쳐주라.. 나 지금 0721 2256인데 너무 힘들거든,,
+
         ResponseDesignerAreaInfo designerAreaInfo = designerDetailRepository.getDesignerAreaInfo(designerSeq);
 
         ArrayList<ResponseHairStyleDto> allCutHairStyle = designerDetailRepository.getAllCutHairStyle();
@@ -66,5 +65,17 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
         ArrayList<ResponsePermHairStyleDto> myPermHairStyle = designerDetailRepository.getMyPermHairStyle(designerSeq);
 
         return responseDesignerMyPageUpdateShowDto;
+    }
+
+    @Override
+    public boolean updateDesignerInfo(int designerSeq, RequestDesignerInfoUpdateDto requestDesignerInfoUpdateDto) {
+        
+        // 디자이너 정보 수정
+        boolean isSuccess = designerDetailRepository.updateDesignerInfo(designerSeq, requestDesignerInfoUpdateDto);
+
+        // 디자이너 잘하는 헤어스타일 수정
+        // 이게 전부 삭제하고 다시 전부 넣을지 고민해보고 해야할듯
+
+        return true;
     }
 }

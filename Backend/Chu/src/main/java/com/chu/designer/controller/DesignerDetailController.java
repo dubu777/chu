@@ -1,5 +1,6 @@
 package com.chu.designer.controller;
 
+import com.chu.designer.domain.RequestDesignerInfoUpdateDto;
 import com.chu.designer.domain.ResponseDesignerMyPageUpdateShowDto;
 import com.chu.designer.domain.ResponseDesignerMyPageDto;
 import com.chu.designer.service.DesignerDetailService;
@@ -18,7 +19,7 @@ public class DesignerDetailController {
     private final DesignerDetailService designerDetailService;
 
     @GetMapping("/")
-    public ResponseEntity<HttpResponseDto> getDesignerDetailInfo(@PathVariable("designer_seq") int designerSeq) {
+    public ResponseEntity<HttpResponseDto> getDesignerDetailInfo(@PathVariable("designer-seq") int designerSeq) {
         ResponseDesignerMyPageUpdateShowDto responseDesignerMyPageUpdateShowDto = new ResponseDesignerMyPageUpdateShowDto();
 
         responseDesignerMyPageUpdateShowDto = designerDetailService.getDesignerMyPageUpdateInfo(designerSeq);
@@ -32,8 +33,22 @@ public class DesignerDetailController {
         }
     }
 
+    @PutMapping("/")
+    public ResponseEntity<HttpResponseDto> updateDesignerInfo(@PathVariable("designer-seq") int designerSeq, @RequestBody RequestDesignerInfoUpdateDto requestDesignerInfoUpdateDto) {
+
+        boolean isSuccess = designerDetailService.updateDesignerInfo(designerSeq, requestDesignerInfoUpdateDto);
+
+        if (isSuccess) {
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, null);
+            return ResponseEntity.ok(httpResponseDto);
+        } else {
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
+        }
+    }
+
     @GetMapping("/mypage")
-    public ResponseEntity<HttpResponseDto> getMyPageInfo(@PathVariable("designer_seq") int designerSeq) {
+    public ResponseEntity<HttpResponseDto> getMyPageInfo(@PathVariable("designer-seq") int designerSeq) {
         ResponseDesignerMyPageDto responseDesignerMyPageDto = designerDetailService.getMyPageInfo(designerSeq);
 
         if (responseDesignerMyPageDto != null) {
@@ -46,7 +61,7 @@ public class DesignerDetailController {
     }
 
     @PatchMapping("/introduction")
-    public ResponseEntity<HttpResponseDto> patchIntroduction(@PathVariable("designer_seq") int designerSeq, @RequestParam String introduction) {
+    public ResponseEntity<HttpResponseDto> patchIntroduction(@PathVariable("designer-seq") int designerSeq, @RequestParam String introduction) {
 
         boolean isSuccess = designerDetailService.patchIntroduction(designerSeq, introduction);
 
@@ -60,7 +75,7 @@ public class DesignerDetailController {
     }
 
     @PatchMapping("/img")
-    public ResponseEntity<HttpResponseDto> patchImg(@PathVariable("designer_seq") int designerSeq, @RequestParam String img) {
+    public ResponseEntity<HttpResponseDto> patchImg(@PathVariable("designer-seq") int designerSeq, @RequestParam String img) {
 
         boolean isSuccess = designerDetailService.patchImg(designerSeq, img);
 

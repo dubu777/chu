@@ -119,21 +119,6 @@ public class DesignerRepositoryImpl implements DesignerRepository {
     }
 
     @Override
-    public boolean updateDesignerInfo(int designerSeq, DesignerInfoUpdateDto designerInfoUpdateDto) {
-        boolean isSuccess = true;
-
-        // 로직
-
-        // 디자이너 정보 수정
-        
-        // 디자이너 지역 정보 수정
-
-        // 디자이너가 잘하는 컷, 펌 삽입
-
-        return isSuccess;
-    }
-
-    @Override
     public ArrayList<TimeDto> getPossibleReservationTime(int designerSeq, Date date) {
         ArrayList<TimeDto> possibleReservationTimeList = new ArrayList<>();
 

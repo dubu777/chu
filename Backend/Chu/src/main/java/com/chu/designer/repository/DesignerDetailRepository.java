@@ -1,6 +1,7 @@
 package com.chu.designer.repository;
 
 import com.chu.designer.domain.DesignerDto;
+import com.chu.designer.domain.RequestDesignerInfoUpdateDto;
 import com.chu.designer.domain.ResponseDesignerAreaInfo;
 import com.chu.global.domain.ResponseHairStyleDto;
 import com.chu.global.domain.ResponseHairStyleLabelDto;
@@ -30,5 +31,7 @@ public interface DesignerDetailRepository {
     ArrayList<ResponseHairStyleDto> getMyCutHairStyle(int designerSeq);
 
     ArrayList<ResponsePermHairStyleDto> getMyPermHairStyle(int designerSeq);
+
+    boolean updateDesignerInfo(int designerSeq, RequestDesignerInfoUpdateDto requestDesignerInfoUpdateDto);
 
 }

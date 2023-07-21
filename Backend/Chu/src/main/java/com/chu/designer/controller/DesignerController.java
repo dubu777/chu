@@ -133,20 +133,6 @@ public class DesignerController {
         }
     }
 
-    @PutMapping("/detail")
-    public ResponseEntity<HttpResponseDto> updateDesignerInfo(@PathVariable("designer_seq") int designerSeq, @RequestBody DesignerInfoUpdateDto designerInfoUpdateDto) {
-
-        boolean isSuccess = designerService.updateDesignerInfo(designerSeq, designerInfoUpdateDto);
-
-        if (isSuccess) {
-            HttpResponseDto httpResponseDto = new HttpResponseDto(200, null);
-            return ResponseEntity.ok(httpResponseDto);
-        } else {
-            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
-            return ResponseEntity.ok(httpResponseDto);
-        }
-    }
-
     @GetMapping("/time")
     public ResponseEntity<HttpResponseDto> getPossibleReservationTime(@PathVariable("designer-seq") int designerSeq, Date date) {
 

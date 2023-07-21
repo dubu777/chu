@@ -1,6 +1,7 @@
 package com.chu.designer.repository;
 
 import com.chu.designer.domain.DesignerDto;
+import com.chu.designer.domain.RequestDesignerInfoUpdateDto;
 import com.chu.designer.domain.ResponseDesignerAreaInfo;
 import com.chu.global.domain.ResponseHairStyleDto;
 import com.chu.global.domain.ResponseHairStyleLabelDto;
@@ -112,5 +113,16 @@ public class DesignerDetailRepositoryImpl implements DesignerDetailRepository {
         // 디자이너의 펌스타일 조회
 
         return myPermHairStyle;
+    }
+
+    @Override
+    public boolean updateDesignerInfo(int designerSeq, RequestDesignerInfoUpdateDto requestDesignerInfoUpdateDto) {
+        boolean isSuccess = true;
+
+        // 로직
+
+        // 디자이너 정보 수정
+
+        return isSuccess;
     }
 }
