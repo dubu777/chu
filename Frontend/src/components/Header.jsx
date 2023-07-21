@@ -105,6 +105,7 @@ function Header() {
       </Col>
       <Col>
         <Search >
+          <Link to="/customermypage">CustomerMyPage//</Link>
           <Link to="usertype">
             <Item 
               variants={logoVariants}

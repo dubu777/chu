@@ -11,6 +11,7 @@ import UserType from "./Routes/SignUpPage/UserType";
 import FindPw from "./Routes/LogInPage/FindPw";
 import ChangePw from "./Routes/LogInPage/ChangePw";
 import WorldcupImgUpload from "./Routes/WorldCupPage/WorldcupImgUpload";
+import CustomerMyPage from "./Routes/CustomerPage/CustomerMyPage";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Route path="changepw" element={<ChangePw/>} />
         <Route path="reservation" element={<Reservation/>} />
         <Route path="worlducupimgupload" element={<WorldcupImgUpload/>} />
+        <Route path="customermypage" element={<CustomerMyPage/>} />
       </Routes>
     </Router>
   )
