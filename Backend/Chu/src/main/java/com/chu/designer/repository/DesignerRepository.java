@@ -48,4 +48,6 @@ public interface DesignerRepository {
     ArrayList<ConsultingDto> getReservationList(int designerSeq);
 
     ArrayList<ImageDto> getPortfolio(int designerSeq);
+
+    boolean deletePortfolioImage(int designerSeq, int imageSeq);
 }

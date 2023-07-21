@@ -277,7 +277,21 @@ public class DesignerController {
             ResponseDto responseDto = new ResponseDto(204, null);
             return ResponseEntity.ok(responseDto);
         }
+    }
 
+    @DeleteMapping("/portfolio")
+    public ResponseEntity<ResponseDto> deletePortfolio(@PathVariable("designer-seq") int designerSeq, @RequestParam int imageSeq){
+
+        boolean isSuccess = designerService.deletePortfolioImage(designerSeq, imageSeq);
+
+        if(isSuccess){
+            ResponseDto responseDto = new ResponseDto(200, null);
+            return ResponseEntity.ok(responseDto);
+        }
+        else{
+            ResponseDto responseDto = new ResponseDto(204, null);
+            return ResponseEntity.ok(responseDto);
+        }
     }
 
 }
