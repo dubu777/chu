@@ -1,4 +1,6 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
+import swal from "sweetalert";
 
 const ClickImg = styled.img`
   height: 310px;
@@ -17,6 +19,7 @@ const Container = styled.div`
   margin-left: 150px;
   margin-right: 150px;
   margin-top: 50px;
+  font-family: "Blue-road";  
 `;
 
 const Wrapper = styled.div`
@@ -28,14 +31,13 @@ const Box = styled.div`
 `;
 const Title = styled.h1`
   font-family: 'omyu_pretty'; 
-  font-size: 40px;
-  font-family: 'Pretendard-Regular';
+  font-size: 25px;
+  font-family: "Blue-road";  
   font-weight: bold;
 
 `;
 const P = styled.p`
-  font-family: 'omyu_pretty';
-  font-size: 20px;
+  font-size: 15px;
 `;
 
 function MainView(){
@@ -48,10 +50,13 @@ function MainView(){
           <ClickImg src="./img/listview.jpg"></ClickImg>
           <P>헤어스타일 상담 예약 바로가기</P>
         </Box>
-        <Box>
+        {/* alert창 띄우고 업로드 화면으로 이동 */}
+        <Box onClick={()=> swal("Style worldCup을 위한 파일 등록창으로 이동합니다 😉")}>
+          <Link to="/worlducupimgupload">
           <ClickImg src="./img/worldcupimg.png"></ClickImg>
           {/* <WorldcupImg src="worldcup1.jpg"></WorldcupImg> */}
           <P>스타일 월드컵은 어때요?</P>
+          </Link>
         </Box>
       </Wrapper>
   </Container>

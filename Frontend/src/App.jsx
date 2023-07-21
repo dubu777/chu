@@ -10,6 +10,7 @@ import AuthNum from "./Routes/LogInPage/AuthNum";
 import UserType from "./Routes/SignUpPage/UserType";
 import FindPw from "./Routes/LogInPage/FindPw";
 import ChangePw from "./Routes/LogInPage/ChangePw";
+import WorldcupImgUpload from "./Routes/WorldCupPage/WorldcupImgUpload";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="foundid" element={<FoundId/>} />
         <Route path="changepw" element={<ChangePw/>} />
         <Route path="reservation" element={<Reservation/>} />
+        <Route path="worlducupimgupload" element={<WorldcupImgUpload/>} />
       </Routes>
     </Router>
   )
