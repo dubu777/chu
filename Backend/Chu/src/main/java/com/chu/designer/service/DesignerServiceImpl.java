@@ -89,7 +89,7 @@ public class DesignerServiceImpl implements DesignerService{
     }
 
     @Override
-    public ArrayList<TimeStateDto> getTimeStateList(int designerSeq, Date date) {
+    public ArrayList<ResponseTimeStateDto> getTimeStateList(int designerSeq, Date date) {
         return designerRepository.getTimeStateList(designerSeq, date);
     }
 

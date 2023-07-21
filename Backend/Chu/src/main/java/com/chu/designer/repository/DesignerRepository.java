@@ -30,7 +30,7 @@ public interface DesignerRepository {
 
     boolean changePwd(RequestChangePwdDto requestChangePwdDto);
 
-    ArrayList<TimeStateDto> getTimeStateList(int designerSeq, Date date);
+    ArrayList<ResponseTimeStateDto> getTimeStateList(int designerSeq, Date date);
 
     ArrayList<AlertDesignerDto> getAlertList(int designerSeq);
 

@@ -79,8 +79,8 @@ public class DesignerRepositoryImpl implements DesignerRepository {
     }
 
     @Override
-    public ArrayList<TimeStateDto> getTimeStateList(int designerSeq, Date date) {
-        ArrayList<TimeStateDto> result = new ArrayList<>();
+    public ArrayList<ResponseTimeStateDto> getTimeStateList(int designerSeq, Date date) {
+        ArrayList<ResponseTimeStateDto> result = new ArrayList<>();
 
         // 디자이너 번호, 시간으로 가능 날짜 조회
 

@@ -107,12 +107,12 @@ public class DesignerController {
 
     @GetMapping("/date")
     public ResponseEntity<HttpResponseDto> getPossibleTimeOfDate(@PathVariable("designer_seq") int designerSeq, @RequestParam Date date) {
-        ArrayList<TimeStateDto> timeStateDtoList = new ArrayList<>();
+        ArrayList<ResponseTimeStateDto> responseTimeStateDtoList = new ArrayList<>();
 
-        timeStateDtoList = designerService.getTimeStateList(designerSeq, date);
+        responseTimeStateDtoList = designerService.getTimeStateList(designerSeq, date);
 
-        if (timeStateDtoList.size() != 0) {
-            HttpResponseDto httpResponseDto = new HttpResponseDto(200, timeStateDtoList);
+        if (responseTimeStateDtoList.size() != 0) {
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseTimeStateDtoList);
             return ResponseEntity.ok(httpResponseDto);
         } else {
             HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);

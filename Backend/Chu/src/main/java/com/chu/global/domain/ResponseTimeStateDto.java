@@ -1,6 +1,6 @@
 package com.chu.global.domain;
 
-public class TimeStateDto {
+public class ResponseTimeStateDto {
 //    time
 //    state
 }
