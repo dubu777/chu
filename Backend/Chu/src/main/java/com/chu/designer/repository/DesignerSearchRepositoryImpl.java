@@ -3,7 +3,6 @@ package com.chu.designer.repository;
 import com.chu.designer.domain.DesignerDetailInfoDto;
 import com.chu.designer.domain.DesignerSearchAreaDto;
 import com.chu.designer.domain.DesignerSearchDto;
-import com.chu.designer.domain.DesignerSearchResponseDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 

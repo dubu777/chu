@@ -1,7 +1,5 @@
 package com.chu.designer.domain;
 
-import java.util.ArrayList;
-
 public class DesignerSearchDto {
 
 //            "designerSeq" : 1,

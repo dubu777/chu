@@ -3,7 +3,7 @@ package com.chu.designer.controller;
 import com.chu.designer.domain.DesignerDetailInfoDto;
 import com.chu.designer.domain.DesignerSearchAreaDto;
 import com.chu.designer.domain.DesignerSearchDto;
-import com.chu.designer.domain.DesignerSearchResponseDto;
+import com.chu.designer.domain.ResponseDesignerSearchDto;
 import com.chu.designer.service.DesignerSearchService;
 import com.chu.global.domain.HttpResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -20,17 +20,16 @@ import java.util.ArrayList;
 public class DesignerSearchController {
 
     private final DesignerSearchService designerSearchService;
-
     @GetMapping("/name")
     public ResponseEntity<HttpResponseDto> search2Name(@RequestParam int customerSeq, @RequestParam String name){
 
         ArrayList<DesignerSearchDto> designerSearchDtoList = designerSearchService.search2Name(customerSeq, name);
 
         if(designerSearchDtoList.size() != 0){
-            DesignerSearchResponseDto designerSearchResponseDto = new DesignerSearchResponseDto();
-            designerSearchResponseDto.setDesignerListCnt(designerSearchDtoList.size());
-            designerSearchResponseDto.setDesignerList(designerSearchDtoList);
-            HttpResponseDto httpResponseDto = new HttpResponseDto(200, designerSearchResponseDto);
+            ResponseDesignerSearchDto responseDesignerSearchDto = new ResponseDesignerSearchDto();
+            responseDesignerSearchDto.setDesignerListCnt(designerSearchDtoList.size());
+            responseDesignerSearchDto.setDesignerList(designerSearchDtoList);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseDesignerSearchDto);
             return ResponseEntity.ok(httpResponseDto);
         }
         else{
@@ -44,10 +43,10 @@ public class DesignerSearchController {
         ArrayList<DesignerSearchDto> designerSearchDtoList = designerSearchService.search2Filter(customerSeq, hairStyle);
 
         if(designerSearchDtoList.size() != 0){
-            DesignerSearchResponseDto designerSearchResponseDto = new DesignerSearchResponseDto();
-            designerSearchResponseDto.setDesignerListCnt(designerSearchDtoList.size());
-            designerSearchResponseDto.setDesignerList(designerSearchDtoList);
-            HttpResponseDto httpResponseDto = new HttpResponseDto(200, designerSearchResponseDto);
+            ResponseDesignerSearchDto responseDesignerSearchDto = new ResponseDesignerSearchDto();
+            responseDesignerSearchDto.setDesignerListCnt(designerSearchDtoList.size());
+            responseDesignerSearchDto.setDesignerList(designerSearchDtoList);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseDesignerSearchDto);
             return ResponseEntity.ok(httpResponseDto);
         }
         else{
@@ -61,10 +60,10 @@ public class DesignerSearchController {
         ArrayList<DesignerSearchDto> designerSearchDtoList = designerSearchService.search2LikeCount(customerSeq);
 
         if(designerSearchDtoList.size() != 0){
-            DesignerSearchResponseDto designerSearchResponseDto = new DesignerSearchResponseDto();
-            designerSearchResponseDto.setDesignerListCnt(designerSearchDtoList.size());
-            designerSearchResponseDto.setDesignerList(designerSearchDtoList);
-            HttpResponseDto httpResponseDto = new HttpResponseDto(200, designerSearchResponseDto);
+            ResponseDesignerSearchDto responseDesignerSearchDto = new ResponseDesignerSearchDto();
+            responseDesignerSearchDto.setDesignerListCnt(designerSearchDtoList.size());
+            responseDesignerSearchDto.setDesignerList(designerSearchDtoList);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseDesignerSearchDto);
             return ResponseEntity.ok(httpResponseDto);
         }
         else{

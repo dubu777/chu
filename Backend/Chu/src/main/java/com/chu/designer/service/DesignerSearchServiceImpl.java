@@ -3,7 +3,6 @@ package com.chu.designer.service;
 import com.chu.designer.domain.DesignerDetailInfoDto;
 import com.chu.designer.domain.DesignerSearchAreaDto;
 import com.chu.designer.domain.DesignerSearchDto;
-import com.chu.designer.domain.DesignerSearchResponseDto;
 import com.chu.designer.repository.DesignerSearchRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -3,7 +3,7 @@ package com.chu.customer.controller;
 import com.chu.customer.domain.*;
 import com.chu.customer.service.CustomerService;
 import com.chu.designer.domain.DesignerSearchDto;
-import com.chu.designer.domain.DesignerSearchResponseDto;
+import com.chu.designer.domain.ResponseDesignerSearchDto;
 import com.chu.designer.service.DesignerSearchService;
 import com.chu.global.domain.*;
 import lombok.RequiredArgsConstructor;
@@ -195,10 +195,10 @@ public class CustomerController {
         ArrayList<DesignerSearchDto> designerSearchDtoList = designerSearchService.search2Like(customerSeq);
 
         if(designerSearchDtoList.size() != 0){
-            DesignerSearchResponseDto designerSearchResponseDto = new DesignerSearchResponseDto();
-            designerSearchResponseDto.setDesignerListCnt(designerSearchDtoList.size());
-            designerSearchResponseDto.setDesignerList(designerSearchDtoList);
-            HttpResponseDto httpResponseDto = new HttpResponseDto(200, designerSearchResponseDto);
+            ResponseDesignerSearchDto responseDesignerSearchDto = new ResponseDesignerSearchDto();
+            responseDesignerSearchDto.setDesignerListCnt(designerSearchDtoList.size());
+            responseDesignerSearchDto.setDesignerList(designerSearchDtoList);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseDesignerSearchDto);
             return ResponseEntity.ok(httpResponseDto);
         }
         else{
