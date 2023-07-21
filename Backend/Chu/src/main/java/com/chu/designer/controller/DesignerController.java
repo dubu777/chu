@@ -216,4 +216,21 @@ public class DesignerController {
             return ResponseEntity.ok(responseDto);
         }
     }
+
+    @PutMapping("/time")
+    public ResponseEntity<ResponseDto> updatePossibleReservationTime(@PathVariable("designer-seq") int designerSeq, @RequestBody ReservationTimeDto reservationTimeDto) {
+
+        boolean isSuccess = designerService.updatePossibleReservationTime(designerSeq, reservationTimeDto);
+
+        if(isSuccess){
+            ResponseDto responseDto = new ResponseDto(200, null);
+            return ResponseEntity.ok(responseDto);
+        }
+        else{
+            ResponseDto responseDto = new ResponseDto(204, null);
+            return ResponseEntity.ok(responseDto);
+        }
+    }
+
+    
 }

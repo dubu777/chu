@@ -39,4 +39,7 @@ public interface DesignerService {
     DesignerMyPageUpdateShowDto getDesignerMyPageUpdateInfo(int designerSeq);
 
     boolean updateDesignerInfo(int designerSeq, DesignerInfoUpdateDto designerInfoUpdateDto);
+
+
+    boolean updatePossibleReservationTime(int designerSeq, ReservationTimeDto reservationTimeDto);
 }

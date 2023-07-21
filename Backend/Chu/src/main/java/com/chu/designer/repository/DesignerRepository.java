@@ -39,4 +39,6 @@ public interface DesignerRepository {
     DesignerMyPageUpdateShowDto getDesignerMyPageUpdateInfo(int designerSeq);
 
     boolean updateDesignerInfo(int designerSeq, DesignerInfoUpdateDto designerInfoUpdateDto);
+
+    boolean updatePossibleReservationTime(int designerSeq, ReservationTimeDto reservationTimeDto);
 }

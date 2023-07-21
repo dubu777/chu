@@ -195,4 +195,15 @@ public class DesignerRepositoryImpl implements DesignerRepository {
 
         return isSuccess;
     }
+
+    @Override
+    public boolean updatePossibleReservationTime(int designerSeq, ReservationTimeDto reservationTimeDto) {
+        boolean isSuccess = true;
+
+        // 로직
+        
+        // 해당 미용사의 예약 가능 시간 변경
+
+        return isSuccess;
+    }
 }
