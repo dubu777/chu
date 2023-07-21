@@ -65,9 +65,7 @@ public class DesignerController {
         String id = designerService.findId(findIdDto);
 
         if (id != null) {
-            HashMap<String, String> resultMap = new HashMap<>();
-            resultMap.put("id", id);
-            ResponseDto responseDto = new ResponseDto(200, resultMap);
+            ResponseDto responseDto = new ResponseDto(200, id);
             return ResponseEntity.ok(responseDto);
         } else {
             ResponseDto responseDto = new ResponseDto(204, null);

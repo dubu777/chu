@@ -28,6 +28,7 @@ public interface DesignerService {
     // 디자이너 로그인 시 정보 조회
     DesignerLoginDetailDto getLoginDesignerDetail(String id);
 
+    // 디자이너 아이디 찾기
     String findId(FindIdDto findIdDto);
 
     int isValidUser(FindPwdDto findPwdDto);

@@ -24,6 +24,7 @@ public interface DesignerRepository {
     // 디자이너 정보 조회
     DesignerDto getDesignerInfo(String id);
 
+    // 디자이너 아이디 찾기
     String findId(FindIdDto findIdDto);
 
     int isValidUser(FindPwdDto findPwdDto);
