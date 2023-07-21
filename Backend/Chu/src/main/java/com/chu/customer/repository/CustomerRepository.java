@@ -31,7 +31,7 @@ public interface CustomerRepository {
 
     boolean changePwd(RequestChangePwdDto requestChangePwdDto);
 
-    int changeLikeInfo(LikeDto likeDto);
+    int changeLikeInfo(RequestLikeDto requestLikeDto);
 
     CustomerDetailDto getCustomerDetail(int customerSeq);
 

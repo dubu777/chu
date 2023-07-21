@@ -94,8 +94,8 @@ public class CustomerServiceImpl implements CustomerService{
     }
 
     @Override
-    public int changeLikeInfo(LikeDto likeDto) {
-        return customerRepository.changeLikeInfo(likeDto);
+    public int changeLikeInfo(RequestLikeDto requestLikeDto) {
+        return customerRepository.changeLikeInfo(requestLikeDto);
     }
 
     @Override

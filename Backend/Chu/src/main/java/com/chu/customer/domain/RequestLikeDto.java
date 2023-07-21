@@ -1,6 +1,6 @@
 package com.chu.customer.domain;
 
-public class LikeDto {
+public class RequestLikeDto {
 //    {
 //        "customerSeq" : 1,
 //            "designerSeq" : 1,

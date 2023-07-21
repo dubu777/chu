@@ -32,7 +32,7 @@ public interface CustomerService {
 
     boolean changePwd(RequestChangePwdDto requestChangePwdDto);
 
-    int changeLikeInfo(LikeDto likeDto);
+    int changeLikeInfo(RequestLikeDto requestLikeDto);
 
     CustomerDetailDto getCustomerDetail(int customerSeq);
 

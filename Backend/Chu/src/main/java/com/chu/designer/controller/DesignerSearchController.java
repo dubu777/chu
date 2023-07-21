@@ -1,6 +1,6 @@
 package com.chu.designer.controller;
 
-import com.chu.designer.domain.DesignerDetailInfoDto;
+import com.chu.designer.domain.ResponseDesignerDetailInfoDto;
 import com.chu.designer.domain.DesignerSearchAreaDto;
 import com.chu.designer.domain.DesignerSearchDto;
 import com.chu.designer.domain.ResponseDesignerSearchDto;
@@ -106,10 +106,10 @@ public class DesignerSearchController {
     @GetMapping("/detail")
     public ResponseEntity<HttpResponseDto> getDesignerDetailInfo(@PathVariable("designer-seq") int designerSeq, @RequestParam int customerSeq){
 
-        DesignerDetailInfoDto designerDetailInfoDto = designerSearchService.getDesignerDetailInfo(designerSeq, customerSeq);
+        ResponseDesignerDetailInfoDto responseDesignerDetailInfoDto = designerSearchService.getDesignerDetailInfo(designerSeq, customerSeq);
 
-        if(designerDetailInfoDto != null){
-            HttpResponseDto httpResponseDto = new HttpResponseDto(200, designerDetailInfoDto);
+        if(responseDesignerDetailInfoDto != null){
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseDesignerDetailInfoDto);
             return ResponseEntity.ok(httpResponseDto);
         }
         else{

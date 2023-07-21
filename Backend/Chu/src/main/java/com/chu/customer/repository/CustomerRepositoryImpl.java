@@ -89,13 +89,12 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     }
 
     @Override
-    public int changeLikeInfo(LikeDto likeDto) {
+    public int changeLikeInfo(RequestLikeDto requestLikeDto) {
         int likeCount = 0;
 
         // 아직 고객, 디자이너 좋아요 관계 없다면 데이터 삽입
 
         // 이미 고객, 디자이너 관계 있다면 상태만 변경
-
 
         // 디자이너 좋아요 개수 반환
         return likeCount;

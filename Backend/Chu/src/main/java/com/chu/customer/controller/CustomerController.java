@@ -113,17 +113,17 @@ public class CustomerController {
     }
 
     @PostMapping("/like")
-    public ResponseEntity<HttpResponseDto> changeLikeInfo(@RequestBody LikeDto likeDto){
+    public ResponseEntity<HttpResponseDto> changeLikeInfo(@RequestBody RequestLikeDto requestLikeDto){
 
-        int likeCount = customerService.changeLikeInfo(likeDto);
+        int likeCount = customerService.changeLikeInfo(requestLikeDto);
 
-        LikeResponseDto likeResponseDto = new LikeResponseDto();
-        likeResponseDto.setLikeCnt(likeCount);
-        likeResponseDto.setIsLike(likeDto.getIsLike());
+        ResponseLikeDto responseLikeDto = new ResponseLikeDto();
+        responseLikeDto.setLikeCnt(likeCount);
+        responseLikeDto.setIsLike(requestLikeDto.getIsLike());
 
         // 예외 처리 다시 필요
-        if(likeResponseDto != null){
-            HttpResponseDto httpResponseDto = new HttpResponseDto(200, likeResponseDto);
+        if(responseLikeDto != null){
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseLikeDto);
             return ResponseEntity.ok(httpResponseDto);
         }
         else{

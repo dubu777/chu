@@ -1,6 +1,6 @@
 package com.chu.customer.domain;
 
-public class LikeResponseDto {
+public class ResponseLikeDto {
 //        "likeCnt" : 87,
 //                "isLike" : true
 }
