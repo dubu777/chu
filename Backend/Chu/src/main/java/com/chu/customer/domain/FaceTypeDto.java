@@ -1,6 +1,6 @@
 package com.chu.customer.domain;
 
-public class FaceInfoDto {
+public class FaceTypeDto {
     //Entity
 
     // 얼굴형 라벨링

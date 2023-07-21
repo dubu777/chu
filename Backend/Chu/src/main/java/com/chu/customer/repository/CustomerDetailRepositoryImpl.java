@@ -4,7 +4,8 @@ import com.chu.consulting.domain.FutureConsultingDto;
 import com.chu.consulting.domain.PastConsultingDto;
 import com.chu.customer.domain.CustomerDto;
 import com.chu.customer.domain.CustomerHairConditionDto;
-import com.chu.customer.domain.ResponseCustomerDetailDto;
+import com.chu.customer.domain.FaceTypeDto;
+import com.chu.global.domain.HairStyleDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
@@ -58,5 +59,23 @@ public class CustomerDetailRepositoryImpl implements CustomerDetailRepository {
         // 현재 시점 이후에 있을 상담들 조회 / 디자이너 엮어서
 
         return futureConsultingDtoList;
+    }
+
+    @Override
+    public ArrayList<FaceTypeDto> getALLFaceTypeList() {
+        ArrayList<FaceTypeDto> faceTypeList = new ArrayList<>();
+
+        // 모든 얼굴형 타입 가져오기
+
+        return faceTypeList;
+    }
+
+    @Override
+    public ArrayList<HairStyleDto> getAllHairStyleList() {
+        ArrayList<HairStyleDto> hairStyleList = new ArrayList<>();
+
+        // 모든 모발상태 가져오기
+
+        return hairStyleList;
     }
 }

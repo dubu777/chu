@@ -101,11 +101,6 @@ public class CustomerServiceImpl implements CustomerService{
     }
 
     @Override
-    public CustomerDetailInfoDto getCustomerDetailInfo(int customerSeq) {
-        return customerRepository.getCustomerDetailInfo(customerSeq);
-    }
-
-    @Override
     public boolean putCustomerDetailInfo(int customerSeq, CustomerDetailChangeDto customerDetailChangeDto) {
         return customerRepository.putCustomerDetailInfo(customerSeq, customerDetailChangeDto);
     }

@@ -132,20 +132,6 @@ public class CustomerController {
         }
     }
 
-    @GetMapping("/detail")
-    public ResponseEntity<HttpResponseDto> getCustomerDetailInfo(@PathVariable("customer_seq") int customerSeq){
-        CustomerDetailInfoDto customerDetailInfoDto = customerService.getCustomerDetailInfo(customerSeq);
-
-        if (customerDetailInfoDto != null) {
-            HttpResponseDto httpResponseDto = new HttpResponseDto(200, customerDetailInfoDto);
-            return ResponseEntity.ok(httpResponseDto);
-        }
-        else{
-            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
-            return ResponseEntity.ok(httpResponseDto);
-        }
-    }
-
     @PutMapping("/detail")
     public ResponseEntity<HttpResponseDto> putCustomerDetailInfo(@PathVariable("customer_seq") int customerSeq, @RequestBody CustomerDetailChangeDto customerDetailChangeDto) {
         boolean isSuccess = customerService.putCustomerDetailInfo(customerSeq, customerDetailChangeDto);

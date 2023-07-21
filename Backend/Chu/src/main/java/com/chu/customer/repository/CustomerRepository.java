@@ -35,7 +35,7 @@ public interface CustomerRepository {
 
 
 
-    CustomerDetailInfoDto getCustomerDetailInfo(int customerSeq);
+    ResponseCustomerDetailInfoDto getCustomerDetailInfo(int customerSeq);
 
     boolean putCustomerDetailInfo(int customerSeq, CustomerDetailChangeDto customerDetailChangeDto);
 

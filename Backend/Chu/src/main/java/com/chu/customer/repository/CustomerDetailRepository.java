@@ -4,7 +4,9 @@ import com.chu.consulting.domain.FutureConsultingDto;
 import com.chu.consulting.domain.PastConsultingDto;
 import com.chu.customer.domain.CustomerDto;
 import com.chu.customer.domain.CustomerHairConditionDto;
+import com.chu.customer.domain.FaceTypeDto;
 import com.chu.customer.domain.ResponseCustomerDetailDto;
+import com.chu.global.domain.HairStyleDto;
 
 import java.util.ArrayList;
 
@@ -18,4 +20,8 @@ public interface CustomerDetailRepository {
     ArrayList<PastConsultingDto> getPastConsultingList(int customerSeq);
 
     ArrayList<FutureConsultingDto> getFutureConsultingList(int customerSeq);
+
+    ArrayList<FaceTypeDto> getALLFaceTypeList();
+
+    ArrayList<HairStyleDto> getAllHairStyleList();
 }

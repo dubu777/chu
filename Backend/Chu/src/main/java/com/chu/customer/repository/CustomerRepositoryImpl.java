@@ -102,15 +102,15 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
 
     @Override
-    public CustomerDetailInfoDto getCustomerDetailInfo(int customerSeq) {
-        CustomerDetailInfoDto customerDetailInfoDto = new CustomerDetailInfoDto();
+    public ResponseCustomerDetailInfoDto getCustomerDetailInfo(int customerSeq) {
+        ResponseCustomerDetailInfoDto responseCustomerDetailInfoDto = new ResponseCustomerDetailInfoDto();
         // 회원 정보 조회
 
         // 얼굴형 사진들 다 뽑기
 
         // 고객 모발 상태 뽑기
 
-        return customerDetailInfoDto;
+        return responseCustomerDetailInfoDto;
     }
 
     @Override

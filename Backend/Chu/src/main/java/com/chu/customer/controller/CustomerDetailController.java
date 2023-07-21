@@ -1,5 +1,6 @@
 package com.chu.customer.controller;
 
+import com.chu.customer.domain.ResponseCustomerDetailInfoDto;
 import com.chu.customer.domain.ResponseCustomerDetailDto;
 import com.chu.customer.service.CustomerDetailService;
 import com.chu.global.domain.HttpResponseDto;
@@ -17,6 +18,20 @@ public class CustomerDetailController {
     private final CustomerDetailService customerDetailService;
 
     @GetMapping("/")
+    public ResponseEntity<HttpResponseDto> getCustomerDetailInfo(@PathVariable("customer_seq") int customerSeq){
+        ResponseCustomerDetailInfoDto responseCustomerDetailInfoDto = customerDetailService.getCustomerUpdateDetailInfo(customerSeq);
+
+        if (responseCustomerDetailInfoDto != null) {
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseCustomerDetailInfoDto);
+            return ResponseEntity.ok(httpResponseDto);
+        }
+        else{
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
+        }
+    }
+
+    @GetMapping("/mypage")
     public ResponseEntity<HttpResponseDto> getCustomerDetail(@PathVariable("customer_seq") int customerSeq) {
 
         ResponseCustomerDetailDto responseCustomerDetailDto = customerDetailService.getCustomerDetail(customerSeq);
@@ -45,4 +60,5 @@ public class CustomerDetailController {
             return ResponseEntity.ok(httpResponseDto);
         }
     }
+
 }
