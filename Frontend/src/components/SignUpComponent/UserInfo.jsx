@@ -59,15 +59,24 @@ const Btn = styled.button`
   font-size: 5px;
 `;
 const User = styled.div`
+  display: flex; /* 추가: 라디오 버튼과 텍스트를 가로로 나열하기 위해 */
+  align-items: center; /* 추가: 라디오 버튼과 텍스트를 수직 중앙에 정렬 */
   margin-bottom: 25px;
   margin-left: 70px;
 `;
-const Btn1 = styled.button`
-  border-radius: 0.78rem;
+const SubmitBtn = styled.button`
+  background-color: rgba(244,153,26,0.6);
+  color: black;
+  padding: 10px 55px;
   border: 0;
-  background-color: orange;
-  height: 35px;
-  width: 120px;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  &:hover {
+  background-color: rgba(244,153,26,1);
+  color: #f7f5e1;
+  }
 `;
 
 function UserInfoComponet() {
@@ -88,7 +97,6 @@ function UserInfoComponet() {
             {/* <Btn>중복확인</Btn> */}
           </Wrap>
           <Wrap>
-          <InputWrapper>
           <User>
             <Text>성별 </Text>
               <Label>
@@ -112,12 +120,11 @@ function UserInfoComponet() {
               여자
             </Label>
             </User>
-          </InputWrapper>
           <SignUpInput text="비밀번호" placeholder="8~16자리의 비밀번호 ⚠"/>
           <SignUpInput text="비밀번호 확인" placeholder="비밀번호 확인 ✔" />
           </Wrap>
         </Wrapper>
-        <Btn1>회원 가입하기</Btn1>
+        <SubmitBtn>회원 가입하기</SubmitBtn>
       </Container>
   )
 }
