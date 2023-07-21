@@ -1,7 +1,7 @@
 package com.chu.worldcup.service;
 
 import com.chu.global.domain.ResponseImageWithHairInfoDto;
-import com.chu.worldcup.domain.WorldcupRequestDto;
+import com.chu.worldcup.domain.RequestWorldcupDto;
 import com.chu.worldcup.domain.WorldcupStatisticsRequestDto;
 import com.chu.worldcup.repository.WorldcupRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,8 +18,8 @@ public class WorldcupServiceImpl implements WorldcupService {
     private final WorldcupRepository worldcupRepository;
 
     @Override
-    public int createWorldcup(WorldcupRequestDto worldcupRequestDto) {
-        return worldcupRepository.createWorldcup(worldcupRequestDto);
+    public int createWorldcup(RequestWorldcupDto requestWorldcupDto) {
+        return worldcupRepository.createWorldcup(requestWorldcupDto);
     }
 
     @Override

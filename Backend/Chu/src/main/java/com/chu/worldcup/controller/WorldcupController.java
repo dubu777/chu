@@ -2,7 +2,7 @@ package com.chu.worldcup.controller;
 
 import com.chu.global.domain.ResponseImageWithHairInfoDto;
 import com.chu.global.domain.HttpResponseDto;
-import com.chu.worldcup.domain.WorldcupRequestDto;
+import com.chu.worldcup.domain.RequestWorldcupDto;
 import com.chu.worldcup.domain.WorldcupStatisticsRequestDto;
 import com.chu.worldcup.service.WorldcupService;
 import lombok.RequiredArgsConstructor;
@@ -37,9 +37,9 @@ public class WorldcupController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<HttpResponseDto> createWorldcup(@RequestBody WorldcupRequestDto worldcupRequestDto) {
+    public ResponseEntity<HttpResponseDto> createWorldcup(@RequestBody RequestWorldcupDto requestWorldcupDto) {
 
-        int responseSeq = worldcupService.createWorldcup(worldcupRequestDto);
+        int responseSeq = worldcupService.createWorldcup(requestWorldcupDto);
 
         // 예외 처리 다시 보기
         if(responseSeq > 0){

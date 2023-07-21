@@ -2,7 +2,7 @@ package com.chu.worldcup.repository;
 
 import com.chu.global.domain.ImageDto;
 import com.chu.global.domain.ResponseImageWithHairInfoDto;
-import com.chu.worldcup.domain.WorldcupRequestDto;
+import com.chu.worldcup.domain.RequestWorldcupDto;
 import com.chu.worldcup.domain.WorldcupStatisticsRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +26,7 @@ public class WorldcupRepositoryImpl implements WorldcupRepository {
     }
 
     @Override
-    public int createWorldcup(WorldcupRequestDto worldcupRequestDto) {
+    public int createWorldcup(RequestWorldcupDto requestWorldcupDto) {
         int resultRow = 0;
 
         // 로직
