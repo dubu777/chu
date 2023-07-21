@@ -1,5 +1,7 @@
 package com.chu.designer.domain;
 
+import com.chu.global.domain.HairStyleDto;
+
 import java.util.ArrayList;
 
 public class DesignerMyPageUpdateShowDto {
@@ -7,10 +9,10 @@ public class DesignerMyPageUpdateShowDto {
     // 디자이너 정보
     
     // 지역도 있음
-    ArrayList<CutHairStyleDto> allCutHairStyleDtoList;
+    ArrayList<HairStyleDto> allCutHairStyleDtoList;
     ArrayList<PermHairStyleDto> allPermHairStyleDtoList;
     
-    ArrayList<CutHairStyleDto> myCutHairStyleDtoList;
+    ArrayList<HairStyleDto> myCutHairStyleDtoList;
 
     ArrayList<PermHairStyleDto> myPermHairStyleDtoList;
 //    "name" : "재현",

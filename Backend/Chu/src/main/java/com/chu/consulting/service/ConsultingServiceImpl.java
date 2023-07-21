@@ -3,6 +3,7 @@ package com.chu.consulting.service;
 import com.chu.consulting.domain.ConsultingRequestDto;
 import com.chu.consulting.domain.ConsultingResultDto;
 import com.chu.consulting.domain.ConsultingReviewDto;
+import com.chu.consulting.domain.ConsultingReviewInfoDto;
 import com.chu.consulting.repository.ConsultingRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -43,5 +44,10 @@ public class ConsultingServiceImpl implements ConsultingService {
     @Override
     public boolean updateConsultingReview(ConsultingReviewDto consultingReviewDto) {
         return consultingRepository.updateConsultingReview(consultingReviewDto);
+    }
+
+    @Override
+    public ConsultingReviewInfoDto getConsultingResultDetailInfo(int consultingSeq) {
+        return consultingRepository.getConsultingResultDetailInfo(consultingSeq);
     }
 }

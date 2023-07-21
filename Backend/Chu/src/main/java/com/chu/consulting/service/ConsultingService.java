@@ -3,6 +3,7 @@ package com.chu.consulting.service;
 import com.chu.consulting.domain.ConsultingRequestDto;
 import com.chu.consulting.domain.ConsultingResultDto;
 import com.chu.consulting.domain.ConsultingReviewDto;
+import com.chu.consulting.domain.ConsultingReviewInfoDto;
 
 public interface ConsultingService {
     String participantConsulting(int consultingSeq);
@@ -16,4 +17,6 @@ public interface ConsultingService {
     boolean updateConsultingUrl(int consultingSeq, String url);
 
     boolean updateConsultingReview(ConsultingReviewDto consultingReviewDto);
+
+    ConsultingReviewInfoDto getConsultingResultDetailInfo(int consultingSeq);
 }

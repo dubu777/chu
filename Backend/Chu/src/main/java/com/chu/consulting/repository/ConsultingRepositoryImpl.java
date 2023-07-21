@@ -3,6 +3,7 @@ package com.chu.consulting.repository;
 import com.chu.consulting.domain.ConsultingRequestDto;
 import com.chu.consulting.domain.ConsultingResultDto;
 import com.chu.consulting.domain.ConsultingReviewDto;
+import com.chu.consulting.domain.ConsultingReviewInfoDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
@@ -84,5 +85,18 @@ public class ConsultingRepositoryImpl implements ConsultingRepository {
         // 고객 정보 뽑아서 좋아요 테이블에 관계 없다면 추가
 
         return isSuccess;
+    }
+
+    @Override
+    public ConsultingReviewInfoDto getConsultingResultDetailInfo(int consultingSeq) {
+        ConsultingReviewInfoDto consultingReviewInfoDto = new ConsultingReviewInfoDto();
+
+        // 로직
+
+        // 머리스타일 전부 가져오기
+
+        // 이미지 전부 가져오기
+
+        return consultingReviewInfoDto;
     }
 }
