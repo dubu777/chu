@@ -1,5 +1,10 @@
 ### Getting Started with Create React App
 
+#### 리액트 상태 관리
+- Recoil 사용
+```import { atom, useRecoilState } from 'recoil';```
+```npm install recoil```
+
 #### 페이지 이동 방식 
 1. navigate 
 ```jsx
