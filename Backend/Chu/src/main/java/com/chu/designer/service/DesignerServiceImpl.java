@@ -35,13 +35,13 @@ public class DesignerServiceImpl implements DesignerService{
     }
 
     @Override
-    public boolean signUp(DesignerSignUpDto designerSignUpDto) {
-        return designerRepository.signUp(designerSignUpDto);
+    public boolean signUp(RequestDesignerSignUpDto requestDesignerSignUpDto) {
+        return designerRepository.signUp(requestDesignerSignUpDto);
     }
     
     @Override
-    public boolean signIn(SignInRequestDto signInRequestDto) {
-        return designerRepository.signIn(signInRequestDto);
+    public boolean signIn(RequestSignInDto requestSignInDto) {
+        return designerRepository.signIn(requestSignInDto);
     }
 
     @Override
@@ -50,9 +50,9 @@ public class DesignerServiceImpl implements DesignerService{
     }
 
     @Override
-    public DesignerLoginDetailDto getLoginDesignerDetail(String id) {
+    public ResponseDesignerLoginDetailDto getLoginDesignerDetail(String id) {
 
-        DesignerLoginDetailDto designerLoginDetailDto = new DesignerLoginDetailDto();
+        ResponseDesignerLoginDetailDto responseDesignerLoginDetailDto = new ResponseDesignerLoginDetailDto();
 
         // 디자니어 정보 다 가져와서 필요한거 채우기
         designerRepository.getDesignerInfo(id);
@@ -70,22 +70,22 @@ public class DesignerServiceImpl implements DesignerService{
         // 여기에 알람에 따른 고객 정보가 추가될꺼야
         ArrayList<AlertDesignerOnLoginDto> alertDetailList = new ArrayList<>();
 
-        return designerLoginDetailDto;
+        return responseDesignerLoginDetailDto;
     }
 
     @Override
-    public String findId(FindIdRequestDto findIdRequestDto) {
-        return designerRepository.findId(findIdRequestDto);
+    public String findId(RequestFindIdDto requestFindIdDto) {
+        return designerRepository.findId(requestFindIdDto);
     }
 
     @Override
-    public int isValidUser(FindPwdRequestDto findPwdRequestDto) {
-        return designerRepository.isValidUser(findPwdRequestDto);
+    public int isValidUser(RequestFindPwdDto requestFindPwdDto) {
+        return designerRepository.isValidUser(requestFindPwdDto);
     }
 
     @Override
-    public boolean changePwd(ChangePwdDto changePwdDto) {
-        return designerRepository.changePwd(changePwdDto);
+    public boolean changePwd(RequestChangePwdDto requestChangePwdDto) {
+        return designerRepository.changePwd(requestChangePwdDto);
     }
 
     @Override

@@ -15,20 +15,20 @@ public interface DesignerRepository {
     boolean checkEmail(String email);
 
     // 디자이너 회원가입
-    boolean signUp(DesignerSignUpDto designerSignUpDto);
+    boolean signUp(RequestDesignerSignUpDto requestDesignerSignUpDto);
 
     // 디자이너 로그인 여부 확인
-    boolean signIn(SignInRequestDto signInRequestDto);
+    boolean signIn(RequestSignInDto requestSignInDto);
 
     // 디자이너 정보 조회
     DesignerDto getDesignerInfo(String id);
 
     // 디자이너 아이디 찾기
-    String findId(FindIdRequestDto findIdRequestDto);
+    String findId(RequestFindIdDto requestFindIdDto);
 
-    int isValidUser(FindPwdRequestDto findPwdRequestDto);
+    int isValidUser(RequestFindPwdDto requestFindPwdDto);
 
-    boolean changePwd(ChangePwdDto changePwdDto);
+    boolean changePwd(RequestChangePwdDto requestChangePwdDto);
 
     ArrayList<TimeStateDto> getTimeStateList(int designerSeq, Date date);
 

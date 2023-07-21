@@ -1,6 +1,6 @@
 package com.chu.designer.domain;
 
-public class DesignerSignUpDto {
+public class RequestDesignerSignUpDto {
     //    		"name" : "ssafy",
 //                    "id" : "id",
 //                    "email" : "ssafy@gmail.com",

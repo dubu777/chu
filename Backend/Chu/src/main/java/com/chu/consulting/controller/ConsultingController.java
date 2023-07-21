@@ -2,7 +2,7 @@ package com.chu.consulting.controller;
 
 import com.chu.consulting.domain.*;
 import com.chu.consulting.service.ConsultingService;
-import com.chu.global.domain.ResponseDto;
+import com.chu.global.domain.HttpResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -18,123 +18,123 @@ public class ConsultingController {
     private final ConsultingService consultingService;
 
     @GetMapping("/")
-    public ResponseEntity<ResponseDto> participantConsulting(@PathVariable("consulting_seq") int consultingSeq) {
+    public ResponseEntity<HttpResponseDto> participantConsulting(@PathVariable("consulting_seq") int consultingSeq) {
 
         String url = consultingService.participantConsulting(consultingSeq);
 
         if (url != null) {
-            ResponseDto responseDto = new ResponseDto(200, url);
-            return ResponseEntity.ok(responseDto);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, url);
+            return ResponseEntity.ok(httpResponseDto);
         }
         else {
-            ResponseDto responseDto = new ResponseDto(204, null);
-            return ResponseEntity.ok(responseDto);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
         }
     }
 
     @PostMapping("/")
-    public ResponseEntity<ResponseDto> postConsulting(@RequestBody ConsultingRequestDto consultingRequestDto) {
+    public ResponseEntity<HttpResponseDto> postConsulting(@RequestBody ConsultingRequestDto consultingRequestDto) {
 
         int isSuccess = consultingService.createConsulting(consultingRequestDto);
 
         if (isSuccess == 1) {
-            ResponseDto responseDto = new ResponseDto(200, null);
-            return ResponseEntity.ok(responseDto);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, null);
+            return ResponseEntity.ok(httpResponseDto);
         }
         else {
-            ResponseDto responseDto = new ResponseDto(204, null);
-            return ResponseEntity.ok(responseDto);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
         }
     }
 
     @PatchMapping("/")
-    public ResponseEntity<ResponseDto> updateConsultingUrl(@PathVariable("consulting-seq") int consultingSeq, @RequestParam String url){
+    public ResponseEntity<HttpResponseDto> updateConsultingUrl(@PathVariable("consulting-seq") int consultingSeq, @RequestParam String url){
 
         boolean isSuccess = consultingService.updateConsultingUrl(consultingSeq, url);
 
         if (isSuccess) {
-            ResponseDto responseDto = new ResponseDto(200, null);
-            return ResponseEntity.ok(responseDto);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, null);
+            return ResponseEntity.ok(httpResponseDto);
         }
         else {
-            ResponseDto responseDto = new ResponseDto(204, null);
-            return ResponseEntity.ok(responseDto);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
         }
     }
 
     @DeleteMapping("/")
 
-    public ResponseEntity<ResponseDto> deleteConsulting(@PathVariable("consulting_seq") int consultingSeq) {
+    public ResponseEntity<HttpResponseDto> deleteConsulting(@PathVariable("consulting_seq") int consultingSeq) {
 
         boolean isSuccess = consultingService.deleteConsulting(consultingSeq);
 
         if (isSuccess) {
-            ResponseDto responseDto = new ResponseDto(200, null);
-            return ResponseEntity.ok(responseDto);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, null);
+            return ResponseEntity.ok(httpResponseDto);
         }
         else {
-            ResponseDto responseDto = new ResponseDto(204, null);
-            return ResponseEntity.ok(responseDto);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
         }
     }
 
     @GetMapping("/result")
-    public ResponseEntity<ResponseDto> getConsultingResult(@PathVariable("consulting-seq") int consultingSeq) {
+    public ResponseEntity<HttpResponseDto> getConsultingResult(@PathVariable("consulting-seq") int consultingSeq) {
 
         ConsultingResultDto consultingResultDto = consultingService.getConsultingResult(consultingSeq);
 
         if (consultingResultDto != null) {
-            ResponseDto responseDto = new ResponseDto(200, consultingResultDto);
-            return ResponseEntity.ok(responseDto);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, consultingResultDto);
+            return ResponseEntity.ok(httpResponseDto);
         }
         else {
-            ResponseDto responseDto = new ResponseDto(204, null);
-            return ResponseEntity.ok(responseDto);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
         }
     }
 
     @PatchMapping("/result")
-    public ResponseEntity<ResponseDto> updateConsultingResult(@RequestBody ConsultingUpdateDto consultingUpdateDto) {
+    public ResponseEntity<HttpResponseDto> updateConsultingResult(@RequestBody ConsultingUpdateDto consultingUpdateDto) {
 
         boolean isSuccess = consultingService.updateConsultingResult(consultingUpdateDto);
 
         if (isSuccess) {
-            ResponseDto responseDto = new ResponseDto(200, null);
-            return ResponseEntity.ok(responseDto);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, null);
+            return ResponseEntity.ok(httpResponseDto);
         }
         else {
-            ResponseDto responseDto = new ResponseDto(204, null);
-            return ResponseEntity.ok(responseDto);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
         }
     }
 
     @PatchMapping("/review")
-    public ResponseEntity<ResponseDto> updateConsultingReview(@RequestBody ConsultingReviewDto consultingReviewDto) {
+    public ResponseEntity<HttpResponseDto> updateConsultingReview(@RequestBody ConsultingReviewDto consultingReviewDto) {
 
         boolean isSuccess = consultingService.updateConsultingReview(consultingReviewDto);
 
         if (isSuccess) {
-            ResponseDto responseDto = new ResponseDto(200, null);
-            return ResponseEntity.ok(responseDto);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, null);
+            return ResponseEntity.ok(httpResponseDto);
         }
         else {
-            ResponseDto responseDto = new ResponseDto(204, null);
-            return ResponseEntity.ok(responseDto);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
         }
     }
 
     @GetMapping("/result-element")
-    public ResponseEntity<ResponseDto> getConsultingResultDetailInfo(@RequestParam int consultingSeq){
+    public ResponseEntity<HttpResponseDto> getConsultingResultDetailInfo(@RequestParam int consultingSeq){
 
         ConsultingReviewInfoDto consultingReviewInfoDto = consultingService.getConsultingResultDetailInfo(consultingSeq);
 
         if (consultingReviewInfoDto != null) {
-            ResponseDto responseDto = new ResponseDto(200, consultingReviewInfoDto);
-            return ResponseEntity.ok(responseDto);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, consultingReviewInfoDto);
+            return ResponseEntity.ok(httpResponseDto);
         }
         else {
-            ResponseDto responseDto = new ResponseDto(204, null);
-            return ResponseEntity.ok(responseDto);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
         }
     }
 

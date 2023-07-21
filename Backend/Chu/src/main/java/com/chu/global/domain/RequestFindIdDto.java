@@ -1,6 +1,6 @@
 package com.chu.global.domain;
 
-public class FindIdRequestDto {
+public class RequestFindIdDto {
 //    이름
 //    이메일
 }

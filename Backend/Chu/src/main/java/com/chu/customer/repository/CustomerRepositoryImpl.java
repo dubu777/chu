@@ -31,7 +31,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     }
 
     @Override
-    public boolean signUp(CustomerSignUpDto customerSignUpDto) {
+    public boolean signUp(RequestCustomerSignUpDto requestCustomerSignUpDto) {
 
         // 로직
         // 정상 가입인지
@@ -40,7 +40,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     }
 
     @Override
-    public boolean signIn(SignInRequestDto signInRequestDto) {
+    public boolean signIn(RequestSignInDto requestSignInDto) {
         // 로직
         // 조건에 맞는 사용자 존재하는지?
         return false;
@@ -67,7 +67,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     }
 
     @Override
-    public String findId(FindIdRequestDto findIdRequestDto) {
+    public String findId(RequestFindIdDto requestFindIdDto) {
         // 로직
 
         // 이름, 이메일로 아이디 찾기
@@ -75,14 +75,14 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     }
 
     @Override
-    public int isValidUser(FindPwdRequestDto findPwdRequestDto) {
+    public int isValidUser(RequestFindPwdDto requestFindPwdDto) {
         // 로직
         // 이름, 아이디, 이메일로 존재하는 유저인지 확인
         return 0;
     }
 
     @Override
-    public boolean changePwd(ChangePwdDto changePwdDto) {
+    public boolean changePwd(RequestChangePwdDto requestChangePwdDto) {
         // 로직
         // 고객 시퀀스넘버, 바꿀 비밀번호
         return false;

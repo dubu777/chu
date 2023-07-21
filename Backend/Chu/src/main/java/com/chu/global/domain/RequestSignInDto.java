@@ -1,6 +1,6 @@
 package com.chu.global.domain;
 
-public class SignInRequestDto {
+public class RequestSignInDto {
 //    		"id" : "ssafy",
 //                    "pwd" : "12345678"
 }

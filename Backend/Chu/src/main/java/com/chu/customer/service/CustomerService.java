@@ -14,23 +14,23 @@ public interface CustomerService {
     boolean checkEmail(String email);
     
     // 고객 회원가입
-    boolean signUp(CustomerSignUpDto customerSignUpDto);
+    boolean signUp(RequestCustomerSignUpDto requestCustomerSignUpDto);
     
     // 고객 로그인
-    boolean signIn(SignInRequestDto signInRequestDto);
+    boolean signIn(RequestSignInDto requestSignInDto);
 
     // 고객 정보 조회
     CustomerDto getCustomerInfo(String id);
     
     // 고객 로그인 시 정보 조회
-    CustomerLoginDetailDto getLoginCustomerDetail(String id);
+    ResponseCustomerLoginDetailDto getLoginCustomerDetail(String id);
 
     // 고객 아이디 찾기
-    String findId(FindIdRequestDto findIdRequestDto);
+    String findId(RequestFindIdDto requestFindIdDto);
 
-    int isValidUser(FindPwdRequestDto findPwdRequestDto);
+    int isValidUser(RequestFindPwdDto requestFindPwdDto);
 
-    boolean changePwd(ChangePwdDto changePwdDto);
+    boolean changePwd(RequestChangePwdDto requestChangePwdDto);
 
     int changeLikeInfo(LikeDto likeDto);
 

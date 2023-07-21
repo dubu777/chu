@@ -24,96 +24,96 @@ public class CustomerController {
     
     // 회원 가입
     @PostMapping(value = "/sign-up")
-    public ResponseEntity<ResponseDto> signUp(@RequestBody CustomerSignUpDto customerSignUpDto){
-        log.info(customerSignUpDto.toString());
-        boolean isSuccess = customerService.signUp(customerSignUpDto);
+    public ResponseEntity<HttpResponseDto> signUp(@RequestBody RequestCustomerSignUpDto requestCustomerSignUpDto){
+        log.info(requestCustomerSignUpDto.toString());
+        boolean isSuccess = customerService.signUp(requestCustomerSignUpDto);
 
         if(isSuccess){
-            CustomerLoginDetailDto customerLoginDetailDto = customerService.getLoginCustomerDetail(customerSignUpDto.getId());
-            ResponseDto responseDto = new ResponseDto(200, customerLoginDetailDto);
-            return ResponseEntity.ok(responseDto);
+            ResponseCustomerLoginDetailDto responseCustomerLoginDetailDto = customerService.getLoginCustomerDetail(requestCustomerSignUpDto.getId());
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseCustomerLoginDetailDto);
+            return ResponseEntity.ok(httpResponseDto);
         }
         else{
-            ResponseDto responseDto = new ResponseDto(204, null);
-            return ResponseEntity.ok(responseDto);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
         }
     }
 
     // 로그인
     @PostMapping(value = "/sign-in")
-    public ResponseEntity<ResponseDto> signIn(@RequestBody SignInRequestDto signInRequestDto) {
+    public ResponseEntity<HttpResponseDto> signIn(@RequestBody RequestSignInDto requestSignInDto) {
 
-        boolean isUser = customerService.signIn(signInRequestDto);
+        boolean isUser = customerService.signIn(requestSignInDto);
 
         // 로그인 성공
         if(isUser){
-            CustomerLoginDetailDto customerLoginDetailDto = customerService.getLoginCustomerDetail(signInRequestDto.getId());
-            ResponseDto responseDto = new ResponseDto(200, customerLoginDetailDto);
-            return ResponseEntity.ok(responseDto);
+            ResponseCustomerLoginDetailDto responseCustomerLoginDetailDto = customerService.getLoginCustomerDetail(requestSignInDto.getId());
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseCustomerLoginDetailDto);
+            return ResponseEntity.ok(httpResponseDto);
         }
         // 로그인 실패
         else{
-            ResponseDto responseDto = new ResponseDto(204, null);
-            return ResponseEntity.ok(responseDto);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
         }
     }
 
     @GetMapping("/find-id")
-    public ResponseEntity<ResponseDto> findId(@RequestParam String name, @RequestParam String email){
+    public ResponseEntity<HttpResponseDto> findId(@RequestParam String name, @RequestParam String email){
 
-        FindIdRequestDto findIdRequestDto = new FindIdRequestDto();
-        findIdRequestDto.setName(name);
-        findIdRequestDto.setEmail(email);
+        RequestFindIdDto requestFindIdDto = new RequestFindIdDto();
+        requestFindIdDto.setName(name);
+        requestFindIdDto.setEmail(email);
 
-        String id = customerService.findId(findIdRequestDto);
+        String id = customerService.findId(requestFindIdDto);
 
         if(id != null){
-            ResponseDto responseDto = new ResponseDto(200, id);
-            return ResponseEntity.ok(responseDto);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, id);
+            return ResponseEntity.ok(httpResponseDto);
         }
         else{
-            ResponseDto responseDto = new ResponseDto(204, null);
-            return ResponseEntity.ok(responseDto);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
         }
     }
 
     @GetMapping("/find-pwd")
-    public ResponseEntity<ResponseDto> findPwd(@RequestParam String id, @RequestParam String name, @RequestParam String email){
+    public ResponseEntity<HttpResponseDto> findPwd(@RequestParam String id, @RequestParam String name, @RequestParam String email){
 
-        FindPwdRequestDto findPwdRequestDto = new FindPwdRequestDto();
-        findPwdRequestDto.setName(name);
-        findPwdRequestDto.setId(id);
-        findPwdRequestDto.setEmail(email);
+        RequestFindPwdDto requestFindPwdDto = new RequestFindPwdDto();
+        requestFindPwdDto.setName(name);
+        requestFindPwdDto.setId(id);
+        requestFindPwdDto.setEmail(email);
 
-        int seq = customerService.isValidUser(findPwdRequestDto);
+        int seq = customerService.isValidUser(requestFindPwdDto);
         
         // 존재하는 유저일 경우
         if(seq == 1){
-            ResponseDto responseDto = new ResponseDto(200, seq);
-            return ResponseEntity.ok(responseDto);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, seq);
+            return ResponseEntity.ok(httpResponseDto);
         }
         else{
-            ResponseDto responseDto = new ResponseDto(204, null);
-            return ResponseEntity.ok(responseDto);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
         }
     }
 
     @PatchMapping("/change-pwd")
-    public ResponseEntity<ResponseDto> changePwd(@RequestBody ChangePwdDto changePwdDto) {
-        boolean isSuccess = customerService.changePwd(changePwdDto);
+    public ResponseEntity<HttpResponseDto> changePwd(@RequestBody RequestChangePwdDto requestChangePwdDto) {
+        boolean isSuccess = customerService.changePwd(requestChangePwdDto);
 
         if(isSuccess){
-            ResponseDto responseDto = new ResponseDto(200, null);
-            return ResponseEntity.ok(responseDto);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, null);
+            return ResponseEntity.ok(httpResponseDto);
         }
         else{
-            ResponseDto responseDto = new ResponseDto(204, null);
-            return ResponseEntity.ok(responseDto);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
         }
     }
 
     @PostMapping("/like")
-    public ResponseEntity<ResponseDto> changeLikeInfo(@RequestBody LikeDto likeDto){
+    public ResponseEntity<HttpResponseDto> changeLikeInfo(@RequestBody LikeDto likeDto){
 
         int likeCount = customerService.changeLikeInfo(likeDto);
 
@@ -123,74 +123,74 @@ public class CustomerController {
 
         // 예외 처리 다시 필요
         if(likeResponseDto != null){
-            ResponseDto responseDto = new ResponseDto(200, likeResponseDto);
-            return ResponseEntity.ok(responseDto);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, likeResponseDto);
+            return ResponseEntity.ok(httpResponseDto);
         }
         else{
-            ResponseDto responseDto = new ResponseDto(204, null);
-            return ResponseEntity.ok(responseDto);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
         }
     }
 
     @GetMapping("/")
-    public ResponseEntity<ResponseDto> getCustomerDetail(@PathVariable("customer_seq") int customerSeq) {
+    public ResponseEntity<HttpResponseDto> getCustomerDetail(@PathVariable("customer_seq") int customerSeq) {
 
         CustomerDetailDto customerDetailDto = customerService.getCustomerDetail(customerSeq);
 
         if(customerDetailDto != null){
-            ResponseDto responseDto = new ResponseDto(200, customerDetailDto);
-            return ResponseEntity.ok(responseDto);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, customerDetailDto);
+            return ResponseEntity.ok(httpResponseDto);
         }
         else{
-            ResponseDto responseDto = new ResponseDto(204, null);
-            return ResponseEntity.ok(responseDto);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
         }
     }
 
     @PatchMapping("/img")
-    public ResponseEntity<ResponseDto> patchImg(@RequestParam("img") String imgName){
+    public ResponseEntity<HttpResponseDto> patchImg(@RequestParam("img") String imgName){
 
         boolean isSuccess = customerService.patchImage(imgName);
 
         if (isSuccess) {
-            ResponseDto responseDto = new ResponseDto(200, imgName);
-            return ResponseEntity.ok(responseDto);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, imgName);
+            return ResponseEntity.ok(httpResponseDto);
         }
         else{
-            ResponseDto responseDto = new ResponseDto(204, null);
-            return ResponseEntity.ok(responseDto);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
         }
     }
 
     @GetMapping("/detail")
-    public ResponseEntity<ResponseDto> getCustomerDetailInfo(@PathVariable("customer_seq") int customerSeq){
+    public ResponseEntity<HttpResponseDto> getCustomerDetailInfo(@PathVariable("customer_seq") int customerSeq){
         CustomerDetailInfoDto customerDetailInfoDto = customerService.getCustomerDetailInfo(customerSeq);
 
         if (customerDetailInfoDto != null) {
-            ResponseDto responseDto = new ResponseDto(200, customerDetailInfoDto);
-            return ResponseEntity.ok(responseDto);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, customerDetailInfoDto);
+            return ResponseEntity.ok(httpResponseDto);
         }
         else{
-            ResponseDto responseDto = new ResponseDto(204, null);
-            return ResponseEntity.ok(responseDto);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
         }
     }
 
     @PutMapping("/detail")
-    public ResponseEntity<ResponseDto> putCustomerDetailInfo(@PathVariable("customer_seq") int customerSeq, @RequestBody CustomerDetailChangeDto customerDetailChangeDto) {
+    public ResponseEntity<HttpResponseDto> putCustomerDetailInfo(@PathVariable("customer_seq") int customerSeq, @RequestBody CustomerDetailChangeDto customerDetailChangeDto) {
         boolean isSuccess = customerService.putCustomerDetailInfo(customerSeq, customerDetailChangeDto);
 
         if (isSuccess) {
-            ResponseDto responseDto = new ResponseDto(200, null);
-            return ResponseEntity.ok(responseDto);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, null);
+            return ResponseEntity.ok(httpResponseDto);
         } else {
-            ResponseDto responseDto = new ResponseDto(204, null);
-            return ResponseEntity.ok(responseDto);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
         }
     }
 
     @GetMapping("/like")
-    public ResponseEntity<ResponseDto> getLikeDesignerInfo(@PathVariable("customer_seq") int customerSeq){
+    public ResponseEntity<HttpResponseDto> getLikeDesignerInfo(@PathVariable("customer_seq") int customerSeq){
 
         ArrayList<DesignerSearchDto> designerSearchDtoList = designerSearchService.search2Like(customerSeq);
 
@@ -198,26 +198,26 @@ public class CustomerController {
             DesignerSearchResponseDto designerSearchResponseDto = new DesignerSearchResponseDto();
             designerSearchResponseDto.setDesignerListCnt(designerSearchDtoList.size());
             designerSearchResponseDto.setDesignerList(designerSearchDtoList);
-            ResponseDto responseDto = new ResponseDto(200, designerSearchResponseDto);
-            return ResponseEntity.ok(responseDto);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, designerSearchResponseDto);
+            return ResponseEntity.ok(httpResponseDto);
         }
         else{
-            ResponseDto responseDto = new ResponseDto(204, null);
-            return ResponseEntity.ok(responseDto);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
         }
     }
 
     @GetMapping("alert")
-    public ResponseEntity<ResponseDto> getAlert(@PathVariable("designer_seq") int designerSeq){
+    public ResponseEntity<HttpResponseDto> getAlert(@PathVariable("designer_seq") int designerSeq){
         ArrayList<AlertCustomerDto> AlertCustomerDtoList = customerService.getAlertList(designerSeq);
 
         if(AlertCustomerDtoList.size() != 0){
-            ResponseDto responseDto = new ResponseDto(200, null);
-            return ResponseEntity.ok(responseDto);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, null);
+            return ResponseEntity.ok(httpResponseDto);
         }
         else{
-            ResponseDto responseDto = new ResponseDto(204, null);
-            return ResponseEntity.ok(responseDto);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
         }
     }
 }

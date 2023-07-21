@@ -34,13 +34,13 @@ public class CustomerServiceImpl implements CustomerService{
     }
 
     @Override
-    public boolean signUp(CustomerSignUpDto customerSignUpDto) {
-        return customerRepository.signUp(customerSignUpDto);
+    public boolean signUp(RequestCustomerSignUpDto requestCustomerSignUpDto) {
+        return customerRepository.signUp(requestCustomerSignUpDto);
     }
 
     @Override
-    public boolean signIn(SignInRequestDto signInRequestDto) {
-        return customerRepository.signIn(signInRequestDto);
+    public boolean signIn(RequestSignInDto requestSignInDto) {
+        return customerRepository.signIn(requestSignInDto);
     }
 
 
@@ -51,9 +51,9 @@ public class CustomerServiceImpl implements CustomerService{
     }
 
     @Override
-    public CustomerLoginDetailDto getLoginCustomerDetail(String id) {
+    public ResponseCustomerLoginDetailDto getLoginCustomerDetail(String id) {
 
-        CustomerLoginDetailDto customerLoginDetailDto = new CustomerLoginDetailDto();
+        ResponseCustomerLoginDetailDto responseCustomerLoginDetailDto = new ResponseCustomerLoginDetailDto();
 
         // 고객 정보 다 가져와서 필요한거 채우기
         customerRepository.getCustomerInfo(id);
@@ -75,22 +75,22 @@ public class CustomerServiceImpl implements CustomerService{
         // 여기에 알람에 따른 디자이너 정보가 추가될꺼야
         ArrayList<AlertCustomerOnLoginDto> alertDetailList = new ArrayList<>();
 
-        return customerLoginDetailDto;
+        return responseCustomerLoginDetailDto;
     }
 
     @Override
-    public String findId(FindIdRequestDto findIdRequestDto) {
-        return customerRepository.findId(findIdRequestDto);
+    public String findId(RequestFindIdDto requestFindIdDto) {
+        return customerRepository.findId(requestFindIdDto);
     }
 
     @Override
-    public int isValidUser(FindPwdRequestDto findPwdRequestDto) {
-        return customerRepository.isValidUser(findPwdRequestDto);
+    public int isValidUser(RequestFindPwdDto requestFindPwdDto) {
+        return customerRepository.isValidUser(requestFindPwdDto);
     }
 
     @Override
-    public boolean changePwd(ChangePwdDto changePwdDto) {
-        return customerRepository.changePwd(changePwdDto);
+    public boolean changePwd(RequestChangePwdDto requestChangePwdDto) {
+        return customerRepository.changePwd(requestChangePwdDto);
     }
 
     @Override

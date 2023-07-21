@@ -1,13 +1,12 @@
 package com.chu.designer.domain;
 
-import com.chu.global.domain.AlertCustomerOnLoginDto;
 import com.chu.global.domain.AlertDesignerOnLoginDto;
 import com.chu.global.domain.BestDesignerDto;
 import com.chu.global.domain.FaceImageNameDto;
 
 import java.util.ArrayList;
 
-public class DesignerLoginDetailDto {
+public class ResponseDesignerLoginDetailDto {
     //        "designerSeq" : 1,
 
 //            "name" : "김싸피",

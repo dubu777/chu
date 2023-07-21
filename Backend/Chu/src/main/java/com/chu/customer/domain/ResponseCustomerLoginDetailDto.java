@@ -7,7 +7,7 @@ import com.chu.global.domain.FaceImageNameDto;
 
 import java.util.ArrayList;
 
-public class CustomerLoginDetailDto {
+public class ResponseCustomerLoginDetailDto {
     //        "customerSeq" : 1,
 
 //            "name" : "김싸피",

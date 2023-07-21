@@ -1,6 +1,6 @@
 package com.chu.customer.domain;
 
-public class CustomerSignUpDto {
+public class RequestCustomerSignUpDto {
     //        "name" : "ssafy",
 //            "id" : "id",
 //            "email" : "ssafy@gmail.com",
