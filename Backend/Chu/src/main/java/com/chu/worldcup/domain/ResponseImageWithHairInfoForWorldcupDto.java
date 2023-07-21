@@ -1,6 +1,6 @@
-package com.chu.global.domain;
+package com.chu.worldcup.domain;
 
-public class ResponseImageWithHairInfoDto {
+public class ResponseImageWithHairInfoForWorldcupDto {
 //            "hairStyleSeq" : 1,
 //                    "imgSeq" : 1,
 //                    "imgName" : "img1.png"

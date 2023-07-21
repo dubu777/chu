@@ -1,7 +1,7 @@
 package com.chu.worldcup.repository;
 
 import com.chu.global.domain.ImageDto;
-import com.chu.global.domain.ResponseImageWithHairInfoDto;
+import com.chu.worldcup.domain.ResponseImageWithHairInfoForWorldcupDto;
 import com.chu.worldcup.domain.RequestWorldcupDto;
 import com.chu.worldcup.domain.WorldcupStatisticsRequestDto;
 
@@ -13,7 +13,7 @@ public interface WorldcupRepository {
 
     int createWorldcup(RequestWorldcupDto requestWorldcupDto);
 
-    ArrayList<ResponseImageWithHairInfoDto> getWorldcup(int worldcupSeq);
+    ArrayList<ResponseImageWithHairInfoForWorldcupDto> getWorldcup(int worldcupSeq);
 
     boolean updateWorldcupStatistics(WorldcupStatisticsRequestDto worldcupStatisticsRequestDto);
 }

@@ -1,6 +1,6 @@
 package com.chu.worldcup.controller;
 
-import com.chu.global.domain.ResponseImageWithHairInfoDto;
+import com.chu.worldcup.domain.ResponseImageWithHairInfoForWorldcupDto;
 import com.chu.global.domain.HttpResponseDto;
 import com.chu.worldcup.domain.RequestWorldcupDto;
 import com.chu.worldcup.domain.WorldcupStatisticsRequestDto;
@@ -23,10 +23,10 @@ public class WorldcupController {
     @GetMapping("/")
     public ResponseEntity<HttpResponseDto> getWorldcup(@RequestParam int worldcupSeq){
 
-        ArrayList<ResponseImageWithHairInfoDto> responseImageWithHairInfoDtoList = worldcupService.getWorldcup(worldcupSeq);
+        ArrayList<ResponseImageWithHairInfoForWorldcupDto> responseImageWithHairInfoForWorldcupDtoList = worldcupService.getWorldcup(worldcupSeq);
 
-        if(responseImageWithHairInfoDtoList.size() != 0){
-            HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseImageWithHairInfoDtoList);
+        if(responseImageWithHairInfoForWorldcupDtoList.size() != 0){
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseImageWithHairInfoForWorldcupDtoList);
             return ResponseEntity.ok(httpResponseDto);
         }
         else{
