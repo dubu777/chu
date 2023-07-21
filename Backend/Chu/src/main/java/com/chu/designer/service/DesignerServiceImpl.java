@@ -65,9 +65,10 @@ public class DesignerServiceImpl implements DesignerService{
         // 알림 데이터
         // 디자이너 idx로 알림 접근
         // 상담 IDX 토대로 APi 명세에 따른 로직 추가
-        ArrayList<AlertToDesignerDto> alertDtoList = designerAlertRepository.getAlertToDesigner(designerSeq);
 
-        // 여기에 알람에 따른 고객 정보가 추가될꺼야
+//        ArrayList<AlertToDesignerDto> alertDtoList = designerAlertRepository.getAlertToDesigner(designerSeq);
+
+        // 여기에 알람에 따른 고객 정보가 추가하면 될거같은데 이쪽 로직은 다시 고려해봐야겠다,,
         ArrayList<AlertDesignerOnLoginDto> alertDetailList = new ArrayList<>();
 
         return responseDesignerLoginDetailDto;
@@ -94,7 +95,7 @@ public class DesignerServiceImpl implements DesignerService{
     }
 
     @Override
-    public ArrayList<AlertDesignerDto> getAlertList(int designerSeq) {
+    public ArrayList<ResponseAlertDesignerDto> getAlertList(int designerSeq) {
         return designerRepository.getAlertList(designerSeq);
     }
 

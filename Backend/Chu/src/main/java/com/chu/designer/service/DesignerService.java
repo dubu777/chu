@@ -35,7 +35,7 @@ public interface DesignerService {
 
     ArrayList<ResponseTimeStateDto> getTimeStateList(int designerSeq, Date date);
 
-    ArrayList<AlertDesignerDto> getAlertList(int designerSeq);
+    ArrayList<ResponseAlertDesignerDto> getAlertList(int designerSeq);
 
     boolean createAlert(AlertCreateDto alertCreateDto);
 

@@ -1,6 +1,6 @@
 package com.chu.global.domain;
 
-public class AlertDesignerDto {
+public class ResponseAlertDesignerDto {
 //    {
 //        "alertSeq" : 3,
 //            "check" : false,
