@@ -26,6 +26,7 @@ public interface CustomerService {
     // 고객 로그인 시 정보 조회
     CustomerLoginDetailDto getLoginCustomerDetail(String id);
 
+    // 고객 아이디 찾기
     String findId(FindIdDto findIdDto);
 
     int isValidUser(FindPwdDto findPwdDto);

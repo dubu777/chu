@@ -22,9 +22,10 @@ public interface CustomerRepository {
     // 고객 정보 가져오기
     CustomerDto getCustomerInfo(String id);
 
-    ArrayList<ImageDto> getTopStyleByFace(int faceSeq);
-
+    // 고객 아이디 찾기
     String findId(FindIdDto findIdDto);
+
+    ArrayList<ImageDto> getTopStyleByFace(int faceSeq);
 
     int isValidUser(FindPwdDto findPwdDto);
 
