@@ -1,9 +1,13 @@
 package com.chu.designer.service;
 
 import com.chu.consulting.domain.ConsultingDto;
+import com.chu.customer.domain.AlertToCustomerDto;
+import com.chu.customer.domain.CustomerDto;
 import com.chu.designer.domain.*;
+import com.chu.designer.repository.DesignerAlertRepository;
 import com.chu.designer.repository.DesignerRepository;
 import com.chu.global.domain.*;
+import com.chu.worldcup.repository.WorldcupRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,6 +23,8 @@ public class DesignerServiceImpl implements DesignerService{
 
     // repo 주입
     private final DesignerRepository designerRepository;
+    private final WorldcupRepository worldcupRepository;
+    private final DesignerAlertRepository designerAlertRepository;
     
     @Override
     public boolean checkId(String id) {
@@ -31,7 +37,7 @@ public class DesignerServiceImpl implements DesignerService{
     }
 
     @Override
-    public int signUp(DesignerSignUpDto designerSignUpDto) {
+    public boolean signUp(DesignerSignUpDto designerSignUpDto) {
         return designerRepository.signUp(designerSignUpDto);
     }
     
@@ -41,9 +47,32 @@ public class DesignerServiceImpl implements DesignerService{
     }
 
     @Override
-    public DesignerDetailDto getDesignerDetail(String id) {
-        // 서비스에서 여러번 디비 접근할지 정해야함
-        return designerRepository.getDesignerDetail(id);
+    public DesignerDto getDesignerInfo(String id) {
+        return designerRepository.getDesignerInfo(id);
+    }
+
+    @Override
+    public DesignerLoginDetailDto getLoginDesignerDetail(String id) {
+
+        DesignerLoginDetailDto designerLoginDetailDto = new DesignerLoginDetailDto();
+
+        // 디자니어 정보 다 가져와서 필요한거 채우기
+        designerRepository.getDesignerInfo(id);
+
+        // 베스트 디자이너 정보 채우기
+        ArrayList<BestDesignerDto> bestDesignerList = designerRepository.getBestDesigners();
+
+        ArrayList<ImageDto> worldcupTopImageList = worldcupRepository.getTopWorldcupImages();
+
+        // 알림 데이터
+        // 디자이너 idx로 알림 접근
+        // 상담 IDX 토대로 APi 명세에 따른 로직 추가
+        ArrayList<AlertToDesignerDto> alertDtoList = designerAlertRepository.getAlertToDesigner(designerSeq);
+
+        // 여기에 알람에 따른 고객 정보가 추가될꺼야
+        ArrayList<AlertDesignerOnLoginDto> alertDetailList = new ArrayList<>();
+
+        return designerLoginDetailDto;
     }
 
     @Override

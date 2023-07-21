@@ -23,10 +23,11 @@ public class DesignerController {
     @PostMapping(value = "/sign-up")
     public ResponseEntity<ResponseDto> signUp(@RequestBody DesignerSignUpDto designerSignUpDto) {
         log.info(designerSignUpDto.toString());
-        int isSuccess = designerService.signUp(designerSignUpDto);
+        boolean isSuccess = designerService.signUp(designerSignUpDto);
 
-        if (isSuccess == 1) {
-            ResponseDto responseDto = new ResponseDto(200, null);
+        if (isSuccess) {
+            DesignerLoginDetailDto designerLoginDetailDto = designerService.getLoginDesignerDetail(designerSignUpDto.getId());
+            ResponseDto responseDto = new ResponseDto(200, designerLoginDetailDto);
             return ResponseEntity.ok(responseDto);
         } else {
             ResponseDto responseDto = new ResponseDto(204, null);
@@ -43,8 +44,8 @@ public class DesignerController {
 
         // 로그인 성공
         if (isDesigner) {
-            DesignerDetailDto designerDetailDto = designerService.getDesignerDetail(signInDto.getId());
-            ResponseDto responseDto = new ResponseDto(200, designerDetailDto);
+            DesignerLoginDetailDto designerLoginDetailDto = designerService.getLoginDesignerDetail(signInDto.getId());
+            ResponseDto responseDto = new ResponseDto(200, designerLoginDetailDto);
             return ResponseEntity.ok(responseDto);
         }
         // 로그인 실패

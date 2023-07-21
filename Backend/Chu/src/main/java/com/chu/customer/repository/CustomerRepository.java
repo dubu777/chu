@@ -14,7 +14,7 @@ public interface CustomerRepository {
     boolean checkEmail(String email);
 
     // 고객 회원 가입
-    int signUp(CustomerSignUpDto customerSignUpDto);
+    boolean signUp(CustomerSignUpDto customerSignUpDto);
 
     // 고객 로그인 가능 여부 확인
     boolean signIn(SignInDto signInDto);

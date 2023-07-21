@@ -13,8 +13,6 @@ import java.util.ArrayList;
 @Transactional
 @RequiredArgsConstructor
 public class CustomerAlertRepositoryImpl implements CustomerAlertRepository {
-
-
     @Override
     public ArrayList<AlertToCustomerDto> getAlertToCustomer(int customerSeq) {
         ArrayList<AlertToCustomerDto> alertsToCustomer = new ArrayList<>();

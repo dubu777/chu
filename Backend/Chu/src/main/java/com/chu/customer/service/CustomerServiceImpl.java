@@ -35,9 +35,15 @@ public class CustomerServiceImpl implements CustomerService{
     }
 
     @Override
-    public int signUp(CustomerSignUpDto customerSignUpDto) {
+    public boolean signUp(CustomerSignUpDto customerSignUpDto) {
         return customerRepository.signUp(customerSignUpDto);
     }
+
+    @Override
+    public boolean signIn(SignInDto signInDto) {
+        return customerRepository.signIn(signInDto);
+    }
+
 
     // 얘가 다 가져오는거야 고객 정보를 그 테이블에 있는건 전부
     @Override
@@ -46,13 +52,7 @@ public class CustomerServiceImpl implements CustomerService{
     }
 
     @Override
-    public boolean signIn(SignInDto signInDto) {
-        return customerRepository.signIn(signInDto);
-    }
-
-    @Override
     public CustomerLoginDetailDto getLoginCustomerDetail(String id) {
-        // 이건 서비스 로직에서 db 여러번 접근하는게 나을지도
 
         CustomerLoginDetailDto customerLoginDetailDto = new CustomerLoginDetailDto();
 
@@ -64,7 +64,7 @@ public class CustomerServiceImpl implements CustomerService{
 
         // 얼굴형에 잘 어울리는 스타일들 사진
         // 위에서 갖고 온 얼굴형 정보 토대로 검색
-        ArrayList<ImageDto> topStyleImageList = customerRepository.getTopStyleByFace(얼굴형 시퀀스);
+        ArrayList<ImageDto> topStyleImageList = customerRepository.getTopStyleByFace(얼굴형시퀀스);
 
         ArrayList<ImageDto> worldcupTopImageList = worldcupRepository.getTopWorldcupImages();
 

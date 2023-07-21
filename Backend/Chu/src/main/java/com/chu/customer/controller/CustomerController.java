@@ -28,10 +28,11 @@ public class CustomerController {
     @PostMapping(value = "/sign-up")
     public ResponseEntity<ResponseDto> signUp(@RequestBody CustomerSignUpDto customerSignUpDto){
         log.info(customerSignUpDto.toString());
-        int isSuccess = customerService.signUp(customerSignUpDto);
+        boolean isSuccess = customerService.signUp(customerSignUpDto);
 
-        if(isSuccess == 1){
-            ResponseDto responseDto = new ResponseDto(200, null);
+        if(isSuccess){
+            CustomerLoginDetailDto customerLoginDetailDto = customerService.getLoginCustomerDetail(customerSignUpDto.getId());
+            ResponseDto responseDto = new ResponseDto(200, customerLoginDetailDto);
             return ResponseEntity.ok(responseDto);
         }
         else{

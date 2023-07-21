@@ -1,6 +1,7 @@
 package com.chu.designer.repository;
 
 import com.chu.consulting.domain.ConsultingDto;
+import com.chu.customer.domain.CustomerDto;
 import com.chu.designer.domain.*;
 import com.chu.global.domain.*;
 
@@ -8,14 +9,20 @@ import java.sql.Date;
 import java.util.ArrayList;
 
 public interface DesignerRepository {
+    // 아이디 중복체크
     boolean checkId(String id);
+    
+    // 이메일 중복체크
     boolean checkEmail(String email);
 
-    int signUp(DesignerSignUpDto designerSignUpDto);
+    // 디자이너 회원가입
+    boolean signUp(DesignerSignUpDto designerSignUpDto);
 
+    // 디자이너 로그인 여부 확인
     boolean signIn(SignInDto signInDto);
 
-    DesignerDetailDto getDesignerDetail(String id);
+    // 디자이너 정보 조회
+    DesignerDto getDesignerInfo(String id);
 
     String findId(FindIdDto findIdDto);
 
