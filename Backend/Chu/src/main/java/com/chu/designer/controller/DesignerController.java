@@ -25,11 +25,10 @@ public class DesignerController {
         log.info(designerSignUpDto.toString());
         int isSuccess = designerService.signUp(designerSignUpDto);
 
-        if(isSuccess == 1){
+        if (isSuccess == 1) {
             ResponseDto responseDto = new ResponseDto(200, null);
             return ResponseEntity.ok(responseDto);
-        }
-        else{
+        } else {
             ResponseDto responseDto = new ResponseDto(204, null);
             return ResponseEntity.ok(responseDto);
         }
@@ -37,26 +36,26 @@ public class DesignerController {
 
     // 로그인
     @PostMapping(value = "/sign-in")
-    public ResponseEntity<ResponseDto> signIn(@RequestBody SignInDto signInDto){
+    public ResponseEntity<ResponseDto> signIn(@RequestBody SignInDto signInDto) {
         boolean isDesigner = true;
 
         isDesigner = designerService.signIn(signInDto);
 
         // 로그인 성공
-        if(isDesigner){
+        if (isDesigner) {
             DesignerDetailDto designerDetailDto = designerService.getDesignerDetail(signInDto.getId());
             ResponseDto responseDto = new ResponseDto(200, designerDetailDto);
             return ResponseEntity.ok(responseDto);
         }
         // 로그인 실패
-        else{
+        else {
             ResponseDto responseDto = new ResponseDto(204, null);
             return ResponseEntity.ok(responseDto);
         }
     }
 
     @GetMapping("/find-id")
-    public ResponseEntity<ResponseDto> findId(@RequestParam String name, @RequestParam String email){
+    public ResponseEntity<ResponseDto> findId(@RequestParam String name, @RequestParam String email) {
 
         FindIdDto findIdDto = new FindIdDto();
         findIdDto.setName(name);
@@ -64,20 +63,19 @@ public class DesignerController {
 
         String id = designerService.findId(findIdDto);
 
-        if(id != null){
+        if (id != null) {
             HashMap<String, String> resultMap = new HashMap<>();
             resultMap.put("id", id);
             ResponseDto responseDto = new ResponseDto(200, resultMap);
             return ResponseEntity.ok(responseDto);
-        }
-        else{
+        } else {
             ResponseDto responseDto = new ResponseDto(204, null);
             return ResponseEntity.ok(responseDto);
         }
     }
 
     @GetMapping("/find-pwd")
-    public ResponseEntity<ResponseDto> findPwd(@RequestParam String id, @RequestParam String name, @RequestParam String email){
+    public ResponseEntity<ResponseDto> findPwd(@RequestParam String id, @RequestParam String name, @RequestParam String email) {
 
         FindPwdDto findPwdDto = new FindPwdDto();
         findPwdDto.setName(name);
@@ -87,13 +85,12 @@ public class DesignerController {
         int seq = designerService.isValidUser(findPwdDto);
 
         // 존재하는 유저일 경우
-        if(seq == 1){
+        if (seq == 1) {
             HashMap<String, Integer> resultMap = new HashMap<>();
             resultMap.put("seq", seq);
             ResponseDto responseDto = new ResponseDto(200, resultMap);
             return ResponseEntity.ok(responseDto);
-        }
-        else{
+        } else {
             ResponseDto responseDto = new ResponseDto(204, null);
             return ResponseEntity.ok(responseDto);
         }
@@ -103,11 +100,10 @@ public class DesignerController {
     public ResponseEntity<ResponseDto> changePwd(@RequestBody ChangePwdDto changePwdDto) {
         boolean isSuccess = designerService.changePwd(changePwdDto);
 
-        if(isSuccess){
+        if (isSuccess) {
             ResponseDto responseDto = new ResponseDto(200, null);
             return ResponseEntity.ok(responseDto);
-        }
-        else{
+        } else {
             ResponseDto responseDto = new ResponseDto(204, null);
             return ResponseEntity.ok(responseDto);
         }
@@ -119,25 +115,23 @@ public class DesignerController {
 
         timeStateDtoList = designerService.getTimeStateList(designerSeq, date);
 
-        if(timeStateDtoList.size() != 0){
+        if (timeStateDtoList.size() != 0) {
             ResponseDto responseDto = new ResponseDto(200, timeStateDtoList);
             return ResponseEntity.ok(responseDto);
-        }
-        else{
+        } else {
             ResponseDto responseDto = new ResponseDto(204, null);
             return ResponseEntity.ok(responseDto);
         }
     }
 
     @GetMapping("alert")
-    public ResponseEntity<ResponseDto> getAlert(@PathVariable("designer_seq") int designerSeq){
+    public ResponseEntity<ResponseDto> getAlert(@PathVariable("designer_seq") int designerSeq) {
         ArrayList<AlertDesignerDto> AlertDesignerDtoList = designerService.getAlertList(designerSeq);
 
-        if(AlertDesignerDtoList.size() != 0){
+        if (AlertDesignerDtoList.size() != 0) {
             ResponseDto responseDto = new ResponseDto(200, null);
             return ResponseEntity.ok(responseDto);
-        }
-        else{
+        } else {
             ResponseDto responseDto = new ResponseDto(204, null);
             return ResponseEntity.ok(responseDto);
         }
@@ -147,41 +141,38 @@ public class DesignerController {
     public ResponseEntity<ResponseDto> getMyPageInfo(@PathVariable("designer_seq") int designerSeq) {
         DesignerMyPageDto designerMyPageDto = designerService.getMyPageInfo(designerSeq);
 
-        if(designerMyPageDto != null){
+        if (designerMyPageDto != null) {
             ResponseDto responseDto = new ResponseDto(200, designerMyPageDto);
             return ResponseEntity.ok(responseDto);
-        }
-        else{
+        } else {
             ResponseDto responseDto = new ResponseDto(204, null);
             return ResponseEntity.ok(responseDto);
         }
     }
 
     @PatchMapping("/introduction")
-    public ResponseEntity<ResponseDto> patchIntroduction(@PathVariable("designer_seq") int designerSeq, @RequestParam String introduction){
+    public ResponseEntity<ResponseDto> patchIntroduction(@PathVariable("designer_seq") int designerSeq, @RequestParam String introduction) {
 
         boolean isSuccess = designerService.patchIntroduction(designerSeq, introduction);
 
-        if(isSuccess){
+        if (isSuccess) {
             ResponseDto responseDto = new ResponseDto(200, introduction);
             return ResponseEntity.ok(responseDto);
-        }
-        else{
+        } else {
             ResponseDto responseDto = new ResponseDto(204, null);
             return ResponseEntity.ok(responseDto);
         }
     }
 
     @PatchMapping("/img")
-    public ResponseEntity<ResponseDto> patchImg(@PathVariable("designer_seq") int designerSeq, @RequestParam String img){
+    public ResponseEntity<ResponseDto> patchImg(@PathVariable("designer_seq") int designerSeq, @RequestParam String img) {
 
         boolean isSuccess = designerService.patchImg(designerSeq, img);
 
-        if(isSuccess){
+        if (isSuccess) {
             ResponseDto responseDto = new ResponseDto(200, img);
             return ResponseEntity.ok(responseDto);
-        }
-        else{
+        } else {
             ResponseDto responseDto = new ResponseDto(204, null);
             return ResponseEntity.ok(responseDto);
         }
@@ -193,11 +184,10 @@ public class DesignerController {
 
         designerMyPageUpdateShowDto = designerService.getDesignerMyPageUpdateInfo(designerSeq);
 
-        if(designerMyPageUpdateShowDto != null){
+        if (designerMyPageUpdateShowDto != null) {
             ResponseDto responseDto = new ResponseDto(200, designerMyPageUpdateShowDto);
             return ResponseEntity.ok(responseDto);
-        }
-        else{
+        } else {
             ResponseDto responseDto = new ResponseDto(204, null);
             return ResponseEntity.ok(responseDto);
         }
@@ -208,11 +198,10 @@ public class DesignerController {
 
         boolean isSuccess = designerService.updateDesignerInfo(designerSeq, designerInfoUpdateDto);
 
-        if(isSuccess){
+        if (isSuccess) {
             ResponseDto responseDto = new ResponseDto(200, null);
             return ResponseEntity.ok(responseDto);
-        }
-        else{
+        } else {
             ResponseDto responseDto = new ResponseDto(204, null);
             return ResponseEntity.ok(responseDto);
         }
@@ -223,11 +212,10 @@ public class DesignerController {
 
         ArrayList<TimeDto> possibleReservationTime = designerService.getPossibleReservationTime(designerSeq, date);
 
-        if(possibleReservationTime.size() != 0){
+        if (possibleReservationTime.size() != 0) {
             ResponseDto responseDto = new ResponseDto(200, possibleReservationTime);
             return ResponseEntity.ok(responseDto);
-        }
-        else{
+        } else {
             ResponseDto responseDto = new ResponseDto(204, null);
             return ResponseEntity.ok(responseDto);
         }
@@ -239,59 +227,68 @@ public class DesignerController {
 
         boolean isSuccess = designerService.updatePossibleReservationTime(designerSeq, reservationTimeDto);
 
-        if(isSuccess){
+        if (isSuccess) {
             ResponseDto responseDto = new ResponseDto(200, null);
             return ResponseEntity.ok(responseDto);
-        }
-        else{
+        } else {
             ResponseDto responseDto = new ResponseDto(204, null);
             return ResponseEntity.ok(responseDto);
         }
     }
 
     @GetMapping("/reservation-list")
-    public ResponseEntity<ResponseDto> getReservationList(@PathVariable("designer-seq") int designerSeq){
+    public ResponseEntity<ResponseDto> getReservationList(@PathVariable("designer-seq") int designerSeq) {
 
         ArrayList<ConsultingDto> reservationList = designerService.getReservationList(designerSeq);
 
-        if(reservationList.size() != 0){
+        if (reservationList.size() != 0) {
             ResponseDto responseDto = new ResponseDto(200, reservationList);
             return ResponseEntity.ok(responseDto);
-        }
-        else{
+        } else {
             ResponseDto responseDto = new ResponseDto(204, null);
             return ResponseEntity.ok(responseDto);
         }
     }
 
     @GetMapping("/portfolio")
-    public ResponseEntity<ResponseDto> getPortfolio(@PathVariable("designer-seq") int designerSeq){
+    public ResponseEntity<ResponseDto> getPortfolio(@PathVariable("designer-seq") int designerSeq) {
 
         ArrayList<ImageDto> portfolioList = designerService.getPortfolio(designerSeq);
 
-        if(portfolioList.size() != 0){
+        if (portfolioList.size() != 0) {
             ResponseDto responseDto = new ResponseDto(200, portfolioList);
             return ResponseEntity.ok(responseDto);
+        } else {
+            ResponseDto responseDto = new ResponseDto(204, null);
+            return ResponseEntity.ok(responseDto);
         }
-        else{
+    }
+
+    @PostMapping("/portfolio")
+    public ResponseEntity<ResponseDto> postPortfolio(@PathVariable("designer-seq") int designerSeq, @RequestParam String img) {
+
+        boolean isSuccess = designerService.postPortfolioImage(designerSeq, img);
+
+        if (isSuccess) {
+            ResponseDto responseDto = new ResponseDto(200, null);
+            return ResponseEntity.ok(responseDto);
+        } else {
             ResponseDto responseDto = new ResponseDto(204, null);
             return ResponseEntity.ok(responseDto);
         }
     }
 
     @DeleteMapping("/portfolio")
-    public ResponseEntity<ResponseDto> deletePortfolio(@PathVariable("designer-seq") int designerSeq, @RequestParam int imageSeq){
+    public ResponseEntity<ResponseDto> deletePortfolio(@PathVariable("designer-seq") int designerSeq, @RequestParam int imageSeq) {
 
         boolean isSuccess = designerService.deletePortfolioImage(designerSeq, imageSeq);
 
-        if(isSuccess){
+        if (isSuccess) {
             ResponseDto responseDto = new ResponseDto(200, null);
             return ResponseEntity.ok(responseDto);
-        }
-        else{
+        } else {
             ResponseDto responseDto = new ResponseDto(204, null);
             return ResponseEntity.ok(responseDto);
         }
     }
-
 }

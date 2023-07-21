@@ -50,4 +50,6 @@ public interface DesignerRepository {
     ArrayList<ImageDto> getPortfolio(int designerSeq);
 
     boolean deletePortfolioImage(int designerSeq, int imageSeq);
+
+    boolean postPortfolioImage(int designerSeq, String img);
 }
