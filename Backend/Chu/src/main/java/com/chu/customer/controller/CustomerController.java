@@ -147,21 +147,6 @@ public class CustomerController {
         }
     }
 
-    @PatchMapping("/img")
-    public ResponseEntity<HttpResponseDto> patchImg(@RequestParam("img") String imgName){
-
-        boolean isSuccess = customerService.patchImage(imgName);
-
-        if (isSuccess) {
-            HttpResponseDto httpResponseDto = new HttpResponseDto(200, imgName);
-            return ResponseEntity.ok(httpResponseDto);
-        }
-        else{
-            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
-            return ResponseEntity.ok(httpResponseDto);
-        }
-    }
-
     @GetMapping("/detail")
     public ResponseEntity<HttpResponseDto> getCustomerDetailInfo(@PathVariable("customer_seq") int customerSeq){
         CustomerDetailInfoDto customerDetailInfoDto = customerService.getCustomerDetailInfo(customerSeq);

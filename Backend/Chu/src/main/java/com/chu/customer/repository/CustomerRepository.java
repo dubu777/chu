@@ -35,7 +35,7 @@ public interface CustomerRepository {
 
     CustomerDetailDto getCustomerDetail(int customerSeq);
 
-    boolean patchImage(String imgName);
+
 
     CustomerDetailInfoDto getCustomerDetailInfo(int customerSeq);
 
