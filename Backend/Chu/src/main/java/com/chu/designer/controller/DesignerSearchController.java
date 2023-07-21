@@ -55,6 +55,23 @@ public class DesignerSearchController {
         }
     }
 
+    @GetMapping("/review-score")
+    public ResponseEntity<HttpResponseDto> search2ReviewScore(@RequestParam int customerSeq){
+        ArrayList<DesignerSearchDto> designerSearchDtoList = designerSearchService.search2ReviewScore(customerSeq);
+
+        if(designerSearchDtoList.size() != 0){
+            ResponseDesignerSearchDto responseDesignerSearchDto = new ResponseDesignerSearchDto();
+            responseDesignerSearchDto.setDesignerListCnt(designerSearchDtoList.size());
+            responseDesignerSearchDto.setDesignerList(designerSearchDtoList);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseDesignerSearchDto);
+            return ResponseEntity.ok(httpResponseDto);
+        }
+        else{
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
+        }
+    }
+
     @GetMapping("/like-cnt")
     public ResponseEntity<HttpResponseDto> search2LikeCount(@RequestParam int customerSeq){
         ArrayList<DesignerSearchDto> designerSearchDtoList = designerSearchService.search2LikeCount(customerSeq);

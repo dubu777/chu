@@ -55,6 +55,17 @@ public class DesignerSearchRepositoryImpl implements DesignerSearchRepository {
     }
 
     @Override
+    public ArrayList<DesignerSearchDto> search2ReviewScore(int customerSeq) {
+        ArrayList<DesignerSearchDto> list = new ArrayList<>();
+
+        // 고객이 좋아하는지 여부도
+
+        // 디자이너 리뷰순으로 정렬
+
+        return list;
+    }
+
+    @Override
     public ArrayList<DesignerSearchAreaDto> search2AllArea() {
         ArrayList<DesignerSearchAreaDto> list = new ArrayList<>();
         //필요 데이터 추출

@@ -34,6 +34,11 @@ public class DesignerSearchServiceImpl implements  DesignerSearchService{
     }
 
     @Override
+    public ArrayList<DesignerSearchDto> search2ReviewScore(int customerSeq) {
+        return designerSearchRepository.search2ReviewScore(customerSeq);
+    }
+
+    @Override
     public ArrayList<DesignerSearchAreaDto> search2AllArea() {
         return designerSearchRepository.search2AllArea();
     }
