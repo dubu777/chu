@@ -133,20 +133,6 @@ public class DesignerController {
         }
     }
 
-    @PatchMapping("/introduction")
-    public ResponseEntity<HttpResponseDto> patchIntroduction(@PathVariable("designer_seq") int designerSeq, @RequestParam String introduction) {
-
-        boolean isSuccess = designerService.patchIntroduction(designerSeq, introduction);
-
-        if (isSuccess) {
-            HttpResponseDto httpResponseDto = new HttpResponseDto(200, introduction);
-            return ResponseEntity.ok(httpResponseDto);
-        } else {
-            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
-            return ResponseEntity.ok(httpResponseDto);
-        }
-    }
-
     @PatchMapping("/img")
     public ResponseEntity<HttpResponseDto> patchImg(@PathVariable("designer_seq") int designerSeq, @RequestParam String img) {
 

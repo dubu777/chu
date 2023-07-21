@@ -34,4 +34,9 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
 
         return responseDesignerMyPageDto;
     }
+
+    @Override
+    public boolean patchIntroduction(int designerSeq, String introduction) {
+        return designerDetailRepository.patchIntroduction(designerSeq, introduction);
+    }
 }

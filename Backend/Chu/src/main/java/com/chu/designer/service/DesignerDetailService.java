@@ -5,4 +5,6 @@ import com.chu.designer.domain.ResponseDesignerMyPageDto;
 public interface DesignerDetailService {
 
     ResponseDesignerMyPageDto getMyPageInfo(int designerSeq);
+
+    boolean patchIntroduction(int designerSeq, String introduction);
 }

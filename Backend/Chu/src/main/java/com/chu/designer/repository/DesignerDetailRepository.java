@@ -13,4 +13,6 @@ public interface DesignerDetailRepository {
     ArrayList<HairStyleLabelDto> getHairStyleTag(int designerSeq);
 
     ArrayList<TimeDto> getPossibleTimeList(int designerSeq);
+
+    boolean patchIntroduction(int designerSeq, String introduction);
 }

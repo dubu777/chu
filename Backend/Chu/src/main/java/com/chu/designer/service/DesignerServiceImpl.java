@@ -110,11 +110,6 @@ public class DesignerServiceImpl implements DesignerService{
     }
 
     @Override
-    public boolean patchIntroduction(int designerSeq, String introduction) {
-        return designerRepository.patchIntroduction(designerSeq, introduction);
-    }
-
-    @Override
     public boolean patchImg(int designerSeq, String img) {
         return designerRepository.patchImg(designerSeq, img);
     }

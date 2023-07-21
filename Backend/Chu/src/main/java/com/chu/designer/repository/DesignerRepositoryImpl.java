@@ -119,16 +119,6 @@ public class DesignerRepositoryImpl implements DesignerRepository {
     }
 
     @Override
-    public boolean patchIntroduction(int designerSeq, String introduction) {
-        boolean isSuccess = true;
-
-        // 로직
-        // 디자이너 한줄 소개 변경
-        
-        return isSuccess;
-    }
-
-    @Override
     public boolean patchImg(int designerSeq, String img) {
         boolean isSuccess = true;
 

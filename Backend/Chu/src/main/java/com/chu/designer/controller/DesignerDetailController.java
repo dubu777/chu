@@ -6,10 +6,7 @@ import com.chu.global.domain.HttpResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -25,6 +22,20 @@ public class DesignerDetailController {
 
         if (responseDesignerMyPageDto != null) {
             HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseDesignerMyPageDto);
+            return ResponseEntity.ok(httpResponseDto);
+        } else {
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
+        }
+    }
+
+    @PatchMapping("/introduction")
+    public ResponseEntity<HttpResponseDto> patchIntroduction(@PathVariable("designer_seq") int designerSeq, @RequestParam String introduction) {
+
+        boolean isSuccess = designerDetailService.patchIntroduction(designerSeq, introduction);
+
+        if (isSuccess) {
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, introduction);
             return ResponseEntity.ok(httpResponseDto);
         } else {
             HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
