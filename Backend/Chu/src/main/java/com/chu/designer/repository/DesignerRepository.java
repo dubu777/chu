@@ -38,8 +38,6 @@ public interface DesignerRepository {
 
     boolean readAlert(RequestAlertReadDto requestAlertReadDto);
 
-    boolean patchImg(int designerSeq, String img);
-
     DesignerMyPageUpdateShowDto getDesignerMyPageUpdateInfo(int designerSeq);
 
     boolean updateDesignerInfo(int designerSeq, DesignerInfoUpdateDto designerInfoUpdateDto);

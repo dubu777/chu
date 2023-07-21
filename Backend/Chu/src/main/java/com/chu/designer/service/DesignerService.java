@@ -41,7 +41,7 @@ public interface DesignerService {
 
     boolean readAlert(RequestAlertReadDto requestAlertReadDto);
 
-    boolean patchImg(int designerSeq, String img);
+
 
     DesignerMyPageUpdateShowDto getDesignerMyPageUpdateInfo(int designerSeq);
 

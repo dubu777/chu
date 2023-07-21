@@ -15,4 +15,6 @@ public interface DesignerDetailRepository {
     ArrayList<TimeDto> getPossibleTimeList(int designerSeq);
 
     boolean patchIntroduction(int designerSeq, String introduction);
+
+    boolean patchImg(int designerSeq, String img);
 }

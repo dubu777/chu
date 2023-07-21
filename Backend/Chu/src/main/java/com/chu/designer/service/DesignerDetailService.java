@@ -7,4 +7,6 @@ public interface DesignerDetailService {
     ResponseDesignerMyPageDto getMyPageInfo(int designerSeq);
 
     boolean patchIntroduction(int designerSeq, String introduction);
+
+    boolean patchImg(int designerSeq, String img);
 }

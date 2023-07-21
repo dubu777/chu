@@ -119,17 +119,6 @@ public class DesignerRepositoryImpl implements DesignerRepository {
     }
 
     @Override
-    public boolean patchImg(int designerSeq, String img) {
-        boolean isSuccess = true;
-
-        // 로직
-
-        // 디자이너 대표 사진 변경
-
-        return isSuccess;
-    }
-
-    @Override
     public DesignerMyPageUpdateShowDto getDesignerMyPageUpdateInfo(int designerSeq) {
         DesignerMyPageUpdateShowDto designerMyPageUpdateShowDto = new DesignerMyPageUpdateShowDto();
 

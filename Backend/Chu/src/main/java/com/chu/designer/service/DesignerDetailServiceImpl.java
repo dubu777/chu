@@ -39,4 +39,9 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
     public boolean patchIntroduction(int designerSeq, String introduction) {
         return designerDetailRepository.patchIntroduction(designerSeq, introduction);
     }
+
+    @Override
+    public boolean patchImg(int designerSeq, String img) {
+        return designerDetailRepository.patchImg(designerSeq, img);
+    }
 }

@@ -110,11 +110,6 @@ public class DesignerServiceImpl implements DesignerService{
     }
 
     @Override
-    public boolean patchImg(int designerSeq, String img) {
-        return designerRepository.patchImg(designerSeq, img);
-    }
-
-    @Override
     public DesignerMyPageUpdateShowDto getDesignerMyPageUpdateInfo(int designerSeq) {
         return designerRepository.getDesignerMyPageUpdateInfo(designerSeq);
     }
