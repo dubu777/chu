@@ -19,60 +19,71 @@ public class ConsultingController {
     private final ConsultingService consultingService;
 
     @GetMapping("/")
-    public ResponseEntity<ResponseDto> participantConsulting(@PathVariable("consulting_seq") int consultingSeq){
+    public ResponseEntity<ResponseDto> participantConsulting(@PathVariable("consulting_seq") int consultingSeq) {
 
         String url = consultingService.participantConsulting(consultingSeq);
 
-        if(url != null){
+        if (url != null) {
             ResponseDto responseDto = new ResponseDto(200, url);
             return ResponseEntity.ok(responseDto);
-        }
-        else{
+        } else {
             ResponseDto responseDto = new ResponseDto(204, null);
             return ResponseEntity.ok(responseDto);
         }
     }
 
     @PostMapping("/")
-    public ResponseEntity<ResponseDto> postConsulting(@RequestBody ConsultingRequestDto consultingRequestDto){
+    public ResponseEntity<ResponseDto> postConsulting(@RequestBody ConsultingRequestDto consultingRequestDto) {
 
         int isSuccess = consultingService.createConsulting(consultingRequestDto);
 
-        if(isSuccess == 1){
+        if (isSuccess == 1) {
             ResponseDto responseDto = new ResponseDto(200, null);
             return ResponseEntity.ok(responseDto);
+        } else {
+            ResponseDto responseDto = new ResponseDto(204, null);
+            return ResponseEntity.ok(responseDto);
         }
-        else{
+    }
+
+    @PatchMapping("/")
+    public ResponseEntity<ResponseDto> updateConsultingUrl(@PathVariable("consulting-seq"), int consultingSeq, @RequestParam String url){
+
+        boolean isSuccess = consultingService.updateConsultingUrl(consultingSeq, url);
+
+        if (isSuccess) {
+            ResponseDto responseDto = new ResponseDto(200, null);
+            return ResponseEntity.ok(responseDto);
+        } else {
             ResponseDto responseDto = new ResponseDto(204, null);
             return ResponseEntity.ok(responseDto);
         }
     }
 
     @DeleteMapping("/")
-    public ResponseEntity<ResponseDto> deleteConsulting(@PathVariable("consulting_seq") int consultingSeq){
+
+    public ResponseEntity<ResponseDto> deleteConsulting(@PathVariable("consulting_seq") int consultingSeq) {
 
         boolean isSuccess = consultingService.deleteConsulting(consultingSeq);
 
-        if(isSuccess){
+        if (isSuccess) {
             ResponseDto responseDto = new ResponseDto(200, null);
             return ResponseEntity.ok(responseDto);
-        }
-        else{
+        } else {
             ResponseDto responseDto = new ResponseDto(204, null);
             return ResponseEntity.ok(responseDto);
         }
     }
 
     @GetMapping("/result")
-    public ResponseEntity<ResponseDto> getConsultingResult(@PathVariable("consulting-seq") int consultingSeq){
+    public ResponseEntity<ResponseDto> getConsultingResult(@PathVariable("consulting-seq") int consultingSeq) {
 
         ConsultingResultDto consultingResultDto = consultingService.;
 
-        if(consultingResultDto != null){
+        if (consultingResultDto != null) {
             ResponseDto responseDto = new ResponseDto(200, consultingResultDto);
             return ResponseEntity.ok(responseDto);
-        }
-        else{
+        } else {
             ResponseDto responseDto = new ResponseDto(204, null);
             return ResponseEntity.ok(responseDto);
         }

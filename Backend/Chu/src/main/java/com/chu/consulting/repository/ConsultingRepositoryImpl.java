@@ -59,4 +59,16 @@ public class ConsultingRepositoryImpl implements ConsultingRepository {
 
         return consultingResultDto;
     }
+
+    @Override
+    public boolean updateConsultingUrl(int consultingSeq, String url) {
+        
+        boolean isSuccess = true;
+        
+        // 로직
+        
+        // 해당 상담 시퀀스에 url 삽입
+        
+        return isSuccess;
+    }
 }

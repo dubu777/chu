@@ -33,4 +33,9 @@ public class ConsultingServiceImpl implements ConsultingService {
     public ConsultingResultDto getConsultingResult(int consultingSeq) {
         return consultingRepository.getConsultingResult(consultingSeq);
     }
+
+    @Override
+    public boolean updateConsultingUrl(int consultingSeq, String url) {
+        return consultingRepository.updateConsultingUrl(consultingSeq, url);
+    }
 }

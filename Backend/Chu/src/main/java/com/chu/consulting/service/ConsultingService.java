@@ -11,4 +11,6 @@ public interface ConsultingService {
     boolean deleteConsulting(int consultingSeq);
 
     ConsultingResultDto getConsultingResult(int consultingSeq);
+
+    boolean updateConsultingUrl(int consultingSeq, String url);
 }
