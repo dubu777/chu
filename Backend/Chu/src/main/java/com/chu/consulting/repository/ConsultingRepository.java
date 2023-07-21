@@ -2,6 +2,7 @@ package com.chu.consulting.repository;
 
 import com.chu.consulting.domain.ConsultingRequestDto;
 import com.chu.consulting.domain.ConsultingResultDto;
+import com.chu.consulting.domain.ConsultingReviewDto;
 
 public interface ConsultingRepository {
 
@@ -14,4 +15,6 @@ public interface ConsultingRepository {
     ConsultingResultDto getConsultingResult(int consultingSeq);
 
     boolean updateConsultingUrl(int consultingSeq, String url);
+
+    boolean updateConsultingReview(ConsultingReviewDto consultingReviewDto);
 }

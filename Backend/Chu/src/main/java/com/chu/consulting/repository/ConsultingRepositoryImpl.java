@@ -2,6 +2,7 @@ package com.chu.consulting.repository;
 
 import com.chu.consulting.domain.ConsultingRequestDto;
 import com.chu.consulting.domain.ConsultingResultDto;
+import com.chu.consulting.domain.ConsultingReviewDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
@@ -69,6 +70,19 @@ public class ConsultingRepositoryImpl implements ConsultingRepository {
         
         // 해당 상담 시퀀스에 url 삽입
         
+        return isSuccess;
+    }
+
+    @Override
+    public boolean updateConsultingReview(ConsultingReviewDto consultingReviewDto) {
+        boolean isSuccess = true;
+
+        // 로직
+
+        // 해당 상담 번호로 리뷰 등록
+
+        // 고객 정보 뽑아서 좋아요 테이블에 관계 없다면 추가
+
         return isSuccess;
     }
 }
