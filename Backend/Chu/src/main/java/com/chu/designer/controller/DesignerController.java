@@ -37,14 +37,14 @@ public class DesignerController {
 
     // 로그인
     @PostMapping(value = "/sign-in")
-    public ResponseEntity<ResponseDto> signIn(@RequestBody SignInDto signInDto) {
+    public ResponseEntity<ResponseDto> signIn(@RequestBody SignInRequestDto signInRequestDto) {
         boolean isDesigner = true;
 
-        isDesigner = designerService.signIn(signInDto);
+        isDesigner = designerService.signIn(signInRequestDto);
 
         // 로그인 성공
         if (isDesigner) {
-            DesignerLoginDetailDto designerLoginDetailDto = designerService.getLoginDesignerDetail(signInDto.getId());
+            DesignerLoginDetailDto designerLoginDetailDto = designerService.getLoginDesignerDetail(signInRequestDto.getId());
             ResponseDto responseDto = new ResponseDto(200, designerLoginDetailDto);
             return ResponseEntity.ok(responseDto);
         }
@@ -58,11 +58,11 @@ public class DesignerController {
     @GetMapping("/find-id")
     public ResponseEntity<ResponseDto> findId(@RequestParam String name, @RequestParam String email) {
 
-        FindIdDto findIdDto = new FindIdDto();
-        findIdDto.setName(name);
-        findIdDto.setEmail(email);
+        FindIdRequestDto findIdRequestDto = new FindIdRequestDto();
+        findIdRequestDto.setName(name);
+        findIdRequestDto.setEmail(email);
 
-        String id = designerService.findId(findIdDto);
+        String id = designerService.findId(findIdRequestDto);
 
         if (id != null) {
             ResponseDto responseDto = new ResponseDto(200, id);
@@ -76,12 +76,12 @@ public class DesignerController {
     @GetMapping("/find-pwd")
     public ResponseEntity<ResponseDto> findPwd(@RequestParam String id, @RequestParam String name, @RequestParam String email) {
 
-        FindPwdDto findPwdDto = new FindPwdDto();
-        findPwdDto.setName(name);
-        findPwdDto.setId(id);
-        findPwdDto.setEmail(email);
+        FindPwdRequestDto findPwdRequestDto = new FindPwdRequestDto();
+        findPwdRequestDto.setName(name);
+        findPwdRequestDto.setId(id);
+        findPwdRequestDto.setEmail(email);
 
-        int seq = designerService.isValidUser(findPwdDto);
+        int seq = designerService.isValidUser(findPwdRequestDto);
 
         // 존재하는 유저일 경우
         if (seq == 1) {

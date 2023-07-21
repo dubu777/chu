@@ -5,7 +5,6 @@ import com.chu.customer.service.CustomerService;
 import com.chu.designer.domain.DesignerSearchDto;
 import com.chu.designer.domain.DesignerSearchResponseDto;
 import com.chu.designer.service.DesignerSearchService;
-import com.chu.designer.service.DesignerService;
 import com.chu.global.domain.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 @Slf4j
 @RestController
@@ -43,13 +41,13 @@ public class CustomerController {
 
     // 로그인
     @PostMapping(value = "/sign-in")
-    public ResponseEntity<ResponseDto> signIn(@RequestBody SignInDto signInDto) {
+    public ResponseEntity<ResponseDto> signIn(@RequestBody SignInRequestDto signInRequestDto) {
 
-        boolean isUser = customerService.signIn(signInDto);
+        boolean isUser = customerService.signIn(signInRequestDto);
 
         // 로그인 성공
         if(isUser){
-            CustomerLoginDetailDto customerLoginDetailDto = customerService.getLoginCustomerDetail(signInDto.getId());
+            CustomerLoginDetailDto customerLoginDetailDto = customerService.getLoginCustomerDetail(signInRequestDto.getId());
             ResponseDto responseDto = new ResponseDto(200, customerLoginDetailDto);
             return ResponseEntity.ok(responseDto);
         }
@@ -63,11 +61,11 @@ public class CustomerController {
     @GetMapping("/find-id")
     public ResponseEntity<ResponseDto> findId(@RequestParam String name, @RequestParam String email){
 
-        FindIdDto findIdDto = new FindIdDto();
-        findIdDto.setName(name);
-        findIdDto.setEmail(email);
+        FindIdRequestDto findIdRequestDto = new FindIdRequestDto();
+        findIdRequestDto.setName(name);
+        findIdRequestDto.setEmail(email);
 
-        String id = customerService.findId(findIdDto);
+        String id = customerService.findId(findIdRequestDto);
 
         if(id != null){
             ResponseDto responseDto = new ResponseDto(200, id);
@@ -82,18 +80,16 @@ public class CustomerController {
     @GetMapping("/find-pwd")
     public ResponseEntity<ResponseDto> findPwd(@RequestParam String id, @RequestParam String name, @RequestParam String email){
 
-        FindPwdDto findPwdDto = new FindPwdDto();
-        findPwdDto.setName(name);
-        findPwdDto.setId(id);
-        findPwdDto.setEmail(email);
+        FindPwdRequestDto findPwdRequestDto = new FindPwdRequestDto();
+        findPwdRequestDto.setName(name);
+        findPwdRequestDto.setId(id);
+        findPwdRequestDto.setEmail(email);
 
-        int seq = customerService.isValidUser(findPwdDto);
+        int seq = customerService.isValidUser(findPwdRequestDto);
         
         // 존재하는 유저일 경우
         if(seq == 1){
-            HashMap<String, Integer> resultMap = new HashMap<>();
-            resultMap.put("seq", seq);
-            ResponseDto responseDto = new ResponseDto(200, resultMap);
+            ResponseDto responseDto = new ResponseDto(200, seq);
             return ResponseEntity.ok(responseDto);
         }
         else{

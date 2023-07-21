@@ -2,7 +2,6 @@ package com.chu.customer.repository;
 
 import com.chu.customer.domain.*;
 import com.chu.global.domain.*;
-import com.chu.worldcup.domain.WorldcupStatisticsWinnerHairInfoDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,7 +40,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     }
 
     @Override
-    public boolean signIn(SignInDto signInDto) {
+    public boolean signIn(SignInRequestDto signInRequestDto) {
         // 로직
         // 조건에 맞는 사용자 존재하는지?
         return false;
@@ -68,7 +67,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     }
 
     @Override
-    public String findId(FindIdDto findIdDto) {
+    public String findId(FindIdRequestDto findIdRequestDto) {
         // 로직
 
         // 이름, 이메일로 아이디 찾기
@@ -76,7 +75,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     }
 
     @Override
-    public int isValidUser(FindPwdDto findPwdDto) {
+    public int isValidUser(FindPwdRequestDto findPwdRequestDto) {
         // 로직
         // 이름, 아이디, 이메일로 존재하는 유저인지 확인
         return 0;

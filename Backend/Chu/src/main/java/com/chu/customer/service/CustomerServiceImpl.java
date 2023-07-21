@@ -5,7 +5,6 @@ import com.chu.customer.repository.CustomerAlertRepository;
 import com.chu.customer.repository.CustomerRepository;
 import com.chu.designer.repository.DesignerRepository;
 import com.chu.global.domain.*;
-import com.chu.global.service.GlobalService;
 import com.chu.worldcup.repository.WorldcupRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,8 +39,8 @@ public class CustomerServiceImpl implements CustomerService{
     }
 
     @Override
-    public boolean signIn(SignInDto signInDto) {
-        return customerRepository.signIn(signInDto);
+    public boolean signIn(SignInRequestDto signInRequestDto) {
+        return customerRepository.signIn(signInRequestDto);
     }
 
 
@@ -80,13 +79,13 @@ public class CustomerServiceImpl implements CustomerService{
     }
 
     @Override
-    public String findId(FindIdDto findIdDto) {
-        return customerRepository.findId(findIdDto);
+    public String findId(FindIdRequestDto findIdRequestDto) {
+        return customerRepository.findId(findIdRequestDto);
     }
 
     @Override
-    public int isValidUser(FindPwdDto findPwdDto) {
-        return customerRepository.isValidUser(findPwdDto);
+    public int isValidUser(FindPwdRequestDto findPwdRequestDto) {
+        return customerRepository.isValidUser(findPwdRequestDto);
     }
 
     @Override

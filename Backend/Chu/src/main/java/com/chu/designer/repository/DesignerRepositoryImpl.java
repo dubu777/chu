@@ -3,7 +3,6 @@ package com.chu.designer.repository;
 import com.chu.consulting.domain.ConsultingDto;
 import com.chu.designer.domain.*;
 import com.chu.global.domain.*;
-import com.chu.worldcup.domain.WorldcupStatisticsWinnerHairInfoDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
@@ -41,7 +40,7 @@ public class DesignerRepositoryImpl implements DesignerRepository {
     }
 
     @Override
-    public boolean signIn(SignInDto signInDto) {
+    public boolean signIn(SignInRequestDto signInRequestDto) {
         // 로직
 
         return false;
@@ -58,7 +57,7 @@ public class DesignerRepositoryImpl implements DesignerRepository {
 
 
     @Override
-    public String findId(FindIdDto findIdDto) {
+    public String findId(FindIdRequestDto findIdRequestDto) {
         // 로직
 
         // 이름, 이메일로 아이디 찾기
@@ -66,7 +65,7 @@ public class DesignerRepositoryImpl implements DesignerRepository {
     }
 
     @Override
-    public int isValidUser(FindPwdDto findPwdDto) {
+    public int isValidUser(FindPwdRequestDto findPwdRequestDto) {
         // 로직
         // 이름, 아이디, 이메일로 존재하는 유저인지 확인
         return 0;

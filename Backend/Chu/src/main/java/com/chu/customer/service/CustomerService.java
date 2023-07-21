@@ -1,7 +1,6 @@
 package com.chu.customer.service;
 
 import com.chu.customer.domain.*;
-import com.chu.designer.domain.DesignerDto;
 import com.chu.global.domain.*;
 
 import java.util.ArrayList;
@@ -18,7 +17,7 @@ public interface CustomerService {
     boolean signUp(CustomerSignUpDto customerSignUpDto);
     
     // 고객 로그인
-    boolean signIn(SignInDto signInDto);
+    boolean signIn(SignInRequestDto signInRequestDto);
 
     // 고객 정보 조회
     CustomerDto getCustomerInfo(String id);
@@ -27,9 +26,9 @@ public interface CustomerService {
     CustomerLoginDetailDto getLoginCustomerDetail(String id);
 
     // 고객 아이디 찾기
-    String findId(FindIdDto findIdDto);
+    String findId(FindIdRequestDto findIdRequestDto);
 
-    int isValidUser(FindPwdDto findPwdDto);
+    int isValidUser(FindPwdRequestDto findPwdRequestDto);
 
     boolean changePwd(ChangePwdDto changePwdDto);
 

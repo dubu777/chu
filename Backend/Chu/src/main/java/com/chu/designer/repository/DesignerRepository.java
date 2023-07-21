@@ -1,7 +1,6 @@
 package com.chu.designer.repository;
 
 import com.chu.consulting.domain.ConsultingDto;
-import com.chu.customer.domain.CustomerDto;
 import com.chu.designer.domain.*;
 import com.chu.global.domain.*;
 
@@ -19,15 +18,15 @@ public interface DesignerRepository {
     boolean signUp(DesignerSignUpDto designerSignUpDto);
 
     // 디자이너 로그인 여부 확인
-    boolean signIn(SignInDto signInDto);
+    boolean signIn(SignInRequestDto signInRequestDto);
 
     // 디자이너 정보 조회
     DesignerDto getDesignerInfo(String id);
 
     // 디자이너 아이디 찾기
-    String findId(FindIdDto findIdDto);
+    String findId(FindIdRequestDto findIdRequestDto);
 
-    int isValidUser(FindPwdDto findPwdDto);
+    int isValidUser(FindPwdRequestDto findPwdRequestDto);
 
     boolean changePwd(ChangePwdDto changePwdDto);
 

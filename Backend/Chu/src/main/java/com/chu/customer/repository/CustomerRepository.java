@@ -17,17 +17,17 @@ public interface CustomerRepository {
     boolean signUp(CustomerSignUpDto customerSignUpDto);
 
     // 고객 로그인 가능 여부 확인
-    boolean signIn(SignInDto signInDto);
+    boolean signIn(SignInRequestDto signInRequestDto);
 
     // 고객 정보 가져오기
     CustomerDto getCustomerInfo(String id);
 
     // 고객 아이디 찾기
-    String findId(FindIdDto findIdDto);
+    String findId(FindIdRequestDto findIdRequestDto);
 
     ArrayList<ImageDto> getTopStyleByFace(int faceSeq);
 
-    int isValidUser(FindPwdDto findPwdDto);
+    int isValidUser(FindPwdRequestDto findPwdRequestDto);
 
     boolean changePwd(ChangePwdDto changePwdDto);
 

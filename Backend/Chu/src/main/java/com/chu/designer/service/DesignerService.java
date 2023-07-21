@@ -1,8 +1,6 @@
 package com.chu.designer.service;
 
 import com.chu.consulting.domain.ConsultingDto;
-import com.chu.customer.domain.CustomerDto;
-import com.chu.customer.domain.CustomerLoginDetailDto;
 import com.chu.designer.domain.*;
 import com.chu.global.domain.*;
 
@@ -20,7 +18,7 @@ public interface DesignerService {
     boolean signUp(DesignerSignUpDto designerSignUpDto);
 
     // 디자이너 로그인
-    boolean signIn(SignInDto signInDto);
+    boolean signIn(SignInRequestDto signInRequestDto);
 
     // 디자이너 정보 조회
     DesignerDto getDesignerInfo(String id);
@@ -29,9 +27,9 @@ public interface DesignerService {
     DesignerLoginDetailDto getLoginDesignerDetail(String id);
 
     // 디자이너 아이디 찾기
-    String findId(FindIdDto findIdDto);
+    String findId(FindIdRequestDto findIdRequestDto);
 
-    int isValidUser(FindPwdDto findPwdDto);
+    int isValidUser(FindPwdRequestDto findPwdRequestDto);
 
     boolean changePwd(ChangePwdDto changePwdDto);
 

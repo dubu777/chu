@@ -1,8 +1,6 @@
 package com.chu.designer.service;
 
 import com.chu.consulting.domain.ConsultingDto;
-import com.chu.customer.domain.AlertToCustomerDto;
-import com.chu.customer.domain.CustomerDto;
 import com.chu.designer.domain.*;
 import com.chu.designer.repository.DesignerAlertRepository;
 import com.chu.designer.repository.DesignerRepository;
@@ -42,8 +40,8 @@ public class DesignerServiceImpl implements DesignerService{
     }
     
     @Override
-    public boolean signIn(SignInDto signInDto) {
-        return designerRepository.signIn(signInDto);
+    public boolean signIn(SignInRequestDto signInRequestDto) {
+        return designerRepository.signIn(signInRequestDto);
     }
 
     @Override
@@ -76,13 +74,13 @@ public class DesignerServiceImpl implements DesignerService{
     }
 
     @Override
-    public String findId(FindIdDto findIdDto) {
-        return designerRepository.findId(findIdDto);
+    public String findId(FindIdRequestDto findIdRequestDto) {
+        return designerRepository.findId(findIdRequestDto);
     }
 
     @Override
-    public int isValidUser(FindPwdDto findPwdDto) {
-        return designerRepository.isValidUser(findPwdDto);
+    public int isValidUser(FindPwdRequestDto findPwdRequestDto) {
+        return designerRepository.isValidUser(findPwdRequestDto);
     }
 
     @Override
