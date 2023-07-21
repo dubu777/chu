@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 import Step from "../../components/SignUpComponent/Step";
-import UserInfo from "../../components/SignUpComponent/UserInfo";
+import CustomerUserInfo from "../../components/SignUpComponent/CutomerUserInfo";
 
 const Hr = styled.div`
   margin-top: 20px;
@@ -25,7 +25,7 @@ const Container = styled.div`
 
 
 
-function SignUp() {
+function CustomerSignUp() {
   return (
     <Container>
       <Wrapper>
@@ -35,8 +35,8 @@ function SignUp() {
         <Step top="step4" bottom="가입 완료" />
       </Wrapper>
       <Hr/>
-      <UserInfo/>
+      <CustomerUserInfo/>
     </Container>
   )
 }
-export default SignUp;
+export default CustomerSignUp;

@@ -1,11 +1,14 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
+import swal from "sweetalert";
 
 
 const Container = styled.div`
-	background: url('./password.jpg');
+	background: url('./img/password.jpg');
 	filter: invert(7%);
 	background-size: cover ;
-	height: 900px;
+	width: 100vw;
+  	height: 100vh;
 	display:flex;
 	justify-content: center;
 	flex-direction: column;
@@ -16,14 +19,19 @@ const Container = styled.div`
 const Wrapper = styled.div`
 	border: 0;
 	border-radius: 0.8rem;
-	width: 40%;
-	height: 40%;
+	width: 35%;
+	height: 45%;
 	background-color: rgb(33, 25, 25, 0.4);
 	color: black;
 `;
+const Title = styled.h1`
+margin-top: 10px;
+margin-bottom: 15px;
+font-size: 30px;
+`;
 const Input = styled.input`
-	width: 60%;
-	height: 45px;
+	width: 75%;
+	height: 50px;
 	border: 0;
 	border-radius: 0.4rem;
 	background-color: white;
@@ -36,7 +44,7 @@ const Box = styled.div`
 	display: flex;
 	align-items: center;
 	flex-direction: column;
-	margin-top: 10px;
+	margin-top: 15px;
 `;
 const Btn = styled.button`
 	border: 0;
@@ -51,21 +59,21 @@ const Btn = styled.button`
 
 
 
-function Changepw() {
+function ChangePw() {
 	return(
 		<Container>
 			<Wrapper>
 				<Box>
-					<h1>Change Password</h1>
+					<Title>Change Password</Title>
 					<br></br>
 					<Input placeholder="New password" type="password"></Input>
 					<Input placeholder="Check password" type="password"></Input>
 					<br></br>
-					<Btn>변경하기</Btn>
+					<Btn onClick={()=> swal("  비밀번호 변경 성공 \n 새롭게 로그인을 시도해 주세요 🙂")}><Link to="/login">변경하기</Link></Btn>
 				</Box>
 			</Wrapper>
 		</Container>
 	);
 }
 
-export default Changepw;
+export default ChangePw;

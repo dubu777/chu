@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 
 const Container = styled.div`
 	background: url('./img/password.jpg');
-	filter: invert(7%);
+	filter: invert(5%);
 	background-size: cover ;
 	width: 100vw;
-  	height: 100vh;
+  height: 100vh;
 	display:flex;
 	justify-content: center;
 	flex-direction: column;
@@ -22,58 +22,56 @@ const Wrapper = styled.div`
 	background-color: rgb(33, 25, 25, 0.4);
 	color: black;
 `;
-const Title = styled.h1`
-margin-top: 10px;
-margin-bottom: 15px;
-font-size: 30px;
-`;
 const Input = styled.input`
-	width: 75%;
+	width: 65%;
 	height: 50px;
 	border: 0;
 	border-radius: 0.4rem;
 	background-color: white;
 	padding-left: 10px;
-	margin-top: 7px;
+	margin-left: 10px;
 	font-size: 18px;
-	font-family: 'Cormorant Garamond';
+	font-family: 'Caveat';
 `;
 const Box = styled.div`
-	/* justify-content: center; */
+	justify-content: center;
 	display: flex;
 	align-items: center;
-	margin-left: 10%;
-	margin-right: 10%;
 	flex-direction: column;
 	margin-top: 20px;
 `;
+const Title = styled.h1`
+	margin-top: 10px;
+	margin-bottom: 15px;
+	font-size: 30px;
+`;
+
 const Btn = styled.button`
 	border: 0;
 	border-radius: 0.3rem;
 	background-color: rgb(45, 28, 20);
-	width:30%;
+	width:70%;
 	height: 40px;
-	margin-top: 15px;
+	margin-top: 30px;
 	color: white;
 	cursor: pointer;
 `;
 
 
-
-function FindPw() {
+function AuthNum() {
 	return(
 		<Container>
 			<Wrapper>
 				<Box>
-					<Title>Find Password</Title>
-					<Input placeholder="ID"></Input>
-					<Input placeholder="Name"></Input>
-					<Input type="email" placeholder="e-mail"></Input>
-					<Btn><Link to="/authnum">email 인증</Link></Btn>
-				</Box>
+					<Title>인증번호 확인</Title>
+					<br></br>
+					<Input placeholder="인증번호 입력"></Input>
+					<br></br>
+					  <Btn type="submit"><Link to="/changepw">확인</Link></Btn>
+				</Box>				
 			</Wrapper>
 		</Container>
 	);
 }
 
-export default FindPw;
+export default AuthNum;
