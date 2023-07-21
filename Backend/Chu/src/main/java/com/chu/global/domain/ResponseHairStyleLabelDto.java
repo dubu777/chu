@@ -1,5 +1,5 @@
 package com.chu.global.domain;
 
-public class HairStyleLabelDto {
+public class ResponseHairStyleLabelDto {
 //    "레이어드컷",
 }

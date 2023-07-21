@@ -42,9 +42,6 @@ public interface DesignerService {
     boolean readAlert(RequestAlertReadDto requestAlertReadDto);
 
 
-
-    DesignerMyPageUpdateShowDto getDesignerMyPageUpdateInfo(int designerSeq);
-
     boolean updateDesignerInfo(int designerSeq, DesignerInfoUpdateDto designerInfoUpdateDto);
 
     ArrayList<TimeDto> getPossibleReservationTime(int designerSeq, Date date);

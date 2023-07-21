@@ -119,27 +119,6 @@ public class DesignerRepositoryImpl implements DesignerRepository {
     }
 
     @Override
-    public DesignerMyPageUpdateShowDto getDesignerMyPageUpdateInfo(int designerSeq) {
-        DesignerMyPageUpdateShowDto designerMyPageUpdateShowDto = new DesignerMyPageUpdateShowDto();
-
-        // 로직
-
-        // 디자이너 정보 삽입
-
-        // 디자이너 지역 정보 삽입
-
-        // 컷 정보 삽입
-
-        // 펌 정보 삽입
-
-        // 디자이너가 잘하는 컷 정보 삽입
-
-        // 디자이너가 잘하는 펌 정보 삽입
-
-        return designerMyPageUpdateShowDto;
-    }
-
-    @Override
     public boolean updateDesignerInfo(int designerSeq, DesignerInfoUpdateDto designerInfoUpdateDto) {
         boolean isSuccess = true;
 
@@ -221,8 +200,8 @@ public class DesignerRepositoryImpl implements DesignerRepository {
     }
 
     @Override
-    public ArrayList<BestDesignerDto> getBestDesigners() {
-        ArrayList<BestDesignerDto> bestDesignerInfoList = new ArrayList<>();
+    public ArrayList<ResponseBestDesignerDto> getBestDesigners() {
+        ArrayList<ResponseBestDesignerDto> bestDesignerInfoList = new ArrayList<>();
 
         // 베스트 디자이너들 정보 얻어오기
         // 디자이너 평점 limit 6

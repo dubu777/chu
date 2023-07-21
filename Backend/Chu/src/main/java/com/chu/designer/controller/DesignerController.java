@@ -133,21 +133,6 @@ public class DesignerController {
         }
     }
 
-    @GetMapping("/detail")
-    public ResponseEntity<HttpResponseDto> getDesignerDetailInfo(@PathVariable("designer_seq") int designerSeq) {
-        DesignerMyPageUpdateShowDto designerMyPageUpdateShowDto = new DesignerMyPageUpdateShowDto();
-
-        designerMyPageUpdateShowDto = designerService.getDesignerMyPageUpdateInfo(designerSeq);
-
-        if (designerMyPageUpdateShowDto != null) {
-            HttpResponseDto httpResponseDto = new HttpResponseDto(200, designerMyPageUpdateShowDto);
-            return ResponseEntity.ok(httpResponseDto);
-        } else {
-            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
-            return ResponseEntity.ok(httpResponseDto);
-        }
-    }
-
     @PutMapping("/detail")
     public ResponseEntity<HttpResponseDto> updateDesignerInfo(@PathVariable("designer_seq") int designerSeq, @RequestBody DesignerInfoUpdateDto designerInfoUpdateDto) {
 

@@ -2,9 +2,8 @@ package com.chu.customer.domain;
 
 
 import com.chu.global.domain.AlertCustomerOnLoginDto;
-import com.chu.global.domain.BestDesignerDto;
+import com.chu.global.domain.ResponseBestDesignerDto;
 import com.chu.global.domain.FaceImageNameDto;
-import lombok.Data;
 
 import java.util.ArrayList;
 
@@ -13,7 +12,7 @@ public class ResponseCustomerLoginDetailDto {
 
 //            "name" : "김싸피",
 
-    ArrayList<BestDesignerDto> bestDesigner;
+    ArrayList<ResponseBestDesignerDto> bestDesigner;
     //        "faceSeq" : "둥근 얼굴형",
     ArrayList<FaceImageNameDto> faceImg;
 

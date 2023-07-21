@@ -58,7 +58,7 @@ public class DesignerServiceImpl implements DesignerService{
         designerRepository.getDesignerInfo(id);
 
         // 베스트 디자이너 정보 채우기
-        ArrayList<BestDesignerDto> bestDesignerList = designerRepository.getBestDesigners();
+        ArrayList<ResponseBestDesignerDto> bestDesignerList = designerRepository.getBestDesigners();
 
         ArrayList<ImageDto> worldcupTopImageList = worldcupRepository.getTopWorldcupImages();
 
@@ -107,11 +107,6 @@ public class DesignerServiceImpl implements DesignerService{
     @Override
     public boolean readAlert(RequestAlertReadDto requestAlertReadDto) {
         return designerRepository.readAlert(requestAlertReadDto);
-    }
-
-    @Override
-    public DesignerMyPageUpdateShowDto getDesignerMyPageUpdateInfo(int designerSeq) {
-        return designerRepository.getDesignerMyPageUpdateInfo(designerSeq);
     }
 
     @Override

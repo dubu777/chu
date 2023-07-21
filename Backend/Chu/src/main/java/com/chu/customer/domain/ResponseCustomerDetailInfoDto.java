@@ -1,6 +1,6 @@
 package com.chu.customer.domain;
 
-import com.chu.global.domain.HairStyleDto;
+import com.chu.global.domain.ResponseHairStyleDto;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class ResponseCustomerDetailInfoDto {
     CustomerDto customerDto;
     ArrayList<FaceTypeDto> faceTypeList;
-    ArrayList<HairStyleDto> hairStyleList;
+    ArrayList<ResponseHairStyleDto> hairStyleList;
     ArrayList<CustomerHairConditionDto> hairConditionList;
 
 }

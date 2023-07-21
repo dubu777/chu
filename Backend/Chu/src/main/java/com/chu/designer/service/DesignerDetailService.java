@@ -1,5 +1,6 @@
 package com.chu.designer.service;
 
+import com.chu.designer.domain.ResponseDesignerMyPageUpdateShowDto;
 import com.chu.designer.domain.ResponseDesignerMyPageDto;
 
 public interface DesignerDetailService {
@@ -9,4 +10,6 @@ public interface DesignerDetailService {
     boolean patchIntroduction(int designerSeq, String introduction);
 
     boolean patchImg(int designerSeq, String img);
+
+    ResponseDesignerMyPageUpdateShowDto getDesignerMyPageUpdateInfo(int designerSeq);
 }

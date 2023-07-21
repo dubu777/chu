@@ -38,8 +38,6 @@ public interface DesignerRepository {
 
     boolean readAlert(RequestAlertReadDto requestAlertReadDto);
 
-    DesignerMyPageUpdateShowDto getDesignerMyPageUpdateInfo(int designerSeq);
-
     boolean updateDesignerInfo(int designerSeq, DesignerInfoUpdateDto designerInfoUpdateDto);
 
     ArrayList<TimeDto> getPossibleReservationTime(int designerSeq, Date date);
@@ -54,5 +52,5 @@ public interface DesignerRepository {
 
     boolean postPortfolioImage(int designerSeq, String img);
 
-    ArrayList<BestDesignerDto> getBestDesigners();
+    ArrayList<ResponseBestDesignerDto> getBestDesigners();
 }

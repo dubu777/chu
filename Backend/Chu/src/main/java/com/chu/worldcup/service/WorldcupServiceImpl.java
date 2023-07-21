@@ -1,6 +1,6 @@
 package com.chu.worldcup.service;
 
-import com.chu.global.domain.ImageWithHairInfoDto;
+import com.chu.global.domain.ResponseImageWithHairInfoDto;
 import com.chu.worldcup.domain.WorldcupRequestDto;
 import com.chu.worldcup.domain.WorldcupStatisticsRequestDto;
 import com.chu.worldcup.repository.WorldcupRepository;
@@ -23,7 +23,7 @@ public class WorldcupServiceImpl implements WorldcupService {
     }
 
     @Override
-    public ArrayList<ImageWithHairInfoDto> getWorldcup(int worldcupSeq) {
+    public ArrayList<ResponseImageWithHairInfoDto> getWorldcup(int worldcupSeq) {
         return worldcupRepository.getWorldcup(worldcupSeq);
     }
 

@@ -1,7 +1,7 @@
 package com.chu.worldcup.repository;
 
 import com.chu.global.domain.ImageDto;
-import com.chu.global.domain.ImageWithHairInfoDto;
+import com.chu.global.domain.ResponseImageWithHairInfoDto;
 import com.chu.worldcup.domain.WorldcupRequestDto;
 import com.chu.worldcup.domain.WorldcupStatisticsRequestDto;
 import lombok.RequiredArgsConstructor;
@@ -37,8 +37,8 @@ public class WorldcupRepositoryImpl implements WorldcupRepository {
     }
 
     @Override
-    public ArrayList<ImageWithHairInfoDto> getWorldcup(int worldcupSeq) {
-        ArrayList<ImageWithHairInfoDto> resultList = new ArrayList<>();
+    public ArrayList<ResponseImageWithHairInfoDto> getWorldcup(int worldcupSeq) {
+        ArrayList<ResponseImageWithHairInfoDto> resultList = new ArrayList<>();
 
         // 로직
 

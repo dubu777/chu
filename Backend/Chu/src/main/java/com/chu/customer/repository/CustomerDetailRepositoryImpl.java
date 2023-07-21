@@ -6,7 +6,7 @@ import com.chu.customer.domain.CustomerDto;
 import com.chu.customer.domain.CustomerHairConditionDto;
 import com.chu.customer.domain.FaceTypeDto;
 import com.chu.customer.domain.RequestCustomerDetailChangeDto;
-import com.chu.global.domain.HairStyleDto;
+import com.chu.global.domain.ResponseHairStyleDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
@@ -72,8 +72,8 @@ public class CustomerDetailRepositoryImpl implements CustomerDetailRepository {
     }
 
     @Override
-    public ArrayList<HairStyleDto> getAllHairStyleList() {
-        ArrayList<HairStyleDto> hairStyleList = new ArrayList<>();
+    public ArrayList<ResponseHairStyleDto> getAllHairStyleList() {
+        ArrayList<ResponseHairStyleDto> hairStyleList = new ArrayList<>();
 
         // 모든 모발상태 가져오기
 

@@ -59,7 +59,7 @@ public class CustomerServiceImpl implements CustomerService{
         customerRepository.getCustomerInfo(id);
 
         // 베스트 디자이너 정보 채우기
-        ArrayList<BestDesignerDto> bestDesignerList = designerRepository.getBestDesigners();
+        ArrayList<ResponseBestDesignerDto> bestDesignerList = designerRepository.getBestDesigners();
 
         // 얼굴형에 잘 어울리는 스타일들 사진
         // 위에서 갖고 온 얼굴형 정보 토대로 검색

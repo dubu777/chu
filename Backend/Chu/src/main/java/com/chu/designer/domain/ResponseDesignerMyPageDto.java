@@ -1,6 +1,6 @@
 package com.chu.designer.domain;
 
-import com.chu.global.domain.HairStyleLabelDto;
+import com.chu.global.domain.ResponseHairStyleLabelDto;
 import com.chu.global.domain.TimeDto;
 
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ public class ResponseDesignerMyPageDto {
 //                "email" : "ssafy@ssafy.com",
 //                "introduction" : " 남자 펌 전문 !",
 //                "img" : "img1.png",
-    ArrayList<HairStyleLabelDto> hairStyleTag;
+    ArrayList<ResponseHairStyleLabelDto> hairStyleTag;
 //                "hairStyleTag" : [
 //                "시스루펌",
 //                "아이롱펌",

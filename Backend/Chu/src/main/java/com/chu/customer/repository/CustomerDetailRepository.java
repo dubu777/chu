@@ -3,7 +3,7 @@ package com.chu.customer.repository;
 import com.chu.consulting.domain.FutureConsultingDto;
 import com.chu.consulting.domain.PastConsultingDto;
 import com.chu.customer.domain.*;
-import com.chu.global.domain.HairStyleDto;
+import com.chu.global.domain.ResponseHairStyleDto;
 
 import java.util.ArrayList;
 
@@ -20,7 +20,7 @@ public interface CustomerDetailRepository {
 
     ArrayList<FaceTypeDto> getALLFaceTypeList();
 
-    ArrayList<HairStyleDto> getAllHairStyleList();
+    ArrayList<ResponseHairStyleDto> getAllHairStyleList();
 
     boolean updateCustomerInfo(int customerSeq, RequestCustomerDetailChangeDto requestCustomerDetailChangeDto);
 

@@ -1,5 +1,6 @@
 package com.chu.designer.controller;
 
+import com.chu.designer.domain.ResponseDesignerMyPageUpdateShowDto;
 import com.chu.designer.domain.ResponseDesignerMyPageDto;
 import com.chu.designer.service.DesignerDetailService;
 import com.chu.global.domain.HttpResponseDto;
@@ -15,6 +16,21 @@ import org.springframework.web.bind.annotation.*;
 public class DesignerDetailController {
 
     private final DesignerDetailService designerDetailService;
+
+    @GetMapping("/")
+    public ResponseEntity<HttpResponseDto> getDesignerDetailInfo(@PathVariable("designer_seq") int designerSeq) {
+        ResponseDesignerMyPageUpdateShowDto responseDesignerMyPageUpdateShowDto = new ResponseDesignerMyPageUpdateShowDto();
+
+        responseDesignerMyPageUpdateShowDto = designerDetailService.getDesignerMyPageUpdateInfo(designerSeq);
+
+        if (responseDesignerMyPageUpdateShowDto != null) {
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseDesignerMyPageUpdateShowDto);
+            return ResponseEntity.ok(httpResponseDto);
+        } else {
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
+        }
+    }
 
     @GetMapping("/mypage")
     public ResponseEntity<HttpResponseDto> getMyPageInfo(@PathVariable("designer_seq") int designerSeq) {
