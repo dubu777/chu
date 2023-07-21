@@ -3,7 +3,7 @@ import Header from "./components/Header";
 import Home from "./Routes/Home";
 import Reservation from "./Routes/Reservation";
 import CustomerSignUp from "./Routes/SignUpPage/CutomerSignUp";
-// import DesignerSignUp from "./Routes/SignUpPage/DesignerSignUp";
+import DesignerSignUp from "./Routes/SignUpPage/DesignerSignUp";
 // import Complete from "./Routes/SignUpPage/Complete";
 import LogIn from "./Routes/LogInPage/LogIn";
 import FindId from "./Routes/LogInPage/FindId";
@@ -21,7 +21,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home/>} />
         <Route path="customersignup" element={<CustomerSignUp/>} />
-        {/* <Route path="designersignup" element={<DesignerSignUp/>} /> */}
+        <Route path="designersignup" element={<DesignerSignUp/>} />
         {/* <Route path="complete" element={<Complete/>} /> */}
         <Route path="login" element={<LogIn/>} />
         <Route path="findid" element={<FindId/>} />
