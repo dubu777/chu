@@ -2,7 +2,7 @@ package com.chu.worldcup.service;
 
 import com.chu.worldcup.domain.ResponseImageWithHairInfoForWorldcupDto;
 import com.chu.worldcup.domain.RequestWorldcupDto;
-import com.chu.worldcup.domain.WorldcupStatisticsRequestDto;
+import com.chu.worldcup.domain.RequestWorldcupStatisticsDto;
 import com.chu.worldcup.repository.WorldcupRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +28,7 @@ public class WorldcupServiceImpl implements WorldcupService {
     }
 
     @Override
-    public boolean updateWorldcupStatistics(WorldcupStatisticsRequestDto worldcupStatisticsRequestDto) {
-        return worldcupRepository.updateWorldcupStatistics(worldcupStatisticsRequestDto);
+    public boolean updateWorldcupStatistics(RequestWorldcupStatisticsDto requestWorldcupStatisticsDto) {
+        return worldcupRepository.updateWorldcupStatistics(requestWorldcupStatisticsDto);
     }
 }

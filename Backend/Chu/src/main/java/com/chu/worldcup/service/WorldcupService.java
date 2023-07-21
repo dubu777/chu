@@ -2,7 +2,7 @@ package com.chu.worldcup.service;
 
 import com.chu.worldcup.domain.ResponseImageWithHairInfoForWorldcupDto;
 import com.chu.worldcup.domain.RequestWorldcupDto;
-import com.chu.worldcup.domain.WorldcupStatisticsRequestDto;
+import com.chu.worldcup.domain.RequestWorldcupStatisticsDto;
 
 import java.util.ArrayList;
 
@@ -12,5 +12,5 @@ public interface WorldcupService {
 
     ArrayList<ResponseImageWithHairInfoForWorldcupDto> getWorldcup(int worldcupSeq);
 
-    boolean updateWorldcupStatistics(WorldcupStatisticsRequestDto worldcupStatisticsRequestDto);
+    boolean updateWorldcupStatistics(RequestWorldcupStatisticsDto requestWorldcupStatisticsDto);
 }

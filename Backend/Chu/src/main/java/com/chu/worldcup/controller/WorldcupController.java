@@ -3,7 +3,7 @@ package com.chu.worldcup.controller;
 import com.chu.worldcup.domain.ResponseImageWithHairInfoForWorldcupDto;
 import com.chu.global.domain.HttpResponseDto;
 import com.chu.worldcup.domain.RequestWorldcupDto;
-import com.chu.worldcup.domain.WorldcupStatisticsRequestDto;
+import com.chu.worldcup.domain.RequestWorldcupStatisticsDto;
 import com.chu.worldcup.service.WorldcupService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -53,9 +53,9 @@ public class WorldcupController {
     }
 
     @PatchMapping("/")
-    public ResponseEntity<HttpResponseDto> updateWorldcupStatistics(@RequestBody WorldcupStatisticsRequestDto worldcupStatisticsRequestDto) {
+    public ResponseEntity<HttpResponseDto> updateWorldcupStatistics(@RequestBody RequestWorldcupStatisticsDto requestWorldcupStatisticsDto) {
 
-        boolean isSuccess = worldcupService.updateWorldcupStatistics(worldcupStatisticsRequestDto);
+        boolean isSuccess = worldcupService.updateWorldcupStatistics(requestWorldcupStatisticsDto);
 
         if(isSuccess){
             HttpResponseDto httpResponseDto = new HttpResponseDto(200, null);

@@ -3,7 +3,7 @@ package com.chu.worldcup.repository;
 import com.chu.global.domain.ImageDto;
 import com.chu.worldcup.domain.ResponseImageWithHairInfoForWorldcupDto;
 import com.chu.worldcup.domain.RequestWorldcupDto;
-import com.chu.worldcup.domain.WorldcupStatisticsRequestDto;
+import com.chu.worldcup.domain.RequestWorldcupStatisticsDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
@@ -48,7 +48,7 @@ public class WorldcupRepositoryImpl implements WorldcupRepository {
     }
 
     @Override
-    public boolean updateWorldcupStatistics(WorldcupStatisticsRequestDto worldcupStatisticsRequestDto) {
+    public boolean updateWorldcupStatistics(RequestWorldcupStatisticsDto requestWorldcupStatisticsDto) {
         
         boolean isSuccess = true;
         

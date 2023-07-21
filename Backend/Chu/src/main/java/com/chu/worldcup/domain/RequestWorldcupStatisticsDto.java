@@ -1,6 +1,6 @@
 package com.chu.worldcup.domain;
 
-public class WorldcupStatisticsRequestDto {
+public class RequestWorldcupStatisticsDto {
 //    "worldcupSeq" : 1,
 //            "hairStyleSeq" : 10
 }
