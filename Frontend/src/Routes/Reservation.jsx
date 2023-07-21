@@ -10,10 +10,10 @@ const Container = styled.div`
     
 `;
 const Wrapper = styled.div`
-	border: black;
+	border: #f6f7e5;
 	width: 100px;
 	height: 100px;
-	background-color: black;
+	background-color: #ffffff;
 
     
 `;
