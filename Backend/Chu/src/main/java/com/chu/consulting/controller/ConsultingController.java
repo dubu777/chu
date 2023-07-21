@@ -1,9 +1,6 @@
 package com.chu.consulting.controller;
 
-import com.chu.consulting.domain.ConsultingRequestDto;
-import com.chu.consulting.domain.ConsultingResultDto;
-import com.chu.consulting.domain.ConsultingReviewDto;
-import com.chu.consulting.domain.ConsultingReviewInfoDto;
+import com.chu.consulting.domain.*;
 import com.chu.consulting.service.ConsultingService;
 import com.chu.global.domain.ResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -88,6 +85,21 @@ public class ConsultingController {
 
         if (consultingResultDto != null) {
             ResponseDto responseDto = new ResponseDto(200, consultingResultDto);
+            return ResponseEntity.ok(responseDto);
+        }
+        else {
+            ResponseDto responseDto = new ResponseDto(204, null);
+            return ResponseEntity.ok(responseDto);
+        }
+    }
+
+    @PatchMapping("/result")
+    public ResponseEntity<ResponseDto> updateConsultingResult(@RequestBody ConsultingUpdateDto consultingUpdateDto) {
+
+        boolean isSuccess = consultingService.updateConsultingResult(consultingUpdateDto);
+
+        if (isSuccess) {
+            ResponseDto responseDto = new ResponseDto(200, null);
             return ResponseEntity.ok(responseDto);
         }
         else {

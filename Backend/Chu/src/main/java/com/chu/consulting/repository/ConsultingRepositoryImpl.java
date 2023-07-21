@@ -1,9 +1,6 @@
 package com.chu.consulting.repository;
 
-import com.chu.consulting.domain.ConsultingRequestDto;
-import com.chu.consulting.domain.ConsultingResultDto;
-import com.chu.consulting.domain.ConsultingReviewDto;
-import com.chu.consulting.domain.ConsultingReviewInfoDto;
+import com.chu.consulting.domain.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
@@ -98,5 +95,17 @@ public class ConsultingRepositoryImpl implements ConsultingRepository {
         // 이미지 전부 가져오기
 
         return consultingReviewInfoDto;
+    }
+
+    @Override
+    public boolean updateConsultingResult(ConsultingUpdateDto consultingUpdateDto) {
+
+        boolean isSuccess = true;
+
+        // 로직
+
+        // 상담 리뷰 정보, 상세 정보 저장
+
+        return isSuccess;
     }
 }
