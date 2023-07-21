@@ -34,8 +34,6 @@ public interface CustomerService {
 
     int changeLikeInfo(RequestLikeDto requestLikeDto);
 
-    CustomerDetailDto getCustomerDetail(int customerSeq);
-
     CustomerDetailInfoDto getCustomerDetailInfo(int customerSeq);
 
     boolean putCustomerDetailInfo(int customerSeq, CustomerDetailChangeDto customerDetailChangeDto);

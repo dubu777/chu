@@ -1,8 +1,11 @@
 package com.chu.global.domain;
 
+import lombok.Data;
+
+@Data
 public class RequestFindPwdDto {
-//        "id" : "ssafy",
-//                "name" : "김싸피",
-//                "email" : "ssafy@gmail.con"
+    String id;
+    String name;
+    String email;
 
 }

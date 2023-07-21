@@ -119,26 +119,11 @@ public class CustomerController {
 
         ResponseLikeDto responseLikeDto = new ResponseLikeDto();
         responseLikeDto.setLikeCnt(likeCount);
-        responseLikeDto.setIsLike(requestLikeDto.getIsLike());
+        responseLikeDto.setLike(requestLikeDto.isLike());
 
         // 예외 처리 다시 필요
         if(responseLikeDto != null){
             HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseLikeDto);
-            return ResponseEntity.ok(httpResponseDto);
-        }
-        else{
-            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
-            return ResponseEntity.ok(httpResponseDto);
-        }
-    }
-
-    @GetMapping("/")
-    public ResponseEntity<HttpResponseDto> getCustomerDetail(@PathVariable("customer_seq") int customerSeq) {
-
-        CustomerDetailDto customerDetailDto = customerService.getCustomerDetail(customerSeq);
-
-        if(customerDetailDto != null){
-            HttpResponseDto httpResponseDto = new HttpResponseDto(200, customerDetailDto);
             return ResponseEntity.ok(httpResponseDto);
         }
         else{

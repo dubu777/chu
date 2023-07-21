@@ -33,8 +33,6 @@ public interface CustomerRepository {
 
     int changeLikeInfo(RequestLikeDto requestLikeDto);
 
-    CustomerDetailDto getCustomerDetail(int customerSeq);
-
 
 
     CustomerDetailInfoDto getCustomerDetailInfo(int customerSeq);

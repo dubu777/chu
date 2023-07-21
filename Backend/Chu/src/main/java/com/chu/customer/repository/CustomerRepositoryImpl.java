@@ -100,19 +100,6 @@ public class CustomerRepositoryImpl implements CustomerRepository {
         return likeCount;
     }
 
-    @Override
-    public CustomerDetailDto getCustomerDetail(int customerSeq) {
-        CustomerDetailDto customerDetailDto = new CustomerDetailDto();
-        // 회원 정보 조회
-
-        // 이전 상담 내역 조회
-
-        // 예약 상담 내역 조회
-
-        return customerDetailDto;
-    }
-
-
 
     @Override
     public CustomerDetailInfoDto getCustomerDetailInfo(int customerSeq) {

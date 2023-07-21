@@ -4,6 +4,7 @@ package com.chu.customer.domain;
 import com.chu.global.domain.AlertCustomerOnLoginDto;
 import com.chu.global.domain.BestDesignerDto;
 import com.chu.global.domain.FaceImageNameDto;
+import lombok.Data;
 
 import java.util.ArrayList;
 

@@ -63,14 +63,16 @@ public class CustomerServiceImpl implements CustomerService{
 
         // 얼굴형에 잘 어울리는 스타일들 사진
         // 위에서 갖고 온 얼굴형 정보 토대로 검색
-        ArrayList<ImageDto> topStyleImageList = customerRepository.getTopStyleByFace(얼굴형시퀀스);
+
+//        ArrayList<ImageDto> topStyleImageList = customerRepository.getTopStyleByFace("얼굴형시퀀스");
 
         ArrayList<ImageDto> worldcupTopImageList = worldcupRepository.getTopWorldcupImages();
 
         // 알림 데이터
         // 고객 idx로 알림 접근
         // 상담 IDX 토대로 APi 명세에 따른 로직 추가
-        ArrayList<AlertToCustomerDto> alertList = customerAlertRepository.getAlertToCustomer(customerSeq);
+
+//        ArrayList<AlertToCustomerDto> alertList = customerAlertRepository.getAlertToCustomer(customerSeq);
 
         // 여기에 알람에 따른 디자이너 정보가 추가될꺼야
         ArrayList<AlertCustomerOnLoginDto> alertDetailList = new ArrayList<>();
@@ -96,11 +98,6 @@ public class CustomerServiceImpl implements CustomerService{
     @Override
     public int changeLikeInfo(RequestLikeDto requestLikeDto) {
         return customerRepository.changeLikeInfo(requestLikeDto);
-    }
-
-    @Override
-    public CustomerDetailDto getCustomerDetail(int customerSeq) {
-        return customerRepository.getCustomerDetail(customerSeq);
     }
 
     @Override

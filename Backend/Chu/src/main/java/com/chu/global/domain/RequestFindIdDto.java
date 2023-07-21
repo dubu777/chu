@@ -1,6 +1,9 @@
 package com.chu.global.domain;
 
+import lombok.Data;
+
+@Data
 public class RequestFindIdDto {
-//    이름
-//    이메일
+    String name;
+    String email;
 }
