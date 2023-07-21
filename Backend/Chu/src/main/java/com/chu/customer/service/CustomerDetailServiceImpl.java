@@ -1,9 +1,9 @@
 package com.chu.customer.service;
 
+import com.chu.customer.domain.RequestCustomerDetailChangeDto;
 import com.chu.customer.domain.ResponseCustomerDetailDto;
 import com.chu.customer.domain.ResponseCustomerDetailInfoDto;
 import com.chu.customer.repository.CustomerDetailRepository;
-import com.chu.customer.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -46,5 +46,18 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
 
 
         return responseCustomerDetailInfoDto;
+    }
+
+    @Override
+    public boolean putCustomerDetailInfo(int customerSeq, RequestCustomerDetailChangeDto requestCustomerDetailChangeDto) {
+        boolean isSuccess = true;
+
+        // 고객정보, 얼굴형 수정
+        customerDetailRepository.updateCustomerInfo(customerSeq, requestCustomerDetailChangeDto);
+        // 고객 모발상태 수정
+        customerDetailRepository.updateHairStyleInfo(customerSeq, requestCustomerDetailChangeDto);
+        
+        // 둘다 완료됐으면
+        return true;
     }
 }

@@ -5,6 +5,7 @@ import com.chu.consulting.domain.PastConsultingDto;
 import com.chu.customer.domain.CustomerDto;
 import com.chu.customer.domain.CustomerHairConditionDto;
 import com.chu.customer.domain.FaceTypeDto;
+import com.chu.customer.domain.RequestCustomerDetailChangeDto;
 import com.chu.global.domain.HairStyleDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
@@ -77,5 +78,19 @@ public class CustomerDetailRepositoryImpl implements CustomerDetailRepository {
         // 모든 모발상태 가져오기
 
         return hairStyleList;
+    }
+
+    @Override
+    public boolean updateCustomerInfo(int customerSeq, RequestCustomerDetailChangeDto requestCustomerDetailChangeDto) {
+        // 고객정보, 얼굴형 수정
+        
+        return false;
+    }
+
+    @Override
+    public boolean updateHairStyleInfo(int customerSeq, RequestCustomerDetailChangeDto requestCustomerDetailChangeDto) {
+        // 고객 모발상태 수정
+        
+        return false;
     }
 }

@@ -34,11 +34,6 @@ public interface CustomerRepository {
     int changeLikeInfo(RequestLikeDto requestLikeDto);
 
 
-
-    ResponseCustomerDetailInfoDto getCustomerDetailInfo(int customerSeq);
-
-    boolean putCustomerDetailInfo(int customerSeq, CustomerDetailChangeDto customerDetailChangeDto);
-
     ArrayList<AlertCustomerDto> getAlertList(int customerSeq);
 
     boolean createAlert(AlertCreateDto alertCreateDto);

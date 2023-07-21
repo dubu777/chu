@@ -1,5 +1,6 @@
 package com.chu.customer.service;
 
+import com.chu.customer.domain.RequestCustomerDetailChangeDto;
 import com.chu.customer.domain.ResponseCustomerDetailInfoDto;
 import com.chu.customer.domain.ResponseCustomerDetailDto;
 
@@ -12,4 +13,6 @@ public interface CustomerDetailService {
 
     // 고객정보 수정 눌렀을때 가져올 것들
     ResponseCustomerDetailInfoDto getCustomerUpdateDetailInfo(int customerSeq);
+
+    boolean putCustomerDetailInfo(int customerSeq, RequestCustomerDetailChangeDto requestCustomerDetailChangeDto);
 }

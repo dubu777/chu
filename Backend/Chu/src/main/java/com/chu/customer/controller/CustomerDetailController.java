@@ -1,5 +1,6 @@
 package com.chu.customer.controller;
 
+import com.chu.customer.domain.RequestCustomerDetailChangeDto;
 import com.chu.customer.domain.ResponseCustomerDetailInfoDto;
 import com.chu.customer.domain.ResponseCustomerDetailDto;
 import com.chu.customer.service.CustomerDetailService;
@@ -26,6 +27,19 @@ public class CustomerDetailController {
             return ResponseEntity.ok(httpResponseDto);
         }
         else{
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
+        }
+    }
+
+    @PutMapping("/")
+    public ResponseEntity<HttpResponseDto> putCustomerDetailInfo(@PathVariable("customer_seq") int customerSeq, @RequestBody RequestCustomerDetailChangeDto requestCustomerDetailChangeDto) {
+        boolean isSuccess = customerDetailService.putCustomerDetailInfo(customerSeq, requestCustomerDetailChangeDto);
+
+        if (isSuccess) {
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, null);
+            return ResponseEntity.ok(httpResponseDto);
+        } else {
             HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
             return ResponseEntity.ok(httpResponseDto);
         }

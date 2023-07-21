@@ -132,19 +132,6 @@ public class CustomerController {
         }
     }
 
-    @PutMapping("/detail")
-    public ResponseEntity<HttpResponseDto> putCustomerDetailInfo(@PathVariable("customer_seq") int customerSeq, @RequestBody CustomerDetailChangeDto customerDetailChangeDto) {
-        boolean isSuccess = customerService.putCustomerDetailInfo(customerSeq, customerDetailChangeDto);
-
-        if (isSuccess) {
-            HttpResponseDto httpResponseDto = new HttpResponseDto(200, null);
-            return ResponseEntity.ok(httpResponseDto);
-        } else {
-            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
-            return ResponseEntity.ok(httpResponseDto);
-        }
-    }
-
     @GetMapping("/like")
     public ResponseEntity<HttpResponseDto> getLikeDesignerInfo(@PathVariable("customer_seq") int customerSeq){
 
