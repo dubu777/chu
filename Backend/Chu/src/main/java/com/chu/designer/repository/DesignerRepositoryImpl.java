@@ -3,7 +3,7 @@ package com.chu.designer.repository;
 import com.chu.consulting.domain.ConsultingDto;
 import com.chu.designer.domain.*;
 import com.chu.global.domain.*;
-import com.chu.worldcup.domain.WorldcupStatisticsInfoDto;
+import com.chu.worldcup.domain.WorldcupStatisticsWinnerHairInfoDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
@@ -56,7 +56,7 @@ public class DesignerRepositoryImpl implements DesignerRepository {
         ArrayList<BestDesignerDto> bestDesignerDtoList = new ArrayList<>();
 
         // 월드컵 우승 데이터 사진들
-        ArrayList<WorldcupStatisticsInfoDto> worldcupStatisticsInfoDtoList = new ArrayList<>();
+        ArrayList<WorldcupStatisticsWinnerHairInfoDto> worldcupStatisticsWinnerHairInfoDtoList = new ArrayList<>();
 
         // 알림 데이터
         // 디자이너 idx로 알림 접근

@@ -2,7 +2,7 @@ package com.chu.customer.repository;
 
 import com.chu.customer.domain.*;
 import com.chu.global.domain.*;
-import com.chu.worldcup.domain.WorldcupStatisticsInfoDto;
+import com.chu.worldcup.domain.WorldcupStatisticsWinnerHairInfoDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -63,7 +63,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
         ArrayList<FaceInfoDto> faceInfoDtoList = new ArrayList<FaceInfoDto>();
 
         // 월드컵 우승 데이터 사진들
-        ArrayList<WorldcupStatisticsInfoDto> worldcupStatisticsInfoDtoList = new ArrayList<>();
+        ArrayList<WorldcupStatisticsWinnerHairInfoDto> worldcupStatisticsWinnerHairInfoDtoList = new ArrayList<>();
 
         // 알림 데이터
         // 고객 idx로 알림 접근

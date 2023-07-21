@@ -3,6 +3,7 @@ package com.chu.worldcup.controller;
 import com.chu.global.domain.ImageWithHairInfoDto;
 import com.chu.global.domain.ResponseDto;
 import com.chu.worldcup.domain.WorldcupRequestDto;
+import com.chu.worldcup.domain.WorldcupStatisticsRequestDto;
 import com.chu.worldcup.service.WorldcupService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -43,6 +44,21 @@ public class WorldcupController {
         // 예외 처리 다시 보기
         if(responseSeq > 0){
             ResponseDto responseDto = new ResponseDto(200, responseSeq);
+            return ResponseEntity.ok(responseDto);
+        }
+        else{
+            ResponseDto responseDto = new ResponseDto(204, null);
+            return ResponseEntity.ok(responseDto);
+        }
+    }
+
+    @PatchMapping("/")
+    public ResponseEntity<ResponseDto> updateWorldcupStatistics(@RequestBody WorldcupStatisticsRequestDto worldcupStatisticsRequestDto) {
+
+        boolean isSuccess = worldcupService.updateWorldcupStatistics(worldcupStatisticsRequestDto);
+
+        if(isSuccess){
+            ResponseDto responseDto = new ResponseDto(200, null);
             return ResponseEntity.ok(responseDto);
         }
         else{

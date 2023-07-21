@@ -2,6 +2,7 @@ package com.chu.worldcup.repository;
 
 import com.chu.global.domain.ImageWithHairInfoDto;
 import com.chu.worldcup.domain.WorldcupRequestDto;
+import com.chu.worldcup.domain.WorldcupStatisticsRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
@@ -34,5 +35,17 @@ public class WorldcupRepositoryImpl implements WorldcupRepository {
         // 월드컵 시퀀스로 이미지들 다 가져오기
 
         return resultList;
+    }
+
+    @Override
+    public boolean updateWorldcupStatistics(WorldcupStatisticsRequestDto worldcupStatisticsRequestDto) {
+        
+        boolean isSuccess = true;
+        
+        // 로직
+        
+        // 월드컵 통계 정보 추가
+
+        return isSuccess;
     }
 }
