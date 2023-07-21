@@ -38,7 +38,7 @@ const P = styled.p`
   font-size: 20px;
 `;
 
-function ClickMenu(){
+function MainView(){
   return(
     <Container>
     <Title>Style의 발견 🎁</Title>
@@ -58,4 +58,4 @@ function ClickMenu(){
   )
 }
 
-export default ClickMenu;
+export default MainView;
