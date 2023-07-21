@@ -132,7 +132,6 @@ function WorldcupImgUpload() {
 								<P>{fileName}</P>
 								<DeleteBtn onClick={handleFileRemoveButton}>삭제</DeleteBtn>
 							</Div>
-							
 						</Borderbox>
         	</Imgbox>
 				

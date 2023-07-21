@@ -114,7 +114,7 @@ function Header() {
               >UserType
             </Item>
           </Link>
-          <Link to="signup">
+          <Link to="usertype">
             <Item 
               variants={logoVariants}
               whileHover="active"

@@ -37,7 +37,7 @@ const Box = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 400px;
+  width: 370px;
   height: 400px;
   margin-top: 30px;
   border-radius: 10px;
@@ -59,6 +59,7 @@ const SubText = styled.span`
   font-size: 15px;
   font-weight: bold;
   margin: 10px 0 40px 0;
+  color: rgb(100,93,81);
 `;
 const Hr = styled.div`
   margin-top: 20px;
@@ -110,13 +111,13 @@ function UserTypeComponet() {
             <DesignerImg src="./icon/hair-cutting.png"/>
             <Text>디자이너</Text>
             <SubText>디자이너가 홈페이지에 가입하는 경우</SubText>
-            <Btn>회원가입</Btn>
+            <Btn onClick={() => navigate('/designersignup')}>회원가입</Btn>
           </Box>
           <Box>
             <CustomerImg src="./icon/woman.png"/>
             <Text>일반 회원</Text>
             <SubText>일반 회원이 홈페이지에 가입하는 경우</SubText>
-            <Btn onClick={() => navigate('/signup')}>회원가입</Btn>
+            <Btn onClick={() => navigate('/customersignup')}>회원가입</Btn>
           </Box>
         </Wrapper>
       </TypeWrapper>
