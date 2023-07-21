@@ -36,7 +36,7 @@ public interface CustomerRepository {
 
     ArrayList<ResponseAlertCustomerDto> getAlertList(int customerSeq);
 
-    boolean createAlert(AlertCreateDto alertCreateDto);
+    boolean createAlert(RequestAlertCreateDto requestAlertCreateDto);
 
     boolean readAlert(AlertReadDto alertReadDto);
 }

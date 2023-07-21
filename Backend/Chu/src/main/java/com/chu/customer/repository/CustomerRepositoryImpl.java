@@ -113,12 +113,11 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     }
 
     @Override
-    public boolean createAlert(AlertCreateDto alertCreateDto) {
+    public boolean createAlert(RequestAlertCreateDto requestAlertCreateDto) {
         boolean isSuccess = true;
         // 로직
 
         // 알림 생성
-
         return isSuccess;
     }
 

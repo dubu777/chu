@@ -2,7 +2,7 @@ package com.chu.global.controller;
 
 import com.chu.customer.service.CustomerService;
 import com.chu.designer.service.DesignerService;
-import com.chu.global.domain.AlertCreateDto;
+import com.chu.global.domain.RequestAlertCreateDto;
 import com.chu.global.domain.AlertReadDto;
 import com.chu.global.domain.HttpResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -62,19 +62,19 @@ public class UserController {
     }
 
     @PostMapping("/alert")
-    public ResponseEntity<HttpResponseDto> creatAlert(@RequestBody AlertCreateDto alertCreateDto) {
+    public ResponseEntity<HttpResponseDto> creatAlert(@RequestBody RequestAlertCreateDto requestAlertCreateDto) {
 
-        String userType = alertCreateDto.getUserType();
+        String userType = requestAlertCreateDto.getUserType();
 
         boolean customerSuccess = false;
         boolean designerSuccess = false;
 
         if(userType.equals("customer")){
-            boolean isSuccess = customerService.createAlert(alertCreateDto);
+            boolean isSuccess = customerService.createAlert(requestAlertCreateDto);
             if(isSuccess) customerSuccess = true;
         }
         else if(userType.equals("designer")){
-            boolean isSuccess = designerService.createAlert(alertCreateDto);
+            boolean isSuccess = designerService.createAlert(requestAlertCreateDto);
             if(isSuccess) designerSuccess = true;
         }
 

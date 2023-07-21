@@ -1,6 +1,11 @@
 package com.chu.global.domain;
 
-public class AlertCreateDto {
+import lombok.Data;
+
+@Data
+public class RequestAlertCreateDto {
+    int consultingSeq;
+    String userType;
 //        "consultingSeq" : 10,
 //                "userType" : "designer"
 }

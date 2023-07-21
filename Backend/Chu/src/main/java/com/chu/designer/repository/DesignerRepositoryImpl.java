@@ -101,7 +101,7 @@ public class DesignerRepositoryImpl implements DesignerRepository {
     }
 
     @Override
-    public boolean createAlert(AlertCreateDto alertCreateDto) {
+    public boolean createAlert(RequestAlertCreateDto requestAlertCreateDto) {
         boolean isSuccess = true;
 
         // 로직

@@ -37,7 +37,7 @@ public interface DesignerService {
 
     ArrayList<ResponseAlertDesignerDto> getAlertList(int designerSeq);
 
-    boolean createAlert(AlertCreateDto alertCreateDto);
+    boolean createAlert(RequestAlertCreateDto requestAlertCreateDto);
 
     boolean readAlert(AlertReadDto alertReadDto);
 
