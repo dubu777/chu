@@ -1,5 +1,6 @@
 package com.chu.designer.repository;
 
+import com.chu.consulting.domain.ConsultingDto;
 import com.chu.designer.domain.*;
 import com.chu.global.domain.*;
 import com.chu.worldcup.domain.WorldcupStatisticsInfoDto;
@@ -214,5 +215,16 @@ public class DesignerRepositoryImpl implements DesignerRepository {
         // 해당 미용사의 예약 가능 시간 변경
 
         return isSuccess;
+    }
+
+    @Override
+    public ArrayList<ConsultingDto> getReservationList(int designerSeq) {
+        ArrayList<ConsultingDto> reservationList = new ArrayList<>();
+
+        // 로직
+
+        // 디자이너 seq로 현재 시점 이후 예약 날짜 혹은 시간 상담들 조회
+
+        return reservationList;
     }
 }

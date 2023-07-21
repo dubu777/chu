@@ -1,5 +1,6 @@
 package com.chu.designer.service;
 
+import com.chu.consulting.domain.ConsultingDto;
 import com.chu.designer.domain.*;
 import com.chu.designer.repository.DesignerRepository;
 import com.chu.global.domain.*;
@@ -113,6 +114,11 @@ public class DesignerServiceImpl implements DesignerService{
     @Override
     public boolean updatePossibleReservationTime(int designerSeq, ReservationTimeDto reservationTimeDto) {
         return designerRepository.updatePossibleReservationTime(designerSeq, reservationTimeDto);
+    }
+
+    @Override
+    public ArrayList<ConsultingDto> getReservationList(int designerSeq) {
+        return designerRepository.getReservationList(designerSeq);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.chu.designer.repository;
 
+import com.chu.consulting.domain.ConsultingDto;
 import com.chu.designer.domain.*;
 import com.chu.global.domain.*;
 
@@ -43,4 +44,6 @@ public interface DesignerRepository {
     ArrayList<TimeDto> getPossibleReservationTime(int designerSeq, Date date);
 
     boolean updatePossibleReservationTime(int designerSeq, ReservationTimeDto reservationTimeDto);
+
+    ArrayList<ConsultingDto> getReservationList(int designerSeq);
 }
