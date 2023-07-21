@@ -217,6 +217,22 @@ public class DesignerController {
         }
     }
 
+    @GetMapping("/time")
+    public ResponseEntity<ResponseDto> getPossibleReservationTime(@PathVariable("designer-seq") int designerSeq, Date date) {
+
+        ArrayList<TimeDto> possibleReservationTime = designerService.getPossibleReservationTime(designerSeq, date);
+
+        if(possibleReservationTime.size() != 0){
+            ResponseDto responseDto = new ResponseDto(200, possibleReservationTime);
+            return ResponseEntity.ok(responseDto);
+        }
+        else{
+            ResponseDto responseDto = new ResponseDto(204, null);
+            return ResponseEntity.ok(responseDto);
+        }
+
+    }
+
     @PutMapping("/time")
     public ResponseEntity<ResponseDto> updatePossibleReservationTime(@PathVariable("designer-seq") int designerSeq, @RequestBody ReservationTimeDto reservationTimeDto) {
 
@@ -231,6 +247,4 @@ public class DesignerController {
             return ResponseEntity.ok(responseDto);
         }
     }
-
-    
 }

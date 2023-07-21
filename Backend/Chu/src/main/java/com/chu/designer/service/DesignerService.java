@@ -40,6 +40,7 @@ public interface DesignerService {
 
     boolean updateDesignerInfo(int designerSeq, DesignerInfoUpdateDto designerInfoUpdateDto);
 
+    ArrayList<TimeDto> getPossibleReservationTime(int designerSeq, Date date);
 
     boolean updatePossibleReservationTime(int designerSeq, ReservationTimeDto reservationTimeDto);
 }

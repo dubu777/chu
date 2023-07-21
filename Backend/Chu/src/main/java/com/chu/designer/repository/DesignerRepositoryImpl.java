@@ -197,6 +197,15 @@ public class DesignerRepositoryImpl implements DesignerRepository {
     }
 
     @Override
+    public ArrayList<TimeDto> getPossibleReservationTime(int designerSeq, Date date) {
+        ArrayList<TimeDto> possibleReservationTimeList = new ArrayList<>();
+
+        // 디자이너 해당 날짜 가능 시간 조회
+
+        return possibleReservationTimeList;
+    }
+
+    @Override
     public boolean updatePossibleReservationTime(int designerSeq, ReservationTimeDto reservationTimeDto) {
         boolean isSuccess = true;
 
