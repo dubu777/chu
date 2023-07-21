@@ -53,11 +53,16 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
         boolean isSuccess = true;
 
         // 고객정보, 얼굴형 수정
-        customerDetailRepository.updateCustomerInfo(customerSeq, requestCustomerDetailChangeDto);
+        boolean customerInfoFaceUpdateSuccess = customerDetailRepository.updateCustomerInfo(customerSeq, requestCustomerDetailChangeDto);
         // 고객 모발상태 수정
-        customerDetailRepository.updateHairStyleInfo(customerSeq, requestCustomerDetailChangeDto);
-        
+        boolean customerHairStatusUpdateSuccess = customerDetailRepository.updateHairStyleInfo(customerSeq, requestCustomerDetailChangeDto);
+
         // 둘다 완료됐으면
-        return true;
+        if (customerHairStatusUpdateSuccess && customerInfoFaceUpdateSuccess) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 }

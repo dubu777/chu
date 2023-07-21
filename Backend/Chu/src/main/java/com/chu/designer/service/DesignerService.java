@@ -41,8 +41,6 @@ public interface DesignerService {
 
     boolean readAlert(RequestAlertReadDto requestAlertReadDto);
 
-    DesignerMyPageDto getMyPageInfo(int designerSeq);
-
     boolean patchIntroduction(int designerSeq, String introduction);
 
     boolean patchImg(int designerSeq, String img);
@@ -63,5 +61,4 @@ public interface DesignerService {
 
     boolean postPortfolioImage(int designerSeq, String img);
 
-    ArrayList<BestDesignerDto> getBestDesignerInfo();
 }

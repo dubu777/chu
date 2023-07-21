@@ -119,19 +119,6 @@ public class DesignerRepositoryImpl implements DesignerRepository {
     }
 
     @Override
-    public DesignerMyPageDto getMyPageInfo(int designerSeq) {
-        DesignerMyPageDto designerMyPageDto = new DesignerMyPageDto();
-
-        // 디자이너 정보
-        
-        // 디자이너가 잘하는 머리 스타일
-        
-        // 디자이너가 그날 가능한 시간
-
-        return designerMyPageDto;
-    }
-
-    @Override
     public boolean patchIntroduction(int designerSeq, String introduction) {
         boolean isSuccess = true;
 

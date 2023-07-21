@@ -120,25 +120,12 @@ public class DesignerController {
         }
     }
 
-    @GetMapping("alert")
+    @GetMapping("/alert")
     public ResponseEntity<HttpResponseDto> getAlert(@PathVariable("designer_seq") int designerSeq) {
         ArrayList<ResponseAlertDesignerDto> responseAlertDesignerDtoList = designerService.getAlertList(designerSeq);
 
         if (responseAlertDesignerDtoList.size() != 0) {
             HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseAlertDesignerDtoList);
-            return ResponseEntity.ok(httpResponseDto);
-        } else {
-            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
-            return ResponseEntity.ok(httpResponseDto);
-        }
-    }
-
-    @GetMapping("/")
-    public ResponseEntity<HttpResponseDto> getMyPageInfo(@PathVariable("designer_seq") int designerSeq) {
-        DesignerMyPageDto designerMyPageDto = designerService.getMyPageInfo(designerSeq);
-
-        if (designerMyPageDto != null) {
-            HttpResponseDto httpResponseDto = new HttpResponseDto(200, designerMyPageDto);
             return ResponseEntity.ok(httpResponseDto);
         } else {
             HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);

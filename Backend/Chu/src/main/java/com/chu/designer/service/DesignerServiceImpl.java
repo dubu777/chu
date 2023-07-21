@@ -110,11 +110,6 @@ public class DesignerServiceImpl implements DesignerService{
     }
 
     @Override
-    public DesignerMyPageDto getMyPageInfo(int designerSeq) {
-        return designerRepository.getMyPageInfo(designerSeq);
-    }
-
-    @Override
     public boolean patchIntroduction(int designerSeq, String introduction) {
         return designerRepository.patchIntroduction(designerSeq, introduction);
     }
@@ -162,13 +157,5 @@ public class DesignerServiceImpl implements DesignerService{
     @Override
     public boolean postPortfolioImage(int designerSeq, String img) {
         return designerRepository.postPortfolioImage(designerSeq, img);
-    }
-
-    @Override
-    public ArrayList<BestDesignerDto> getBestDesignerInfo() {
-        ArrayList<BestDesignerDto> bestDesignerInfoList = new ArrayList<>();
-
-        designerRepository.getBestDesigners();
-        return bestDesignerInfoList;
     }
 }
