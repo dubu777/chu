@@ -1,5 +1,6 @@
 package com.chu.designer.domain;
 
+// 디자이너의 정보를 담고 있는 가장 많이 쓰이는 DTO
 public class DesignerSearchDto {
 
 //            "designerSeq" : 1,

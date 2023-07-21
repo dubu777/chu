@@ -1,6 +1,6 @@
 package com.chu.consulting.domain;
 
-public class ConsultingRequestDto {
+public class RequestConsultingDto {
 //        "customerSeq" : 1,
 //                "designerSeq" : 4,
 //                "date" : "2023-07-20",

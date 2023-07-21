@@ -1,7 +1,6 @@
 package com.chu.consulting.repository;
 
 import com.chu.consulting.domain.*;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
@@ -23,13 +22,22 @@ public class ConsultingRepositoryImpl implements ConsultingRepository {
     }
 
     @Override
-    public int createConsulting(ConsultingRequestDto consultingRequestDto) {
-        int row = 0;
+    public boolean createConsulting(RequestConsultingDto requestConsultingDto) {
+        boolean isSuccess = true;
 
         // 로직
-        // 상담 등록 후 행 반환
+        // 상담 등록
 
-        return row;
+        return isSuccess;
+    }
+
+    @Override
+    public boolean updatePossibleConsulting(int consultingSeq) {
+        boolean isSuccess = true;
+
+        // 해당 시간 날짜 디자이너의 상담 가능 테이블 상태 변경 가능으로
+
+        return isSuccess;
     }
 
     @Override
@@ -38,10 +46,14 @@ public class ConsultingRepositoryImpl implements ConsultingRepository {
 
         // 로직
         // 상담 취소니까
-        // 가능 시간 테이블에서 그 녀석 상태 변경
         // 상담 테이블에서 그 녀석 삭제 ( 삭제 하는게 맞는가 상태 컬럼 추가하는게 맞는가)
 
         return isSuccess;
+    }
+
+    @Override
+    public boolean updateImpossibleConsulting(RequestConsultingDto requestConsultingDto) {
+        return false;
     }
 
     @Override

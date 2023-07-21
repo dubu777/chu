@@ -5,7 +5,7 @@ import com.chu.consulting.domain.*;
 public interface ConsultingService {
     String participantConsulting(int consultingSeq);
 
-    int createConsulting(ConsultingRequestDto consultingRequestDto);
+    boolean createConsulting(RequestConsultingDto requestConsultingDto);
 
     boolean deleteConsulting(int consultingSeq);
 

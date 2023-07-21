@@ -33,11 +33,11 @@ public class ConsultingController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<HttpResponseDto> postConsulting(@RequestBody ConsultingRequestDto consultingRequestDto) {
+    public ResponseEntity<HttpResponseDto> postConsulting(@RequestBody RequestConsultingDto requestConsultingDto) {
 
-        int isSuccess = consultingService.createConsulting(consultingRequestDto);
+        boolean isSuccess = consultingService.createConsulting(requestConsultingDto);
 
-        if (isSuccess == 1) {
+        if (isSuccess) {
             HttpResponseDto httpResponseDto = new HttpResponseDto(200, null);
             return ResponseEntity.ok(httpResponseDto);
         }
@@ -63,8 +63,7 @@ public class ConsultingController {
     }
 
     @DeleteMapping("/")
-
-    public ResponseEntity<HttpResponseDto> deleteConsulting(@PathVariable("consulting_seq") int consultingSeq) {
+    public ResponseEntity<HttpResponseDto> deleteConsulting(@PathVariable("consulting-seq") int consultingSeq) {
 
         boolean isSuccess = consultingService.deleteConsulting(consultingSeq);
 

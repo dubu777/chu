@@ -6,9 +6,13 @@ public interface ConsultingRepository {
 
     String participantConsulting(int consultingSeq);
 
-    int createConsulting(ConsultingRequestDto consultingRequestDto);
+    boolean createConsulting(RequestConsultingDto requestConsultingDto);
+
+    boolean updatePossibleConsulting(int consultingSeq);
 
     boolean deleteConsulting(int consultingSeq);
+
+    boolean updateImpossibleConsulting(RequestConsultingDto requestConsultingDto);
 
     ConsultingResultDto getConsultingResult(int consultingSeq);
 

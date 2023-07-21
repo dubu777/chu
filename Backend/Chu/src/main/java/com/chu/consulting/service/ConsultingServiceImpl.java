@@ -19,13 +19,33 @@ public class ConsultingServiceImpl implements ConsultingService {
     }
 
     @Override
-    public int createConsulting(ConsultingRequestDto consultingRequestDto) {
-        return consultingRepository.createConsulting(consultingRequestDto);
+    public boolean createConsulting(RequestConsultingDto requestConsultingDto) {
+        // 상담 가능 상태 테이블 상태 변경
+        boolean updateImpossibleConsulting = consultingRepository.updateImpossibleConsulting(requestConsultingDto);
+        // 상담 테이블 행 추가
+        boolean createConsultingState = consultingRepository.createConsulting(requestConsultingDto);
+
+        if (updateImpossibleConsulting && createConsultingState) {
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     @Override
     public boolean deleteConsulting(int consultingSeq) {
-        return consultingRepository.deleteConsulting(consultingSeq);
+        // 상담 가능 상태 테이블 상태 변경
+        boolean updatePossibleConsulting = consultingRepository.updatePossibleConsulting(consultingSeq);
+        // 상담 테이블 삭제 혹은 상태 변경 ERD 변화 필요 가능성 대화 필요
+        boolean deleteConsultingState = consultingRepository.deleteConsulting(consultingSeq);
+
+        if (updatePossibleConsulting && deleteConsultingState) {
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     @Override
