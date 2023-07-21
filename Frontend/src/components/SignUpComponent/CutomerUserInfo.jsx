@@ -17,28 +17,21 @@ const Container = styled.div`
 
 const Wrapper = styled.div`
   display: flex;
-  gap: 20px;
-  grid-template-columns: repeat(2, 1fr);
   justify-content: space-around;
   align-items: center;
   height: 300px;
-  width: 100%;
-  margin-top: 30px;
+  width: 900px;
+  margin-top: 50px;
   border-radius: 20px;
   background-color: rgb(242,234,211);
   margin-bottom: 20px;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
 `;
 
+
 const Wrap = styled.div`
   display: flex;
   flex-direction: column;
-  /* align-items: right; */
-  /* margin-left: 10%; */
-`;
-
-const InputWrapper = styled.div`
-  display: flex;
 `;
 
 const Label = styled.label`
@@ -50,14 +43,7 @@ const Text = styled.span`
   font-size: 14px;
   font-weight: bold;
 `;
-const Btn = styled.button`
-  border-radius: 0.78rem;
-  border: 0;
-  background-color: orange;
-  height: 25px;
-  width: 55px;
-  font-size: 5px;
-`;
+
 const User = styled.div`
   display: flex; /* 추가: 라디오 버튼과 텍스트를 가로로 나열하기 위해 */
   align-items: center; /* 추가: 라디오 버튼과 텍스트를 수직 중앙에 정렬 */
