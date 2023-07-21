@@ -101,7 +101,7 @@ public class CustomerServiceImpl implements CustomerService{
     }
 
     @Override
-    public ArrayList<AlertCustomerDto> getAlertList(int customerSeq) {
+    public ArrayList<ResponseAlertCustomerDto> getAlertList(int customerSeq) {
         return customerRepository.getAlertList(customerSeq);
     }
 

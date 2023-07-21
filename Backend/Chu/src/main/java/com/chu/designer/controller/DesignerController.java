@@ -125,7 +125,7 @@ public class DesignerController {
         ArrayList<ResponseAlertDesignerDto> responseAlertDesignerDtoList = designerService.getAlertList(designerSeq);
 
         if (responseAlertDesignerDtoList.size() != 0) {
-            HttpResponseDto httpResponseDto = new HttpResponseDto(200, null);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseAlertDesignerDtoList);
             return ResponseEntity.ok(httpResponseDto);
         } else {
             HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);

@@ -1,6 +1,6 @@
 package com.chu.global.domain;
 
-public class AlertCustomerDto {
+public class ResponseAlertCustomerDto {
 //                    "alertSeq" : 1,
 //                            "check" : false,
 //                            "sendDate" : "2023-07-18",

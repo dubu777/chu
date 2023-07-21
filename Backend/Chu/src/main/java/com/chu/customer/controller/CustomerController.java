@@ -133,7 +133,7 @@ public class CustomerController {
     }
 
     @GetMapping("/like")
-    public ResponseEntity<HttpResponseDto> getLikeDesignerInfo(@PathVariable("customer_seq") int customerSeq){
+    public ResponseEntity<HttpResponseDto> getLikeDesignerInfo(@PathVariable("customer-seq") int customerSeq){
 
         ArrayList<DesignerSearchDto> designerSearchDtoList = designerSearchService.search2Like(customerSeq);
 
@@ -150,12 +150,12 @@ public class CustomerController {
         }
     }
 
-    @GetMapping("alert")
-    public ResponseEntity<HttpResponseDto> getAlert(@PathVariable("designer_seq") int designerSeq){
-        ArrayList<AlertCustomerDto> AlertCustomerDtoList = customerService.getAlertList(designerSeq);
+    @GetMapping("/alert")
+    public ResponseEntity<HttpResponseDto> getAlert(@PathVariable("customer-seq") int customerSeq){
+        ArrayList<ResponseAlertCustomerDto> responseAlertCustomerDtoList = customerService.getAlertList(customerSeq);
 
-        if(AlertCustomerDtoList.size() != 0){
-            HttpResponseDto httpResponseDto = new HttpResponseDto(200, null);
+        if(responseAlertCustomerDtoList.size() != 0){
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseAlertCustomerDtoList);
             return ResponseEntity.ok(httpResponseDto);
         }
         else{

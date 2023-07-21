@@ -102,10 +102,11 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
 
     @Override
-    public ArrayList<AlertCustomerDto> getAlertList(int customerSeq) {
-        ArrayList<AlertCustomerDto> alertList = new ArrayList<>();
+    public ArrayList<ResponseAlertCustomerDto> getAlertList(int customerSeq) {
+        ArrayList<ResponseAlertCustomerDto> alertList = new ArrayList<>();
 
         // 로직
+
         // 고객 번호로 알림 조회
 
         return alertList;
