@@ -52,4 +52,6 @@ public interface DesignerRepository {
     boolean deletePortfolioImage(int designerSeq, int imageSeq);
 
     boolean postPortfolioImage(int designerSeq, String img);
+
+    ArrayList<BestDesignerDto> getBestDesigners();
 }

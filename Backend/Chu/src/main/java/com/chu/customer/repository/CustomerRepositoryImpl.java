@@ -32,12 +32,12 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     }
 
     @Override
-    public int signUp(CustomerSignUpDto customerSignUpDto) {
+    public boolean signUp(CustomerSignUpDto customerSignUpDto) {
+
         // 로직
         // 정상 가입인지
 
-        //성공시 isSuccess 1 아니면 0이나 -1
-        return 0;
+        return false;
     }
 
     @Override
@@ -48,28 +48,23 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     }
 
     @Override
-    public CustomerLoginDetailDto getLoginCustomerDetail(String id) {
-        // 고객 정보
-        // 고객 테이블에서 정보 다 끌어오기
+    public CustomerDto getCustomerInfo(String id) {
+        CustomerDto customerDto = new CustomerDto();
+        // 로직
 
-        // 베스트 디자이너
-        // 디자이너 평점 limit 6
-        // 초기에 값이 없을 수도 있음 null 조심, 미리 dump 파일로 어느정도 데이터 삽입해놓기
-        // 베스트 디자이너 갖고 와서 채우고 -> customerDetailDto에 넣기
-        ArrayList<BestDesignerDto> bestDesignerDtoList = new ArrayList<>();
+        // 아이디로 고객 테이블 정보 다 가져오기
 
-        // 얼굴형에 잘 어울리는 스타일들 사진
-        // 위에서 갖고 온 얼굴형 정보 토대로 검색
-        ArrayList<FaceInfoDto> faceInfoDtoList = new ArrayList<FaceInfoDto>();
+        return customerDto;
+    }
 
-        // 월드컵 우승 데이터 사진들
-        ArrayList<WorldcupStatisticsWinnerHairInfoDto> worldcupStatisticsWinnerHairInfoDtoList = new ArrayList<>();
+    @Override
+    public ArrayList<ImageDto> getTopStyleByFace(int faceSeq) {
+        ArrayList<ImageDto> getTopStyleList = new ArrayList<>();
+        // 얼굴형 갖고 상담 결과 상세에서 탑 몇개 뽑기
 
-        // 알림 데이터
-        // 고객 idx로 알림 접근
-        // 상담 IDX 토대로 APi 명세에 따른 로직 추가
-        ArrayList<AlertDto> alertDtoList = new ArrayList<>();
-        return null;
+        // 헤어스타일 사전 거쳐서 헤어스타일 이미지 가져오기
+
+        return getTopStyleList;
     }
 
     @Override

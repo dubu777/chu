@@ -61,7 +61,7 @@ public class DesignerRepositoryImpl implements DesignerRepository {
         // 알림 데이터
         // 디자이너 idx로 알림 접근
         // 상담 IDX 토대로 APi 명세에 따른 로직 추가
-        ArrayList<AlertDto> alertDtoList = new ArrayList<>();
+        ArrayList<AlertToDesignerDto> alertDtoList = new ArrayList<>();
         return null;
     }
 
@@ -261,5 +261,16 @@ public class DesignerRepositoryImpl implements DesignerRepository {
         // 해당 디자이너 번호에 해당 이미지 삽입
         
         return isSuccess;
+    }
+
+    @Override
+    public ArrayList<BestDesignerDto> getBestDesigners() {
+        ArrayList<BestDesignerDto> bestDesignerInfoList = new ArrayList<>();
+
+        // 베스트 디자이너들 정보 얻어오기
+        // 디자이너 평점 limit 6
+        // 초기에 값이 없을 수도 있음 null 조심, 미리 dump 파일로 어느정도 데이터 삽입해놓기
+
+        return bestDesignerInfoList;
     }
 }

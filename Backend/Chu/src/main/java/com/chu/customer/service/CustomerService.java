@@ -11,6 +11,8 @@ public interface CustomerService {
     boolean checkEmail(String email);
     int signUp(CustomerSignUpDto customerSignUpDto);
 
+    CustomerDto getCustomerInfo(String id);
+
     boolean signIn(SignInDto signInDto);
 
     CustomerLoginDetailDto getLoginCustomerDetail(String id);

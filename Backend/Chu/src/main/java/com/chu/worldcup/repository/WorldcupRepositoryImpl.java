@@ -1,5 +1,6 @@
 package com.chu.worldcup.repository;
 
+import com.chu.global.domain.ImageDto;
 import com.chu.global.domain.ImageWithHairInfoDto;
 import com.chu.worldcup.domain.WorldcupRequestDto;
 import com.chu.worldcup.domain.WorldcupStatisticsRequestDto;
@@ -14,6 +15,15 @@ import java.util.ArrayList;
 @RequiredArgsConstructor
 public class WorldcupRepositoryImpl implements WorldcupRepository {
     // DB CONN
+
+    @Override
+    public ArrayList<ImageDto> getTopWorldcupImages() {
+        ArrayList<ImageDto> worldcupWinHairImageList = new ArrayList<>();
+        // 로직
+
+        // 월드컵 우승 데이터 사진들
+        return worldcupWinHairImageList;
+    }
 
     @Override
     public int createWorldcup(WorldcupRequestDto worldcupRequestDto) {

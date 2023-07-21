@@ -7,13 +7,22 @@ import java.util.ArrayList;
 
 public interface CustomerRepository {
 
+    // 아이디 중복 검사
     boolean checkId(String id);
+
+    // 이메일 중복 검사
     boolean checkEmail(String email);
+
+    // 고객 회원 가입
     int signUp(CustomerSignUpDto customerSignUpDto);
 
+    // 고객 로그인 가능 여부 확인
     boolean signIn(SignInDto signInDto);
 
-    CustomerLoginDetailDto getLoginCustomerDetail(String id);
+    // 고객 정보 가져오기
+    CustomerDto getCustomerInfo(String id);
+
+    ArrayList<ImageDto> getTopStyleByFace(int faceSeq);
 
     String findId(FindIdDto findIdDto);
 

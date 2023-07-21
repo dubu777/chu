@@ -136,4 +136,11 @@ public class DesignerServiceImpl implements DesignerService{
         return designerRepository.postPortfolioImage(designerSeq, img);
     }
 
+    @Override
+    public ArrayList<BestDesignerDto> getBestDesignerInfo() {
+        ArrayList<BestDesignerDto> bestDesignerInfoList = new ArrayList<>();
+
+        designerRepository.getBestDesigners();
+        return bestDesignerInfoList;
+    }
 }

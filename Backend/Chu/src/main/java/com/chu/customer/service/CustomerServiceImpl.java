@@ -1,8 +1,12 @@
 package com.chu.customer.service;
 
 import com.chu.customer.domain.*;
+import com.chu.customer.repository.CustomerAlertRepository;
 import com.chu.customer.repository.CustomerRepository;
+import com.chu.designer.repository.DesignerRepository;
 import com.chu.global.domain.*;
+import com.chu.global.service.GlobalService;
+import com.chu.worldcup.repository.WorldcupRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -16,6 +20,9 @@ import java.util.ArrayList;
 public class CustomerServiceImpl implements CustomerService{
 
     private final CustomerRepository customerRepository;
+    private final DesignerRepository designerRepository;
+    private final WorldcupRepository worldcupRepository;
+    private final CustomerAlertRepository customerAlertRepository;
 
     @Override
     public boolean checkId(String id) {
@@ -32,6 +39,12 @@ public class CustomerServiceImpl implements CustomerService{
         return customerRepository.signUp(customerSignUpDto);
     }
 
+    // 얘가 다 가져오는거야 고객 정보를 그 테이블에 있는건 전부
+    @Override
+    public CustomerDto getCustomerInfo(String id) {
+        return customerRepository.getCustomerInfo(id);
+    }
+
     @Override
     public boolean signIn(SignInDto signInDto) {
         return customerRepository.signIn(signInDto);
@@ -40,7 +53,30 @@ public class CustomerServiceImpl implements CustomerService{
     @Override
     public CustomerLoginDetailDto getLoginCustomerDetail(String id) {
         // 이건 서비스 로직에서 db 여러번 접근하는게 나을지도
-        return customerRepository.getLoginCustomerDetail(id);
+
+        CustomerLoginDetailDto customerLoginDetailDto = new CustomerLoginDetailDto();
+
+        // 고객 정보 다 가져와서 필요한거 채우기
+        customerRepository.getCustomerInfo(id);
+
+        // 베스트 디자이너 정보 채우기
+        ArrayList<BestDesignerDto> bestDesignerList = designerRepository.getBestDesigners();
+
+        // 얼굴형에 잘 어울리는 스타일들 사진
+        // 위에서 갖고 온 얼굴형 정보 토대로 검색
+        ArrayList<ImageDto> topStyleImageList = customerRepository.getTopStyleByFace(얼굴형 시퀀스);
+
+        ArrayList<ImageDto> worldcupTopImageList = worldcupRepository.getTopWorldcupImages();
+
+        // 알림 데이터
+        // 고객 idx로 알림 접근
+        // 상담 IDX 토대로 APi 명세에 따른 로직 추가
+        ArrayList<AlertToCustomerDto> alertList = customerAlertRepository.getAlertToCustomer(customerSeq);
+
+        // 여기에 알람에 따른 디자이너 정보가 추가될꺼야
+        ArrayList<AlertCustomerOnLoginDto> alertDetailList = new ArrayList<>();
+
+        return customerLoginDetailDto;
     }
 
     @Override
