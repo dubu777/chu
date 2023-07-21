@@ -3,7 +3,7 @@ package com.chu.global.controller;
 import com.chu.customer.service.CustomerService;
 import com.chu.designer.service.DesignerService;
 import com.chu.global.domain.RequestAlertCreateDto;
-import com.chu.global.domain.AlertReadDto;
+import com.chu.global.domain.RequestAlertReadDto;
 import com.chu.global.domain.HttpResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -89,18 +89,18 @@ public class UserController {
     }
 
     @PatchMapping("/alert")
-    public ResponseEntity<HttpResponseDto> readAlert(@RequestBody AlertReadDto alertReadDto) {
+    public ResponseEntity<HttpResponseDto> readAlert(@RequestBody RequestAlertReadDto requestAlertReadDto) {
 
-        String userType = alertReadDto.getUserType();
+        String userType = requestAlertReadDto.getUserType();
 
         boolean customerSuccess = false;
         boolean designerSuccess = false;
 
         if (userType.equals("customer")) {
-            boolean isSuccess = customerService.readAlert(alertReadDto);
+            boolean isSuccess = customerService.readAlert(requestAlertReadDto);
             if (isSuccess) customerSuccess = true;
         } else if (userType.equals("designer")) {
-            boolean isSuccess = designerService.readAlert(alertReadDto);
+            boolean isSuccess = designerService.readAlert(requestAlertReadDto);
             if (isSuccess) designerSuccess = true;
         }
 

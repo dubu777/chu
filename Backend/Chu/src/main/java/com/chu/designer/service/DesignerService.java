@@ -39,7 +39,7 @@ public interface DesignerService {
 
     boolean createAlert(RequestAlertCreateDto requestAlertCreateDto);
 
-    boolean readAlert(AlertReadDto alertReadDto);
+    boolean readAlert(RequestAlertReadDto requestAlertReadDto);
 
     DesignerMyPageDto getMyPageInfo(int designerSeq);
 

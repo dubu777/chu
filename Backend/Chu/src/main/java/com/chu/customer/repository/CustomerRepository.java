@@ -38,5 +38,5 @@ public interface CustomerRepository {
 
     boolean createAlert(RequestAlertCreateDto requestAlertCreateDto);
 
-    boolean readAlert(AlertReadDto alertReadDto);
+    boolean readAlert(RequestAlertReadDto requestAlertReadDto);
 }

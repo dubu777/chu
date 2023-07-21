@@ -110,7 +110,7 @@ public class DesignerRepositoryImpl implements DesignerRepository {
     }
 
     @Override
-    public boolean readAlert(AlertReadDto alertReadDto) {
+    public boolean readAlert(RequestAlertReadDto requestAlertReadDto) {
         boolean isSuccess = true;
 
         // 알림 읽기

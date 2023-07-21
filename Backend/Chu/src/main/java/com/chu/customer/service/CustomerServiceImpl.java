@@ -111,7 +111,7 @@ public class CustomerServiceImpl implements CustomerService{
     }
 
     @Override
-    public boolean readAlert(AlertReadDto alertReadDto) {
-        return customerRepository.readAlert(alertReadDto);
+    public boolean readAlert(RequestAlertReadDto requestAlertReadDto) {
+        return customerRepository.readAlert(requestAlertReadDto);
     }
 }

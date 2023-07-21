@@ -39,5 +39,5 @@ public interface CustomerService {
 
     boolean createAlert(RequestAlertCreateDto requestAlertCreateDto);
 
-    boolean readAlert(AlertReadDto alertReadDto);
+    boolean readAlert(RequestAlertReadDto requestAlertReadDto);
 }
