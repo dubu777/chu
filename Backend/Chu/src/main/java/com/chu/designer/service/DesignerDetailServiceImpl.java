@@ -78,4 +78,20 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
 
         return true;
     }
+
+    @Override
+    public boolean updatePossibleReservationTime(int designerSeq, RequestReservationPossibleDateAndTimeDto requestReservationPossibleDateAndTimeDto) {
+//        1. 기존에 있던 해당 날짜 데이터 전부 삭제
+        boolean deleteSuccess = designerDetailRepository.deleteAlreadyPossibleTime(designerSeq, requestReservationPossibleDateAndTimeDto);
+//        2. 새로 들어온 데이터 전부 삽입
+
+        boolean postSuccess = designerDetailRepository.postPossibleTime(designerSeq, requestReservationPossibleDateAndTimeDto);
+
+        if(deleteSuccess && postSuccess){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 }

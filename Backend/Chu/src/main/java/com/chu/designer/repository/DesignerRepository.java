@@ -40,8 +40,6 @@ public interface DesignerRepository {
 
     ArrayList<TimeDto> getPossibleReservationTime(int designerSeq, Date date);
 
-    boolean updatePossibleReservationTime(int designerSeq, ReservationTimeDto reservationTimeDto);
-
     ArrayList<ConsultingDto> getReservationList(int designerSeq);
 
     ArrayList<ImageDto> getPortfolio(int designerSeq);

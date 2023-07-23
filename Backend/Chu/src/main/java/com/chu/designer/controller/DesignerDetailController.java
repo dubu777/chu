@@ -1,6 +1,7 @@
 package com.chu.designer.controller;
 
 import com.chu.designer.domain.RequestDesignerInfoUpdateDto;
+import com.chu.designer.domain.RequestReservationPossibleDateAndTimeDto;
 import com.chu.designer.domain.ResponseDesignerMyPageUpdateShowDto;
 import com.chu.designer.domain.ResponseDesignerMyPageDto;
 import com.chu.designer.service.DesignerDetailService;
@@ -81,6 +82,20 @@ public class DesignerDetailController {
 
         if (isSuccess) {
             HttpResponseDto httpResponseDto = new HttpResponseDto(200, img);
+            return ResponseEntity.ok(httpResponseDto);
+        } else {
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
+        }
+    }
+
+    @PutMapping("/time")
+    public ResponseEntity<HttpResponseDto> updatePossibleReservationTime(@PathVariable("designer-seq") int designerSeq, @RequestBody RequestReservationPossibleDateAndTimeDto requestReservationPossibleDateAndTimeDto) {
+
+        boolean isSuccess = designerDetailService.updatePossibleReservationTime(designerSeq, requestReservationPossibleDateAndTimeDto);
+
+        if (isSuccess) {
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, null);
             return ResponseEntity.ok(httpResponseDto);
         } else {
             HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);

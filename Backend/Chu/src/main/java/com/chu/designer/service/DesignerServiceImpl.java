@@ -115,11 +115,6 @@ public class DesignerServiceImpl implements DesignerService{
     }
 
     @Override
-    public boolean updatePossibleReservationTime(int designerSeq, ReservationTimeDto reservationTimeDto) {
-        return designerRepository.updatePossibleReservationTime(designerSeq, reservationTimeDto);
-    }
-
-    @Override
     public ArrayList<ConsultingDto> getReservationList(int designerSeq) {
         return designerRepository.getReservationList(designerSeq);
     }

@@ -2,6 +2,7 @@ package com.chu.designer.repository;
 
 import com.chu.designer.domain.DesignerDto;
 import com.chu.designer.domain.RequestDesignerInfoUpdateDto;
+import com.chu.designer.domain.RequestReservationPossibleDateAndTimeDto;
 import com.chu.designer.domain.ResponseDesignerAreaInfo;
 import com.chu.global.domain.ResponseHairStyleDto;
 import com.chu.global.domain.ResponseHairStyleLabelDto;
@@ -122,6 +123,28 @@ public class DesignerDetailRepositoryImpl implements DesignerDetailRepository {
         // 로직
 
         // 디자이너 정보 수정
+
+        return isSuccess;
+    }
+
+    @Override
+    public boolean deleteAlreadyPossibleTime(int designerSeq, RequestReservationPossibleDateAndTimeDto requestReservationPossibleDateAndTimeDto) {
+        boolean isSuccess = true;
+
+        // 로직
+
+        // 디자이너 날짜 가능 시간 전체 삭제
+
+        return isSuccess;
+    }
+
+    @Override
+    public boolean postPossibleTime(int designerSeq, RequestReservationPossibleDateAndTimeDto requestReservationPossibleDateAndTimeDto) {
+        boolean isSuccess = true;
+
+        // 로직
+
+        // 디자이너 날짜 가능 시간 전체 삽입
 
         return isSuccess;
     }

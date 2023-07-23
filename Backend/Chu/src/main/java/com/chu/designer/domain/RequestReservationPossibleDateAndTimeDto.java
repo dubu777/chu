@@ -1,6 +1,6 @@
 package com.chu.designer.domain;
 
-public class ReservationTimeDto {
+public class RequestReservationPossibleDateAndTimeDto {
 //        "date" : "2023-07-20",
 //                "time" : [
 //                "10:00",
