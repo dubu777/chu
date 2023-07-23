@@ -1,13 +1,11 @@
 package com.chu.designer.repository;
 
+import com.chu.consulting.domain.ResponseConsultingDto;
 import com.chu.designer.domain.DesignerDto;
 import com.chu.designer.domain.RequestDesignerInfoUpdateDto;
 import com.chu.designer.domain.RequestReservationPossibleDateAndTimeDto;
 import com.chu.designer.domain.ResponseDesignerAreaInfo;
-import com.chu.global.domain.ResponseHairStyleDto;
-import com.chu.global.domain.ResponseHairStyleLabelDto;
-import com.chu.global.domain.ResponsePermHairStyleDto;
-import com.chu.global.domain.TimeDto;
+import com.chu.global.domain.*;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -41,5 +39,9 @@ public interface DesignerDetailRepository {
     boolean postPossibleTime(int designerSeq, RequestReservationPossibleDateAndTimeDto requestReservationPossibleDateAndTimeDto);
 
     ArrayList<TimeDto> getPossibleReservationTime(int designerSeq, Date date);
+
+    ArrayList<ResponseConsultingDto> getReservationList(int designerSeq);
+
+    ArrayList<ImageDto> getConfusionImages(int consultinSeq);
 
 }

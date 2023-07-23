@@ -1,5 +1,6 @@
 package com.chu.designer.controller;
 
+import com.chu.consulting.domain.ResponseConsultingDto;
 import com.chu.designer.domain.RequestDesignerInfoUpdateDto;
 import com.chu.designer.domain.RequestReservationPossibleDateAndTimeDto;
 import com.chu.designer.domain.ResponseDesignerMyPageUpdateShowDto;
@@ -114,6 +115,20 @@ public class DesignerDetailController {
 
         if (isSuccess) {
             HttpResponseDto httpResponseDto = new HttpResponseDto(200, null);
+            return ResponseEntity.ok(httpResponseDto);
+        } else {
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
+        }
+    }
+
+    @GetMapping("/reservation-list")
+    public ResponseEntity<HttpResponseDto> getReservationList(@PathVariable("designer-seq") int designerSeq) {
+
+        ArrayList<ResponseConsultingDto> reservationList = designerDetailService.getReservationList(designerSeq);
+
+        if (reservationList.size() != 0) {
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, reservationList);
             return ResponseEntity.ok(httpResponseDto);
         } else {
             HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);

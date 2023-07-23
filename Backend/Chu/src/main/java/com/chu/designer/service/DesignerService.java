@@ -1,6 +1,5 @@
 package com.chu.designer.service;
 
-import com.chu.consulting.domain.ConsultingDto;
 import com.chu.designer.domain.*;
 import com.chu.global.domain.*;
 
@@ -40,8 +39,6 @@ public interface DesignerService {
     boolean createAlert(RequestAlertCreateDto requestAlertCreateDto);
 
     boolean readAlert(RequestAlertReadDto requestAlertReadDto);
-
-    ArrayList<ConsultingDto> getReservationList(int designerSeq);
 
     ArrayList<ImageDto> getPortfolio(int designerSeq);
 

@@ -1,6 +1,5 @@
 package com.chu.designer.repository;
 
-import com.chu.consulting.domain.ConsultingDto;
 import com.chu.designer.domain.*;
 import com.chu.global.domain.*;
 import lombok.extern.slf4j.Slf4j;
@@ -116,17 +115,6 @@ public class DesignerRepositoryImpl implements DesignerRepository {
         // 알림 읽기
 
         return isSuccess;
-    }
-
-    @Override
-    public ArrayList<ConsultingDto> getReservationList(int designerSeq) {
-        ArrayList<ConsultingDto> reservationList = new ArrayList<>();
-
-        // 로직
-
-        // 디자이너 seq로 현재 시점 이후 예약 날짜 혹은 시간 상담들 조회
-
-        return reservationList;
     }
 
     @Override

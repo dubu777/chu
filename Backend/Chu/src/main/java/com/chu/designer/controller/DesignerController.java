@@ -1,5 +1,4 @@
 package com.chu.designer.controller;
-import com.chu.consulting.domain.ConsultingDto;
 import com.chu.designer.domain.*;
 import com.chu.designer.service.DesignerService;
 import com.chu.global.domain.*;
@@ -126,20 +125,6 @@ public class DesignerController {
 
         if (responseAlertDesignerDtoList.size() != 0) {
             HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseAlertDesignerDtoList);
-            return ResponseEntity.ok(httpResponseDto);
-        } else {
-            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
-            return ResponseEntity.ok(httpResponseDto);
-        }
-    }
-
-    @GetMapping("/reservation-list")
-    public ResponseEntity<HttpResponseDto> getReservationList(@PathVariable("designer-seq") int designerSeq) {
-
-        ArrayList<ConsultingDto> reservationList = designerService.getReservationList(designerSeq);
-
-        if (reservationList.size() != 0) {
-            HttpResponseDto httpResponseDto = new HttpResponseDto(200, reservationList);
             return ResponseEntity.ok(httpResponseDto);
         } else {
             HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);

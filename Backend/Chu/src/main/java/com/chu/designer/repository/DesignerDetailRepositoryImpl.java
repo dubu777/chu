@@ -1,13 +1,11 @@
 package com.chu.designer.repository;
 
+import com.chu.consulting.domain.ResponseConsultingDto;
 import com.chu.designer.domain.DesignerDto;
 import com.chu.designer.domain.RequestDesignerInfoUpdateDto;
 import com.chu.designer.domain.RequestReservationPossibleDateAndTimeDto;
 import com.chu.designer.domain.ResponseDesignerAreaInfo;
-import com.chu.global.domain.ResponseHairStyleDto;
-import com.chu.global.domain.ResponseHairStyleLabelDto;
-import com.chu.global.domain.ResponsePermHairStyleDto;
-import com.chu.global.domain.TimeDto;
+import com.chu.global.domain.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
@@ -158,4 +156,23 @@ public class DesignerDetailRepositoryImpl implements DesignerDetailRepository {
 
         return possibleReservationTimeList;
     }
+
+    @Override
+    public ArrayList<ResponseConsultingDto> getReservationList(int designerSeq) {
+        ArrayList<ResponseConsultingDto> resultList = new ArrayList<>();
+
+        // 디자어너가 갖고 있는 상담 정보, 그 고객의 모발상태까지 리턴
+
+        return resultList;
+    }
+
+    @Override
+    public ArrayList<ImageDto> getConfusionImages(int consultinSeq) {
+        ArrayList<ImageDto> resultList = new ArrayList<>();
+        
+        // 합성 이미지 정보 반환
+
+        return resultList;
+    }
+
 }

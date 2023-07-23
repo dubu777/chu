@@ -1,5 +1,6 @@
 package com.chu.designer.service;
 
+import com.chu.consulting.domain.ResponseConsultingDto;
 import com.chu.designer.domain.*;
 import com.chu.designer.repository.DesignerDetailRepository;
 import com.chu.global.domain.ResponseHairStyleDto;
@@ -99,5 +100,19 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
     @Override
     public ArrayList<TimeDto> getPossibleReservationTime(int designerSeq, Date date) {
         return designerDetailRepository.getPossibleReservationTime(designerSeq, date);
+    }
+
+    @Override
+    public ArrayList<ResponseConsultingDto> getReservationList(int designerSeq) {
+
+        ArrayList<ResponseConsultingDto> resultList = designerDetailRepository.getReservationList(designerSeq);
+
+        // 조인이 많아질 것 같으면 함수 나누기
+
+        // 갖고 온 데이터 기반으로 그 상담의 합성 얼굴 사진 뽑아오기
+
+//        designerDetailRepository.getConfusionImages(consultingSeq);
+
+        return resultList;
     }
 }

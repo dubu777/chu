@@ -1,6 +1,5 @@
 package com.chu.designer.service;
 
-import com.chu.consulting.domain.ConsultingDto;
 import com.chu.designer.domain.*;
 import com.chu.designer.repository.DesignerAlertRepository;
 import com.chu.designer.repository.DesignerRepository;
@@ -107,11 +106,6 @@ public class DesignerServiceImpl implements DesignerService{
     @Override
     public boolean readAlert(RequestAlertReadDto requestAlertReadDto) {
         return designerRepository.readAlert(requestAlertReadDto);
-    }
-
-    @Override
-    public ArrayList<ConsultingDto> getReservationList(int designerSeq) {
-        return designerRepository.getReservationList(designerSeq);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.chu.designer.service;
 
+import com.chu.consulting.domain.ResponseConsultingDto;
 import com.chu.designer.domain.RequestDesignerInfoUpdateDto;
 import com.chu.designer.domain.RequestReservationPossibleDateAndTimeDto;
 import com.chu.designer.domain.ResponseDesignerMyPageUpdateShowDto;
@@ -24,4 +25,6 @@ public interface DesignerDetailService {
     boolean updatePossibleReservationTime(int designerSeq, RequestReservationPossibleDateAndTimeDto requestReservationPossibleDateAndTimeDto);
 
     ArrayList<TimeDto> getPossibleReservationTime(int designerSeq, Date date);
+
+    ArrayList<ResponseConsultingDto> getReservationList(int designerSeq);
 }
