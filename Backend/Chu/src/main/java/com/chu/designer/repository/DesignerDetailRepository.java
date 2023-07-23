@@ -46,4 +46,6 @@ public interface DesignerDetailRepository {
 
     ArrayList<ImageDto> getPortfolio(int designerSeq);
 
+    boolean deletePortfolioImage(int designerSeq, int imageSeq);
+
 }

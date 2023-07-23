@@ -37,8 +37,6 @@ public interface DesignerRepository {
 
     boolean readAlert(RequestAlertReadDto requestAlertReadDto);
 
-    boolean deletePortfolioImage(int designerSeq, int imageSeq);
-
     boolean postPortfolioImage(int designerSeq, String img);
 
     ArrayList<ResponseBestDesignerDto> getBestDesigners();

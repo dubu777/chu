@@ -109,11 +109,6 @@ public class DesignerServiceImpl implements DesignerService{
     }
 
     @Override
-    public boolean deletePortfolioImage(int designerSeq, int imageSeq) {
-        return designerRepository.deletePortfolioImage(designerSeq, imageSeq);
-    }
-
-    @Override
     public boolean postPortfolioImage(int designerSeq, String img) {
         return designerRepository.postPortfolioImage(designerSeq, img);
     }

@@ -118,18 +118,6 @@ public class DesignerRepositoryImpl implements DesignerRepository {
     }
 
     @Override
-    public boolean deletePortfolioImage(int designerSeq, int imageSeq) {
-        
-        boolean isSuccess = true;
-
-        // 로직
-        
-        // 해당 디자이너의 이미지 하나 삭제
-        
-        return isSuccess;
-    }
-
-    @Override
     public boolean postPortfolioImage(int designerSeq, String img) {
         
         boolean isSuccess = true;

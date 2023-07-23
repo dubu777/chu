@@ -145,18 +145,4 @@ public class DesignerController {
             return ResponseEntity.ok(httpResponseDto);
         }
     }
-
-    @DeleteMapping("/portfolio")
-    public ResponseEntity<HttpResponseDto> deletePortfolio(@PathVariable("designer-seq") int designerSeq, @RequestParam int imageSeq) {
-
-        boolean isSuccess = designerService.deletePortfolioImage(designerSeq, imageSeq);
-
-        if (isSuccess) {
-            HttpResponseDto httpResponseDto = new HttpResponseDto(200, null);
-            return ResponseEntity.ok(httpResponseDto);
-        } else {
-            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
-            return ResponseEntity.ok(httpResponseDto);
-        }
-    }
 }
