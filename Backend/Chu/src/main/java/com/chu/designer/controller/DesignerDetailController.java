@@ -6,10 +6,14 @@ import com.chu.designer.domain.ResponseDesignerMyPageUpdateShowDto;
 import com.chu.designer.domain.ResponseDesignerMyPageDto;
 import com.chu.designer.service.DesignerDetailService;
 import com.chu.global.domain.HttpResponseDto;
+import com.chu.global.domain.TimeDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.sql.Date;
+import java.util.ArrayList;
 
 @Slf4j
 @RestController
@@ -82,6 +86,20 @@ public class DesignerDetailController {
 
         if (isSuccess) {
             HttpResponseDto httpResponseDto = new HttpResponseDto(200, img);
+            return ResponseEntity.ok(httpResponseDto);
+        } else {
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
+        }
+    }
+
+    @GetMapping("/time")
+    public ResponseEntity<HttpResponseDto> getPossibleReservationTime(@PathVariable("designer-seq") int designerSeq, Date date) {
+
+        ArrayList<TimeDto> possibleReservationTime = designerDetailService.getPossibleReservationTime(designerSeq, date);
+
+        if (possibleReservationTime.size() != 0) {
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, possibleReservationTime);
             return ResponseEntity.ok(httpResponseDto);
         } else {
             HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);

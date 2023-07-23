@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
 @Slf4j
@@ -147,5 +148,14 @@ public class DesignerDetailRepositoryImpl implements DesignerDetailRepository {
         // 디자이너 날짜 가능 시간 전체 삽입
 
         return isSuccess;
+    }
+
+    @Override
+    public ArrayList<TimeDto> getPossibleReservationTime(int designerSeq, Date date) {
+        ArrayList<TimeDto> possibleReservationTimeList = new ArrayList<>();
+
+        // 디자이너 해당 날짜 가능 시간 조회
+
+        return possibleReservationTimeList;
     }
 }

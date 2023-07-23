@@ -38,8 +38,6 @@ public interface DesignerRepository {
 
     boolean readAlert(RequestAlertReadDto requestAlertReadDto);
 
-    ArrayList<TimeDto> getPossibleReservationTime(int designerSeq, Date date);
-
     ArrayList<ConsultingDto> getReservationList(int designerSeq);
 
     ArrayList<ImageDto> getPortfolio(int designerSeq);

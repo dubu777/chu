@@ -9,6 +9,7 @@ import com.chu.global.domain.ResponseHairStyleLabelDto;
 import com.chu.global.domain.ResponsePermHairStyleDto;
 import com.chu.global.domain.TimeDto;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
 public interface DesignerDetailRepository {
@@ -38,5 +39,7 @@ public interface DesignerDetailRepository {
     boolean deleteAlreadyPossibleTime(int designerSeq, RequestReservationPossibleDateAndTimeDto requestReservationPossibleDateAndTimeDto);
 
     boolean postPossibleTime(int designerSeq, RequestReservationPossibleDateAndTimeDto requestReservationPossibleDateAndTimeDto);
+
+    ArrayList<TimeDto> getPossibleReservationTime(int designerSeq, Date date);
 
 }

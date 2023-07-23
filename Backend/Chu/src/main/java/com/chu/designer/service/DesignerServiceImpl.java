@@ -110,11 +110,6 @@ public class DesignerServiceImpl implements DesignerService{
     }
 
     @Override
-    public ArrayList<TimeDto> getPossibleReservationTime(int designerSeq, Date date) {
-        return designerRepository.getPossibleReservationTime(designerSeq, date);
-    }
-
-    @Override
     public ArrayList<ConsultingDto> getReservationList(int designerSeq) {
         return designerRepository.getReservationList(designerSeq);
     }

@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
 @Slf4j
@@ -93,5 +94,10 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
         else{
             return false;
         }
+    }
+
+    @Override
+    public ArrayList<TimeDto> getPossibleReservationTime(int designerSeq, Date date) {
+        return designerDetailRepository.getPossibleReservationTime(designerSeq, date);
     }
 }

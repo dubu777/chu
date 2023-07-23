@@ -4,6 +4,10 @@ import com.chu.designer.domain.RequestDesignerInfoUpdateDto;
 import com.chu.designer.domain.RequestReservationPossibleDateAndTimeDto;
 import com.chu.designer.domain.ResponseDesignerMyPageUpdateShowDto;
 import com.chu.designer.domain.ResponseDesignerMyPageDto;
+import com.chu.global.domain.TimeDto;
+
+import java.sql.Date;
+import java.util.ArrayList;
 
 public interface DesignerDetailService {
 
@@ -18,4 +22,6 @@ public interface DesignerDetailService {
     boolean updateDesignerInfo(int designerSeq, RequestDesignerInfoUpdateDto requestDesignerInfoUpdateDto);
 
     boolean updatePossibleReservationTime(int designerSeq, RequestReservationPossibleDateAndTimeDto requestReservationPossibleDateAndTimeDto);
+
+    ArrayList<TimeDto> getPossibleReservationTime(int designerSeq, Date date);
 }
