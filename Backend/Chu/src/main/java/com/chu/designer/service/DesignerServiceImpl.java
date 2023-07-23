@@ -109,11 +109,6 @@ public class DesignerServiceImpl implements DesignerService{
     }
 
     @Override
-    public ArrayList<ImageDto> getPortfolio(int designerSeq) {
-        return designerRepository.getPortfolio(designerSeq);
-    }
-
-    @Override
     public boolean deletePortfolioImage(int designerSeq, int imageSeq) {
         return designerRepository.deletePortfolioImage(designerSeq, imageSeq);
     }

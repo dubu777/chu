@@ -5,6 +5,7 @@ import com.chu.designer.domain.RequestDesignerInfoUpdateDto;
 import com.chu.designer.domain.RequestReservationPossibleDateAndTimeDto;
 import com.chu.designer.domain.ResponseDesignerMyPageUpdateShowDto;
 import com.chu.designer.domain.ResponseDesignerMyPageDto;
+import com.chu.global.domain.ImageDto;
 import com.chu.global.domain.TimeDto;
 
 import java.sql.Date;
@@ -27,4 +28,6 @@ public interface DesignerDetailService {
     ArrayList<TimeDto> getPossibleReservationTime(int designerSeq, Date date);
 
     ArrayList<ResponseConsultingDto> getReservationList(int designerSeq);
+
+    ArrayList<ImageDto> getPortfolio(int designerSeq);
 }

@@ -175,4 +175,14 @@ public class DesignerDetailRepositoryImpl implements DesignerDetailRepository {
         return resultList;
     }
 
+    @Override
+    public ArrayList<ImageDto> getPortfolio(int designerSeq) {
+        ArrayList<ImageDto> portfolioList = new ArrayList<>();
+
+        // 로직
+
+        // 디자이너 번호로 포트폴리오 다 가져오기
+
+        return portfolioList;
+    }
 }

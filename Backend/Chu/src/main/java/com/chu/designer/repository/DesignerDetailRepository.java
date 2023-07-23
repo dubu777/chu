@@ -44,4 +44,6 @@ public interface DesignerDetailRepository {
 
     ArrayList<ImageDto> getConfusionImages(int consultinSeq);
 
+    ArrayList<ImageDto> getPortfolio(int designerSeq);
+
 }

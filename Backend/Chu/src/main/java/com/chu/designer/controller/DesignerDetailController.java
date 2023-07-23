@@ -7,6 +7,7 @@ import com.chu.designer.domain.ResponseDesignerMyPageUpdateShowDto;
 import com.chu.designer.domain.ResponseDesignerMyPageDto;
 import com.chu.designer.service.DesignerDetailService;
 import com.chu.global.domain.HttpResponseDto;
+import com.chu.global.domain.ImageDto;
 import com.chu.global.domain.TimeDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -129,6 +130,20 @@ public class DesignerDetailController {
 
         if (reservationList.size() != 0) {
             HttpResponseDto httpResponseDto = new HttpResponseDto(200, reservationList);
+            return ResponseEntity.ok(httpResponseDto);
+        } else {
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
+        }
+    }
+
+    @GetMapping("/portfolio")
+    public ResponseEntity<HttpResponseDto> getPortfolio(@PathVariable("designer-seq") int designerSeq) {
+
+        ArrayList<ImageDto> portfolioList = designerDetailService.getPortfolio(designerSeq);
+
+        if (portfolioList.size() != 0) {
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, portfolioList);
             return ResponseEntity.ok(httpResponseDto);
         } else {
             HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);

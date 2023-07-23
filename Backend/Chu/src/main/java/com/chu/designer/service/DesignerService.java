@@ -40,8 +40,6 @@ public interface DesignerService {
 
     boolean readAlert(RequestAlertReadDto requestAlertReadDto);
 
-    ArrayList<ImageDto> getPortfolio(int designerSeq);
-
     boolean deletePortfolioImage(int designerSeq, int imageSeq);
 
     boolean postPortfolioImage(int designerSeq, String img);

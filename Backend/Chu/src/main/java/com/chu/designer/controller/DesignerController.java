@@ -132,20 +132,6 @@ public class DesignerController {
         }
     }
 
-    @GetMapping("/portfolio")
-    public ResponseEntity<HttpResponseDto> getPortfolio(@PathVariable("designer-seq") int designerSeq) {
-
-        ArrayList<ImageDto> portfolioList = designerService.getPortfolio(designerSeq);
-
-        if (portfolioList.size() != 0) {
-            HttpResponseDto httpResponseDto = new HttpResponseDto(200, portfolioList);
-            return ResponseEntity.ok(httpResponseDto);
-        } else {
-            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
-            return ResponseEntity.ok(httpResponseDto);
-        }
-    }
-
     @PostMapping("/portfolio")
     public ResponseEntity<HttpResponseDto> postPortfolio(@PathVariable("designer-seq") int designerSeq, @RequestParam String img) {
 

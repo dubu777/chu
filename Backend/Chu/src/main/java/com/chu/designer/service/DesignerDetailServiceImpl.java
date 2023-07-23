@@ -3,10 +3,7 @@ package com.chu.designer.service;
 import com.chu.consulting.domain.ResponseConsultingDto;
 import com.chu.designer.domain.*;
 import com.chu.designer.repository.DesignerDetailRepository;
-import com.chu.global.domain.ResponseHairStyleDto;
-import com.chu.global.domain.ResponseHairStyleLabelDto;
-import com.chu.global.domain.ResponsePermHairStyleDto;
-import com.chu.global.domain.TimeDto;
+import com.chu.global.domain.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -114,5 +111,10 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
 //        designerDetailRepository.getConfusionImages(consultingSeq);
 
         return resultList;
+    }
+
+    @Override
+    public ArrayList<ImageDto> getPortfolio(int designerSeq) {
+        return designerDetailRepository.getPortfolio(designerSeq);
     }
 }
