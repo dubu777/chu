@@ -73,12 +73,11 @@ public class ConsultingServiceImpl implements ConsultingService {
         // 디자이너 평점 수정
         consultingRepository.updateDesignerReviewScore(requestConsultingReviewDto);
 
-
         return isSuccess;
     }
 
     @Override
-    public ConsultingReviewInfoDto getConsultingResultDetailInfo(int consultingSeq) {
+    public ResponseConsultingReviewInfoDto getConsultingResultDetailInfo(int consultingSeq) {
         return consultingRepository.getConsultingResultDetailInfo(consultingSeq);
     }
 

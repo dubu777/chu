@@ -15,7 +15,7 @@ public interface ConsultingService {
 
     boolean updateConsultingReview(RequestConsultingReviewDto requestConsultingReviewDto);
 
-    ConsultingReviewInfoDto getConsultingResultDetailInfo(int consultingSeq);
+    ResponseConsultingReviewInfoDto getConsultingResultDetailInfo(int consultingSeq);
 
     boolean updateConsultingResult(ConsultingUpdateDto consultingUpdateDto);
 }

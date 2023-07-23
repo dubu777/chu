@@ -125,10 +125,10 @@ public class ConsultingController {
     @GetMapping("/result-element")
     public ResponseEntity<HttpResponseDto> getConsultingResultDetailInfo(@RequestParam int consultingSeq){
 
-        ConsultingReviewInfoDto consultingReviewInfoDto = consultingService.getConsultingResultDetailInfo(consultingSeq);
+        ResponseConsultingReviewInfoDto responseConsultingReviewInfoDto = consultingService.getConsultingResultDetailInfo(consultingSeq);
 
-        if (consultingReviewInfoDto != null) {
-            HttpResponseDto httpResponseDto = new HttpResponseDto(200, consultingReviewInfoDto);
+        if (responseConsultingReviewInfoDto != null) {
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseConsultingReviewInfoDto);
             return ResponseEntity.ok(httpResponseDto);
         }
         else {

@@ -5,7 +5,7 @@ import com.chu.global.domain.ImageDto;
 
 import java.util.ArrayList;
 
-public class ConsultingReviewInfoDto {
+public class ResponseConsultingReviewInfoDto {
     ArrayList<ResponseHairStyleDto> hairStyleList;
     ArrayList<ImageDto> imageList;
 }

@@ -84,8 +84,41 @@ public class ConsultingRepositoryImpl implements ConsultingRepository {
     }
 
     @Override
-    public ConsultingReviewInfoDto getConsultingResultDetailInfo(int consultingSeq) {
-        ConsultingReviewInfoDto consultingReviewInfoDto = new ConsultingReviewInfoDto();
+    public boolean updateReviewContent(RequestConsultingReviewDto requestConsultingReviewDto) {
+        boolean isSuccess = true;
+        
+        // 로직
+        
+        // 상담 테이블 리뷰 상세 업데이트
+
+        return isSuccess;
+    }
+
+    @Override
+    public boolean updateLikeInfo(RequestConsultingReviewDto requestConsultingReviewDto) {
+        boolean isSuccess = true;
+
+        // 로직
+        
+        // 좋아요 정보 수정
+
+        return isSuccess;
+    }
+
+    @Override
+    public boolean updateDesignerReviewScore(RequestConsultingReviewDto requestConsultingReviewDto) {
+        boolean isSuccess = true;
+
+        // 로직
+        
+        // 디자이너 평점 수정
+
+        return isSuccess;
+    }
+
+    @Override
+    public ResponseConsultingReviewInfoDto getConsultingResultDetailInfo(int consultingSeq) {
+        ResponseConsultingReviewInfoDto responseConsultingReviewInfoDto = new ResponseConsultingReviewInfoDto();
 
         // 로직
 
@@ -93,7 +126,7 @@ public class ConsultingRepositoryImpl implements ConsultingRepository {
 
         // 이미지 전부 가져오기
 
-        return consultingReviewInfoDto;
+        return responseConsultingReviewInfoDto;
     }
 
     @Override
