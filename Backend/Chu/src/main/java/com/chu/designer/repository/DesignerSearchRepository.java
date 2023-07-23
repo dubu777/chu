@@ -1,7 +1,7 @@
 package com.chu.designer.repository;
 
 import com.chu.designer.domain.ResponseDesignerDetailInfoDto;
-import com.chu.designer.domain.DesignerSearchAreaDto;
+import com.chu.designer.domain.ResponseDesignerSearchAreaDto;
 import com.chu.designer.domain.DesignerSearchDto;
 
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ public interface DesignerSearchRepository {
 
     ArrayList<DesignerSearchDto> search2ReviewScore(int customerSeq);
 
-    ArrayList<DesignerSearchAreaDto> search2AllArea();
+    ArrayList<ResponseDesignerSearchAreaDto> search2AllArea();
 
     ResponseDesignerDetailInfoDto getDesignerDetailInfo(int designerSeq, int customerSeq);
 

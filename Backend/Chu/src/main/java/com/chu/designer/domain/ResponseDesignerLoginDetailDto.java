@@ -1,6 +1,5 @@
 package com.chu.designer.domain;
 
-import com.chu.global.domain.AlertDesignerOnLoginDto;
 import com.chu.global.domain.ResponseBestDesignerDto;
 import com.chu.global.domain.FaceImageNameDto;
 

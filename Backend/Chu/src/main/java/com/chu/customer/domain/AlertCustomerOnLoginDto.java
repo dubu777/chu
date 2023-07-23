@@ -1,11 +1,11 @@
-package com.chu.global.domain;
+package com.chu.customer.domain;
 
-public class AlertDesignerOnLoginDto {
-    //            "alertSeq" : 1,
+public class AlertCustomerOnLoginDto {
+//            "alertSeq" : 1,
 //                    "userType" : "customer",
 //                    "consultingSeq" : 1,
 //                    "check" : "N",
 //                    "checkedDate" : null,
 //                    "pushDate" : "2023-07-19",
-//                    "customerName" : "재현"
+//                    "designerName" : "재현"
 }

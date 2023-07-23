@@ -1,7 +1,7 @@
 package com.chu.designer.domain;
 
 // 지역으로 검색 시 핀 꽂는 용도로 사용
-public class DesignerSearchAreaDto {
+public class ResponseDesignerSearchAreaDto {
 //                    "designerSeq" : 14,
 //                            "designerImg" : "img14.png",
 //                            "name" : "재현",

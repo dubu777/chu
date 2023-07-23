@@ -1,7 +1,7 @@
 package com.chu.designer.controller;
 
 import com.chu.designer.domain.ResponseDesignerDetailInfoDto;
-import com.chu.designer.domain.DesignerSearchAreaDto;
+import com.chu.designer.domain.ResponseDesignerSearchAreaDto;
 import com.chu.designer.domain.DesignerSearchDto;
 import com.chu.designer.domain.ResponseDesignerSearchDto;
 import com.chu.designer.service.DesignerSearchService;
@@ -91,10 +91,10 @@ public class DesignerSearchController {
 
     @GetMapping("/around")
     public ResponseEntity<HttpResponseDto> search2AllArea(){
-        ArrayList<DesignerSearchAreaDto> designerSearchAreaDtoList = designerSearchService.search2AllArea();
+        ArrayList<ResponseDesignerSearchAreaDto> responseDesignerSearchAreaDtoList = designerSearchService.search2AllArea();
 
-        if(designerSearchAreaDtoList.size() != 0){
-            HttpResponseDto httpResponseDto = new HttpResponseDto(200, designerSearchAreaDtoList);
+        if(responseDesignerSearchAreaDtoList.size() != 0){
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseDesignerSearchAreaDtoList);
             return ResponseEntity.ok(httpResponseDto);
         }
         else{

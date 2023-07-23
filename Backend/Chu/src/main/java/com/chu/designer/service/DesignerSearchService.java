@@ -13,7 +13,7 @@ public interface DesignerSearchService {
 
     ArrayList<DesignerSearchDto> search2ReviewScore(int customerSeq);
 
-    ArrayList<DesignerSearchAreaDto> search2AllArea();
+    ArrayList<ResponseDesignerSearchAreaDto> search2AllArea();
 
     ResponseDesignerDetailInfoDto getDesignerDetailInfo(int designerSeq, int customerSeq);
 
