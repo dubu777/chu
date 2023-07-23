@@ -59,8 +59,22 @@ public class ConsultingServiceImpl implements ConsultingService {
     }
 
     @Override
-    public boolean updateConsultingReview(ConsultingReviewDto consultingReviewDto) {
-        return consultingRepository.updateConsultingReview(consultingReviewDto);
+    public boolean updateConsultingReview(RequestConsultingReviewDto requestConsultingReviewDto) {
+
+        boolean isSuccess = true;
+        // 로직
+
+        // 해당 상담 번호로 리뷰 등록
+        consultingRepository.updateReviewContent(requestConsultingReviewDto);
+
+        // 고객 정보 뽑아서 좋아요 테이블에 관계 없다면 추가
+        consultingRepository.updateLikeInfo(requestConsultingReviewDto);
+
+        // 디자이너 평점 수정
+        consultingRepository.updateDesignerReviewScore(requestConsultingReviewDto);
+
+
+        return isSuccess;
     }
 
     @Override

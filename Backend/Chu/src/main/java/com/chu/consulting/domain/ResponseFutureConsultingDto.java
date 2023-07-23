@@ -1,6 +1,6 @@
 package com.chu.consulting.domain;
 
-public class FutureConsultingDto {
+public class ResponseFutureConsultingDto {
 //    {
 //        "consultingSeq" : 11,
 //            "designerImg" : "img2.png",

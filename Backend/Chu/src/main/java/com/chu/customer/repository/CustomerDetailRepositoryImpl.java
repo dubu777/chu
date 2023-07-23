@@ -1,7 +1,7 @@
 package com.chu.customer.repository;
 
-import com.chu.consulting.domain.FutureConsultingDto;
-import com.chu.consulting.domain.PastConsultingDto;
+import com.chu.consulting.domain.ResponseFutureConsultingDto;
+import com.chu.consulting.domain.ResponsePastConsultingDto;
 import com.chu.customer.domain.CustomerDto;
 import com.chu.customer.domain.CustomerHairConditionDto;
 import com.chu.customer.domain.FaceTypeDto;
@@ -47,19 +47,19 @@ public class CustomerDetailRepositoryImpl implements CustomerDetailRepository {
     }
 
     @Override
-    public ArrayList<PastConsultingDto> getPastConsultingList(int customerSeq) {
-        ArrayList<PastConsultingDto> pastConsultingDtoList = new ArrayList<>();
+    public ArrayList<ResponsePastConsultingDto> getPastConsultingList(int customerSeq) {
+        ArrayList<ResponsePastConsultingDto> responsePastConsultingDtoList = new ArrayList<>();
         // 현재 시점 이전에 끝난 상담들 조회 / 디자이너 엮어서
 
-        return pastConsultingDtoList;
+        return responsePastConsultingDtoList;
     }
 
     @Override
-    public ArrayList<FutureConsultingDto> getFutureConsultingList(int customerSeq) {
-        ArrayList<FutureConsultingDto> futureConsultingDtoList = new ArrayList<>();
+    public ArrayList<ResponseFutureConsultingDto> getFutureConsultingList(int customerSeq) {
+        ArrayList<ResponseFutureConsultingDto> responseFutureConsultingDtoList = new ArrayList<>();
         // 현재 시점 이후에 있을 상담들 조회 / 디자이너 엮어서
 
-        return futureConsultingDtoList;
+        return responseFutureConsultingDtoList;
     }
 
     @Override

@@ -18,7 +18,11 @@ public interface ConsultingRepository {
 
     boolean updateConsultingUrl(int consultingSeq, String url);
 
-    boolean updateConsultingReview(ConsultingReviewDto consultingReviewDto);
+    boolean updateReviewContent(RequestConsultingReviewDto requestConsultingReviewDto);
+
+    boolean updateLikeInfo(RequestConsultingReviewDto requestConsultingReviewDto);
+
+    boolean updateDesignerReviewScore(RequestConsultingReviewDto requestConsultingReviewDto);
 
     ConsultingReviewInfoDto getConsultingResultDetailInfo(int consultingSeq);
 

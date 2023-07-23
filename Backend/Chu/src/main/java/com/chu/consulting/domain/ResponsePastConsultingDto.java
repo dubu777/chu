@@ -1,6 +1,6 @@
 package com.chu.consulting.domain;
 
-public class PastConsultingDto {
+public class ResponsePastConsultingDto {
 //            "consultingSeq" : 8,
 //            "designerImg" : "img1.png",
 //            "allReviewScore" : 4.7,

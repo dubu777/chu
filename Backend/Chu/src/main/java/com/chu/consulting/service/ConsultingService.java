@@ -13,7 +13,7 @@ public interface ConsultingService {
 
     boolean updateConsultingUrl(int consultingSeq, String url);
 
-    boolean updateConsultingReview(ConsultingReviewDto consultingReviewDto);
+    boolean updateConsultingReview(RequestConsultingReviewDto requestConsultingReviewDto);
 
     ConsultingReviewInfoDto getConsultingResultDetailInfo(int consultingSeq);
 

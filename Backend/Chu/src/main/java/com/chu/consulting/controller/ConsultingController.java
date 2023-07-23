@@ -108,9 +108,9 @@ public class ConsultingController {
     }
 
     @PatchMapping("/review")
-    public ResponseEntity<HttpResponseDto> updateConsultingReview(@RequestBody ConsultingReviewDto consultingReviewDto) {
+    public ResponseEntity<HttpResponseDto> updateConsultingReview(@RequestBody RequestConsultingReviewDto requestConsultingReviewDto) {
 
-        boolean isSuccess = consultingService.updateConsultingReview(consultingReviewDto);
+        boolean isSuccess = consultingService.updateConsultingReview(requestConsultingReviewDto);
 
         if (isSuccess) {
             HttpResponseDto httpResponseDto = new HttpResponseDto(200, null);

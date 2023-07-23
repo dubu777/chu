@@ -27,8 +27,8 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
         responseCustomerDetailDto.setCustomerDto(customerDetailRepository.getCustomerInfo(customerSeq));
         responseCustomerDetailDto.setCustomerHairConditionDtoList(customerDetailRepository.getCustomerHairCondition(customerSeq));
 
-        responseCustomerDetailDto.setPastConsultingDtoList(customerDetailRepository.getPastConsultingList(customerSeq));
-        responseCustomerDetailDto.setFutureConsultingDtoList(customerDetailRepository.getFutureConsultingList(customerSeq));
+        responseCustomerDetailDto.setResponsePastConsultingDtoList(customerDetailRepository.getPastConsultingList(customerSeq));
+        responseCustomerDetailDto.setResponseFutureConsultingDtoList(customerDetailRepository.getFutureConsultingList(customerSeq));
 
         return responseCustomerDetailDto;
     }

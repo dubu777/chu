@@ -33,7 +33,6 @@ public interface CustomerRepository {
 
     int changeLikeInfo(RequestLikeDto requestLikeDto);
 
-
     ArrayList<ResponseAlertCustomerDto> getAlertList(int customerSeq);
 
     boolean createAlert(RequestAlertCreateDto requestAlertCreateDto);

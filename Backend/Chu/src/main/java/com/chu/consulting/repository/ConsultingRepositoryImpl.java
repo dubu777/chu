@@ -84,19 +84,6 @@ public class ConsultingRepositoryImpl implements ConsultingRepository {
     }
 
     @Override
-    public boolean updateConsultingReview(ConsultingReviewDto consultingReviewDto) {
-        boolean isSuccess = true;
-
-        // 로직
-
-        // 해당 상담 번호로 리뷰 등록
-
-        // 고객 정보 뽑아서 좋아요 테이블에 관계 없다면 추가
-
-        return isSuccess;
-    }
-
-    @Override
     public ConsultingReviewInfoDto getConsultingResultDetailInfo(int consultingSeq) {
         ConsultingReviewInfoDto consultingReviewInfoDto = new ConsultingReviewInfoDto();
 

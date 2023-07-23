@@ -1,6 +1,6 @@
 package com.chu.consulting.domain;
 
-public class ConsultingReviewDto {
+public class RequestConsultingReviewDto {
 //       "consultingSeq" : 1,
 //               "isLike" : true,
 //               "reviewScore" : 4.5,
