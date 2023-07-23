@@ -32,7 +32,7 @@ const Wrapper = styled.div`
   width: 100%;
 `;
 
-const Box = styled.div`
+const Box = styled(motion.div)`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -91,6 +91,17 @@ const Btn = styled(motion.button)`
   }
 `;
 
+const boxVariants = {
+  nomal: {
+    scale: 1
+  },
+  hover: {
+    scale: 1.02,
+    transition: {
+      duration: 0.3,
+    },
+  }
+}
 
 function UserTypeComponet() {
   const navigate = useNavigate();
@@ -98,7 +109,7 @@ function UserTypeComponet() {
   return (
     <Container>
       <StepWrapper>
-        <Step top="step1" bottom="회원 유형 선택" />
+        <Step top="step1" bottom="회원 유형 선택" bgcolor="rgb(244,153,26)"/>
         <Step top="step2" bottom="약관 동의" />
         <Step top="step3" bottom="회원 정보 입력" />
         <Step top="step4" bottom="가입 완료" />
@@ -107,13 +118,21 @@ function UserTypeComponet() {
       <TypeWrapper>
         <Title>회원 유형 선택</Title>
         <Wrapper>
-          <Box>
+          <Box
+            onClick={() => navigate('/designersignup')}
+            variants={boxVariants} 
+            initial="nomal" 
+            whileHover="hover">
             <DesignerImg src="./icon/hair-cutting.png"/>
             <Text>디자이너</Text>
             <SubText>디자이너가 홈페이지에 가입하는 경우</SubText>
             <Btn onClick={() => navigate('/designersignup')}>회원가입</Btn>
           </Box>
-          <Box>
+          <Box 
+            onClick={() => navigate('/customersignup')}
+            variants={boxVariants} 
+            initial="nomal" 
+            whileHover="hover">
             <CustomerImg src="./icon/woman.png"/>
             <Text>일반 회원</Text>
             <SubText>일반 회원이 홈페이지에 가입하는 경우</SubText>

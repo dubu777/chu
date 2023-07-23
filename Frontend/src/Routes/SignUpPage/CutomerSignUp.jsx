@@ -31,7 +31,7 @@ function CustomerSignUp() {
       <Wrapper>
         <Step top="step1" bottom="회원 유형 선택" />
         <Step top="step2" bottom="약관 동의" />
-        <Step top="step3" bottom="회원 정보 입력" />
+        <Step top="step3" bottom="회원 정보 입력" bgcolor="rgb(244,153,26)"/>
         <Step top="step4" bottom="가입 완료" />
       </Wrapper>
       <Hr/>
