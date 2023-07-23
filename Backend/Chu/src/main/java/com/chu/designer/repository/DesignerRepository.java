@@ -7,22 +7,16 @@ import java.sql.Date;
 import java.util.ArrayList;
 
 public interface DesignerRepository {
-    // 아이디 중복체크
     boolean checkId(String id);
-    
-    // 이메일 중복체크
+
     boolean checkEmail(String email);
 
-    // 디자이너 회원가입
     boolean signUp(RequestDesignerSignUpDto requestDesignerSignUpDto);
 
-    // 디자이너 로그인 여부 확인
     boolean signIn(RequestSignInDto requestSignInDto);
 
-    // 디자이너 정보 조회
     DesignerDto getDesignerInfo(String id);
 
-    // 디자이너 아이디 찾기
     String findId(RequestFindIdDto requestFindIdDto);
 
     int isValidUser(RequestFindPwdDto requestFindPwdDto);

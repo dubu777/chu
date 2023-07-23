@@ -14,5 +14,6 @@ public interface CustomerDetailService {
     // 고객정보 수정 눌렀을때 가져올 것들
     ResponseCustomerDetailInfoDto getCustomerUpdateDetailInfo(int customerSeq);
 
+    // 고객 상세 정보 수정
     boolean putCustomerDetailInfo(int customerSeq, RequestCustomerDetailChangeDto requestCustomerDetailChangeDto);
 }
