@@ -2,7 +2,7 @@
 
 import {styled} from "styled-components";
 // import css from "../font/font.css"
-import MyApp from "../components/ViewPageComponent/Calendar";
+import MyApp from "../components/ReservationComponent/Calendar";
 
 const Container = styled.div`
 	display: flex;
