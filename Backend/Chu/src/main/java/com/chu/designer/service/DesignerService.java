@@ -39,7 +39,4 @@ public interface DesignerService {
     boolean createAlert(RequestAlertCreateDto requestAlertCreateDto);
 
     boolean readAlert(RequestAlertReadDto requestAlertReadDto);
-
-    boolean postPortfolioImage(int designerSeq, String img);
-
 }

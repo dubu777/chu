@@ -118,18 +118,6 @@ public class DesignerRepositoryImpl implements DesignerRepository {
     }
 
     @Override
-    public boolean postPortfolioImage(int designerSeq, String img) {
-        
-        boolean isSuccess = true;
-
-        // 로직
-        
-        // 해당 디자이너 번호에 해당 이미지 삽입
-        
-        return isSuccess;
-    }
-
-    @Override
     public ArrayList<ResponseBestDesignerDto> getBestDesigners() {
         ArrayList<ResponseBestDesignerDto> bestDesignerInfoList = new ArrayList<>();
 

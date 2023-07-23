@@ -187,6 +187,18 @@ public class DesignerDetailRepositoryImpl implements DesignerDetailRepository {
     }
 
     @Override
+    public boolean postPortfolioImage(int designerSeq, String img) {
+
+        boolean isSuccess = true;
+
+        // 로직
+
+        // 해당 디자이너 번호에 해당 이미지 삽입
+
+        return isSuccess;
+    }
+
+    @Override
     public boolean deletePortfolioImage(int designerSeq, int imageSeq) {
 
         boolean isSuccess = true;

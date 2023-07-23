@@ -31,5 +31,7 @@ public interface DesignerDetailService {
 
     ArrayList<ImageDto> getPortfolio(int designerSeq);
 
+    boolean postPortfolioImage(int designerSeq, String img);
+
     boolean deletePortfolioImage(int designerSeq, int imageSeq);
 }

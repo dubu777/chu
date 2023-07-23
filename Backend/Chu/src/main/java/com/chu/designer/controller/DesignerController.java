@@ -131,18 +131,4 @@ public class DesignerController {
             return ResponseEntity.ok(httpResponseDto);
         }
     }
-
-    @PostMapping("/portfolio")
-    public ResponseEntity<HttpResponseDto> postPortfolio(@PathVariable("designer-seq") int designerSeq, @RequestParam String img) {
-
-        boolean isSuccess = designerService.postPortfolioImage(designerSeq, img);
-
-        if (isSuccess) {
-            HttpResponseDto httpResponseDto = new HttpResponseDto(200, null);
-            return ResponseEntity.ok(httpResponseDto);
-        } else {
-            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
-            return ResponseEntity.ok(httpResponseDto);
-        }
-    }
 }

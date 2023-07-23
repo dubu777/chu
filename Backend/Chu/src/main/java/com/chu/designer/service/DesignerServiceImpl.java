@@ -107,9 +107,4 @@ public class DesignerServiceImpl implements DesignerService{
     public boolean readAlert(RequestAlertReadDto requestAlertReadDto) {
         return designerRepository.readAlert(requestAlertReadDto);
     }
-
-    @Override
-    public boolean postPortfolioImage(int designerSeq, String img) {
-        return designerRepository.postPortfolioImage(designerSeq, img);
-    }
 }

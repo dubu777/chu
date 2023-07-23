@@ -119,6 +119,11 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
     }
 
     @Override
+    public boolean postPortfolioImage(int designerSeq, String img) {
+        return designerDetailRepository.postPortfolioImage(designerSeq, img);
+    }
+
+    @Override
     public boolean deletePortfolioImage(int designerSeq, int imageSeq) {
         return designerDetailRepository.deletePortfolioImage(designerSeq, imageSeq);
     }
