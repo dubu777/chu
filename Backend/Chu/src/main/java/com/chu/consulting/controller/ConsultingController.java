@@ -80,10 +80,10 @@ public class ConsultingController {
     @GetMapping("/result")
     public ResponseEntity<HttpResponseDto> getConsultingResult(@PathVariable("consulting-seq") int consultingSeq) {
 
-        ConsultingResultDto consultingResultDto = consultingService.getConsultingResult(consultingSeq);
+        ResponseConsultingResultDto responseConsultingResultDto = consultingService.getConsultingResult(consultingSeq);
 
-        if (consultingResultDto != null) {
-            HttpResponseDto httpResponseDto = new HttpResponseDto(200, consultingResultDto);
+        if (responseConsultingResultDto != null) {
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseConsultingResultDto);
             return ResponseEntity.ok(httpResponseDto);
         }
         else {
@@ -93,9 +93,9 @@ public class ConsultingController {
     }
 
     @PatchMapping("/result")
-    public ResponseEntity<HttpResponseDto> updateConsultingResult(@RequestBody ConsultingUpdateDto consultingUpdateDto) {
+    public ResponseEntity<HttpResponseDto> updateConsultingResult(@RequestBody RequestConsultingUpdateDto requestConsultingUpdateDto) {
 
-        boolean isSuccess = consultingService.updateConsultingResult(consultingUpdateDto);
+        boolean isSuccess = consultingService.updateConsultingResult(requestConsultingUpdateDto);
 
         if (isSuccess) {
             HttpResponseDto httpResponseDto = new HttpResponseDto(200, null);

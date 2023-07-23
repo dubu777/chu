@@ -14,7 +14,7 @@ public interface ConsultingRepository {
 
     boolean updateImpossibleConsulting(RequestConsultingDto requestConsultingDto);
 
-    ConsultingResultDto getConsultingResult(int consultingSeq);
+    ResponseConsultingResultDto getConsultingResult(int consultingSeq);
 
     boolean updateConsultingUrl(int consultingSeq, String url);
 
@@ -26,5 +26,7 @@ public interface ConsultingRepository {
 
     ResponseConsultingReviewInfoDto getConsultingResultDetailInfo(int consultingSeq);
 
-    boolean updateConsultingResult(ConsultingUpdateDto consultingUpdateDto);
+    boolean updateConsultingResultStyle(RequestConsultingUpdateDto requestConsultingUpdateDto);
+
+    boolean updateSelectedConsultingResultImage(RequestConsultingUpdateDto requestConsultingUpdateDto);
 }

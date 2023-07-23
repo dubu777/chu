@@ -5,7 +5,7 @@ import com.chu.global.domain.ImageNameDto;
 
 import java.util.ArrayList;
 
-public class ConsultingResultDto {
+public class ResponseConsultingResultDto {
 //            "name" : "소희",
 //                    "consultingDate" : "07/11"
 //                    "consultingStartTime" : "22:00",

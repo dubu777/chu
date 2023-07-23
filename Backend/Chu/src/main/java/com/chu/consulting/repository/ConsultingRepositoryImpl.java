@@ -57,8 +57,8 @@ public class ConsultingRepositoryImpl implements ConsultingRepository {
     }
 
     @Override
-    public ConsultingResultDto getConsultingResult(int consultingSeq) {
-        ConsultingResultDto consultingResultDto = new ConsultingResultDto();
+    public ResponseConsultingResultDto getConsultingResult(int consultingSeq) {
+        ResponseConsultingResultDto responseConsultingResultDto = new ResponseConsultingResultDto();
 
         // 로직
 
@@ -68,7 +68,7 @@ public class ConsultingRepositoryImpl implements ConsultingRepository {
 
         // 상담 결과 사진들 반환
 
-        return consultingResultDto;
+        return responseConsultingResultDto;
     }
 
     @Override
@@ -130,13 +130,18 @@ public class ConsultingRepositoryImpl implements ConsultingRepository {
     }
 
     @Override
-    public boolean updateConsultingResult(ConsultingUpdateDto consultingUpdateDto) {
+    public boolean updateConsultingResultStyle(RequestConsultingUpdateDto requestConsultingUpdateDto) {
+        boolean isSuccess = true;
+        // 상담 결과 상세 테이블 스타일 업데이트
 
+        return isSuccess;
+    }
+
+    @Override
+    public boolean updateSelectedConsultingResultImage(RequestConsultingUpdateDto requestConsultingUpdateDto) {
         boolean isSuccess = true;
 
-        // 로직
-
-        // 상담 리뷰 정보, 상세 정보 저장
+        // 상담 결과 선택 합성 이미지 업데이트
 
         return isSuccess;
     }

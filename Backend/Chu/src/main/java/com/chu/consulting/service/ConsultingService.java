@@ -9,7 +9,7 @@ public interface ConsultingService {
 
     boolean deleteConsulting(int consultingSeq);
 
-    ConsultingResultDto getConsultingResult(int consultingSeq);
+    ResponseConsultingResultDto getConsultingResult(int consultingSeq);
 
     boolean updateConsultingUrl(int consultingSeq, String url);
 
@@ -17,5 +17,5 @@ public interface ConsultingService {
 
     ResponseConsultingReviewInfoDto getConsultingResultDetailInfo(int consultingSeq);
 
-    boolean updateConsultingResult(ConsultingUpdateDto consultingUpdateDto);
+    boolean updateConsultingResult(RequestConsultingUpdateDto requestConsultingUpdateDto);
 }

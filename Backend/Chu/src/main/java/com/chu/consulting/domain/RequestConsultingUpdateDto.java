@@ -1,6 +1,6 @@
 package com.chu.consulting.domain;
 
-public class ConsultingUpdateDto {
+public class RequestConsultingUpdateDto {
 //        "consultingSeq" : 1,
 //                "selectedHairStyle" : [
 //                1, 2, 5

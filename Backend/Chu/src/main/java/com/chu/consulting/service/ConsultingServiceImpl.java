@@ -49,7 +49,7 @@ public class ConsultingServiceImpl implements ConsultingService {
     }
 
     @Override
-    public ConsultingResultDto getConsultingResult(int consultingSeq) {
+    public ResponseConsultingResultDto getConsultingResult(int consultingSeq) {
         return consultingRepository.getConsultingResult(consultingSeq);
     }
 
@@ -82,7 +82,16 @@ public class ConsultingServiceImpl implements ConsultingService {
     }
 
     @Override
-    public boolean updateConsultingResult(ConsultingUpdateDto consultingUpdateDto) {
-        return consultingRepository.updateConsultingResult(consultingUpdateDto);
+    public boolean updateConsultingResult(RequestConsultingUpdateDto requestConsultingUpdateDto) {
+        
+        boolean isSuccess = true;
+
+        // 상담 결과 헤어스타일 등록
+        consultingRepository.updateConsultingResultStyle(requestConsultingUpdateDto);
+        
+        // 상담 결과 이미지 등록
+        consultingRepository.updateSelectedConsultingResultImage(requestConsultingUpdateDto);
+
+        return isSuccess;
     }
 }
