@@ -9,7 +9,7 @@ function formatDateString(date) {
 
 }
 
-function MyApp() {
+function ReserveCalendar() {
     const [value, onChange] = useState(new Date());
     return (
       <div>
@@ -22,4 +22,4 @@ function MyApp() {
   }
 
 
-export default MyApp;
+export default ReserveCalendar;

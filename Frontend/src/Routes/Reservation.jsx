@@ -1,8 +1,9 @@
 // 여기는 디자이너 예약 상세 페이지
 
 import {styled} from "styled-components";
-// import css from "../font/font.css"
-import MyApp from "../components/ReservationComponent/Calendar";
+import css from "../font/font.css"
+import 'react-calendar/dist/Calendar.css'; // css import
+import ReserveCalendar from "../components/ReservationComponent/Calendar";
 
 const Container = styled.div`
 	display: flex;
@@ -26,7 +27,7 @@ function Reservation() {
     <Container>
 			<Wrapper>ss</Wrapper>
 			<Wrapper></Wrapper>
-			<MyApp/>
+			<ReserveCalendar/>
 		</Container>
   );
 }
