@@ -11,15 +11,15 @@ const Container = styled.div`
 const ReserveWrapper = styled.div`
   border: solid 2px;
   border-color: gray;
-  margin: 200px auto 10px auto;
+  margin: 200px auto 50px auto;
   height: 150px;
-  width: 70%;
+  width: 60%;
   border-radius: 0.7rem;
 `;
 
 const Wrapper = styled.div`
-  width: 70%; 
-  height: 500px;
+  width: 60%; 
+  /* hesight: 500px; */
   margin: 30px auto 10px auto;
   
 `;
@@ -34,6 +34,8 @@ const InfoBox = styled.div`
 `;
 
 const Box = styled.div`
+  height: 500px;
+  border: solid 2px gray;
   
 `;
 
@@ -62,6 +64,11 @@ function CustomerMyPage(){
         <Wrapper>
           <button>최근 상담 내역</button>
           <button>좋아요 한 디자이너</button>
+          <Box>
+            <ReserveList />
+            <LikeDesigner />
+
+          </Box>
 
 
 
