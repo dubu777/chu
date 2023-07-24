@@ -37,9 +37,17 @@ const InfoBox = styled.div`
 
 const Box = styled.div`
   height: 500px;
-  border: solid 2px gray;
-  
+  border: 0;
+  background-color: #F9F5F0;
 `;
+
+const ClickBtn = styled.button`
+  height: 40px;
+  padding: 0px 15px;
+  border: ${(props) => props.border || "hidden"};
+  background-color: ${(props) => props.bgcolor || "#F9F5F0"};
+  border-radius: 1rem 1rem 0rem 0rem;
+`
 
 function CustomerMyPage(){
   const [showReserveList, setShowReserveList] = useState(true); // 상담 내역 컴포넌트
@@ -75,8 +83,8 @@ function CustomerMyPage(){
 
 {/* 여기는 탭 작동 */}
         <Wrapper>
-          <button onClick={handleShowReserveList}>최근 상담 내역</button>
-          <button onClick={handleShowLikeDesigner}>좋아요 한 디자이너</button>
+          <ClickBtn onClick={handleShowReserveList} bgcolor="#F2EAD3">최근 상담 내역</ClickBtn>
+          <ClickBtn onClick={handleShowLikeDesigner} bgcolor="#F2EAD3">좋아요 한 디자이너</ClickBtn>
           <Box>
             {/* 앞의 조건이 true일 때 뒤의 컴포넌트 보여주기 */}
             {showReserveList && <ReserveList />}
