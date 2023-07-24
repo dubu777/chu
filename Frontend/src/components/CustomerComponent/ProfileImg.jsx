@@ -21,7 +21,7 @@ function ProfileImg() {
   };
 
   // 파일을 선택했을 때 호출되는 이벤트 핸들러
-  const handleFileChange = (event) => {
+  function handleFileChange(event){
     const file = event.target.files[0];
     // 파일 타입이 image를 포함하는지 확인 후 객체 생성
     if (file && file.type.includes('image')) {
