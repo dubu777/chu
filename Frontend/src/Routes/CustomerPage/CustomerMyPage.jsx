@@ -44,9 +44,10 @@ const Box = styled.div`
 const ClickBtn = styled.button`
   height: 40px;
   padding: 0px 15px;
-  border: ${(props) => props.border || "hidden"};
-  background-color: ${(props) => props.bgcolor || "#F9F5F0"};
-  border-radius: 1rem 1rem 0rem 0rem;
+  /* border-color: #83807a; */
+  background-color: ${(props) => props.bgcolor || "#f8f3ed"};
+  border-bottom: white;
+  border-radius: 0.6rem 0.6rem 0rem 0rem;
 `
 
 function CustomerMyPage(){
@@ -83,8 +84,17 @@ function CustomerMyPage(){
 
 {/* 여기는 탭 작동 */}
         <Wrapper>
-          <ClickBtn onClick={handleShowReserveList} bgcolor="#F2EAD3">최근 상담 내역</ClickBtn>
-          <ClickBtn onClick={handleShowLikeDesigner} bgcolor="#F2EAD3">좋아요 한 디자이너</ClickBtn>
+          <ClickBtn 
+            onClick={handleShowReserveList} 
+            bgcolor={showReserveList ? "#F9F5F0" : "#f5ebb8"}
+            border = {showReserveList ? " ":"#898773 #898773 none #898773" }
+            >최근 상담 내역
+          </ClickBtn>
+          <ClickBtn 
+            onClick={handleShowLikeDesigner} 
+            bgcolor={showReserveList ? "#f5ebb8" : "#F9F5F0"}
+            >좋아요 한 디자이너
+          </ClickBtn>
           <Box>
             {/* 앞의 조건이 true일 때 뒤의 컴포넌트 보여주기 */}
             {showReserveList && <ReserveList />}
