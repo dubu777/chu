@@ -5,17 +5,6 @@ import { useState, useEffect } from "react";
 import Select from "react-select";
 import DesignerList from "../../components/DesignerComponent/DesignerList";
 
-const Hr = styled.div`
-  margin-top: 20px;
-  border-bottom : 2px solid rgb(242,234,211);
-`;
-const Wrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -23,56 +12,108 @@ const Container = styled.div`
   width: 65vw;
   margin: 0 auto;
 `;
-const Input = styled(motion.input)`
-
-  position: absolute;
-  padding: 7px 10px;
-  padding-left: 40px;
-  z-index: -1;
-  color: black;
-  font-size: 16px;
-  background-color: transparent;
-  border: 1px solid grey;
-  border-radius: 10px;
-`;
-const Search = styled.form`
-  color: grey;
+const Box = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
-  position: relative;
-  top: 50px;
-  z-index: -1;
-  svg {
-    height: 25px;
-  }
+  margin-top: 20px;
 `;
-const Svg = styled.svg`
-  position: absolute;
-  left: -107px;
+const HashTag = styled.span`
+  font-size: 12px;
+  font-weight: 700;
+  padding: 5px 10px;
+  margin-right: 5px;
+  border: 1px solid black;
+  background-color: ${props => props.selected ?"rgb(100,93,81)" :"rgb(251, 246, 232)" };
+  color: ${props => props.selected ?"rgb(255, 255, 255)" :"rgb(0,0,0)" };
+  border-radius: 5px;
+  margin-top:3px;
 `;
-
 function ListView() {
-  const repeat = [1,2,3,4,5,6,7,8]
+  const repeat = [1,2,3]
+  const cutType = ["레이어드컷", "히메컷", "투블럭", "시스루컷", "허쉬컷", "슬릭컷"]
+  const permType = ["아이롱펌", "시스루펌", "C컬", "볼륨펌", "쉐도우펌", "베이비펌"]
+  const [selectedCut, setSelectedCut] = useState([]);
+  const [selectedPerm, setSelectedPerm] = useState([]);
 
+
+  const toggleCutType = (tag) => {
+    if (selectedCut.includes(tag)) {
+      setSelectedCut((prev) => prev.filter((resist) => resist !== tag))
+    } else {
+      setSelectedCut((prev) => [...prev, tag]);
+    }
+  };
+  const togglePermType = (tag) => {
+    if (selectedPerm.includes(tag)) {
+      setSelectedPerm((prev) => prev.filter((resist) => resist !== tag))
+    } else {
+      setSelectedPerm((prev) => [...prev, tag]);
+    }
+  };
   return (
     <Container>
-      {/* <Wrapper>
-        <Search>
-          <Svg
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fillRule="evenodd"
-              d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-              clipRule="evenodd"
-            ></path>
-          </Svg>
-          <Input placeholder="search"/>
-        </Search>
-      </Wrapper> */}
+      <Box>
+        {
+          cutType.map((tag) => (
+            <HashTag
+              key={tag}
+              onClick={() => toggleCutType(tag)}
+              selected={selectedCut.includes(tag)}
+            >
+              #{tag}
+            </HashTag>
+          ))
+        }
+      </Box>
+      <Box>
+        {
+          permType.map((tag) => (
+            <HashTag
+              key={tag}
+              onClick={() => togglePermType(tag)}
+              selected={selectedPerm.includes(tag)}
+            >
+              #{tag}
+            </HashTag>
+          ))
+        }
+      </Box>
+      <Box>
+        {
+          selectedCut.map((tag) => (
+            <HashTag
+              key={tag}
+              onClick={() => toggleCutType(tag)}
+              selected={selectedCut.includes(tag)}
+            >
+              #{tag}
+            </HashTag>
+          ))
+        }
+      </Box>
+      <Box>
+        {
+          selectedPerm.map((tag) => (
+            <HashTag 
+              key={tag}
+              onClick={() => togglePermType(tag)}
+              selected={selectedPerm.includes(tag)}
+            >
+              #{tag}
+            </HashTag>
+          ))
+        }
+      </Box>
+      {/* <Box onClick={toggleCutType}>
+        {showCutType &&
+          cutType.map((tag) => <HashTag>#{tag}</HashTag>)
+        }
+      </Box>
+      <Box onClick={togglePermType}>
+        {showPermType &&
+          permType.map((tag) => <HashTag>#{tag}</HashTag>)
+        }
+      </Box> */}
       {
         repeat.map((i) => (
           <DesignerList key={i} />
