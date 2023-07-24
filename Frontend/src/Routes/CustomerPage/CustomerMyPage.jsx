@@ -8,13 +8,13 @@ const Container = styled.div`
 const Wrapper = styled.div`
 `;
 
-const ImgBox = styled.box`
+const ImgBox = styled.div`
   
 `;
-const TextBox = styled.box`
+const TextBox = styled.div`
   
 `;
-const InfoBox = styled.box`
+const InfoBox = styled.div`
 `;
 
 function CustomerMyPage(){
