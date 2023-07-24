@@ -39,7 +39,7 @@ const Input = styled.input`
 	background-color: white;
 	padding-left: 10px;
 	font-size: 18px;
-	/* font-family: 'Cormorant Garamond'; */
+	font-family: 'Cormorant Garamond';
 `;
 const P = styled.p`
 	margin-top: -15px;

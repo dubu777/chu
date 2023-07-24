@@ -4,7 +4,8 @@ import React, {useState, useEffect} from "react";
 import ProfileImg from "../../components/CustomerComponent/ProfileImg";
 
 const Container = styled.div`
-    
+  /* font-family: "Apple-B";   */
+  font-family: "Blue-road";
 `;
 // 고정 프로필바
 const Wrapper = styled.div`
@@ -13,7 +14,8 @@ const Wrapper = styled.div`
 	width: 100%;
 	height: 300px;
 	background-color: #f8f1d9;
-  font-family: "Blue-road"; 
+  /* font-family: "Blue-road"; */
+  /* font-family: "Apple-B";   */
     
 `;
 const ImgBox = styled.div`
@@ -28,6 +30,7 @@ const NameText = styled.h1`
 const Text = styled.p`
   margin-bottom: 20px;
   font-size: large;
+  
 `;
 const HashTag = styled.button`
   border: 0;
@@ -59,6 +62,7 @@ const ChangeBtn = styled.button`
   background-color: #f9bd4f;
   width: 150px;
   height: 35px;
+  
 `;
 
 function CustomerPageInfo(){
