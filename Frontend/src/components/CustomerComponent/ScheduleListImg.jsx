@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const ScheduleListImg = () => {
+function ScheduleListImg(){
   const [imageUrl, setImageUrl] = useState('');
 
   useEffect(() => {

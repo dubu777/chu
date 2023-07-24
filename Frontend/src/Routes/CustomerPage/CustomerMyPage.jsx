@@ -41,18 +41,16 @@ const Box = styled.div`
   
 `;
 
-
-
 function CustomerMyPage(){
   const [showReserveList, setShowReserveList] = useState(true); // 상담 내역 컴포넌트
   const [showLikeDesigner, setShowLikeDesigner] = useState(false); // 디자이너 컴포넌트
 
-  const handleShowReserveList = () => {
+  function handleShowReserveList() {
     setShowReserveList(true);
     setShowLikeDesigner(false);
   };
 
-  const handleShowLikeDesigner = () => {
+  function handleShowLikeDesigner() {
     setShowReserveList(false);
     setShowLikeDesigner(true);
   };

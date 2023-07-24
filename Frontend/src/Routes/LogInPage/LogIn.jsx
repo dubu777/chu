@@ -89,7 +89,7 @@ export const usernameState = selector({
 function LogIn() {
 	const [isLoggedIn, setLoggedIn] = useRecoilState(isLoggedInState);
 	// 폼 제출 핸들러를 정의
-	const handleFormSubmit = (event) => {
+	function handleFormSubmit(event){
 		event.preventDefault();
 		const form = event.target;
 		const formData = new FormData(form);
