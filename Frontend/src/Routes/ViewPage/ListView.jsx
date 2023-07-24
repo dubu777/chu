@@ -1,15 +1,15 @@
 import { styled } from "styled-components";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import Select from "react-select";
-import { useState } from "react";
-
+import DesignerList from "../../components/DesignerComponent/DesignerList";
 
 const Hr = styled.div`
   margin-top: 20px;
   border-bottom : 2px solid rgb(242,234,211);
 `;
-const Col = styled.div`
+const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -51,21 +51,13 @@ const Svg = styled.svg`
   position: absolute;
   left: -107px;
 `;
-const options = [
-  { label: 'Option 1', value: 'option1' },
-  { label: 'Option 2', value: 'option2' },
-  { label: 'Option 3', value: 'option3' },
-];
 
 function ListView() {
-  const [selectedOption, setSelectedOption] = useState(null);
+  const repeat = [1,2,3,4,5,6,7,8]
 
-  const handleChange = (selected) => {
-    setSelectedOption(selected);
-  };
   return (
     <Container>
-      <Col>
+      {/* <Wrapper>
         <Search>
           <Svg
             fill="currentColor"
@@ -80,10 +72,12 @@ function ListView() {
           </Svg>
           <Input placeholder="search"/>
         </Search>
-      </Col>
-      <Col>
-
-      </Col>
+      </Wrapper> */}
+      {
+        repeat.map((i) => (
+          <DesignerList key={i} />
+        ))
+      }
     </Container>
   )
 }

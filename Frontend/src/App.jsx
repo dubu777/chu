@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Home from "./Routes/Home";
-import Reservation from "./Routes/Reservation";
+import DesignerDetail from "./Routes/DesignerDetail";
 import CustomerSignUp from "./Routes/SignUpPage/CutomerSignUp";
 import DesignerSignUp from "./Routes/SignUpPage/DesignerSignUp";
 import Complete from "./Routes/SignUpPage/Complete";
@@ -22,17 +22,17 @@ function App() {
       <Header/>
       <Routes>
         <Route path="/" element={<Home/>} />
-        <Route path="customersignup" element={<CustomerSignUp/>} />
-        <Route path="designersignup" element={<DesignerSignUp/>} />
-        <Route path="complete" element={<Complete/>} />
         <Route path="login" element={<LogIn/>} />
         <Route path="findid" element={<FindId/>} />
         <Route path="findpw" element={<FindPw/>}/>
-        <Route path="usertype" element={<UserType/>} />
         <Route path="authnum" element={<AuthNum/>} />
         <Route path="foundid" element={<FoundId/>} />
         <Route path="changepw" element={<ChangePw/>} />
-        <Route path="reservation" element={<Reservation/>} />
+        <Route path="usertype" element={<UserType/>} />
+        <Route path="customersignup" element={<CustomerSignUp/>} />
+        <Route path="designersignup" element={<DesignerSignUp/>} />
+        <Route path="complete" element={<Complete/>} />
+        <Route path="designerdetail" element={<DesignerDetail/>} />
         <Route path="worlducupimgupload" element={<WorldcupImgUpload/>} />
         <Route path="customermypage" element={<CustomerMyPage/>} />
         <Route path="listview" element={<ListView/>} />
