@@ -28,3 +28,13 @@
     font-weight: normal;
     font-style: normal;
 }
+
+@font-face {
+    font-family: "Apple-R";        
+    src: url("../font/AppleSDGothicNeoR.ttf");
+  }
+
+  @font-face {
+    font-family: "Apple-B";        
+    src: url("../font/AppleSDGothicNeoB.ttf");
+  }
