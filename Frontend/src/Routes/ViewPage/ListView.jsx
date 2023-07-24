@@ -12,21 +12,36 @@ const Container = styled.div`
   width: 65vw;
   margin: 0 auto;
 `;
+const Wrapper = styled.div`
+  display: flex;
+  margin: 12px;
+`;
+const Wrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  border: 2px solid rgb(220, 220, 220);
+`;
 const Box = styled.div`
   display: flex;
   align-items: center;
-  margin-top: 20px;
+  justify-content: center;
 `;
-const HashTag = styled.span`
+const HashTag = styled(motion.span)`
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 500;
   padding: 5px 10px;
   margin-right: 5px;
   border: 1px solid black;
-  background-color: ${props => props.selected ?"rgb(100,93,81)" :"rgb(251, 246, 232)" };
+  background-color: ${props => props.selected ?"rgb(100,93,81)" :"rgb(250, 248, 242)" };
   color: ${props => props.selected ?"rgb(255, 255, 255)" :"rgb(0,0,0)" };
   border-radius: 5px;
   margin-top:3px;
+  cursor: pointer;
+`;
+const Text = styled.span`
+  font-size: 16px;
+  font-weight: 800;
 `;
 function ListView() {
   const repeat = [1,2,3]
@@ -52,32 +67,39 @@ function ListView() {
   };
   return (
     <Container>
-      <Box>
-        {
-          cutType.map((tag) => (
-            <HashTag
-              key={tag}
-              onClick={() => toggleCutType(tag)}
-              selected={selectedCut.includes(tag)}
-            >
-              #{tag}
-            </HashTag>
-          ))
-        }
-      </Box>
-      <Box>
-        {
-          permType.map((tag) => (
-            <HashTag
-              key={tag}
-              onClick={() => togglePermType(tag)}
-              selected={selectedPerm.includes(tag)}
-            >
-              #{tag}
-            </HashTag>
-          ))
-        }
-      </Box>
+      <Wrap>
+      <Wrapper>
+        <Text>커트</Text>
+        <Box>
+          {
+            cutType.map((tag) => (
+              <HashTag
+                key={tag}
+                onClick={() => toggleCutType(tag)}
+                selected={selectedCut.includes(tag)}
+              >
+                #{tag}
+              </HashTag>
+            ))
+          }
+        </Box>
+      </Wrapper>
+      <Wrapper>
+        <Text>펌</Text>
+        <Box>
+          {
+            permType.map((tag) => (
+              <HashTag
+                key={tag}
+                onClick={() => togglePermType(tag)}
+                selected={selectedPerm.includes(tag)}
+              >
+                #{tag}
+              </HashTag>
+            ))
+          }
+        </Box>
+      </Wrapper>
       <Box>
         {
           selectedCut.map((tag) => (
@@ -104,6 +126,7 @@ function ListView() {
           ))
         }
       </Box>
+      </Wrap>
       {/* <Box onClick={toggleCutType}>
         {showCutType &&
           cutType.map((tag) => <HashTag>#{tag}</HashTag>)
