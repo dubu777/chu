@@ -15,7 +15,9 @@ const Nav = styled(motion.nav)`
   padding: 20px 60px;
   color: white;
   background-color: rgb(100, 93, 81);
-  font-family: 'Cormorant Garamond';
+  /* font-family: 'Cormorant Garamond'; */
+  /* font-family: 'Pretendard-Regular'; */
+  font-family: "San Francisco";
   /* font-family: 'NanumSquareNeo-Variable'; */
 `;
 

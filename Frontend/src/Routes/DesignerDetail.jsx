@@ -22,7 +22,7 @@ const box = styled.div`
     
 `;
 
-function Reservation() {
+function DesignerDetail() {
   return(
     <Container>
 			<Wrapper>ss</Wrapper>
@@ -33,4 +33,4 @@ function Reservation() {
 }
 
 
-export default Reservation;
+export default DesignerDetail;
