@@ -3,6 +3,8 @@ import styled from "styled-components";
 import React, {useState, useEffect} from "react";
 import CustomerPageInfo from "../../components/CustomerComponent/CustomerPageInfo";
 import ScheduleListImg from "../../components/CustomerComponent/ScheduleListImg";
+import ReserveList from "../../components/CustomerComponent/ReserveList";
+import LikeDesigner from "../../components/CustomerComponent/LikeDesigner";
 import axios from 'axios';
 
 const Container = styled.div`
@@ -42,6 +44,19 @@ const Box = styled.div`
 
 
 function CustomerMyPage(){
+  const [showReserveList, setShowReserveList] = useState(true); // 상담 내역 컴포넌트
+  const [showLikeDesigner, setShowLikeDesigner] = useState(false); // 디자이너 컴포넌트
+
+  const handleShowReserveList = () => {
+    setShowReserveList(true);
+    setShowLikeDesigner(false);
+  };
+
+  const handleShowLikeDesigner = () => {
+    setShowReserveList(false);
+    setShowLikeDesigner(true);
+  };
+
   return(
     <Container>
       {/*  */}
@@ -62,12 +77,12 @@ function CustomerMyPage(){
 
 {/* 여기는 탭 작동 */}
         <Wrapper>
-          <button>최근 상담 내역</button>
-          <button>좋아요 한 디자이너</button>
+          <button onClick={handleShowReserveList}>최근 상담 내역</button>
+          <button onClick={handleShowLikeDesigner}>좋아요 한 디자이너</button>
           <Box>
-            <ReserveList />
-            <LikeDesigner />
-
+            {/* 앞의 조건이 true일 때 뒤의 컴포넌트 보여주기 */}
+            {showReserveList && <ReserveList />}
+            {showLikeDesigner && <LikeDesigner />}
           </Box>
 
 
