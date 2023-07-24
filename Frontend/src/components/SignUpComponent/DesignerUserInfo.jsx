@@ -1,6 +1,5 @@
 import { styled } from "styled-components";
 import SignUpInput from "./SignUpInput";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 
@@ -27,27 +26,8 @@ const Wrapper = styled.div`
 const Wrap = styled.div`
   display: flex;
   flex-direction: column;
-  /* align-items: right; */
-  /* margin-left: 10%; */
 `;
 
-
-const Label = styled.label`
-  font-size: 14px;
-  font-weight: bold;
-`;
-
-const Text = styled.span`
-  font-size: 14px;
-  font-weight: bold;
-`;
-
-const User = styled.div`
-  display: flex; /* 추가: 라디오 버튼과 텍스트를 가로로 나열하기 위해 */
-  align-items: center; /* 추가: 라디오 버튼과 텍스트를 수직 중앙에 정렬 */
-  margin-bottom: 25px;
-  margin-left: 70px;
-`;
 const SubmitBtn = styled.button`
   background-color: rgba(244,153,26,0.6);
   color: black;
@@ -65,11 +45,7 @@ const SubmitBtn = styled.button`
 
 function UserInfoComponet() {
   const navigate = useNavigate();
-  const [gender, setGender] = useState(""); // 선택된 성별 상태값
 
-  const handleGenderChange = (event) => {
-    setGender(event.target.value); // 선택된 성별을 상태값에 업데이트
-  };
   return (
       <Container>
         <Wrapper>

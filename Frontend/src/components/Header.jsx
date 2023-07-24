@@ -66,7 +66,11 @@ const logoVariants = {
     color: "white"
   },
   active: {
-    color: "rgb(244,153,26)"
+    color: "rgb(244,153,26)",
+    trasition: {
+      type: "tween",
+      duration: 0.05,
+    },
   }
 };
 
@@ -106,12 +110,12 @@ function Header() {
       <Col>
         <Search >
           <Link to="/customermypage">CustomerMyPage//</Link>
-          <Link to="usertype">
+          <Link to="listview">
             <Item 
               variants={logoVariants}
               whileHover="active"
               initial="nomal"
-              >UserType
+              >ListView
             </Item>
           </Link>
           <Link to="usertype">

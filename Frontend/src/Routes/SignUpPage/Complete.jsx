@@ -26,7 +26,7 @@ const BackBox = styled.div`
   justify-content: center;
   align-items: center;
   background-color: rgba(0,0,0,0.6);
-  width: 700px;
+  width: 50vw;
   height: 500px;
   margin: 60px auto;
   border-radius: 15px;
@@ -82,7 +82,7 @@ function Complete() {
         <Step top="step1" bottom="회원 유형 선택" />
         <Step top="step2" bottom="약관 동의" />
         <Step top="step3" bottom="회원 정보 입력" />
-        <Step top="step4" bottom="가입 완료" />
+        <Step top="step4" bottom="가입 완료" bgcolor="rgb(244,153,26)"/>
       </Wrapper>
       <Hr/>
       <BackBox>

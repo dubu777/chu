@@ -14,6 +14,7 @@ import FindPw from "./Routes/LogInPage/FindPw";
 import ChangePw from "./Routes/LogInPage/ChangePw";
 import WorldcupImgUpload from "./Routes/WorldCupPage/WorldcupImgUpload";
 import CustomerMyPage from "./Routes/CustomerPage/CustomerMyPage";
+import ListView from "./Routes/ViewPage/ListView";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
         <Route path="reservation" element={<Reservation/>} />
         <Route path="worlducupimgupload" element={<WorldcupImgUpload/>} />
         <Route path="customermypage" element={<CustomerMyPage/>} />
+        <Route path="listview" element={<ListView/>} />
       </Routes>
     </Router>
   )
