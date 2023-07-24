@@ -9,7 +9,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 65vw;
+  width: 80%;
   margin: 0 auto;
 `;
 const Hr = styled.div`
@@ -139,16 +139,6 @@ function ReserveList() {
           </Box>
         </InfoBox>
       </Wrapper>
-      <LikeBox>
-        {liked ? (
-          // 좋아요가 눌려있을 때 빨간색 하트 아이콘
-          <LikeBtn src="./icon/hearto.png" onClick={handleLikeClick}/>
-        ) : (
-          // 좋아요가 눌려있지 않을 때 빈 하트 아이콘
-          <LikeBtn src="./icon/heartx.png" onClick={handleLikeClick}/>
-        )}
-        <Text>132</Text>
-      </LikeBox>
       </Wrap>
     </Container>
   )
