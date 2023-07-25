@@ -82,7 +82,7 @@ function Header() {
       whileHover="active"
       initial="nomal"
       >
-        Chu
+        Chu 배포 성공
       </Logo>
         <Items>
           <Link to="/">
