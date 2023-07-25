@@ -3,6 +3,7 @@ import Step from "../../components/SignUpComponent/Step";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -24,6 +25,7 @@ const TypeWrapper = styled.div`
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 60px;
 `;
 const Wrapper = styled.div`
   display: flex;
@@ -42,7 +44,8 @@ const Box = styled(motion.div)`
   margin-top: 30px;
   border-radius: 10px;
   background-color: rgb(249,245,240);
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
+  /* box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06); */
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 `;
 
 const Title = styled.span`
@@ -107,6 +110,7 @@ function UserTypeComponet() {
   const navigate = useNavigate();
 
   return (
+
     <Container>
       <StepWrapper>
         <Step top="step1" bottom="회원 유형 선택" bgcolor="rgb(244,153,26)"/>
@@ -128,7 +132,7 @@ function UserTypeComponet() {
             <SubText>디자이너가 홈페이지에 가입하는 경우</SubText>
             <Btn onClick={() => navigate('/designersignup')}>회원가입</Btn>
           </Box>
-          <Box 
+          <Box
             onClick={() => navigate('/customersignup')}
             variants={boxVariants} 
             initial="nomal" 
@@ -141,6 +145,7 @@ function UserTypeComponet() {
         </Wrapper>
       </TypeWrapper>
     </Container>
+    
   )
 }
 export default UserTypeComponet;
