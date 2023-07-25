@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class ChuApplication {
 	public static void main(String[] args) {
-		// CI/CD Test2 correct branch push
+		// CI/CD Test2 correct branch push test
 		SpringApplication.run(ChuApplication.class, args);
 	}
 
