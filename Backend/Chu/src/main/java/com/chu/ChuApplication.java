@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class ChuApplication {
 	public static void main(String[] args) {
-		// merge test2
+		// wrong branch test
 		SpringApplication.run(ChuApplication.class, args);
 	}
 
