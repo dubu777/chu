@@ -33,3 +33,13 @@
     font-family: "Apple-B";        
     src: url("../font/SF-Pro-Text-Bold.otf");
 }
+
+@font-face {
+    font-family: "Apple-H";        
+    src: url("../font/SF-Pro-Text-Heavy.otf");
+}
+
+@font-face {
+    font-family: "Sandol-B";        
+    src: url("../font/AppleSDGothicNeoB.ttf");
+}

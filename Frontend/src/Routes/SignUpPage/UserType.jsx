@@ -9,6 +9,7 @@ const Container = styled.div`
   justify-content: center;
   width: 65vw;
   margin: 0 auto;
+  
 
 `;
 const StepWrapper = styled.div`
@@ -47,13 +48,16 @@ const Box = styled(motion.div)`
 
 const Title = styled.span`
   font-size: 30px;
-  font-weight: bold;
+  font-family: "Sandol-B";   
+  font-weight: bolder;
   margin: 40px 0 30px 0;
+  /* font-family: "Apple-H";     */
 `;
 const Text = styled.span`
   font-size: 22px;
   font-weight: bold;
   margin-top: 15px;
+  font-family: "Apple-H";    
 `;
 const SubText = styled.span`
   font-size: 15px;
@@ -116,7 +120,7 @@ function UserTypeComponet() {
       </StepWrapper>
       <Hr/>
       <TypeWrapper>
-        <Title>회원 유형 선택</Title>
+        <Title>회원 유형 선fgsdfbsv</Title>
         <Wrapper>
           <Box
             onClick={() => navigate('/designersignup')}

@@ -17,8 +17,10 @@ const Nav = styled(motion.nav)`
   background-color: rgb(100, 93, 81);
   /* font-family: 'Cormorant Garamond'; */
   /* font-family: 'Pretendard-Regular'; */
-  font-family: "San Francisco";
+  /* font-family: "San Francisco"; */
   /* font-family: 'NanumSquareNeo-Variable'; */
+  font-family: "Sandol-B";    
+  
 `;
 
 const Col = styled.div`

@@ -5,6 +5,7 @@ import MainView from "../components/HomeComponent/MainView";
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  
 `;
 
 const Main = styled.img`
