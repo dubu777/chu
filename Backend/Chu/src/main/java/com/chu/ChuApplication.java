@@ -8,6 +8,7 @@ public class ChuApplication {
 	public static void main(String[] args) {
 		// merge test
 		// jenkinsTest
+		//JenkinsTestttttt
 		SpringApplication.run(ChuApplication.class, args);
 	}
 
