@@ -6,9 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class ChuApplication {
 	public static void main(String[] args) {
-		// merge test
-		// jenkinsTest
-		//JenkinsTestttttt
+		// CI Test
 		SpringApplication.run(ChuApplication.class, args);
 	}
 
