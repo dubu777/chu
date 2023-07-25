@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class ChuApplication {
 	public static void main(String[] args) {
-		// merge test
+		// merge test2
 		SpringApplication.run(ChuApplication.class, args);
 	}
 
