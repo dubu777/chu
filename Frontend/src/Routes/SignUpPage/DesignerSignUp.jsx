@@ -82,6 +82,12 @@ const Btn = styled.button`
   margin-top: 70px;
   margin-left: -55px;
   margin-bottom: 20px;
+  transition: background-color 0.3s ease;
+  &:hover {
+  /* background-color: #f3ece2; */
+  border-color: #c0b692;
+  }
+  cursor: pointer;
 `;
 const Profile = styled.img`
   width: 200px;
@@ -103,8 +109,8 @@ const SubmitBtn = styled.button`
   border-radius: 7px;
   background: #574934;
   color: #f1efed;
-  padding: 8px 25px;
-  margin-top: 30px;
+  padding: 10px 25px;
+  margin-top: 50px;
   border: 0;
   font-size: 14px;
   width: 180px;
@@ -161,40 +167,35 @@ function DesignerSignUp() {
       </StepWrapper>
       <Hr/>
       <SignupBox>
-      <InfoBox>
-      <Title>Sign Up</Title>
-      <Wrapper>
-      <ProfileBox>
-        {/* 버튼을 클릭하면 파일 선택 다이얼로그를 나타내는 input 요소 */}
-        <input type="file" style={{ display: 'none' }} ref={fileInputRef} onChange={handleFileChange} />
-        {/* 프로필 사진 or 연산자는 앞의 피연산자 기준*/}
-         <Profile src={selectedFile || './icon/designerr.png'} alt="Profile" hasFile={selectedFile !== null} />
-          <ClickBox>
-            <Btn onClick={handleImageClick}>프로필 이미지 첨부</Btn>
-            <Text>디자이너 프로필에 사용될 사진을 첨부해주세요</Text>
-          </ClickBox>
-      </ProfileBox>
-      <InputBox>
-      <SignUpInput text="이름" placeholder="회원명"/>
-          <SignUpInput text="아이디" placeholder="아이디"/>
-            {/* <Btn>중복확인</Btn> */}
-          <SignUpInput text="이메일" placeholder="이메일"/>
-            {/* <Btn>중복확인</Btn> */}
-          <SignUpInput text="등록번호" placeholder="미용사 자격증 등록번호"/>
-          <SignUpInput text="비밀번호" placeholder="8~16자리의 비밀번호를 입력해주세요"/>
-          <SignUpInput text="비밀번호 확인" placeholder="비밀번호 확인 ✔" />
-
-          <CenterBox>
-            <SubmitBtn onClick={() => navigate('/complete')}>회원 가입하기</SubmitBtn>
-          </CenterBox>
-          
-      </InputBox>
-			</Wrapper>
-        
-      </InfoBox>
-      
+        <InfoBox>
+          <Title>Sign Up</Title>
+            <Wrapper>
+              <ProfileBox>
+              {/* 버튼을 클릭하면 파일 선택 다이얼로그를 나타내는 input 요소 */}
+              <input type="file" style={{ display: 'none' }} ref={fileInputRef} onChange={handleFileChange} />
+              {/* 프로필 사진 or 연산자는 앞의 피연산자 기준*/}
+              <Profile src={selectedFile || './icon/designerr.png'} alt="Profile" hasFile={selectedFile !== null} />
+                <ClickBox>
+                  <Btn onClick={handleImageClick}>프로필 이미지 첨부</Btn>
+                  <Text>디자이너 프로필에 사용될 사진을 첨부해주세요</Text>
+                </ClickBox>
+              </ProfileBox>
+              <InputBox>
+                <SignUpInput text="이름" placeholder="회원명"/>
+                <SignUpInput text="아이디" placeholder="아이디"/>
+                {/* <Btn>중복확인</Btn> */}
+                <SignUpInput text="이메일" placeholder="이메일"/>
+                {/* <Btn>중복확인</Btn> */}
+                <SignUpInput text="등록번호" placeholder="미용사 자격증 등록번호"/>
+                <SignUpInput text="비밀번호" placeholder="8~16자리의 비밀번호를 입력해주세요"/>
+                <SignUpInput text="비밀번호 확인" placeholder="비밀번호 확인 ✔" />
+              <CenterBox>
+                <SubmitBtn onClick={() => navigate('/complete')}>회원 가입하기</SubmitBtn>
+              </CenterBox>  
+              </InputBox>
+			      </Wrapper>
+          </InfoBox>
       </SignupBox>
-      
     </Container>
   );
 }
