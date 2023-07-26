@@ -40,6 +40,7 @@ const InfoBox = styled.div`
   margin-bottom: 100px;
 `;
 const Wrapper = styled.div`
+  padding: 0px 20px;
   display: flex;
   flex-direction: column;
   /* align-content: center; */
@@ -68,7 +69,7 @@ const ClickBox = styled.div`
 `;
 const Text = styled.p`
   margin-left: 30px;
-  font-size: 13px;
+  font-size: 10px;
   
 `;
 const Btn = styled.button`
@@ -80,7 +81,7 @@ const Btn = styled.button`
   border-radius: 0.5rem;
   background-color: white;
   margin-top: 70px;
-  margin-left: -55px;
+  margin-left: -35px;
   margin-bottom: 20px;
   transition: background-color 0.3s ease;
   &:hover {
@@ -90,8 +91,8 @@ const Btn = styled.button`
   cursor: pointer;
 `;
 const Profile = styled.img`
-  width: 200px;
-  height: 200px;
+  width: 170px;
+  height: 170px;
   border-radius: 50%;
   /* 이미지 상태에 따라 태두리 색 다르게 */
   border: 7px solid ${props => props.hasFile ? 'beige' : 'transparent'};
@@ -102,7 +103,7 @@ const InputBox = styled.div`
   flex-direction: column;
   justify-content: center;
   /* text-align: center; */
-  margin: 5px auto;
+  margin: 15px auto;
 `;
 const SubmitBtn = styled.button`
   text-align: center;
@@ -115,10 +116,11 @@ const SubmitBtn = styled.button`
   font-size: 14px;
   width: 180px;
   /* font-weight: bold; */
-  transition: background-color 0.3s ease;
+  transition: background-color, 0.3s ease;
   &:hover {
   background-color: #f0aa48;
   color: #f7f5e1;
+  border-color: #574934;;
   }
 `;
 
