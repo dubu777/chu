@@ -99,12 +99,12 @@ function Header() {
               >Home
             </Item>
           </Link>
-          <Link to="reservation">
+          <Link to="result">
             <Item 
               variants={logoVariants}
               whileHover="active"
               initial="nomal"
-              >Reservation
+              >ModalTest
             </Item>
           </Link>
         </Items>
