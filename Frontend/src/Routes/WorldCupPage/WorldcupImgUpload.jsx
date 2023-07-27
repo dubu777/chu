@@ -108,7 +108,7 @@ function WorldcupImgUpload() {
     // 예: 파일 업로드, 서버에 데이터 전송 등
   }
 
-  // 파일 삭제 및 초기화 버튼을 누를 때 호출되는 함수
+  // 파일 삭제 및 초기화 버튼을 누를때 호출되는 함수
   const handleFileRemoveButton = () => {
     // 파일 선택을 초기화합니다.
     document.getElementById('file').value = '';
