@@ -1,6 +1,6 @@
 package com.chu.designer.repository;
 
-import com.chu.customer.domain.AlertToCustomerDto;
+import com.chu.customer.domain.AlertToCustomer;
 import com.chu.designer.domain.AlertToDesignerDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
