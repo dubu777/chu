@@ -15,6 +15,8 @@ import ChangePw from "./Routes/LogInPage/ChangePw";
 import WorldcupImgUpload from "./Routes/WorldCupPage/WorldcupImgUpload";
 import CustomerMyPage from "./Routes/CustomerPage/CustomerMyPage";
 import ListView from "./Routes/ViewPage/ListView";
+import Survey from "./components/ModalComponent/Survey";
+import Result from "./components/ModalComponent/Result";
 
 function App() {
   return (
@@ -36,6 +38,13 @@ function App() {
         <Route path="worlducupimgupload" element={<WorldcupImgUpload/>} />
         <Route path="customermypage" element={<CustomerMyPage/>} />
         <Route path="listview" element={<ListView/>} />
+        <Route path="/modaltest" element={<Survey/>}>
+          <Route path="/modaltest/1" element={<Survey/>}/>
+        </Route>
+        <Route path="/result" element={<Result/>}>
+          <Route path="/result/1" element={<Result/>}/>
+        </Route>
+
       </Routes>
     </Router>
   )

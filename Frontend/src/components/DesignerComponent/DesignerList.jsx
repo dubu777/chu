@@ -31,6 +31,7 @@ const Box = styled.div`
 `;
 const DesignerImg = styled.img`
   width: 100px;
+  cursor: pointer;
 `;
 
 const InfoBox = styled.div`
@@ -47,6 +48,7 @@ const LikeBox = styled.div`
 const Name = styled.span`
   font-size: 13px;
   font-weight: bold;
+  cursor: pointer;
 `;
 const Intro = styled.span`
   font-size: 13px;
@@ -58,6 +60,7 @@ const Reviewer = styled.span`
   font-weight: 500;
   color: grey;
   margin-top: 3px;
+  cursor: pointer;
 `;
 const HashTag = styled.span`
   font-size: 12px;
@@ -81,6 +84,7 @@ const ReservBox = styled(motion.div)`
   border: 1px solid rgb(244, 153, 26);
   border-radius:5px;
   margin-top: 10px;
+  cursor: pointer;
 `;
 const Text = styled.span`
   font-size: 14px;
@@ -98,6 +102,7 @@ const LikeBtn = styled.img`
   width: 27px;
   height: 27px;
   margin-right: 10px;
+  cursor: pointer;
 `;
 function DesignerList() {
   const hashTag = ["레이어드컷", "히피펌", "아이롱펌"]

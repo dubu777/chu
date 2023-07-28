@@ -13,6 +13,7 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-bottom: 60px;
 `;
 
 const Wrapper = styled.div`
@@ -25,7 +26,8 @@ const Wrapper = styled.div`
   border-radius: 20px;
   background-color: rgb(242,234,211);
   margin-bottom: 20px;
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
+  /* box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06); */
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 `;
 
 
