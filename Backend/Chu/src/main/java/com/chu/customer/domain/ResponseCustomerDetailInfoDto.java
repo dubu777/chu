@@ -10,6 +10,6 @@ public class ResponseCustomerDetailInfoDto {
     Customer customer;
     ArrayList<FaceDict> faceDictList;
     ArrayList<ResponseHairStyleDto> hairStyleList;
-    ArrayList<CustomerHairConditionDto> hairConditionList;
+    ArrayList<CustomerHairCondition> hairConditionList;
 
 }

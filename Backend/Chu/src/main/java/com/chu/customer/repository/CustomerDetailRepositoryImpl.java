@@ -3,7 +3,7 @@ package com.chu.customer.repository;
 import com.chu.consulting.domain.ResponseFutureConsultingDto;
 import com.chu.consulting.domain.ResponsePastConsultingDto;
 import com.chu.customer.domain.Customer;
-import com.chu.customer.domain.CustomerHairConditionDto;
+import com.chu.customer.domain.CustomerHairCondition;
 import com.chu.customer.domain.FaceDict;
 import com.chu.customer.domain.RequestCustomerDetailChangeDto;
 import com.chu.global.domain.ResponseHairStyleDto;
@@ -38,8 +38,8 @@ public class CustomerDetailRepositoryImpl implements CustomerDetailRepository {
     }
 
     @Override
-    public ArrayList<CustomerHairConditionDto> getCustomerHairCondition(int customerSeq) {
-        ArrayList<CustomerHairConditionDto> list = new ArrayList<>();
+    public ArrayList<CustomerHairCondition> getCustomerHairCondition(int customerSeq) {
+        ArrayList<CustomerHairCondition> list = new ArrayList<>();
 
         // 고객 모발 상태 조회
 

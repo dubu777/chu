@@ -12,7 +12,7 @@ public interface CustomerDetailRepository {
 
     boolean patchImage(String imgName);
 
-    ArrayList<CustomerHairConditionDto> getCustomerHairCondition(int customerSeq);
+    ArrayList<CustomerHairCondition> getCustomerHairCondition(int customerSeq);
 
     ArrayList<ResponsePastConsultingDto> getPastConsultingList(int customerSeq);
 

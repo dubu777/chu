@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 
 @Entity
 @Getter @Setter
-public class CustomerHairConditionDto {
+public class CustomerHairCondition {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "seq")
