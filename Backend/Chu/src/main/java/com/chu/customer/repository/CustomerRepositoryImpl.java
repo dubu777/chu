@@ -2,7 +2,6 @@ package com.chu.customer.repository;
 
 import com.chu.customer.domain.*;
 import com.chu.global.domain.*;
-import com.chu.worldcup.domain.WorldcupStatisticsWinnerHairInfoDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,7 +31,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     }
 
     @Override
-    public boolean signUp(CustomerSignUpDto customerSignUpDto) {
+    public boolean signUp(RequestCustomerSignUpDto requestCustomerSignUpDto) {
 
         // 로직
         // 정상 가입인지
@@ -41,7 +40,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     }
 
     @Override
-    public boolean signIn(SignInDto signInDto) {
+    public boolean signIn(RequestSignInDto requestSignInDto) {
         // 로직
         // 조건에 맞는 사용자 존재하는지?
         return false;
@@ -68,7 +67,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     }
 
     @Override
-    public String findId(FindIdDto findIdDto) {
+    public String findId(RequestFindIdDto requestFindIdDto) {
         // 로직
 
         // 이름, 이메일로 아이디 찾기
@@ -76,98 +75,54 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     }
 
     @Override
-    public int isValidUser(FindPwdDto findPwdDto) {
+    public int isValidUser(RequestFindPwdDto requestFindPwdDto) {
         // 로직
         // 이름, 아이디, 이메일로 존재하는 유저인지 확인
         return 0;
     }
 
     @Override
-    public boolean changePwd(ChangePwdDto changePwdDto) {
+    public boolean changePwd(RequestChangePwdDto requestChangePwdDto) {
         // 로직
         // 고객 시퀀스넘버, 바꿀 비밀번호
         return false;
     }
 
     @Override
-    public int changeLikeInfo(LikeDto likeDto) {
+    public int changeLikeInfo(RequestLikeDto requestLikeDto) {
         int likeCount = 0;
 
         // 아직 고객, 디자이너 좋아요 관계 없다면 데이터 삽입
 
         // 이미 고객, 디자이너 관계 있다면 상태만 변경
 
-
         // 디자이너 좋아요 개수 반환
         return likeCount;
     }
 
-    @Override
-    public CustomerDetailDto getCustomerDetail(int customerSeq) {
-        CustomerDetailDto customerDetailDto = new CustomerDetailDto();
-        // 회원 정보 조회
-
-        // 이전 상담 내역 조회
-
-        // 예약 상담 내역 조회
-
-        return customerDetailDto;
-    }
 
     @Override
-    public boolean patchImage(String imgName) {
-        boolean isSuccess = true;
-        // 회원 이미지 정보 수정
-
-
-        return isSuccess;
-    }
-
-    @Override
-    public CustomerDetailInfoDto getCustomerDetailInfo(int customerSeq) {
-        CustomerDetailInfoDto customerDetailInfoDto = new CustomerDetailInfoDto();
-        // 회원 정보 조회
-
-        // 얼굴형 사진들 다 뽑기
-
-        // 고객 모발 상태 뽑기
-
-        return customerDetailInfoDto;
-    }
-
-    @Override
-    public boolean putCustomerDetailInfo(int customerSeq, CustomerDetailChangeDto customerDetailChangeDto) {
-        boolean isSuccess = true;
-
-        // 고객정보, 얼굴형 수정
-        
-        // 모발상태 수정
-        
-        return isSuccess;
-    }
-
-    @Override
-    public ArrayList<AlertCustomerDto> getAlertList(int customerSeq) {
-        ArrayList<AlertCustomerDto> alertList = new ArrayList<>();
+    public ArrayList<ResponseAlertCustomerDto> getAlertList(int customerSeq) {
+        ArrayList<ResponseAlertCustomerDto> alertList = new ArrayList<>();
 
         // 로직
+
         // 고객 번호로 알림 조회
 
         return alertList;
     }
 
     @Override
-    public boolean createAlert(AlertCreateDto alertCreateDto) {
+    public boolean createAlert(RequestAlertCreateDto requestAlertCreateDto) {
         boolean isSuccess = true;
         // 로직
 
         // 알림 생성
-
         return isSuccess;
     }
 
     @Override
-    public boolean readAlert(AlertReadDto alertReadDto) {
+    public boolean readAlert(RequestAlertReadDto requestAlertReadDto) {
         boolean isSuccess = true;
 
         // 로직

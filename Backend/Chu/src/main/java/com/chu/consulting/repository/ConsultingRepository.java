@@ -6,17 +6,27 @@ public interface ConsultingRepository {
 
     String participantConsulting(int consultingSeq);
 
-    int createConsulting(ConsultingRequestDto consultingRequestDto);
+    boolean createConsulting(RequestConsultingDto requestConsultingDto);
+
+    boolean updatePossibleConsulting(int consultingSeq);
 
     boolean deleteConsulting(int consultingSeq);
 
-    ConsultingResultDto getConsultingResult(int consultingSeq);
+    boolean updateImpossibleConsulting(RequestConsultingDto requestConsultingDto);
+
+    ResponseConsultingResultDto getConsultingResult(int consultingSeq);
 
     boolean updateConsultingUrl(int consultingSeq, String url);
 
-    boolean updateConsultingReview(ConsultingReviewDto consultingReviewDto);
+    boolean updateReviewContent(RequestConsultingReviewDto requestConsultingReviewDto);
 
-    ConsultingReviewInfoDto getConsultingResultDetailInfo(int consultingSeq);
+    boolean updateLikeInfo(RequestConsultingReviewDto requestConsultingReviewDto);
 
-    boolean updateConsultingResult(ConsultingUpdateDto consultingUpdateDto);
+    boolean updateDesignerReviewScore(RequestConsultingReviewDto requestConsultingReviewDto);
+
+    ResponseConsultingReviewInfoDto getConsultingResultDetailInfo(int consultingSeq);
+
+    boolean updateConsultingResultStyle(RequestConsultingUpdateDto requestConsultingUpdateDto);
+
+    boolean updateSelectedConsultingResultImage(RequestConsultingUpdateDto requestConsultingUpdateDto);
 }

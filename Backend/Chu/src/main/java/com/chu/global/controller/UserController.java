@@ -2,9 +2,9 @@ package com.chu.global.controller;
 
 import com.chu.customer.service.CustomerService;
 import com.chu.designer.service.DesignerService;
-import com.chu.global.domain.AlertCreateDto;
-import com.chu.global.domain.AlertReadDto;
-import com.chu.global.domain.ResponseDto;
+import com.chu.global.domain.RequestAlertCreateDto;
+import com.chu.global.domain.RequestAlertReadDto;
+import com.chu.global.domain.HttpResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +21,7 @@ public class UserController {
 
     // 아이디 중복확인
     @GetMapping("/check-id")
-    public ResponseEntity<ResponseDto> checkId(@RequestParam String id){
+    public ResponseEntity<HttpResponseDto> checkId(@RequestParam String id){
         log.info("id = {id}", id);
 
         // 존재하지 않으면 가능 -> true
@@ -31,18 +31,18 @@ public class UserController {
 
         // 두 테이블 모두 존재하지 않아야함
         if (existsCustomer && existsDesigner) {
-            ResponseDto responseDto = new ResponseDto(200, true);
-            return ResponseEntity.ok(responseDto);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, true);
+            return ResponseEntity.ok(httpResponseDto);
         }
         else{
-            ResponseDto responseDto = new ResponseDto(204, false);
-            return ResponseEntity.ok(responseDto);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, false);
+            return ResponseEntity.ok(httpResponseDto);
         }
     }
 
     // 이메일 중복확인
     @GetMapping("/check-email")
-    public ResponseEntity<ResponseDto> checkEmail(@RequestParam String email){
+    public ResponseEntity<HttpResponseDto> checkEmail(@RequestParam String email){
         log.info("email = {email}", email);
 
         // 존재하지 않으면 가능 -> true
@@ -52,64 +52,64 @@ public class UserController {
 
         // 두 테이블 모두 존재하지 않아야함
         if (existsCustomer && existsDesigner) {
-            ResponseDto responseDto = new ResponseDto(200, true);
-            return ResponseEntity.ok(responseDto);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, true);
+            return ResponseEntity.ok(httpResponseDto);
         }
         else{
-            ResponseDto responseDto = new ResponseDto(204, false);
-            return ResponseEntity.ok(responseDto);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, false);
+            return ResponseEntity.ok(httpResponseDto);
         }
     }
 
     @PostMapping("/alert")
-    public ResponseEntity<ResponseDto> creatAlert(@RequestBody AlertCreateDto alertCreateDto) {
+    public ResponseEntity<HttpResponseDto> creatAlert(@RequestBody RequestAlertCreateDto requestAlertCreateDto) {
 
-        String userType = alertCreateDto.getUserType();
+        String userType = requestAlertCreateDto.getUserType();
 
         boolean customerSuccess = false;
         boolean designerSuccess = false;
 
         if(userType.equals("customer")){
-            boolean isSuccess = customerService.createAlert(alertCreateDto);
+            boolean isSuccess = customerService.createAlert(requestAlertCreateDto);
             if(isSuccess) customerSuccess = true;
         }
         else if(userType.equals("designer")){
-            boolean isSuccess = designerService.createAlert(alertCreateDto);
+            boolean isSuccess = designerService.createAlert(requestAlertCreateDto);
             if(isSuccess) designerSuccess = true;
         }
 
         if(customerSuccess || designerSuccess){
-            ResponseDto responseDto = new ResponseDto(200, null);
-            return ResponseEntity.ok(responseDto);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, null);
+            return ResponseEntity.ok(httpResponseDto);
         }
         else{
-            ResponseDto responseDto = new ResponseDto(204, null);
-            return ResponseEntity.ok(responseDto);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
         }
     }
 
     @PatchMapping("/alert")
-    public ResponseEntity<ResponseDto> readAlert(@RequestBody AlertReadDto alertReadDto) {
+    public ResponseEntity<HttpResponseDto> readAlert(@RequestBody RequestAlertReadDto requestAlertReadDto) {
 
-        String userType = alertReadDto.getUserType();
+        String userType = requestAlertReadDto.getUserType();
 
         boolean customerSuccess = false;
         boolean designerSuccess = false;
 
         if (userType.equals("customer")) {
-            boolean isSuccess = customerService.readAlert(alertReadDto);
+            boolean isSuccess = customerService.readAlert(requestAlertReadDto);
             if (isSuccess) customerSuccess = true;
         } else if (userType.equals("designer")) {
-            boolean isSuccess = designerService.readAlert(alertReadDto);
+            boolean isSuccess = designerService.readAlert(requestAlertReadDto);
             if (isSuccess) designerSuccess = true;
         }
 
         if (customerSuccess || designerSuccess) {
-            ResponseDto responseDto = new ResponseDto(200, null);
-            return ResponseEntity.ok(responseDto);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, null);
+            return ResponseEntity.ok(httpResponseDto);
         } else {
-            ResponseDto responseDto = new ResponseDto(204, null);
-            return ResponseEntity.ok(responseDto);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
         }
     }
 }

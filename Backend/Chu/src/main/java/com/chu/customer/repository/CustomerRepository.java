@@ -7,42 +7,29 @@ import java.util.ArrayList;
 
 public interface CustomerRepository {
 
-    // 아이디 중복 검사
     boolean checkId(String id);
 
-    // 이메일 중복 검사
     boolean checkEmail(String email);
 
-    // 고객 회원 가입
-    int signUp(CustomerSignUpDto customerSignUpDto);
+    boolean signUp(RequestCustomerSignUpDto requestCustomerSignUpDto);
 
-    // 고객 로그인 가능 여부 확인
-    boolean signIn(SignInDto signInDto);
+    boolean signIn(RequestSignInDto requestSignInDto);
 
-    // 고객 정보 가져오기
     CustomerDto getCustomerInfo(String id);
+
+    String findId(RequestFindIdDto requestFindIdDto);
 
     ArrayList<ImageDto> getTopStyleByFace(int faceSeq);
 
-    String findId(FindIdDto findIdDto);
+    int isValidUser(RequestFindPwdDto requestFindPwdDto);
 
-    int isValidUser(FindPwdDto findPwdDto);
+    boolean changePwd(RequestChangePwdDto requestChangePwdDto);
 
-    boolean changePwd(ChangePwdDto changePwdDto);
+    int changeLikeInfo(RequestLikeDto requestLikeDto);
 
-    int changeLikeInfo(LikeDto likeDto);
+    ArrayList<ResponseAlertCustomerDto> getAlertList(int customerSeq);
 
-    CustomerDetailDto getCustomerDetail(int customerSeq);
+    boolean createAlert(RequestAlertCreateDto requestAlertCreateDto);
 
-    boolean patchImage(String imgName);
-
-    CustomerDetailInfoDto getCustomerDetailInfo(int customerSeq);
-
-    boolean putCustomerDetailInfo(int customerSeq, CustomerDetailChangeDto customerDetailChangeDto);
-
-    ArrayList<AlertCustomerDto> getAlertList(int customerSeq);
-
-    boolean createAlert(AlertCreateDto alertCreateDto);
-
-    boolean readAlert(AlertReadDto alertReadDto);
+    boolean readAlert(RequestAlertReadDto requestAlertReadDto);
 }

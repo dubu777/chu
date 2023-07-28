@@ -1,16 +1,19 @@
 package com.chu.worldcup.service;
 
-import com.chu.global.domain.ImageWithHairInfoDto;
-import com.chu.worldcup.domain.WorldcupRequestDto;
-import com.chu.worldcup.domain.WorldcupStatisticsRequestDto;
+import com.chu.worldcup.domain.ResponseImageWithHairInfoForWorldcupDto;
+import com.chu.worldcup.domain.RequestWorldcupDto;
+import com.chu.worldcup.domain.RequestWorldcupStatisticsDto;
 
 import java.util.ArrayList;
 
 public interface WorldcupService {
 
-    int createWorldcup(WorldcupRequestDto worldcupRequestDto);
+    // 월드컵 생성
+    int createWorldcup(RequestWorldcupDto requestWorldcupDto);
 
-    ArrayList<ImageWithHairInfoDto> getWorldcup(int worldcupSeq);
+    // 월드컵 정보 조회
+    ArrayList<ResponseImageWithHairInfoForWorldcupDto> getWorldcup(int worldcupSeq);
 
-    boolean updateWorldcupStatistics(WorldcupStatisticsRequestDto worldcupStatisticsRequestDto);
+    // 월드컵 통계 수정
+    boolean updateWorldcupStatistics(RequestWorldcupStatisticsDto requestWorldcupStatisticsDto);
 }

@@ -1,6 +1,5 @@
 package com.chu.designer.repository;
 
-import com.chu.consulting.domain.ConsultingDto;
 import com.chu.designer.domain.*;
 import com.chu.global.domain.*;
 
@@ -9,49 +8,28 @@ import java.util.ArrayList;
 
 public interface DesignerRepository {
     boolean checkId(String id);
+
     boolean checkEmail(String email);
 
-    int signUp(DesignerSignUpDto designerSignUpDto);
+    boolean signUp(RequestDesignerSignUpDto requestDesignerSignUpDto);
 
-    boolean signIn(SignInDto signInDto);
+    boolean signIn(RequestSignInDto requestSignInDto);
 
-    DesignerDetailDto getDesignerDetail(String id);
+    DesignerDto getDesignerInfo(String id);
 
-    String findId(FindIdDto findIdDto);
+    String findId(RequestFindIdDto requestFindIdDto);
 
-    int isValidUser(FindPwdDto findPwdDto);
+    int isValidUser(RequestFindPwdDto requestFindPwdDto);
 
-    boolean changePwd(ChangePwdDto changePwdDto);
+    boolean changePwd(RequestChangePwdDto requestChangePwdDto);
 
-    ArrayList<TimeStateDto> getTimeStateList(int designerSeq, Date date);
+    ArrayList<ResponseTimeStateDto> getTimeStateList(int designerSeq, Date date);
 
-    ArrayList<AlertDesignerDto> getAlertList(int designerSeq);
+    ArrayList<ResponseAlertDesignerDto> getAlertList(int designerSeq);
 
-    boolean createAlert(AlertCreateDto alertCreateDto);
+    boolean createAlert(RequestAlertCreateDto requestAlertCreateDto);
 
-    boolean readAlert(AlertReadDto alertReadDto);
+    boolean readAlert(RequestAlertReadDto requestAlertReadDto);
 
-    DesignerMyPageDto getMyPageInfo(int designerSeq);
-
-    boolean patchIntroduction(int designerSeq, String introduction);
-
-    boolean patchImg(int designerSeq, String img);
-
-    DesignerMyPageUpdateShowDto getDesignerMyPageUpdateInfo(int designerSeq);
-
-    boolean updateDesignerInfo(int designerSeq, DesignerInfoUpdateDto designerInfoUpdateDto);
-
-    ArrayList<TimeDto> getPossibleReservationTime(int designerSeq, Date date);
-
-    boolean updatePossibleReservationTime(int designerSeq, ReservationTimeDto reservationTimeDto);
-
-    ArrayList<ConsultingDto> getReservationList(int designerSeq);
-
-    ArrayList<ImageDto> getPortfolio(int designerSeq);
-
-    boolean deletePortfolioImage(int designerSeq, int imageSeq);
-
-    boolean postPortfolioImage(int designerSeq, String img);
-
-    ArrayList<BestDesignerDto> getBestDesigners();
+    ArrayList<ResponseBestDesignerDto> getBestDesigners();
 }

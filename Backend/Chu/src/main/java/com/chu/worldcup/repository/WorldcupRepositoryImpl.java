@@ -1,9 +1,9 @@
 package com.chu.worldcup.repository;
 
 import com.chu.global.domain.ImageDto;
-import com.chu.global.domain.ImageWithHairInfoDto;
-import com.chu.worldcup.domain.WorldcupRequestDto;
-import com.chu.worldcup.domain.WorldcupStatisticsRequestDto;
+import com.chu.worldcup.domain.ResponseImageWithHairInfoForWorldcupDto;
+import com.chu.worldcup.domain.RequestWorldcupDto;
+import com.chu.worldcup.domain.RequestWorldcupStatisticsDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
@@ -26,7 +26,7 @@ public class WorldcupRepositoryImpl implements WorldcupRepository {
     }
 
     @Override
-    public int createWorldcup(WorldcupRequestDto worldcupRequestDto) {
+    public int createWorldcup(RequestWorldcupDto requestWorldcupDto) {
         int resultRow = 0;
 
         // 로직
@@ -37,8 +37,8 @@ public class WorldcupRepositoryImpl implements WorldcupRepository {
     }
 
     @Override
-    public ArrayList<ImageWithHairInfoDto> getWorldcup(int worldcupSeq) {
-        ArrayList<ImageWithHairInfoDto> resultList = new ArrayList<>();
+    public ArrayList<ResponseImageWithHairInfoForWorldcupDto> getWorldcup(int worldcupSeq) {
+        ArrayList<ResponseImageWithHairInfoForWorldcupDto> resultList = new ArrayList<>();
 
         // 로직
 
@@ -48,7 +48,7 @@ public class WorldcupRepositoryImpl implements WorldcupRepository {
     }
 
     @Override
-    public boolean updateWorldcupStatistics(WorldcupStatisticsRequestDto worldcupStatisticsRequestDto) {
+    public boolean updateWorldcupStatistics(RequestWorldcupStatisticsDto requestWorldcupStatisticsDto) {
         
         boolean isSuccess = true;
         

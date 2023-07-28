@@ -1,8 +1,8 @@
 package com.chu.worldcup.service;
 
-import com.chu.global.domain.ImageWithHairInfoDto;
-import com.chu.worldcup.domain.WorldcupRequestDto;
-import com.chu.worldcup.domain.WorldcupStatisticsRequestDto;
+import com.chu.worldcup.domain.ResponseImageWithHairInfoForWorldcupDto;
+import com.chu.worldcup.domain.RequestWorldcupDto;
+import com.chu.worldcup.domain.RequestWorldcupStatisticsDto;
 import com.chu.worldcup.repository.WorldcupRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,17 +18,17 @@ public class WorldcupServiceImpl implements WorldcupService {
     private final WorldcupRepository worldcupRepository;
 
     @Override
-    public int createWorldcup(WorldcupRequestDto worldcupRequestDto) {
-        return worldcupRepository.createWorldcup(worldcupRequestDto);
+    public int createWorldcup(RequestWorldcupDto requestWorldcupDto) {
+        return worldcupRepository.createWorldcup(requestWorldcupDto);
     }
 
     @Override
-    public ArrayList<ImageWithHairInfoDto> getWorldcup(int worldcupSeq) {
+    public ArrayList<ResponseImageWithHairInfoForWorldcupDto> getWorldcup(int worldcupSeq) {
         return worldcupRepository.getWorldcup(worldcupSeq);
     }
 
     @Override
-    public boolean updateWorldcupStatistics(WorldcupStatisticsRequestDto worldcupStatisticsRequestDto) {
-        return worldcupRepository.updateWorldcupStatistics(worldcupStatisticsRequestDto);
+    public boolean updateWorldcupStatistics(RequestWorldcupStatisticsDto requestWorldcupStatisticsDto) {
+        return worldcupRepository.updateWorldcupStatistics(requestWorldcupStatisticsDto);
     }
 }

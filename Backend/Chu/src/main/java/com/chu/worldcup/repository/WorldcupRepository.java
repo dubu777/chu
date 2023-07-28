@@ -1,9 +1,9 @@
 package com.chu.worldcup.repository;
 
 import com.chu.global.domain.ImageDto;
-import com.chu.global.domain.ImageWithHairInfoDto;
-import com.chu.worldcup.domain.WorldcupRequestDto;
-import com.chu.worldcup.domain.WorldcupStatisticsRequestDto;
+import com.chu.worldcup.domain.ResponseImageWithHairInfoForWorldcupDto;
+import com.chu.worldcup.domain.RequestWorldcupDto;
+import com.chu.worldcup.domain.RequestWorldcupStatisticsDto;
 
 import java.util.ArrayList;
 
@@ -11,9 +11,9 @@ public interface WorldcupRepository {
 
     ArrayList<ImageDto> getTopWorldcupImages();
 
-    int createWorldcup(WorldcupRequestDto worldcupRequestDto);
+    int createWorldcup(RequestWorldcupDto requestWorldcupDto);
 
-    ArrayList<ImageWithHairInfoDto> getWorldcup(int worldcupSeq);
+    ArrayList<ResponseImageWithHairInfoForWorldcupDto> getWorldcup(int worldcupSeq);
 
-    boolean updateWorldcupStatistics(WorldcupStatisticsRequestDto worldcupStatisticsRequestDto);
+    boolean updateWorldcupStatistics(RequestWorldcupStatisticsDto requestWorldcupStatisticsDto);
 }

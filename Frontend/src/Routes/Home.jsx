@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
-import css from "../font.css"
-import ClickMenu from "../components/HomeComponent/ClickMenu";
+import css from "../font/font.css"
+import MainView from "../components/HomeComponent/MainView";
 
 const Wrapper = styled.div`
   display: flex;
@@ -9,7 +9,7 @@ const Wrapper = styled.div`
 
 const Main = styled.img`
   width: 100vw;
-  height: 100vh;
+  height: 120vh;
 `;
 const ImgText = styled.h2`
   font-family: 'Amiri';
@@ -25,7 +25,7 @@ function Home() {
     <Wrapper>
       <Main src="./img/main.jpg"></Main>
       <ImgText>Change Hair & U</ImgText>
-      <ClickMenu />
+      <MainView />
     </Wrapper>
   );
 }
