@@ -4,7 +4,7 @@ import com.chu.consulting.domain.ResponseFutureConsultingDto;
 import com.chu.consulting.domain.ResponsePastConsultingDto;
 import com.chu.customer.domain.CustomerDto;
 import com.chu.customer.domain.CustomerHairConditionDto;
-import com.chu.customer.domain.FaceTypeDto;
+import com.chu.customer.domain.FaceType;
 import com.chu.customer.domain.RequestCustomerDetailChangeDto;
 import com.chu.global.domain.ResponseHairStyleDto;
 import lombok.extern.slf4j.Slf4j;
@@ -63,8 +63,8 @@ public class CustomerDetailRepositoryImpl implements CustomerDetailRepository {
     }
 
     @Override
-    public ArrayList<FaceTypeDto> getALLFaceTypeList() {
-        ArrayList<FaceTypeDto> faceTypeList = new ArrayList<>();
+    public ArrayList<FaceType> getALLFaceTypeList() {
+        ArrayList<FaceType> faceTypeList = new ArrayList<>();
 
         // 모든 얼굴형 타입 가져오기
 

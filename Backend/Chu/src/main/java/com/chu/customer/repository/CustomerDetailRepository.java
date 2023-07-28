@@ -18,7 +18,7 @@ public interface CustomerDetailRepository {
 
     ArrayList<ResponseFutureConsultingDto> getFutureConsultingList(int customerSeq);
 
-    ArrayList<FaceTypeDto> getALLFaceTypeList();
+    ArrayList<FaceType> getALLFaceTypeList();
 
     ArrayList<ResponseHairStyleDto> getAllHairStyleList();
 
