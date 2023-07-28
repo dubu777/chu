@@ -31,6 +31,6 @@ public class Customer {
 
    @OneToOne(fetch = FetchType.LAZY)
    @JoinColumn(name="seq")
-   private FaceType faceType;
+   private FaceDict faceDict;
 
 }

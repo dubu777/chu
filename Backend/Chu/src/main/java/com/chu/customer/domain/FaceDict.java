@@ -9,7 +9,7 @@ import javax.persistence.Id;
 
 @Entity
 @Getter @Setter
-public class FaceType {
+public class FaceDict {
 
     @Id @GeneratedValue
     private int seq;

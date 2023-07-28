@@ -2,9 +2,9 @@ package com.chu.customer.repository;
 
 import com.chu.consulting.domain.ResponseFutureConsultingDto;
 import com.chu.consulting.domain.ResponsePastConsultingDto;
-import com.chu.customer.domain.CustomerDto;
+import com.chu.customer.domain.Customer;
 import com.chu.customer.domain.CustomerHairConditionDto;
-import com.chu.customer.domain.FaceType;
+import com.chu.customer.domain.FaceDict;
 import com.chu.customer.domain.RequestCustomerDetailChangeDto;
 import com.chu.global.domain.ResponseHairStyleDto;
 import lombok.extern.slf4j.Slf4j;
@@ -19,14 +19,14 @@ public class CustomerDetailRepositoryImpl implements CustomerDetailRepository {
     
 
     @Override
-    public CustomerDto getCustomerInfo(int customerSeq) {
-        CustomerDto customerDto = new CustomerDto();
+    public Customer getCustomerInfo(int customerSeq) {
+        Customer customer = new Customer();
 
         // 로직
         
         // 고객 조회
         
-        return customerDto;
+        return customer;
     }
 
     @Override
@@ -63,12 +63,12 @@ public class CustomerDetailRepositoryImpl implements CustomerDetailRepository {
     }
 
     @Override
-    public ArrayList<FaceType> getALLFaceTypeList() {
-        ArrayList<FaceType> faceTypeList = new ArrayList<>();
+    public ArrayList<FaceDict> getALLFaceTypeList() {
+        ArrayList<FaceDict> faceDictList = new ArrayList<>();
 
         // 모든 얼굴형 타입 가져오기
 
-        return faceTypeList;
+        return faceDictList;
     }
 
     @Override

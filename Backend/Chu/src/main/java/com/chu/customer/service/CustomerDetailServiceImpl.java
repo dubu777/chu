@@ -24,7 +24,7 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
     public ResponseCustomerDetailDto getCustomerDetail(int customerSeq) {
         ResponseCustomerDetailDto responseCustomerDetailDto = new ResponseCustomerDetailDto();
 
-        responseCustomerDetailDto.setCustomerDto(customerDetailRepository.getCustomerInfo(customerSeq));
+        responseCustomerDetailDto.setCustomer(customerDetailRepository.getCustomerInfo(customerSeq));
         responseCustomerDetailDto.setCustomerHairConditionDtoList(customerDetailRepository.getCustomerHairCondition(customerSeq));
 
         responseCustomerDetailDto.setResponsePastConsultingDtoList(customerDetailRepository.getPastConsultingList(customerSeq));
@@ -38,8 +38,8 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
         ResponseCustomerDetailInfoDto responseCustomerDetailInfoDto = new ResponseCustomerDetailInfoDto();
 
         // 고객정보 가져와
-        responseCustomerDetailInfoDto.setCustomerDto(customerDetailRepository.getCustomerInfo(customerSeq));
-        responseCustomerDetailInfoDto.setFaceTypeList(customerDetailRepository.getALLFaceTypeList());
+        responseCustomerDetailInfoDto.setCustomer(customerDetailRepository.getCustomerInfo(customerSeq));
+        responseCustomerDetailInfoDto.setFaceDictList(customerDetailRepository.getALLFaceTypeList());
         responseCustomerDetailInfoDto.setHairStyleList(customerDetailRepository.getAllHairStyleList());
 
         responseCustomerDetailInfoDto.setHairConditionList(customerDetailRepository.getCustomerHairCondition(customerSeq));

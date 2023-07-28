@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 @Data
 public class ResponseCustomerDetailInfoDto {
-    CustomerDto customerDto;
-    ArrayList<FaceType> faceTypeList;
+    Customer customer;
+    ArrayList<FaceDict> faceDictList;
     ArrayList<ResponseHairStyleDto> hairStyleList;
     ArrayList<CustomerHairConditionDto> hairConditionList;
 
