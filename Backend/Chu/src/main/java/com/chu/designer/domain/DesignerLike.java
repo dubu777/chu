@@ -13,7 +13,7 @@ public class DesignerLike {
 
     @Id
     @GeneratedValue
-    private int seq;
+    private Integer seq;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "seq")

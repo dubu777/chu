@@ -12,7 +12,7 @@ import javax.persistence.Id;
 public class FaceDict {
 
     @Id @GeneratedValue
-    private int seq;
+    private Integer seq;
 
     private String faceLabel;
 

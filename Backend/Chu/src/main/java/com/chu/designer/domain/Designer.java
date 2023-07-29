@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class Designer {
 
     @Id @GeneratedValue
-    private int seq;
+    private Integer seq;
 
     private String id;
 
@@ -23,7 +23,7 @@ public class Designer {
 
     private String email;
 
-    private char gender;
+    private Character gender;
 
     private String introduction;
 
@@ -31,9 +31,9 @@ public class Designer {
 
     private String address;
 
-    private double latitude;
+    private Double latitude;
 
-    private double longitude;
+    private Double longitude;
 
     private String salonName;
 
@@ -43,7 +43,7 @@ public class Designer {
 
     private float reviewScore;
 
-    private int cost;
+    private Integer cost;
 
     private LocalDateTime createdDate;
 

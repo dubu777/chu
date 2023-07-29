@@ -12,9 +12,9 @@ import java.time.LocalDateTime;
 public class AlertToCustomer {
 
     @Id @GeneratedValue
-    private int seq;
+    private Integer seq;
 
-    private boolean isCheck;
+    private Boolean  isCheck;
 
     private LocalDateTime createdDate;
 

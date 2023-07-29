@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 public class Customer {
 
    @Id @GeneratedValue
-   private int seq;
+   private Integer seq;
 
    private String id;
 

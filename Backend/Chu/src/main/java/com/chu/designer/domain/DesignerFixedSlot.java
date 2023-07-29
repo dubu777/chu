@@ -11,11 +11,11 @@ import java.time.LocalDateTime;
 public class DesignerFixedSlot {
 
     @Id @GeneratedValue
-    private int seq;
+    private Integer seq;
 
-    private int day;
+    private Integer day;
 
-    private int time;
+    private Integer time;
 
     private LocalDateTime createdDate;
 

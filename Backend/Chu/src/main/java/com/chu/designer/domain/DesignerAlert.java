@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class DesignerAlert {
 
     @Id @GeneratedValue
-    private int seq;
+    private Integer seq;
 
     private boolean isCheck;
 
