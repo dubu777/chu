@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter
-public class DesignerDto {
+public class Designer {
 
     @Id @GeneratedValue
     private int seq;

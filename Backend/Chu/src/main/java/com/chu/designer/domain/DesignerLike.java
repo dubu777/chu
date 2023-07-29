@@ -21,7 +21,7 @@ public class DesignerLike {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "seq")
-    private DesignerDto designerDto;
+    private Designer designer;
 
     private boolean likeStatus;
 
