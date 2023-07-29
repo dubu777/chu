@@ -1,5 +1,6 @@
 package com.chu.customer.domain;
 
+import com.chu.global.domain.ImagePath;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,9 +26,7 @@ public class Customer {
 
    private LocalDateTime createdDate;
 
-   private String uploadImgName;
-
-   private String savedImgName;
+   private ImagePath imagePath;
 
    @OneToOne(fetch = FetchType.LAZY)
    @JoinColumn(name="seq")

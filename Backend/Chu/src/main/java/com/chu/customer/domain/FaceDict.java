@@ -1,8 +1,10 @@
 package com.chu.customer.domain;
 
+import com.chu.global.domain.ImagePath;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -16,8 +18,7 @@ public class FaceDict {
 
     private String faceLabel;
 
-    private String uploadImgName;
-
-    private String savedImgName;
+    @Embedded
+    private ImagePath imagePath;
 
 }
