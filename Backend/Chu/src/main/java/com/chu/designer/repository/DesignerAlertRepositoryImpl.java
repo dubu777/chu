@@ -1,7 +1,6 @@
 package com.chu.designer.repository;
 
-import com.chu.customer.domain.AlertToCustomer;
-import com.chu.designer.domain.AlertToDesignerDto;
+import com.chu.designer.domain.AlertToDesigner;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
@@ -14,8 +13,8 @@ import java.util.ArrayList;
 public class DesignerAlertRepositoryImpl implements DesignerAlertRepository {
 
     @Override
-    public ArrayList<AlertToDesignerDto> getAlertToDesigner(int designerSeq) {
-        ArrayList<AlertToDesignerDto> alertsToDesigner = new ArrayList<>();
+    public ArrayList<AlertToDesigner> getAlertToDesigner(int designerSeq) {
+        ArrayList<AlertToDesigner> alertsToDesigner = new ArrayList<>();
         // 로직
 
         // 고객 seq로 알람 가져오기
