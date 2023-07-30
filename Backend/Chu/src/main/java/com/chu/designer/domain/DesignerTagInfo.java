@@ -1,5 +1,6 @@
 package com.chu.designer.domain;
 
+import com.chu.global.domain.HairStyleDict;
 import lombok.Getter;
 import lombok.Setter;
 
