@@ -3,9 +3,10 @@ import Step from "../SignUpComponent/Step";
 import { AnimatePresence, motion, useScroll } from "framer-motion";
 import { useMatch, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import designer from "../../icon/hair-cutting.png";
-import woman from "../../icon/woman.png";
-import reviewImg from "../../icon/designerimg.png";
+// import designer from "../../icon/hair-cutting.png";
+// import woman from "../../icon/woman.png";
+// import reviewImg from "../../icon/designerimg.png";
+
 const BigWrapper =styled.div`
 
 `;
@@ -223,7 +224,7 @@ function Result() {
             variants={boxVariants} 
             initial="nomal" 
             whileHover="hover">
-            <DesignerImg src={designer}/>
+            <DesignerImg src="./icon/hair-cutting.png"/>
             <Text>디자이너</Text>
             <SubText>디자이너가 홈페이지에 가입하는 경우</SubText>
             <Btn onClick={() => navigate('/designersignup')}>회원가입</Btn>
@@ -232,7 +233,7 @@ function Result() {
             variants={boxVariants} 
             initial="nomal" 
             whileHover="hover">
-            <CustomerImg src={woman}/>
+            <CustomerImg src="./icon/woman.png"/>
             <Text>일반 회원</Text>
             <SubText>일반 회원이 홈페이지에 가입하는 경우</SubText>
             <Btn
@@ -269,7 +270,7 @@ function Result() {
                       <ResultBox>
                         상담 결과 <br/><ResultHr/> {data.reviewResult}
                       </ResultBox>
-                      <ReviewImg src={reviewImg} />
+                      <ReviewImg src="./icon/reviewImg" />
                     </ResultWrap>
                     {/* selectedCut.map((tag) => (
                       <HashTag

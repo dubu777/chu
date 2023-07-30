@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 import css from "../font/font.css"
 import MainView from "../components/HomeComponent/MainView";
-import banner1 from "../img/banner-lmg.png"
+// import banner1 from "../img/banner-lmg.png"
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -24,7 +24,7 @@ const ImgText = styled.h2`
 function Home() {
   return (
     <Wrapper>
-      <Main src={banner1}></Main>
+      <Main src="./img/banner-lmg.png"></Main>
       <ImgText>Change Hair & U</ImgText>
       <MainView />
     </Wrapper>
