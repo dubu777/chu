@@ -4,7 +4,7 @@ import com.chu.consulting.domain.ResponseFutureConsultingDto;
 import com.chu.consulting.domain.ResponsePastConsultingDto;
 import com.chu.customer.domain.Customer;
 import com.chu.customer.domain.CustomerHairCondition;
-import com.chu.customer.domain.FaceDict;
+import com.chu.global.domain.FaceDict;
 import com.chu.customer.domain.RequestCustomerDetailChangeDto;
 import com.chu.global.domain.ResponseHairStyleDto;
 import lombok.extern.slf4j.Slf4j;

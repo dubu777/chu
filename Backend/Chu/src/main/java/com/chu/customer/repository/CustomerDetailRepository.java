@@ -3,6 +3,7 @@ package com.chu.customer.repository;
 import com.chu.consulting.domain.ResponseFutureConsultingDto;
 import com.chu.consulting.domain.ResponsePastConsultingDto;
 import com.chu.customer.domain.*;
+import com.chu.global.domain.FaceDict;
 import com.chu.global.domain.ResponseHairStyleDto;
 
 import java.util.ArrayList;

@@ -1,10 +1,10 @@
 package com.chu.customer.repository;
 
-import com.chu.customer.domain.AlertToCustomer;
+import com.chu.customer.domain.CustomerAlert;
 
 import java.util.ArrayList;
 
 public interface CustomerAlertRepository {
-    ArrayList<AlertToCustomer> getAlertToCustomer(int customerSeq);
+    ArrayList<CustomerAlert> getAlertToCustomer(int customerSeq);
 
 }

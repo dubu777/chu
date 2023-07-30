@@ -1,6 +1,6 @@
 package com.chu.consulting.domain;
 
-import com.chu.customer.domain.FaceDict;
+import com.chu.global.domain.FaceDict;
 import com.chu.designer.domain.Designer;
 import com.chu.global.domain.HairStyleDict;
 import lombok.Getter;

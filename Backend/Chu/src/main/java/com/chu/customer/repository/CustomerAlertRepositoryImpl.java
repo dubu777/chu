@@ -1,6 +1,6 @@
 package com.chu.customer.repository;
 
-import com.chu.customer.domain.AlertToCustomer;
+import com.chu.customer.domain.CustomerAlert;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
@@ -14,8 +14,8 @@ import java.util.ArrayList;
 @RequiredArgsConstructor
 public class CustomerAlertRepositoryImpl implements CustomerAlertRepository {
     @Override
-    public ArrayList<AlertToCustomer> getAlertToCustomer(int customerSeq) {
-        ArrayList<AlertToCustomer> alertsToCustomer = new ArrayList<>();
+    public ArrayList<CustomerAlert> getAlertToCustomer(int customerSeq) {
+        ArrayList<CustomerAlert> alertsToCustomer = new ArrayList<>();
         // 로직
 
         // 고객 seq로 알람 가져오기

@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter
-public class AlertToCustomer {
+public class CustomerAlert {
 
     @Id @GeneratedValue
     private Integer seq;
