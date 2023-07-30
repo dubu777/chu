@@ -1,5 +1,6 @@
 ## Wireframe
 
+![chu.png](../Readme_images/wireframe/0.png)
 ![chu.png](../Readme_images/wireframe/1.png)
 ![chu.png](../Readme_images/wireframe/2.png)
 ![chu.png](../Readme_images/wireframe/3.png)
@@ -32,3 +33,4 @@
 ![chu.png](../Readme_images/wireframe/30.png)
 ![chu.png](../Readme_images/wireframe/31.png)
 ![chu.png](../Readme_images/wireframe/32.png)
+![chu.png](../Readme_images/wireframe/33.png)
