@@ -1,7 +1,5 @@
 // 고객이 좋아요 누른 디자이너 목록 컴포넌트
 
-// 고객의 최근 상담 내역 보여주는 컴포넌트
-
 import { styled } from "styled-components";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
