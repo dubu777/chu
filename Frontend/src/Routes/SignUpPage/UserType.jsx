@@ -126,7 +126,7 @@ function UserTypeComponet() {
       </StepWrapper>
       <Hr/>
       <TypeWrapper>
-        <Title>회원 유형 선fgsdfbsv</Title>
+        <Title>회원 유형 선택</Title>
         <Wrapper>
           <Box
             onClick={() => navigate('/designersignup')}
