@@ -25,11 +25,11 @@ public class JwtTokenProvider {
     @Value("${jwt.token.refresh-token-key}")
     private String refreshTokenKey;
     @Value("${jwt.token.access-token-expire}")
-    private Long accessTokenExpire;
+    private String accessTokenExpire;
     @Value("${jwt.token.refresh-token-expire}")
-    private Long refreshTokenExpire;
+    private String refreshTokenExpire;
 
-    @Autowired
+    //@Autowired
     private UserDetailsService userDetailsService;
 
     /*
