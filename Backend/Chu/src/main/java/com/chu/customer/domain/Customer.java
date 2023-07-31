@@ -27,6 +27,9 @@ public class Customer {
 
    private LocalDateTime createdDate;
 
+   @Enumerated(EnumType.STRING)
+   private Role role;
+
    @Embedded
    private ImagePath imagePath;
 

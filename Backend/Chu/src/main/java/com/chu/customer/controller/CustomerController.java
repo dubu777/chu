@@ -21,6 +21,11 @@ public class CustomerController {
 
     private final CustomerService customerService;
     private final DesignerSearchService designerSearchService;
+
+    @GetMapping(value="/start")
+    public String start(){
+        return "start";
+    }
     
     // 회원 가입
     @PostMapping(value = "/sign-up")
