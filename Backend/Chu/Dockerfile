@@ -18,10 +18,21 @@
 #CMD ["java", "-jar", "/app.jar"]
 
 
+FROM openjdk:11-jdk AS builder
+ENV PUBLIC_IP=13.125.135.111
+ENV DB_URL=jdbc:mysql://$PUBLIC_IP:3306/chu?serverTimezone=UTC&useUniCode=yes&characterEncoding=UTF-8
+ENV DB_USERNAME=chufamily11
+ENV DB_PASSWORD=gmbefamily11!
+COPY gradlew .
+COPY gradle gradle
+COPY build.gradle .
+COPY settings.gradle .
+COPY src src
+COPY ./build/libs/mylastkey.p12 /mylastkey.p12
+RUN chmod +x ./gradlew
+RUN ./gradlew build
+
 #FROM openjdk:11-jdk AS builder
-#ENV DB_URL=${DB_URL}
-#ENV DB_USERNAME=${DB_USERNAME}
-#ENV DB_PASSWORD=${DB_PASSWORD}
 #COPY gradlew .
 #COPY gradle gradle
 #COPY build.gradle .
@@ -29,16 +40,6 @@
 #COPY src src
 #RUN chmod +x ./gradlew
 #RUN ./gradlew build
-
-FROM openjdk:11-jdk AS builder
-COPY gradlew .
-COPY gradle gradle
-COPY build.gradle .
-COPY settings.gradle .
-COPY src src
-RUN chmod +x ./gradlew
-RUN ./gradlew build
-
 
 FROM openjdk:11-jdk
 COPY --from=builder build/libs/*.jar app.jar
