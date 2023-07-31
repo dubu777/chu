@@ -1,7 +1,7 @@
 package com.chu.designer.repository;
 
 import com.chu.consulting.domain.ResponseConsultingDto;
-import com.chu.designer.domain.DesignerDto;
+import com.chu.designer.domain.Designer;
 import com.chu.designer.domain.RequestDesignerInfoUpdateDto;
 import com.chu.designer.domain.RequestReservationPossibleDateAndTimeDto;
 import com.chu.designer.domain.ResponseDesignerAreaInfo;
@@ -19,12 +19,12 @@ import java.util.ArrayList;
 public class DesignerDetailRepositoryImpl implements DesignerDetailRepository {
 
     @Override
-    public DesignerDto getDesignerInfo(int designerSeq) {
+    public Designer getDesignerInfo(int designerSeq) {
 
-        DesignerDto designerDto = null;
+        Designer designer = null;
         // 디자이너 정보 조회
 
-        return designerDto;
+        return designer;
     }
 
     @Override
