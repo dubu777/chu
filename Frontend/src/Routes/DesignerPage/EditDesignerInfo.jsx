@@ -115,12 +115,6 @@ const SelectText = styled.span`
   margin-bottom: 10px;
   padding-bottom: 10px;
 `;
-const SelectedText = styled.span`
-  font-size: 16px;
-  font-weight: 800;
-  text-align: center;
-  height: 85%;
-`;
 const Grid = styled.div`
   display: grid;
   gap: 5px;
@@ -134,8 +128,6 @@ const Grid = styled.div`
   margin-top: 20px;
   width: 100%;
   border: 1px solid rgb(148, 148, 148);
-  /* box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); */
-  /* box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25); */
   padding: 10px 20px;
   border-radius: 10px;
 `;
