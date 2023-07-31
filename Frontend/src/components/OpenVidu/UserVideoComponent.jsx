@@ -7,7 +7,10 @@ const Container = styled.div`
     width:100%;
     height:100%;
 `;
-
+const Video = styled.div`
+  width : 300px;
+  border-radius: 0.3rem;
+`;
 
 export default class UserVideoComponent extends Component {
 
@@ -19,10 +22,10 @@ export default class UserVideoComponent extends Component {
         return (
             <Container>
                 {this.props.streamManager !== undefined ? (
-                    <div className="streamcomponent">
+                    <Video className="streamcomponent">
                         <OpenViduVideoComponent streamManager={this.props.streamManager} />
                         <div><p>{this.getNicknameTag()}</p></div>
-                    </div>
+                    </Video>
                 ) : null}
             </Container>
         );
