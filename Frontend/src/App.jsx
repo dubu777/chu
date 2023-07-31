@@ -19,6 +19,7 @@ import ListView from "./Routes/ViewPage/ListView";
 import Survey from "./components/ModalComponent/Survey";
 import Result from "./components/ModalComponent/Result";
 import EditDesignerInfo from "./Routes/DesignerPage/EditDesignerInfo";
+import EditCustomerInfo from "./Routes/CustomerPage/EditCustomerInfo";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
         <Route path="designerdetail" element={<DesignerDetail/>} />
         <Route path="worlducupimgupload" element={<WorldcupImgUpload/>} />
         <Route path="customermypage" element={<CustomerMyPage/>} />
+        <Route path="editcustomerinfo" element={<EditCustomerInfo/>} />
         <Route path="designermypage" element={<DesignerMyPage/>} />
         <Route path="listview" element={<ListView/>} />
         <Route path="editdesignerinfo" element={<EditDesignerInfo/>} />
