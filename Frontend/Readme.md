@@ -1,5 +1,8 @@
 ### Getting Started with Create React App
 
+#### public 이미지 접근
+``` <Img src="/icon/complete.png" />```
+
 #### 리액트 상태 관리
 - Recoil 사용
 ```import { atom, useRecoilState } from 'recoil';```

@@ -67,7 +67,7 @@ function AuthNum() {
 					<br></br>
 					<Input placeholder="인증번호 입력"></Input>
 					<br></br>
-					  <Btn type="submit"><Link to="/changepw">확인</Link></Btn>
+						<Btn type="submit"><Link to="/changepw">확인</Link></Btn>
 				</Box>				
 			</Wrapper>
 		</Container>
