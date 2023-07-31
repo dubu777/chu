@@ -18,10 +18,19 @@
 #CMD ["java", "-jar", "/app.jar"]
 
 
+#FROM openjdk:11-jdk AS builder
+#ENV DB_URL=${DB_URL}
+#ENV DB_USERNAME=${DB_USERNAME}
+#ENV DB_PASSWORD=${DB_PASSWORD}
+#COPY gradlew .
+#COPY gradle gradle
+#COPY build.gradle .
+#COPY settings.gradle .
+#COPY src src
+#RUN chmod +x ./gradlew
+#RUN ./gradlew build
+
 FROM openjdk:11-jdk AS builder
-ENV DB_URL=${DB_URL}
-ENV DB_USERNAME=${DB_USERNAME}
-ENV DB_PASSWORD=${DB_PASSWORD}
 COPY gradlew .
 COPY gradle gradle
 COPY build.gradle .
@@ -29,6 +38,7 @@ COPY settings.gradle .
 COPY src src
 RUN chmod +x ./gradlew
 RUN ./gradlew build
+
 
 FROM openjdk:11-jdk
 COPY --from=builder build/libs/*.jar app.jar
