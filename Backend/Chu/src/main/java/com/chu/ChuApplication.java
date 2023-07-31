@@ -9,5 +9,4 @@ public class ChuApplication {
 		// wrong branch test2
 		SpringApplication.run(ChuApplication.class, args);
 	}
-
 }
