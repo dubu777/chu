@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Setter @Getter
 public class DesignerFixedSlot {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer seq;
 
     private Integer day;
@@ -20,7 +20,7 @@ public class DesignerFixedSlot {
     private LocalDateTime createdDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "seq")
+    @JoinColumn(name = "designer_seq")
     private Designer designer;
 
 

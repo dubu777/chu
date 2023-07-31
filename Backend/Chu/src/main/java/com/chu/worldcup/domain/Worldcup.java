@@ -12,18 +12,18 @@ import java.time.LocalDateTime;
 @Getter @Setter
 public class Worldcup {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer seq;
 
     private String url;
     private LocalDateTime createdDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "seq")
+    @JoinColumn(name = "customer_seq")
     private Customer customer;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "seq")
+    @JoinColumn(name = "hair_style_seq")
     private HairStyleDict hairStyleDict;
 
 }
