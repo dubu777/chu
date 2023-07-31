@@ -46,7 +46,7 @@ const Wrapper = styled.div`
   /* align-content: center; */
   justify-content: center;
   width: 70vh;
-  height: 800px;
+  height: 100%;
   border-radius: 51px;
   background: #FDFDFD;
   /* box-shadow: 0px 4px 15px 0px rgba(0, 0, 0, 0.30); */
@@ -60,7 +60,7 @@ const Hr = styled.div`
 const ProfileBox = styled.div`
   display: flex;
   justify-content: center;
-  /* margin-top: 20px; */
+  margin-top: 30px;
 `;
 const Img = styled.img`
   border-radius: 50%;
@@ -89,6 +89,7 @@ const InputBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  width: 70%;
   /* text-align: center; */
   margin: 15px auto;
 `;
@@ -114,6 +115,7 @@ const SubmitBtn = styled.button`
 const CenterBox = styled.div`
   display: flex;
   justify-content: center;
+  margin-bottom: 10px;
 `;
 
 const RadioContainer = styled.div`

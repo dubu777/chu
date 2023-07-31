@@ -6,6 +6,7 @@ import axios from 'axios';
 import ReserveCalendar from "../../components/DesignerComponent/ReserveCalendar";
 import AllReserveList from "../../components/DesignerComponent/AllReserveList";
 import Portfolio from "../../components/DesignerComponent/Portfolio";
+import { useNavigate } from "react-router";
 
 const Container = styled.div`
 
@@ -104,6 +105,7 @@ const ClickBtn = styled.button`
 `
 
 function DesignerMyPage(){
+  const navigate = useNavigate();
   const [data, setData] = useState({
     "name" : "재현",
         "cost" : "5000",
@@ -163,7 +165,7 @@ function DesignerMyPage(){
         </InfoBox>
 
         <ChangeBox>
-          <ChangeBtn>회원 정보 변경</ChangeBtn>
+          <ChangeBtn onClick={() => navigate("/editdesignerinfo")}>회원 정보 변경</ChangeBtn>
         </ChangeBox>
       </ProfileWrapper>
         

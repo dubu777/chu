@@ -18,6 +18,7 @@ import DesignerMyPage from "./Routes/DesignerPage/DesignerMyPage";
 import ListView from "./Routes/ViewPage/ListView";
 import Survey from "./components/ModalComponent/Survey";
 import Result from "./components/ModalComponent/Result";
+import EditDesignerInfo from "./Routes/DesignerPage/EditDesignerInfo";
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
         <Route path="customermypage" element={<CustomerMyPage/>} />
         <Route path="designermypage" element={<DesignerMyPage/>} />
         <Route path="listview" element={<ListView/>} />
+        <Route path="editdesignerinfo" element={<EditDesignerInfo/>} />
         <Route path="/modaltest" element={<Survey/>}>
           <Route path="/modaltest/1" element={<Survey/>}/>
         </Route>

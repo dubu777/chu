@@ -46,7 +46,7 @@ const Wrapper = styled.div`
   /* align-content: center; */
   justify-content: center;
   width: 70vh;
-  height: 800px;
+  height: 100%;
   border-radius: 51px;
   background: #FDFDFD;
   /* box-shadow: 0px 4px 15px 0px rgba(0, 0, 0, 0.30); */
@@ -103,6 +103,7 @@ const InputBox = styled.div`
   flex-direction: column;
   justify-content: center;
   /* text-align: center; */
+  width: 70%;
   margin: 15px auto;
 `;
 const SubmitBtn = styled.button`
@@ -127,6 +128,7 @@ const SubmitBtn = styled.button`
 const CenterBox = styled.div`
   display: flex;
   justify-content: center;
+  margin-bottom: 10px;
 `;
 
 function DesignerSignUp() {
