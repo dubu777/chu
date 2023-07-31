@@ -31,8 +31,10 @@ public class CustomerController {
     @PostMapping(value = "/sign-up")
     public ResponseEntity<HttpResponseDto> signUp(@RequestBody RequestCustomerSignUpDto requestCustomerSignUpDto){
         log.info(requestCustomerSignUpDto.toString());
-        boolean isSuccess = customerService.signUp(requestCustomerSignUpDto);
+        Customer customer = requestCustomerSignUpDto.toCustomerEntity();
+        boolean isSuccess = customerService.signUp(customer);
 
+        /*
         if(isSuccess){
             ResponseCustomerLoginDetailDto responseCustomerLoginDetailDto = customerService.getLoginCustomerDetail(requestCustomerSignUpDto.getId());
             HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseCustomerLoginDetailDto);
@@ -40,6 +42,17 @@ public class CustomerController {
         }
         else{
             HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
+        }
+        */
+
+
+        if(isSuccess){
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, "success");
+            return ResponseEntity.ok(httpResponseDto);
+        }
+        else {
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, "fail");
             return ResponseEntity.ok(httpResponseDto);
         }
     }

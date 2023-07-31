@@ -14,7 +14,8 @@ public interface CustomerService {
     boolean checkEmail(String email);
     
     // 고객 회원가입
-    boolean signUp(RequestCustomerSignUpDto requestCustomerSignUpDto);
+//    boolean signUp(RequestCustomerSignUpDto requestCustomerSignUpDto);
+    boolean signUp(Customer customer);
     
     // 고객 로그인
     boolean signIn(RequestSignInDto requestSignInDto);

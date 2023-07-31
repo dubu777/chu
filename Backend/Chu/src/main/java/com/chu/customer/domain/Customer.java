@@ -4,6 +4,7 @@ import com.chu.global.domain.FaceDict;
 import com.chu.global.domain.ImagePath;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -37,4 +38,9 @@ public class Customer {
    @JoinColumn(name="face_seq")
    private FaceDict faceDict;
 
+   public Customer hashPassword(PasswordEncoder passwordEncoder){
+      this.pwd = passwordEncoder.encode(this.pwd);
+
+      return this;
+   }
 }

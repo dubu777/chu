@@ -3,11 +3,13 @@ package com.chu.customer.service;
 import com.chu.customer.domain.*;
 import com.chu.customer.repository.CustomerAlertRepository;
 import com.chu.customer.repository.CustomerRepository;
+import com.chu.customer.repository.TestRepository;
 import com.chu.designer.repository.DesignerRepository;
 import com.chu.global.domain.*;
 import com.chu.worldcup.repository.WorldcupRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,6 +24,8 @@ public class CustomerServiceImpl implements CustomerService{
     private final DesignerRepository designerRepository;
     private final WorldcupRepository worldcupRepository;
     private final CustomerAlertRepository customerAlertRepository;
+    private final TestRepository testRepository;
+    private final PasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public boolean checkId(String id) {
@@ -34,8 +38,13 @@ public class CustomerServiceImpl implements CustomerService{
     }
 
     @Override
-    public boolean signUp(RequestCustomerSignUpDto requestCustomerSignUpDto) {
-        return customerRepository.signUp(requestCustomerSignUpDto);
+    public boolean signUp(Customer customer) {
+        //return customerRepository.signUp(requestCustomerSignUpDto);
+        Customer newCustomer = customer;
+        newCustomer.hashPassword(bCryptPasswordEncoder);
+
+        testRepository.save(customer);
+        return true;
     }
 
     @Override
