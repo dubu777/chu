@@ -21,11 +21,11 @@ public class WorldcupImg {
     private LocalDateTime createdDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "seq")
+    @JoinColumn(name = "worldcup_seq")
     private Worldcup worldcup;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "seq")
+    @JoinColumn(name = "hair_style_seq")
     private HairStyleDict hairStyleDict;
 
 }

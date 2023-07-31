@@ -12,18 +12,18 @@ import java.time.LocalDateTime;
 public class DesignerTagInfo {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Integer seq;
 
     private LocalDateTime createdTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="seq")
+    @JoinColumn(name="hair_style_seq")
     private HairStyleDict hairStyleDict;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="seq")
+    @JoinColumn(name="designer_seq")
     private Designer designer;
 
 

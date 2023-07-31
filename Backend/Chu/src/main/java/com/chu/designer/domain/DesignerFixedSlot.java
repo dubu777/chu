@@ -20,7 +20,7 @@ public class DesignerFixedSlot {
     private LocalDateTime createdDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "seq")
+    @JoinColumn(name = "designer_seq")
     private Designer designer;
 
 

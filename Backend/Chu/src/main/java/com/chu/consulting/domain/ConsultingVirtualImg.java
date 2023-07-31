@@ -19,11 +19,11 @@ public class ConsultingVirtualImg {
     private Boolean isSelected;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "seq")
+    @JoinColumn(name = "consulting_seq")
     private Consulting consulting;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "seq")
+    @JoinColumn(name = "hair_style_seq")
     private HairStyleDict hairStyleDict;
 
 }

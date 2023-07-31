@@ -16,11 +16,11 @@ public class DesignerLike {
     private Integer seq;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "seq")
+    @JoinColumn(name = "customer_seq")
     private Customer customer;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "seq")
+    @JoinColumn(name = "designer_seq")
     private Designer designer;
 
     private boolean likeStatus;

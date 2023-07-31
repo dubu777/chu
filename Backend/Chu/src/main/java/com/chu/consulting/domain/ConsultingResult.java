@@ -16,15 +16,15 @@ public class ConsultingResult {
     private Integer seq;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "seq")
+    @JoinColumn(name = "designer_seq")
     private Designer designer;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "seq")
+    @JoinColumn(name = "customer_seq")
     private HairStyleDict hairStyleDict;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "seq")
+    @JoinColumn(name = "face_seq")
     private FaceDict faceDict;
 
 }

@@ -21,11 +21,11 @@ public class DesignerAlert {
     private LocalDateTime checkedDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "seq")
+    @JoinColumn(name = "designer_seq")
     private Designer designer;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "seq")
+    @JoinColumn(name = "consulting_seq")
     private Consulting consulting;
 
 }

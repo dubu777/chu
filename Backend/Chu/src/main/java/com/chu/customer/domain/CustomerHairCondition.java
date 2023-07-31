@@ -15,10 +15,10 @@ public class CustomerHairCondition {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "seq")
+    @JoinColumn(name = "customer_seq")
     private Customer customer;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="seq")
+    @JoinColumn(name="hair_condition_seq")
     private HairConditionDict hairConditionDict;
 }

@@ -30,7 +30,7 @@ public class Customer {
    private ImagePath imagePath;
 
    @OneToOne(fetch = FetchType.LAZY)
-   @JoinColumn(name="seq")
+   @JoinColumn(name="face_seq")
    private FaceDict faceDict;
 
 }

@@ -13,6 +13,6 @@ public class HairStyleImg {
     private Integer seq;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "seq")
+    @JoinColumn(name = "hair_style_seq")
     private HairStyleDict hairStyleDict;
 }
