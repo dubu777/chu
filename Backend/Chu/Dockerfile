@@ -22,6 +22,6 @@ FROM openjdk:11-jdk
 ENV DB_USERNAME=chufamily11
 ENV DB_PASSWORD=gmbefamily11!
 COPY --from=builder build/libs/*.jar app.jar
-COPY .build/libs/mylastkey.p12 /mylastkey.p12
+COPY build/libs/mylastkey.p12 /mylastkey.p12
 EXPOSE 8081
 ENTRYPOINT ["java", "-jar", "/app.jar"]
