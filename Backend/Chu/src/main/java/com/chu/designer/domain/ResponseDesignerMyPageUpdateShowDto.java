@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class ResponseDesignerMyPageUpdateShowDto {
 
     // 디자이너 정보
-    DesignerDto designerDto;
+    Designer designer;
     // 지역도 있음
     ResponseDesignerAreaInfo responseDesignerAreaInfo;
     ArrayList<ResponseHairStyleDto> allCutResponseHairStyleDtoList;

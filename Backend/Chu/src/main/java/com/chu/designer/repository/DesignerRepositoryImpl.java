@@ -46,12 +46,12 @@ public class DesignerRepositoryImpl implements DesignerRepository {
     }
 
     @Override
-    public DesignerDto getDesignerInfo(String id) {
-        DesignerDto designerDto = new DesignerDto();
+    public Designer getDesignerInfo(String id) {
+        Designer designer = new Designer();
         // 로직
 
         // 디자이너 테이블에서 정보 조회
-        return designerDto;
+        return designer;
     }
 
 

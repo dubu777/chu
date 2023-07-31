@@ -3,22 +3,23 @@ package com.chu.customer.repository;
 import com.chu.consulting.domain.ResponseFutureConsultingDto;
 import com.chu.consulting.domain.ResponsePastConsultingDto;
 import com.chu.customer.domain.*;
+import com.chu.global.domain.FaceDict;
 import com.chu.global.domain.ResponseHairStyleDto;
 
 import java.util.ArrayList;
 
 public interface CustomerDetailRepository {
-    CustomerDto getCustomerInfo(int customerSeq);
+    Customer getCustomerInfo(int customerSeq);
 
     boolean patchImage(String imgName);
 
-    ArrayList<CustomerHairConditionDto> getCustomerHairCondition(int customerSeq);
+    ArrayList<CustomerHairCondition> getCustomerHairCondition(int customerSeq);
 
     ArrayList<ResponsePastConsultingDto> getPastConsultingList(int customerSeq);
 
     ArrayList<ResponseFutureConsultingDto> getFutureConsultingList(int customerSeq);
 
-    ArrayList<FaceTypeDto> getALLFaceTypeList();
+    ArrayList<FaceDict> getALLFaceTypeList();
 
     ArrayList<ResponseHairStyleDto> getAllHairStyleList();
 

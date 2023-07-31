@@ -20,7 +20,7 @@ public interface DesignerService {
     boolean signIn(RequestSignInDto requestSignInDto);
 
     // 디자이너 정보 조회
-    DesignerDto getDesignerInfo(String id);
+    Designer getDesignerInfo(String id);
 
     // 디자이너 로그인 시 정보 조회
     ResponseDesignerLoginDetailDto getLoginDesignerDetail(String id);
