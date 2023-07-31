@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Getter @Setter
 public class DesignerAlert {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer seq;
 
     private boolean isCheck;

@@ -4,16 +4,16 @@ import com.chu.global.domain.HairStyleDict;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter
 public class DesignerTagInfo {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)(strategy = GenerationType.IDENTITY)
+    private Long id;
     private Integer seq;
 
     private LocalDateTime createdTime;

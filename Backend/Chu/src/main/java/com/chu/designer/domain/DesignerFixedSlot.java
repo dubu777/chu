@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Setter @Getter
 public class DesignerFixedSlot {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer seq;
 
     private Integer day;

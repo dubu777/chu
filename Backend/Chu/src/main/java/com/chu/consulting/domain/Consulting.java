@@ -15,7 +15,7 @@ import java.util.PriorityQueue;
 public class Consulting {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer seq;
 
     @Embedded

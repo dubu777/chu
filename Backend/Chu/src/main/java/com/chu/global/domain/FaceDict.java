@@ -13,7 +13,7 @@ import javax.persistence.Id;
 @Getter @Setter
 public class FaceDict {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer seq;
 
     private String faceLabel;

@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Getter @Setter
 public class Designer {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer seq;
 
     private String id;

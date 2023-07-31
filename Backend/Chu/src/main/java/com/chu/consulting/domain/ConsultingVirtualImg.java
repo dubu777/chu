@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Setter @Getter
 public class ConsultingVirtualImg {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer seq;
 
     private ImagePath imagePath;

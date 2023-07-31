@@ -13,7 +13,7 @@ import java.util.Date;
 public class ReservationAvailableSlot {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer seq;
 
     private String date;

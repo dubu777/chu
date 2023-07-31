@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Setter @Getter
 public class HairStyleImg {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer seq;
 
     @ManyToOne(fetch = FetchType.LAZY)

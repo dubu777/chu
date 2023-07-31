@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Getter @Setter
 public class ConsultingResult {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer seq;
 
     @ManyToOne(fetch = FetchType.LAZY)

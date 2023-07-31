@@ -11,7 +11,7 @@ import javax.persistence.Id;
 @Getter @Setter
 public class HairConditionDict {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer seq;
 
     private String label;

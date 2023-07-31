@@ -11,7 +11,7 @@ import javax.persistence.Id;
 @Setter @Getter
 public class HairStyleCategory {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer seq;
 
     private String name;

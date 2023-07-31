@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class DesignerLike {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer seq;
 
     @ManyToOne(fetch = FetchType.LAZY)

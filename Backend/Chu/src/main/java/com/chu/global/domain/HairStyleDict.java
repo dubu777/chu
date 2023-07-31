@@ -10,7 +10,7 @@ import javax.persistence.*;
 public class HairStyleDict {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer seq;
 
     private String hairStyleLabel;
