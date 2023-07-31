@@ -18,6 +18,7 @@ RUN ./gradlew build
 #RUN chmod +x ./gradlew
 #RUN ./gradlew build
 
+
 FROM openjdk:11-jdk
 ENV DB_USERNAME=chufamily11
 ENV DB_PASSWORD=gmbefamily11!
