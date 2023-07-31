@@ -19,9 +19,10 @@
 
 
 FROM openjdk:11-jdk AS builder
-ENV DB_URL=jdbc:mysql://${PUBLIC_IP}:3306/chu?serverTimezone=UTC&useUniCode=yes&characterEncoding=UTF-8
-ENV DB_USERNAME=${DB_USERNAME}
-ENV DB_PASSWORD=${DB_PASSWORD}
+ENV PUBLIC_IP=13.125.135.111
+ENV DB_URL=jdbc:mysql://$PUBLIC_IP:3306/chu?serverTimezone=UTC&useUniCode=yes&characterEncoding=UTF-8
+ENV DB_USERNAME=chufamily11
+ENV DB_PASSWORD=gmbefamily11!
 COPY gradlew .
 COPY gradle gradle
 COPY build.gradle .
