@@ -28,7 +28,6 @@ COPY gradle gradle
 COPY build.gradle .
 COPY settings.gradle .
 COPY src src
-COPY ./build/libs/mylastkey.p12 /mylastkey.p12
 RUN chmod +x ./gradlew
 RUN ./gradlew build
 
