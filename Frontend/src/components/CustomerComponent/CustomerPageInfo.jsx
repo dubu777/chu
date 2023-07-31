@@ -2,6 +2,7 @@
 import styled from "styled-components";
 import React, {useState, useEffect} from "react";
 import ProfileImg from "../../components/CustomerComponent/ProfileImg";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   /* font-family: "Apple-B";   */
@@ -145,7 +146,7 @@ function CustomerPageInfo(){
         </InfoBox>
 
         <ChangeBox>
-          <ChangeBtn>회원 정보 변경</ChangeBtn>
+          <ChangeBtn><Link to="/editcustomerinfo">회원 정보 변경</Link></ChangeBtn>
         </ChangeBox>
       </Wrapper>
     </Container>
