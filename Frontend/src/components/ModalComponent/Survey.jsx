@@ -3,10 +3,6 @@ import Step from "../SignUpComponent/Step";
 import { AnimatePresence, motion, useScroll } from "framer-motion";
 import { useMatch, useNavigate } from "react-router-dom";
 import { useState } from "react";
-// import hearto from "../../icon/hearto.png";
-// import heartx from "../../icon/heartx.png";
-// import designer from "../../icon/hair-cutting.png";
-// import woman from "../../icon/woman.png";
 const BigWrapper =styled.div`
 
 `;
@@ -247,7 +243,7 @@ function Review() {
             variants={boxVariants} 
             initial="nomal" 
             whileHover="hover">
-            <DesignerImg src="./icon/hair-cutting.png"/>
+            <DesignerImg src="icon/hair-cutting.png"/>
             <Text>디자이너</Text>
             <SubText>디자이너가 홈페이지에 가입하는 경우</SubText>
             <Btn onClick={() => navigate('/designersignup')}>회원가입</Btn>
@@ -256,7 +252,7 @@ function Review() {
             variants={boxVariants} 
             initial="nomal" 
             whileHover="hover">
-            <CustomerImg src="./icon/woman.png"/>
+            <CustomerImg src="icon/woman.png"/>
             <Text>일반 회원</Text>
             <SubText>일반 회원이 홈페이지에 가입하는 경우</SubText>
             <Btn
@@ -284,10 +280,10 @@ function Review() {
                     <LikeBox>
                       {handleLike ? (
                         // 좋아요가 눌려있을 때 빨간색 하트 아이콘
-                        <LikeBtn src="./icon/hearto.png"/>
+                        <LikeBtn src="icon/hearto"/>
                       ) : (
                         // 좋아요가 눌려있지 않을 때 빈 하트 아이콘
-                        <LikeBtn src="./icon/heartx.png"/>
+                        <LikeBtn src="icon/heartx"/>
                       )}
                     </LikeBox>
                     <LikeBtnText>이 디자이너 좋아요!</LikeBtnText>

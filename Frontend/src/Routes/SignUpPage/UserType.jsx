@@ -44,9 +44,11 @@ const Box = styled(motion.div)`
   height: 400px;
   margin-top: 30px;
   border-radius: 10px;
-  background-color: rgb(249,245,240);
+  /* background-color: rgb(249,245,240); */
+  background-color: white;
   /* box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06); */
-  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  /* box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1); */
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 2px 4px 30px -4px rgb(0 0 0 / 0.1);
 `;
 
 const Title = styled.span`
@@ -124,7 +126,7 @@ function UserTypeComponet() {
       </StepWrapper>
       <Hr/>
       <TypeWrapper>
-        <Title>회원 유형 선fgsdfbsv</Title>
+        <Title>회원 유형 선택</Title>
         <Wrapper>
           <Box
             onClick={() => navigate('/designersignup')}
