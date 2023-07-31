@@ -48,6 +48,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
     @Override
     public Customer getCustomerInfo(String id) {
+
         Customer customer = new Customer();
         // 로직
 

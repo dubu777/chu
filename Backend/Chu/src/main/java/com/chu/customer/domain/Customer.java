@@ -27,6 +27,7 @@ public class Customer {
 
    private LocalDateTime createdDate;
 
+   @Embedded
    private ImagePath imagePath;
 
    @OneToOne(fetch = FetchType.LAZY)

@@ -9,10 +9,12 @@ const InputWrapper = styled.div`
 `;
 
 const Input = styled.input`
-  height: 35px;
-  width: 250px;
-  border: 0;
-  border-radius: 5px;
+  height: 45px;
+  width: 320px;
+  border: solid 1px;
+  border-color: #d5d5d4;
+  border-radius: 5.5px;
+  padding-left: 20px;
   margin-top: 5px;
   outline: none; /* 포커스된 상태의 외곽선을 제거 */
   &:focus {
@@ -29,11 +31,10 @@ const Text = styled.span`
 `;
 
 
-
 function SignUpInput({text, placeholder }) {
   return (
     <InputWrapper>
-      <Text>{text}</Text>
+      {/* <Text>{text}</Text> */}
       <Input placeholder={placeholder}/>
     </InputWrapper>
   )
