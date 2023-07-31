@@ -15,7 +15,7 @@ public interface CustomerRepository {
 
     boolean signIn(RequestSignInDto requestSignInDto);
 
-    CustomerDto getCustomerInfo(String id);
+    Customer getCustomerInfo(String id);
 
     String findId(RequestFindIdDto requestFindIdDto);
 

@@ -46,7 +46,7 @@ public class CustomerServiceImpl implements CustomerService{
 
     // 얘가 다 가져오는거야 고객 정보를 그 테이블에 있는건 전부
     @Override
-    public CustomerDto getCustomerInfo(String id) {
+    public Customer getCustomerInfo(String id) {
         return customerRepository.getCustomerInfo(id);
     }
 
@@ -72,7 +72,7 @@ public class CustomerServiceImpl implements CustomerService{
         // 고객 idx로 알림 접근
         // 상담 IDX 토대로 APi 명세에 따른 로직 추가
 
-//        ArrayList<AlertToCustomerDto> alertList = customerAlertRepository.getAlertToCustomer(customerSeq);
+//        ArrayList<AlertToCustomer> alertList = customerAlertRepository.getAlertToCustomer(customerSeq);
 
         // 여기에 알람에 따른 디자이너 정보가 추가될꺼야
         ArrayList<AlertCustomerOnLoginDto> alertDetailList = new ArrayList<>();

@@ -20,7 +20,7 @@ public interface CustomerService {
     boolean signIn(RequestSignInDto requestSignInDto);
 
     // 고객 정보 조회
-    CustomerDto getCustomerInfo(String id);
+    Customer getCustomerInfo(String id);
     
     // 고객 로그인 시 정보 조회
     ResponseCustomerLoginDetailDto getLoginCustomerDetail(String id);
