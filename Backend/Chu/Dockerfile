@@ -21,7 +21,7 @@ RUN ./gradlew build
 FROM openjdk:11-jdk
 ENV DB_USERNAME=chufamily11
 ENV DB_PASSWORD=gmbefamily11!
+COPY ./mylastkey.p12 /mylastkey.p12
 COPY --from=builder build/libs/*.jar app.jar
-COPY ./mylastkey.p12 /build/libs/mylastkey.p12
 EXPOSE 8081
 ENTRYPOINT ["java", "-jar", "/app.jar"]
