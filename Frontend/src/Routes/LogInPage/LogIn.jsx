@@ -15,6 +15,7 @@ const Container = styled.div`
 	flex-direction: column;
 	padding-left: 150px;
 	font-family: 'Cormorant Garamond';
+	/* font-family: "Apple-B";  */
 `;
 
 const Wrapper = styled.div`
@@ -60,7 +61,7 @@ const SubmitBox = styled.div`
 const Btn = styled.button`
 	border: 0;
 	border-radius: 0.4rem;
-	font-family: 'Cormorant Garamond';
+	/* font-family: 'Cormorant Garamond'; */
 	font-size: 15px;
 	width: 60px;
 `;
@@ -88,7 +89,7 @@ export const usernameState = selector({
 function LogIn() {
 	const [isLoggedIn, setLoggedIn] = useRecoilState(isLoggedInState);
 	// 폼 제출 핸들러를 정의
-	const handleFormSubmit = (event) => {
+	function handleFormSubmit(event){
 		event.preventDefault();
 		const form = event.target;
 		const formData = new FormData(form);
