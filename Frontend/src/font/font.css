@@ -20,11 +20,26 @@
 @font-face {
     font-family: "Blue-road";        
     src: url("../font/Yeongdeok Blueroad.ttf");
-  }
+    }
 
-  @font-face {
+@font-face {
     font-family: 'NanumSquareNeo-Variable';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
+}
+
+@font-face {
+    font-family: "Apple-B";        
+    src: url("../font/SF-Pro-Text-Bold.otf");
+}
+
+@font-face {
+    font-family: "Apple-H";        
+    src: url("../font/SF-Pro-Text-Heavy.otf");
+}
+
+@font-face {
+    font-family: "Sandol-B";        
+    src: url("../font/AppleSDGothicNeoB.ttf");
 }

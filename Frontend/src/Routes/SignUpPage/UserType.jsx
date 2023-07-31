@@ -3,12 +3,14 @@ import Step from "../../components/SignUpComponent/Step";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   width: 65vw;
   margin: 0 auto;
+  
 
 `;
 const StepWrapper = styled.div`
@@ -24,6 +26,7 @@ const TypeWrapper = styled.div`
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 60px;
 `;
 const Wrapper = styled.div`
   display: flex;
@@ -32,7 +35,7 @@ const Wrapper = styled.div`
   width: 100%;
 `;
 
-const Box = styled.div`
+const Box = styled(motion.div)`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -41,19 +44,25 @@ const Box = styled.div`
   height: 400px;
   margin-top: 30px;
   border-radius: 10px;
-  background-color: rgb(249,245,240);
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
+  /* background-color: rgb(249,245,240); */
+  background-color: white;
+  /* box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06); */
+  /* box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1); */
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 2px 4px 30px -4px rgb(0 0 0 / 0.1);
 `;
 
 const Title = styled.span`
   font-size: 30px;
-  font-weight: bold;
+  font-family: "Sandol-B";   
+  font-weight: bolder;
   margin: 40px 0 30px 0;
+  /* font-family: "Apple-H";     */
 `;
 const Text = styled.span`
   font-size: 22px;
   font-weight: bold;
   margin-top: 15px;
+  font-family: "Apple-H";    
 `;
 const SubText = styled.span`
   font-size: 15px;
@@ -91,14 +100,26 @@ const Btn = styled(motion.button)`
   }
 `;
 
+const boxVariants = {
+  nomal: {
+    scale: 1
+  },
+  hover: {
+    scale: 1.02,
+    transition: {
+      duration: 0.3,
+    },
+  }
+}
 
 function UserTypeComponet() {
   const navigate = useNavigate();
 
   return (
+
     <Container>
       <StepWrapper>
-        <Step top="step1" bottom="회원 유형 선택" />
+        <Step top="step1" bottom="회원 유형 선택" bgcolor="rgb(244,153,26)"/>
         <Step top="step2" bottom="약관 동의" />
         <Step top="step3" bottom="회원 정보 입력" />
         <Step top="step4" bottom="가입 완료" />
@@ -107,13 +128,21 @@ function UserTypeComponet() {
       <TypeWrapper>
         <Title>회원 유형 선택</Title>
         <Wrapper>
-          <Box>
+          <Box
+            onClick={() => navigate('/designersignup')}
+            variants={boxVariants} 
+            initial="nomal" 
+            whileHover="hover">
             <DesignerImg src="./icon/hair-cutting.png"/>
             <Text>디자이너</Text>
             <SubText>디자이너가 홈페이지에 가입하는 경우</SubText>
             <Btn onClick={() => navigate('/designersignup')}>회원가입</Btn>
           </Box>
-          <Box>
+          <Box
+            onClick={() => navigate('/customersignup')}
+            variants={boxVariants} 
+            initial="nomal" 
+            whileHover="hover">
             <CustomerImg src="./icon/woman.png"/>
             <Text>일반 회원</Text>
             <SubText>일반 회원이 홈페이지에 가입하는 경우</SubText>
@@ -122,6 +151,7 @@ function UserTypeComponet() {
         </Wrapper>
       </TypeWrapper>
     </Container>
+    
   )
 }
 export default UserTypeComponet;

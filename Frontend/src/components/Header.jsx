@@ -15,8 +15,12 @@ const Nav = styled(motion.nav)`
   padding: 20px 60px;
   color: white;
   background-color: rgb(100, 93, 81);
-  font-family: 'Cormorant Garamond';
+  /* font-family: 'Cormorant Garamond'; */
+  /* font-family: 'Pretendard-Regular'; */
+  /* font-family: "San Francisco"; */
   /* font-family: 'NanumSquareNeo-Variable'; */
+  font-family: "Sandol-B";    
+  
 `;
 
 const Col = styled.div`
@@ -66,7 +70,11 @@ const logoVariants = {
     color: "white"
   },
   active: {
-    color: "rgb(244,153,26)"
+    color: "rgb(244,153,26)",
+    trasition: {
+      type: "tween",
+      duration: 0.05,
+    },
   }
 };
 
@@ -93,25 +101,26 @@ function Header() {
               >Home
             </Item>
           </Link>
-          <Link to="reservation">
+          <Link to="designerdetail">
             <Item 
               variants={logoVariants}
               whileHover="active"
               initial="nomal"
-              >Reservation
+              >DesignerDetail
             </Item>
           </Link>
         </Items>
       </Col>
       <Col>
         <Search >
+        <Link to="/designermypage">디자이너MyPage//</Link>
           <Link to="/customermypage">CustomerMyPage//</Link>
-          <Link to="usertype">
+          <Link to="listview">
             <Item 
               variants={logoVariants}
               whileHover="active"
               initial="nomal"
-              >UserType
+              >ListView
             </Item>
           </Link>
           <Link to="usertype">
