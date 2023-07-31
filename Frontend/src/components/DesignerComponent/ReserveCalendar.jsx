@@ -28,7 +28,9 @@ const TimeBox = styled.div`
 `;
 
 const TimeButton = styled.button`
-  border-radius: 0.5rem;
+  border-radius: 0.3rem;
+  width: 65px;
+  height: 40px;
   margin: 5px;
   border: 2px solid ${props => props.selected ? 'none' : 'beige'} ;
   background-color: ${props => props.selected ? 'beige' : 'ivory'}; // 선택된 버튼은 초록색으로, 선택되지 않은 버튼은 회색으로 표시
