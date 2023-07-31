@@ -98,20 +98,20 @@ const UploadBtn = styled.button`
 	background-color:rgb(242,234,211);
 	font-size: 14px;
 	font-weight: 600;
-	width: 90%;
+	width: 40%;
 	height: 40px;
 	border-radius: 5px;
-	margin-bottom: 5px;
+	margin: 10px 0 5px 0;
 `;
 const ReservBtn = styled.button`
 	border: none;
 	background-color: rgba(242,153,26,0.53);
 	font-size: 14px;
 	font-weight: 600;
-	width: 90%;
+	width: 40%;
 	height: 40px;
 	border-radius: 5px;
-	margin: 30px 0 5px 0;
+	margin: 10px 0 5px 0;
 `;
 const SText = styled.span`
 	font-size: 10px;
@@ -244,10 +244,13 @@ function Reservation() {
                 }
               </PofolImgBox>
             </PofolWrap>
+            <StartBox>
             <SubTitle>상담 사진 등록</SubTitle>
+            </StartBox>
             <Hr/>
             <UploadBtn>파일 업로드</UploadBtn>
             <SText>- 이마가 보이는 사진을 업로드해 주세요.</SText>
+            <Hr/>
             <ReservBtn>상담 예약하기</ReservBtn>
             <SText> - 예약취소 시, 24시간 이전에만 예약금 환불이 가능합니다.</SText>
 					</ResevBox>
