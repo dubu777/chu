@@ -11,14 +11,14 @@ function formatDateString(date) {
 }
 const CalendarContainer = styled.div`
   /* ~~~ container styles ~~~ */
-  /* width: 95%; */
+  width: 100%;
   max-width: 600px;
   margin: auto;
   margin-top: 20px;
   padding: 10px;
   border-radius: 3px;
-  
 `;
+
 function ReserveCalendar() {
     const [value, onChange] = useState(new Date());
     console.log(value)
