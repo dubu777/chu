@@ -66,23 +66,80 @@ const ChangeBtn = styled.button`
 `;
 
 function CustomerPageInfo(){
-  const [username, setusername] = useState('송지윤');
-  const [id, setid] = useState('내머리가너무나나빠서');
-  const [mail, setmail] = useState('wldbs8241@naver.com');
-  const [hashtag, sethashtag] = useState(['키워드로 적어보자','얇은 모발', '반곱슬', '계란형']);
-
+  const [data, setdata] = useState({
+    "customerSeq" : 1,
+        "name" : "김싸피",
+        "id" : "ssafy",
+        "email" : "ssafy@gmail.com",
+        "img" : "img1.png",
+        "hairCondition" : [
+            "얇은 모발",
+            "굵은 모발"
+        ],
+        "face" : "계란형",
+        "futureConsulting" : [
+            {
+                "consultingSeq" : 10,
+                "designerImg" : "img1.png",
+                "reviewScore" : 4.7,
+                "name" : "지윤",
+                "consultingDate" : "08.21",
+                "consultingDateDay" : "금",
+                "consultingStartTime" : "18:30",
+                "url" : " ",
+            },
+            {
+                "consultingSeq" : 11,
+                "designerImg" : "img2.png",
+                "reviewScore" : 4.8,
+                "name" : "민지",
+                "consultingDate" : "08.22",
+                "consultingDateDay" : "금",
+                "consultingStartTime" : "18:30",
+                "url" : " ",
+            }
+        
+        ],
+        "pastConsuting" : [
+            {
+                "consultingSeq" : 8,
+                "designerImg" : "img1.png",
+                "allReviewScore" : 4.7,
+                "name" : "지윤",
+                "consultingDate" : "05.21",
+                "consultingDateDay" : "금",
+                "consultingStartTime" : "18:30",
+                "consultingEndTime" : "17:00",
+                "myReviewScore" : 4.9,
+                "reviewContent" : "옛날에 남긴 나의 한줄평",
+            },
+            {
+                "consultingSeq" : 9,
+                "designerImg" : "img1.png",
+                "allReviewScore" : 4.7,
+                "name" : "민지",
+                "consultingDate" : "06.21",
+                "consultingDateDay" : "금",
+                "consultingStartTime" : "18:30",
+                "consultingEndTime" : "17:00",
+                "myReviewScore" : 4.9,
+                "reviewContent" : "옛날에 남긴 나의 한줄평",
+            },
+        
+        ]
+  });
   return(
     <Container>
       <Wrapper>
         <ImgBox>
-          <NameText>{username}</NameText>
+          <NameText>{data.name}</NameText>
             <ProfileImg />
         </ImgBox>
         
         <InfoBox>
-          <Text>{id}</Text>
-          <Text>{mail}</Text>
-          {hashtag.map((word, index) => (
+          <Text>{data.id}</Text>
+          <Text>{data.email}</Text>
+          {data.hairCondition.map((word, index) => (
             <HashTag key={index}> #{word} </HashTag>
           ))}
         </InfoBox>

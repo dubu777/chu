@@ -113,6 +113,7 @@ function Header() {
       </Col>
       <Col>
         <Search >
+        <Link to="/designermypage">디자이너MyPage//</Link>
           <Link to="/customermypage">CustomerMyPage//</Link>
           <Link to="listview">
             <Item 

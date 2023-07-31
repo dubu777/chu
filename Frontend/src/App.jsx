@@ -14,6 +14,7 @@ import FindPw from "./Routes/LogInPage/FindPw";
 import ChangePw from "./Routes/LogInPage/ChangePw";
 import WorldcupImgUpload from "./Routes/WorldCupPage/WorldcupImgUpload";
 import CustomerMyPage from "./Routes/CustomerPage/CustomerMyPage";
+import DesignerMyPage from "./Routes/DesignerPage/DesignerMyPage";
 import ListView from "./Routes/ViewPage/ListView";
 import Survey from "./components/ModalComponent/Survey";
 import Result from "./components/ModalComponent/Result";
@@ -37,6 +38,7 @@ function App() {
         <Route path="designerdetail" element={<DesignerDetail/>} />
         <Route path="worlducupimgupload" element={<WorldcupImgUpload/>} />
         <Route path="customermypage" element={<CustomerMyPage/>} />
+        <Route path="designermypage" element={<DesignerMyPage/>} />
         <Route path="listview" element={<ListView/>} />
         <Route path="/modaltest" element={<Survey/>}>
           <Route path="/modaltest/1" element={<Survey/>}/>
