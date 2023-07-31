@@ -46,7 +46,7 @@ public class CustomerServiceImpl implements CustomerService{
 
     // 얘가 다 가져오는거야 고객 정보를 그 테이블에 있는건 전부
     @Override
-    public CustomerDto getCustomerInfo(String id) {
+    public Customer getCustomerInfo(String id) {
         return customerRepository.getCustomerInfo(id);
     }
 

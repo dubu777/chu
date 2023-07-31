@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 @Data
 public class ResponseCustomerDetailDto {
-    CustomerDto customerDto;
+    Customer customerDto;
     ArrayList<CustomerHairConditionDto> customerHairConditionDtoList;
     ArrayList<ResponseFutureConsultingDto> responseFutureConsultingDtoList;
     ArrayList<ResponsePastConsultingDto> responsePastConsultingDtoList;

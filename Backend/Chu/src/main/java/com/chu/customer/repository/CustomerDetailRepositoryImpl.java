@@ -2,7 +2,7 @@ package com.chu.customer.repository;
 
 import com.chu.consulting.domain.ResponseFutureConsultingDto;
 import com.chu.consulting.domain.ResponsePastConsultingDto;
-import com.chu.customer.domain.CustomerDto;
+import com.chu.customer.domain.Customer;
 import com.chu.customer.domain.CustomerHairConditionDto;
 import com.chu.customer.domain.FaceType;
 import com.chu.customer.domain.RequestCustomerDetailChangeDto;
@@ -19,8 +19,8 @@ public class CustomerDetailRepositoryImpl implements CustomerDetailRepository {
     
 
     @Override
-    public CustomerDto getCustomerInfo(int customerSeq) {
-        CustomerDto customerDto = new CustomerDto();
+    public Customer getCustomerInfo(int customerSeq) {
+        Customer customerDto = new Customer();
 
         // 로직
         

@@ -8,7 +8,7 @@ import com.chu.global.domain.ResponseHairStyleDto;
 import java.util.ArrayList;
 
 public interface CustomerDetailRepository {
-    CustomerDto getCustomerInfo(int customerSeq);
+    Customer getCustomerInfo(int customerSeq);
 
     boolean patchImage(String imgName);
 
