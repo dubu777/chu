@@ -44,7 +44,7 @@ public class DesignerServiceImpl implements DesignerService{
     }
 
     @Override
-    public DesignerDto getDesignerInfo(String id) {
+    public Designer getDesignerInfo(String id) {
         return designerRepository.getDesignerInfo(id);
     }
 

@@ -15,7 +15,7 @@ public interface DesignerRepository {
 
     boolean signIn(RequestSignInDto requestSignInDto);
 
-    DesignerDto getDesignerInfo(String id);
+    Designer getDesignerInfo(String id);
 
     String findId(RequestFindIdDto requestFindIdDto);
 

@@ -1,11 +1,10 @@
 package com.chu.designer.repository;
 
-import com.chu.customer.domain.AlertToCustomerDto;
-import com.chu.designer.domain.AlertToDesignerDto;
+import com.chu.designer.domain.DesignerAlert;
 
 import java.util.ArrayList;
 
 public interface DesignerAlertRepository {
 
-    ArrayList<AlertToDesignerDto> getAlertToDesigner(int designerSeq);
+    ArrayList<DesignerAlert> getAlertToDesigner(int designerSeq);
 }

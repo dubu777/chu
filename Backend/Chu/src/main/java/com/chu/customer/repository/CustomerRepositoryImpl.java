@@ -48,12 +48,13 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
     @Override
     public Customer getCustomerInfo(String id) {
-        Customer customerDto = new Customer();
+
+        Customer customer = new Customer();
         // 로직
 
         // 아이디로 고객 테이블 정보 다 가져오기
 
-        return customerDto;
+        return customer;
     }
 
     @Override

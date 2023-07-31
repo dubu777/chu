@@ -3,8 +3,8 @@ package com.chu.customer.repository;
 import com.chu.consulting.domain.ResponseFutureConsultingDto;
 import com.chu.consulting.domain.ResponsePastConsultingDto;
 import com.chu.customer.domain.Customer;
-import com.chu.customer.domain.CustomerHairConditionDto;
-import com.chu.customer.domain.FaceType;
+import com.chu.customer.domain.CustomerHairCondition;
+import com.chu.global.domain.FaceDict;
 import com.chu.customer.domain.RequestCustomerDetailChangeDto;
 import com.chu.global.domain.ResponseHairStyleDto;
 import lombok.extern.slf4j.Slf4j;
@@ -20,13 +20,14 @@ public class CustomerDetailRepositoryImpl implements CustomerDetailRepository {
 
     @Override
     public Customer getCustomerInfo(int customerSeq) {
-        Customer customerDto = new Customer();
+
+        Customer customer = new Customer();
 
         // 로직
         
         // 고객 조회
         
-        return customerDto;
+        return customer;
     }
 
     @Override
@@ -38,8 +39,8 @@ public class CustomerDetailRepositoryImpl implements CustomerDetailRepository {
     }
 
     @Override
-    public ArrayList<CustomerHairConditionDto> getCustomerHairCondition(int customerSeq) {
-        ArrayList<CustomerHairConditionDto> list = new ArrayList<>();
+    public ArrayList<CustomerHairCondition> getCustomerHairCondition(int customerSeq) {
+        ArrayList<CustomerHairCondition> list = new ArrayList<>();
 
         // 고객 모발 상태 조회
 
@@ -63,12 +64,12 @@ public class CustomerDetailRepositoryImpl implements CustomerDetailRepository {
     }
 
     @Override
-    public ArrayList<FaceType> getALLFaceTypeList() {
-        ArrayList<FaceType> faceTypeList = new ArrayList<>();
+    public ArrayList<FaceDict> getALLFaceTypeList() {
+        ArrayList<FaceDict> faceDictList = new ArrayList<>();
 
         // 모든 얼굴형 타입 가져오기
 
-        return faceTypeList;
+        return faceDictList;
     }
 
     @Override

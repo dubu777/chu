@@ -1,4 +1,4 @@
-package com.chu.customer.domain;
+package com.chu.global.domain;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,15 +9,11 @@ import javax.persistence.Id;
 
 @Entity
 @Getter @Setter
-public class FaceType {
+public class HairConditionDict {
 
     @Id @GeneratedValue
-    private int seq;
+    private Integer seq;
 
-    private String faceLabel;
-
-    private String uploadImgName;
-
-    private String savedImgName;
+    private String label;
 
 }

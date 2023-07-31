@@ -72,7 +72,7 @@ public class CustomerServiceImpl implements CustomerService{
         // 고객 idx로 알림 접근
         // 상담 IDX 토대로 APi 명세에 따른 로직 추가
 
-//        ArrayList<AlertToCustomerDto> alertList = customerAlertRepository.getAlertToCustomer(customerSeq);
+//        ArrayList<AlertToCustomer> alertList = customerAlertRepository.getAlertToCustomer(customerSeq);
 
         // 여기에 알람에 따른 디자이너 정보가 추가될꺼야
         ArrayList<AlertCustomerOnLoginDto> alertDetailList = new ArrayList<>();

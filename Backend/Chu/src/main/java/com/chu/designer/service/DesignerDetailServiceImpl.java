@@ -21,7 +21,7 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
     public ResponseDesignerMyPageDto getMyPageInfo(int designerSeq) {
         ResponseDesignerMyPageDto responseDesignerMyPageDto = new ResponseDesignerMyPageDto();
         // 디자이너 정보
-        DesignerDto designerDto = designerDetailRepository.getDesignerInfo(designerSeq);
+        Designer designer = designerDetailRepository.getDesignerInfo(designerSeq);
         
         // 여기서 필요한거 뽑아쓰기
 
@@ -49,7 +49,7 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
     public ResponseDesignerMyPageUpdateShowDto getDesignerMyPageUpdateInfo(int designerSeq) {
         ResponseDesignerMyPageUpdateShowDto responseDesignerMyPageUpdateShowDto = new ResponseDesignerMyPageUpdateShowDto();
 
-        DesignerDto designerDto = designerDetailRepository.getDesignerInfo(designerSeq);
+        Designer designer = designerDetailRepository.getDesignerInfo(designerSeq);
 
         // 생각해보니 디자이너 지역이 디자이너 안에 있네.. 이거 한 번 고쳐주라.. 나 지금 0721 2256인데 너무 힘들거든,,
 

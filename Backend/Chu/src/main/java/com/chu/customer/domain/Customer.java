@@ -1,5 +1,7 @@
 package com.chu.customer.domain;
 
+import com.chu.global.domain.FaceDict;
+import com.chu.global.domain.ImagePath;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,7 +13,7 @@ import java.time.LocalDateTime;
 public class Customer {
 
    @Id @GeneratedValue
-   private int seq;
+   private Integer seq;
 
    private String id;
 
@@ -25,12 +27,10 @@ public class Customer {
 
    private LocalDateTime createdDate;
 
-   private String uploadImgName;
-
-   private String savedImgName;
+   private ImagePath imagePath;
 
    @OneToOne(fetch = FetchType.LAZY)
    @JoinColumn(name="seq")
-   private FaceType faceType;
+   private FaceDict faceDict;
 
 }

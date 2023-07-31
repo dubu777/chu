@@ -1,7 +1,7 @@
 package com.chu.designer.repository;
 
 import com.chu.consulting.domain.ResponseConsultingDto;
-import com.chu.designer.domain.DesignerDto;
+import com.chu.designer.domain.Designer;
 import com.chu.designer.domain.RequestDesignerInfoUpdateDto;
 import com.chu.designer.domain.RequestReservationPossibleDateAndTimeDto;
 import com.chu.designer.domain.ResponseDesignerAreaInfo;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public interface DesignerDetailRepository {
 
-    DesignerDto getDesignerInfo(int designerSeq);
+    Designer getDesignerInfo(int designerSeq);
 
     ArrayList<ResponseHairStyleLabelDto> getHairStyleTag(int designerSeq);
 
