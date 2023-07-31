@@ -80,10 +80,10 @@ public class ConsultingController {
     @GetMapping("/result")
     public ResponseEntity<HttpResponseDto> getConsultingResult(@PathVariable("consulting-seq") int consultingSeq) {
 
-        ConsultingResultDto consultingResultDto = consultingService.getConsultingResult(consultingSeq);
+        ResponseConsultingResultDto responseConsultingResultDto = consultingService.getConsultingResult(consultingSeq);
 
-        if (consultingResultDto != null) {
-            HttpResponseDto httpResponseDto = new HttpResponseDto(200, consultingResultDto);
+        if (responseConsultingResultDto != null) {
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseConsultingResultDto);
             return ResponseEntity.ok(httpResponseDto);
         }
         else {
@@ -93,9 +93,9 @@ public class ConsultingController {
     }
 
     @PatchMapping("/result")
-    public ResponseEntity<HttpResponseDto> updateConsultingResult(@RequestBody ConsultingUpdateDto consultingUpdateDto) {
+    public ResponseEntity<HttpResponseDto> updateConsultingResult(@RequestBody RequestConsultingUpdateDto requestConsultingUpdateDto) {
 
-        boolean isSuccess = consultingService.updateConsultingResult(consultingUpdateDto);
+        boolean isSuccess = consultingService.updateConsultingResult(requestConsultingUpdateDto);
 
         if (isSuccess) {
             HttpResponseDto httpResponseDto = new HttpResponseDto(200, null);
@@ -108,9 +108,9 @@ public class ConsultingController {
     }
 
     @PatchMapping("/review")
-    public ResponseEntity<HttpResponseDto> updateConsultingReview(@RequestBody ConsultingReviewDto consultingReviewDto) {
+    public ResponseEntity<HttpResponseDto> updateConsultingReview(@RequestBody RequestConsultingReviewDto requestConsultingReviewDto) {
 
-        boolean isSuccess = consultingService.updateConsultingReview(consultingReviewDto);
+        boolean isSuccess = consultingService.updateConsultingReview(requestConsultingReviewDto);
 
         if (isSuccess) {
             HttpResponseDto httpResponseDto = new HttpResponseDto(200, null);
@@ -125,10 +125,10 @@ public class ConsultingController {
     @GetMapping("/result-element")
     public ResponseEntity<HttpResponseDto> getConsultingResultDetailInfo(@RequestParam int consultingSeq){
 
-        ConsultingReviewInfoDto consultingReviewInfoDto = consultingService.getConsultingResultDetailInfo(consultingSeq);
+        ResponseConsultingReviewInfoDto responseConsultingReviewInfoDto = consultingService.getConsultingResultDetailInfo(consultingSeq);
 
-        if (consultingReviewInfoDto != null) {
-            HttpResponseDto httpResponseDto = new HttpResponseDto(200, consultingReviewInfoDto);
+        if (responseConsultingReviewInfoDto != null) {
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseConsultingReviewInfoDto);
             return ResponseEntity.ok(httpResponseDto);
         }
         else {

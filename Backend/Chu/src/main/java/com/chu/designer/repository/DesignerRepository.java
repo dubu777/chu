@@ -1,6 +1,5 @@
 package com.chu.designer.repository;
 
-import com.chu.consulting.domain.ConsultingDto;
 import com.chu.designer.domain.*;
 import com.chu.global.domain.*;
 
@@ -8,22 +7,16 @@ import java.sql.Date;
 import java.util.ArrayList;
 
 public interface DesignerRepository {
-    // 아이디 중복체크
     boolean checkId(String id);
-    
-    // 이메일 중복체크
+
     boolean checkEmail(String email);
 
-    // 디자이너 회원가입
     boolean signUp(RequestDesignerSignUpDto requestDesignerSignUpDto);
 
-    // 디자이너 로그인 여부 확인
     boolean signIn(RequestSignInDto requestSignInDto);
 
-    // 디자이너 정보 조회
-    DesignerDto getDesignerInfo(String id);
+    Designer getDesignerInfo(String id);
 
-    // 디자이너 아이디 찾기
     String findId(RequestFindIdDto requestFindIdDto);
 
     int isValidUser(RequestFindPwdDto requestFindPwdDto);
@@ -37,18 +30,6 @@ public interface DesignerRepository {
     boolean createAlert(RequestAlertCreateDto requestAlertCreateDto);
 
     boolean readAlert(RequestAlertReadDto requestAlertReadDto);
-
-    ArrayList<TimeDto> getPossibleReservationTime(int designerSeq, Date date);
-
-    boolean updatePossibleReservationTime(int designerSeq, ReservationTimeDto reservationTimeDto);
-
-    ArrayList<ConsultingDto> getReservationList(int designerSeq);
-
-    ArrayList<ImageDto> getPortfolio(int designerSeq);
-
-    boolean deletePortfolioImage(int designerSeq, int imageSeq);
-
-    boolean postPortfolioImage(int designerSeq, String img);
 
     ArrayList<ResponseBestDesignerDto> getBestDesigners();
 }

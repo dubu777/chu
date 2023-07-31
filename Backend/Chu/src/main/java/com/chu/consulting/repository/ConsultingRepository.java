@@ -14,13 +14,19 @@ public interface ConsultingRepository {
 
     boolean updateImpossibleConsulting(RequestConsultingDto requestConsultingDto);
 
-    ConsultingResultDto getConsultingResult(int consultingSeq);
+    ResponseConsultingResultDto getConsultingResult(int consultingSeq);
 
     boolean updateConsultingUrl(int consultingSeq, String url);
 
-    boolean updateConsultingReview(ConsultingReviewDto consultingReviewDto);
+    boolean updateReviewContent(RequestConsultingReviewDto requestConsultingReviewDto);
 
-    ConsultingReviewInfoDto getConsultingResultDetailInfo(int consultingSeq);
+    boolean updateLikeInfo(RequestConsultingReviewDto requestConsultingReviewDto);
 
-    boolean updateConsultingResult(ConsultingUpdateDto consultingUpdateDto);
+    boolean updateDesignerReviewScore(RequestConsultingReviewDto requestConsultingReviewDto);
+
+    ResponseConsultingReviewInfoDto getConsultingResultDetailInfo(int consultingSeq);
+
+    boolean updateConsultingResultStyle(RequestConsultingUpdateDto requestConsultingUpdateDto);
+
+    boolean updateSelectedConsultingResultImage(RequestConsultingUpdateDto requestConsultingUpdateDto);
 }

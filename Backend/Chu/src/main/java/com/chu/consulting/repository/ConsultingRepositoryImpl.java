@@ -57,8 +57,8 @@ public class ConsultingRepositoryImpl implements ConsultingRepository {
     }
 
     @Override
-    public ConsultingResultDto getConsultingResult(int consultingSeq) {
-        ConsultingResultDto consultingResultDto = new ConsultingResultDto();
+    public ResponseConsultingResultDto getConsultingResult(int consultingSeq) {
+        ResponseConsultingResultDto responseConsultingResultDto = new ResponseConsultingResultDto();
 
         // 로직
 
@@ -68,7 +68,7 @@ public class ConsultingRepositoryImpl implements ConsultingRepository {
 
         // 상담 결과 사진들 반환
 
-        return consultingResultDto;
+        return responseConsultingResultDto;
     }
 
     @Override
@@ -84,21 +84,41 @@ public class ConsultingRepositoryImpl implements ConsultingRepository {
     }
 
     @Override
-    public boolean updateConsultingReview(ConsultingReviewDto consultingReviewDto) {
+    public boolean updateReviewContent(RequestConsultingReviewDto requestConsultingReviewDto) {
         boolean isSuccess = true;
-
+        
         // 로직
-
-        // 해당 상담 번호로 리뷰 등록
-
-        // 고객 정보 뽑아서 좋아요 테이블에 관계 없다면 추가
+        
+        // 상담 테이블 리뷰 상세 업데이트
 
         return isSuccess;
     }
 
     @Override
-    public ConsultingReviewInfoDto getConsultingResultDetailInfo(int consultingSeq) {
-        ConsultingReviewInfoDto consultingReviewInfoDto = new ConsultingReviewInfoDto();
+    public boolean updateLikeInfo(RequestConsultingReviewDto requestConsultingReviewDto) {
+        boolean isSuccess = true;
+
+        // 로직
+        
+        // 좋아요 정보 수정
+
+        return isSuccess;
+    }
+
+    @Override
+    public boolean updateDesignerReviewScore(RequestConsultingReviewDto requestConsultingReviewDto) {
+        boolean isSuccess = true;
+
+        // 로직
+        
+        // 디자이너 평점 수정
+
+        return isSuccess;
+    }
+
+    @Override
+    public ResponseConsultingReviewInfoDto getConsultingResultDetailInfo(int consultingSeq) {
+        ResponseConsultingReviewInfoDto responseConsultingReviewInfoDto = new ResponseConsultingReviewInfoDto();
 
         // 로직
 
@@ -106,17 +126,22 @@ public class ConsultingRepositoryImpl implements ConsultingRepository {
 
         // 이미지 전부 가져오기
 
-        return consultingReviewInfoDto;
+        return responseConsultingReviewInfoDto;
     }
 
     @Override
-    public boolean updateConsultingResult(ConsultingUpdateDto consultingUpdateDto) {
+    public boolean updateConsultingResultStyle(RequestConsultingUpdateDto requestConsultingUpdateDto) {
+        boolean isSuccess = true;
+        // 상담 결과 상세 테이블 스타일 업데이트
 
+        return isSuccess;
+    }
+
+    @Override
+    public boolean updateSelectedConsultingResultImage(RequestConsultingUpdateDto requestConsultingUpdateDto) {
         boolean isSuccess = true;
 
-        // 로직
-
-        // 상담 리뷰 정보, 상세 정보 저장
+        // 상담 결과 선택 합성 이미지 업데이트
 
         return isSuccess;
     }

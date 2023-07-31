@@ -49,7 +49,7 @@ public class ConsultingServiceImpl implements ConsultingService {
     }
 
     @Override
-    public ConsultingResultDto getConsultingResult(int consultingSeq) {
+    public ResponseConsultingResultDto getConsultingResult(int consultingSeq) {
         return consultingRepository.getConsultingResult(consultingSeq);
     }
 
@@ -59,17 +59,39 @@ public class ConsultingServiceImpl implements ConsultingService {
     }
 
     @Override
-    public boolean updateConsultingReview(ConsultingReviewDto consultingReviewDto) {
-        return consultingRepository.updateConsultingReview(consultingReviewDto);
+    public boolean updateConsultingReview(RequestConsultingReviewDto requestConsultingReviewDto) {
+
+        boolean isSuccess = true;
+        // 로직
+
+        // 해당 상담 번호로 리뷰 등록
+        consultingRepository.updateReviewContent(requestConsultingReviewDto);
+
+        // 고객 정보 뽑아서 좋아요 테이블에 관계 없다면 추가
+        consultingRepository.updateLikeInfo(requestConsultingReviewDto);
+
+        // 디자이너 평점 수정
+        consultingRepository.updateDesignerReviewScore(requestConsultingReviewDto);
+
+        return isSuccess;
     }
 
     @Override
-    public ConsultingReviewInfoDto getConsultingResultDetailInfo(int consultingSeq) {
+    public ResponseConsultingReviewInfoDto getConsultingResultDetailInfo(int consultingSeq) {
         return consultingRepository.getConsultingResultDetailInfo(consultingSeq);
     }
 
     @Override
-    public boolean updateConsultingResult(ConsultingUpdateDto consultingUpdateDto) {
-        return consultingRepository.updateConsultingResult(consultingUpdateDto);
+    public boolean updateConsultingResult(RequestConsultingUpdateDto requestConsultingUpdateDto) {
+        
+        boolean isSuccess = true;
+
+        // 상담 결과 헤어스타일 등록
+        consultingRepository.updateConsultingResultStyle(requestConsultingUpdateDto);
+        
+        // 상담 결과 이미지 등록
+        consultingRepository.updateSelectedConsultingResultImage(requestConsultingUpdateDto);
+
+        return isSuccess;
     }
 }

@@ -1,17 +1,15 @@
 package com.chu.customer.domain;
 
-import com.chu.consulting.domain.FutureConsultingDto;
-import com.chu.consulting.domain.PastConsultingDto;
+import com.chu.consulting.domain.ResponseFutureConsultingDto;
+import com.chu.consulting.domain.ResponsePastConsultingDto;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.ArrayList;
 
 @Data
 public class ResponseCustomerDetailDto {
-    CustomerDto customerDto;
-    ArrayList<CustomerHairConditionDto> customerHairConditionDtoList;
-    ArrayList<FutureConsultingDto> futureConsultingDtoList;
-    ArrayList<PastConsultingDto> pastConsultingDtoList;
+    Customer customer;
+    ArrayList<CustomerHairCondition> customerHairConditionList;
+    ArrayList<ResponseFutureConsultingDto> responseFutureConsultingDtoList;
+    ArrayList<ResponsePastConsultingDto> responsePastConsultingDtoList;
 }

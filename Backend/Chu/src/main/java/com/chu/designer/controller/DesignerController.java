@@ -1,5 +1,4 @@
 package com.chu.designer.controller;
-import com.chu.consulting.domain.ConsultingDto;
 import com.chu.designer.domain.*;
 import com.chu.designer.service.DesignerService;
 import com.chu.global.domain.*;
@@ -126,91 +125,6 @@ public class DesignerController {
 
         if (responseAlertDesignerDtoList.size() != 0) {
             HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseAlertDesignerDtoList);
-            return ResponseEntity.ok(httpResponseDto);
-        } else {
-            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
-            return ResponseEntity.ok(httpResponseDto);
-        }
-    }
-
-    @GetMapping("/time")
-    public ResponseEntity<HttpResponseDto> getPossibleReservationTime(@PathVariable("designer-seq") int designerSeq, Date date) {
-
-        ArrayList<TimeDto> possibleReservationTime = designerService.getPossibleReservationTime(designerSeq, date);
-
-        if (possibleReservationTime.size() != 0) {
-            HttpResponseDto httpResponseDto = new HttpResponseDto(200, possibleReservationTime);
-            return ResponseEntity.ok(httpResponseDto);
-        } else {
-            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
-            return ResponseEntity.ok(httpResponseDto);
-        }
-
-    }
-
-    @PutMapping("/time")
-    public ResponseEntity<HttpResponseDto> updatePossibleReservationTime(@PathVariable("designer-seq") int designerSeq, @RequestBody ReservationTimeDto reservationTimeDto) {
-
-        boolean isSuccess = designerService.updatePossibleReservationTime(designerSeq, reservationTimeDto);
-
-        if (isSuccess) {
-            HttpResponseDto httpResponseDto = new HttpResponseDto(200, null);
-            return ResponseEntity.ok(httpResponseDto);
-        } else {
-            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
-            return ResponseEntity.ok(httpResponseDto);
-        }
-    }
-
-    @GetMapping("/reservation-list")
-    public ResponseEntity<HttpResponseDto> getReservationList(@PathVariable("designer-seq") int designerSeq) {
-
-        ArrayList<ConsultingDto> reservationList = designerService.getReservationList(designerSeq);
-
-        if (reservationList.size() != 0) {
-            HttpResponseDto httpResponseDto = new HttpResponseDto(200, reservationList);
-            return ResponseEntity.ok(httpResponseDto);
-        } else {
-            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
-            return ResponseEntity.ok(httpResponseDto);
-        }
-    }
-
-    @GetMapping("/portfolio")
-    public ResponseEntity<HttpResponseDto> getPortfolio(@PathVariable("designer-seq") int designerSeq) {
-
-        ArrayList<ImageDto> portfolioList = designerService.getPortfolio(designerSeq);
-
-        if (portfolioList.size() != 0) {
-            HttpResponseDto httpResponseDto = new HttpResponseDto(200, portfolioList);
-            return ResponseEntity.ok(httpResponseDto);
-        } else {
-            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
-            return ResponseEntity.ok(httpResponseDto);
-        }
-    }
-
-    @PostMapping("/portfolio")
-    public ResponseEntity<HttpResponseDto> postPortfolio(@PathVariable("designer-seq") int designerSeq, @RequestParam String img) {
-
-        boolean isSuccess = designerService.postPortfolioImage(designerSeq, img);
-
-        if (isSuccess) {
-            HttpResponseDto httpResponseDto = new HttpResponseDto(200, null);
-            return ResponseEntity.ok(httpResponseDto);
-        } else {
-            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
-            return ResponseEntity.ok(httpResponseDto);
-        }
-    }
-
-    @DeleteMapping("/portfolio")
-    public ResponseEntity<HttpResponseDto> deletePortfolio(@PathVariable("designer-seq") int designerSeq, @RequestParam int imageSeq) {
-
-        boolean isSuccess = designerService.deletePortfolioImage(designerSeq, imageSeq);
-
-        if (isSuccess) {
-            HttpResponseDto httpResponseDto = new HttpResponseDto(200, null);
             return ResponseEntity.ok(httpResponseDto);
         } else {
             HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);

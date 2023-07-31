@@ -20,7 +20,7 @@ public interface CustomerService {
     boolean signIn(RequestSignInDto requestSignInDto);
 
     // 고객 정보 조회
-    CustomerDto getCustomerInfo(String id);
+    Customer getCustomerInfo(String id);
     
     // 고객 로그인 시 정보 조회
     ResponseCustomerLoginDetailDto getLoginCustomerDetail(String id);
@@ -28,16 +28,21 @@ public interface CustomerService {
     // 고객 아이디 찾기
     String findId(RequestFindIdDto requestFindIdDto);
 
+    // 고객 유효성 체크
     int isValidUser(RequestFindPwdDto requestFindPwdDto);
 
+    // 고객 비밀번호 변경
     boolean changePwd(RequestChangePwdDto requestChangePwdDto);
 
+    // 좋아요 상태 변경
     int changeLikeInfo(RequestLikeDto requestLikeDto);
 
-
+    // 알림 내역 조회
     ArrayList<ResponseAlertCustomerDto> getAlertList(int customerSeq);
 
+    // 알림 생성
     boolean createAlert(RequestAlertCreateDto requestAlertCreateDto);
 
+    // 알림 읽음여부 수정
     boolean readAlert(RequestAlertReadDto requestAlertReadDto);
 }

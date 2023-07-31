@@ -1,14 +1,21 @@
 package com.chu.designer.controller;
 
+import com.chu.consulting.domain.ResponseConsultingDto;
 import com.chu.designer.domain.RequestDesignerInfoUpdateDto;
+import com.chu.designer.domain.RequestReservationPossibleDateAndTimeDto;
 import com.chu.designer.domain.ResponseDesignerMyPageUpdateShowDto;
 import com.chu.designer.domain.ResponseDesignerMyPageDto;
 import com.chu.designer.service.DesignerDetailService;
 import com.chu.global.domain.HttpResponseDto;
+import com.chu.global.domain.ImageDto;
+import com.chu.global.domain.TimeDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.sql.Date;
+import java.util.ArrayList;
 
 @Slf4j
 @RestController
@@ -88,4 +95,87 @@ public class DesignerDetailController {
         }
     }
 
+    @GetMapping("/time")
+    public ResponseEntity<HttpResponseDto> getPossibleReservationTime(@PathVariable("designer-seq") int designerSeq, Date date) {
+
+        ArrayList<TimeDto> possibleReservationTime = designerDetailService.getPossibleReservationTime(designerSeq, date);
+
+        if (possibleReservationTime.size() != 0) {
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, possibleReservationTime);
+            return ResponseEntity.ok(httpResponseDto);
+        } else {
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
+        }
+    }
+
+    @PutMapping("/time")
+    public ResponseEntity<HttpResponseDto> updatePossibleReservationTime(@PathVariable("designer-seq") int designerSeq, @RequestBody RequestReservationPossibleDateAndTimeDto requestReservationPossibleDateAndTimeDto) {
+
+        boolean isSuccess = designerDetailService.updatePossibleReservationTime(designerSeq, requestReservationPossibleDateAndTimeDto);
+
+        if (isSuccess) {
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, null);
+            return ResponseEntity.ok(httpResponseDto);
+        } else {
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
+        }
+    }
+
+    @GetMapping("/reservation-list")
+    public ResponseEntity<HttpResponseDto> getReservationList(@PathVariable("designer-seq") int designerSeq) {
+
+        ArrayList<ResponseConsultingDto> reservationList = designerDetailService.getReservationList(designerSeq);
+
+        if (reservationList.size() != 0) {
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, reservationList);
+            return ResponseEntity.ok(httpResponseDto);
+        } else {
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
+        }
+    }
+
+    @GetMapping("/portfolio")
+    public ResponseEntity<HttpResponseDto> getPortfolio(@PathVariable("designer-seq") int designerSeq) {
+
+        ArrayList<ImageDto> portfolioList = designerDetailService.getPortfolio(designerSeq);
+
+        if (portfolioList.size() != 0) {
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, portfolioList);
+            return ResponseEntity.ok(httpResponseDto);
+        } else {
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
+        }
+    }
+
+    @PostMapping("/portfolio")
+    public ResponseEntity<HttpResponseDto> postPortfolio(@PathVariable("designer-seq") int designerSeq, @RequestParam String img) {
+
+        boolean isSuccess = designerDetailService.postPortfolioImage(designerSeq, img);
+
+        if (isSuccess) {
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, null);
+            return ResponseEntity.ok(httpResponseDto);
+        } else {
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
+        }
+    }
+
+    @DeleteMapping("/portfolio")
+    public ResponseEntity<HttpResponseDto> deletePortfolio(@PathVariable("designer-seq") int designerSeq, @RequestParam int imageSeq) {
+
+        boolean isSuccess = designerDetailService.deletePortfolioImage(designerSeq, imageSeq);
+
+        if (isSuccess) {
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, null);
+            return ResponseEntity.ok(httpResponseDto);
+        } else {
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
+        }
+    }
 }

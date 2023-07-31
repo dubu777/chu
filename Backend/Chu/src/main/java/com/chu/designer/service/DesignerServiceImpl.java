@@ -1,6 +1,5 @@
 package com.chu.designer.service;
 
-import com.chu.consulting.domain.ConsultingDto;
 import com.chu.designer.domain.*;
 import com.chu.designer.repository.DesignerAlertRepository;
 import com.chu.designer.repository.DesignerRepository;
@@ -45,7 +44,7 @@ public class DesignerServiceImpl implements DesignerService{
     }
 
     @Override
-    public DesignerDto getDesignerInfo(String id) {
+    public Designer getDesignerInfo(String id) {
         return designerRepository.getDesignerInfo(id);
     }
 
@@ -107,35 +106,5 @@ public class DesignerServiceImpl implements DesignerService{
     @Override
     public boolean readAlert(RequestAlertReadDto requestAlertReadDto) {
         return designerRepository.readAlert(requestAlertReadDto);
-    }
-
-    @Override
-    public ArrayList<TimeDto> getPossibleReservationTime(int designerSeq, Date date) {
-        return designerRepository.getPossibleReservationTime(designerSeq, date);
-    }
-
-    @Override
-    public boolean updatePossibleReservationTime(int designerSeq, ReservationTimeDto reservationTimeDto) {
-        return designerRepository.updatePossibleReservationTime(designerSeq, reservationTimeDto);
-    }
-
-    @Override
-    public ArrayList<ConsultingDto> getReservationList(int designerSeq) {
-        return designerRepository.getReservationList(designerSeq);
-    }
-
-    @Override
-    public ArrayList<ImageDto> getPortfolio(int designerSeq) {
-        return designerRepository.getPortfolio(designerSeq);
-    }
-
-    @Override
-    public boolean deletePortfolioImage(int designerSeq, int imageSeq) {
-        return designerRepository.deletePortfolioImage(designerSeq, imageSeq);
-    }
-
-    @Override
-    public boolean postPortfolioImage(int designerSeq, String img) {
-        return designerRepository.postPortfolioImage(designerSeq, img);
     }
 }

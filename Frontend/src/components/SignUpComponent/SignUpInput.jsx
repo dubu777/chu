@@ -3,14 +3,13 @@ import { styled } from "styled-components";
 const InputWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: self-start;
-  margin: 10px;
+  margin: 10px 0;
   flex-direction: column;
 `;
 
 const Input = styled.input`
   height: 45px;
-  width: 320px;
+  width: 100%;
   border: solid 1px;
   border-color: #d5d5d4;
   border-radius: 5.5px;
@@ -29,12 +28,19 @@ const Text = styled.span`
   font-size: 14px;
   font-weight: bold;
 `;
+const TextBox = styled.div`
+  display: flex;
+  justify-content: start;
+  margin: 0 0 5px 8px;
+`;
 
 
 function SignUpInput({text, placeholder }) {
   return (
     <InputWrapper>
-      {/* <Text>{text}</Text> */}
+    <TextBox>
+      <Text>{text}</Text>
+    </TextBox>
       <Input placeholder={placeholder}/>
     </InputWrapper>
   )

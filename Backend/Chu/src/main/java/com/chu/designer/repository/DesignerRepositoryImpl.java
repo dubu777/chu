@@ -1,6 +1,5 @@
 package com.chu.designer.repository;
 
-import com.chu.consulting.domain.ConsultingDto;
 import com.chu.designer.domain.*;
 import com.chu.global.domain.*;
 import lombok.extern.slf4j.Slf4j;
@@ -47,12 +46,12 @@ public class DesignerRepositoryImpl implements DesignerRepository {
     }
 
     @Override
-    public DesignerDto getDesignerInfo(String id) {
-        DesignerDto designerDto = new DesignerDto();
+    public Designer getDesignerInfo(String id) {
+        Designer designer = new Designer();
         // 로직
 
         // 디자이너 테이블에서 정보 조회
-        return designerDto;
+        return designer;
     }
 
 
@@ -115,72 +114,6 @@ public class DesignerRepositoryImpl implements DesignerRepository {
 
         // 알림 읽기
 
-        return isSuccess;
-    }
-
-    @Override
-    public ArrayList<TimeDto> getPossibleReservationTime(int designerSeq, Date date) {
-        ArrayList<TimeDto> possibleReservationTimeList = new ArrayList<>();
-
-        // 디자이너 해당 날짜 가능 시간 조회
-
-        return possibleReservationTimeList;
-    }
-
-    @Override
-    public boolean updatePossibleReservationTime(int designerSeq, ReservationTimeDto reservationTimeDto) {
-        boolean isSuccess = true;
-
-        // 로직
-        
-        // 해당 미용사의 예약 가능 시간 변경
-
-        return isSuccess;
-    }
-
-    @Override
-    public ArrayList<ConsultingDto> getReservationList(int designerSeq) {
-        ArrayList<ConsultingDto> reservationList = new ArrayList<>();
-
-        // 로직
-
-        // 디자이너 seq로 현재 시점 이후 예약 날짜 혹은 시간 상담들 조회
-
-        return reservationList;
-    }
-
-    @Override
-    public ArrayList<ImageDto> getPortfolio(int designerSeq) {
-        ArrayList<ImageDto> portfolioList = new ArrayList<>();
-
-        // 로직
-
-        // 디자이너 번호로 포트폴리오 다 가져오기
-
-        return portfolioList;
-    }
-
-    @Override
-    public boolean deletePortfolioImage(int designerSeq, int imageSeq) {
-        
-        boolean isSuccess = true;
-
-        // 로직
-        
-        // 해당 디자이너의 이미지 하나 삭제
-        
-        return isSuccess;
-    }
-
-    @Override
-    public boolean postPortfolioImage(int designerSeq, String img) {
-        
-        boolean isSuccess = true;
-
-        // 로직
-        
-        // 해당 디자이너 번호에 해당 이미지 삽입
-        
         return isSuccess;
     }
 

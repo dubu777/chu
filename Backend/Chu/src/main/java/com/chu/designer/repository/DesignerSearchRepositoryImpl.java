@@ -1,7 +1,7 @@
 package com.chu.designer.repository;
 
 import com.chu.designer.domain.ResponseDesignerDetailInfoDto;
-import com.chu.designer.domain.DesignerSearchAreaDto;
+import com.chu.designer.domain.ResponseDesignerSearchAreaDto;
 import com.chu.designer.domain.DesignerSearchDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
@@ -66,8 +66,8 @@ public class DesignerSearchRepositoryImpl implements DesignerSearchRepository {
     }
 
     @Override
-    public ArrayList<DesignerSearchAreaDto> search2AllArea() {
-        ArrayList<DesignerSearchAreaDto> list = new ArrayList<>();
+    public ArrayList<ResponseDesignerSearchAreaDto> search2AllArea() {
+        ArrayList<ResponseDesignerSearchAreaDto> list = new ArrayList<>();
         //필요 데이터 추출
         // 디자이너
 
