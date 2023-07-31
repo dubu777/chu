@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Home from "./Routes/Home";
-import DesignerDetail from "./Routes/DesignerDetail";
+import DesignerDetail from "./Routes/DesignerPage/DesignerDetail";
 import CustomerSignUp from "./Routes/SignUpPage/CutomerSignUp";
 import DesignerSignUp from "./Routes/SignUpPage/DesignerSignUp";
 import Complete from "./Routes/SignUpPage/Complete";
@@ -20,6 +20,7 @@ import Survey from "./components/ModalComponent/Survey";
 import Result from "./components/ModalComponent/Result";
 import EditDesignerInfo from "./Routes/DesignerPage/EditDesignerInfo";
 import EditCustomerInfo from "./Routes/CustomerPage/EditCustomerInfo";
+import Reservation from "./Routes/DesignerPage/Reservation";
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
         <Route path="designermypage" element={<DesignerMyPage/>} />
         <Route path="listview" element={<ListView/>} />
         <Route path="editdesignerinfo" element={<EditDesignerInfo/>} />
+        <Route path="reservation" element={<Reservation/>} />
         <Route path="/modaltest" element={<Survey/>}>
           <Route path="/modaltest/1" element={<Survey/>}/>
         </Route>
