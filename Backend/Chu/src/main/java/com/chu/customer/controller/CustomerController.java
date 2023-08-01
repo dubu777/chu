@@ -61,7 +61,6 @@ public class CustomerController {
     @PostMapping(value = "/sign-in")
     public ResponseEntity<TokenDto> signIn(@RequestBody RequestSignInDto requestSignInDto) {
 
-        System.out.println("==========================controller");
         return customerService.signIn(requestSignInDto);
 
         /*

@@ -75,9 +75,8 @@ public class CustomerServiceImpl implements CustomerService{
     // 로그인 테스트
     @Override
     public ResponseEntity<TokenDto> signIn(RequestSignInDto requestSignInDto) {
-        System.out.println("==========================serviceImpl");
+
         try{
-            System.out.println("==========================try start");
 
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -85,8 +84,6 @@ public class CustomerServiceImpl implements CustomerService{
                             requestSignInDto.getPwd()
                     )
             );
-
-            System.out.println("==========================authentication");
 
             String refreshToken = jwtTokenProvider.generateRefreshToken(authentication);
             String accessToken = jwtTokenProvider.generateAccessToken(authentication);
@@ -96,8 +93,6 @@ public class CustomerServiceImpl implements CustomerService{
                     refreshToken
             );
 
-            System.out.println("==========================tokenDto");
-
             // Redis 저장 : 만료 시간 설정으로 자동 삭제 처리
             redisTemplate.opsForValue().set(
                     authentication.getName(),
@@ -106,12 +101,8 @@ public class CustomerServiceImpl implements CustomerService{
                     TimeUnit.MILLISECONDS
             );
 
-            System.out.println("==========================redis");
-
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.add("Authorization", "Bearer "+tokenDto.getAccessToken());
-
-            System.out.println("==========================httpHeaders");
 
             return new ResponseEntity<>(tokenDto, httpHeaders, HttpStatus.OK);
 

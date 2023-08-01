@@ -11,6 +11,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/*
+사용자 요청이 들어오면 Servlet Req, Res 객체가 생성되어 넘어온다
+
+Req 객체에서 JWT token을 추출하고, token을 통해 정상 토큰인지 확인한 후,
+토큰을 통해 생성한 Authentication 객체를 SecurityContext에 저장해주는 역할 수행
+
+
+* */
+
 public class JwtTokenFilter extends OncePerRequestFilter {
     private JwtTokenProvider jwtTokenProvider;
 
