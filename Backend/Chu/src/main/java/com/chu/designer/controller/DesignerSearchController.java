@@ -18,6 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/designer/search")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000")
 public class DesignerSearchController {
 
     private final DesignerSearchService designerSearchService;
