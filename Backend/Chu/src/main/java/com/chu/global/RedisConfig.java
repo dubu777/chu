@@ -14,8 +14,8 @@ public class RedisConfig {
     @Value("${redis.host}")
     private String redisHost;
 
-    @Value("${redis.port}")
-    private int redisPort;
+//    @Value("${redis.port}")
+    private int redisPort = 6379;
 
     /*
     RedisTemplate을 이용한 방식

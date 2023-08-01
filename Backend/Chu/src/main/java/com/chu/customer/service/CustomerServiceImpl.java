@@ -6,13 +6,25 @@ import com.chu.customer.repository.CustomerRepository;
 import com.chu.customer.repository.TestRepository;
 import com.chu.designer.repository.DesignerRepository;
 import com.chu.global.domain.*;
+import com.chu.global.exception.Exception;
+import com.chu.global.jwt.JwtTokenProvider;
 import com.chu.worldcup.repository.WorldcupRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 
 @Slf4j
@@ -26,6 +38,11 @@ public class CustomerServiceImpl implements CustomerService{
     private final CustomerAlertRepository customerAlertRepository;
     private final TestRepository testRepository;
     private final PasswordEncoder bCryptPasswordEncoder;
+    private final AuthenticationManager authenticationManager;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final RedisTemplate<String, String> redisTemplate;
+
+    private long refreshTokenExpire = 6000000;
 
     @Override
     public boolean checkId(String id) {
@@ -47,11 +64,61 @@ public class CustomerServiceImpl implements CustomerService{
         return true;
     }
 
+
+    /*
     @Override
     public boolean signIn(RequestSignInDto requestSignInDto) {
         return customerRepository.signIn(requestSignInDto);
     }
+*/
 
+    // 로그인 테스트
+    @Override
+    public ResponseEntity<TokenDto> signIn(RequestSignInDto requestSignInDto) {
+        System.out.println("==========================serviceImpl");
+        try{
+            System.out.println("==========================try start");
+
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            requestSignInDto.getId(),
+                            requestSignInDto.getPwd()
+                    )
+            );
+
+            System.out.println("==========================authentication");
+
+            String refreshToken = jwtTokenProvider.generateRefreshToken(authentication);
+            String accessToken = jwtTokenProvider.generateAccessToken(authentication);
+
+            TokenDto tokenDto = new TokenDto(
+                    accessToken,
+                    refreshToken
+            );
+
+            System.out.println("==========================tokenDto");
+
+            // Redis 저장 : 만료 시간 설정으로 자동 삭제 처리
+            redisTemplate.opsForValue().set(
+                    authentication.getName(),
+                    refreshToken,
+                    refreshTokenExpire,
+                    TimeUnit.MILLISECONDS
+            );
+
+            System.out.println("==========================redis");
+
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.add("Authorization", "Bearer "+tokenDto.getAccessToken());
+
+            System.out.println("==========================httpHeaders");
+
+            return new ResponseEntity<>(tokenDto, httpHeaders, HttpStatus.OK);
+
+        } catch(AuthenticationException e){
+            throw new Exception("Invalid credentials supplied", HttpStatus.BAD_REQUEST);
+        }
+    }
 
     // 얘가 다 가져오는거야 고객 정보를 그 테이블에 있는건 전부
     @Override

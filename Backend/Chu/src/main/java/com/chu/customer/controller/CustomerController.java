@@ -59,7 +59,12 @@ public class CustomerController {
 
     // 로그인
     @PostMapping(value = "/sign-in")
-    public ResponseEntity<HttpResponseDto> signIn(@RequestBody RequestSignInDto requestSignInDto) {
+    public ResponseEntity<TokenDto> signIn(@RequestBody RequestSignInDto requestSignInDto) {
+
+        System.out.println("==========================controller");
+        return customerService.signIn(requestSignInDto);
+
+        /*
 
         boolean isUser = customerService.signIn(requestSignInDto);
 
@@ -74,6 +79,8 @@ public class CustomerController {
             HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
             return ResponseEntity.ok(httpResponseDto);
         }
+
+        */
     }
 
     @GetMapping("/find-id")

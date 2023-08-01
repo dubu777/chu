@@ -1,6 +1,7 @@
 package com.chu.global;
 
 import com.chu.global.jwt.JwtTokenProvider;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,14 +13,14 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
 
     // 추가한 jwt 관련 클래스들
-    //private final JwtTokenProvider jwtTokenProvider;
+    private final JwtTokenProvider jwtTokenProvider;
 
 
     @Bean
@@ -28,7 +29,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public BCryptPasswordEncoder encoder(){
+    public BCryptPasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
 
@@ -47,9 +48,10 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
 
             // jwt 사용하므로 request 보내기 어려움
-        http.csrf().disable()
+        http.csrf().disable();
+
             // formLogin 대신 jwt 사용하기 때문에 비활성화
-            .formLogin().disable()
+        http.formLogin().disable()
             // httpBasic 방식 대신 jwt 사용하기 때문에 비활성화
             .httpBasic().disable()
             // Session 기반의 인증을 사용하지 않고 jwt 사용
@@ -57,6 +59,7 @@ public class SecurityConfig {
             // 필터 순서 설정
             //.addFilterBefore(new JwtAuthentiationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
 
+        http.apply(new JwtSecurityConfig(jwtTokenProvider));
 
         return http.build();
     }

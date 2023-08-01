@@ -6,6 +6,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -24,12 +25,11 @@ public class JwtTokenProvider {
     private String accessTokenKey;
     @Value("${jwt.token.refresh-token-key}")
     private String refreshTokenKey;
-    @Value("${jwt.token.access-token-expire}")
-    private String accessTokenExpire;
-    @Value("${jwt.token.refresh-token-expire}")
-    private String refreshTokenExpire;
 
-    //@Autowired
+    private long accessTokenExpire = 300000;
+    private long refreshTokenExpire = 6000000;
+
+    @Autowired
     private UserDetailsService userDetailsService;
 
     /*

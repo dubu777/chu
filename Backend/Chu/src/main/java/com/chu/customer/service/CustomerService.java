@@ -1,7 +1,9 @@
 package com.chu.customer.service;
 
+import antlr.Token;
 import com.chu.customer.domain.*;
 import com.chu.global.domain.*;
+import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 
@@ -18,7 +20,10 @@ public interface CustomerService {
     boolean signUp(Customer customer);
     
     // 고객 로그인
-    boolean signIn(RequestSignInDto requestSignInDto);
+    //boolean signIn(RequestSignInDto requestSignInDto);
+
+    // 로그인 테스트
+    ResponseEntity<TokenDto> signIn(RequestSignInDto requestSignInDto);
 
     // 고객 정보 조회
     Customer getCustomerInfo(String id);
