@@ -10,11 +10,17 @@ const Container = styled.div`
 `;
 const Wrapper = styled.div`
   display: flex;
-  justify-content: space-around;  
-  padding-top: 50px;
+  justify-content: space-between;  
+  padding: 50px 20px 20px 20px;
 `;
 const CalendarBox = styled.div`
     
+`;
+// 캘린더 커스텀
+const StyledCalendar = styled(Calendar)`
+  width: 90%; 
+  height: 90%;
+
 `;
 const Box = styled.div`
 
@@ -23,19 +29,42 @@ const DateText = styled.p`
 
 `;
 const TimeBox = styled.div`
-    /* display: flex; */
+    width: 800px;
+    display: flex;
     flex-wrap: wrap;
+    justify-content: space-around;
+`;
+
+const Title = styled.h1`
+    text-align: center;
+    font-size : 20px ;
+    padding-top: 30px;
+    margin-bottom: 15px;
+`;
+const Hr = styled.hr`
+  width : 80%;
+  color: #afa582;
+  opacity: 50%;
 `;
 
 const TimeButton = styled.button`
-  border-radius: 0.3rem;
+  border-radius:1.0rem;
   width: 65px;
-  height: 40px;
-  margin: 5px;
-  border: 2px solid ${props => props.selected ? 'none' : 'beige'} ;
-  background-color: ${props => props.selected ? 'beige' : 'ivory'}; // 선택된 버튼은 초록색으로, 선택되지 않은 버튼은 회색으로 표시
+  height: 35px;
+  margin: 3px;
+  border: ${props => props.selected ? 'none' : '1px solid lightgray'};
+  background-color: ${props => props.selected ? '#7D705F' : 'white'}; 
+  color: ${props => props.selected ? 'white' : 'black'}; 
 `;
-
+const OkBtn = styled.button`
+margin-top: 20px;
+  width : 130px;
+  height: 30px;
+  border: 0;
+  background-color: #7D705F;
+  color: white;
+  border-radius: 0.2rem;
+`;
 function formatDateString(date) {
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const day = date.getDate().toString().padStart(2, '0');
@@ -45,10 +74,10 @@ function formatDateString(date) {
   function generateTimeButtons(selectedDate, selectedTimes, setSelectedTimes) {
     const timeButtons = [];
     const startDate = new Date(selectedDate);
-    startDate.setHours(10, 0, 0, 0); // 선택된 날짜의 시작 시간 (10:00 AM)
+    startDate.setHours(9, 0, 0, 0); // 선택된 날짜의 시작 시간 (10:00 AM)
 
     const endDate = new Date(selectedDate);
-    endDate.setHours(22, 0, 0, 0); // 선택된 날짜의 종료 시간 (10:00 PM)
+    endDate.setHours(22, 30, 0, 0); // 선택된 날짜의 종료 시간 (10:00 PM)
 
 
     let currentTime = new Date(startDate);
@@ -100,14 +129,16 @@ function ReserveCalendar(){
       };
     return (
       <Container>
+        <Title>상담 일정</Title>
+        <Hr></Hr>
             <Wrapper>
                 <CalendarBox>
-                    <Calendar onChange={date => setSelectedDate(date)} value={selectedDate} />
+                    <StyledCalendar onChange={date => setSelectedDate(date)} value={selectedDate} />
                 </CalendarBox>
                 <TimeBox>
                     {/* 시간 선택 박스 */}
                     {generateTimeButtons(selectedDate, selectedTimes, setSelectedTimes)}
-                    <button onClick={() => console.log(selectedTimes)}>확인</button> {/* 확인 버튼 추가 */}
+                    <OkBtn onClick={() => console.log(selectedTimes)}>확인</OkBtn> {/* 확인 버튼 추가 */}
                 </TimeBox>
             </Wrapper>
         </Container>
