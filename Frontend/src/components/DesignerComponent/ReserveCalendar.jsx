@@ -11,15 +11,21 @@ const Container = styled.div`
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;  
-  padding: 50px 20px 20px 20px;
+  padding: 10px 20px 20px 20px;
 `;
 const CalendarBox = styled.div`
+  width: 1200px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  text-align: center;
     
 `;
 // 캘린더 커스텀
 const StyledCalendar = styled(Calendar)`
   width: 90%; 
   height: 90%;
+  /* margin-left: 10px; */
 
 `;
 const Box = styled.div`
@@ -29,24 +35,47 @@ const DateText = styled.p`
 
 `;
 const TimeBox = styled.div`
-    width: 800px;
+    width: 700px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
 `;
-
+const BtnBox = styled.div`
+  text-align: center;
+  
+`;
 const Title = styled.h1`
     text-align: center;
     font-size : 20px ;
     padding-top: 30px;
     margin-bottom: 15px;
 `;
+
+const InfoBtn = styled.p`
+  font-size: 15px;
+`;
 const Hr = styled.hr`
-  width : 80%;
+  width : 90%;
   color: #afa582;
   opacity: 50%;
+  margin-bottom: 20px;
 `;
-
+const IconWrap = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: flex-start; */
+`;
+const IconBox = styled.div`
+  display: flex;
+  margin-left: 30px;
+  /* justify-content: flex-start; */
+`;
+const Icon = styled.img`
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+`;
 const TimeButton = styled.button`
   border-radius:1.0rem;
   width: 65px;
@@ -74,10 +103,10 @@ function formatDateString(date) {
   function generateTimeButtons(selectedDate, selectedTimes, setSelectedTimes) {
     const timeButtons = [];
     const startDate = new Date(selectedDate);
-    startDate.setHours(9, 0, 0, 0); // 선택된 날짜의 시작 시간 (10:00 AM)
+    startDate.setHours(9, 0, 0, 0); // 선택된 날짜의 시작 시간
 
     const endDate = new Date(selectedDate);
-    endDate.setHours(22, 30, 0, 0); // 선택된 날짜의 종료 시간 (10:00 PM)
+    endDate.setHours(22, 30, 0, 0); // 선택된 날짜의 종료 시간
 
 
     let currentTime = new Date(startDate);
@@ -119,7 +148,7 @@ function handleTimeButtonClick(selectedDate, formattedTime, isSelected, setSelec
 function ReserveCalendar(){
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedTimes, setSelectedTimes] = useState({});
-
+  const selectedDateString = formatDateString(selectedDate);
      // 백엔드로 선택된 시간 보내는 함수
      const sendSelectedTimesToBackend = () => {
       // 선택된 시간들(selectedTimes)을 서버로 전송
@@ -129,16 +158,33 @@ function ReserveCalendar(){
       };
     return (
       <Container>
-        <Title>상담 일정</Title>
+        <Title>예약 시간 캘린더</Title>
         <Hr></Hr>
             <Wrapper>
                 <CalendarBox>
-                    <StyledCalendar onChange={date => setSelectedDate(date)} value={selectedDate} />
+                  <IconWrap>
+                    <IconBox>
+                      <Icon src="/icon/calendar.png"></Icon>
+                      <InfoBtn>날짜 선택</InfoBtn>
+                    </IconBox>
+                    <Hr></Hr>
+                  </IconWrap>
+                      <StyledCalendar onChange={date => setSelectedDate(date)} value={selectedDate} />
+                      {selectedDateString}
                 </CalendarBox>
                 <TimeBox>
+                <IconWrap>
+                  <IconBox>
+                      <Icon src="/icon/clock.png"></Icon>
+                      <InfoBtn>시간 선택</InfoBtn>
+                  </IconBox>
+                  </IconWrap>
+                  <Hr></Hr>
+                    <BtnBox>
                     {/* 시간 선택 박스 */}
                     {generateTimeButtons(selectedDate, selectedTimes, setSelectedTimes)}
-                    <OkBtn onClick={() => console.log(selectedTimes)}>확인</OkBtn> {/* 확인 버튼 추가 */}
+                    </BtnBox>
+                    <OkBtn onClick={() => console.log(selectedTimes)}>적용</OkBtn> {/* 확인 버튼 추가 */}
                 </TimeBox>
             </Wrapper>
         </Container>
