@@ -192,18 +192,24 @@ const JoinBox = styled.div`
   
 `;
 const ConsultBox = styled.div`
-  width : 500px;
-  height: 300px;
+  width : 600px;
+  height: 350px;
   background-color: black;
   margin-left: 400px;
+  margin-bottom: 20px;
 `;
 const ImageBox = styled.div`
     display: flex;
     justify-content: space-around;
     margin-left: 400px;
 `;
-
+const Img = styled.img`
+    /* width: 200px;
+    height: 300px; */
+    margin-right: 10px;
+`;
 class ViduRoom extends Component {
+    
   render() {
     return (
       <Container>
@@ -260,11 +266,11 @@ class ViduRoom extends Component {
                       <div>
                         <ConsultBox></ConsultBox>
                         <ImageBox>
-                          <img src="icon/designerimg.png" alt="여기에 헤어 사진" />
-                          <img src="icon/designerimg.png" alt="여기에 헤어 사진" />
-                          <img src="icon/designerimg.png" alt="여기에 헤어 사진" />
-                          <img src="icon/designerimg.png" alt="여기에 헤어 사진" />
-                          <img src="icon/designerimg.png" alt="여기에 헤어 사진" />
+                          <Img src="icon/designerimg.png" alt="여기에 헤어 사진" />
+                          <Img src="icon/designerimg.png" alt="여기에 헤어 사진" />
+                          <Img src="icon/designerimg.png" alt="여기에 헤어 사진" />
+                          <Img src="icon/designerimg.png" alt="여기에 헤어 사진" />
+                          <Img src="icon/designerimg.png" alt="여기에 헤어 사진" />
                         </ImageBox>
                   </div>
                     </StreamContainer>
@@ -348,12 +354,19 @@ class ViduRoom extends Component {
     this.handleMainVideoStream = this.handleMainVideoStream.bind(this);
     this.onbeforeunload = this.onbeforeunload.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
+    this.createSessionAndGenerateURL = this.createSessionAndGenerateURL.bind(this);
   }
 
-  componentDidMount() {
-    // this.leaveSession();
-    window.addEventListener("beforeunload", this.onbeforeunload);
-    // 스터디방에서 화상회의 입장 -> props로 roomId로 받으면 세션id 업뎃 user 정보 전역변수 가져옴 -> 상태값 업뎃
+//   componentDidMount() {
+//     // this.leaveSession();
+//     window.addEventListener("beforeunload", this.onbeforeunload);
+//     // 스터디방에서 화상회의 입장 -> props로 roomId로 받으면 세션id 업뎃 user 정보 전역변수 가져옴 -> 상태값 업뎃
+//   }
+async componentDidMount() {
+    // createAndJoinNewRoom() 함수 호출
+    const sessionURL = await this.createSessionAndGenerateURL();
+    console.log('새로운 방의 URL:', sessionURL);
+    // 이후에 sessionURL을 원하는 곳으로 전달하거나 사용할 수 있습니다.
   }
 
   componentWillUnmount() {
@@ -425,7 +438,7 @@ class ViduRoom extends Component {
     }
   }
 
-  joinSession() {
+  async joinSession() {
     this.OV = new OpenVidu(); // OpenVidu 객체를 얻음
 
     this.OV.setAdvancedConfiguration({
@@ -530,68 +543,132 @@ class ViduRoom extends Component {
     );
   }
 
-  createSession(sessionId) {
-    return new Promise((resolve, reject) => {
-      let data = JSON.stringify({ customSessionId: sessionId });
+  
+//   createSession(sessionId) {
+//     return new Promise((resolve, reject) => {
+//       let data = JSON.stringify({ customSessionId: sessionId });
 
-      axios
-        .post(OPENVIDU_SERVER_URL + "/openvidu/api/sessions", data, {
+//       axios
+//         .post(OPENVIDU_SERVER_URL + "/openvidu/api/sessions", data, {
+//           headers: {
+//             Authorization: `Basic ${btoa(
+//               `OPENVIDUAPP:${OPENVIDU_SERVER_SECRET}`
+//             )}`,
+//             "Content-Type": "application/json",
+//           },
+//         })
+//         .then((res) => {
+//           resolve(res.data.id);
+//         })
+//         .catch((res) => {
+//           let error = Object.assign({}, res);
+
+//           if (error?.response?.status === 409) {
+//             resolve(sessionId);
+//           } else if (
+//             window.confirm(
+//               'No connection to OpenVidu Server. This may be a certificate error at "' +
+//                 OPENVIDU_SERVER_URL +
+//                 '"\n\nClick OK to navigate and accept it. If no certifica' +
+//                 "te warning is shown, then check that your OpenVidu Server is up and running at" +
+//                 ' "' +
+//                 OPENVIDU_SERVER_URL +
+//                 '"'
+//             )
+//           ) {
+//             window.location.assign(OPENVIDU_SERVER_URL + "/accept-certificate");
+//           }
+//         });
+//     });
+//   }
+
+// 방 개설자가 방을 생성하고 세션의 고유 ID를 얻는 함수
+async createSession() {
+    const response = await fetch(`${OPENVIDU_SERVER_URL}/openvidu/api/sessions`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Basic ${btoa(`OPENVIDUAPP:${OPENVIDU_SERVER_SECRET}`)}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({}),
+    });
+  
+    const data = await response.json();
+    const sessionId = data.id;
+    return sessionId;
+  }
+  
+  // 방 개설자가 세션을 생성하고 URL을 얻는 과정
+  async createSessionAndGenerateURL() {
+    try {
+      const sessionId = await this.createSession.bind(this)();
+      const sessionURL = this.generateSessionURL(sessionId);
+      console.log('생성된 세션 ID:', sessionId);
+      console.log('생성된 세션 URL:', sessionURL);
+      return sessionURL;
+    } catch (error) {
+      console.error('세션 생성 및 URL 생성 오류:', error);
+      return null;
+    }
+  }
+   // URL 생성 함수
+   generateSessionURL(sessionId) {
+    return `${window.location.origin}/join?sessionId=${sessionId}`;
+  }
+
+  async createAndJoinNewRoom() {
+    try {
+      const sessionURL = await this.createSessionAndGenerateURL();
+      console.log('새로운 방의 URL:', sessionURL);
+      // 이후에 sessionURL을 원하는 곳으로 전달하거나 사용할 수 있습니다.
+    } catch (error) {
+      console.error('방 생성 및 URL 생성 오류:', error);
+    }
+  }
+
+  // createToken 함수를 async로 수정
+async createToken(sessionId) {
+    try {
+      const res = await axios.post(
+        `${OPENVIDU_SERVER_URL}/openvidu/api/sessions/${sessionId}/connection`,
+        {},
+        {
           headers: {
-            Authorization: `Basic ${btoa(
-              `OPENVIDUAPP:${OPENVIDU_SERVER_SECRET}`
-            )}`,
+            Authorization: `Basic ${btoa(`OPENVIDUAPP:${OPENVIDU_SERVER_SECRET}`)}`,
             "Content-Type": "application/json",
           },
-        })
-        .then((res) => {
-          resolve(res.data.id);
-        })
-        .catch((res) => {
-          let error = Object.assign({}, res);
-
-          if (error?.response?.status === 409) {
-            resolve(sessionId);
-          } else if (
-            window.confirm(
-              'No connection to OpenVidu Server. This may be a certificate error at "' +
-                OPENVIDU_SERVER_URL +
-                '"\n\nClick OK to navigate and accept it. If no certifica' +
-                "te warning is shown, then check that your OpenVidu Server is up and running at" +
-                ' "' +
-                OPENVIDU_SERVER_URL +
-                '"'
-            )
-          ) {
-            window.location.assign(OPENVIDU_SERVER_URL + "/accept-certificate");
-          }
-        });
-    });
-  }
-
-  createToken(sessionId) {
-    return new Promise((resolve, reject) => {
-      let data = {};
-
-      axios
-        .post(
-          `${OPENVIDU_SERVER_URL}/openvidu/api/sessions/${sessionId}/connection`,
-          data,
-          {
-            headers: {
-              Authorization: `Basic ${btoa(
-                `OPENVIDUAPP:${OPENVIDU_SERVER_SECRET}`
-              )}`,
-              "Content-Type": "application/json",
-            },
-          }
-        )
-        .then((res) => {
-          resolve(res.data.token);
-        })
-        .catch((error) => reject(error));
-    });
+        }
+      );
+      return res.data.token;
+    } catch (error) {
+      throw error;
+    }
   }
 }
+//   createToken(sessionId) {
+//     return new Promise((resolve, reject) => {
+//       let data = {};
+
+//       axios
+//         .post(
+//           `${OPENVIDU_SERVER_URL}/openvidu/api/sessions/${sessionId}/connection`,
+//           data,
+//           {
+//             headers: {
+//               Authorization: `Basic ${btoa(
+//                 `OPENVIDUAPP:${OPENVIDU_SERVER_SECRET}`
+//               )}`,
+//               "Content-Type": "application/json",
+//             },
+//           }
+//         )
+//         .then((res) => {
+//           resolve(res.data.token);
+//         })
+//         .catch((error) => reject(error));
+//     });
+//   }
+// }
 
 export default ViduRoom;
 
