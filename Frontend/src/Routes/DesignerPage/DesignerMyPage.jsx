@@ -90,14 +90,16 @@ const TextBox = styled.div`
 `;
 
 const Box = styled.div`
-  height: 500px;
+  min-height: 500px;
+  height: 50%px;
   border: 0;
   background-color: #F9F5F0;
+  margin-bottom: 50px;
 `;
 
 const ClickBtn = styled.button`
   height: 40px;
-  padding: 0px 15px;
+  padding: 0px 25px;
   /* border-color: #83807a; */
   background-color: ${(props) => props.bgcolor || "#f8f3ed"};
   border-bottom: white;
