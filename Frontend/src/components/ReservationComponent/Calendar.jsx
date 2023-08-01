@@ -13,8 +13,6 @@ const CalendarContainer = styled.div`
   /* ~~~ container styles ~~~ */
   width: 100%;
   max-width: 600px;
-  margin: auto;
-  margin-top: 20px;
   padding: 10px;
   border-radius: 3px;
 `;
@@ -25,9 +23,9 @@ function ReserveCalendar() {
     return (
       <CalendarContainer>
         <Calendar onChange={onChange} value={value} />
-          <div>
+          {/* <div>
             <p>{formatDateString(value)}</p>
-          </div>
+          </div> */}
       </CalendarContainer>
     );
   }
