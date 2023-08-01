@@ -23,9 +23,9 @@ function ReserveCalendar() {
     return (
       <CalendarContainer>
         <Calendar onChange={onChange} value={value} />
-          <div>
+          {/* <div>
             <p>{formatDateString(value)}</p>
-          </div>
+          </div> */}
       </CalendarContainer>
     );
   }

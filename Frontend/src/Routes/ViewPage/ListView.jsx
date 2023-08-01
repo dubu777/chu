@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import DesignerList from "../../components/DesignerComponent/DesignerList";
-
+import axios from "axios";
 
 
 const Container = styled.div`
@@ -159,12 +159,25 @@ function ListView() {
     }
   };
   const [activeBtn, setActiveBtn] = useState(null); // 초기 상태는 아무 버튼도 선택되지 않은 상태로 설정
-
-  const handleBtnClick = (btnName) => {
+  const dataObject = {
+    "customerSeq" : 2
+  };
+  const handleBtnClick = async (btnName) => {
     if (activeBtn === btnName) {
       setActiveBtn(null); // 이미 선택된 버튼을 누르면 선택 해제
     } else {
       setActiveBtn(btnName); // 새로운 버튼 선택
+    }
+  
+    if (btnName === "평점순") {
+      try {
+
+        const response = await axios.get("https://api.example.com/designers/sortByRating", { params: dataObject });
+        console.log(response.data);
+        return response.data
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
   const [handleMap, setHandleMap] = useState(false);
