@@ -6,6 +6,7 @@ import axios from 'axios';
 import ReserveCalendar from "../../components/DesignerComponent/ReserveCalendar";
 import AllReserveList from "../../components/DesignerComponent/AllReserveList";
 import Portfolio from "../../components/DesignerComponent/Portfolio";
+import { useNavigate } from "react-router";
 
 const Container = styled.div`
 
@@ -89,14 +90,16 @@ const TextBox = styled.div`
 `;
 
 const Box = styled.div`
-  height: 500px;
+  min-height: 500px;
+  height: 50%px;
   border: 0;
   background-color: #F9F5F0;
+  margin-bottom: 50px;
 `;
 
 const ClickBtn = styled.button`
   height: 40px;
-  padding: 0px 15px;
+  padding: 0px 25px;
   /* border-color: #83807a; */
   background-color: ${(props) => props.bgcolor || "#f8f3ed"};
   border-bottom: white;
@@ -104,6 +107,7 @@ const ClickBtn = styled.button`
 `
 
 function DesignerMyPage(){
+  const navigate = useNavigate();
   const [data, setData] = useState({
     "name" : "재현",
         "cost" : "5000",
@@ -163,7 +167,7 @@ function DesignerMyPage(){
         </InfoBox>
 
         <ChangeBox>
-          <ChangeBtn>회원 정보 변경</ChangeBtn>
+          <ChangeBtn onClick={() => navigate("/editdesignerinfo")}>회원 정보 변경</ChangeBtn>
         </ChangeBox>
       </ProfileWrapper>
         
