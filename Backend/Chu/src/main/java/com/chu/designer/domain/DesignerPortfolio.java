@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Getter @Setter
 public class DesignerPortfolio {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer seq;
 
     @Embedded
@@ -22,7 +22,7 @@ public class DesignerPortfolio {
     private LocalDateTime createdDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "seq")
+    @JoinColumn(name = "designer_seq")
     private Designer designer;
 
 }

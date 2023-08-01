@@ -90,7 +90,7 @@ function Header() {
       whileHover="active"
       initial="nomal"
       >
-        Chu
+        Chu~.~
       </Logo>
         <Items>
           <Link to="/">

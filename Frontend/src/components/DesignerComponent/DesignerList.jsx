@@ -2,6 +2,8 @@ import { styled } from "styled-components";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useQuery } from "react-query";
+import { getByRating } from "../../apis/api";
 
 const Container = styled.div`
   display: flex;
@@ -104,13 +106,14 @@ const LikeBtn = styled.img`
   margin-right: 10px;
   cursor: pointer;
 `;
+	
 function DesignerList() {
   const hashTag = ["레이어드컷", "히피펌", "아이롱펌"]
   const [liked, setLiked] = useState(false); // 좋아요 상태를 state로 관리
   const handleLikeClick = () => {
     setLiked((prevLiked) => !prevLiked); // 좋아요 상태를 토글
   };
-  
+  const {data, isLoading} = useQuery(["rating"], getByRating)
   return (
     <Container>
       <Hr/>
