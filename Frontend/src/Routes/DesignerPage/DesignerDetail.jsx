@@ -11,12 +11,8 @@ const Container = styled.div`
 `;
 
 const Wrapper = styled.div`
-	display: grid;
-	grid-template-columns: repeat(3, minmax(0, 1fr));
-	div:nth-child(1) {
-    grid-column: span 2;
-  }
-	width: 70vw;
+	display: flex;
+	width: 50vw;
 	margin: 40px 0;
 `;
 const Wrap = styled.div`
@@ -401,36 +397,6 @@ function DesignerDetail() {
 				))
 				}
 				</Wrap>
-				<ReservWrap>
-				<ResevBox>
-					<SubTitle>예약날짜</SubTitle>
-					<Hr/>
-					<Calendar/>
-					<SubTitle>예약시간</SubTitle>
-					<Hr/>
-					<TimeBox>
-					<TimeSelectionContainer>
-						{timeSlots.map((time, index) => (
-							<TimeButton
-								key={index}
-								onClick={() => handleTimeClick(time)}
-							>
-								{time}
-							</TimeButton>
-						))}
-					</TimeSelectionContainer>
-					</TimeBox>
-					<SubTitle>전달사항</SubTitle>
-					<Hr/>
-					<TextArea placeholder="내용을 입력해주세요." />
-					<SubTitle>상담 사진 등록</SubTitle>
-					<Hr/>
-					<UploadBtn>파일 업로드</UploadBtn>
-					<SText>- 이마가 보이는 사진을 업로드해 주세요.</SText>
-					<ReservBtn>상담 예약하기</ReservBtn>
-					<SText> - 예약취소 시, 24시간 이전에만 예약금 환불이 가능합니다.</SText>
-					</ResevBox>
-				</ReservWrap>
 			</Wrapper>
 		</Container>
   );
