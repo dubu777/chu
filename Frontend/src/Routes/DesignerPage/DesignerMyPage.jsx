@@ -35,7 +35,6 @@ const NameText = styled.h1`
 const Text = styled.p`
   margin-bottom: 20px;
   font-size: large;
-  
 `;
 const HashTag = styled.button`
   border: 0;
@@ -91,15 +90,17 @@ const TextBox = styled.div`
 
 const Box = styled.div`
   min-height: 500px;
-  height: 50%px;
+  height: 75%;
   border: 0;
   background-color: #F9F5F0;
-  margin-bottom: 50px;
+  padding-bottom: 20px;
+  margin-bottom: 60px;
 `;
 
 const ClickBtn = styled.button`
   height: 40px;
   padding: 0px 25px;
+  margin-right: -1px;
   /* border-color: #83807a; */
   background-color: ${(props) => props.bgcolor || "#f8f3ed"};
   border-bottom: white;
