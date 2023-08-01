@@ -103,10 +103,10 @@ function formatDateString(date) {
   function generateTimeButtons(selectedDate, selectedTimes, setSelectedTimes) {
     const timeButtons = [];
     const startDate = new Date(selectedDate);
-    startDate.setHours(9, 0, 0, 0); // 선택된 날짜의 시작 시간 (10:00 AM)
+    startDate.setHours(9, 0, 0, 0); // 선택된 날짜의 시작 시간
 
     const endDate = new Date(selectedDate);
-    endDate.setHours(22, 30, 0, 0); // 선택된 날짜의 종료 시간 (10:00 PM)
+    endDate.setHours(22, 30, 0, 0); // 선택된 날짜의 종료 시간
 
 
     let currentTime = new Date(startDate);
@@ -148,7 +148,7 @@ function handleTimeButtonClick(selectedDate, formattedTime, isSelected, setSelec
 function ReserveCalendar(){
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedTimes, setSelectedTimes] = useState({});
-
+  const selectedDateString = formatDateString(selectedDate);
      // 백엔드로 선택된 시간 보내는 함수
      const sendSelectedTimesToBackend = () => {
       // 선택된 시간들(selectedTimes)을 서버로 전송
@@ -170,6 +170,7 @@ function ReserveCalendar(){
                     <Hr></Hr>
                   </IconWrap>
                       <StyledCalendar onChange={date => setSelectedDate(date)} value={selectedDate} />
+                      {selectedDateString}
                 </CalendarBox>
                 <TimeBox>
                 <IconWrap>

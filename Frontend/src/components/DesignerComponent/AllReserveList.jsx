@@ -6,20 +6,39 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* justify-content: space-between; */
+  /* width: 65vw; */
+  /* margin: 0 auto; */
+  padding-left: 40px;
+  padding-right: 50px;
+`;
+const TitleBox = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 65vw;
-  margin: 0 auto;
+  justify-content: space-around;
+  padding: 70px 20px 0px 20px;
+  margin-bottom: 10px;
+`;
+const ReserveBox = styled.div`
+  display: flex;
+  justify-content: space-around;
+  border: 1px solid lightgray;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 0.4rem;
 `;
 const Hr = styled.div`
-  margin: 20px 0 20px 0;
+  /* margin: 20px 0 20px 0; */
+  padding-top: 20px;
   border-bottom : 2px solid rgba(0, 0, 0, 0.1);
+  width: 80%;
+  
 `;
 const Wrap = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  /* display: flex; */
+  /* justify-content: space-between; */
+  /* align-items: center; */
 `;
 const Wrapper = styled.div`
   /* display: flex; */
@@ -30,87 +49,114 @@ const Wrapper = styled.div`
 const Box = styled.div`
   display: flex;
   align-items: center;
+  text-align: center;
+  
 `;
-const DesignerImg = styled.img`
-  width: 100px;
-  cursor: pointer;
+const CustomerImg = styled.img`
+  width: 40px;
 `;
 
-const InfoBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin-left: 20px;
-`;
-const LikeBox = styled.div`
-  display: flex;
-  margin-right: 20px;
-  align-items: center;
-`;
 const Name = styled.span`
   font-size: 13px;
   font-weight: bold;
   cursor: pointer;
 `;
-const Intro = styled.span`
-  font-size: 13px;
-  font-weight: 500;
-  margin-top: 3px;
+
+const ImgBox = styled.div`
+  display: flex;
+  /* margin-right: 10px; */
 `;
-const Reviewer = styled.span`
-  font-size: 12px;
-  font-weight: 500;
-  color: grey;
-  margin-top: 3px;
-  cursor: pointer;
+// 여기 실제 데이터 받아올 때 img태그로 변경하기
+const VirtualImg = styled.img`
+  width: 150px;
+  height: 170px;
+  text-align: center;
+  background-color: #d1cdc2;
+  color: white;
+  margin-right: 10px;
 `;
 const HashTag = styled.span`
   font-size: 12px;
-  font-weight: 700;
   padding: 5px 10px;
   margin-right: 5px;
-  background-color: rgba(196, 192, 192, 0.5);
+  background-color: #83807a;
+  border-radius: 5px;
+  margin-top:3px;
+  color: white;
+`;
+const FaceTag = styled.span`
+  font-size: 12px;
+  padding: 4px 9px;
+  margin-right: 5px;
+  background-color: #fffffd;
+  border: 2px solid #83807a;
   border-radius: 5px;
   margin-top:3px;
 `;
-const Icon = styled.img`
-  width: 21px;
-  margin-right: 3px;
-`;
-const ReservBox = styled(motion.div)`
-  width: 70px;
-  height: 35px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid rgb(244, 153, 26);
-  border-radius:5px;
-  margin-top: 10px;
-  cursor: pointer;
-`;
 const Text = styled.span`
   font-size: 14px;
-  font-weight: bold;
+  /* font-weight: bold; */
   text-align: center;
 `;
-const CostBox = styled.div`
-display: flex;
-justify-content: center;
-align-items: center;
-margin-top: 10px;
-margin-left: 20px;
-`;
-const LikeBtn = styled.img`
-  width: 27px;
-  height: 27px;
-  margin-right: 10px;
-  cursor: pointer;
+const Memo = styled.div`
+  margin-top: 20px;
+  width: 100%;
+  height: 20%;
+  min-height: 100px;
+  border-radius: 0.2rem;
+  background-color: #fcf7e7;
+  padding: 10px;
 `;
 const EnterBtn = styled.button`
-    
+  border: 0;
+  background-color: #83807a;
+  width: 100px;
+  height: 30px;
+  border-radius: 0.3rem;
+  color: white;
+`;
+const ModalBtn = styled.button`
+  border: 0;
+  background-color: #83807a;
+  width: 100px;
+  height: 30px;
+  border-radius: 0.3rem;
+  color: white;
+`;
+const Modal = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
-
+const ModalContent = styled.div`
+  background-color: white;
+  width: 500px;
+  /* height: 300px; */
+  padding: 20px;
+  border-radius: 0.6rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+`;
+const CloseDiv = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+const CloseButton = styled.button`
+  border: 0;
+  background-color: #ccc;
+  width: 100px;
+  height: 30px;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  margin-top: 10px;
+`;
 function AllReserveList(){
     const [data, setdata] = useState({
         "consultingList" : [
@@ -127,10 +173,11 @@ function AllReserveList(){
                     "반곱슬"
                 ],
                 "virtualImg" : [
-                    "img1.png",
-                    "img2.png",
-                    "img3.png"
-                ]
+                    "./icon/woman.png",
+                    "./icon/woman.png",
+                    "./icon/woman.png"
+                ],
+                "time" : "14:00"
             },
             {
                 "consultingSeq" : 2,
@@ -139,40 +186,90 @@ function AllReserveList(){
                 "originImg" : "img2.png",
                 "name" : "송싸피",
                 "gender" : "여성",
-                "faceLabel" : "계란형",
+                "faceLabel" : "사각턱",
                 "hairCondition" : [
-                    "얇은 모발",
+                    "탈모",
                     "반곱슬"
                 ],
                 "virtualImg" : [
                     "img1.png",
                     "img2.png",
                     "img3.png"
-                ]
+                ],
+                "time" : "10:00"
             },
         ] 
     })
+    // 모달 상태 관리
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedItem, setSelectedItem] = useState(null);
+
+    const openModal = (item) => {    // 모달 열기
+      setSelectedItem(item);
+      setIsModalOpen(true);
+    };
+
+    const closeModal = () => {  // 모달 닫기
+      setIsModalOpen(false);
+    };
     return(
         <Container>
-      <Hr/>
       <Wrap>
+        <TitleBox>
+          <Box></Box>
+          <Box>예약자명</Box>
+          <Box>성별</Box>
+          <Box> 상담 일시 </Box>
+          <Box>상세 보기</Box>
+          <Box>상담 입장</Box>
+        </TitleBox>
       <Wrapper>
       {data.consultingList.map((item) => (
-                <div key={item.consultingSeq}>
-                    <Hr/>
-                     <Box>
-                        <DesignerImg src="./icon/designerimg.png"/>
-                    </Box>
-                    <Name>예약자 명: {item.name} </Name>
-                    <Name> {item.gender}</Name>
-                    <Text> 상담 일시: {item.consultingDate}</Text>
-                    <ul>
-                        {item.hairCondition.map((condition, index) => (
-                            <HashTag key={index}>{condition}</HashTag>
-                        ))}
-                    </ul>
-                    <EnterBtn>상담 입장</EnterBtn>
-                </div>
+                <ReserveBox key={item.consultingSeq}>
+                      <Box>
+                        <CustomerImg src="./icon/user.png"/>
+                      </Box>
+                      <Box>
+                        <Name>{item.name} </Name>
+                      </Box>
+                      <Box>
+                        <Text>{item.gender}</Text>
+                      </Box>
+                      <Box>
+                        <Text>{item.consultingDate} {item.time}</Text>
+                      </Box>
+                      <Box> 
+                        <ModalBtn onClick={()=>openModal(item)}>상세 보기</ModalBtn>
+                      </Box>
+                      <Box>
+                        <EnterBtn>상담 입장</EnterBtn>
+                      </Box>
+                        {/* 모달 */}
+      {isModalOpen && selectedItem && (
+        <Modal>
+          <ModalContent>
+            {/* 여기에 모달에 표시할 내용을 추가 */}
+            <div>
+              <ImgBox>
+                  {selectedItem.virtualImg.map((img, index) => (
+                    <VirtualImg key={index} src={img}></VirtualImg>
+                  ))}
+              </ImgBox>
+              <hr />
+              <ul>
+                {selectedItem.hairCondition.map((condition, index) => (
+                  <HashTag key={index}>{condition}</HashTag>
+                ))}<FaceTag>{selectedItem.faceLabel}</FaceTag>
+              </ul>
+              <Memo>{selectedItem.consultingMemo}</Memo>
+            </div>
+            <CloseDiv>
+              <CloseButton onClick={closeModal}>닫기</CloseButton>
+            </CloseDiv>
+          </ModalContent>
+        </Modal>
+      )}
+                </ReserveBox>
                 
             ))}
       </Wrapper>
