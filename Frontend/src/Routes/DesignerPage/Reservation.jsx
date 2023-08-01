@@ -2,9 +2,11 @@ import {styled} from "styled-components";
 import 'react-calendar/dist/Calendar.css'; // css import
 import Calendar from "../../components/ReservationComponent/Calendar";
 import { useState } from "react";
+import { motion,AnimatePresence,useAnimation } from "framer-motion";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+
 const Container = styled.div`
 	display: flex;
 	justify-content: center;
@@ -15,28 +17,28 @@ const Container = styled.div`
 const LeftWrap = styled.div`
 	display: flex;
   flex-direction: column;
-	width: 25%;
+	width: 30%;
+	height: 100%;
 	margin: 40px 10px;
 `;
 const RigthWrap = styled.div`
 	display: flex;
   flex-direction: column;
-	width: 30%;
+	width: 38%;
+	height: 100%;
 	margin: 40px 10px;
 `;
 
 const Hr = styled.div`
-	/* color: #383838; */
 	border: 1px solid rgb(197, 197, 197);
-	/* border: 1px solid rgb(100, 93, 81); */
-	width:90%;
+	width:100%;
 	margin: 10px 0;
 `;
 
 const PofolWrap = styled.div`
 	display: flex;
-	/* align-items: center; */
 	flex-direction: column;
+	/* align-items: center; */
 	width: 90%;
 	margin-bottom: 10px;
 `;
@@ -46,53 +48,57 @@ const SubTitle = styled.span`
 	margin: 8px 0;
 `;
 const StyledSlider = styled(Slider)`
-	.slick-slide {
-    margin: 0 3px; /* 간격을 조절하는 부분입니다. */
+	.slick-slide > div {
+    margin: 0 10px;
   }
-	/* .slick-prev {
+	.slick-list {
+		margin: 0 -10px;
+		height: 100%;
+	}
+	.slick-prev {
     z-index: 1;
-    left: 30px;
+    left: -26px;
   }
 
   .slick-next {
-    right: 40px;
+    right: -23px;
   }
 
   .slick-prev:before,
   .slick-next:before {
-    font-size: 30px;
+    font-size: 25px;
     opacity: 0.5;
-    color: white;
-  } */
+    color: #a1a1a1;
+  }
 
   .slick-dots {
     display: flex;
     justify-content: center;
-    bottom: 30px;
-    color: white;
+    bottom: -13px;
 
     li button:before {
-      color: white;
+      color: #acaaa9;
     }
 
     li.slick-active button:before {
-      color: white;
+      color: #353535;
     }
   }
 `;
-const PofolImg = styled.img`
-	width: 80px;
-	margin: 0 10px;
+const PofolImg = styled(motion.img)`
+	width: 100px;
+	height: 125px;
 `;
 
 const ReservWrap = styled.div`
 	display: flex;
   flex-direction: column;
   align-items: center;
-	justify-content: center;
 	border-radius: 10px;
-	background-color: rgb(248, 245, 240);
+	box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 2px 4px 30px -4px rgb(0 0 0 / 0.1);
+	background: #FDFDFD;
 	padding: 20px 0;
+	height: 800px;
 `;
 const ResevBox = styled.div`
 	display: flex;
@@ -102,23 +108,24 @@ const ResevBox = styled.div`
 `;
 const TimeSelectionContainer = styled.div`
   display: flex;
-  margin: 2px 0 0 12px;
 	flex-wrap: wrap;
 `;
 const TimeBox = styled.div`
 	display: flex;
 	justify-content: center;
 `;
-const TimeButton = styled.button`
+const TimeButton = styled(motion.button)`
   margin: 5px 4px;
   padding: 5px 12px;
+	width: 14.25%;
 	display: flex;
-	border: none;
-	border-radius: 5px;
+	border: 1px solid grey;
+	border-radius: 1px;
 	background-color: rgb(242,234,211);
   align-items: center;
   justify-content: center;
 	font-size: 12px;
+	cursor: pointer;
 `;
 const TextArea = styled.textarea`
 	border: 1px solid rgb(207, 200, 192);
@@ -135,24 +142,27 @@ const TextArea = styled.textarea`
 `;
 
 const UploadBtn = styled.button`
-	border: none;
-	background-color:rgb(242,234,211);
+	border: 0px solid rgb(244,153,26);
+	background-color: #F2EAD3;
 	font-size: 14px;
 	font-weight: 600;
-	width: 40%;
+	width: 30%;
 	height: 40px;
-	border-radius: 5px;
+	border-radius: 1px;
 	margin: 10px 0 5px 0;
+	cursor: pointer;
 `;
 const ReservBtn = styled.button`
 	border: none;
-	background-color: rgba(242,153,26,0.53);
+	background-color: rgb(100, 93, 81);
+	color: white;
 	font-size: 14px;
-	font-weight: 600;
-	width: 40%;
+	font-weight: 500;
+	width: 30%;
 	height: 40px;
 	border-radius: 5px;
 	margin: 10px 0 5px 0;
+	cursor: pointer;
 `;
 const SText = styled.span`
 	font-size: 10px;
@@ -163,15 +173,73 @@ const SText = styled.span`
 
 const StartBox = styled.div`
 	display: flex;
-	justify-content: start;
+	justify-content: center;
+	
 `;
-
-const Wrap = styled.div`
-  display: flex;
-  justify-content: space-around;
-  width: 90%;
+const pofolVariants = {
+	nomal: {
+		scale: 1,
+	},
+	hover: {
+		scale: 1.05,
+		transition: {
+			duration: 0.2
+		},
+	},
+}
+const timeBtnVariants = {
+	nomal: {
+		backgroundColor: "rgb(255, 251, 235)",
+		borderColor: "#fcd34d"
+	},
+	hover: {
+		backgroundColor: "rgb(242,234,211)",
+		borderColor: "#f59e0b",
+		color: "#f59e0b"
+	},
+	active: {
+    backgroundColor: "rgb(242,234,211)",
+		borderColor: "#f59e0b",
+		color: "#f59e0b"
+  },
+}
+const SImgBox = styled(motion.div)`
+	width: 50px;
+	height: 60px;
+	margin: 10px;
 `;
+const SImg = styled(motion.img)`
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+`;
+const selectedVariants = {
+	initial: {
+		scale: 0,
+		opacity: 0,
+	},
+	selected: {
+		scale: 1,
+		opacity: 1,
+	},
+	exit: {
+		scale: 0,
+		opacity: 0,
+		transition: {
+			duration: 0.3
+		}
+	}
+}
 
+const SelectedBox = styled.div`
+	display: flex;
+	justify-content: center;
+	margin-top: 20px;
+`;
+const EmtyBox = styled.div`
+	width: 100px;
+	height: 80px;
+`;
 function Reservation() {
 	const [handleLike, setHandleLike] = useState(false); // 좋아요 상태를 state로 관리
 	const settings = {
@@ -180,6 +248,7 @@ function Reservation() {
     slidesToShow: 4,
 		slidesToScroll: 4,
     swipeToSlide: true,
+		dots: true,
 		responsive: [
 			{
 				breakpoint: 1024,
@@ -206,18 +275,29 @@ function Reservation() {
 				}
 			}
 		]
-	};
+	}
 
-	const repeat = [
-		"img/hamzzi.png",
-		"img/hamzzi.png",
-		"img/hamzzi.png",
-		"img/hamzzi.png",
-		"img/hamzzi.png",
-		"img/hamzzi.png",
-		"img/hamzzi.png",
-		"img/hamzzi.png",
-		"img/hamzzi.png",
+	const PofolImgs = [
+		"img/pofol1.jpg",
+		"img/pofol2.jpg",
+		"img/pofol3.jpg",
+		"img/pofol4.jpg",
+		"img/pofol5.jpg",
+		"img/pofol6.jpg",
+		"img/pofol7.jpg",
+		"img/pofol8.jpg",
+		"img/pofol9.jpg",
+	];
+	const OPofolImgs = [
+		"img/opofol1.jpg",
+		"img/opofol2.jpg",
+		"img/opofol3.jpg",
+		"img/opofol4.jpg",
+		"img/opofol5.jpg",
+		"img/opofol6.jpg",
+		"img/opofol7.jpg",
+		"img/opofol8.jpg",
+		"img/opofol9.jpg",
 	];
 	const [data, setData] = useState({
 		"designerSeq" : 1,
@@ -263,29 +343,36 @@ function Reservation() {
 					"reviewContent" : "덕문에 인생 머리 찾았어요!"					
 				}
 		],
-		"cost" : 5000
-			
+		"cost" : 5000			
 	})
   const toggleLike = () => {
     setHandleLike((prev) => !prev); // 좋아요 상태를 토글
   };
 
-
 	const [selectedTime, setSelectedTime] = useState(null);
-
   const hours = Array.from({ length: 14 }, (_, index) => index + 9);
   const minutes = ['00', '30'];
-
   const timeSlots = [];
   hours.forEach((hour) => {
     minutes.forEach((minute) => {
-      const time = `${hour.toString().padStart(2, '0')}${minute}`;
+      const time = `${hour.toString().padStart(2, '0')}:${minute}`;
       timeSlots.push(time);
     });
   });
-
   const handleTimeClick = (time) => {
-    setSelectedTime(time);
+    // 이미 선택된 시간과 같으면 선택 해제
+    setSelectedTime((prevTime) => (prevTime === time ? null : time));
+  };
+	// 사진 선택 코드
+	const [selectedImgs, setSelectedImgs] = useState([]);
+	const handleImageClick = (item) => {
+    if (selectedImgs.includes(item)) {
+      // 이미 선택된 이미지를 다시 클릭하면 선택 해제
+      setSelectedImgs((prev) => prev.filter((img) => img !== item));
+    } else {
+      // 새로운 이미지를 선택
+      setSelectedImgs((prev) => [...prev, item]);
+    }
   };
   return(
 		<Container>
@@ -305,12 +392,19 @@ function Reservation() {
                   <TimeButton
                     key={index}
                     onClick={() => handleTimeClick(time)}
+										variants={timeBtnVariants}
+										initial="nomal"
+										whileHover="hover"
+										animate={selectedTime === time ? "active" : "nomal"}
                   >
                     {time}
                   </TimeButton>
                 ))}
               </TimeSelectionContainer>
               </TimeBox>
+							<SubTitle>전달사항</SubTitle>
+            <Hr/>
+            <TextArea placeholder="내용을 입력해주세요." />
             </ResevBox>
 						</ReservWrap>
 					</LeftWrap>
@@ -319,15 +413,67 @@ function Reservation() {
           <ResevBox>
             
             <PofolWrap>
-              <SubTitle>상담에 적용할 사진을 골라주세요</SubTitle>
+							<StartBox>
+              <SubTitle>디자이너 포트폴리오</SubTitle>
+							</StartBox>
               <Hr/>
-              <StyledSlider {...settings}>
+							<StyledSlider {...settings}>
                 {
-                  repeat.map((item, index) => (
-                    <PofolImg key={index} src={item} />
+                  PofolImgs.map((item, index) => (
+                    <PofolImg 
+											key={index} 
+											src={item}
+											variants={pofolVariants}
+											initial="nomal"
+											whileHover="hover"
+											onClick={() => handleImageClick(item)}
+											/>
                   ))
                 }
               </StyledSlider>
+            </PofolWrap>
+						<PofolWrap>
+							<StartBox>
+              <SubTitle>다른 디자이너 포트폴리오</SubTitle>
+							</StartBox>
+              <Hr/>
+							<StyledSlider {...settings}>
+                { 
+                  OPofolImgs.map((item, index) => (
+                    <PofolImg 
+											key={index} 
+											src={item}
+											variants={pofolVariants}
+											initial="nomal"
+											whileHover="hover"
+											onClick={() => handleImageClick(item)}
+											/>
+                  ))
+                }
+              </StyledSlider>
+							<SelectedBox>
+              <SubTitle>선택한 사진</SubTitle>
+							</SelectedBox>
+							<Hr/>
+
+							<StartBox>
+							<AnimatePresence>
+							{ 
+								selectedImgs.map((item, index) => (
+								<SImgBox
+									key={index}
+									variants={selectedVariants}
+									initial="initial"
+									animate="selected"
+									exit="exit"
+									onClick={() => handleImageClick(item)}
+								>
+									<SImg src={item} />
+								</SImgBox>
+							))
+							}
+							</AnimatePresence>
+							</StartBox>
             </PofolWrap>
             <StartBox>
             <SubTitle>상담 사진 등록</SubTitle>
@@ -336,9 +482,6 @@ function Reservation() {
             <UploadBtn>파일 업로드</UploadBtn>
             <SText>- 이마가 보이는 사진을 업로드해 주세요.</SText>
             <Hr/>
-						<SubTitle>전달사항</SubTitle>
-            <Hr/>
-            <TextArea placeholder="내용을 입력해주세요." />
             <ReservBtn>상담 예약하기</ReservBtn>
             <SText> - 예약취소 시, 24시간 이전에만 예약금 환불이 가능합니다.</SText>
 					</ResevBox>
