@@ -1,10 +1,9 @@
 import {styled} from "styled-components";
-import css from "../font/font.css"
 import 'react-calendar/dist/Calendar.css'; // css import
-import ReserveCalendar from "../components/ReservationComponent/Calendar";
 import { useState } from "react";
-import Calendar from "../components/ReservationComponent/Calendar";
-
+import Calendar from "../../components/ReservationComponent/Calendar";
+import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 const Container = styled.div`
 	display: flex;
 	justify-content: center;
@@ -76,10 +75,11 @@ const Text = styled.span`
 `;
 const Box = styled.div`
 	display: flex;
-
+	align-items: center;
 `;
 const CostIcon = styled.img`
   width: 21px;
+	height: 21px;
   margin-right: 3px;
 	margin-right: 5px;
 `;
@@ -231,19 +231,20 @@ const SText = styled.span`
 	display: flex;
 	justify-content: start;
 `;
-const UploadBox = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: start;
-
+const ReservBox = styled(motion.div)`
+  width: 70px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid rgb(244, 153, 26);
+  border-radius:5px;
+	margin-left: 10px;
+  cursor: pointer;
 `;
-const StartBox = styled.div`
-	display: flex;
-	justify-content: start;
-`;
-
 
 function DesignerDetail() {
+	const navigate = useNavigate();
 	const [handleLike, setHandleLike] = useState(false); // 좋아요 상태를 state로 관리
 	const repeat = [1,2,3,4,5]
 	const [data, setData] = useState({
@@ -337,8 +338,14 @@ function DesignerDetail() {
 							</DesignerNameBox>
 							<Hr/>
 							<Box>
+								<Box>
 								<CostIcon src="icon/money.png"/>
 								<Text>{data.cost}</Text>
+								</Box>
+								<ReservBox onClick={() => navigate("/reservation")} whileHover={{backgroundColor: "rgb(244,153,26)"}}>
+									<Icon src="./icon/reservBtn.png"/>
+									<Text>예약</Text>
+								</ReservBox>
 							</Box>
 						</DesignerNameWrap>
 					</DesignerInfoBox>
