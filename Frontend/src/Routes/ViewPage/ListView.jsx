@@ -24,6 +24,7 @@ const BtnWrapper = styled.div`
 `;
 const SelectBox = styled.div`
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   margin-bottom: 10px;
@@ -32,6 +33,7 @@ const SelectBox = styled.div`
 `;
 const SelectedBox = styled.div`
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   margin-bottom: 10px;
@@ -143,7 +145,7 @@ function ListView() {
   const permType = ["아이롱펌", "시스루펌", "C컬", "볼륨펌", "쉐도우펌", "베이비펌"]
   const [selectedCut, setSelectedCut] = useState([]);
   const [selectedPerm, setSelectedPerm] = useState([]);
-
+  const [data, setData] = useState([]);
   const toggleCutType = (tag) => {
     if (selectedCut.includes(tag)) {
       setSelectedCut((prev) => prev.filter((resist) => resist !== tag))
@@ -197,9 +199,9 @@ function ListView() {
         <SelectText>커트</SelectText>
         <SelectBox>
           {
-            cutType.map((tag) => (
+            cutType.map((tag, index) => (
               <HashTag
-                key={tag}
+                key={index}
                 onClick={() => toggleCutType(tag)}
                 selected={selectedCut.includes(tag)}
               >
@@ -211,9 +213,9 @@ function ListView() {
         <SelectText>펌</SelectText>
         <SelectBox>
           {
-            permType.map((tag) => (
+            permType.map((tag, index) => (
               <HashTag
-                key={tag}
+                key={index}
                 onClick={() => togglePermType(tag)}
                 selected={selectedPerm.includes(tag)}
               >
@@ -225,9 +227,9 @@ function ListView() {
         <SelectedText>선택</SelectedText>
         <SelectedBox>
         {
-          selectedCut.map((tag) => (
+          selectedCut.map((tag, index) => (
             <HashTag
-              key={tag}
+              key={index}
               onClick={() => toggleCutType(tag)}
               selected={selectedCut.includes(tag)}
             >
@@ -239,9 +241,9 @@ function ListView() {
       <SelectedText></SelectedText>
       <SelectedBox>
         {
-          selectedPerm.map((tag) => (
+          selectedPerm.map((tag, index) => (
             <HashTag 
-              key={tag}
+              key={index}
               onClick={() => togglePermType(tag)}
               selected={selectedPerm.includes(tag)}
             >

@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { OpenVidu } from 'openvidu-browser';
-import Header from "./components/Header";
+import Header from "./components/Common/Header";
 import Home from "./Routes/Home";
 import DesignerDetail from "./Routes/DesignerPage/DesignerDetail";
 import ViduRoom from "./components/OpenVidu/ViduRoom";

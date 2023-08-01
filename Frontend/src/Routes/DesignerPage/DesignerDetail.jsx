@@ -1,9 +1,12 @@
 import {styled} from "styled-components";
 import 'react-calendar/dist/Calendar.css'; // css import
 import { useState } from "react";
-import Calendar from "../../components/ReservationComponent/Calendar";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
 const Container = styled.div`
 	display: flex;
 	justify-content: center;
@@ -12,6 +15,7 @@ const Container = styled.div`
 
 const Wrapper = styled.div`
 	display: flex;
+	justify-content: center;
 	width: 50vw;
 	margin: 40px 0;
 `;
@@ -31,7 +35,7 @@ const DesignerInfoBox = styled.div`
 
 `;
 const DesignerImg = styled.img`
-	width: 80px;
+	width: 100px;
 	margin-right: 10px;
 `;
 const DesignerNameWrap = styled.div`
@@ -129,12 +133,9 @@ const SubTitle = styled.span`
 	font-weight: 700;
 	margin: 8px 0;
 `;
-const PofolImgBox = styled.div`
-	display: flex;
-	justify-content: space-around;
-`;
-const PofolImg = styled.img`
-	width: 90px;
+const PofolImg = styled(motion.img)`
+	width: 120px;
+	height: 150px;
 `;
 const ReviewWrap = styled.div`
 	display: flex;
@@ -143,6 +144,7 @@ const ReviewWrap = styled.div`
 const ReviewInfoBox = styled.div`
 	display: flex;
 	flex-direction: column;
+
 
 `;
 const ReviewIdBox = styled.div`
@@ -155,78 +157,7 @@ const SIcon = styled.img`
 	height: 15px;
 	margin: 0 5px;
 `;
-const ReservWrap = styled.div`
-	display: flex;
-	justify-content: center;
-	border-radius: 10px;
-	background-color: rgb(248, 245, 240);
-	padding: 20px 0;
-`;
-const ResevBox = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	width: 90%;
-`;
-const TimeSelectionContainer = styled.div`
-  display: flex;
-  /* justify-content: center; */
-	flex-wrap: wrap;
-`;
-const TimeBox = styled.div`
-	display: flex;
-	justify-content: center;
-`;
-const TimeButton = styled.button`
-  margin: 5px 4px;
-  padding: 5px 12px;
-	display: flex;
-	border: none;
-	border-radius: 5px;
-	background-color: rgb(242,234,211);
-  align-items: center;
-  justify-content: center;
-	font-size: 12px;
-`;
-const TextArea = styled.textarea`
-	border: 1px solid rgb(207, 200, 192);
-	border-radius: 10px;
-	background-color: none;
-	width: 100%;
-	height: 100px;
-	resize: none;
-	padding: 5px;
-	&:focus {
-		outline: 1px solid rgb(244,153,26);
-	}
-`;
 
-const UploadBtn = styled.button`
-	border: none;
-	background-color:rgb(242,234,211);
-	font-size: 14px;
-	font-weight: 600;
-	width: 90%;
-	height: 40px;
-	border-radius: 5px;
-	margin-bottom: 5px;
-`;
-const ReservBtn = styled.button`
-	border: none;
-	background-color: rgba(242,153,26,0.53);
-	font-size: 14px;
-	font-weight: 600;
-	width: 90%;
-	height: 40px;
-	border-radius: 5px;
-	margin: 30px 0 5px 0;
-`;
-const SText = styled.span`
-	font-size: 10px;
-  font-weight: 600;
-	display: flex;
-	justify-content: start;
-`;
 const ReservBox = styled(motion.div)`
   width: 70px;
   height: 35px;
@@ -238,11 +169,104 @@ const ReservBox = styled(motion.div)`
 	margin-left: 10px;
   cursor: pointer;
 `;
+const StyledSlider = styled(Slider)`
+	.slick-slide > div {
+    margin: 0 10px;
+  }
+	.slick-list {
+		margin: 0 -10px;
+		height: 100%;
+	}
+	.slick-prev {
+    z-index: 1;
+    left: -26px;
+  }
+
+  .slick-next {
+    right: -23px;
+  }
+
+  .slick-prev:before,
+  .slick-next:before {
+    font-size: 25px;
+    opacity: 0.5;
+    color: #a1a1a1;
+  }
+
+  .slick-dots {
+    display: flex;
+    justify-content: center;
+    bottom: -13px;
+
+    li button:before {
+      color: #acaaa9;
+    }
+
+    li.slick-active button:before {
+      color: #353535;
+    }
+  }
+`;
+const pofolVariants = {
+	nomal: {
+		scale: 1,
+	},
+	hover: {
+		scale: 1.05,
+		transition: {
+			duration: 0.2
+		},
+	},
+};
 
 function DesignerDetail() {
 	const navigate = useNavigate();
 	const [handleLike, setHandleLike] = useState(false); // 좋아요 상태를 state로 관리
-	const repeat = [1,2,3,4,5]
+	const OPofolImgs = [
+		"img/opofol1.jpg",
+		"img/opofol2.jpg",
+		"img/opofol3.jpg",
+		"img/opofol4.jpg",
+		"img/opofol5.jpg",
+		"img/opofol6.jpg",
+		"img/opofol7.jpg",
+		"img/opofol8.jpg",
+		"img/opofol9.jpg",
+	];
+	const settings = {
+    className: "center",
+    infinite: true,
+    slidesToShow: 5,
+		slidesToScroll: 5,
+    swipeToSlide: true,
+		dots: true,
+		responsive: [
+			{
+				breakpoint: 1024,
+				settings: {
+					slidesToShow: 4,
+					slidesToScroll: 4,
+					infinite: true,
+					dots: true
+				}
+			},
+			{
+				breakpoint: 600,
+				settings: {
+					slidesToShow: 3,
+					slidesToScroll: 3,
+					initialSlide: 3
+				}
+			},
+			{
+				breakpoint: 480,
+				settings: {
+					slidesToShow: 2,
+					slidesToScroll: 2
+				}
+			}
+		]
+	};
 	const [data, setData] = useState({
 		"designerSeq" : 1,
 		"name" : "소희",
@@ -360,13 +384,19 @@ function DesignerDetail() {
 				<PofolWrap>
 					<SubTitle>포트폴리오</SubTitle>
 					<Hr/>
-					<PofolImgBox>
-						{
-							repeat.map((item, index) => (
-								<PofolImg key={index} src="img/hamzzi.png" />
-							))
-						}
-					</PofolImgBox>
+					<StyledSlider {...settings}>
+                { 
+                  OPofolImgs.map((item, index) => (
+                    <PofolImg 
+											key={index} 
+											src={item}
+											variants={pofolVariants}
+											initial="nomal"
+											whileHover="hover"
+											/>
+                  ))
+                }
+              </StyledSlider>
 				</PofolWrap>
 				<InfoBox>
 					<SubTitle>별점</SubTitle>
