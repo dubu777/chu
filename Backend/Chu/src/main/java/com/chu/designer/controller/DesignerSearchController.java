@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -23,7 +24,7 @@ public class DesignerSearchController {
     @GetMapping("/name")
     public ResponseEntity<HttpResponseDto> search2Name(@RequestParam int customerSeq, @RequestParam String name){
 
-        ArrayList<DesignerSearchDto> designerSearchDtoList = designerSearchService.search2Name(customerSeq, name);
+        List<DesignerSearchDto> designerSearchDtoList = designerSearchService.search2Name(customerSeq, name);
 
         if(designerSearchDtoList.size() != 0){
             ResponseDesignerSearchDto responseDesignerSearchDto = new ResponseDesignerSearchDto();
@@ -40,7 +41,7 @@ public class DesignerSearchController {
 
     @GetMapping("/filter")
     public ResponseEntity<HttpResponseDto> search2Filter(@RequestParam("hairStyle") String[] hairStyle, @RequestParam int customerSeq){
-        ArrayList<DesignerSearchDto> designerSearchDtoList = designerSearchService.search2Filter(customerSeq, hairStyle);
+        List<DesignerSearchDto> designerSearchDtoList = designerSearchService.search2Filter(customerSeq, hairStyle);
 
         if(designerSearchDtoList.size() != 0){
             ResponseDesignerSearchDto responseDesignerSearchDto = new ResponseDesignerSearchDto();
@@ -57,16 +58,16 @@ public class DesignerSearchController {
 
     @GetMapping("/review-score")
     public ResponseEntity<HttpResponseDto> search2ReviewScore(@RequestParam int customerSeq){
-        ArrayList<DesignerSearchDto> designerSearchDtoList = designerSearchService.search2ReviewScore(customerSeq);
+        List<DesignerSearchDto> designerSearchDtoList = designerSearchService.search2ReviewScore(customerSeq);
 
+        System.out.println(designerSearchDtoList);
         if(designerSearchDtoList.size() != 0){
             ResponseDesignerSearchDto responseDesignerSearchDto = new ResponseDesignerSearchDto();
             responseDesignerSearchDto.setDesignerListCnt(designerSearchDtoList.size());
             responseDesignerSearchDto.setDesignerList(designerSearchDtoList);
             HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseDesignerSearchDto);
             return ResponseEntity.ok(httpResponseDto);
-        }
-        else{
+        } else{
             HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
             return ResponseEntity.ok(httpResponseDto);
         }
@@ -74,7 +75,7 @@ public class DesignerSearchController {
 
     @GetMapping("/like-cnt")
     public ResponseEntity<HttpResponseDto> search2LikeCount(@RequestParam int customerSeq){
-        ArrayList<DesignerSearchDto> designerSearchDtoList = designerSearchService.search2LikeCount(customerSeq);
+        List<DesignerSearchDto> designerSearchDtoList = designerSearchService.search2LikeCount(customerSeq);
 
         if(designerSearchDtoList.size() != 0){
             ResponseDesignerSearchDto responseDesignerSearchDto = new ResponseDesignerSearchDto();
@@ -91,7 +92,7 @@ public class DesignerSearchController {
 
     @GetMapping("/around")
     public ResponseEntity<HttpResponseDto> search2AllArea(){
-        ArrayList<ResponseDesignerSearchAreaDto> responseDesignerSearchAreaDtoList = designerSearchService.search2AllArea();
+        List<ResponseDesignerSearchAreaDto> responseDesignerSearchAreaDtoList = designerSearchService.search2AllArea();
 
         if(responseDesignerSearchAreaDtoList.size() != 0){
             HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseDesignerSearchAreaDtoList);
