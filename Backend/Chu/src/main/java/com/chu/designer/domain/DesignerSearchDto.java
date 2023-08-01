@@ -1,5 +1,6 @@
 package com.chu.designer.domain;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,13 +12,18 @@ public class DesignerSearchDto {
 
     private Integer seq;
 
-    private String savedImgPath;
+    //private String savedImgName;
 
-    private Float reviewScore;
+    //private Float reviewScore;
 
     private String name;
 
-    private String introduction;
+    public DesignerSearchDto(Designer designer) {
+        this.seq = designer.getSeq();
+        this.name = designer.getName();
+    }
+
+    //private String introduction;
 
 //    private Integer reviewCnt;
 

@@ -1,7 +1,7 @@
 package com.chu.designer.domain;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.chu.global.domain.ImagePath;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +11,8 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter
+@ToString
+//@NoArgsConstructor(access = AccessLevel.PROTECTED) //@NoArgsConstructor AccessLevel.PROTECTED: 기본 생성자 막고 싶은데, JPA 스팩상 PROTECTED로 열어두어야 함
 public class Designer {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,9 +40,7 @@ public class Designer {
 
     private String salonName;
 
-    private String profileUploadImgName;
-
-    private String profileSavedImgName;
+    private ImagePath imagePath;
 
     private float reviewScore;
 

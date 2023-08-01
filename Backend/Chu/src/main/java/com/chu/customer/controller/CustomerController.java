@@ -22,7 +22,7 @@ public class CustomerController {
 
     private final CustomerService customerService;
     private final DesignerSearchService designerSearchService;
-    
+
     // 회원 가입
     @PostMapping(value = "/sign-up")
     public ResponseEntity<HttpResponseDto> signUp(@RequestBody RequestCustomerSignUpDto requestCustomerSignUpDto){
@@ -87,7 +87,7 @@ public class CustomerController {
         requestFindPwdDto.setEmail(email);
 
         int seq = customerService.isValidUser(requestFindPwdDto);
-        
+
         // 존재하는 유저일 경우
         if(seq == 1){
             HttpResponseDto httpResponseDto = new HttpResponseDto(200, seq);
@@ -133,23 +133,23 @@ public class CustomerController {
         }
     }
 
-    @GetMapping("/like")
-    public ResponseEntity<HttpResponseDto> getLikeDesignerInfo(@PathVariable("customer-seq") int customerSeq){
-
-        List<DesignerSearchDto> designerSearchDtoList = designerSearchService.search2Like(customerSeq);
-
-        if(designerSearchDtoList.size() != 0){
-            ResponseDesignerSearchDto responseDesignerSearchDto = new ResponseDesignerSearchDto();
-            responseDesignerSearchDto.setDesignerListCnt(designerSearchDtoList.size());
-            responseDesignerSearchDto.setDesignerList(designerSearchDtoList);
-            HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseDesignerSearchDto);
-            return ResponseEntity.ok(httpResponseDto);
-        }
-        else{
-            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
-            return ResponseEntity.ok(httpResponseDto);
-        }
-    }
+//    @GetMapping("/like")
+//    public ResponseEntity<HttpResponseDto> getLikeDesignerInfo(@PathVariable("customer-seq") int customerSeq){
+//
+//        List<DesignerSearchDto> designerSearchDtoList = designerSearchService.search2Like(customerSeq);
+//
+//        if(designerSearchDtoList.size() != 0){
+//            ResponseDesignerSearchDto responseDesignerSearchDto = new ResponseDesignerSearchDto();
+//            responseDesignerSearchDto.setDesignerListCnt(designerSearchDtoList.size());
+//            responseDesignerSearchDto.setDesignerList(designerSearchDtoList);
+//            HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseDesignerSearchDto);
+//            return ResponseEntity.ok(httpResponseDto);
+//        }
+//        else{
+//            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+//            return ResponseEntity.ok(httpResponseDto);
+//        }
+//    }
 
     @GetMapping("/alert")
     public ResponseEntity<HttpResponseDto> getAlert(@PathVariable("customer-seq") int customerSeq){
