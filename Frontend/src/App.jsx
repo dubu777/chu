@@ -1,7 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { OpenVidu } from 'openvidu-browser';
 import Header from "./components/Header";
 import Home from "./Routes/Home";
 import DesignerDetail from "./Routes/DesignerPage/DesignerDetail";
+import ViduRoom from "./components/OpenVidu/ViduRoom";
 import CustomerSignUp from "./Routes/SignUpPage/CutomerSignUp";
 import DesignerSignUp from "./Routes/SignUpPage/DesignerSignUp";
 import Complete from "./Routes/SignUpPage/Complete";
@@ -28,6 +30,7 @@ function App() {
       <Header/>
       <Routes>
         <Route path="/" element={<Home/>} />
+        <Route path="/viduroom" element={<ViduRoom/>} />
         <Route path="login" element={<LogIn/>} />
         <Route path="findid" element={<FindId/>} />
         <Route path="findpw" element={<FindPw/>}/>
