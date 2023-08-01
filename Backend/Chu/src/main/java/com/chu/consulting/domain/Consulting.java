@@ -8,13 +8,14 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.PriorityQueue;
 
 @Entity
 @Getter @Setter
 public class Consulting {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Integer seq;
 
     @Embedded
@@ -37,11 +38,11 @@ public class Consulting {
     private LocalDateTime cancelDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "designer_seq")
+    @JoinColumn(name = "seq")
     private Designer designer;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_seq")
+    @JoinColumn(name = "seq")
     private Customer customer;
 
 

@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Slf4j
 @RestController
@@ -136,7 +135,7 @@ public class CustomerController {
     @GetMapping("/like")
     public ResponseEntity<HttpResponseDto> getLikeDesignerInfo(@PathVariable("customer-seq") int customerSeq){
 
-        List<DesignerSearchDto> designerSearchDtoList = designerSearchService.search2Like(customerSeq);
+        ArrayList<DesignerSearchDto> designerSearchDtoList = designerSearchService.search2Like(customerSeq);
 
         if(designerSearchDtoList.size() != 0){
             ResponseDesignerSearchDto responseDesignerSearchDto = new ResponseDesignerSearchDto();

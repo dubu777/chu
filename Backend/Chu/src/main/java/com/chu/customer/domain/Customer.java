@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Getter @Setter
 public class Customer {
 
-   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+   @Id @GeneratedValue
    private Integer seq;
 
    private String id;
@@ -27,11 +27,10 @@ public class Customer {
 
    private LocalDateTime createdDate;
 
-   @Embedded
    private ImagePath imagePath;
 
    @OneToOne(fetch = FetchType.LAZY)
-   @JoinColumn(name="face_seq")
+   @JoinColumn(name="seq")
    private FaceDict faceDict;
 
 }

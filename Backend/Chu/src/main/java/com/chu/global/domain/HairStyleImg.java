@@ -9,10 +9,10 @@ import javax.persistence.*;
 @Setter @Getter
 public class HairStyleImg {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue
     private Integer seq;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "hair_style_seq")
+    @JoinColumn(name = "seq")
     private HairStyleDict hairStyleDict;
 }

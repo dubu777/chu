@@ -12,15 +12,15 @@ import java.time.LocalDateTime;
 public class DesignerLike {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Integer seq;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_seq")
+    @JoinColumn(name = "seq")
     private Customer customer;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "designer_seq")
+    @JoinColumn(name = "seq")
     private Designer designer;
 
     private boolean likeStatus;

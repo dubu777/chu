@@ -20,7 +20,6 @@ public class CustomerDetailRepositoryImpl implements CustomerDetailRepository {
 
     @Override
     public Customer getCustomerInfo(int customerSeq) {
-
         Customer customer = new Customer();
 
         // 로직

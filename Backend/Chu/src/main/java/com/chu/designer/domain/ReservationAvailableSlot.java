@@ -13,7 +13,7 @@ import java.util.Date;
 public class ReservationAvailableSlot {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Integer seq;
 
     private String date;
@@ -25,11 +25,11 @@ public class ReservationAvailableSlot {
     private LocalDateTime createdDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "designer_seq")
+    @JoinColumn(name = "seq")
     private Designer designer;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "consulting_seq")
+    @JoinColumn(name = "seq")
     private Consulting consulting;
 
 

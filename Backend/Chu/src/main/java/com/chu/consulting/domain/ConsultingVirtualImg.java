@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Setter @Getter
 public class ConsultingVirtualImg {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue
     private Integer seq;
 
     private ImagePath imagePath;
@@ -19,11 +19,11 @@ public class ConsultingVirtualImg {
     private Boolean isSelected;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "consulting_seq")
+    @JoinColumn(name = "seq")
     private Consulting consulting;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "hair_style_seq")
+    @JoinColumn(name = "seq")
     private HairStyleDict hairStyleDict;
 
 }

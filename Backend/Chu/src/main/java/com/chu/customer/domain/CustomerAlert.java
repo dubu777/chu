@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Getter @Setter
 public class CustomerAlert {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue
     private Integer seq;
 
     private Boolean  isCheck;
@@ -21,11 +21,11 @@ public class CustomerAlert {
     private LocalDateTime checkedDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_seq")
+    @JoinColumn(name = "seq")
     private Customer customer;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "consulting_seq")
+    @JoinColumn(name = "seq")
     private Consulting consulting;
 
 
