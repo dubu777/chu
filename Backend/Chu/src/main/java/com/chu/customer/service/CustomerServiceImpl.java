@@ -44,10 +44,10 @@ public class CustomerServiceImpl implements CustomerService{
 
     private long refreshTokenExpire = 6000000;
 
-//    @Override
-//    public boolean checkId(String id) {
-//        return customerRepository.checkId(id);
-//    }
+    @Override
+    public boolean checkId(String id) {
+        return customerRepository.existsById(id);
+    }
 //
 //    @Override
 //    public boolean checkEmail(String email) {

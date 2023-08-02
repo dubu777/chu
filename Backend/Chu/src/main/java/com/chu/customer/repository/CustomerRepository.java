@@ -9,6 +9,9 @@ import java.util.ArrayList;
 public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 
     Customer findById(String Id);
+
+    // ID 중복검사
+    boolean existsById(String Id);
 //    boolean checkId(String id);
 //
 //    boolean checkEmail(String email);

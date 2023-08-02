@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public interface CustomerService {
 //
 //    // 아이디 중복체크
-//    boolean checkId(String id);
+    boolean checkId(String id);
 //
 //    // 이메일 중복체크
 //    boolean checkEmail(String email);

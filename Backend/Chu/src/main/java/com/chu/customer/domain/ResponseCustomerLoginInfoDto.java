@@ -3,8 +3,10 @@ package com.chu.customer.domain;
 import com.chu.global.domain.FaceDict;
 import com.chu.global.domain.ImagePath;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class ResponseCustomerLoginInfoDto {
     int customerSeq;
     String name;

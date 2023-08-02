@@ -7,6 +7,7 @@ import com.chu.global.domain.RequestAlertReadDto;
 import com.chu.global.domain.HttpResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,28 +19,27 @@ public class UserController {
 
     private final CustomerService customerService;
     private final DesignerService designerService;
-//
-//    // 아이디 중복확인
-//    @GetMapping("/check-id")
-//    public ResponseEntity<HttpResponseDto> checkId(@RequestParam String id){
-//        log.info("id = {id}", id);
-//
-//        // 존재하지 않으면 가능 -> true
-//        boolean existsCustomer = customerService.checkId(id);
-//        // 존재하지 않으면 가능 -> true
-//        boolean existsDesigner = designerService.checkId(id);
-//
-//        // 두 테이블 모두 존재하지 않아야함
-//        if (existsCustomer && existsDesigner) {
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(200, true);
-//            return ResponseEntity.ok(httpResponseDto);
-//        }
-//        else{
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(204, false);
-//            return ResponseEntity.ok(httpResponseDto);
-//        }
-//    }
-//
+
+    // 아이디 중복확인
+    @GetMapping("/check-id")
+    public ResponseEntity<HttpResponseDto> chekId(@RequestParam String id, @RequestParam String userType){
+        boolean isExist = false;
+
+        try{
+            if(userType.equals("customer")){
+                isExist = customerService.checkId(id);
+            }
+            else{
+                //isExist = designerService.checkId(id);
+            }
+        } catch(Exception e){
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), isExist));
+    }
+
+
 //    // 이메일 중복확인
 //    @GetMapping("/check-email")
 //    public ResponseEntity<HttpResponseDto> checkEmail(@RequestParam String email){
