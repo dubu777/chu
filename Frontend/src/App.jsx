@@ -23,6 +23,7 @@ import Result from "./components/ModalComponent/Result";
 import EditDesignerInfo from "./Routes/DesignerPage/EditDesignerInfo";
 import EditCustomerInfo from "./Routes/CustomerPage/EditCustomerInfo";
 import Reservation from "./Routes/DesignerPage/Reservation";
+import ConsultResultPage from "./Routes/ConsultPage/ConsultResultPage";
 
 function App() {
   return (
@@ -48,6 +49,7 @@ function App() {
         <Route path="designermypage" element={<DesignerMyPage/>} />
         <Route path="listview" element={<ListView/>} />
         <Route path="editdesignerinfo" element={<EditDesignerInfo/>} />
+        <Route path="consultresultpage" element={<ConsultResultPage/>} />
         <Route path="reservation" element={<Reservation/>} />
         <Route path="/modaltest" element={<Survey/>}>
           <Route path="/modaltest/1" element={<Survey/>}/>
