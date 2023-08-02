@@ -1,8 +1,8 @@
 // 고객의 최근 상담 내역 보여주는 컴포넌트
 
 import { styled } from "styled-components";
-import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
+import { AnimatePresence, motion, useScroll } from "framer-motion";
+import { useMatch, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from 'axios';
 import Modal from 'react-modal';
@@ -49,34 +49,20 @@ const ProfileBox = styled.div`
   justify-content: center;
   margin-left: 10px;
 `;
-const InfoBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin-left: 10px;
-  margin-top: -40px;
-`;
-const LikeBox = styled.div`
-  display: flex;
-  margin-right: 20px;
-  align-items: center;
-`;
+// const InfoBox = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   margin-left: 10px;
+//   margin-top: -40px;
+// `;
+
 const Name = styled.p`
   font-size: 17px;
   font-weight: bold;
   margin: 5px;
 `;
-const Intro = styled.span`
-  font-size: 13px;
-  font-weight: 500;
-  margin-top: 3px;
-`;
-const Reviewer = styled.span`
-  font-size: 12px;
-  font-weight: 500;
-  color: grey;
-  margin-top: 3px;
-`;
+
 const Icon = styled.img`
   width: 21px;
   margin-right: 3px;
@@ -116,15 +102,15 @@ margin-top: 10px;
 margin-left: 20px;
 `;
 
-const HashTag = styled.button`
-  border: 0;
-  border-radius: 0.3rem;
-  background-color: #AF9571;
-  color: #242321;
-  height: 30px;
-  margin-right: 10px;
-  padding: 2px 15px;
-`
+// const HashTag = styled.button`
+//   border: 0;
+//   border-radius: 0.3rem;
+//   background-color: #AF9571;
+//   color: #242321;
+//   height: 30px;
+//   margin-right: 10px;
+//   padding: 2px 15px;
+// `
 const CunsultBox = styled.div`
   border: 0;
   border-radius: 0.6rem;
@@ -134,17 +120,17 @@ const CunsultBox = styled.div`
   padding-top: 70px;
   padding-left: 30px;
 `;
-const ResultBox = styled.div`
-  border: 0;
-  border-radius: 0.6rem;
-  background-color: #4F472F;
-  width: 70%;
-  height: 280px;
-  margin-left: 10px;
-  margin-top: 10px;
-  padding-top: 30px;
-  padding-left: 30px;
-`;
+// const ResultBox = styled.div`
+//   border: 0;
+//   border-radius: 0.6rem;
+//   background-color: #4F472F;
+//   width: 70%;
+//   height: 280px;
+//   margin-left: 10px;
+//   margin-top: 10px;
+//   padding-top: 30px;
+//   padding-left: 30px;
+// `;
 
 const Letter = styled.p`
   color : white;
@@ -177,8 +163,94 @@ const ModalContent = styled.div`
   padding: 20px;
   z-index: 9999;
 `;
+const boxVariants = {
+  nomal: {
+    scale: 1
+  },
+  hover: {
+    scale: 1.02,
+    transition: {
+      duration: 0.3,
+    },
+  }
+}
+const Overlay = styled(motion.div)`
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.6);
+  /* opacity: 0; */
+`;
+const BigModal = styled(motion.div)`
+  position: absolute;
+  width: 40vw;
+  height: 45vh;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  border-radius: 15px;
+  overflow: hidden;
+  background-color: rgb(242,234,211);
+`;
+const InfoText = styled.span`
+  font-size: 14px;
+  margin-bottom: 10px;
+  font-weight: bold;
+`;
+const InfoBox = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+const BigModalBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 25px;
+`;
+const HashTag = styled(motion.span)`
+  font-size: 12px;
+  font-weight: 500;
+  padding: 5px 10px;
+  margin-right: 10px;
+  margin-bottom: 20px;
+  margin-top: 10px;
+  background-color: rgba(175,149,113, 0.75);
+  color: black;
+  border-radius: 5px;
+  cursor: pointer;
+`;
+const ResultWrap = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+`;
 
+const ResultBox = styled.span`
+  background-color: rgb(79, 71, 47);
+  padding: 20px;
+  border-radius: 10px;
+  width: 70%;
+  color: white;
+  font-size: 14px;
+  line-height: 1.5;
+`;
+const ResultHr = styled.hr`
+  color: white;
+`;
+const ReviewImg = styled.img`
+  width: 23%;
+`;
 function ReserveList() {
+  const {scrollY} = useScroll();
+  const bigModalMatch = useMatch("customermypage/result/:designerSeq");
+  console.log(bigModalMatch)
+  const navigate = useNavigate();
+  const onBoxClicked = (designerSeq) => {
+    navigate(`result/${designerSeq}`);
+  };
+  const onOverlayClick = () => {
+    navigate('/customermypage');
+  };
   const [isModalOpen, setIsModalOpen] = useState(false);
   function openModal() {
     setIsModalOpen(true);
@@ -186,6 +258,23 @@ function ReserveList() {
   function closeModal() {
     setIsModalOpen(false);
   };
+  const data = {
+    "name" : "소희",
+    "consultingDate" : "07/11",
+    "designerSeq" : 1,
+    "consultingStartTime" : "22:00",
+    "hairStyle" : [
+        "레이어드컷",
+        "히피펌",
+        "검정색"
+    ],
+    "reviewResult" : "전형적인 계란형얼굴로 레이어트컷이 어울려요!",
+    "reviewImgs" : [
+        "img1.png",
+        "img2.png",
+        "img3.png"
+    ]
+  }
   const pastConsuting = [
     {
         "consultingSeq" : 8,
@@ -231,39 +320,6 @@ function ReserveList() {
     ]
 }]
 
-  // // 백엔드에서 가져오게 될 형태 임시
-  // const timeDataFromBackend = [
-  //   { consultingSeq: 'a', consultingStartTime: '10:30' },
-  //   { consultingSeq: 'b', consultingStartTime: '11:00' },
-  //   { consultingSeq: 'c', consultingStartTime: '12:00' },
-  // ];
-
-  // // a만 가져올거야..일단
-  // const personA = timeDataFromBackend.find(person => person.consultingSeq === 'a');
-
-  // const getPlus30 = (consultingStartTime) => {
-  //   const [hour, minute] = consultingStartTime.split(':').map(Number);
-  //   const addedMinute = (minute + 30) % 60;
-  //   const addedHour = hour + Math.floor((minute + 30) / 60);
-
-  //   // 30분 더해서 24시를 넘어가면 처리
-  //   const formattedHour = addedHour % 24;
-
-  //   return `${formattedHour.toString().padStart(2, '0')}:${addedMinute.toString().padStart(2, '0')}`;
-  // };
-
-  // useEffect(() => {
-  //   // 백엔드에서 시간 정보를 가져오는 API 요청
-  //   axios.get('/api/time') // 나중에 실제 API 주소로 변경해야 함
-  //     .then(response => {
-  //       // API 요청 성공하면 시간 데이터 상태 변수에 저장
-  //       setTimeData(response.data);
-  //     })
-  //     .catch(error => {
-  //       // 에러 처리 로직
-  //       console.error('예약 시간 정보 가져오기 실패.', error);
-  //     });
-  // }, []);
   return (
     <Container>
       <Hr/>
@@ -271,7 +327,7 @@ function ReserveList() {
       <Wrapper>
         <Box>
           <ProfileBox>
-           <DesignerImg src="./icon/designerimg.png"/>
+          <DesignerImg src="./icon/designerimg.png"/>
             <StarBox>
               <Icon src="./icon/star.png"/>
               <Text>4.8</Text>
@@ -300,40 +356,54 @@ function ReserveList() {
         </InfoBox>
       </Wrapper>
         <DetailBox >
-          <Text onClick={openModal}>상담 결과 보기</Text>
+          <Text onClick={() =>onBoxClicked(data.designerSeq)}>상담 결과 보기</Text>
         </DetailBox>
       </Wrap>
-      <Modal
-        isOpen={isModalOpen}
-        onRequestClose={closeModal}
-        contentLabel="Modal"
-        className="modal"
-        overlayClassName="overlay"
-      >
-        <ModalWrapper>
-        <ModalContent>
-        <CunsultBox>
-            <InfoBox>
-              <Name>상담사명 : {pastConsuting[0].name}디자이너 </Name>
-                <Box>  
-                  <Name>상담일시 : {pastConsuting[0].consultingDate} ({pastConsuting[0].consultingDateDay})</Name>
-                  <Name>{pastConsuting[0].consultingStartTime} ~ {pastConsuting[0].consultingEndTime}</Name>
-                </Box>
-                <Box>
-                  <Name>스타일 진단 : </Name>  {result[0].hairStyle.map((style, index) => (
-                  <HashTag key={index}>  #{style.hairStyleLabel} </HashTag>
-                  ))}
-                </Box>
-            </InfoBox>
-            <ResultBox>
-              <Letter>상담 결과</Letter>
-              <Hr color="ivory" width="90%"></Hr>
-            </ResultBox>
-          </CunsultBox>
-          <button onClick={closeModal}>닫기</button>
-          </ModalContent>
-        </ModalWrapper>
-      </Modal>
+      <AnimatePresence>
+        { bigModalMatch ? (
+          <>
+            <Overlay 
+              onClick={onOverlayClick}
+              initial= {{opacity: 0}}
+              animate={{ opacity: 1 }}
+              exit={{opacity: 0}}
+              />
+              <BigModal 
+                style={{ top: scrollY.get() + 110 }}
+                layoutId={data.designerSeq}>
+                <BigModalBox>
+                  <InfoBox>
+                    <InfoText>상담사명 : {data.name} 디자이너</InfoText>
+                    <InfoText>상담일시 : {data.consultingDate} {data.consultingStartTime}</InfoText>
+                    <InfoText>스타일 진단 : {data.hairStyle.map((tag) => (
+                      <HashTag
+                      key={tag}
+                      >
+                      #{tag}
+                    </HashTag>
+                    ))}</InfoText>
+                    <ResultWrap>
+                      <ResultBox>
+                        상담 결과 <br/><ResultHr/> {data.reviewResult}
+                      </ResultBox>
+                      <ReviewImg src="/icon/designerimg.png" />
+                    </ResultWrap>
+                    {/* selectedCut.map((tag) => (
+                      <HashTag
+                        key={tag}
+                        onClick={() => toggleCutType(tag)}
+                        selected={selectedCut.includes(tag)}
+                      >
+                        #{tag}
+                      </HashTag>
+                    )) */}
+                  </InfoBox>
+                </BigModalBox>
+              </BigModal>          
+          </>
+          ) : null 
+        }
+      </AnimatePresence>
     </Container>
   )
 }

@@ -51,7 +51,6 @@ const Hr = styled.div`
 const InputWrap = styled.div`
   display: flex;
   justify-content: space-around;
-  margin-top: 20px;
 `;
 const InputBox = styled.div`
   display: flex;
@@ -155,6 +154,15 @@ const Form = styled.form`
 const ErrorMessage = styled.span`
   font-size: 10px;
   color: red;
+`;
+const BackBtn = styled.img`
+  width: 25px;
+  height: 25px;
+  margin: 30px 0 0 7px;
+`;
+const BackBox = styled.div`
+  display: flex;
+  justify-content: start;
 `;
 const typeBtnVariants = {
   normal: {},
@@ -280,6 +288,9 @@ function EditCustomerInfo(){
         <InfoBox>
           <Title>회원정보 수정</Title>
             <Wrapper>
+            <BackBox>
+              <BackBtn src='icon/backBtn.png' onClick={() => navigate(-1)}/>
+            </BackBox>
               <Form onSubmit={handleSubmit(onValid)}>
                 <InputWrap>
                   <InputBox>

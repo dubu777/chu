@@ -43,7 +43,9 @@ function App() {
         <Route path="complete" element={<Complete/>} />
         <Route path="designerdetail" element={<DesignerDetail/>} />
         <Route path="worlducupimgupload" element={<WorldcupImgUpload/>} />
-        <Route path="customermypage" element={<CustomerMyPage/>} />
+        <Route path="customermypage" element={<CustomerMyPage/>} >
+          <Route path="result/:designerSeq" element={<CustomerMyPage/>} />
+        </Route>
         <Route path="editcustomerinfo" element={<EditCustomerInfo/>} />
         <Route path="designermypage" element={<DesignerMyPage/>} />
         <Route path="listview" element={<ListView/>} />
@@ -52,9 +54,9 @@ function App() {
         <Route path="/modaltest" element={<Survey/>}>
           <Route path="/modaltest/1" element={<Survey/>}/>
         </Route>
-        <Route path="/result" element={<Result/>}>
+        {/* <Route path="/result" element={<Result/>}>
           <Route path="/result/1" element={<Result/>}/>
-        </Route>
+        </Route> */}
       </Routes>
     </Router>
   )

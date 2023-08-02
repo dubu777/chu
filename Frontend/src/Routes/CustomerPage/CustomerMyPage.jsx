@@ -68,17 +68,14 @@ function CustomerMyPage(){
     <Container>
       {/*  */}
         <CustomerPageInfo />
-
       {/* 예약 정보 확인하기 */}
         <ReserveWrapper>
           <ImgBox>
             <ScheduleListImg />
           </ImgBox>
           <TextBox>
-
           </TextBox>
           <InfoBox>
-
           </InfoBox>
         </ReserveWrapper>
 
@@ -100,15 +97,7 @@ function CustomerMyPage(){
             {showReserveList && <ReserveList />}
             {showLikeDesigner && <LikeDesigner />}
           </Box>
-
-
-
-
-
         </Wrapper>
-
-
-
     </Container>
     )
 }
