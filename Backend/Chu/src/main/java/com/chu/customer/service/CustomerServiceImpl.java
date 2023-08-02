@@ -72,10 +72,13 @@ public class CustomerServiceImpl implements CustomerService{
 
     // 로그인 테스트
     @Override
-    public ResponseEntity<TokenDto> signIn(RequestSignInDto requestSignInDto) {
+    public ResponseCustomerLoginDetailDto signIn(RequestSignInDto requestSignInDto) {
+
+        ResponseCustomerLoginDetailDto responseCustomerLoginDetailDto = new ResponseCustomerLoginDetailDto();
 
         try{
 
+            // 1) token setting
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             requestSignInDto.getId(),
@@ -86,10 +89,7 @@ public class CustomerServiceImpl implements CustomerService{
             String refreshToken = jwtTokenProvider.generateRefreshToken(authentication);
             String accessToken = jwtTokenProvider.generateAccessToken(authentication);
 
-            TokenDto tokenDto = new TokenDto(
-                    accessToken,
-                    refreshToken
-            );
+            TokenDto tokenDto = new TokenDto(accessToken,refreshToken);
 
             // Redis 저장 : 만료 시간 설정으로 자동 삭제 처리
             redisTemplate.opsForValue().set(
@@ -99,10 +99,25 @@ public class CustomerServiceImpl implements CustomerService{
                     TimeUnit.MILLISECONDS
             );
 
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.add("Authorization", "Bearer "+tokenDto.getAccessToken());
+            //HttpHeaders httpHeaders = new HttpHeaders();
+            //httpHeaders.add("Authorization", "Bearer "+tokenDto.getAccessToken());
 
-            return new ResponseEntity<>(tokenDto, httpHeaders, HttpStatus.OK);
+            responseCustomerLoginDetailDto.setToken(tokenDto);
+
+
+
+            // 2) customerInfo setting
+            Customer customer = customerRepository.findById(requestSignInDto.getId());
+            ResponseCustomerLoginInfoDto responseCustomerLoginInfoDto = new ResponseCustomerLoginInfoDto().entityToDto(customer);
+
+            responseCustomerLoginDetailDto.setCustomerInfo(responseCustomerLoginInfoDto);
+
+
+
+            // 3) bestDesigner setting
+
+
+            return responseCustomerLoginDetailDto;
 
         } catch(AuthenticationException e){
             throw new Exception("Invalid credentials supplied", HttpStatus.BAD_REQUEST);

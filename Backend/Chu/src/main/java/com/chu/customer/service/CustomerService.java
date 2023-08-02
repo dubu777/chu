@@ -23,7 +23,7 @@ public interface CustomerService {
     //boolean signIn(RequestSignInDto requestSignInDto);
 //
     // 로그인 테스트
-    ResponseEntity<TokenDto> signIn(RequestSignInDto requestSignInDto);
+    ResponseCustomerLoginDetailDto signIn(RequestSignInDto requestSignInDto);
 //
 //    // 고객 정보 조회
 //    Customer getCustomerInfo(String id);
