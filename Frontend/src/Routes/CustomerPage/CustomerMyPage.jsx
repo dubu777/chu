@@ -13,7 +13,7 @@ const Container = styled.div`
 const ReserveWrapper = styled.div`
   border: solid 2px;
   border-color: gray;
-  margin: 200px auto 50px auto;
+  margin: 160px auto 50px auto;
   height: 150px;
   width: 60%;
   border-radius: 0.7rem;

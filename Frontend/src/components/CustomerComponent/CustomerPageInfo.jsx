@@ -13,7 +13,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-around;
 	width: 100%;
-	height: 300px;
+	height: 270px;
 	background-color: #f8f1d9;
   /* font-family: "Blue-road"; */
   /* font-family: "Apple-B";   */
@@ -21,7 +21,7 @@ const Wrapper = styled.div`
 `;
 const ImgBox = styled.div`
   text-align: center;
-  margin-top: 130px;
+  margin-top: 110px;
 `;
 
 const NameText = styled.h1`
@@ -46,14 +46,14 @@ const InfoBox = styled.div`
   /* border: solid 2px;
   border-color: #afadaa; */
   width: 30%;
-  margin-top: 225px;
+  margin-top: 200px;
   margin-left: -120px;
 `;
 const ChangeBox = styled.div`
   /* border: solid 2px;
   border-color: #afadaa; */
   width: 30%;
-  margin-top: 240px;
+  margin-top: 220px;
   text-align: right;
 `;
 

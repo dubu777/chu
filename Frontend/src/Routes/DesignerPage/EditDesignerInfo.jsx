@@ -60,13 +60,17 @@ const InputBox = styled.div`
   width: 60%;
   margin: 15px 0;
 `;
+
+const IdText = styled.span`
+  color: red;
+`;
 const SubmitBtn = styled.button`
   text-align: center;
   border-radius: 7px;
   background: #574934;
   color: #f1efed;
   padding: 10px 25px;
-  margin: 50px 0 20px 0;
+  margin: 30px 0 20px 0;
   border: 0;
   font-size: 14px;
   width: 180px;
@@ -77,10 +81,28 @@ const SubmitBtn = styled.button`
   border-color: #574934;;
   }
 `;
-
+const CancleBtn = styled.button`
+  text-align: center;
+  border-radius: 7px;
+  color: #574934;
+  background-color: #f1efed;
+  border: 2.1px solid #574934;
+  padding: 10px 25px;
+  margin: 30px 0 20px 0;
+  font-size: 14px;
+  width: 180px;
+  transition: background-color, 0.3s ease;
+  &:hover {
+  /* background-color: #f0aa48; */
+  color: #574934;
+  border-color: #f0aa48; 
+  }
+`;
 const CenterBox = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
+  margin-bottom: 20px;
+  padding: 0px 40px;
 `;
 const SelectBox = styled.div`
   display: flex;
@@ -213,7 +235,61 @@ function EditDesignerInfo() {
   const permType = ["아이롱펌", "시스루펌", "C컬", "볼륨펌", "쉐도우펌", "베이비펌", "히피펌", "복구펌"]
   const [selectedCut, setSelectedCut] = useState([]);
   const [selectedPerm, setSelectedPerm] = useState([]);
-
+  const [data, setdata] = useState({
+    "name" : "재현",
+    "id" : "ssafy",
+    "email" : "ssafy@ssafy.com",
+    "price" : "5000",
+    "certification_num" : "1234-56789",
+    "salonName" : "미용실 이름",
+    "latitude" : 234.2563,
+    "longitude" : 234.2563,
+    "address" : "대전광역시 유성구",
+    "allCutHairStyle" : [
+        {
+            "hairStyleSeq" : 1,
+            "hairStyleLabel" : "레이어드컷"
+        },
+        {
+            "hairStyleSeq" : 2,
+            "hairStyleLabel" : "웬디컷"
+        },
+        {
+            "hairStyleSeq" : 3,
+            "hairStyleLabel" : "댄디컷"
+        }
+    ],
+    "allPermHairStyle" : [
+        {
+            "hairStyleSeq" : 1,
+            "hairStyleLabel" : "C컬펌"
+        },
+        {
+            "hairStyleSeq" : 2,
+            "hairStyleLabel" : "히피펌"
+        },
+        {
+            "hairStyleSeq" : 3,
+            "hairStyleLabel" : "펌"
+        }
+    ],
+    "myCutHairStyle" : [
+        {
+            "hairStyleSeq" : 2,
+            "hairStyleLabel" : "웬디컷"
+        },
+        {
+            "hairStyleSeq" : 3,
+            "hairStyleLabel" : "댄디컷"
+        }
+    ],
+    "myPermHairStyle" : [
+        {
+            "hairStyleSeq" : 3,
+            "hairStyleLabel" : "펌"
+        }
+    ]
+});
   const toggleCutType = (tag) => {
     if (selectedCut.includes(tag)) {
       setSelectedCut((prev) => prev.filter((resist) => resist !== tag))
@@ -236,12 +312,11 @@ function EditDesignerInfo() {
             <Wrapper>
               <InputWrap>
                 <InputBox>
-                  <SignUpInput text="이름" placeholder="회원명"/>
-                  <SignUpInput text="아이디" placeholder="아이디"/>
+                  <SignUpInput text="이름" placeholder={data.name}/>
+                  <SignUpInput text="아이디" word="*아이디 변경 불가" placeholder={data.id} disable/>
+                  <SignUpInput text="이메일" placeholder={data.email}/>
                   {/* <Btn>중복확인</Btn> */}
-                  <SignUpInput text="이메일" placeholder="이메일"/>
-                  {/* <Btn>중복확인</Btn> */}
-                  <SignUpInput text="등록번호" placeholder="미용사 자격증 등록번호"/>
+                  <SignUpInput text="등록번호" placeholder={data.certification_num}/>
                   <SignUpInput text="비밀번호" placeholder="8~16자리의 비밀번호를 입력해주세요"/>
                   <SignUpInput text="비밀번호 확인" placeholder="비밀번호 확인 ✔" />
                 </InputBox>
@@ -251,7 +326,7 @@ function EditDesignerInfo() {
                 <InfoText>소속 미용실(활동지역)</InfoText>
                 <SearchBox>
                   <SearchImg src="./icon/search.png"/>
-                  <Input placeholder="Search" />
+                  <Input placeholder={data.address} />
                 </SearchBox>
               </Box>
               <Hr/>
@@ -291,7 +366,9 @@ function EditDesignerInfo() {
                 </Grid>
               </TagWrapper>
                 <CenterBox>
-                  <SubmitBtn onClick={() => navigate('/complete')}>회원 가입하기</SubmitBtn>
+                  {/* 취소할때에는 */}
+                  <CancleBtn onClick={() => navigate('/designermypage')}>취소</CancleBtn>
+                  <SubmitBtn onClick={() => navigate('/designermypage')}>수정 완료</SubmitBtn>
                 </CenterBox>  
 			      </Wrapper>
           </InfoBox>

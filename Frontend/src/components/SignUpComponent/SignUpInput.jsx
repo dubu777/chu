@@ -28,6 +28,12 @@ const Text = styled.span`
   font-size: 14px;
   font-weight: bold;
 `;
+const Word = styled.span`
+ font-size : 10px;
+ color: red;
+ margin-left: 10px;
+ margin-top: 5px;
+`;
 const TextBox = styled.div`
   display: flex;
   justify-content: start;
@@ -35,11 +41,12 @@ const TextBox = styled.div`
 `;
 
 
-function SignUpInput({text, placeholder }) {
+function SignUpInput({text, word, placeholder}) {
   return (
     <InputWrapper>
     <TextBox>
       <Text>{text}</Text>
+      <Word>{word}</Word>
     </TextBox>
       <Input placeholder={placeholder}/>
     </InputWrapper>
