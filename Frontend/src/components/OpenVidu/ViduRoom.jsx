@@ -263,16 +263,7 @@ class ViduRoom extends Component {
                       <UserVideoComponent
                         streamManager={this.state.publisher}
                       />
-                      <div>
-                        <ConsultBox></ConsultBox>
-                        <ImageBox>
-                          <Img src="icon/designerimg.png" alt="여기에 헤어 사진" />
-                          <Img src="icon/designerimg.png" alt="여기에 헤어 사진" />
-                          <Img src="icon/designerimg.png" alt="여기에 헤어 사진" />
-                          <Img src="icon/designerimg.png" alt="여기에 헤어 사진" />
-                          <Img src="icon/designerimg.png" alt="여기에 헤어 사진" />
-                        </ImageBox>
-                  </div>
+                      
                     </StreamContainer>
                   ) : null}
                   {this.state.subscribers.map((sub, i) => (
@@ -282,6 +273,16 @@ class ViduRoom extends Component {
                   ))}
                 </StreamContainerWrapper>
               ) : null}
+              <div>
+                        <ConsultBox></ConsultBox>
+                        <ImageBox>
+                          <Img src="icon/designerimg.png" alt="여기에 헤어 사진" />
+                          <Img src="icon/designerimg.png" alt="여기에 헤어 사진" />
+                          <Img src="icon/designerimg.png" alt="여기에 헤어 사진" />
+                          <Img src="icon/designerimg.png" alt="여기에 헤어 사진" />
+                          <Img src="icon/designerimg.png" alt="여기에 헤어 사진" />
+                        </ImageBox>
+                  </div>
             </VideoContainer>
           </Left>
           {/* <Right primary={this.state.isChat}>
@@ -639,6 +640,7 @@ async createToken(sessionId) {
           },
         }
       );
+      console.log(res.data.token)
       return res.data.token;
     } catch (error) {
       throw error;
