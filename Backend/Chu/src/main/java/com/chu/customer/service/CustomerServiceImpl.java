@@ -48,11 +48,11 @@ public class CustomerServiceImpl implements CustomerService{
     public boolean checkId(String id) {
         return customerRepository.existsById(id);
     }
-//
-//    @Override
-//    public boolean checkEmail(String email) {
-//        return customerRepository.checkEmail(email);
-//    }
+
+    @Override
+    public boolean checkEmail(String email) {
+        return customerRepository.existsByEmail(email);
+    }
 
     @Override
     public void signUp(Customer customer) {

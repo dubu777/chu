@@ -9,12 +9,12 @@ import java.util.ArrayList;
 
 public interface CustomerService {
 //
-//    // 아이디 중복체크
+    // 아이디 중복체크
     boolean checkId(String id);
-//
-//    // 이메일 중복체크
-//    boolean checkEmail(String email);
-//
+
+    // 이메일 중복체크
+    boolean checkEmail(String email);
+
     // 고객 회원가입
 //    boolean signUp(RequestCustomerSignUpDto requestCustomerSignUpDto);
     void signUp(Customer customer);

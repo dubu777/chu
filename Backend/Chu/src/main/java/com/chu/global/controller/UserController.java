@@ -22,8 +22,8 @@ public class UserController {
 
     // 아이디 중복확인
     @GetMapping("/check-id")
-    public ResponseEntity<HttpResponseDto> chekId(@RequestParam String id, @RequestParam String userType){
-        boolean isExist = false;
+    public ResponseEntity<HttpResponseDto> checkId(@RequestParam String id, @RequestParam String userType){
+        boolean isExist = true;
 
         try{
             if(userType.equals("customer")){
@@ -37,6 +37,26 @@ public class UserController {
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), isExist));
+    }
+
+    // 이메일 중복확인
+    @GetMapping("/check-email")
+    public ResponseEntity<HttpResponseDto> checkEmail(@RequestParam String email, @RequestParam String userType){
+        boolean isExist = true;
+
+        try{
+            if(userType.equals("customer")){
+                isExist = customerService.checkEmail(email);
+            }
+            else{
+
+            }
+        } catch(Exception e){
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), isExist));
+
     }
 
 
