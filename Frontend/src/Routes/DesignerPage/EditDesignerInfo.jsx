@@ -319,8 +319,17 @@ function EditDesignerInfo() {
                   <SignUpInput text="등록번호" placeholder={data.certification_num}/>
                   <SignUpInput text="비밀번호" placeholder="8~16자리의 비밀번호를 입력해주세요"/>
                   <SignUpInput text="비밀번호 확인" placeholder="비밀번호 확인 ✔" />
+                  <SignUpInput text="상담 가격" placeholder={data.price} />
                 </InputBox>
               </InputWrap>
+              <Hr/>
+                <Box>
+                  <InfoText>상담 가격</InfoText>
+                  <SearchBox>
+                    <SearchImg src="./icon/money.png"/>
+                    <Input placeholder={data.price} />
+                </SearchBox>
+                </Box>
               <Hr/>
               <Box>
                 <InfoText>소속 미용실(활동지역)</InfoText>
@@ -367,7 +376,7 @@ function EditDesignerInfo() {
               </TagWrapper>
                 <CenterBox>
                   {/* 취소할때에는 */}
-                  <CancleBtn onClick={() => navigate('/designermypage')}>취소</CancleBtn>
+                  <CancleBtn onClick={() => navigate(-1)}>취소</CancleBtn>
                   <SubmitBtn onClick={() => navigate('/designermypage')}>수정 완료</SubmitBtn>
                 </CenterBox>  
 			      </Wrapper>
