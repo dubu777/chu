@@ -1,5 +1,7 @@
 package com.chu.customer.domain;
 
+import com.chu.global.domain.FaceDict;
+import com.chu.global.domain.ImagePath;
 import lombok.Data;
 
 @Data
@@ -19,7 +21,6 @@ public class RequestCustomerSignUpDto {
         customer.setEmail(this.getEmail());
         customer.setGender(this.getGender());
         customer.setPwd(this.getPwd());
-
         return customer;
     }
 

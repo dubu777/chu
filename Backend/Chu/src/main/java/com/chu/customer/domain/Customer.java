@@ -4,6 +4,7 @@ import com.chu.global.domain.FaceDict;
 import com.chu.global.domain.ImagePath;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
@@ -37,6 +38,11 @@ public class Customer {
    @OneToOne(fetch = FetchType.LAZY)
    @JoinColumn(name="face_seq")
    private FaceDict faceDict;
+
+   public Customer() {
+      this.faceDict = new FaceDict();
+      this.faceDict.setSeq(0);
+   }
 
    public Customer hashPassword(PasswordEncoder passwordEncoder){
       this.pwd = passwordEncoder.encode(this.pwd);
