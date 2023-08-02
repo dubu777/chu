@@ -20,7 +20,7 @@ public class DesignerSearchDto {
 //
 //    private String introduction;
 //
-//    private Integer reviewCnt;  //계산해서 가져와야함
+    private Integer reviewCnt;  //계산해서 가져와야함
 //
 //    private List<String> hairStyleLabel;
 

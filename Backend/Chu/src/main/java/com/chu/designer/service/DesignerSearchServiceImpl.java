@@ -1,5 +1,6 @@
 package com.chu.designer.service;
 
+import com.chu.consulting.repository.ConsultingRepository;
 import com.chu.designer.domain.Designer;
 import com.chu.designer.domain.ResponseDesignerDetailInfoDto;
 import com.chu.designer.domain.ResponseDesignerSearchAreaDto;
@@ -23,6 +24,7 @@ public class DesignerSearchServiceImpl implements DesignerSearchService{
 
     private final DesignerSearchRepository designerSearchRepository;
     private final DesignerLikeRepository designerLikeRepository;
+    private final ConsultingRepository consultingRepository;
 
 
 //    @Override
@@ -53,8 +55,10 @@ public class DesignerSearchServiceImpl implements DesignerSearchService{
 
         for (Designer designer : designers) {
             Integer likeCnt = designerLikeRepository.countByDesignerSeq(designer.getSeq());
+            Integer reviewCnt = consultingRepository.countByDesignerSeq(designer.getSeq());
             DesignerSearchDto dto = new DesignerSearchDto(designer);
             dto.setLikeCnt(likeCnt);
+            dto.setReviewCnt(reviewCnt);
             result.add(dto);
         }
         //System.out.println("entity>>>>>> "+designerSearch);
