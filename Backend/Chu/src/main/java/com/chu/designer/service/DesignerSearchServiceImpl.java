@@ -22,6 +22,8 @@ import java.util.stream.Collectors;
 public class DesignerSearchServiceImpl implements DesignerSearchService{
 
     private final DesignerSearchRepository designerSearchRepository;
+    private final DesignerLikeRepository designerLikeRepository;
+
 
 //    @Override
 //    public List<DesignerSearchDto> search2Name(int customerSeq, String name) {
@@ -46,14 +48,24 @@ public class DesignerSearchServiceImpl implements DesignerSearchService{
 //                new NoMemberException("없는 사용자입니다.")
 //        );
 
-        List<Designer> designerSearch = designerSearchRepository.findAll();
-        System.out.println("entity>>>>>> "+designerSearch);
+        List<Designer> designers = designerSearchRepository.findAll();
+        List<DesignerSearchDto> result = new ArrayList<>();
+
+        for (Designer designer : designers) {
+            Integer likeCnt = designerLikeRepository.countByDesignerSeq(designer.getSeq());
+            DesignerSearchDto dto = new DesignerSearchDto(designer);
+            dto.setLikeCnt(likeCnt);
+            result.add(dto);
+        }
+        //System.out.println("entity>>>>>> "+designerSearch);
+
+
 
         //널값처리 어떻게 할지?????
-        List<DesignerSearchDto> result = designerSearch.stream()
-                .filter(Objects::nonNull)
-                .map(DesignerSearchDto::new)
-                .collect(Collectors.toList());
+//        List<DesignerSearchDto> result = designerSearch.stream()
+//                .filter(Objects::nonNull)
+//                .map(DesignerSearchDto::new)
+//                .collect(Collectors.toList());
         System.out.println("dto>>>>>> "+result);
 
         return result;
