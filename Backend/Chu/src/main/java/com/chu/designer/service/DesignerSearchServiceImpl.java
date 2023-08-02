@@ -3,7 +3,11 @@ package com.chu.designer.service;
 import com.chu.consulting.repository.ConsultingRepository;
 import com.chu.designer.domain.Designer;
 import com.chu.designer.domain.DesignerSearchDto;
+import com.chu.designer.domain.DesignerTagInfo;
 import com.chu.designer.repository.DesignerSearchRepository;
+import com.chu.global.domain.HairStyleDict;
+import com.chu.global.repository.DesignerTagInfoRepository;
+import com.chu.global.repository.HairStyleDictRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -21,6 +25,7 @@ public class DesignerSearchServiceImpl implements DesignerSearchService{
     private final DesignerSearchRepository designerSearchRepository;
     private final DesignerLikeRepository designerLikeRepository;
     private final ConsultingRepository consultingRepository;
+    private final DesignerTagInfoRepository designerTagInfoRepository;
     private final HairStyleDictRepository hairStyleDictRepository;
 
 
@@ -48,16 +53,19 @@ public class DesignerSearchServiceImpl implements DesignerSearchService{
         for (Designer designer : designers) {
             Integer likeCnt = designerLikeRepository.countByDesignerSeq(designer.getSeq());
             Integer reviewCnt = consultingRepository.countByDesignerSeq(designer.getSeq());
-            List<String> hairStyleLabel = hairStyleDictRepository.findByDesignerSeq(designer.getSeq());
 
-            DesignerSearchDto dto = new DesignerSearchDto(designer, likeCnt, reviewCnt);
+            List<DesignerTagInfo> hairStyleTagSeqs = designerTagInfoRepository.findByDesignerSeq(designer.getSeq());
+            List<String> hairStyleLabels = new ArrayList<>();
+            for (DesignerTagInfo tag : hairStyleTagSeqs) {
+                Integer seq = tag.getSeq();
+                HairStyleDict hairStyleDict = hairStyleDictRepository.findBySeq(seq);
+                hairStyleLabels.add(hairStyleDict.getHairStyleLabel());
+            }
+            DesignerSearchDto dto = new DesignerSearchDto(designer, likeCnt, reviewCnt, hairStyleLabels);
             result.add(dto);
         }
 
-        System.out.println("dto>>>>>> "+result);
-
         return result;
-
     }
 //
 //    @Override

@@ -3,12 +3,14 @@ package com.chu.designer.domain;
 import com.chu.global.domain.HairStyleDict;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter
+@ToString
 public class DesignerTagInfo {
 
     @Id

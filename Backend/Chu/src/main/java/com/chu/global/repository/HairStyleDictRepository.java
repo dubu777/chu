@@ -4,4 +4,6 @@ import com.chu.global.domain.HairStyleDict;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface HairStyleDictRepository extends JpaRepository<HairStyleDict, Integer> {
+
+    HairStyleDict findBySeq(Integer seq);
 }
