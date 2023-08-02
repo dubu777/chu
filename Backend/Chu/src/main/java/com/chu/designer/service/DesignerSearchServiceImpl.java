@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -51,19 +52,17 @@ public class DesignerSearchServiceImpl implements DesignerSearchService{
 //        );
 
         List<Designer> designers = designerSearchRepository.findAll();
+
+
         List<DesignerSearchDto> result = new ArrayList<>();
 
         for (Designer designer : designers) {
             Integer likeCnt = designerLikeRepository.countByDesignerSeq(designer.getSeq());
             Integer reviewCnt = consultingRepository.countByDesignerSeq(designer.getSeq());
-            DesignerSearchDto dto = new DesignerSearchDto(designer);
-            dto.setLikeCnt(likeCnt);
-            dto.setReviewCnt(reviewCnt);
+
+            DesignerSearchDto dto = new DesignerSearchDto(designer, likeCnt, reviewCnt);
             result.add(dto);
         }
-        //System.out.println("entity>>>>>> "+designerSearch);
-
-
 
         //널값처리 어떻게 할지?????
 //        List<DesignerSearchDto> result = designerSearch.stream()
