@@ -17,9 +17,6 @@ public interface DesignerSearchRepository extends JpaRepository<Designer, Intege
 //
 //    List<DesignerSearchDto> search2LikeCount(int customerSeq);
 
-//    //seq, name, saved_img_name 가져오기
-//    List<Designer> findBySeqAndName();
-
 //    List<ResponseDesignerSearchAreaDto> search2AllArea();
 //
 //    ResponseDesignerDetailInfoDto getDesignerDetailInfo(int designerSeq, int customerSeq);

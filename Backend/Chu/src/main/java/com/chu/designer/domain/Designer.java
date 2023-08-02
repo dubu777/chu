@@ -3,10 +3,7 @@ package com.chu.designer.domain;
 import com.chu.global.domain.ImagePath;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -40,6 +37,7 @@ public class Designer {
 
     private String salonName;
 
+    @Embedded
     private ImagePath imagePath;
 
     private float reviewScore;

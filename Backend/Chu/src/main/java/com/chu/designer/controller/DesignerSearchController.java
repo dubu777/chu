@@ -59,6 +59,7 @@ public class DesignerSearchController {
 
     @GetMapping("/review-score")
     public ResponseEntity<HttpResponseDto> search2ReviewScore(@RequestParam int customerSeq){
+
         List<DesignerSearchDto> designerSearchDtoList = designerSearchService.search2ReviewScore(customerSeq);
 
         if(designerSearchDtoList.size() != 0){

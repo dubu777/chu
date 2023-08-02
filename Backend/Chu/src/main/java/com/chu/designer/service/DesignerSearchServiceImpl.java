@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -41,12 +42,19 @@ public class DesignerSearchServiceImpl implements DesignerSearchService{
     @Override
     public List<DesignerSearchDto> search2ReviewScore(int customerSeq) {
 
+//        Member me = memberRepository.findByEmail(email).orElseThrow(() ->
+//                new NoMemberException("없는 사용자입니다.")
+//        );
+
         List<Designer> designerSearch = designerSearchRepository.findAll();
-        System.out.println(designerSearch);
+        System.out.println("entity>>>>>> "+designerSearch);
+
+        //널값처리 어떻게 할지?????
         List<DesignerSearchDto> result = designerSearch.stream()
+                .filter(Objects::nonNull)
                 .map(DesignerSearchDto::new)
                 .collect(Collectors.toList());
-        System.out.println(result);
+        System.out.println("dto>>>>>> "+result);
 
         return result;
 

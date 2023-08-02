@@ -12,41 +12,34 @@ public class DesignerSearchDto {
 
     private Integer seq;
 
-    //private String savedImgName;
+    private String savedImgName;
 
-    //private Float reviewScore;
+    private Float reviewScore;
 
     private String name;
 
+    private String introduction;
+
+    private Integer reviewCnt;  //계산해서 가져와야함
+
+    private List<String> hairStyleLabel;
+
+    private Integer likeCnt;    //계산해서 가져와야함
+
+    private Boolean isLike;
+
+    private Integer cost;
+
     public DesignerSearchDto(Designer designer) {
         this.seq = designer.getSeq();
+        this.savedImgName = designer.getImagePath().getSavedImgName();
+        this.reviewScore = designer.getReviewScore();
         this.name = designer.getName();
+        this.introduction = designer.getIntroduction();
+        //this.reviewCnt = ;
+        //this.hairStyleLabel = ;
+        //this.likeCnt = designer.;
+        this.cost = designer.getCost();
     }
-
-    //private String introduction;
-
-//    private Integer reviewCnt;
-
-//    private List<String> hairStyleLabel;
-
-//    private Integer likeCnt;
-
-//    private Integer cost;
-
-
-
-//            "designerSeq" : 1,
-//            "designerImg" : "Img1.png",
-//            "reviewScore" : 4.9,
-//            "designerName" : "재현",
-//            "introduction" : "남자 펌, 아이롱펌 전문 디자이너 재현입니다. ",
-//            "reviewCnt" : 132,
-//            "hairStyleLabel" : [
-//        "시스루펌",
-//                "아이롱펌"
-//                ],
-//        "likeCnt" : 56,
-//            "isLike" : true,
-//            "cost" : 5000
 
 }
