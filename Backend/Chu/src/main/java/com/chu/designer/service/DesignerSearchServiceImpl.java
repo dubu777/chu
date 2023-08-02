@@ -2,8 +2,6 @@ package com.chu.designer.service;
 
 import com.chu.consulting.repository.ConsultingRepository;
 import com.chu.designer.domain.Designer;
-import com.chu.designer.domain.ResponseDesignerDetailInfoDto;
-import com.chu.designer.domain.ResponseDesignerSearchAreaDto;
 import com.chu.designer.domain.DesignerSearchDto;
 import com.chu.designer.repository.DesignerSearchRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,9 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -26,6 +21,7 @@ public class DesignerSearchServiceImpl implements DesignerSearchService{
     private final DesignerSearchRepository designerSearchRepository;
     private final DesignerLikeRepository designerLikeRepository;
     private final ConsultingRepository consultingRepository;
+    private final HairStyleDictRepository hairStyleDictRepository;
 
 
 //    @Override
@@ -47,28 +43,17 @@ public class DesignerSearchServiceImpl implements DesignerSearchService{
     @Override
     public List<DesignerSearchDto> search2ReviewScore(int customerSeq) {
 
-//        Member me = memberRepository.findByEmail(email).orElseThrow(() ->
-//                new NoMemberException("없는 사용자입니다.")
-//        );
-
         List<Designer> designers = designerSearchRepository.findAll();
-
-
         List<DesignerSearchDto> result = new ArrayList<>();
-
         for (Designer designer : designers) {
             Integer likeCnt = designerLikeRepository.countByDesignerSeq(designer.getSeq());
             Integer reviewCnt = consultingRepository.countByDesignerSeq(designer.getSeq());
+            List<String> hairStyleLabel = hairStyleDictRepository.findByDesignerSeq(designer.getSeq());
 
             DesignerSearchDto dto = new DesignerSearchDto(designer, likeCnt, reviewCnt);
             result.add(dto);
         }
 
-        //널값처리 어떻게 할지?????
-//        List<DesignerSearchDto> result = designerSearch.stream()
-//                .filter(Objects::nonNull)
-//                .map(DesignerSearchDto::new)
-//                .collect(Collectors.toList());
         System.out.println("dto>>>>>> "+result);
 
         return result;

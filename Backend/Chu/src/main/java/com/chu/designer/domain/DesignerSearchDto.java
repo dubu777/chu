@@ -1,31 +1,23 @@
 package com.chu.designer.domain;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
 
-
-// 디자이너의 정보를 담고 있는 가장 많이 쓰이는 DTO
+// 디자이너의 정보를 담고 있는 DTO
 @Getter @Setter
 public class DesignerSearchDto {
 
     private Integer seq;
     private String savedImgName;
-//
 //    private Float reviewScore;
-//
     private String name;
     private String introduction;
-    private Integer reviewCnt;  //계산해서 가져와야함
-//
-    //private List<String> hairStyleLab;
-
-    private Integer likeCnt;    //계산해서 가져와야함
-
+    private Integer reviewCnt;
+    private List<String> hairStyleLabel;
+    private Integer likeCnt;
 //    private Boolean isLike;
-//
     private Integer cost;
 
     public DesignerSearchDto(Designer designer, Integer likeCnt, Integer reviewCnt) {
