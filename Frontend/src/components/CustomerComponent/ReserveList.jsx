@@ -55,7 +55,7 @@ const ProfileBox = styled.div`
 const Name = styled.p`
   font-size: 17px;
   font-weight: bold;
-  margin-bottom: 5px;
+  margin-bottom: 7px;
 `;
 
 const Icon = styled.img`
@@ -79,6 +79,16 @@ const Day = styled.span`
   text-align: center;
 
 `;
+const ResultBtn = styled(motion.button)`
+  font-size: 16px;
+  font-weight: 500;
+  padding: 5px 10px;
+  border: none;
+  /* background-color: #68655B; */
+  border-radius: 5px;
+  color: white;
+
+`;
 const Text = styled.span`
   font-size: 16px;
   font-weight: bold;
@@ -94,6 +104,9 @@ align-items: center;
 const Overlay = styled(motion.div)`
   position: fixed;
   top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   background-color: rgba(0,0,0,0.6);
@@ -157,20 +170,29 @@ const ResultHr = styled.hr`
 const ReviewImg = styled.img`
   width: 23%;
 `;
-
+const ResultBtnVariants = {
+  nomal: {
+    color: "white",
+    backgroundColor: "#645D51",
+  },
+  hover: {
+    color: "white",
+    backgroundColor: "#F4991A",
+  }
+}
 function ReserveList() {
   const {scrollY} = useScroll();
-  const bigModalMatch = useMatch("customermypage/result/:designerSeq");
+  const bigModalMatch = useMatch("customermypage/result/:consultingSeq");
   console.log(bigModalMatch)
   const navigate = useNavigate();
-  const onBoxClicked = (designerSeq) => {
-    navigate(`result/${designerSeq}`);
+  const onBoxClicked = (consultingSeq) => {
+    navigate(`result/${consultingSeq}`);
   };
   const onOverlayClick = () => {
     navigate('/customermypage');
   };
 
-  const data = {
+  const data = { 
     "name" : "소희",
     "consultingDate" : "07/11",
     "designerSeq" : 1,
@@ -252,6 +274,7 @@ function ReserveList() {
 
   return (
     <Container>
+      <AnimatePresence>
       {result.pastConsulting.map((data) => (
         <BigWrap>
           <Wrap>
@@ -259,10 +282,6 @@ function ReserveList() {
               <Box>
                 <ProfileBox>
                   <DesignerImg src={data.designerImg}/>
-                  <StarBox>
-                    <Icon src="./icon/star.png"/>
-                    <Text>{data.allReviewScore}</Text>
-                  </StarBox> 
                 </ProfileBox>
                 <InfoBox>
                   <Name>{data.name} 디자이너</Name>
@@ -276,7 +295,13 @@ function ReserveList() {
                     </CommentBox>
                   </Box>
                   <DetailBox >
-                    <Text onClick={() =>onBoxClicked(data.designerSeq)}>상담 결과 보기</Text>
+                    <ResultBtn 
+                    onClick={() =>onBoxClicked(data.consultingSeq + "")}
+                    layoutId={data.consultingSeq}
+                    variants={ResultBtnVariants}
+                    initial="nomal"
+                    whileHover="hover"
+                    >상담 결과 보기</ResultBtn>
                   </DetailBox>
                 </InfoBox>
               </Box>
@@ -289,18 +314,23 @@ function ReserveList() {
           <Hr/>
         </BigWrap>
       ))}
+      </AnimatePresence> 
       <AnimatePresence>
         { bigModalMatch ? (
           <>
             <Overlay 
               onClick={onOverlayClick}
-              initial= {{opacity: 0}}
+              initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              exit={{opacity: 0}}
+              exit={{ opacity: 0 }}
               />
               <BigModal 
+                layoutId={bigModalMatch.params.consultingSeq}
                 style={{ top: scrollY.get() + 110 }}
-                layoutId={data.designerSeq}>
+                initial={{ opacity: 0, y: "50%" }}
+                animate={{ opacity: 1, y: "0%" }}
+                exit={{ opacity: 0, y: "50%" }}
+                transition={{ duration: 0.3}}>
                 <BigModalBox>
                   <InfoBox>
                     <InfoText>상담사명 : {data.name} 디자이너</InfoText>
@@ -318,15 +348,6 @@ function ReserveList() {
                       </ResultBox>
                       <ReviewImg src="/icon/designerimg.png" />
                     </ResultWrap>
-                    {/* selectedCut.map((tag) => (
-                      <HashTag
-                        key={tag}
-                        onClick={() => toggleCutType(tag)}
-                        selected={selectedCut.includes(tag)}
-                      >
-                        #{tag}
-                      </HashTag>
-                    )) */}
                   </InfoBox>
                 </BigModalBox>
               </BigModal>          
