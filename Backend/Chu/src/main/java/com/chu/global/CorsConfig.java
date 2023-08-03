@@ -15,7 +15,7 @@ public class CorsConfig {
         CorsConfiguration config = new CorsConfiguration();
 
         config.setAllowCredentials(true);
-        config.setAllowedOrigins(List.of("https://i9b111.p.ssafy.io:4443/", "http://localhost:3000"));
+        config.setAllowedOrigins(List.of("https://i9b111.p.ssafy.io/", "http://localhost:3002"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
         config.setAllowedHeaders(List.of("Authorization", "Authorization-refresh", "*"));
         config.setExposedHeaders(List.of("Authorization", "Authorization-refresh", "*"));
