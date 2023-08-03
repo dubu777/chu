@@ -6,6 +6,10 @@ const ClickImg = styled.img`
   height: 310px;
   width: 500px;
   border-radius: 0.7rem;
+  object-fit: cover;
+  &:hover {
+    transform: scale(1.02);
+  }
 `;
 
 const WorldcupImg = styled.img`
@@ -47,8 +51,10 @@ function MainView(){
     <br></br>
       <Wrapper>
         <Box>
+          <Link to="/listview">
           <ClickImg src="./img/listview.jpg"></ClickImg>
           <P>헤어스타일 상담 예약 바로가기</P>
+          </Link>
         </Box>
         {/* alert창 띄우고 업로드 화면으로 이동 */}
         <Box onClick={()=> swal("Style worldCup을 위한 파일 등록창으로 이동합니다 😉")}>

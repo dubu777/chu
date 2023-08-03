@@ -6,6 +6,7 @@ import { styled } from "styled-components";
 import { useState } from "react";
 import { motion,AnimatePresence,useAnimation } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import swal from "sweetalert";
 
 const Container = styled.div`
   background: url('./img/password.jpg')no-repeat center center/cover, rgba(0, 0, 0, 0.7);
@@ -252,8 +253,11 @@ function ConsultResultPage(){
         setSelectedImgs((prev) => [...prev, item.imgSeq]);
       }
   };
-  console.log(setSelectedImgs);
-  console.log(selectedImgs);
+  const handleClick = () => {
+    // alert 창 보여주고 페이지 이동
+    swal('상담결과 작성 완료! \n 마이페이지로 이동합니다🙂');
+    navigate('/designermypage');
+  };
   return(
     <Container>
       <TitleBox>
@@ -319,7 +323,7 @@ function ConsultResultPage(){
           </TextBox>
           <ConsultBox placeholder="상세 내용을 작성해주세요 :)"></ConsultBox>
           <TitleBox>
-            <SubmitBtn onClick={() => navigate('/designermypage')}>완료</SubmitBtn>
+            <SubmitBtn onClick={handleClick}>완료</SubmitBtn>
           </TitleBox>
           
       </Wrapper>
