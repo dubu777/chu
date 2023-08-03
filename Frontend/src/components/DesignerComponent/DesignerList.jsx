@@ -111,6 +111,7 @@ function DesignerList() {
   const handleLikeClick = () => {
     setLiked((prevLiked) => !prevLiked); // 좋아요 상태를 토글
   };
+<<<<<<< Updated upstream
   // const {data, isLoading} = useQuery(["byRating"], getByRating)
   const [data, setData] = useState(
     {
@@ -196,13 +197,19 @@ function DesignerList() {
       ]
   }
   )
+=======
+ const navigate = useNavigate();
+>>>>>>> Stashed changes
   return (
     <Container>
       <Hr/>
       <Wrap>
       <Wrapper>
         <Box>
-          <DesignerImg src="./icon/designerimg.png"/>
+          <DesignerImg 
+            src="./icon/designerimg.png"
+            onClick={() => navigate("/designerdetail")}
+          />
         </Box>
         <InfoBox>
           <Name>재현 디자이너</Name>

@@ -1,7 +1,9 @@
 import { styled } from "styled-components";
 import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
-
+import { useRecoilState } from "recoil";
+import { loginState } from "../../recoil/auth";
+import { useState } from "react";
 
 const Nav = styled(motion.nav)`
   display: flex;
@@ -80,7 +82,15 @@ const logoVariants = {
 
 function Header() {
   const navigate = useNavigate();
-
+  const [isLogIn, setIsLogIn] = useRecoilState(loginState);
+  const [testLogIn, setTestLogIn] = useState(false)
+  const testBtn = () => {
+    setTestLogIn(prev => !prev)
+  }
+  console.log(testLogIn);
+  const deleteTokenFromLocalStorage = () => {
+    localStorage.removeItem('accessTokenState'); 
+  }
   return (
     <Nav>
       <Col>
@@ -101,40 +111,63 @@ function Header() {
               >Home
             </Item>
           </Link>
-          <Link to="designerdetail">
+          {/* <Link to="designerdetail">
             <Item 
               variants={logoVariants}
               whileHover="active"
               initial="nomal"
               >DesignerDetail
             </Item>
-          </Link>
+          </Link> */}
         </Items>
       </Col>
       <Col>
-        <Search >
-          {/* 나중에 다 옮기기 */}
-          <Link to="/consultresultpage">상담결과 작성//</Link>
+          {/* <Link to="/consultresultpage">상담결과 작성//</Link>
           <Link to="/viduroom">openvidu//</Link>
           <Link to="/designermypage">디자이너MyPage//</Link>
-          <Link to="/customermypage">CustomerMyPage//</Link>
-          <Link to="usertype">
-            <Item 
-              variants={logoVariants}
-              whileHover="active"
-              initial="nomal"
-              >Sign up
-            </Item>
-          </Link>
-          <Link to="/login">
-            <Item 
-              variants={logoVariants}
-              whileHover="active"
-              initial="nomal"
-              >Log in
-            </Item>
-          </Link>
-        </Search>
+          <Link to="/customermypage">CustomerMyPage//</Link> */}
+
+          { testLogIn ?  
+            <>
+              <Item 
+                variants={logoVariants}
+                whileHover="active"
+                initial="nomal"
+                onClick={deleteTokenFromLocalStorage}
+                >Log OUt
+              </Item>
+              <Link to="/customermypage">
+                <Item 
+                  variants={logoVariants}
+                  whileHover="active"
+                  initial="nomal"
+                  >My Page
+                </Item>
+              </Link>
+
+            </>
+          : 
+            <>
+              <Link to="usertype">
+                <Item 
+                  variants={logoVariants}
+                  whileHover="active"
+                  initial="nomal"
+                  >Sign up
+                </Item>
+              </Link>
+              <Link to="/login">
+                <Item 
+                  variants={logoVariants}
+                  whileHover="active"
+                  initial="nomal"
+                  >Log in
+                </Item>
+              </Link>
+            </>
+          }
+            <button onClick={testBtn}>로그인테스트</button>
+        
       </Col>
     </Nav>
   );

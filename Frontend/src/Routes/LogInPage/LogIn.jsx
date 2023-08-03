@@ -78,21 +78,21 @@ const FindBox = styled.div`
 function LogIn() {
 
 	const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
+  	const [password, setPassword] = useState('');
+  	const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
 	const [loginResult, setLoginResult] = useRecoilState(loginResultState);
 	const navigate = useNavigate();
-  const handleLogin = async () => {
-		console.log('Username:', username);
-		console.log('Password:', password);
-		try {
-      const token = await login(username, password);
-	  console.log(token);
-      setAccessToken(token); // Recoil 상태에 토큰 업데이트
-    } catch (error) {
-      console.error(error);
-    }
-  };
+//   const handleLogin = async () => {
+// 		console.log('Username:', username);
+// 		console.log('Password:', password);
+// 		try {
+//       const token = await login(username, password);
+// 	  console.log(token);
+//       setAccessToken(token); // Recoil 상태에 토큰 업데이트
+//     } catch (error) {
+//       console.error(error);
+//     }
+//   };
 
   const handleLogin2 = async () => {
 		console.log('Username:', username);
