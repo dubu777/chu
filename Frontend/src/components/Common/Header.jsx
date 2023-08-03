@@ -118,14 +118,6 @@ function Header() {
           <Link to="/viduroom">openvidu//</Link>
           <Link to="/designermypage">디자이너MyPage//</Link>
           <Link to="/customermypage">CustomerMyPage//</Link>
-          <Link to="listview">
-            <Item 
-              variants={logoVariants}
-              whileHover="active"
-              initial="nomal"
-              >ListView
-            </Item>
-          </Link>
           <Link to="usertype">
             <Item 
               variants={logoVariants}
