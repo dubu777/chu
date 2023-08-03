@@ -124,6 +124,33 @@ public class CustomerServiceImpl implements CustomerService{
         }
     }
 
+    @Override
+    public ResponseFindIdDto findId(String name, String email) {
+
+        ResponseFindIdDto response = new ResponseFindIdDto();
+        Customer customer = new Customer();
+
+        try{
+
+            customer = customerRepository.findByNameAndEmail(name, email);
+
+            // 일치하는 사용자 존재X
+            if(customer == null){
+                response.setExists(false);
+                response.setId(null);
+            }
+            // 일치하는 사용자 존재
+            else{
+                response.setExists(true);
+                response.setId(customer.getId());
+            }
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return response;
+    }
+
 //    // 얘가 다 가져오는거야 고객 정보를 그 테이블에 있는건 전부
 //    @Override
 //    public Customer getCustomerInfo(String id) {
@@ -160,10 +187,7 @@ public class CustomerServiceImpl implements CustomerService{
 //        return responseCustomerLoginDetailDto;
 //    }
 //
-//    @Override
-//    public String findId(RequestFindIdDto requestFindIdDto) {
-//        return customerRepository.findId(requestFindIdDto);
-//    }
+
 //
 //    @Override
 //    public int isValidUser(RequestFindPwdDto requestFindPwdDto) {

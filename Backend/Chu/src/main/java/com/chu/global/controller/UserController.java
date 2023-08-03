@@ -49,7 +49,7 @@ public class UserController {
                 isExist = customerService.checkEmail(email);
             }
             else{
-
+                //isExist = designerService.checkEmail(email);
             }
         } catch(Exception e){
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));

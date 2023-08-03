@@ -44,7 +44,6 @@ public class CustomerController {
     @PostMapping(value = "/sign-in")
     public ResponseEntity<HttpResponseDto> signIn(@RequestBody RequestSignInDto requestSignInDto){
 
-        // 아이디 비밀번호 일치하는 customer 검색
         // null 이면 일치하는 회원 없음 return
         // null 아니면 아래 로직 수행
         ResponseCustomerLoginDetailDto responseCustomerLoginDetailDto = null;
@@ -59,39 +58,22 @@ public class CustomerController {
         return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), responseCustomerLoginDetailDto));
     }
 
-//    // 로그인
-//    @PostMapping(value = "/sign-in")
-//    public ResponseEntity<TokenDto> signInOld(@RequestBody RequestSignInDto requestSignInDto) {
-//
-//        // 성공 여부 먼저 확인
-//        boolean isSuccess = false;
-//
-//        if(isSuccess){
-//
-//        }else{
-//
-//        }
-//
-//        return customerService.signIn(requestSignInDto);
-//
-//        /*
-//
-//        boolean isUser = customerService.signIn(requestSignInDto);
-//
-//        // 로그인 성공
-//        if(isUser){
-//            ResponseCustomerLoginDetailDto responseCustomerLoginDetailDto = customerService.getLoginCustomerDetail(requestSignInDto.getId());
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseCustomerLoginDetailDto);
-//            return ResponseEntity.ok(httpResponseDto);
-//        }
-//        // 로그인 실패
-//        else{
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
-//            return ResponseEntity.ok(httpResponseDto);
-//        }
-//
-//        */
-//    }
+    // 아이디 찾기
+    @GetMapping(value = "/find-id")
+    public ResponseEntity<HttpResponseDto> findId(@RequestParam String name, @RequestParam String email){
+
+        ResponseFindIdDto response = new ResponseFindIdDto();
+
+        try{
+            response = customerService.findId(name, email);
+        } catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), response));
+    }
+
 
 //    @GetMapping("/find-id")
 //    public ResponseEntity<HttpResponseDto> findId(@RequestParam String name, @RequestParam String email){
