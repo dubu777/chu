@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
-import { useRecoilState } from 'recoil';
+import { Link, useNavigate } from "react-router-dom";
+import { useRecoilState, useRecoilValue } from 'recoil';
 import React, { useState } from 'react';
 import { login } from '../../apis/auth';
-import { accessTokenState } from '../../recoil/auth';
+import { accessTokenState, refreshTokenState, loginState, logInDataState } from '../../recoil/auth';
 
 const Container = styled.div`
 	background: url('./img/login.jpg');
@@ -79,19 +79,27 @@ function LogIn() {
 	const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
+	const [refreshToken, setRefreshToken] = useRecoilState(refreshTokenState);
+	const [logInData, setLogInData] = useRecoilState(logInDataState);
 
-  const handleLogin = async () => {
-		console.log('Username:', username);
-		console.log('Password:', password);
+	const navigate = useNavigate();
+  
+	const handleLogin = async () => {
 		try {
-      const token = await login(username, password);
-      setAccessToken(token); // Recoil 상태에 토큰 업데이트
+      const { accessToken, refreshToken, logInData } = await login(username, password);
+      setAccessToken(accessToken); // Recoil 상태에 토큰 업데이트
+			setRefreshToken(refreshToken);
+			setLogInData(logInData)
     } catch (error) {
       console.error(error);
     }
   };
-	console.log('Username:', username);
-  console.log('Password:', password);
+	// const { isLoading, isError, error, data } = useQuery('login', () => login(username, password));
+	console.log(logInData);
+	const isLogIn = useRecoilValue(loginState);
+	if (isLogIn) {
+		navigate('/')
+	}
 	return(
 		<Container>
 			<Wrapper>
@@ -112,7 +120,7 @@ function LogIn() {
 				</LogInBox>
 				<br />
 				<SubmitBox>
-					<P><Link to="/signup">Sign up</Link></P>
+					<P><Link to="/usertype">Sign up</Link></P>
 					<P><Btn 
 								type="submit" 
 								onClick={handleLogin}

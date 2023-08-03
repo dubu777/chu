@@ -9,6 +9,17 @@ export const accessTokenState = atom({
   effects_UNSTABLE: [persistAtom], // Recoil Persist를 적용
 });
 
+export const refreshTokenState = atom({
+  key: 'refreshTokenState',
+  default: null,
+  effects_UNSTABLE: [persistAtom], // Recoil Persist를 적용
+});
+
+export const logInDataState = atom({
+  key: 'logInDataState',
+  default: null,
+});
+
 export const loginState = selector({
   key: 'loginState',
   get: ({ get }) => get(accessTokenState) !== null,
