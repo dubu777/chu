@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import DesignerList from "../../components/DesignerComponent/DesignerList";
 import axios from "axios";
-
+import { useRecoilState } from "recoil";
+import {listViewState} from "../../recoil/designer";
 
 
 const Container = styled.div`
@@ -154,15 +155,7 @@ const SearchImg = styled.img`
 
 `;
 function ListView() {
-  const [data, setData] = useState("");
-  const dataTest = () => {
-    axios.get('http://localhost:9090')
-      .then(response => {
-        setData(response.data);
-      });
-  }
-  console.log(data);
-  
+  const [data, setData] = useRecoilState(listViewState);
   // const [data, setData] = useState(
   //   {
   //     "allCutHairStyle": [
@@ -310,7 +303,7 @@ function ListView() {
   
   return (
     <Container>
-      <button onClick={dataTest}>데이터 받아오기</button>
+      <button>데이터 받아오기</button>
       <Box>
         <SearchBox>
           <SearchImg src="./icon/search.png"/>
