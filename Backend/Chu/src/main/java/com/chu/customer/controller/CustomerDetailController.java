@@ -9,6 +9,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @Slf4j
 @RequestMapping("/customer/detail")
@@ -18,7 +21,7 @@ public class CustomerDetailController {
 
     private final CustomerDetailService customerDetailService;
 
-    @GetMapping("/")
+    @GetMapping("/{customer_seq}")
     public ResponseEntity<HttpResponseDto> getCustomerDetailInfo(@PathVariable("customer_seq") int customerSeq){
         ResponseCustomerDetailInfoDto responseCustomerDetailInfoDto = customerDetailService.getCustomerUpdateDetailInfo(customerSeq);
 
@@ -32,7 +35,7 @@ public class CustomerDetailController {
         }
     }
 
-    @PutMapping("/")
+    @PutMapping("/{customer_seq}")
     public ResponseEntity<HttpResponseDto> putCustomerDetailInfo(@PathVariable("customer_seq") int customerSeq, @RequestBody RequestCustomerDetailChangeDto requestCustomerDetailChangeDto) {
         boolean isSuccess = customerDetailService.putCustomerDetailInfo(customerSeq, requestCustomerDetailChangeDto);
 
@@ -45,7 +48,7 @@ public class CustomerDetailController {
         }
     }
 
-    @GetMapping("/mypage")
+    @GetMapping("/mypage/{customer_seq}")
     public ResponseEntity<HttpResponseDto> getCustomerDetail(@PathVariable("customer_seq") int customerSeq) {
 
         ResponseCustomerDetailDto responseCustomerDetailDto = customerDetailService.getCustomerDetail(customerSeq);
@@ -60,13 +63,16 @@ public class CustomerDetailController {
         }
     }
 
-    @PatchMapping("/img")
-    public ResponseEntity<HttpResponseDto> patchImg(@RequestParam("img") String imgName){
+    @PatchMapping("/img/{customer_seq}")
+    public ResponseEntity<HttpResponseDto> patchImg(@PathVariable("customer_seq") int customerSeq, @RequestParam("img") MultipartFile file) throws IOException {
 
-        boolean isSuccess = customerDetailService.patchImage(imgName);
+        String filePath = customerDetailService.getSavedImgFilePath(file);
+
+        // 내 아이디를 가지고 가서 변경 감지 -> imgPath를 저장파일명에 업데이트한다
+        boolean isSuccess = customerDetailService.patchImage(customerSeq, filePath);
 
         if (isSuccess) {
-            HttpResponseDto httpResponseDto = new HttpResponseDto(200, imgName);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, file);
             return ResponseEntity.ok(httpResponseDto);
         }
         else{

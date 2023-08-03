@@ -7,6 +7,10 @@ import com.chu.customer.repository.CustomerDetailRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
 
 @Slf4j
 @Service
@@ -16,8 +20,35 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
     private final CustomerDetailRepository customerDetailRepository;
 
     @Override
-    public boolean patchImage(String imgName) {
-        return customerDetailRepository.patchImage(imgName);
+    public String getSavedImgFilePath(MultipartFile file) throws IOException {
+        String uploadDir = "/Users/mzmzrmz/images/";
+        File directory = new File(uploadDir);
+
+        String fileName = file.getOriginalFilename();
+        String filePath = uploadDir + fileName;
+        File destFile = new File(filePath);
+
+        if(!directory.exists()) {
+            boolean mkdirsResult = directory.mkdirs();
+            if(mkdirsResult) {
+                System.out.println("디렉토리 생성 성공");
+            } else {
+                System.out.println("디렉토리 생성 실패");
+            }
+        }
+
+        file.transferTo(destFile);
+
+        return filePath;
+    }
+
+    @Override
+    public Boolean patchImage(Integer customerSeq, String fileName) throws IOException {
+
+
+
+
+        return customerDetailRepository.patchImage(fileName);
     }
 
     @Override
