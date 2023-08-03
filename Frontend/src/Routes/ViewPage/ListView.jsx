@@ -303,7 +303,8 @@ function ListView() {
   
   return (
     <Container>
-      <button>데이터 받아오기</button>
+      { data ?
+      <>
       <Box>
         <SearchBox>
           <SearchImg src="./icon/search.png"/>
@@ -386,7 +387,10 @@ function ListView() {
       </BtnBox>
       </BtnWrapper>
           <DesignerList data={data} sortOrder={sortOrder} />
+        </>
+        : null }
+        <p>...loading</p>
     </Container>
-  )
+  );
 }
 export default ListView;
