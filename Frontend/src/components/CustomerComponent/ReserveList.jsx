@@ -16,15 +16,18 @@ const Container = styled.div`
 `;
 const Hr = styled.div`
   margin: 20px 0 20px 10px;
-  border-bottom : 2px solid;
-  border-color: ${(props) => props.color || "rgba(0, 0, 0, 0.1)"};
-  width: ${(props)=> props.width || ""};
-  align-items: center;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+  width: 100%;
 `;
 const Wrap = styled.div`
   display: flex;
   justify-content: space-between;
-
+`;
+const BigWrap = styled.div`
+  display: flex;
+  /* align-items: center; */
+  flex-direction: column;
+  margin-top: 20px;
 `;
 const Wrapper = styled.div`
   display: flex;
@@ -38,7 +41,7 @@ const Box = styled.div`
 `;
 
 const DetailBox = styled.div`
-  
+  margin-top: 5px;
 `;
 const DesignerImg = styled.img`
   width: 100px;
@@ -47,11 +50,12 @@ const ProfileBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-left: 10px;
+  margin: 0 10px;
 `;
 const Name = styled.p`
   font-size: 17px;
   font-weight: bold;
+  margin-bottom: 5px;
 `;
 
 const Icon = styled.img`
@@ -153,10 +157,7 @@ const ResultHr = styled.hr`
 const ReviewImg = styled.img`
   width: 23%;
 `;
-const RecentBox = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
+
 function ReserveList() {
   const {scrollY} = useScroll();
   const bigModalMatch = useMatch("customermypage/result/:designerSeq");
@@ -251,40 +252,42 @@ function ReserveList() {
 
   return (
     <Container>
-      <Hr/>
       {result.pastConsulting.map((data) => (
-        <Wrap>
-          <Wrapper>
-            <Box>
-              <ProfileBox>
-                <DesignerImg src={data.designerImg}/>
-                <StarBox>
-                  <Icon src="./icon/star.png"/>
-                  <Text>4.8</Text>
-                </StarBox> 
-              </ProfileBox>
-              <InfoBox>
-                <Name>{data.name}</Name>
-                <Box>
+        <BigWrap>
+          <Wrap>
+            <Wrapper>
+              <Box>
+                <ProfileBox>
+                  <DesignerImg src={data.designerImg}/>
                   <StarBox>
                     <Icon src="./icon/star.png"/>
-                    <Text>{data.myReviewScore}</Text>
-                  </StarBox>
-                  <CommentBox>
-                    <Text>{data.reviewContent}</Text>
-                  </CommentBox>
-                </Box>
-                <DetailBox >
-                  <Text onClick={() =>onBoxClicked(data.designerSeq)}>상담 결과 보기</Text>
-                </DetailBox>
-              </InfoBox>
+                    <Text>{data.allReviewScore}</Text>
+                  </StarBox> 
+                </ProfileBox>
+                <InfoBox>
+                  <Name>{data.name} 디자이너</Name>
+                  <Box>
+                    <StarBox>
+                      <Icon src="./icon/star.png"/>
+                      <Text>{data.myReviewScore}</Text>
+                    </StarBox>
+                    <CommentBox>
+                      <Text>{data.reviewContent}</Text>
+                    </CommentBox>
+                  </Box>
+                  <DetailBox >
+                    <Text onClick={() =>onBoxClicked(data.designerSeq)}>상담 결과 보기</Text>
+                  </DetailBox>
+                </InfoBox>
+              </Box>
+            </Wrapper>
+            <Box>
+              <Day>{data.consultingDate}({data.consultingDateDay})</Day>
+              <Time>{data.consultingStartTime} ~ {data.consultingEndTime}</Time>
             </Box>
-          </Wrapper>
-          <Box>
-            <Day>{data.consultingDate}({data.consultingDateDay})</Day>
-            <Time>{data.consultingStartTime} ~ {data.consultingEndTime}</Time>
-          </Box>
-        </Wrap>
+          </Wrap>
+          <Hr/>
+        </BigWrap>
       ))}
       <AnimatePresence>
         { bigModalMatch ? (
