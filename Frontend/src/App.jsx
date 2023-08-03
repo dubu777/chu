@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { OpenVidu } from 'openvidu-browser';
-import Header from "./components/Header";
+import Header from "./components/Common/Header";
 import Home from "./Routes/Home";
 import DesignerDetail from "./Routes/DesignerPage/DesignerDetail";
 import ViduRoom from "./components/OpenVidu/ViduRoom";
@@ -23,6 +23,7 @@ import Result from "./components/ModalComponent/Result";
 import EditDesignerInfo from "./Routes/DesignerPage/EditDesignerInfo";
 import EditCustomerInfo from "./Routes/CustomerPage/EditCustomerInfo";
 import Reservation from "./Routes/DesignerPage/Reservation";
+import ConsultResultPage from "./Routes/ConsultPage/ConsultResultPage";
 
 function App() {
   return (
@@ -43,18 +44,21 @@ function App() {
         <Route path="complete" element={<Complete/>} />
         <Route path="designerdetail" element={<DesignerDetail/>} />
         <Route path="worlducupimgupload" element={<WorldcupImgUpload/>} />
-        <Route path="customermypage" element={<CustomerMyPage/>} />
+        <Route path="customermypage" element={<CustomerMyPage/>} >
+          <Route path="result/:consultingSeq" element={<CustomerMyPage/>} />
+        </Route>
         <Route path="editcustomerinfo" element={<EditCustomerInfo/>} />
         <Route path="designermypage" element={<DesignerMyPage/>} />
         <Route path="listview" element={<ListView/>} />
         <Route path="editdesignerinfo" element={<EditDesignerInfo/>} />
+        <Route path="consultresultpage" element={<ConsultResultPage/>} />
         <Route path="reservation" element={<Reservation/>} />
         <Route path="/modaltest" element={<Survey/>}>
           <Route path="/modaltest/1" element={<Survey/>}/>
         </Route>
-        <Route path="/result" element={<Result/>}>
+        {/* <Route path="/result" element={<Result/>}>
           <Route path="/result/1" element={<Result/>}/>
-        </Route>
+        </Route> */}
       </Routes>
     </Router>
   )

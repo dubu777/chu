@@ -3,8 +3,8 @@ import React, { useState, useRef } from 'react';
 import swal from "sweetalert";
 
 const Profile = styled.img`
-  width: 300px;
-  height: 300px;
+  width: 270px;
+  height: 270px;
   border-radius: 50%;
   /* 이미지 상태에 따라 태두리 색 다르게 */
   border: 7px solid ${props => props.hasFile ? 'lightblue' : 'transparent'};

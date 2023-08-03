@@ -2,6 +2,7 @@ import { styled } from "styled-components";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useQuery } from "react-query";
 
 const Container = styled.div`
   display: flex;
@@ -42,24 +43,33 @@ const InfoBox = styled.div`
 `;
 const LikeBox = styled.div`
   display: flex;
+  flex-direction: column;
   margin-right: 20px;
   align-items: center;
 `;
 const Name = styled.span`
   font-size: 13px;
   font-weight: bold;
+  margin-right: 10px;
   cursor: pointer;
+`;
+const StarBox = styled(motion.div)`
+  width: 200px;
+  height: 35px;
+  display: flex;
+  align-items: center;
 `;
 const Intro = styled.span`
   font-size: 13px;
   font-weight: 500;
-  margin-top: 3px;
+  margin-top: 0px;
 `;
 const Reviewer = styled.span`
   font-size: 12px;
   font-weight: 500;
   color: grey;
-  margin-top: 3px;
+  margin-top: 5px;
+  margin-bottom: 5px;
   cursor: pointer;
 `;
 const HashTag = styled.span`
@@ -72,11 +82,11 @@ const HashTag = styled.span`
   margin-top:3px;
 `;
 const Icon = styled.img`
-  width: 21px;
+  width: 18px;
   margin-right: 3px;
 `;
 const ReservBox = styled(motion.div)`
-  width: 70px;
+  width: 100px;
   height: 35px;
   display: flex;
   justify-content: center;
@@ -85,6 +95,12 @@ const ReservBox = styled(motion.div)`
   border-radius:5px;
   margin-top: 10px;
   cursor: pointer;
+`;
+const HeartBox = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 40px;
+  padding-left: 90px;
 `;
 const Text = styled.span`
   font-size: 14px;
@@ -96,7 +112,7 @@ display: flex;
 justify-content: center;
 align-items: center;
 margin-top: 10px;
-margin-left: 20px;
+margin-right: 20px;
 `;
 const LikeBtn = styled.img`
   width: 27px;
@@ -104,15 +120,24 @@ const LikeBtn = styled.img`
   margin-right: 10px;
   cursor: pointer;
 `;
-function DesignerList() {
-  const hashTag = ["레이어드컷", "히피펌", "아이롱펌"]
+function DesignerList(props) {
+  const { data, sortOrder } = props;
+  // likeCnt를 기준으로 내림차순으로 정렬하는 함수
+  const sortByLikeCnt = (designers) => {
+    return designers.slice().sort((a, b) => b.likeCnt - a.likeCnt);
+  };
+  // 정렬 기준에 따라 데이터를 정렬
+  const sortedData = sortOrder === "좋아요순" ? sortByLikeCnt(data.designerList) : data.designerList;
+  
   const [liked, setLiked] = useState(false); // 좋아요 상태를 state로 관리
   const handleLikeClick = () => {
     setLiked((prevLiked) => !prevLiked); // 좋아요 상태를 토글
   };
-  
+ 
   return (
-    <Container>
+    <div>
+    {sortedData.map((item) => (
+    <Container key={item.designerSeq}>
       <Hr/>
       <Wrap>
       <Wrapper>
@@ -120,40 +145,48 @@ function DesignerList() {
           <DesignerImg src="./icon/designerimg.png"/>
         </Box>
         <InfoBox>
-          <Name>재현 디자이너</Name>
-          <Intro>남자 펌, 아이롱펌 전문 디자이너 재현입니다.</Intro>
-          <Reviewer>방문자 리뷰 132</Reviewer>
+          <StarBox>
+            <Name>{item.designerName}디자이너</Name>
+            <Icon src="./icon/star.png"/>
+            <Text>{item.reviewScore}</Text>
+          </StarBox>
+          <Intro>{item.introduction}</Intro>
+          <Reviewer>방문자 리뷰{item.reviewCnt}</Reviewer>
           <Box>
             {
-              hashTag.map((tag) => (
-                <HashTag>#{tag}</HashTag>
+              item.hairStyleLabel.map((tag, index) => (
+                <HashTag key={index} >#{tag}</HashTag>
               ))
             }
-          </Box>
-          <Box>
-            <ReservBox whileHover={{backgroundColor: "rgb(244,153,26)"}}>
-              <Icon src="./icon/reservBtn.png"/>
-              <Text>예약</Text>
-            </ReservBox>
-            <CostBox>
-              <Icon src="./icon/money.png"/>
-              <Text>10,000</Text>
-            </CostBox>
           </Box>
         </InfoBox>
       </Wrapper>
       <LikeBox>
-        {liked ? (
+        <HeartBox>
+        {item.liked ? (
           // 좋아요가 눌려있을 때 빨간색 하트 아이콘
           <LikeBtn src="./icon/hearto.png" onClick={handleLikeClick}/>
         ) : (
           // 좋아요가 눌려있지 않을 때 빈 하트 아이콘
           <LikeBtn src="./icon/heartx.png" onClick={handleLikeClick}/>
         )}
-        <Text>132</Text>
-      </LikeBox>
+        <Text>{item.likeCnt}</Text>
+        </HeartBox>
+          <Box>
+            <CostBox>
+              <Icon src="./icon/money.png"/>
+              <Text>{item.cost}</Text>
+            </CostBox>
+            <ReservBox whileHover={{backgroundColor: "rgb(244,153,26)"}}>
+              <Icon src="./icon/reservBtn.png"/>
+              <Text>예약</Text>
+            </ReservBox>
+          </Box>
+        </LikeBox>
       </Wrap>
     </Container>
+    ))}
+    </div>
   )
 }
 export default DesignerList;

@@ -1,9 +1,10 @@
 import { styled } from "styled-components";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import DesignerList from "../../components/DesignerComponent/DesignerList";
 import axios from "axios";
+
 
 
 const Container = styled.div`
@@ -24,6 +25,7 @@ const BtnWrapper = styled.div`
 `;
 const SelectBox = styled.div`
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   margin-bottom: 10px;
@@ -32,10 +34,11 @@ const SelectBox = styled.div`
 `;
 const SelectedBox = styled.div`
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  margin-bottom: 10px;
-  padding-bottom: 10px;
+  /* margin-bottom: 5px;
+  padding-bottom: 5px; */
 `;
 const HashTag = styled(motion.span)`
   font-size: 12px;
@@ -138,29 +141,134 @@ const SearchImg = styled.img`
 
 `;
 function ListView() {
-  const repeat = [1,2,3]
-  const cutType = ["레이어드컷", "히메컷", "투블럭", "시스루컷", "허쉬컷", "슬릭컷"]
-  const permType = ["아이롱펌", "시스루펌", "C컬", "볼륨펌", "쉐도우펌", "베이비펌"]
-  const [selectedCut, setSelectedCut] = useState([]);
-  const [selectedPerm, setSelectedPerm] = useState([]);
+  const [data, setData] = useState(
+    {
+      "allCutHairStyle": [
+          {
+              "hairStyleSeq": 1,
+              "hairStyleLabel": "젤리펌"
+          },
+          {
+              "hairStyleSeq": 2,
+              "hairStyleLabel": "히피펌"
+          },
+          {
+              "hairStyleSeq": 3,
+              "hairStyleLabel": "가르마펌"
+          },
+          {
+              "hairStyleSeq": 4,
+              "hairStyleLabel": "쉐도우펌"
+          }
+      ],
+      "allPermHairStyle": [
+          {
+              "hairStyleSeq": 5,
+              "hairStyleLabel": "레이어드컷"
+          },
+          {
+              "hairStyleSeq": 6,
+              "hairStyleLabel": "허쉬컷"
+          },
+          {
+              "hairStyleSeq": 7,
+              "hairStyleLabel": "가일컷"
+          },
+          {
+              "hairStyleSeq": 8,
+              "hairStyleLabel": "울프컷"
+          }
+      ],
+      "designerListCnt": 3,
+      "designerList": [
+          {
+              "designerSeq": 1,
+              "designerImg": "202307211500",
+              "reviewScore": 4.5,
+              "designerName": "원영",
+              "introduction": "여성 펌 전문 디자이너 원영입니다 ^_^",
+              "reviewCnt": 3,
+              "hairStyleLabel": [
+                  "젤리펌",
+                  "히피펌",
+                  "가르마펌",
+                  "쉐도우펌"
+              ],
+              "likeCnt": 1,
+              "isLike": true,
+              "cost": 5000
+          },
+          {
+              "designerSeq": 2,
+              "designerImg": "202307211503",
+              "reviewScore": 0.0,
+              "designerName": "시영",
+              "introduction": "남성 커트 전문 디자이너 시영입니다.",
+              "reviewCnt": 1,
+              "hairStyleLabel": [
+                  "다운펌",
+                  "엘리자벳펌",
+                  "가르마펌",
+                  "쉐도우펌"
+              ],
+              "likeCnt": 15,
+              "isLike": false,
+              "cost": 7000
+          },
+          {
+              "designerSeq": 3,
+              "designerImg": "202307211505",
+              "reviewScore": 5.0,
+              "designerName": "승종",
+              "introduction": "남성 펌 전문 디자이너 승종입니다.",
+              "reviewCnt": 1,
+              "hairStyleLabel": [
+                  "야호펌",
+                  "하이펌",
+                  "으악펌",
+                  "그냥펌"
+              ],
+              "likeCnt": 100,
+              "isLike": false,
+              "cost": 6000
+          }
+      ]
+  }
+  );
+  const [selectedStyle, setSelectedStyle] = useState([]);
 
-  const toggleCutType = (tag) => {
-    if (selectedCut.includes(tag)) {
-      setSelectedCut((prev) => prev.filter((resist) => resist !== tag))
+  const toggleStyleType = (tag) => {
+    // 선택된 태그를 { hairStyleSeq, hairStyleLabel } 형식의 객체로 생성
+    const selectedTag = {
+      'hairStyleSeq': tag.hairStyleSeq,
+      'hairStyleLabel': tag.hairStyleLabel,
+    };
+
+    // selectedStyle 배열에 이미 해당 태그가 포함되어 있는지 검사
+    const isTagSelected = selectedStyle.some(
+      (selectedTag) => selectedTag.hairStyleSeq === tag.hairStyleSeq
+    );
+  
+    if (isTagSelected) {
+      // 이미 선택된 태그인 경우, 해당 태그를 제거합니다.
+      setSelectedStyle((prev) =>
+        prev.filter((selectedTag) => selectedTag.hairStyleSeq !== tag.hairStyleSeq)
+      );
     } else {
-      setSelectedCut((prev) => [...prev, tag]);
+      // 선택되지 않은 태그인 경우, 해당 태그를 추가합니다.
+      setSelectedStyle((prev) => [...prev, selectedTag]);
     }
   };
-  const togglePermType = (tag) => {
-    if (selectedPerm.includes(tag)) {
-      setSelectedPerm((prev) => prev.filter((resist) => resist !== tag))
-    } else {
-      setSelectedPerm((prev) => [...prev, tag]);
-    }
-  };
+  // DesignerList에서 사용할 정렬 기준을 상태로 관리
+  const [sortOrder, setSortOrder] = useState(null);
   const [activeBtn, setActiveBtn] = useState(null); // 초기 상태는 아무 버튼도 선택되지 않은 상태로 설정
-  const dataObject = {
-    "customerSeq" : 2
+  // 정렬 기준을 바꾸는 함수
+  const handleSortClick = (btnName) => {
+    if (sortOrder === btnName) {
+      setSortOrder(null); // 버튼 해제시 정렬 기준을 null로 설정
+    } else {
+      setSortOrder(btnName); // 버튼 클릭시 해당 버튼명을 정렬 기준으로 설정
+    }
   };
   const handleBtnClick = async (btnName) => {
     if (activeBtn === btnName) {
@@ -168,22 +276,19 @@ function ListView() {
     } else {
       setActiveBtn(btnName); // 새로운 버튼 선택
     }
-  
-    if (btnName === "평점순") {
-      try {
-
-        const response = await axios.get("https://api.example.com/designers/sortByRating", { params: dataObject });
-        console.log(response.data);
-        return response.data
-      } catch (error) {
-        console.error(error);
-      }
-    }
   };
   const [handleMap, setHandleMap] = useState(false);
   const toggleMap = () => {
     setHandleMap((prev) => !prev);
   };
+
+  // selectedStyle 배열의 변경 상태를 확인하고 콘솔에 출력
+  // 백엔드로 보내야 할 통신 데이터
+  useEffect(() => {
+    const hairStyleSeqNumbers = selectedStyle.map((tag) => tag.hairStyleSeq);
+    console.log("hairStyleSeq numbers:", hairStyleSeqNumbers);
+  }, [selectedStyle]);
+  
   return (
     <Container>
       <Box>
@@ -196,59 +301,48 @@ function ListView() {
       <Grid>
         <SelectText>커트</SelectText>
         <SelectBox>
-          {
-            cutType.map((tag) => (
-              <HashTag
-                key={tag}
-                onClick={() => toggleCutType(tag)}
-                selected={selectedCut.includes(tag)}
-              >
-                #{tag}
-              </HashTag>
-            ))
-          }
+          {data.allCutHairStyle.map((tag) => (
+  <HashTag
+    key={tag.hairStyleSeq}
+    onClick={(e) => {e.stopPropagation(); toggleStyleType(tag);}}
+    selected={selectedStyle.some(
+      (selectedTag) => selectedTag.hairStyleSeq === tag.hairStyleSeq
+    )}
+  >
+    #{tag.hairStyleLabel}
+  </HashTag>
+))}
         </SelectBox>
         <SelectText>펌</SelectText>
         <SelectBox>
-          {
-            permType.map((tag) => (
-              <HashTag
-                key={tag}
-                onClick={() => togglePermType(tag)}
-                selected={selectedPerm.includes(tag)}
-              >
-                #{tag}
-              </HashTag>
-            ))
-          }
+        {data.allPermHairStyle.map((tag) => (
+  <HashTag
+    key={tag.hairStyleSeq}
+    onClick={(e) => {e.stopPropagation(); toggleStyleType(tag);}}
+    selected={selectedStyle.some(
+      (selectedTag) => selectedTag.hairStyleSeq === tag.hairStyleSeq
+    )}
+  >
+    #{tag.hairStyleLabel}
+  </HashTag>
+))}
         </SelectBox>
         <SelectedText>선택</SelectedText>
         <SelectedBox>
-        {
-          selectedCut.map((tag) => (
-            <HashTag
-              key={tag}
-              onClick={() => toggleCutType(tag)}
-              selected={selectedCut.includes(tag)}
-            >
-              #{tag}
-            </HashTag>
-          ))
-        }
+        {selectedStyle.map((tag) => (
+  <HashTag
+    key={tag.hairStyleSeq}
+    onClick={(e) => {e.stopPropagation(); toggleStyleType(tag);}}
+    selected={selectedStyle.some(
+      (selectedTag) => selectedTag.hairStyleSeq === tag.hairStyleSeq
+    )}
+  >
+    #{tag.hairStyleLabel}
+  </HashTag>
+))}
       </SelectedBox>
       <SelectedText></SelectedText>
       <SelectedBox>
-        {
-          selectedPerm.map((tag) => (
-            <HashTag 
-              key={tag}
-              onClick={() => togglePermType(tag)}
-              selected={selectedPerm.includes(tag)}
-            >
-              #{tag}
-            </HashTag>
-          ))
-        }
       </SelectedBox>
       </Grid>
       </Wrapper>
@@ -268,7 +362,7 @@ function ListView() {
         </Btn>
         <Btn 
           active={activeBtn === '좋아요순'}
-          onClick={() => handleBtnClick('좋아요순')}
+          onClick={() => {handleSortClick('좋아요순'); handleBtnClick('좋아요순')}}
         >
           좋아요순
         </Btn>
@@ -281,11 +375,7 @@ function ListView() {
       </MapBtn>
       </BtnBox>
       </BtnWrapper>
-      {
-        repeat.map((i) => (
-          <DesignerList key={i} />
-        ))
-      }
+          <DesignerList data={data} sortOrder={sortOrder} />
     </Container>
   )
 }

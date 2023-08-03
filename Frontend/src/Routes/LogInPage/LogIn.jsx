@@ -1,8 +1,10 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
-import { atom, useRecoilState, selector } from 'recoil';
-// import { isLoggedInState } from './yourRecoilAtoms'; // Recoil 상태 import
-
+import { Link, useNavigate } from "react-router-dom";
+import { useRecoilState } from 'recoil';
+import React, { useState } from 'react';
+import { login, login2 } from '../../apis/auth';
+import { accessTokenState } from '../../recoil/auth';
+import { loginResultState } from '../../recoil/auth';
 
 const Container = styled.div`
 	background: url('./img/login.jpg');
@@ -72,51 +74,70 @@ const FindBox = styled.div`
 	color: white;
 `;
 
-// Recoil 상태로 로그인 상태를 저장
-export const isLoggedInState = atom({
-	key: 'isLoggedInState',
-	default: false, // 기본값은 로그인되어 있지 않은 상태(false)
-  });
-// selector 정의
-export const usernameState = selector({
-	key: 'usernameState',
-	get: ({ get }) => {
-	  const isLoggedIn = get(isLoggedInState);
-	  return isLoggedIn ? 'user123' : null;
-	},
-  });
 
 function LogIn() {
-	const [isLoggedIn, setLoggedIn] = useRecoilState(isLoggedInState);
-	// 폼 제출 핸들러를 정의
-	function handleFormSubmit(event){
-		event.preventDefault();
-		const form = event.target;
-		const formData = new FormData(form);
-		const username = formData.get('username'); // ID 필드의 값 가져오기
-		const password = formData.get('password'); // 비밀번호 필드의 값 가져오기
-		
-		// 임시코드
-		if (username === 'user' && password === 'password') {
-			setLoggedIn(true);
-		  }
-		};
-	
+
+	const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
+	const [loginResult, setLoginResult] = useRecoilState(loginResultState);
+	const navigate = useNavigate();
+  const handleLogin = async () => {
+		console.log('Username:', username);
+		console.log('Password:', password);
+		try {
+      const token = await login(username, password);
+	  console.log(token);
+      setAccessToken(token); // Recoil 상태에 토큰 업데이트
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleLogin2 = async () => {
+		console.log('Username:', username);
+		console.log('Password:', password);
+		try {
+			const result = await login2(username, password);
+			console.log(result);
+			setLoginResult(result);
+			console.log(result.userType);
+			setAccessToken(result.token.accessToken);
+			navigate("/")
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
+	console.log('Username:', username);
+  console.log('Password:', password);
 	return(
 		<Container>
 			<Wrapper>
 				<LogInBox>
 				<Title>Log in</Title>
-					<form onSubmit={handleFormSubmit}></form>
-				<Input type="text" name="username" placeholder="ID" />
-            	<br />
-            	<Input type="password" name="password" placeholder="Password" />
-            	<br />
+				<Input 
+					type="text"
+					value={username}
+					onChange={(e) => setUsername(e.target.value)}
+					placeholder="ID" />
+          <br />
+          <Input 
+						type="password" 
+						value={password}
+						onChange={(e) => setPassword(e.target.value)}
+						placeholder="Password" />
+          <br />
 				</LogInBox>
 				<br />
 				<SubmitBox>
 					<P><Link to="/signup">Sign up</Link></P>
-					<P><Btn type="submit">Log in</Btn></P>
+					<P><Btn 
+								type="submit" 
+								onClick={handleLogin2}
+							>
+								Log in
+							</Btn></P>
 				</SubmitBox> 
 				<br></br>
 				<FindBox><Link to="/findid">Find id</Link></FindBox>

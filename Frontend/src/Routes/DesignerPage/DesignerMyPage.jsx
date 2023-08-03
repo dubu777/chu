@@ -17,7 +17,7 @@ const ProfileWrapper = styled.div`
   display: flex;
   justify-content: space-around;
 	width: 100%;
-	height: 300px;
+	height: 270px;
 	background-color: #f8f1d9;
   /* font-family: "Blue-road"; */
   /* font-family: "Apple-B";   */
@@ -25,7 +25,7 @@ const ProfileWrapper = styled.div`
 `;
 const ImgBox = styled.div`
   text-align: center;
-  margin-top: 130px;
+  margin-top: 110px;
 `;
 
 const NameText = styled.h1`
@@ -35,7 +35,6 @@ const NameText = styled.h1`
 const Text = styled.p`
   margin-bottom: 20px;
   font-size: large;
-  
 `;
 const HashTag = styled.button`
   border: 0;
@@ -50,14 +49,14 @@ const InfoBox = styled.div`
   /* border: solid 2px;
   border-color: #afadaa; */
   width: 30%;
-  margin-top: 185px;
+  margin-top: 155px;
   margin-left: -120px;
 `;
 const ChangeBox = styled.div`
   /* border: solid 2px;
   border-color: #afadaa; */
   width: 30%;
-  margin-top: 240px;
+  margin-top: 220px;
   text-align: right;
 `;
 
@@ -91,17 +90,22 @@ const TextBox = styled.div`
 
 const Box = styled.div`
   min-height: 500px;
-  height: 50%px;
+  height: 75%;
   border: 0;
   background-color: #F9F5F0;
-  margin-bottom: 50px;
+  padding-bottom: 20px;
+  margin-bottom: 60px;
 `;
 
 const ClickBtn = styled.button`
   height: 40px;
   padding: 0px 25px;
-  /* border-color: #83807a; */
-  background-color: ${(props) => props.bgcolor || "#f8f3ed"};
+  border-bottom-color: white;
+  border: 2px solid white;
+  background-color: ${({ isActive }) => (isActive ? '#F9F5F0' : '#F2EAD3')};
+  border-left-color: ${({ isActive }) => (isActive ? '#645D51' : '#F2EAD3')};
+  border-top-color: ${({ isActive }) => (isActive ? '#645D51' : '#F2EAD3')};
+  border-right-color: ${({ isActive }) => (isActive ? '#645D51' : '#F2EAD3')};
   border-bottom: white;
   border-radius: 0.6rem 0.6rem 0rem 0rem;
 `
@@ -126,27 +130,11 @@ function DesignerMyPage(){
             "14:00"
         ]
   });
-  const [showCalendar, setShowCalendar] = useState(true); // 상담 캘린더
-  const [showReserveList, setShowReserveList] = useState(false); // 예약 목록
-  const [showPortfolio, setShowPortfolio] = useState(false); // 포트폴리오
+  const [activeBtn, setActiveBtn] = useState('calendar'); // 'recent' or 'designer'
 
-  function handleShowCalendar() {
-    setShowCalendar(true);
-    setShowReserveList(false);
-    setShowPortfolio(false);
-  }
-
-  function handelShowReserveList() {
-    setShowCalendar(false);
-    setShowReserveList(true);
-    setShowPortfolio(false);
-  }
-
-  function handleShowPortfolio() {
-    setShowCalendar(false);
-    setShowReserveList(false);
-    setShowPortfolio(true);
-  }
+  const handleBtnClick = (btnType) => {
+    setActiveBtn(btnType);
+  };
 
 
   return(
@@ -176,28 +164,25 @@ function DesignerMyPage(){
 {/* 여기는 탭 작동 */}
         <Wrapper>
           <ClickBtn 
-            onClick={handleShowCalendar} 
-            bgcolor={showCalendar ? "#F9F5F0" : "#f5ebb8"}
-            border = {showCalendar ? " ":"#898773 #898773 none #898773" }
+            isActive={activeBtn === 'calendar'} 
+            onClick={() => handleBtnClick('calendar')}
             >상담 캘린더
           </ClickBtn>
           <ClickBtn 
-            onClick={handelShowReserveList} 
-            bgcolor={showReserveList ? "#F9F5F0" : "#f5ebb8"}
-            border = {showReserveList ? " ":"#898773 #898773 none #898773" }
+            isActive={activeBtn === 'reserve'} 
+            onClick={() => handleBtnClick('reserve')}
             >예약 관리
           </ClickBtn>
           <ClickBtn 
-            onClick={handleShowPortfolio} 
-            bgcolor={showPortfolio ? "#F9F5F0" : "#f5ebb8"}
-            border = {showPortfolio ? " ":"#898773 #898773 none #898773" }
+            isActive={activeBtn === 'pofol'} 
+            onClick={() => handleBtnClick('pofol')}
             >포트폴리오
           </ClickBtn>
           <Box>
             {/* 앞의 조건이 true일 때 뒤의 컴포넌트 보여주기 */}
-            {showCalendar && <ReserveCalendar />}
-            {showReserveList && <AllReserveList />}
-            {showPortfolio && <Portfolio />}
+            {activeBtn === 'calendar' && <ReserveCalendar />}
+            {activeBtn === 'reserve' && <AllReserveList />}
+            {activeBtn === 'pofol' && <Portfolio />}
           </Box>
         </Wrapper>
     </Container>

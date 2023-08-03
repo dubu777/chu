@@ -28,6 +28,7 @@
     "react-select": "^5.7.4",
     "react-slick": "^0.29.0",
     "recoil": "^0.7.7",
+    "recoil-persist": "^5.1.0",
     "slick-carousel": "^1.8.1",
     "styled-components": "^6.0.4",
     "sweetalert": "^2.1.2",

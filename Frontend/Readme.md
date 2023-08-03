@@ -47,3 +47,11 @@ onClick={()=> swal("메세지")}
 
 1. ```npm install react-calendar```
 2. ```npm install moment --save ```
+
+
+#### Main Margin
+```
+margin-left: 150px;
+margin-right: 150px;
+
+```
