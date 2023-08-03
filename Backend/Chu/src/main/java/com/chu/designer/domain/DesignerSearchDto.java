@@ -1,52 +1,39 @@
 package com.chu.designer.domain;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.List;
+import java.util.Objects;
 
-// 디자이너의 정보를 담고 있는 가장 많이 쓰이는 DTO
+// 디자이너의 정보를 담고 있는 DTO
 @Getter @Setter
+@ToString
 public class DesignerSearchDto {
 
-    private Integer seq;
+    private Integer designerSeq;
+    private String designerImg;
+    private Double reviewScore;
+    private String designerName;
+    private String introduction;
+    private Integer reviewCnt;
+    private List<String> hairStyleLabel;
+    private Integer likeCnt;
+    private Boolean isLike;
+    private Integer cost;
 
-    //private String savedImgName;
-
-    //private Float reviewScore;
-
-    private String name;
-
-    public DesignerSearchDto(Designer designer) {
-        this.seq = designer.getSeq();
-        this.name = designer.getName();
+    public DesignerSearchDto(Designer designer, Integer likeCnt, Integer reviewCnt, List<String> hairStyleLabels, Double reviewScore, Boolean isLike) {
+        this.designerSeq = designer.getSeq();
+        this.designerImg = (designer.getImagePath() != null) ? designer.getImagePath().getSavedImgName() : null;
+        this.reviewScore = (reviewScore==null) ? 0.0 : reviewScore;
+        this.designerName = designer.getName();
+        this.introduction = designer.getIntroduction();
+        this.hairStyleLabel = hairStyleLabels;
+        this.likeCnt = likeCnt;
+        this.reviewCnt = reviewCnt;
+        this.cost = designer.getCost();
+        this.isLike = isLike;
     }
-
-    //private String introduction;
-
-//    private Integer reviewCnt;
-
-//    private List<String> hairStyleLabel;
-
-//    private Integer likeCnt;
-
-//    private Integer cost;
-
-
-
-//            "designerSeq" : 1,
-//            "designerImg" : "Img1.png",
-//            "reviewScore" : 4.9,
-//            "designerName" : "재현",
-//            "introduction" : "남자 펌, 아이롱펌 전문 디자이너 재현입니다. ",
-//            "reviewCnt" : 132,
-//            "hairStyleLabel" : [
-//        "시스루펌",
-//                "아이롱펌"
-//                ],
-//        "likeCnt" : 56,
-//            "isLike" : true,
-//            "cost" : 5000
 
 }

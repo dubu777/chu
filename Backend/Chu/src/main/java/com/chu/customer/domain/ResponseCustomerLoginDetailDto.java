@@ -1,23 +1,21 @@
 package com.chu.customer.domain;
 
-
 import com.chu.global.domain.ResponseBestDesignerDto;
 import com.chu.global.domain.FaceImageNameDto;
+import com.chu.global.domain.TokenDto;
+import lombok.Data;
 
 import java.util.ArrayList;
+import java.util.List;
 
+@Data
 public class ResponseCustomerLoginDetailDto {
-    //        "customerSeq" : 1,
-
-//            "name" : "김싸피",
-
-    ArrayList<ResponseBestDesignerDto> bestDesigner;
-    //        "faceSeq" : "둥근 얼굴형",
-    ArrayList<FaceImageNameDto> faceImg;
-
-    ArrayList<FaceImageNameDto> statistics;
-
+    TokenDto token;
+    String userType = "customer";
+    ResponseCustomerLoginInfoDto customerInfo;
+    List<ResponseBestDesignerDto> bestDesigner;
+    List<FaceImageNameDto> recommendImg;
+    ArrayList<FaceImageNameDto> statisticsImg;
     ArrayList<AlertCustomerOnLoginDto> alert;
 
-//    "profileImg" : "profileImg1.png"
 }

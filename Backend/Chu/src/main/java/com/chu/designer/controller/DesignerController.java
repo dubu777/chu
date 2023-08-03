@@ -23,7 +23,7 @@ public class DesignerController {
         log.info(requestDesignerSignUpDto.toString());
         boolean isSuccess = designerService.signUp(requestDesignerSignUpDto);
 
-        if (isSuccess) {
+        if(isSuccess) {
             ResponseDesignerLoginDetailDto responseDesignerLoginDetailDto = designerService.getLoginDesignerDetail(requestDesignerSignUpDto.getId());
             HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseDesignerLoginDetailDto);
             return ResponseEntity.ok(httpResponseDto);

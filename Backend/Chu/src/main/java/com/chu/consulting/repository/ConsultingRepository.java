@@ -1,32 +1,44 @@
 package com.chu.consulting.repository;
 
 import com.chu.consulting.domain.*;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
-public interface ConsultingRepository {
+import java.util.List;
 
-    String participantConsulting(int consultingSeq);
+public interface ConsultingRepository extends JpaRepository<Consulting, Integer> {
+    Integer countByDesignerSeq(Integer seq);
 
-    boolean createConsulting(RequestConsultingDto requestConsultingDto);
 
-    boolean updatePossibleConsulting(int consultingSeq);
+    @Query(value = "SELECT c.designer.seq, AVG(c.review.reviewScore)" +
+            " FROM Consulting c" +
+            " GROUP BY c.designer.seq")
+    List<Object[]> getReviewScoreByDesigner();
 
-    boolean deleteConsulting(int consultingSeq);
 
-    boolean updateImpossibleConsulting(RequestConsultingDto requestConsultingDto);
-
-    ResponseConsultingResultDto getConsultingResult(int consultingSeq);
-
-    boolean updateConsultingUrl(int consultingSeq, String url);
-
-    boolean updateReviewContent(RequestConsultingReviewDto requestConsultingReviewDto);
-
-    boolean updateLikeInfo(RequestConsultingReviewDto requestConsultingReviewDto);
-
-    boolean updateDesignerReviewScore(RequestConsultingReviewDto requestConsultingReviewDto);
-
-    ResponseConsultingReviewInfoDto getConsultingResultDetailInfo(int consultingSeq);
-
-    boolean updateConsultingResultStyle(RequestConsultingUpdateDto requestConsultingUpdateDto);
-
-    boolean updateSelectedConsultingResultImage(RequestConsultingUpdateDto requestConsultingUpdateDto);
+//    String participantConsulting(int consultingSeq);
+//
+//    boolean createConsulting(RequestConsultingDto requestConsultingDto);
+//
+//    boolean updatePossibleConsulting(int consultingSeq);
+//
+//    boolean deleteConsulting(int consultingSeq);
+//
+//    boolean updateImpossibleConsulting(RequestConsultingDto requestConsultingDto);
+//
+//    ResponseConsultingResultDto getConsultingResult(int consultingSeq);
+//
+//    boolean updateConsultingUrl(int consultingSeq, String url);
+//
+//    boolean updateReviewContent(RequestConsultingReviewDto requestConsultingReviewDto);
+//
+//    boolean updateLikeInfo(RequestConsultingReviewDto requestConsultingReviewDto);
+//
+//    boolean updateDesignerReviewScore(RequestConsultingReviewDto requestConsultingReviewDto);
+//
+//    ResponseConsultingReviewInfoDto getConsultingResultDetailInfo(int consultingSeq);
+//
+//    boolean updateConsultingResultStyle(RequestConsultingUpdateDto requestConsultingUpdateDto);
+//
+//    boolean updateSelectedConsultingResultImage(RequestConsultingUpdateDto requestConsultingUpdateDto);
 }

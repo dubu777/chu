@@ -1,9 +1,6 @@
 package com.chu.designer.controller;
 
-import com.chu.designer.domain.ResponseDesignerDetailInfoDto;
-import com.chu.designer.domain.ResponseDesignerSearchAreaDto;
-import com.chu.designer.domain.DesignerSearchDto;
-import com.chu.designer.domain.ResponseDesignerSearchDto;
+import com.chu.designer.domain.*;
 import com.chu.designer.service.DesignerSearchService;
 import com.chu.global.domain.HttpResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -12,15 +9,82 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Slf4j
 @RestController
 @RequestMapping("/designer/search")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000")
 public class DesignerSearchController {
 
     private final DesignerSearchService designerSearchService;
+
+    @GetMapping("/review-score")
+    public ResponseEntity<HttpResponseDto> search2ReviewScore(@RequestParam int customerSeq){
+
+        ResponseDesignerSearchDto responseDesignerSearchDto = new ResponseDesignerSearchDto();
+        List<HairStyleDto> allCutHairStyle = designerSearchService.showCategoryView(1);
+        List<HairStyleDto> allPermHairStyle = designerSearchService.showCategoryView(2);
+
+        responseDesignerSearchDto.setAllCutHairStyle(allCutHairStyle);
+        responseDesignerSearchDto.setAllPermHairStyle(allPermHairStyle);
+
+        List<DesignerSearchDto> designerSearchDtoList = designerSearchService.searchList(customerSeq);
+
+        if(designerSearchDtoList.size() != 0) {
+            //dto 평점 순으로 정렬
+            Collections.sort(designerSearchDtoList, Comparator.comparingDouble(DesignerSearchDto::getReviewScore).reversed());
+            responseDesignerSearchDto.setDesignerListCnt(designerSearchDtoList.size());
+            responseDesignerSearchDto.setDesignerList(designerSearchDtoList);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseDesignerSearchDto);
+            return ResponseEntity.ok(httpResponseDto);
+        } else {
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
+        }
+    }
+
+    @GetMapping("/like-cnt")
+    public ResponseEntity<HttpResponseDto> search2LikeCount(@RequestParam int customerSeq) {
+
+        ResponseDesignerSearchDto responseDesignerSearchDto = new ResponseDesignerSearchDto();
+        List<DesignerSearchDto> designerSearchDtoList = designerSearchService.searchList(customerSeq);
+
+        if(designerSearchDtoList.size() != 0){
+            //좋아요 순으로 정렬
+            Collections.sort(designerSearchDtoList, Comparator.comparingDouble(DesignerSearchDto::getLikeCnt).reversed());
+            responseDesignerSearchDto.setDesignerListCnt(designerSearchDtoList.size());
+            responseDesignerSearchDto.setDesignerList(designerSearchDtoList);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseDesignerSearchDto);
+            return ResponseEntity.ok(httpResponseDto);
+        }
+        else{
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
+        }
+    }
+
+//    @GetMapping("/filter")
+//    public ResponseEntity<HttpResponseDto> search2Filter(@RequestParam("hairStyle") Integer[] hairStyleSeq,
+//                                                         @RequestParam int customerSeq) {
+//        List<DesignerSearchDto> designerSearchDtoList = designerSearchService.search2Filter(customerSeq, hairStyleSeq);
+//
+//        if(designerSearchDtoList.size() != 0){
+//            ResponseDesignerSearchDto responseDesignerSearchDto = new ResponseDesignerSearchDto();
+//            responseDesignerSearchDto.setDesignerListCnt(designerSearchDtoList.size());
+//            responseDesignerSearchDto.setDesignerList(designerSearchDtoList);
+//            HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseDesignerSearchDto);
+//            return ResponseEntity.ok(httpResponseDto);
+//        }
+//        else{
+//            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+//            return ResponseEntity.ok(httpResponseDto);
+//        }
+//    }
+
 //    @GetMapping("/name")
 //    public ResponseEntity<HttpResponseDto> search2Name(@RequestParam int customerSeq, @RequestParam String name){
 //
@@ -38,57 +102,7 @@ public class DesignerSearchController {
 //            return ResponseEntity.ok(httpResponseDto);
 //        }
 //    }
-//
-//    @GetMapping("/filter")
-//    public ResponseEntity<HttpResponseDto> search2Filter(@RequestParam("hairStyle") String[] hairStyle, @RequestParam int customerSeq){
-//        List<DesignerSearchDto> designerSearchDtoList = designerSearchService.search2Filter(customerSeq, hairStyle);
-//
-//        if(designerSearchDtoList.size() != 0){
-//            ResponseDesignerSearchDto responseDesignerSearchDto = new ResponseDesignerSearchDto();
-//            responseDesignerSearchDto.setDesignerListCnt(designerSearchDtoList.size());
-//            responseDesignerSearchDto.setDesignerList(designerSearchDtoList);
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseDesignerSearchDto);
-//            return ResponseEntity.ok(httpResponseDto);
-//        }
-//        else{
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
-//            return ResponseEntity.ok(httpResponseDto);
-//        }
-//    }
 
-    @GetMapping("/review-score")
-    public ResponseEntity<HttpResponseDto> search2ReviewScore(@RequestParam int customerSeq){
-        List<DesignerSearchDto> designerSearchDtoList = designerSearchService.search2ReviewScore(customerSeq);
-
-        if(designerSearchDtoList.size() != 0){
-            ResponseDesignerSearchDto responseDesignerSearchDto = new ResponseDesignerSearchDto();
-            responseDesignerSearchDto.setDesignerListCnt(designerSearchDtoList.size());
-            responseDesignerSearchDto.setDesignerList(designerSearchDtoList);
-            HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseDesignerSearchDto);
-            return ResponseEntity.ok(httpResponseDto);
-        } else{
-            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
-            return ResponseEntity.ok(httpResponseDto);
-        }
-    }
-
-//    @GetMapping("/like-cnt")
-//    public ResponseEntity<HttpResponseDto> search2LikeCount(@RequestParam int customerSeq){
-//        List<DesignerSearchDto> designerSearchDtoList = designerSearchService.search2LikeCount(customerSeq);
-//
-//        if(designerSearchDtoList.size() != 0){
-//            ResponseDesignerSearchDto responseDesignerSearchDto = new ResponseDesignerSearchDto();
-//            responseDesignerSearchDto.setDesignerListCnt(designerSearchDtoList.size());
-//            responseDesignerSearchDto.setDesignerList(designerSearchDtoList);
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseDesignerSearchDto);
-//            return ResponseEntity.ok(httpResponseDto);
-//        }
-//        else{
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
-//            return ResponseEntity.ok(httpResponseDto);
-//        }
-//    }
-//
 //    @GetMapping("/around")
 //    public ResponseEntity<HttpResponseDto> search2AllArea(){
 //        List<ResponseDesignerSearchAreaDto> responseDesignerSearchAreaDtoList = designerSearchService.search2AllArea();
@@ -103,6 +117,7 @@ public class DesignerSearchController {
 //        }
 //    }
 //
+//    //
 //    @GetMapping("/detail")
 //    public ResponseEntity<HttpResponseDto> getDesignerDetailInfo(@PathVariable("designer-seq") int designerSeq, @RequestParam int customerSeq){
 //
