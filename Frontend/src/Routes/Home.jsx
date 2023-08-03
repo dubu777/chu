@@ -7,7 +7,6 @@ import { motion,AnimatePresence,useAnimation }from "framer-motion";
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  
 `;
 const Main = styled.img`
   width: 100vw;
@@ -25,6 +24,19 @@ const ImgText = styled.h2`
   position: absolute;
   top: 50%;
   left: 40%;
+  overflow: hidden;
+  animation: fadein 7s ease-in-out;
+  @keyframes ImgText{
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 3;
+      transform: none;
+      
+    }
+  }
 `;
 const DesignerBox = styled.div`
   display: flex;
