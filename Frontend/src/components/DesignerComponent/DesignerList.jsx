@@ -112,7 +112,91 @@ function DesignerList() {
   const handleLikeClick = () => {
     setLiked((prevLiked) => !prevLiked); // 좋아요 상태를 토글
   };
-  const {data, isLoading} = useQuery(["byRating"], getByRating)
+  // const {data, isLoading} = useQuery(["byRating"], getByRating)
+  const [data, setData] = useState(
+    {
+      "allCutHairStyle": [
+          {
+              "hairStyleSeq": 1,
+              "hairStyleLabel": "젤리펌"
+          },
+          {
+              "hairStyleSeq": 2,
+              "hairStyleLabel": "히피펌"
+          },
+          {
+              "hairStyleSeq": 3,
+              "hairStyleLabel": "가르마펌"
+          },
+          {
+              "hairStyleSeq": 4,
+              "hairStyleLabel": "쉐도우펌"
+          }
+      ],
+      "allPermHairStyle": [
+          {
+              "hairStyleSeq": 5,
+              "hairStyleLabel": "레이어드컷"
+          },
+          {
+              "hairStyleSeq": 6,
+              "hairStyleLabel": "허쉬컷"
+          },
+          {
+              "hairStyleSeq": 7,
+              "hairStyleLabel": "가일컷"
+          },
+          {
+              "hairStyleSeq": 8,
+              "hairStyleLabel": "울프컷"
+          }
+      ],
+      "designerListCnt": 3,
+      "designerList": [
+          {
+              "designerSeq": 1,
+              "designerImg": "202307211500",
+              "reviewScore": 4.5,
+              "designerName": "원영",
+              "introduction": "여성 펌 전문 디자이너 원영입니다 ^_^",
+              "reviewCnt": 3,
+              "hairStyleLabel": [
+                  "젤리펌",
+                  "히피펌",
+                  "가르마펌",
+                  "쉐도우펌"
+              ],
+              "likeCnt": 1,
+              "isLike": true,
+              "cost": 5000
+          },
+          {
+              "designerSeq": 2,
+              "designerImg": "202307211503",
+              "reviewScore": 0.0,
+              "designerName": "시영",
+              "introduction": "남성 커트 전문 디자이너 시영입니다.",
+              "reviewCnt": 1,
+              "hairStyleLabel": [],
+              "likeCnt": 0,
+              "isLike": false,
+              "cost": 7000
+          },
+          {
+              "designerSeq": 3,
+              "designerImg": "202307211505",
+              "reviewScore": 5.0,
+              "designerName": "승종",
+              "introduction": "남성 펌 전문 디자이너 승종입니다.",
+              "reviewCnt": 1,
+              "hairStyleLabel": [],
+              "likeCnt": 0,
+              "isLike": false,
+              "cost": 6000
+          }
+      ]
+  }
+  )
   return (
     <Container>
       <Hr/>

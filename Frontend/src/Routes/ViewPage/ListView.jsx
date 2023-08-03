@@ -36,8 +36,8 @@ const SelectedBox = styled.div`
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  margin-bottom: 10px;
-  padding-bottom: 10px;
+  /* margin-bottom: 5px;
+  padding-bottom: 5px; */
 `;
 const HashTag = styled(motion.span)`
   font-size: 12px;
