@@ -1,9 +1,10 @@
 import { styled } from "styled-components";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import DesignerList from "../../components/DesignerComponent/DesignerList";
 import axios from "axios";
+
 
 
 const Container = styled.div`
@@ -141,53 +142,66 @@ const SearchImg = styled.img`
 `;
 function ListView() {
   const repeat = [1,2,3]
-  const cutType = ["레이어드컷", "히메컷", "투블럭", "시스루컷", "허쉬컷", "슬릭컷"]
-  const permType = ["아이롱펌", "시스루펌", "C컬", "볼륨펌", "쉐도우펌", "베이비펌"]
-  const [selectedCut, setSelectedCut] = useState([]);
-  const [selectedPerm, setSelectedPerm] = useState([]);
-  const [data, setData] = useState([]);
-  const toggleCutType = (tag) => {
-    if (selectedCut.includes(tag)) {
-      setSelectedCut((prev) => prev.filter((resist) => resist !== tag))
+  const [data, setData] = useState("");
+  const [selectedStyle, setSelectedStyle] = useState([]);
+
+  const dataTest = () => {
+    axios.get('http://localhost:8081')
+      .then(response => {
+        setData(response.data);
+      });
+  }
+  console.log(data);
+  }
+  const toggleStyleType = (tag) => {
+    // 선택된 태그를 { hairStyleSeq, hairStyleLabel } 형식의 객체로 생성
+    const selectedTag = {
+      'hairStyleSeq': tag.hairStyleSeq,
+      'hairStyleLabel': tag.hairStyleLabel,
+    };
+
+    // selectedStyle 배열에 이미 해당 태그가 포함되어 있는지 검사
+    const isTagSelected = selectedStyle.some(
+      (selectedTag) => selectedTag.hairStyleSeq === tag.hairStyleSeq
+    );
+  
+    if (isTagSelected) {
+      // 이미 선택된 태그인 경우, 해당 태그를 제거합니다.
+      setSelectedStyle((prev) =>
+        prev.filter((selectedTag) => selectedTag.hairStyleSeq !== tag.hairStyleSeq)
+      );
     } else {
-      setSelectedCut((prev) => [...prev, tag]);
+      // 선택되지 않은 태그인 경우, 해당 태그를 추가합니다.
+      setSelectedStyle((prev) => [...prev, selectedTag]);
     }
   };
-  const togglePermType = (tag) => {
-    if (selectedPerm.includes(tag)) {
-      setSelectedPerm((prev) => prev.filter((resist) => resist !== tag))
-    } else {
-      setSelectedPerm((prev) => [...prev, tag]);
-    }
-  };
+
+
   const [activeBtn, setActiveBtn] = useState(null); // 초기 상태는 아무 버튼도 선택되지 않은 상태로 설정
-  const dataObject = {
-    "customerSeq" : 2
-  };
+  // const dataObject = {
+  //   "customerSeq" : 2
+  // };
   const handleBtnClick = async (btnName) => {
     if (activeBtn === btnName) {
       setActiveBtn(null); // 이미 선택된 버튼을 누르면 선택 해제
     } else {
       setActiveBtn(btnName); // 새로운 버튼 선택
     }
-  
-    if (btnName === "평점순") {
-      try {
-
-        const response = await axios.get("https://api.example.com/designers/sortByRating", { params: dataObject });
-        console.log(response.data);
-        return response.data
-      } catch (error) {
-        console.error(error);
-      }
-    }
   };
   const [handleMap, setHandleMap] = useState(false);
   const toggleMap = () => {
     setHandleMap((prev) => !prev);
   };
+  // selectedStyle 배열의 변경 상태를 확인하고 콘솔에 출력
+  // 백엔드로 보내야 할 통신 데이터
+  useEffect(() => {
+    const hairStyleSeqNumbers = selectedStyle.map((tag) => tag.hairStyleSeq);
+    console.log("hairStyleSeq numbers:", hairStyleSeqNumbers);
+  }, [selectedStyle]);
+  
   return (
     <Container>
+      <button onClick={dataTest}>데이터받아오기</button>
       <Box>
       <SearchBox>
         <SearchImg src="./icon/search.png"/>
@@ -198,59 +212,48 @@ function ListView() {
       <Grid>
         <SelectText>커트</SelectText>
         <SelectBox>
-          {
-            cutType.map((tag, index) => (
-              <HashTag
-                key={index}
-                onClick={() => toggleCutType(tag)}
-                selected={selectedCut.includes(tag)}
-              >
-                #{tag}
-              </HashTag>
-            ))
-          }
+          {data.allCutHairStyle.map((tag) => (
+  <HashTag
+    key={tag.hairStyleSeq}
+    onClick={(e) => {e.stopPropagation(); toggleStyleType(tag);}}
+    selected={selectedStyle.some(
+      (selectedTag) => selectedTag.hairStyleSeq === tag.hairStyleSeq
+    )}
+  >
+    #{tag.hairStyleLabel}
+  </HashTag>
+))}
         </SelectBox>
         <SelectText>펌</SelectText>
         <SelectBox>
-          {
-            permType.map((tag, index) => (
-              <HashTag
-                key={index}
-                onClick={() => togglePermType(tag)}
-                selected={selectedPerm.includes(tag)}
-              >
-                #{tag}
-              </HashTag>
-            ))
-          }
+        {data.allPermHairStyle.map((tag) => (
+  <HashTag
+    key={tag.hairStyleSeq}
+    onClick={(e) => {e.stopPropagation(); toggleStyleType(tag);}}
+    selected={selectedStyle.some(
+      (selectedTag) => selectedTag.hairStyleSeq === tag.hairStyleSeq
+    )}
+  >
+    #{tag.hairStyleLabel}
+  </HashTag>
+))}
         </SelectBox>
         <SelectedText>선택</SelectedText>
         <SelectedBox>
-        {
-          selectedCut.map((tag, index) => (
-            <HashTag
-              key={index}
-              onClick={() => toggleCutType(tag)}
-              selected={selectedCut.includes(tag)}
-            >
-              #{tag}
-            </HashTag>
-          ))
-        }
+        {selectedStyle.map((tag) => (
+  <HashTag
+    key={tag.hairStyleSeq}
+    onClick={(e) => {e.stopPropagation(); toggleStyleType(tag);}}
+    selected={selectedStyle.some(
+      (selectedTag) => selectedTag.hairStyleSeq === tag.hairStyleSeq
+    )}
+  >
+    #{tag.hairStyleLabel}
+  </HashTag>
+))}
       </SelectedBox>
       <SelectedText></SelectedText>
       <SelectedBox>
-        {
-          selectedPerm.map((tag, index) => (
-            <HashTag 
-              key={index}
-              onClick={() => togglePermType(tag)}
-              selected={selectedPerm.includes(tag)}
-            >
-              #{tag}
-            </HashTag>
-          ))
-        }
       </SelectedBox>
       </Grid>
       </Wrapper>
@@ -283,11 +286,7 @@ function ListView() {
       </MapBtn>
       </BtnBox>
       </BtnWrapper>
-      {
-        repeat.map((i) => (
-          <DesignerList key={i} />
-        ))
-      }
+          <DesignerList data={data}  />
     </Container>
   )
 }

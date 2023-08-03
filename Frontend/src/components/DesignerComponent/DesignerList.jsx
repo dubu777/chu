@@ -105,99 +105,100 @@ const LikeBtn = styled.img`
   margin-right: 10px;
   cursor: pointer;
 `;
-function DesignerList() {
-  const hashTag = ["레이어드컷", "히피펌", "아이롱펌"]
+function DesignerList({data}) {
   const [liked, setLiked] = useState(false); // 좋아요 상태를 state로 관리
   const handleLikeClick = () => {
     setLiked((prevLiked) => !prevLiked); // 좋아요 상태를 토글
   };
   // const {data, isLoading} = useQuery(["byRating"], getByRating)
-  const [data, setData] = useState(
-    {
-      "allCutHairStyle": [
-          {
-              "hairStyleSeq": 1,
-              "hairStyleLabel": "젤리펌"
-          },
-          {
-              "hairStyleSeq": 2,
-              "hairStyleLabel": "히피펌"
-          },
-          {
-              "hairStyleSeq": 3,
-              "hairStyleLabel": "가르마펌"
-          },
-          {
-              "hairStyleSeq": 4,
-              "hairStyleLabel": "쉐도우펌"
-          }
-      ],
-      "allPermHairStyle": [
-          {
-              "hairStyleSeq": 5,
-              "hairStyleLabel": "레이어드컷"
-          },
-          {
-              "hairStyleSeq": 6,
-              "hairStyleLabel": "허쉬컷"
-          },
-          {
-              "hairStyleSeq": 7,
-              "hairStyleLabel": "가일컷"
-          },
-          {
-              "hairStyleSeq": 8,
-              "hairStyleLabel": "울프컷"
-          }
-      ],
-      "designerListCnt": 3,
-      "designerList": [
-          {
-              "designerSeq": 1,
-              "designerImg": "202307211500",
-              "reviewScore": 4.5,
-              "designerName": "원영",
-              "introduction": "여성 펌 전문 디자이너 원영입니다 ^_^",
-              "reviewCnt": 3,
-              "hairStyleLabel": [
-                  "젤리펌",
-                  "히피펌",
-                  "가르마펌",
-                  "쉐도우펌"
-              ],
-              "likeCnt": 1,
-              "isLike": true,
-              "cost": 5000
-          },
-          {
-              "designerSeq": 2,
-              "designerImg": "202307211503",
-              "reviewScore": 0.0,
-              "designerName": "시영",
-              "introduction": "남성 커트 전문 디자이너 시영입니다.",
-              "reviewCnt": 1,
-              "hairStyleLabel": [],
-              "likeCnt": 0,
-              "isLike": false,
-              "cost": 7000
-          },
-          {
-              "designerSeq": 3,
-              "designerImg": "202307211505",
-              "reviewScore": 5.0,
-              "designerName": "승종",
-              "introduction": "남성 펌 전문 디자이너 승종입니다.",
-              "reviewCnt": 1,
-              "hairStyleLabel": [],
-              "likeCnt": 0,
-              "isLike": false,
-              "cost": 6000
-          }
-      ]
-  }
-  )
+  // const [data, setData] = useState(
+  //   {
+  //     "allCutHairStyle": [
+  //         {
+  //             "hairStyleSeq": 1,
+  //             "hairStyleLabel": "젤리펌"
+  //         },
+  //         {
+  //             "hairStyleSeq": 2,
+  //             "hairStyleLabel": "히피펌"
+  //         },
+  //         {
+  //             "hairStyleSeq": 3,
+  //             "hairStyleLabel": "가르마펌"
+  //         },
+  //         {
+  //             "hairStyleSeq": 4,
+  //             "hairStyleLabel": "쉐도우펌"
+  //         }
+  //     ],
+  //     "allPermHairStyle": [
+  //         {
+  //             "hairStyleSeq": 5,
+  //             "hairStyleLabel": "레이어드컷"
+  //         },
+  //         {
+  //             "hairStyleSeq": 6,
+  //             "hairStyleLabel": "허쉬컷"
+  //         },
+  //         {
+  //             "hairStyleSeq": 7,
+  //             "hairStyleLabel": "가일컷"
+  //         },
+  //         {
+  //             "hairStyleSeq": 8,
+  //             "hairStyleLabel": "울프컷"
+  //         }
+  //     ],
+  //     "designerListCnt": 3,
+  //     "designerList": [
+  //         {
+  //             "designerSeq": 1,
+  //             "designerImg": "202307211500",
+  //             "reviewScore": 4.5,
+  //             "designerName": "원영",
+  //             "introduction": "여성 펌 전문 디자이너 원영입니다 ^_^",
+  //             "reviewCnt": 3,
+  //             "hairStyleLabel": [
+  //                 "젤리펌",
+  //                 "히피펌",
+  //                 "가르마펌",
+  //                 "쉐도우펌"
+  //             ],
+  //             "likeCnt": 1,
+  //             "isLike": true,
+  //             "cost": 5000
+  //         },
+  //         {
+  //             "designerSeq": 2,
+  //             "designerImg": "202307211503",
+  //             "reviewScore": 0.0,
+  //             "designerName": "시영",
+  //             "introduction": "남성 커트 전문 디자이너 시영입니다.",
+  //             "reviewCnt": 1,
+  //             "hairStyleLabel": [],
+  //             "likeCnt": 0,
+  //             "isLike": false,
+  //             "cost": 7000
+  //         },
+  //         {
+  //             "designerSeq": 3,
+  //             "designerImg": "202307211505",
+  //             "reviewScore": 5.0,
+  //             "designerName": "승종",
+  //             "introduction": "남성 펌 전문 디자이너 승종입니다.",
+  //             "reviewCnt": 1,
+  //             "hairStyleLabel": [],
+  //             "likeCnt": 0,
+  //             "isLike": false,
+  //             "cost": 6000
+  //         }
+  //     ]
+  // }
+  // )
   return (
-    <Container>
+    <div>
+    {data.designerList.map((item) => (
+    <Container key={item.designerSeq}>
       <Hr/>
       <Wrap>
       <Wrapper>
@@ -205,12 +206,12 @@ function DesignerList() {
           <DesignerImg src="./icon/designerimg.png"/>
         </Box>
         <InfoBox>
-          <Name>재현 디자이너</Name>
-          <Intro>남자 펌, 아이롱펌 전문 디자이너 재현입니다.</Intro>
-          <Reviewer>방문자 리뷰 132</Reviewer>
+          <Name>{item.designerName}디자이너</Name>
+          <Intro>{item.introduction}</Intro>
+          <Reviewer>방문자 리뷰{item.reviewCnt}</Reviewer>
           <Box>
             {
-              hashTag.map((tag, index) => (
+              item.hairStyleLabel.map((tag, index) => (
                 <HashTag key={index} >#{tag}</HashTag>
               ))
             }
@@ -222,23 +223,25 @@ function DesignerList() {
             </ReservBox>
             <CostBox>
               <Icon src="./icon/money.png"/>
-              <Text>10,000</Text>
+              <Text>{item.cost}</Text>
             </CostBox>
           </Box>
         </InfoBox>
       </Wrapper>
       <LikeBox>
-        {liked ? (
+        {item.liked ? (
           // 좋아요가 눌려있을 때 빨간색 하트 아이콘
           <LikeBtn src="./icon/hearto.png" onClick={handleLikeClick}/>
         ) : (
           // 좋아요가 눌려있지 않을 때 빈 하트 아이콘
           <LikeBtn src="./icon/heartx.png" onClick={handleLikeClick}/>
         )}
-        <Text>132</Text>
+        <Text>{item.likeCnt}</Text>
       </LikeBox>
       </Wrap>
     </Container>
+    ))}
+    </div>
   )
 }
 export default DesignerList;
