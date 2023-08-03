@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Slf4j
@@ -19,6 +21,7 @@ import java.util.List;
 public class DesignerSearchController {
 
     private final DesignerSearchService designerSearchService;
+
 //    @GetMapping("/name")
 //    public ResponseEntity<HttpResponseDto> search2Name(@RequestParam int customerSeq, @RequestParam String name){
 //
@@ -64,12 +67,15 @@ public class DesignerSearchController {
         ResponseDesignerSearchDto responseDesignerSearchDto = new ResponseDesignerSearchDto();
         responseDesignerSearchDto.setAllCutHairStyle(allCutHairStyle);
         responseDesignerSearchDto.setAllPermHairStyle(allPermHairStyle);
-        if(designerSearchDtoList.size() != 0){
+
+        if(designerSearchDtoList.size() != 0) {
+            //dto 평점 순으로 정렬
+            Collections.sort(designerSearchDtoList, Comparator.comparingDouble(DesignerSearchDto::getReviewScore).reversed());
             responseDesignerSearchDto.setDesignerListCnt(designerSearchDtoList.size());
             responseDesignerSearchDto.setDesignerList(designerSearchDtoList);
             HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseDesignerSearchDto);
             return ResponseEntity.ok(httpResponseDto);
-        } else{
+        } else {
             HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
             return ResponseEntity.ok(httpResponseDto);
         }
