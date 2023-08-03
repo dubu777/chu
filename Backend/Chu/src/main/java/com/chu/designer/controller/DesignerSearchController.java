@@ -60,13 +60,14 @@ public class DesignerSearchController {
     @GetMapping("/review-score")
     public ResponseEntity<HttpResponseDto> search2ReviewScore(@RequestParam int customerSeq){
 
+        ResponseDesignerSearchDto responseDesignerSearchDto = new ResponseDesignerSearchDto();
         List<HairStyleDto> allCutHairStyle = designerSearchService.showCategoryView(1);
         List<HairStyleDto> allPermHairStyle = designerSearchService.showCategoryView(2);
-        List<DesignerSearchDto> designerSearchDtoList = designerSearchService.searchList(customerSeq);
 
-        ResponseDesignerSearchDto responseDesignerSearchDto = new ResponseDesignerSearchDto();
         responseDesignerSearchDto.setAllCutHairStyle(allCutHairStyle);
         responseDesignerSearchDto.setAllPermHairStyle(allPermHairStyle);
+
+        List<DesignerSearchDto> designerSearchDtoList = designerSearchService.searchList(customerSeq);
 
         if(designerSearchDtoList.size() != 0) {
             //dto 평점 순으로 정렬
@@ -81,23 +82,26 @@ public class DesignerSearchController {
         }
     }
 
-//    @GetMapping("/like-cnt")
-//    public ResponseEntity<HttpResponseDto> search2LikeCount(@RequestParam int customerSeq){
-//        List<DesignerSearchDto> designerSearchDtoList = designerSearchService.search2LikeCount(customerSeq);
-//
-//        if(designerSearchDtoList.size() != 0){
-//            ResponseDesignerSearchDto responseDesignerSearchDto = new ResponseDesignerSearchDto();
-//            responseDesignerSearchDto.setDesignerListCnt(designerSearchDtoList.size());
-//            responseDesignerSearchDto.setDesignerList(designerSearchDtoList);
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseDesignerSearchDto);
-//            return ResponseEntity.ok(httpResponseDto);
-//        }
-//        else{
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
-//            return ResponseEntity.ok(httpResponseDto);
-//        }
-//    }
-//
+    @GetMapping("/like-cnt")
+    public ResponseEntity<HttpResponseDto> search2LikeCount(@RequestParam int customerSeq) {
+
+        ResponseDesignerSearchDto responseDesignerSearchDto = new ResponseDesignerSearchDto();
+        List<DesignerSearchDto> designerSearchDtoList = designerSearchService.searchList(customerSeq);
+
+        if(designerSearchDtoList.size() != 0){
+            //좋아요 순으로 정렬
+            Collections.sort(designerSearchDtoList, Comparator.comparingDouble(DesignerSearchDto::getLikeCnt).reversed());
+            responseDesignerSearchDto.setDesignerListCnt(designerSearchDtoList.size());
+            responseDesignerSearchDto.setDesignerList(designerSearchDtoList);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseDesignerSearchDto);
+            return ResponseEntity.ok(httpResponseDto);
+        }
+        else{
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
+        }
+    }
+
 //    @GetMapping("/around")
 //    public ResponseEntity<HttpResponseDto> search2AllArea(){
 //        List<ResponseDesignerSearchAreaDto> responseDesignerSearchAreaDtoList = designerSearchService.search2AllArea();
