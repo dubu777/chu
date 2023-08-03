@@ -143,7 +143,7 @@ function WorldcupImgUpload() {
 				) : (
 					/* 파일 이미지가 없을 때 */
 					<Imgbox>
-						<DefaultImg src="/img/file.png"></DefaultImg>
+						<DefaultImg src="/icon/file.png"></DefaultImg>
 						<Text>Style worldcup에 사용할 사진을 업로드 해주세요 :)</Text>
 					</Imgbox>
       	)}
