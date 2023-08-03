@@ -1,10 +1,7 @@
 package com.chu.designer.service;
 
 import com.chu.consulting.repository.ConsultingRepository;
-import com.chu.designer.domain.Designer;
-import com.chu.designer.domain.DesignerLike;
-import com.chu.designer.domain.DesignerSearchDto;
-import com.chu.designer.domain.DesignerTagInfo;
+import com.chu.designer.domain.*;
 import com.chu.designer.repository.DesignerSearchRepository;
 import com.chu.global.domain.HairStyleDict;
 import com.chu.global.repository.DesignerTagInfoRepository;
@@ -17,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -49,13 +47,10 @@ public class DesignerSearchServiceImpl implements DesignerSearchService{
     @Override
     public List<DesignerSearchDto> search2ReviewScore(int customerSeq) {
 
-        // 카테고리 부분
-
-
-
         // 한번에 담아서 보낼 dto 리스트
         List<DesignerSearchDto> result = new ArrayList<>();
-        // 디자이너 엔티티 가져오기
+
+        // 2. 디자이너 엔티티 가져오기
         List<Designer> designers = designerSearchRepository.findAll();
         // 디자이너별 리뷰 평균 점수 가져오기(Integer,Double) [[1, 4.5], [2, 3.8], [3, 4.2] ...]
         List<Object[]> reviewScore = consultingRepository.getReviewScoreByDesigner();
@@ -86,6 +81,18 @@ public class DesignerSearchServiceImpl implements DesignerSearchService{
             reviewScoreSeq++;
         }
         return result;
+    }
+
+    @Override
+    public List<HairStyleDto> showCategoryView(int categorySeq) {
+
+        // 1. 헤어스타일 목록 가져오기
+        List<HairStyleDict> allCutHairStyle = hairStyleDictRepository.findByHairStyleCategorySeq(categorySeq);
+        List<HairStyleDto> tmpResult = new ArrayList<>();
+        for(HairStyleDict hs : allCutHairStyle) {
+            tmpResult.add(new HairStyleDto(hs));
+        }
+        return tmpResult;
     }
 //
 //    @Override

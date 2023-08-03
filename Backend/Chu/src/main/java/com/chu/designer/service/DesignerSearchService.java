@@ -18,6 +18,8 @@ public interface DesignerSearchService {
     // 디자이너 조회 - 리뷰순
     List<DesignerSearchDto> search2ReviewScore(int customerSeq);
 
+    List<HairStyleDto> showCategoryView(int categorySeq);
+
 //    // 디자이너 조회 전체(차후 프론트에서 지역으로 정렬)
 //    List<ResponseDesignerSearchAreaDto> search2AllArea();
 //
