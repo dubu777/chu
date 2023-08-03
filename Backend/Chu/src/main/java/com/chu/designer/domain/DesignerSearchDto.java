@@ -12,10 +12,10 @@ import java.util.Objects;
 @ToString
 public class DesignerSearchDto {
 
-    private Integer seq;
-    private String savedImgName;
+    private Integer designerSeq;
+    private String designerImg;
     private Double reviewScore;
-    private String name;
+    private String designerName;
     private String introduction;
     private Integer reviewCnt;
     private List<String> hairStyleLabel;
@@ -24,10 +24,10 @@ public class DesignerSearchDto {
     private Integer cost;
 
     public DesignerSearchDto(Designer designer, Integer likeCnt, Integer reviewCnt, List<String> hairStyleLabels, Double reviewScore, Boolean isLike) {
-        this.seq = designer.getSeq();
-        this.savedImgName = (designer.getImagePath() != null) ? designer.getImagePath().getSavedImgName() : null;
+        this.designerSeq = designer.getSeq();
+        this.designerImg = (designer.getImagePath() != null) ? designer.getImagePath().getSavedImgName() : null;
         this.reviewScore = (reviewScore==null) ? 0.0 : reviewScore;
-        this.name = designer.getName();
+        this.designerName = designer.getName();
         this.introduction = designer.getIntroduction();
         this.hairStyleLabel = hairStyleLabels;
         this.likeCnt = likeCnt;

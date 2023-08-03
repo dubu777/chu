@@ -9,11 +9,11 @@ import lombok.ToString;
 @ToString
 public class HairStyleDto {
 
-    private Integer seq;
+    private Integer hairStyleSeq;
     private String hairStyleLabel;
 
     public HairStyleDto(HairStyleDict hairStyleDict) {
-        this.seq = hairStyleDict.getSeq();
+        this.hairStyleSeq = hairStyleDict.getSeq();
         this.hairStyleLabel = hairStyleDict.getHairStyleLabel();
     }
 }
