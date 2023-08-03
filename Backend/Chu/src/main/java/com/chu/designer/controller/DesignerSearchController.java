@@ -1,9 +1,6 @@
 package com.chu.designer.controller;
 
-import com.chu.designer.domain.ResponseDesignerDetailInfoDto;
-import com.chu.designer.domain.ResponseDesignerSearchAreaDto;
-import com.chu.designer.domain.DesignerSearchDto;
-import com.chu.designer.domain.ResponseDesignerSearchDto;
+import com.chu.designer.domain.*;
 import com.chu.designer.service.DesignerSearchService;
 import com.chu.global.domain.HttpResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -60,10 +57,14 @@ public class DesignerSearchController {
     @GetMapping("/review-score")
     public ResponseEntity<HttpResponseDto> search2ReviewScore(@RequestParam int customerSeq){
 
-        List<DesignerSearchDto> designerSearchDtoList = designerSearchService.search2ReviewScore(customerSeq);
+        List<HairStyleDto> allCutHairStyle = designerSearchService.showCategoryView(1);
+        List<HairStyleDto> allPermHairStyle = designerSearchService.showCategoryView(2);
+        List<DesignerSearchDto> designerSearchDtoList = designerSearchService.searchList(customerSeq);
 
+        ResponseDesignerSearchDto responseDesignerSearchDto = new ResponseDesignerSearchDto();
+        responseDesignerSearchDto.setAllCutHairStyle(allCutHairStyle);
+        responseDesignerSearchDto.setAllPermHairStyle(allPermHairStyle);
         if(designerSearchDtoList.size() != 0){
-            ResponseDesignerSearchDto responseDesignerSearchDto = new ResponseDesignerSearchDto();
             responseDesignerSearchDto.setDesignerListCnt(designerSearchDtoList.size());
             responseDesignerSearchDto.setDesignerList(designerSearchDtoList);
             HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseDesignerSearchDto);
