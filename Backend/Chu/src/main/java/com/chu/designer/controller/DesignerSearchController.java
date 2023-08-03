@@ -59,7 +59,7 @@ public class DesignerSearchController {
 
         List<HairStyleDto> allCutHairStyle = designerSearchService.showCategoryView(1);
         List<HairStyleDto> allPermHairStyle = designerSearchService.showCategoryView(2);
-        List<DesignerSearchDto> designerSearchDtoList = designerSearchService.search2ReviewScore(customerSeq);
+        List<DesignerSearchDto> designerSearchDtoList = designerSearchService.searchList(customerSeq);
 
         ResponseDesignerSearchDto responseDesignerSearchDto = new ResponseDesignerSearchDto();
         responseDesignerSearchDto.setAllCutHairStyle(allCutHairStyle);

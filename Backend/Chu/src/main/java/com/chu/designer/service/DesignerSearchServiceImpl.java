@@ -28,29 +28,25 @@ public class DesignerSearchServiceImpl implements DesignerSearchService{
     private final DesignerTagInfoRepository designerTagInfoRepository;
     private final HairStyleDictRepository hairStyleDictRepository;
 
-//    @Override
-//    public List<DesignerSearchDto> search2Name(int customerSeq, String name) {
-//        return designerSearchRepository.search2Name(customerSeq, name);
-//    }
-
-//    @Override
-//    public List<DesignerSearchDto> search2Filter(int customerSeq, String[] hairStyle) {
-//        // 조인으로 처리할 수는 있을 것 같은데 힘들면 함수 빼서 스타일 태그번호 갖고 디자이너 상세로 갈 수 있게 짜면 될듯
-//        return designerSearchRepository.search2Filter(customerSeq, hairStyle);
-//    }
-//
-//    @Override
-//    public List<DesignerSearchDto> search2LikeCount(int customerSeq) {
-//        return designerSearchRepository.search2LikeCount(customerSeq);
-//    }
-
+    // 1. 헤어스타일 목록 가져오기
     @Override
-    public List<DesignerSearchDto> search2ReviewScore(int customerSeq) {
+    public List<HairStyleDto> showCategoryView(int categorySeq) {
+        
+        List<HairStyleDict> allCutHairStyle = hairStyleDictRepository.findByHairStyleCategorySeq(categorySeq);
+        List<HairStyleDto> tmpResult = new ArrayList<>();
+        for(HairStyleDict hs : allCutHairStyle) {
+            tmpResult.add(new HairStyleDto(hs));
+        }
+        return tmpResult;
+    }
+
+    //2. 디자이너 seq 오름차순 (필터 없는 리스트)
+    @Override
+    public List<DesignerSearchDto> searchList(int customerSeq) {
 
         // 한번에 담아서 보낼 dto 리스트
         List<DesignerSearchDto> result = new ArrayList<>();
 
-        // 2. 디자이너 엔티티 가져오기
         List<Designer> designers = designerSearchRepository.findAll();
         // 디자이너별 리뷰 평균 점수 가져오기(Integer,Double) [[1, 4.5], [2, 3.8], [3, 4.2] ...]
         List<Object[]> reviewScore = consultingRepository.getReviewScoreByDesigner();
@@ -83,17 +79,26 @@ public class DesignerSearchServiceImpl implements DesignerSearchService{
         return result;
     }
 
-    @Override
-    public List<HairStyleDto> showCategoryView(int categorySeq) {
+//    @Override
+//    public List<DesignerSearchDto> search2Name(int customerSeq, String name) {
+//        return designerSearchRepository.search2Name(customerSeq, name);
+//    }
 
-        // 1. 헤어스타일 목록 가져오기
-        List<HairStyleDict> allCutHairStyle = hairStyleDictRepository.findByHairStyleCategorySeq(categorySeq);
-        List<HairStyleDto> tmpResult = new ArrayList<>();
-        for(HairStyleDict hs : allCutHairStyle) {
-            tmpResult.add(new HairStyleDto(hs));
-        }
-        return tmpResult;
-    }
+//    @Override
+//    public List<DesignerSearchDto> search2Filter(int customerSeq, String[] hairStyle) {
+//        // 조인으로 처리할 수는 있을 것 같은데 힘들면 함수 빼서 스타일 태그번호 갖고 디자이너 상세로 갈 수 있게 짜면 될듯
+//        return designerSearchRepository.search2Filter(customerSeq, hairStyle);
+//    }
+//
+//    @Override
+//    public List<DesignerSearchDto> search2LikeCount(int customerSeq) {
+//        return designerSearchRepository.search2LikeCount(customerSeq);
+//    }
+//
+//    @Override
+//    public List<DesignerSearchDto> search2ReviewScore(int customerSeq) {
+//        return null;
+//    }
 //
 //    @Override
 //    public List<ResponseDesignerSearchAreaDto> search2AllArea() {
