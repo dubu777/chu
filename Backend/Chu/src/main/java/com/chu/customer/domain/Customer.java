@@ -42,7 +42,7 @@ public class Customer {
 
    public Customer() {
       this.faceDict = new FaceDict();
-      this.faceDict.setSeq(0);
+      this.faceDict.setSeq(1);
    }
 
    public Customer hashPassword(PasswordEncoder passwordEncoder){

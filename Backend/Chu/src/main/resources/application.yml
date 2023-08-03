@@ -1,9 +1,9 @@
 server:
-  port: 8081
-  ssl:
-    key-store: ${SSL_KEY_PATH}certificate.p12
-    key-store-type: PKCS12
-    key-store-password: ${SSL_PASSWORD}
+  port: 9090
+#  ssl:
+#    key-store: ${SSL_KEY_PATH}certificate.p12
+#    key-store-type: PKCS12
+#    key-store-password: ${SSL_PASSWORD}
   servlet:
     context-path: /api
 
