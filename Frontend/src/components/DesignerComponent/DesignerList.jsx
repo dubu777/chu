@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useQuery } from "react-query";
-import { getByRating } from "../../apis/api";
 
 const Container = styled.div`
   display: flex;
