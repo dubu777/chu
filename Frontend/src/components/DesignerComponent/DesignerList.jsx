@@ -122,12 +122,27 @@ const LikeBtn = styled.img`
 `;
 function DesignerList(props) {
   const { data, sortOrder } = props;
-  // likeCnt를 기준으로 내림차순으로 정렬하는 함수
+
+  // 필터에 따라 내림차순으로 정렬하는 함수
   const sortByLikeCnt = (designers) => {
     return designers.slice().sort((a, b) => b.likeCnt - a.likeCnt);
   };
+  const sortByReviewScore = (designers) => {
+    return designers.slice().sort((a, b) => b.reviewScore - a.reviewScore);
+  };
+  
+  const sortByReviewCnt = (designers) => {
+    return designers.slice().sort((a, b) => b.reviewCnt - a.reviewCnt);
+  };
   // 정렬 기준에 따라 데이터를 정렬
-  const sortedData = sortOrder === "좋아요순" ? sortByLikeCnt(data.designerList) : data.designerList;
+  const sortedData = 
+  sortOrder === "좋아요순" 
+    ? sortByLikeCnt(data.designerList)
+    : sortOrder === "평점순"
+    ? sortByReviewScore(data.designerList)
+    : sortOrder === "리뷰순"
+    ? sortByReviewCnt(data.designerList)
+    : data.designerList;
   
   const [liked, setLiked] = useState(false); // 좋아요 상태를 state로 관리
   const handleLikeClick = () => {
@@ -151,7 +166,7 @@ function DesignerList(props) {
             <Text>{item.reviewScore}</Text>
           </StarBox>
           <Intro>{item.introduction}</Intro>
-          <Reviewer>방문자 리뷰{item.reviewCnt}</Reviewer>
+          <Reviewer>방문자 리뷰 {item.reviewCnt}</Reviewer>
           <Box>
             {
               item.hairStyleLabel.map((tag, index) => (
