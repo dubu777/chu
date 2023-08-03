@@ -11,9 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -85,9 +83,18 @@ public class DesignerSearchServiceImpl implements DesignerSearchService{
 //    }
 
 //    @Override
-//    public List<DesignerSearchDto> search2Filter(int customerSeq, String[] hairStyle) {
-//        // 조인으로 처리할 수는 있을 것 같은데 힘들면 함수 빼서 스타일 태그번호 갖고 디자이너 상세로 갈 수 있게 짜면 될듯
-//        return designerSearchRepository.search2Filter(customerSeq, hairStyle);
+//    public List<DesignerSearchDto> search2Filter(int customerSeq, Integer[] hairStyleSeq) {
+//        // 디자이너 헤어스타일 태그정보에서 해당 태그가 있는 디자이너 seq를 찾아서 저장. 중복없기 위해 Set 사용
+//        Set<Integer> designerList = new HashSet<>();
+//        for (Integer seq : hairStyleSeq) {
+//            designerList.addAll(designerTagInfoRepository.searchDesigner(seq));
+//            System.out.println(designerList);
+//        }
+//
+//
+//        //List<DesignerSearchDto> result =
+//
+//        return null;
 //    }
 //
 //    @Override

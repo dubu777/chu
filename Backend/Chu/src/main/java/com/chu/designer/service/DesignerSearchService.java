@@ -16,7 +16,7 @@ public interface DesignerSearchService {
 //    List<DesignerSearchDto> search2Name(int customerSeq, String name);
 //
 //    // 디자이너 조회 - 필터
-//    List<DesignerSearchDto> search2Filter(int customerSeq, String[] hairStyle);
+//    List<DesignerSearchDto> search2Filter(int customerSeq, Integer[] hairStyleSeq);
 //
 //    // 디자이너 조회 - 좋아요순
 //    List<DesignerSearchDto> search2LikeCount(int customerSeq);
