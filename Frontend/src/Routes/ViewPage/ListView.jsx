@@ -141,110 +141,100 @@ const SearchImg = styled.img`
 
 `;
 function ListView() {
-  const [data, setData] = useState("");
-
-  const dataTest = () => {
-    axios.get('http://localhost:8081')
-      .then(response => {
-        setData(response.data);
-      });
+  const [data, setData] = useState(
+    {
+      "allCutHairStyle": [
+          {
+              "hairStyleSeq": 1,
+              "hairStyleLabel": "젤리펌"
+          },
+          {
+              "hairStyleSeq": 2,
+              "hairStyleLabel": "히피펌"
+          },
+          {
+              "hairStyleSeq": 3,
+              "hairStyleLabel": "가르마펌"
+          },
+          {
+              "hairStyleSeq": 4,
+              "hairStyleLabel": "쉐도우펌"
+          }
+      ],
+      "allPermHairStyle": [
+          {
+              "hairStyleSeq": 5,
+              "hairStyleLabel": "레이어드컷"
+          },
+          {
+              "hairStyleSeq": 6,
+              "hairStyleLabel": "허쉬컷"
+          },
+          {
+              "hairStyleSeq": 7,
+              "hairStyleLabel": "가일컷"
+          },
+          {
+              "hairStyleSeq": 8,
+              "hairStyleLabel": "울프컷"
+          }
+      ],
+      "designerListCnt": 3,
+      "designerList": [
+          {
+              "designerSeq": 1,
+              "designerImg": "202307211500",
+              "reviewScore": 4.5,
+              "designerName": "원영",
+              "introduction": "여성 펌 전문 디자이너 원영입니다 ^_^",
+              "reviewCnt": 3,
+              "hairStyleLabel": [
+                  "젤리펌",
+                  "히피펌",
+                  "가르마펌",
+                  "쉐도우펌"
+              ],
+              "likeCnt": 1,
+              "isLike": true,
+              "cost": 5000
+          },
+          {
+              "designerSeq": 2,
+              "designerImg": "202307211503",
+              "reviewScore": 0.0,
+              "designerName": "시영",
+              "introduction": "남성 커트 전문 디자이너 시영입니다.",
+              "reviewCnt": 1,
+              "hairStyleLabel": [
+                  "다운펌",
+                  "엘리자벳펌",
+                  "가르마펌",
+                  "쉐도우펌"
+              ],
+              "likeCnt": 15,
+              "isLike": false,
+              "cost": 7000
+          },
+          {
+              "designerSeq": 3,
+              "designerImg": "202307211505",
+              "reviewScore": 5.0,
+              "designerName": "승종",
+              "introduction": "남성 펌 전문 디자이너 승종입니다.",
+              "reviewCnt": 1,
+              "hairStyleLabel": [
+                  "야호펌",
+                  "하이펌",
+                  "으악펌",
+                  "그냥펌"
+              ],
+              "likeCnt": 100,
+              "isLike": false,
+              "cost": 6000
+          }
+      ]
   }
-  console.log(data);
-
-  // const [data, setData] = useState(
-  //   {
-  //     "allCutHairStyle": [
-  //         {
-  //             "hairStyleSeq": 1,
-  //             "hairStyleLabel": "젤리펌"
-  //         },
-  //         {
-  //             "hairStyleSeq": 2,
-  //             "hairStyleLabel": "히피펌"
-  //         },
-  //         {
-  //             "hairStyleSeq": 3,
-  //             "hairStyleLabel": "가르마펌"
-  //         },
-  //         {
-  //             "hairStyleSeq": 4,
-  //             "hairStyleLabel": "쉐도우펌"
-  //         }
-  //     ],
-  //     "allPermHairStyle": [
-  //         {
-  //             "hairStyleSeq": 5,
-  //             "hairStyleLabel": "레이어드컷"
-  //         },
-  //         {
-  //             "hairStyleSeq": 6,
-  //             "hairStyleLabel": "허쉬컷"
-  //         },
-  //         {
-  //             "hairStyleSeq": 7,
-  //             "hairStyleLabel": "가일컷"
-  //         },
-  //         {
-  //             "hairStyleSeq": 8,
-  //             "hairStyleLabel": "울프컷"
-  //         }
-  //     ],
-  //     "designerListCnt": 3,
-  //     "designerList": [
-  //         {
-  //             "designerSeq": 1,
-  //             "designerImg": "202307211500",
-  //             "reviewScore": 4.5,
-  //             "designerName": "원영",
-  //             "introduction": "여성 펌 전문 디자이너 원영입니다 ^_^",
-  //             "reviewCnt": 3,
-  //             "hairStyleLabel": [
-  //                 "젤리펌",
-  //                 "히피펌",
-  //                 "가르마펌",
-  //                 "쉐도우펌"
-  //             ],
-  //             "likeCnt": 1,
-  //             "isLike": true,
-  //             "cost": 5000
-  //         },
-  //         {
-  //             "designerSeq": 2,
-  //             "designerImg": "202307211503",
-  //             "reviewScore": 0.0,
-  //             "designerName": "시영",
-  //             "introduction": "남성 커트 전문 디자이너 시영입니다.",
-  //             "reviewCnt": 1,
-  //             "hairStyleLabel": [
-  //                 "다운펌",
-  //                 "엘리자벳펌",
-  //                 "가르마펌",
-  //                 "쉐도우펌"
-  //             ],
-  //             "likeCnt": 0,
-  //             "isLike": false,
-  //             "cost": 7000
-  //         },
-  //         {
-  //             "designerSeq": 3,
-  //             "designerImg": "202307211505",
-  //             "reviewScore": 5.0,
-  //             "designerName": "승종",
-  //             "introduction": "남성 펌 전문 디자이너 승종입니다.",
-  //             "reviewCnt": 1,
-  //             "hairStyleLabel": [
-  //                 "야호펌",
-  //                 "하이펌",
-  //                 "으악펌",
-  //                 "그냥펌"
-  //             ],
-  //             "likeCnt": 0,
-  //             "isLike": false,
-  //             "cost": 6000
-  //         }
-  //     ]
-  // }
-  // );
+  );
   const [selectedStyle, setSelectedStyle] = useState([]);
 
   const toggleStyleType = (tag) => {
@@ -269,12 +259,17 @@ function ListView() {
       setSelectedStyle((prev) => [...prev, selectedTag]);
     }
   };
-
-
+  // DesignerList에서 사용할 정렬 기준을 상태로 관리
+  const [sortOrder, setSortOrder] = useState(null);
   const [activeBtn, setActiveBtn] = useState(null); // 초기 상태는 아무 버튼도 선택되지 않은 상태로 설정
-  // const dataObject = {
-  //   "customerSeq" : 2
-  // };
+  // 정렬 기준을 바꾸는 함수
+  const handleSortClick = (btnName) => {
+    if (sortOrder === btnName) {
+      setSortOrder(null); // 버튼 해제시 정렬 기준을 null로 설정
+    } else {
+      setSortOrder(btnName); // 버튼 클릭시 해당 버튼명을 정렬 기준으로 설정
+    }
+  };
   const handleBtnClick = async (btnName) => {
     if (activeBtn === btnName) {
       setActiveBtn(null); // 이미 선택된 버튼을 누르면 선택 해제
@@ -286,6 +281,7 @@ function ListView() {
   const toggleMap = () => {
     setHandleMap((prev) => !prev);
   };
+
   // selectedStyle 배열의 변경 상태를 확인하고 콘솔에 출력
   // 백엔드로 보내야 할 통신 데이터
   useEffect(() => {
@@ -366,7 +362,7 @@ function ListView() {
         </Btn>
         <Btn 
           active={activeBtn === '좋아요순'}
-          onClick={() => handleBtnClick('좋아요순')}
+          onClick={() => {handleSortClick('좋아요순'); handleBtnClick('좋아요순')}}
         >
           좋아요순
         </Btn>
@@ -379,7 +375,7 @@ function ListView() {
       </MapBtn>
       </BtnBox>
       </BtnWrapper>
-          <DesignerList data={data}  />
+          <DesignerList data={data} sortOrder={sortOrder} />
     </Container>
   )
 }
