@@ -13,3 +13,18 @@ export const loginState = selector({
   key: 'loginState',
   get: ({ get }) => get(accessTokenState) !== null,
 });
+
+export const loginResultState = atom({
+  key: 'loginResultState',
+  default: null,
+});
+
+export const setFindId = atom({
+  key: 'setFindId',
+  default: null,
+})
+
+export const setExistState = atom({
+  key: 'setExistState',
+  default: null,
+})
