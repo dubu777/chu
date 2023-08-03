@@ -7,7 +7,6 @@ import { createGlobalStyle } from "styled-components";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { theme } from "./theme";
 
-
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>;
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>;
 
