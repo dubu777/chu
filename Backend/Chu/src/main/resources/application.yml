@@ -12,7 +12,7 @@ spring:
   datasource:
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
-    URL: jdbc:mysql://${PUBLIC_IP}:3306/chu?serverTimezone=UTC&useUnicode=yes&characterEncoding=UTF-8
+    URL: jdbc:mysql://${PUBLIC_IP}:3306/Chu?serverTimezone=UTC&useUnicode=yes&characterEncoding=UTF-8
 
   jpa:
     hibernate:
