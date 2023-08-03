@@ -1,9 +1,10 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from 'recoil';
 import React, { useState } from 'react';
-import { login } from '../../apis/auth';
+import { login, login2 } from '../../apis/auth';
 import { accessTokenState } from '../../recoil/auth';
+import { loginResultState } from '../../recoil/auth';
 
 const Container = styled.div`
 	background: url('./img/login.jpg');
@@ -79,7 +80,8 @@ function LogIn() {
 	const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
-
+	const [loginResult, setLoginResult] = useRecoilState(loginResultState);
+	const navigate = useNavigate();
   const handleLogin = async () => {
 		console.log('Username:', username);
 		console.log('Password:', password);
@@ -91,6 +93,22 @@ function LogIn() {
       console.error(error);
     }
   };
+
+  const handleLogin2 = async () => {
+		console.log('Username:', username);
+		console.log('Password:', password);
+		try {
+			const result = await login2(username, password);
+			console.log(result);
+			setLoginResult(result);
+			console.log(result.userType);
+			setAccessToken(result.token.accessToken);
+			navigate("/")
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
 	console.log('Username:', username);
   console.log('Password:', password);
 	return(
@@ -116,7 +134,7 @@ function LogIn() {
 					<P><Link to="/signup">Sign up</Link></P>
 					<P><Btn 
 								type="submit" 
-								onClick={handleLogin}
+								onClick={handleLogin2}
 							>
 								Log in
 							</Btn></P>

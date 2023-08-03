@@ -1,4 +1,8 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { setFindId, setExistState } from "../../recoil/auth";
+import { useRecoilState } from "recoil";
+import { findId } from "../../apis/auth";
+import React, { useState } from 'react';
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -59,17 +63,52 @@ const Btn = styled.button`
 
 
 function FindId() {
+
+	const [username, setUsername] = useState('');
+	const [useremail, setuseremail] = useState('');
+
+	const [findIdResult, setFindIdResult] = useRecoilState(setFindId);
+	const [existState, setExistsState] = useRecoilState(setExistState);
+	
+	const navigate = useNavigate();
+
+	const handleFindId = async () => {
+		console.log('Username:', username);
+		console.log('Useremail:', useremail);
+
+		try{
+			const result = await findId(username, useremail);
+			console.log(result);
+			setFindIdResult(result.id);
+			setExistsState(result.exists);
+			alert("success!");
+			navigate("/foundid");
+		} catch(error){
+			console.error(error);
+			// 라우팅 처리
+			alert("fail!!!!!!!!");
+		}
+	}
+
 	return(
 		<Container>
 			<Wrapper>
 				<Box>
 					<Title>Find ID</Title>
 					<br></br>
-					<Input placeholder="Name"></Input>
+					<Input placeholder="Name"
+						   value={username}
+						   onChange={(e) => setUsername(e.target.value)}
+					></Input>
 					<br></br>
-					<Input type="email" placeholder="e-mail"></Input>
-					<Btn type="submit">
-						<Link to="/foundid">확인</Link>
+					<Input type="email" 
+						   placeholder="e-mail"
+						   value={useremail}
+						   onChange={(e) => setuseremail(e.target.value)}
+					></Input>
+					<Btn type="submit"
+						 onClick={handleFindId}>
+						확인
 					</Btn>
 				</Box>				
 			</Wrapper>
