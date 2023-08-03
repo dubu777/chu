@@ -62,6 +62,33 @@ public class CustomerServiceImpl implements CustomerService{
         customerRepository.save(customer);
     }
 
+    // 비밀번호 찾기
+    @Override
+    public ResponseFindPwdDto findPwd(String name, String email, String id) {
+
+        ResponseFindPwdDto response = new ResponseFindPwdDto();
+        Customer customer = new Customer();
+
+        try{
+            customer = customerRepository.findByNameAndEmailAndId(name, email, id);
+
+            // 일치하는 사용자 존재 X
+            if(customer == null){
+                response.setExists(false);
+                response.setSeq(0);
+            }
+            // 일치하는 사용자 존재
+            else{
+                response.setExists(true);
+                response.setSeq(customer.getSeq());
+            }
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return response;
+    }
+
 
     /*
     @Override
@@ -124,6 +151,7 @@ public class CustomerServiceImpl implements CustomerService{
         }
     }
 
+    // 아이디 찾기
     @Override
     public ResponseFindIdDto findId(String name, String email) {
 

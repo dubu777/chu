@@ -74,6 +74,23 @@ public class CustomerController {
         return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), response));
     }
 
+    // 비밀번호 찾기
+    @GetMapping(value = "/find-pwd")
+    public ResponseEntity<HttpResponseDto> findPwd(@RequestParam String name, @RequestParam String email, @RequestParam String id){
+
+        ResponseFindPwdDto response = new ResponseFindPwdDto();
+
+        try{
+            response = customerService.findPwd(name, email, id);
+        } catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), response));
+    }
+
+
 
 //    @GetMapping("/find-id")
 //    public ResponseEntity<HttpResponseDto> findId(@RequestParam String name, @RequestParam String email){
