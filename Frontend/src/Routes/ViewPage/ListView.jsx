@@ -53,6 +53,19 @@ const HashTag = styled(motion.span)`
   border-radius: 5px;
   cursor: pointer;
 `;
+const SelectTag = styled(motion.span)`
+  font-size: 12px;
+  font-weight: 500;
+  padding: 5px 10px;
+  margin-right: 10px;
+  margin-bottom: 20px;
+  margin-top: 10px;
+  border: 1px solid lightgray;
+  background-color: ${props => props.selected ?"rgb(182, 171, 153)" :"rgb(255, 255, 254)" };
+  color: ${props => props.selected ?"rgb(255, 255, 255)" :"rgb(0,0,0)" };
+  border-radius: 5px;
+  cursor: pointer;
+`;
 const SelectText = styled.span`
   margin-top: 10px;
   font-size: 16px;
@@ -141,100 +154,109 @@ const SearchImg = styled.img`
 
 `;
 function ListView() {
-  const [data, setData] = useState(
-    {
-      "allCutHairStyle": [
-          {
-              "hairStyleSeq": 1,
-              "hairStyleLabel": "젤리펌"
-          },
-          {
-              "hairStyleSeq": 2,
-              "hairStyleLabel": "히피펌"
-          },
-          {
-              "hairStyleSeq": 3,
-              "hairStyleLabel": "가르마펌"
-          },
-          {
-              "hairStyleSeq": 4,
-              "hairStyleLabel": "쉐도우펌"
-          }
-      ],
-      "allPermHairStyle": [
-          {
-              "hairStyleSeq": 5,
-              "hairStyleLabel": "레이어드컷"
-          },
-          {
-              "hairStyleSeq": 6,
-              "hairStyleLabel": "허쉬컷"
-          },
-          {
-              "hairStyleSeq": 7,
-              "hairStyleLabel": "가일컷"
-          },
-          {
-              "hairStyleSeq": 8,
-              "hairStyleLabel": "울프컷"
-          }
-      ],
-      "designerListCnt": 3,
-      "designerList": [
-          {
-              "designerSeq": 1,
-              "designerImg": "202307211500",
-              "reviewScore": 4.5,
-              "designerName": "원영",
-              "introduction": "여성 펌 전문 디자이너 원영입니다 ^_^",
-              "reviewCnt": 3,
-              "hairStyleLabel": [
-                  "젤리펌",
-                  "히피펌",
-                  "가르마펌",
-                  "쉐도우펌"
-              ],
-              "likeCnt": 1,
-              "isLike": true,
-              "cost": 5000
-          },
-          {
-              "designerSeq": 2,
-              "designerImg": "202307211503",
-              "reviewScore": 0.0,
-              "designerName": "시영",
-              "introduction": "남성 커트 전문 디자이너 시영입니다.",
-              "reviewCnt": 1,
-              "hairStyleLabel": [
-                  "다운펌",
-                  "엘리자벳펌",
-                  "가르마펌",
-                  "쉐도우펌"
-              ],
-              "likeCnt": 15,
-              "isLike": false,
-              "cost": 7000
-          },
-          {
-              "designerSeq": 3,
-              "designerImg": "202307211505",
-              "reviewScore": 5.0,
-              "designerName": "승종",
-              "introduction": "남성 펌 전문 디자이너 승종입니다.",
-              "reviewCnt": 1,
-              "hairStyleLabel": [
-                  "야호펌",
-                  "하이펌",
-                  "으악펌",
-                  "그냥펌"
-              ],
-              "likeCnt": 100,
-              "isLike": false,
-              "cost": 6000
-          }
-      ]
+  const [data, setData] = useState("");
+  const dataTest = () => {
+    axios.get('http://localhost:8081')
+      .then(response => {
+        setData(response.data);
+      });
   }
-  );
+  console.log(data);
+  
+  // const [data, setData] = useState(
+  //   {
+  //     "allCutHairStyle": [
+  //         {
+  //             "hairStyleSeq": 1,
+  //             "hairStyleLabel": "젤리펌"
+  //         },
+  //         {
+  //             "hairStyleSeq": 2,
+  //             "hairStyleLabel": "히피펌"
+  //         },
+  //         {
+  //             "hairStyleSeq": 3,
+  //             "hairStyleLabel": "가르마펌"
+  //         },
+  //         {
+  //             "hairStyleSeq": 4,
+  //             "hairStyleLabel": "쉐도우펌"
+  //         }
+  //     ],
+  //     "allPermHairStyle": [
+  //         {
+  //             "hairStyleSeq": 5,
+  //             "hairStyleLabel": "레이어드컷"
+  //         },
+  //         {
+  //             "hairStyleSeq": 6,
+  //             "hairStyleLabel": "허쉬컷"
+  //         },
+  //         {
+  //             "hairStyleSeq": 7,
+  //             "hairStyleLabel": "가일컷"
+  //         },
+  //         {
+  //             "hairStyleSeq": 8,
+  //             "hairStyleLabel": "울프컷"
+  //         }
+  //     ],
+  //     "designerListCnt": 3,
+  //     "designerList": [
+  //         {
+  //             "designerSeq": 1,
+  //             "designerImg": "202307211500",
+  //             "reviewScore": 4.5,
+  //             "designerName": "원영",
+  //             "introduction": "여성 펌 전문 디자이너 원영입니다 ^_^",
+  //             "reviewCnt": 3,
+  //             "hairStyleLabel": [
+  //                 "젤리펌",
+  //                 "히피펌",
+  //                 "가르마펌",
+  //                 "쉐도우펌"
+  //             ],
+  //             "likeCnt": 1,
+  //             "isLike": true,
+  //             "cost": 5000
+  //         },
+  //         {
+  //             "designerSeq": 2,
+  //             "designerImg": "202307211503",
+  //             "reviewScore": 0.0,
+  //             "designerName": "시영",
+  //             "introduction": "남성 커트 전문 디자이너 시영입니다.",
+  //             "reviewCnt": 1,
+  //             "hairStyleLabel": [
+  //                 "다운펌",
+  //                 "엘리자벳펌",
+  //                 "가르마펌",
+  //                 "쉐도우펌"
+  //             ],
+  //             "likeCnt": 15,
+  //             "isLike": false,
+  //             "cost": 7000
+  //         },
+  //         {
+  //             "designerSeq": 3,
+  //             "designerImg": "202307211505",
+  //             "reviewScore": 5.0,
+  //             "designerName": "승종",
+  //             "introduction": "남성 펌 전문 디자이너 승종입니다.",
+  //             "reviewCnt": 1,
+  //             "hairStyleLabel": [
+  //                 "야호펌",
+  //                 "하이펌",
+  //                 "으악펌",
+  //                 "그냥펌"
+  //             ],
+  //             "likeCnt": 100,
+  //             "isLike": false,
+  //             "cost": 6000
+  //         }
+  //     ]
+  // }
+  // );
   const [selectedStyle, setSelectedStyle] = useState([]);
 
   const toggleStyleType = (tag) => {
@@ -291,63 +313,61 @@ function ListView() {
   
   return (
     <Container>
+      <button onClick={dataTest}>데이터 받아오기</button>
       <Box>
-      <SearchBox>
-        <SearchImg src="./icon/search.png"/>
-        <Input placeholder="Search" />
-      </SearchBox>
+        <SearchBox>
+          <SearchImg src="./icon/search.png"/>
+          <Input placeholder="Search" />
+        </SearchBox>
       </Box>
       <Wrapper>
-      <Grid>
-        <SelectText>커트</SelectText>
+        <Grid>
+          <SelectText>커트</SelectText>
+          <SelectBox>
+            {data.allCutHairStyle.map((tag) => (
+            <HashTag
+              key={tag.hairStyleSeq}
+              onClick={(e) => {e.stopPropagation(); toggleStyleType(tag);}}
+              selected={selectedStyle.some(
+                (selectedTag) => selectedTag.hairStyleSeq === tag.hairStyleSeq
+              )}
+            >#{tag.hairStyleLabel}
+            </HashTag>
+            ))}
+          </SelectBox>
+          <SelectText>펌</SelectText>
         <SelectBox>
-          {data.allCutHairStyle.map((tag) => (
-  <HashTag
-    key={tag.hairStyleSeq}
-    onClick={(e) => {e.stopPropagation(); toggleStyleType(tag);}}
-    selected={selectedStyle.some(
-      (selectedTag) => selectedTag.hairStyleSeq === tag.hairStyleSeq
-    )}
-  >
-    #{tag.hairStyleLabel}
-  </HashTag>
-))}
+          {data.allPermHairStyle.map((tag) => (
+          <HashTag
+            key={tag.hairStyleSeq}
+            onClick={(e) => {e.stopPropagation(); toggleStyleType(tag);}}
+            selected={selectedStyle.some(
+              (selectedTag) => selectedTag.hairStyleSeq === tag.hairStyleSeq
+            )}
+          >#{tag.hairStyleLabel}
+          </HashTag>
+          ))}
         </SelectBox>
-        <SelectText>펌</SelectText>
-        <SelectBox>
-        {data.allPermHairStyle.map((tag) => (
-  <HashTag
-    key={tag.hairStyleSeq}
-    onClick={(e) => {e.stopPropagation(); toggleStyleType(tag);}}
-    selected={selectedStyle.some(
-      (selectedTag) => selectedTag.hairStyleSeq === tag.hairStyleSeq
-    )}
-  >
-    #{tag.hairStyleLabel}
-  </HashTag>
-))}
-        </SelectBox>
-        <SelectedText>선택</SelectedText>
-        <SelectedBox>
-        {selectedStyle.map((tag) => (
-  <HashTag
-    key={tag.hairStyleSeq}
-    onClick={(e) => {e.stopPropagation(); toggleStyleType(tag);}}
-    selected={selectedStyle.some(
-      (selectedTag) => selectedTag.hairStyleSeq === tag.hairStyleSeq
-    )}
-  >
-    #{tag.hairStyleLabel}
-  </HashTag>
-))}
+          <SelectedText>선택</SelectedText>
+          <SelectedBox>
+            {selectedStyle.map((tag) => (
+            <SelectTag
+              key={tag.hairStyleSeq}
+              onClick={(e) => {e.stopPropagation(); toggleStyleType(tag);}}
+              selected={selectedStyle.some(
+                (selectedTag) => selectedTag.hairStyleSeq === tag.hairStyleSeq
+              )}
+              >#{tag.hairStyleLabel}
+            </SelectTag>
+              ))}
       </SelectedBox>
-      <SelectedText></SelectedText>
-      <SelectedBox>
-      </SelectedBox>
-      </Grid>
-      </Wrapper>
-      <BtnWrapper>
-      <BtnBox>
+        <SelectedText></SelectedText>
+          <SelectedBox>
+            </SelectedBox>
+            </Grid>
+            </Wrapper>
+            <BtnWrapper>
+            <BtnBox>
         <Btn 
           active={activeBtn === '평점순'}
           onClick={() => handleBtnClick('평점순')}
