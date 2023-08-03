@@ -20,8 +20,8 @@ public class ResponseCustomerLoginInfoDto {
         dto.setCustomerSeq(customer.getSeq());
         dto.setName(customer.getName());
         dto.setProfileImg(customer.getImagePath().getSavedImgName());
-        dto.setFaceSeq(customer.getFaceDict().getSeq());
-        dto.setFaceLabel(customer.getFaceDict().getFaceLabel());
+//        dto.setFaceSeq(customer.getFaceDict().getSeq());
+//        dto.setFaceLabel(customer.getFaceDict().getFaceLabel());
 
         return dto;
     }

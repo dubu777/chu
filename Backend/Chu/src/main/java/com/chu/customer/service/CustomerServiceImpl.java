@@ -4,6 +4,7 @@ import com.chu.customer.domain.*;
 import com.chu.customer.repository.CustomerAlertRepository;
 import com.chu.customer.repository.CustomerRepository;
 import com.chu.customer.repository.TestRepository;
+import com.chu.designer.domain.Designer;
 import com.chu.designer.repository.DesignerRepository;
 import com.chu.global.domain.*;
 import com.chu.global.exception.Exception;
@@ -24,6 +25,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 
@@ -113,6 +115,7 @@ public class CustomerServiceImpl implements CustomerService{
                     )
             );
 
+
             String refreshToken = jwtTokenProvider.generateRefreshToken(authentication);
             String accessToken = jwtTokenProvider.generateAccessToken(authentication);
 
@@ -131,17 +134,14 @@ public class CustomerServiceImpl implements CustomerService{
 
             responseCustomerLoginDetailDto.setToken(tokenDto);
 
-
-
             // 2) customerInfo setting
             Customer customer = customerRepository.findById(requestSignInDto.getId());
             ResponseCustomerLoginInfoDto responseCustomerLoginInfoDto = new ResponseCustomerLoginInfoDto().entityToDto(customer);
 
             responseCustomerLoginDetailDto.setCustomerInfo(responseCustomerLoginInfoDto);
 
-
-
             // 3) bestDesigner setting
+            //List<Designer> designerList = designerRepository
 
 
             return responseCustomerLoginDetailDto;
