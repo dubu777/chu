@@ -20,10 +20,10 @@ public class DesignerSearchDto {
     private Integer reviewCnt;
     private List<String> hairStyleLabel;
     private Integer likeCnt;
-//    private Boolean isLike;
+    private Boolean isLike;
     private Integer cost;
 
-    public DesignerSearchDto(Designer designer, Integer likeCnt, Integer reviewCnt, List<String> hairStyleLabels, Double reviewScore) {
+    public DesignerSearchDto(Designer designer, Integer likeCnt, Integer reviewCnt, List<String> hairStyleLabels, Double reviewScore, Boolean isLike) {
         this.seq = designer.getSeq();
         this.savedImgName = (designer.getImagePath() != null) ? designer.getImagePath().getSavedImgName() : null;
         this.reviewScore = (reviewScore==null) ? 0.0 : reviewScore;
@@ -33,6 +33,7 @@ public class DesignerSearchDto {
         this.likeCnt = likeCnt;
         this.reviewCnt = reviewCnt;
         this.cost = designer.getCost();
+        this.isLike = isLike;
     }
 
 }

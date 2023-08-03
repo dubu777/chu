@@ -7,4 +7,6 @@ public interface DesignerLikeRepository extends JpaRepository<DesignerLike, Inte
 
     Integer countByDesignerSeq(Integer designerSeq);
 
+    DesignerLike findByCustomerSeqAndDesignerSeq(Integer customerSeq, Integer designerSeq);
+
 }

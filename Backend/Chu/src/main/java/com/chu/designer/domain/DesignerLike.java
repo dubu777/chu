@@ -3,12 +3,14 @@ package com.chu.designer.domain;
 import com.chu.customer.domain.Customer;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter
+@ToString
 public class DesignerLike {
 
     @Id
@@ -23,7 +25,7 @@ public class DesignerLike {
     @JoinColumn(name = "designer_seq")
     private Designer designer;
 
-    private boolean likeStatus;
+    private Boolean likeStatus;
 
     private LocalDateTime createDate;
 
