@@ -2,9 +2,19 @@ package com.chu.consulting.repository;
 
 import com.chu.consulting.domain.*;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import java.util.List;
 
 public interface ConsultingRepository extends JpaRepository<Consulting, Integer> {
     Integer countByDesignerSeq(Integer seq);
+
+
+    @Query(value = "SELECT c.designer.seq, AVG(c.review.reviewScore)" +
+            " FROM Consulting c" +
+            " GROUP BY c.designer.seq")
+    List<Object[]> getReviewScoreByDesigner();
+
 
 //    String participantConsulting(int consultingSeq);
 //

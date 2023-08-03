@@ -31,7 +31,7 @@ public class Designer {
     @Embedded
     private ImagePath imagePath;
 
-    private Float reviewScore;
+    private Double reviewScore;
 
     private Integer cost;
     private LocalDateTime createdDate;

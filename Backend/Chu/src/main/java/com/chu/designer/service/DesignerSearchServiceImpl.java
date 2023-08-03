@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Slf4j
 @Service
@@ -48,8 +49,14 @@ public class DesignerSearchServiceImpl implements DesignerSearchService{
     @Override
     public List<DesignerSearchDto> search2ReviewScore(int customerSeq) {
 
-        List<Designer> designers = designerSearchRepository.findAll();
         List<DesignerSearchDto> result = new ArrayList<>();
+        List<Designer> designers = designerSearchRepository.findAll();
+        List<Object[]> reviewScore = consultingRepository.getReviewScoreByDesigner();   //디자이너별 리뷰 평균 점수 가져오기(Integer,Double) [[1, 4.5], [2, 3.8], [3, 4.2] ...]
+
+//        for (Object[] o : reviewScore) {
+//            System.out.println(o[0]+ " " + o[1]);
+//        }
+        int reviewScoreSeq = 0;
         for (Designer designer : designers) {
             Integer likeCnt = designerLikeRepository.countByDesignerSeq(designer.getSeq());
             Integer reviewCnt = consultingRepository.countByDesignerSeq(designer.getSeq());
@@ -61,8 +68,11 @@ public class DesignerSearchServiceImpl implements DesignerSearchService{
                 HairStyleDict hairStyleDict = hairStyleDictRepository.findBySeq(seq);
                 hairStyleLabels.add(hairStyleDict.getHairStyleLabel());
             }
-            DesignerSearchDto dto = new DesignerSearchDto(designer, likeCnt, reviewCnt, hairStyleLabels);
+            //System.out.println(reviewScore.get(reviewScoreSeq)[0].getClass().getName());
+            Double reviewScoreByDesigner = (reviewScoreSeq < reviewScore.size() && (reviewScore.get(reviewScoreSeq)[1] != null)) ? (Double) reviewScore.get(reviewScoreSeq)[1] : 0.0;
+            DesignerSearchDto dto = new DesignerSearchDto(designer, likeCnt, reviewCnt, hairStyleLabels, reviewScoreByDesigner);
             result.add(dto);
+            reviewScoreSeq++;
         }
 
         return result;
