@@ -15,6 +15,10 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 
     // email 중복검사
     boolean existsByEmail(String email);
+
+    Customer findByNameAndEmail(String name, String email);
+
+    Customer findByNameAndEmailAndId(String name, String email, String id);
 //    boolean checkId(String id);
 //
 //    boolean checkEmail(String email);

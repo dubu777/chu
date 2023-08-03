@@ -15,9 +15,16 @@ public interface CustomerService {
     // 이메일 중복체크
     boolean checkEmail(String email);
 
+    // 고객 아이디 찾기
+    ResponseFindIdDto findId(String name, String email);
+
     // 고객 회원가입
 //    boolean signUp(RequestCustomerSignUpDto requestCustomerSignUpDto);
     void signUp(Customer customer);
+
+    // 고객 비밀번호 찾기
+    ResponseFindPwdDto findPwd(String name, String email, String id);
+
     
     // 고객 로그인
     //boolean signIn(RequestSignInDto requestSignInDto);
@@ -31,8 +38,7 @@ public interface CustomerService {
 //    // 고객 로그인 시 정보 조회
 //    ResponseCustomerLoginDetailDto getLoginCustomerDetail(String id);
 //
-//    // 고객 아이디 찾기
-//    String findId(RequestFindIdDto requestFindIdDto);
+
 //
 //    // 고객 유효성 체크
 //    int isValidUser(RequestFindPwdDto requestFindPwdDto);

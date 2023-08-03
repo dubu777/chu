@@ -3,6 +3,7 @@ package com.chu.customer.domain;
 import com.chu.global.domain.FaceDict;
 import com.chu.global.domain.ImagePath;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.security.crypto.password.PasswordEncoder;
