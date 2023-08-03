@@ -156,7 +156,7 @@ const SearchImg = styled.img`
 function ListView() {
   const [data, setData] = useState("");
   const dataTest = () => {
-    axios.get('http://localhost:8081')
+    axios.get('http://localhost:9090')
       .then(response => {
         setData(response.data);
       });
@@ -223,10 +223,10 @@ function ListView() {
   //         {
   //             "designerSeq": 2,
   //             "designerImg": "202307211503",
-  //             "reviewScore": 0.0,
+  //             "reviewScore": 2.0,
   //             "designerName": "시영",
   //             "introduction": "남성 커트 전문 디자이너 시영입니다.",
-  //             "reviewCnt": 1,
+  //             "reviewCnt": 131,
   //             "hairStyleLabel": [
   //                 "다운펌",
   //                 "엘리자벳펌",
@@ -243,7 +243,7 @@ function ListView() {
   //             "reviewScore": 5.0,
   //             "designerName": "승종",
   //             "introduction": "남성 펌 전문 디자이너 승종입니다.",
-  //             "reviewCnt": 1,
+  //             "reviewCnt": 14,
   //             "hairStyleLabel": [
   //                 "야호펌",
   //                 "하이펌",
@@ -293,12 +293,9 @@ function ListView() {
     }
   };
   const handleBtnClick = async (btnName) => {
-    if (activeBtn === btnName) {
-      setActiveBtn(null); // 이미 선택된 버튼을 누르면 선택 해제
-    } else {
-      setActiveBtn(btnName); // 새로운 버튼 선택
-    }
-  };
+    await handleSortClick(btnName); // 버튼을 클릭하면 정렬 기준이 변경되도록 함
+  setActiveBtn(btnName); // 클릭한 버튼을 활성화 상태로 변경
+};
   const [handleMap, setHandleMap] = useState(false);
   const toggleMap = () => {
     setHandleMap((prev) => !prev);
