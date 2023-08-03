@@ -1,12 +1,27 @@
 package com.chu.customer.domain;
 
+import com.chu.global.domain.FaceDict;
+import com.chu.global.domain.ImagePath;
 import lombok.Data;
 
 @Data
 public class RequestCustomerSignUpDto {
-    //        "name" : "ssafy",
+
+    String name;
     String id;
-//            "email" : "ssafy@gmail.com",
-//            "gender" : "M",
-//            "pwd" : "123465678"
+    String email;
+    char gender;
+    String pwd;
+
+    public Customer toCustomerEntity(){
+        Customer customer = new Customer();
+
+        customer.setName(this.getName());
+        customer.setId(this.getId());
+        customer.setEmail(this.getEmail());
+        customer.setGender(this.getGender());
+        customer.setPwd(this.getPwd());
+        return customer;
+    }
+
 }

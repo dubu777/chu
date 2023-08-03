@@ -1,6 +1,7 @@
 package com.chu.global.domain;
 
 import com.chu.global.domain.ImagePath;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
