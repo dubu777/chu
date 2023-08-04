@@ -45,9 +45,14 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
             }
         }
 
-        file.transferTo(destFile);
-        log.info("서비스 >>> 파일 저장 성공! filePath : " + filePath);
-        return filePath;
+        try {
+            file.transferTo(destFile);
+            log.info("서비스 >>> 파일 저장 성공! filePath : " + filePath);
+            return filePath;
+        } catch (IOException e) {
+            log.error("파일 저장 실패:", e);
+            throw new IOException("파일 저장 실패: " + e.getMessage(), e);
+        }
     }
 
     @Override
@@ -56,7 +61,6 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
 
         Customer customer = customerDetailRepository.getById(customerSeq);
         customer.getImagePath().setSavedImgName(fileName);
-
 
         return true;
     }
