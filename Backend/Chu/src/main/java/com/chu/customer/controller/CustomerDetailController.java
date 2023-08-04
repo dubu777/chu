@@ -48,20 +48,20 @@ public class CustomerDetailController {
 //        }
 //    }
 //
-//    @GetMapping("/mypage/{customer_seq}")
-//    public ResponseEntity<HttpResponseDto> getCustomerDetail(@PathVariable("customer_seq") int customerSeq) {
-//
-//        ResponseCustomerDetailDto responseCustomerDetailDto = customerDetailService.getCustomerDetail(customerSeq);
-//
-//        if(responseCustomerDetailDto != null){
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseCustomerDetailDto);
-//            return ResponseEntity.ok(httpResponseDto);
-//        }
-//        else{
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
-//            return ResponseEntity.ok(httpResponseDto);
-//        }
-//    }
+    @GetMapping("/mypage/{customer_seq}")
+    public ResponseEntity<HttpResponseDto> getCustomerDetail(@PathVariable("customer_seq") int customerSeq) {
+
+        ResponseCustomerDetailDto responseCustomerDetailDto = customerDetailService.getCustomerDetail(customerSeq);
+
+        if(responseCustomerDetailDto != null) {
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseCustomerDetailDto);
+            return ResponseEntity.ok(httpResponseDto);
+        }
+        else{
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
+        }
+    }
 
     @PatchMapping("/img/{customer_seq}")
     public ResponseEntity<HttpResponseDto> patchImg(@PathVariable("customer_seq") int customerSeq, @RequestPart("img") MultipartFile file) throws IOException {

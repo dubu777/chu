@@ -76,19 +76,19 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
     }
     */
 
-//
-//    @Override
-//    public ResponseCustomerDetailDto getCustomerDetail(int customerSeq) {
-//        ResponseCustomerDetailDto responseCustomerDetailDto = new ResponseCustomerDetailDto();
-//
-//        responseCustomerDetailDto.setCustomer(customerDetailRepository.getCustomerInfo(customerSeq));
-//        responseCustomerDetailDto.setCustomerHairConditionList(customerDetailRepository.getCustomerHairCondition(customerSeq));
-//
-//        responseCustomerDetailDto.setResponsePastConsultingDtoList(customerDetailRepository.getPastConsultingList(customerSeq));
-//        responseCustomerDetailDto.setResponseFutureConsultingDtoList(customerDetailRepository.getFutureConsultingList(customerSeq));
-//
-//        return responseCustomerDetailDto;
-//    }
+
+    @Override
+    public ResponseCustomerDetailDto getCustomerDetail(int customerSeq) {
+        ResponseCustomerDetailDto responseCustomerDetailDto = new ResponseCustomerDetailDto();
+
+        responseCustomerDetailDto.setCustomer(customerDetailRepository.getCustomerInfo(customerSeq));
+        responseCustomerDetailDto.setCustomerHairConditionList(customerDetailRepository.getCustomerHairCondition(customerSeq));
+
+        responseCustomerDetailDto.setResponsePastConsultingDtoList(customerDetailRepository.getPastConsultingList(customerSeq));
+        responseCustomerDetailDto.setResponseFutureConsultingDtoList(customerDetailRepository.getFutureConsultingList(customerSeq));
+
+        return responseCustomerDetailDto;
+    }
 //
 //    @Override
 //    public ResponseCustomerDetailInfoDto getCustomerUpdateDetailInfo(int customerSeq) {

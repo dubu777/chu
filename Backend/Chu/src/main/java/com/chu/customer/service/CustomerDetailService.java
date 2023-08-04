@@ -11,10 +11,10 @@ public interface CustomerDetailService {
     // 고객 이미지를 통해 파일 경로명을 받아옴
     String getSavedImgFilePath(MultipartFile file) throws IOException;
     // 고객 이미지 수정
-    Boolean patchImage(Integer customerSeq, String fileName) ;
+    Boolean patchImage(Integer customerSeq, String fileName);
 
     // 마이페이지 들어갈때 가져올 것들
-//    ResponseCustomerDetailDto getCustomerDetail(int customerSeq);
+    ResponseCustomerDetailDto getCustomerDetail(int customerSeq);
 //
 //    // 고객정보 수정 눌렀을때 가져올 것들
 //    ResponseCustomerDetailInfoDto getCustomerUpdateDetailInfo(int customerSeq);
