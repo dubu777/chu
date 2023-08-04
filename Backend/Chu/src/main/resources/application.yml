@@ -1,7 +1,7 @@
 server:
   port: 9090
   ssl:
-    key-store: ${SSL_KEY_PATH}certificate.p12
+    key-store: ${SSL_KEY_PATH}keystore.p12
     key-store-type: PKCS12
     key-store-password: ${SSL_PASSWORD}
   servlet:
@@ -16,7 +16,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     generate-ddl: true
     properties:
       hibernate:
