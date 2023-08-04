@@ -15,9 +15,8 @@ const Container = styled.div`
   margin: 0 auto;
 `;
 const Hr = styled.div`
-  margin: 20px 0 20px 10px;
-  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
-  width: 100%;
+  margin: 20px 0 20px 0;
+  border-bottom : 2px solid rgba(0, 0, 0, 0.1);
 `;
 const Wrap = styled.div`
   display: flex;
@@ -45,17 +44,19 @@ const DetailBox = styled.div`
 `;
 const DesignerImg = styled.img`
   width: 100px;
+  margin-right: 10px;
 `;
+
 const ProfileBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   margin: 0 10px;
+  align-items: center;
 `;
-const Name = styled.p`
-  font-size: 17px;
+const Name = styled.span`
+  font-size: 13px;
   font-weight: bold;
-  margin-bottom: 7px;
 `;
 
 const Icon = styled.img`
@@ -69,15 +70,16 @@ const StarBox = styled(motion.div)`
   align-items: center;
 `;
 const Time = styled.span`
-  font-size: 16px;
+  margin-top: 10px;
+  font-size: 14px;
   font-weight: bold;
   text-align: center;
 `;
 const Day = styled.span`
-  font-size: 16px;
+  margin-top: 10px;
+  font-size: 14px;
   font-weight: bold;
   text-align: center;
-
 `;
 const ResultBtn = styled(motion.button)`
   font-size: 16px;
@@ -90,7 +92,7 @@ const ResultBtn = styled(motion.button)`
 
 `;
 const Text = styled.span`
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
   text-align: center;
 `;
@@ -131,6 +133,7 @@ const InfoText = styled.span`
 const InfoBox = styled.div`
   display: flex;
   flex-direction: column;
+  margin-top: 10px;
 `;
 const BigModalBox = styled.div`
   display: flex;
@@ -275,6 +278,7 @@ function ReserveList() {
   return (
     <Container>
       <AnimatePresence>
+      <Hr/>
       {result.pastConsulting.map((data) => (
         <BigWrap>
           <Wrap>
@@ -282,17 +286,22 @@ function ReserveList() {
               <Box>
                 <ProfileBox>
                   <DesignerImg src={data.designerImg}/>
+                  <StarBox>
+                    <Icon src="./icon/star.png"/>
+                    <Text>{data.allReviewScore}</Text>
+                  </StarBox>
                 </ProfileBox>
                 <InfoBox>
                   <Name>{data.name} 디자이너</Name>
                   <Box>
+                    <CommentBox>
+                      <Text>"{data.reviewContent}"</Text>
+                    </CommentBox>
                     <StarBox>
+                      <Text>나의 평점: </Text>
                       <Icon src="./icon/star.png"/>
                       <Text>{data.myReviewScore}</Text>
                     </StarBox>
-                    <CommentBox>
-                      <Text>{data.reviewContent}</Text>
-                    </CommentBox>
                   </Box>
                   <DetailBox >
                     <ResultBtn 
@@ -307,8 +316,8 @@ function ReserveList() {
               </Box>
             </Wrapper>
             <Box>
-              <Day>{data.consultingDate}({data.consultingDateDay})</Day>
-              <Time>{data.consultingStartTime} ~ {data.consultingEndTime}</Time>
+              <Day>{data.consultingDate}({data.consultingDateDay })</Day>
+              <Time> {data.consultingStartTime} ~ {data.consultingEndTime}</Time>
             </Box>
           </Wrap>
           <Hr/>
