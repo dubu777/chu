@@ -1,14 +1,19 @@
 package com.chu.customer.service;
 
+import com.chu.consulting.domain.ConsultingResult;
+import com.chu.consulting.repository.ConsultingResultRepository;
 import com.chu.customer.domain.*;
 import com.chu.customer.repository.CustomerAlertRepository;
 import com.chu.customer.repository.CustomerRepository;
 import com.chu.customer.repository.TestRepository;
 import com.chu.designer.domain.Designer;
 import com.chu.designer.repository.DesignerRepository;
+import com.chu.designer.repository.DesignerSearchRepository;
 import com.chu.global.domain.*;
 import com.chu.global.exception.Exception;
 import com.chu.global.jwt.JwtTokenProvider;
+import com.chu.global.repository.HairStyleDictRepository;
+import com.chu.global.repository.HairStyleImgRepository;
 import com.chu.worldcup.repository.WorldcupRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,8 +41,12 @@ public class CustomerServiceImpl implements CustomerService{
 
     private final CustomerRepository customerRepository;
     private final DesignerRepository designerRepository;
+    private final DesignerSearchRepository designerSearchRepository;
     private final WorldcupRepository worldcupRepository;
     private final CustomerAlertRepository customerAlertRepository;
+    private final ConsultingResultRepository consultingResultRepository;
+    private final HairStyleDictRepository hairStyleDictRepository;
+    private final HairStyleImgRepository hairStyleImgRepository;
     private final TestRepository testRepository;
     private final PasswordEncoder bCryptPasswordEncoder;
     private final AuthenticationManager authenticationManager;
@@ -134,14 +143,89 @@ public class CustomerServiceImpl implements CustomerService{
 
             responseCustomerLoginDetailDto.setToken(tokenDto);
 
+
+
             // 2) customerInfo setting
             Customer customer = customerRepository.findById(requestSignInDto.getId());
             ResponseCustomerLoginInfoDto responseCustomerLoginInfoDto = new ResponseCustomerLoginInfoDto().entityToDto(customer);
 
             responseCustomerLoginDetailDto.setCustomerInfo(responseCustomerLoginInfoDto);
 
+
+
             // 3) bestDesigner setting
-            //List<Designer> designerList = designerRepository
+            List<Designer> designerList = designerSearchRepository.findTop6ByOrderByReviewScoreDesc();
+            List<ResponseBestDesignerDto> list = new ArrayList<>();
+            for(Designer d : designerList){
+                ResponseBestDesignerDto dto = new ResponseBestDesignerDto();
+
+                dto.setImg(d.getImagePath().getSavedImgName());
+                dto.setName(d.getName());
+                dto.setDesignerSeq(d.getSeq());
+
+                list.add(dto);
+            }
+
+            responseCustomerLoginDetailDto.setBestDesigner(list);
+
+
+//
+//            // 4) recommendImg setting
+//            List<FaceImageNameDto> list4 = new ArrayList<>();
+//
+//            // 4-1) 고객 얼굴형 받아오기
+//            int faceSeq = customer.getFaceDict().getSeq();
+//
+//            // 4-2) cunsulting result 테이블에서 얼굴형 일치하는 데이터 6개 가져오기
+//            List<ConsultingResult> conResultList= consultingResultRepository.findTop6ByFaceSeq(faceSeq);
+//
+//            // conResultList에서 헤어스타일 seq로 hairStyleDict 테이블에서 데이터 뽑아내기
+//            List<HairStyleDict> hairStyleDictList = new ArrayList<>();
+//            for(int i=0; i<conResultList.size(); i++){
+//                ConsultingResult c = conResultList.get(i);
+//
+//                HairStyleDict h = hairStyleDictRepository.findBySeq(c.getSeq());
+//
+//                // 헤어스타일 seq 받기
+//                int hairStyleSeq = h.getSeq();
+//                // 받은 seq로 헤어스타일 이미지 테이블에서 이미지 받아오기
+//                HairStyleImg hairStyleImg = hairStyleImgRepository.findByHairStyleSeq(hairStyleSeq);
+//
+//                // 리스트에 넣기
+//                list4.add(new FaceImageNameDto(hairStyleSeq, hairStyleImg.getImagePath().getUploadImgName(), h.getHairStyleLabel()));
+//            }
+//
+//            responseCustomerLoginDetailDto.setRecommendImg(list4);
+
+
+
+            // 5. statisticsImg setting
+            List<FaceImageNameDto> list5 = new ArrayList<>();
+
+            // 5-1) hairStyleImg 테이블에서 이미지 5개 가져오기
+            List<HairStyleImg> hairStyleImgList = hairStyleImgRepository.findTop5ByOrderBySeq();
+
+            for(HairStyleImg i : hairStyleImgList){
+                int seq = i.getSeq();
+
+                // 헤어스타일 라벨 가져오기
+                HairStyleDict hairStyleDict= hairStyleDictRepository.findBySeq(seq);
+
+                list5.add(new FaceImageNameDto(seq, i.getImagePath().getSavedImgName(), hairStyleDict.getHairStyleLabel()));
+            }
+
+            responseCustomerLoginDetailDto.setStatisticsImg(list5);
+
+
+
+            // 6. alert setting
+            List<AlertCustomerOnLoginDto> list6 = new ArrayList<>();
+            int customerSeq = responseCustomerLoginInfoDto.getCustomerSeq();
+
+
+
+
+
 
 
             return responseCustomerLoginDetailDto;

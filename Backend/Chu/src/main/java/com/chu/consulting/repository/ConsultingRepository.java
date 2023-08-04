@@ -16,6 +16,9 @@ public interface ConsultingRepository extends JpaRepository<Consulting, Integer>
     List<Object[]> getReviewScoreByDesigner();
 
 
+
+
+
 //    String participantConsulting(int consultingSeq);
 //
 //    boolean createConsulting(RequestConsultingDto requestConsultingDto);
