@@ -37,7 +37,7 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
 
         File directory = new File(uploadDir);
 
-        String filePath = rootDir + userHomeDir + uploadDir + fileName;
+        String filePath = rootDir + uploadDir + fileName;
         File destFile = new File(filePath);
         System.out.println(filePath);
 
