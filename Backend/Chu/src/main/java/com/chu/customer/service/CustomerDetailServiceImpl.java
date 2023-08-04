@@ -27,23 +27,18 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
 
     @Override
     public String getSavedImgFilePath(MultipartFile file) throws IOException {
-
-        // 로컬 서버 저장 경로: user.home/chu/iamges/profile/__________.png
-//        String userHomeDir = System.getProperty("user.home");
-        String rootDir = File.separator + "home" + File.separator + "ubuntu";
-        String userHomeDir = File.separator + "path" + File.separator + "in" + File.separator + "container";
-        String uploadDir = File.separator + "chu" + File.separator + "images" + File.separator + "profile" + File.separator;
+        String rootDir = "/home/ubuntu";
+        String uploadDir = "/chu/images/profile/";
         String fileName = file.getOriginalFilename();
 
-        File directory = new File(uploadDir);
-
+        File directory = new File(rootDir + uploadDir);
         String filePath = rootDir + uploadDir + fileName;
         File destFile = new File(filePath);
         System.out.println(filePath);
 
-        if(!directory.exists()) {
+        if (!directory.exists()) {
             boolean mkdirsResult = directory.mkdirs();
-            if(mkdirsResult) {
+            if (mkdirsResult) {
                 System.out.println("디렉토리 생성 성공");
             } else {
                 System.out.println("디렉토리 생성 실패");
@@ -51,7 +46,7 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
         }
 
         file.transferTo(destFile);
-        System.out.println("서비스에서 파일 저장 성공! 이미지 저장 경로: "+filePath);
+        System.out.println("서비스에서 파일 저장 성공! 이미지 저장 경로: " + filePath);
 
         return filePath;
     }
