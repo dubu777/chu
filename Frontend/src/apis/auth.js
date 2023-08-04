@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://i9b111.q.ssafy.io:9090/api';
-//const BASE_URL = 'http://localhost:9090/api';
+//const BASE_URL = 'https://i9b111.q.ssafy.io:9090/api';
+const BASE_URL = 'http://localhost:9090/api';
 
 export const login = async (username, password) => {
   try {
@@ -38,8 +38,9 @@ export const findId = async (username, useremail) => {
 };
 
 export const signUpRequest = async (customerData) => {
+  console.log(customerData);
   try {
-    const response = await axios.post(`${BASE_URL}/cusotomer/sign-up`, customerData);
+    const response = await axios.post(`${BASE_URL}/customer/sign-up`, customerData);
     return response.data;
   } catch (error) {
     throw error;
@@ -49,10 +50,13 @@ export const signUpRequest = async (customerData) => {
 // 아이디 중복 체크 요청 함수
 export const checkDuplicateId = async (id, userType) => {
   try {
-    const response = await axios.post(`${BASE_URL}/user/check-id`, { 
+    const response = await axios.get(`${BASE_URL}/user/check-id`, { 
       params : {
         "id" : id,
         "userType" : userType
+      },
+      headers: {
+        'Content-Type': 'text-plain'
       }
     });
     return response.data.result;
@@ -64,11 +68,12 @@ export const checkDuplicateId = async (id, userType) => {
 // 이메일 중복 체크 요청 함수
 export const checkDuplicateEmail = async (email, userType) => {
   try {
-    const response = await axios.post(`${BASE_URL}/user/check-email`, { 
-      parmas : {
+    console.log(email);
+    const response = await axios.get(`${BASE_URL}/user/check-email`, { 
+      params : {
         "email" : email,
         "userType" : userType,
-      }
+      },
     });
     return response.data.result;
   } catch (error) {
