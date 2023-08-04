@@ -30,6 +30,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,6 +102,18 @@ public class CustomerServiceImpl implements CustomerService{
         }
 
         return response;
+    }
+
+    // 고객 비밀번호 변경
+    @Override
+    @Transactional
+    public void changePwd(RequestCustomerChangePwdDto param) {
+        Customer c = new Customer();
+        c.setPwd(param.getPwd());
+        c.hashPassword(bCryptPasswordEncoder);
+        String pwd = c.getPwd();
+
+        customerRepository.changePwd(param.getCustomerSeq(), pwd);
     }
 
 
