@@ -47,8 +47,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
 
-        http.authorizeRequests().antMatchers("/**").permitAll();
-
+        http.cors();
             // jwt 사용하므로 request 보내기 어려움
         http.csrf().disable();
 
@@ -60,6 +59,7 @@ public class SecurityConfig {
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
             // 필터 순서 설정
             //.addFilterBefore(new JwtAuthentiationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
+        http.authorizeRequests().antMatchers("/**").permitAll();
 
 
 

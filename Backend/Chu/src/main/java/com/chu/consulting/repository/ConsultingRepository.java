@@ -15,6 +15,11 @@ public interface ConsultingRepository extends JpaRepository<Consulting, Integer>
             " GROUP BY c.designer.seq")
     List<Object[]> getReviewScoreByDesigner();
 
+    // 상담 번호로 상담 정보 받아오기
+    Consulting getConsultingBySeq(int seq);
+
+
+
 
 //    String participantConsulting(int consultingSeq);
 //
