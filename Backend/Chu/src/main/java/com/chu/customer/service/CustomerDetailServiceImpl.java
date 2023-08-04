@@ -30,13 +30,14 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
 
         // 로컬 서버 저장 경로: user.home/chu/iamges/profile/__________.png
 //        String userHomeDir = System.getProperty("user.home");
+        String rootDir = File.separator + "home" + File.separator + "ubuntu";
         String userHomeDir = File.separator + "path" + File.separator + "in" + File.separator + "container";
         String uploadDir = File.separator + "chu" + File.separator + "images" + File.separator + "profile" + File.separator;
         String fileName = file.getOriginalFilename();
 
         File directory = new File(uploadDir);
 
-        String filePath = userHomeDir + uploadDir + fileName;
+        String filePath = rootDir + userHomeDir + uploadDir + fileName;
         File destFile = new File(filePath);
         System.out.println(filePath);
 
