@@ -29,7 +29,7 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
     public String getSavedImgFilePath(MultipartFile file) throws IOException {
 //        String rootDir = "/home/ubuntu";
 //        String uploadDir = "/chu/images/profile/";
-        String uploadDir = "/path/in/container";
+        String uploadDir = "/path/in/container/";
         String fileName = file.getOriginalFilename();
 
 //        File directory = new File(rootDir + uploadDir);
