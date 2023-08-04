@@ -46,8 +46,7 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
         }
 
         file.transferTo(destFile);
-        System.out.println("서비스에서 파일 저장 성공! 이미지 저장 경로: " + filePath);
-
+        log.info("서비스 >>> 파일 저장 성공! filePath : " + filePath);
         return filePath;
     }
 

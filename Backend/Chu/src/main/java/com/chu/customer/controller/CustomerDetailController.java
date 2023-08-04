@@ -66,9 +66,9 @@ public class CustomerDetailController {
     @PatchMapping("/img/{customer_seq}")
     public ResponseEntity<HttpResponseDto> patchImg(@PathVariable("customer_seq") int customerSeq, @RequestPart("img") MultipartFile file) throws IOException {
 
-        log.info("여기 들어오냐?"); //ㅇㅇ
         String filePath = customerDetailService.getSavedImgFilePath(file);
         log.info("이미지 로컬서버에 저장 완료");
+        log.info("컨트롤러>>> filePath: "+ filePath);
 
         // 내 아이디를 가지고 가서 변경 감지 -> imgPath를 저장파일명에 업데이트한다
         boolean isSuccess = customerDetailService.patchImage(customerSeq, filePath);
