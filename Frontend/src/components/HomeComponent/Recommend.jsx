@@ -1,15 +1,15 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import motion from "framer-motion";
 import { useState } from "react";
 import { useRecoilState } from "recoil";
-import { loginState } from "../../recoil/auth";
+import { loginState, useIsLoggedIn } from "../../recoil/auth";
 
 const Container = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-  margin-top: 30px;
+  margin: 30px 0;
 `;
 const Wrapper = styled.div`
   display: flex;
@@ -17,16 +17,16 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 const RecommendImg = styled.img`
-	width: 100px;
+	width: 150px;
 	margin-right: 20px;
 `;
 const UnRecommendImg = styled.img`
-	width: 100px;
+	width: 150px;
 	margin-right: 20px;
   filter: blur(6px);
 `;
 const ImgDiv = styled.div`
-  width: 100px;
+  width: 150px;
   margin-right: 10px;
 `;
 const ImgBox = styled.div`
@@ -48,16 +48,13 @@ function Recommend(){
     "img/opofol6.jpg",
   ]
   const [isLogIn, setIsLogIn] = useRecoilState(loginState);
-  const [testLogIn, setTestLogIn] = useState(false)
-  const testBtn = () => {
-    setTestLogIn(prev => !prev)
-  }
-
+  const isLoggedIn = useIsLoggedIn();
+  const navigate = useNavigate();
   return(
   
   
     <Container>
-      { isLogIn ?
+      { isLoggedIn ?
       <Wrapper>
       <Text>계란형 얼굴에는 이런 헤어스타일이 잘 어울려요</Text>
       <ImgBox>
@@ -71,7 +68,10 @@ function Recommend(){
       <Text>얼굴형에 맞는 헤어스타일을 추천 받으러 가기!</Text>
       <ImgBox>
       {Imgs.map((item, index) => (
-        <UnRecommendImg src={item} key={index}/>
+        <UnRecommendImg 
+          onClick={() => navigate('/login')}
+          src={item} 
+          key={index}/>
       ))}
       </ImgBox>
       </Wrapper>

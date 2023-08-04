@@ -37,3 +37,41 @@ export const findId = async (username, useremail) => {
   }
 };
 
+export const signUpRequest = async (customerData) => {
+  try {
+    const response = await axios.post(`${BASE_URL}/cusotomer/sign-up`, customerData);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// 아이디 중복 체크 요청 함수
+export const checkDuplicateId = async (id, userType) => {
+  try {
+    const response = await axios.post(`${BASE_URL}/user/check-id`, { 
+      params : {
+        "id" : id,
+        "userType" : userType
+      }
+    });
+    return response.data.result;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// 이메일 중복 체크 요청 함수
+export const checkDuplicateEmail = async (email, userType) => {
+  try {
+    const response = await axios.post(`${BASE_URL}/user/check-email`, { 
+      parmas : {
+        "email" : email,
+        "userType" : userType,
+      }
+    });
+    return response.data.result;
+  } catch (error) {
+    throw error;
+  }
+};

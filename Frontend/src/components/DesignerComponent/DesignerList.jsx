@@ -111,8 +111,7 @@ function DesignerList() {
   const handleLikeClick = () => {
     setLiked((prevLiked) => !prevLiked); // 좋아요 상태를 토글
   };
-<<<<<<< Updated upstream
-  // const {data, isLoading} = useQuery(["byRating"], getByRating)
+  const navigate = useNavigate();
   const [data, setData] = useState(
     {
       "allCutHairStyle": [
@@ -197,9 +196,6 @@ function DesignerList() {
       ]
   }
   )
-=======
- const navigate = useNavigate();
->>>>>>> Stashed changes
   return (
     <Container>
       <Hr/>

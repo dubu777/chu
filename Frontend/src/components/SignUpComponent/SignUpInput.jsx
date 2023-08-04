@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 
-const InputWrapper = styled.div`
+const SignUpInputWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   margin: 10px 0;
@@ -24,17 +24,17 @@ const Input = styled.input`
   }
 `;
 
-const Text = styled.span`
+const SignUpText = styled.span`
   font-size: 14px;
   font-weight: bold;
 `;
-const Word = styled.span`
+const SignUpWord = styled.span`
  font-size : 10px;
  color: red;
  margin-left: 10px;
  margin-top: 5px;
 `;
-const TextBox = styled.div`
+const SignUpTextBox = styled.div`
   display: flex;
   justify-content: start;
   margin: 0 0 5px 8px;
@@ -43,13 +43,13 @@ const TextBox = styled.div`
 
 function SignUpInput({text, word, placeholder}) {
   return (
-    <InputWrapper>
-    <TextBox>
-      <Text>{text}</Text>
-      <Word>{word}</Word>
-    </TextBox>
+    <SignUpInputWrapper>
+    <SignUpTextBox>
+      <SignUpText>{text}</SignUpText>
+      <SignUpWord>{word}</SignUpWord>
+    </SignUpTextBox>
       <Input placeholder={placeholder}/>
-    </InputWrapper>
+    </SignUpInputWrapper>
   )
 }
 export default SignUpInput;

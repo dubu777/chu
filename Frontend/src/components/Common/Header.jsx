@@ -1,8 +1,8 @@
 import { styled } from "styled-components";
 import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
-import { useRecoilState } from "recoil";
-import { loginState } from "../../recoil/auth";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { loginState, useToggleLoginState, useIsLoggedIn } from "../../recoil/auth";
 import { useState } from "react";
 
 const Nav = styled(motion.nav)`
@@ -83,11 +83,14 @@ const logoVariants = {
 function Header() {
   const navigate = useNavigate();
   const [isLogIn, setIsLogIn] = useRecoilState(loginState);
-  const [testLogIn, setTestLogIn] = useState(false)
-  const testBtn = () => {
-    setTestLogIn(prev => !prev)
-  }
-  console.log(testLogIn);
+  /// 임의로 버튼으로 상태만들어서 login test중
+    const setToggleLoginState = useToggleLoginState();
+  
+    const handleLoginClick = () => {
+      setToggleLoginState();
+    };
+    console.log(setToggleLoginState);
+  
   const deleteTokenFromLocalStorage = () => {
     localStorage.removeItem('accessTokenState'); 
   }
@@ -127,7 +130,7 @@ function Header() {
           <Link to="/designermypage">디자이너MyPage//</Link>
           <Link to="/customermypage">CustomerMyPage//</Link> */}
 
-          { testLogIn ?  
+          { useIsLoggedIn() ?  
             <>
               <Item 
                 variants={logoVariants}
@@ -166,7 +169,7 @@ function Header() {
               </Link>
             </>
           }
-            <button onClick={testBtn}>로그인테스트</button>
+            <button onClick={handleLoginClick}>로그인테스트</button>
         
       </Col>
     </Nav>
