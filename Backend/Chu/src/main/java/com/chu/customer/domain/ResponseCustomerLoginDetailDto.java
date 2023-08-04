@@ -16,6 +16,6 @@ public class ResponseCustomerLoginDetailDto {
     List<ResponseBestDesignerDto> bestDesigner;
     List<FaceImageNameDto> recommendImg;
     List<FaceImageNameDto> statisticsImg;
-    ArrayList<AlertCustomerOnLoginDto> alert;
+    List<AlertCustomerOnLoginDto> alert;
 
 }
