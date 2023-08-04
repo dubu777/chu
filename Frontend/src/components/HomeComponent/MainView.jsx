@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import swal from "sweetalert";
+import {listViewState} from "../../recoil/designer";
+import {listinfo} from "../../apis/designer";
+
 
 const ClickImg = styled.img`
   height: 310px;
@@ -45,12 +49,26 @@ const P = styled.p`
 `;
 
 function MainView(){
+  const [data, setData] = useRecoilState(listViewState);
+  const seq = 2
+  const dataTest = async () => {
+    try {
+      const data = await listinfo(seq);
+      console.log(data)
+      setData(data)
+
+    } catch(error){
+      console.log(error)
+
+  }
+}
+  console.log(data);
   return(
     <Container>
     <Title>Style의 발견 🎁</Title>
     <br></br>
       <Wrapper>
-        <Box>
+        <Box onClick={dataTest}>
           <Link to="/listview">
           <ClickImg src="./img/listview.jpg"></ClickImg>
           <P>헤어스타일 상담 예약 바로가기</P>
