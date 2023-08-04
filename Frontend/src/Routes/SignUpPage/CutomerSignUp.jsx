@@ -231,7 +231,25 @@ function CustomerSignUp() {
     formState: { errors },
     watch,
   } = useForm();
+
   const userType = "customer";
+
+  const [name, setName] = useState("");
+  const [id, setId] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [gender, setGender] = useState("");
+  const handleGenderChange = (event) => {
+    setGender(event.target.value);
+  };
+  const customerData = {
+    name: name,
+    id: id,
+    email: email,
+    gender: gender,
+    pwd: password,
+  };
+  console.log(customerData);
 
   const handleIdCheck = async () => {
     try {
@@ -297,22 +315,7 @@ function CustomerSignUp() {
       swal("Error", "회원가입에 실패했습니다.", "error");
     }
   }
-  const [name, setName] = useState("");
-  const [id, setId] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [gender, setGender] = useState("");
-  const handleGenderChange = (event) => {
-    setGender(event.target.value);
-  };
-  const customerData = {
-    name: name,
-    id: id,
-    email: email,
-    gender: gender,
-    pwd: password,
-  };
-  console.log(customerData);
+
   return (
     <Container>
       <StepWrapper>
@@ -384,8 +387,8 @@ function CustomerSignUp() {
                       <GenderLabel>
                         <CustomRadio
                           type="radio"
-                          value="male"
-                          checked={gender === "male"}
+                          value="M"
+                          checked={gender === "M"}
                           onChange={handleGenderChange}
                         />
                         남자
@@ -393,8 +396,8 @@ function CustomerSignUp() {
                       <GenderLabel>
                         <CustomRadio
                           type="radio"
-                          value="female"
-                          checked={gender === "female"}
+                          value="F"
+                          checked={gender === "F"}
                           onChange={handleGenderChange}
                         />
                         여자
