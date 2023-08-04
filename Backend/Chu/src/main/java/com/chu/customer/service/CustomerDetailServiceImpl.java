@@ -27,12 +27,16 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
 
     @Override
     public String getSavedImgFilePath(MultipartFile file) throws IOException {
-        String uploadDir = "/Users/mzmzrmz/images/";
+
+        String userHomeDir = System.getProperty("user.home");
+        String uploadDir = File.separator + "chu" + File.separator + "images" + File.separator + "profile" + File.separator;
+        String fileName = file.getOriginalFilename();
+
         File directory = new File(uploadDir);
 
-        String fileName = file.getOriginalFilename();
-        String filePath = uploadDir + fileName;
+        String filePath = userHomeDir + uploadDir + fileName;
         File destFile = new File(filePath);
+        System.out.println(filePath);
 
         if(!directory.exists()) {
             boolean mkdirsResult = directory.mkdirs();
