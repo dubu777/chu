@@ -29,7 +29,8 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
     public String getSavedImgFilePath(MultipartFile file) throws IOException {
 
         // 로컬 서버 저장 경로: user.home/chu/iamges/profile/__________.png
-        String userHomeDir = System.getProperty("user.home");
+//        String userHomeDir = System.getProperty("user.home");
+        String userHomeDir = "home" + File.separator + "ubuntu";
         String uploadDir = File.separator + "chu" + File.separator + "images" + File.separator + "profile" + File.separator;
         String fileName = file.getOriginalFilename();
 
