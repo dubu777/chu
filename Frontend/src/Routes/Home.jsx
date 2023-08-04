@@ -14,8 +14,8 @@ const Main = styled.img`
 `;
 const MainWrapper = styled.div`
   margin-top: 40px;
-  margin-left: 150px;
-  margin-right: 150px;
+  margin-left: 170px;
+  margin-right: 170px;
 `;
 const ImgText = styled.h2`
   font-family: 'Amiri';
@@ -26,17 +26,6 @@ const ImgText = styled.h2`
   left: 40%;
   overflow: hidden;
   animation: fadein 7s ease-in-out;
-  @keyframes ImgText{
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 3;
-      transform: none;
-      
-    }
-  }
 `;
 const DesignerBox = styled.div`
   display: flex;
@@ -44,7 +33,7 @@ const DesignerBox = styled.div`
   margin-top: 20px;
   margin-bottom: 20px;
 `;
-const ProfileBox = styled.div`
+const ProfileBox = styled(motion.div)`
   background-color: #ffffff;
   border: 2px solid orange;
   width: 160px;
@@ -62,6 +51,17 @@ const ProfileBox = styled.div`
     transform: scale(1.02);
   }
 `;
+const pofolVariants = {
+	nomal: {
+		scale: 1,
+	},
+	hover: {
+		scale: 1.05,
+		transition: {
+			duration: 0.2
+		},
+	},
+}
 const Title = styled.h1`
   font-family: 'omyu_pretty'; 
   font-size: 25px;
@@ -161,7 +161,11 @@ function Home() {
       <DesignerBox>
       {/* 이부분 나중에 img로 태그 변경하기 */}
       {data.bestDesigner.map((item)=> (
-        <ProfileBox key={item.designerIdx}>
+        <ProfileBox 
+          key={item.designerIdx}
+          variants={pofolVariants}
+					initial="nomal"
+					whileHover="hover">
           <ImgBox>
             <ProfileImg src={"./img/opofol9.jpg"}></ProfileImg>
           </ImgBox>

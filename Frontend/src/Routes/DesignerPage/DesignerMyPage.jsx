@@ -33,8 +33,9 @@ const NameText = styled.h1`
   /* font-weight: bold; */
 `;
 const Text = styled.p`
-  margin-bottom: 20px;
+  /* margin-top: 20px; */
   font-size: large;
+  padding: 10px 0px;
 `;
 const HashTag = styled.button`
   border: 0;
@@ -43,13 +44,14 @@ const HashTag = styled.button`
   color: white;
   height: 30px;
   margin-right: 10px;
+  margin-top: 5px;
   padding: 2px 15px;
 `
 const InfoBox = styled.div`
   /* border: solid 2px;
   border-color: #afadaa; */
   width: 30%;
-  margin-top: 155px;
+  margin-top: 130px;
   margin-left: -120px;
 `;
 const ChangeBox = styled.div`
@@ -84,10 +86,6 @@ const Wrapper = styled.div`
   
 `;
 
-const TextBox = styled.div`
-  
-`;
-
 const Box = styled.div`
   min-height: 500px;
   height: 75%;
@@ -109,6 +107,29 @@ const ClickBtn = styled.button`
   border-bottom: white;
   border-radius: 0.6rem 0.6rem 0rem 0rem;
 `
+const EditBox = styled.div`
+  margin-bottom: 25px;
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+`;
+const TextArea = styled.div`
+  border: none;
+  width: 400px;
+  height: 40px;
+  /* padding: 0px 15px; */
+  border-radius: 0.3rem;
+  margin-bottom: 7px;
+  background-color: white;
+  resize: none;
+`;
+const EditBtn =styled.button`
+  height: 25px;
+  border: 2px solid orange;
+  background-color: beige;
+  border-radius: 0.7rem;
+  margin-left: 10px;
+`;
 
 function DesignerMyPage(){
   const navigate = useNavigate();
@@ -116,7 +137,7 @@ function DesignerMyPage(){
     "name" : "재현",
         "cost" : "5000",
         "email" : "ssafy@ssafy.com",
-        "introduction" : " 남자 펌 전문 !",
+        "introduction" : "레이어드 전문 디자이너 차홍 청담점의 재현입니다~",
         "img" : "img1.png",
         "hairStyleTag" : [
             "시스루펌",
@@ -131,11 +152,23 @@ function DesignerMyPage(){
         ]
   });
   const [activeBtn, setActiveBtn] = useState('calendar'); // 'recent' or 'designer'
-
+  const [introduction, setIntroduction] = useState(data.introduction || ""); // data.introduction의 값이 없으면 빈 문자열로 초기화
+  const [isEditing, setIsEditing] = useState(false); // 수정 상태 체크
+  
+  const handleIntroductionChange = (event) => {
+    setIntroduction(event.target.innerText);
+  }
+  const handleEditButtonClick = () => {
+    setIsEditing(true);
+  }
+  const handleSaveButtonClick = () => {
+    setData({...data, introduction});
+    setIsEditing(false);
+  };
   const handleBtnClick = (btnType) => {
     setActiveBtn(btnType);
   };
-
+  
 
   return(
     <Container>
@@ -148,12 +181,31 @@ function DesignerMyPage(){
         <InfoBox>
           <Text>{data.cost}</Text>
           <Text>{data.email}</Text>
-          <Text>{data.introduction}</Text>
+          
+          <introductionWrapper>
+            {isEditing ? (
+          <EditBox>
+            <TextArea
+              contentEditable
+              placeholder="소개글을 작성해주세요"
+              onInput={handleIntroductionChange}
+              >
+              {introduction || data.introduction}
+            </TextArea>
+              <EditBtn onClick={handleSaveButtonClick}>완료</EditBtn>
+            </EditBox>
+            ) : (
+              <EditBox>
+                <Text>{data.introduction || "소개글이 없습니다."}</Text>
+                <EditBtn onClick={handleEditButtonClick}>수정</EditBtn>
+              </EditBox>
+
+              )}
+          </introductionWrapper>
           {data.hairStyleTag.map((word, index) => (
             <HashTag key={index}> #{word} </HashTag>
           ))}
         </InfoBox>
-
         <ChangeBox>
           <ChangeBtn onClick={() => navigate("/editdesignerinfo")}>회원 정보 변경</ChangeBtn>
         </ChangeBox>

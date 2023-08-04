@@ -54,3 +54,26 @@ margin-left: 150px;
 margin-right: 150px;
 
 ```
+
+#### hover motion
+
+
+```
+import { motion,AnimatePresence,useAnimation }from "framer-motion";
+
+const pofolVariants = {
+	nomal: {
+		scale: 1,
+	},
+	hover: {
+		scale: 1.05,
+		transition: {
+			duration: 0.2
+		},
+	},
+}
+
+variants={pofolVariants}
+initial="nomal"
+whileHover="hover"
+```
