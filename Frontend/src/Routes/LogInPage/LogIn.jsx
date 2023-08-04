@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from 'recoil';
 import React, { useState } from 'react';
 import { login, login2 } from '../../apis/auth';
-import { accessTokenState, loginResultState } from '../../recoil/auth';
+import { accessTokenState, loginResultState, loginState } from '../../recoil/auth';
 
 const Container = styled.div`
 	background: url('./img/login.jpg');

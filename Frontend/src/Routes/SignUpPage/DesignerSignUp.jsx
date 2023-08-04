@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect, useRef } from "react";
+import axios from "axios";
 import styled from "styled-components";
-import Step from '../../components/SignUpComponent/Step';
+import Step from "../../components/SignUpComponent/Step";
 import DesignerUserInfo from "../../components/SignUpComponent/DesignerUserInfo";
 import swal from "sweetalert";
 import SignUpInput from "../../components/SignUpComponent/SignUpInput";
@@ -13,7 +13,7 @@ const Container = styled.div`
   flex-direction: column;
   display: flex;
   width: 65vw;
-  margin: 0 auto;    
+  margin: 0 auto;
 `;
 const StepWrapper = styled.div`
   margin-top: 40px;
@@ -48,13 +48,14 @@ const Wrapper = styled.div`
   width: 70vh;
   height: 100%;
   border-radius: 51px;
-  background: #FDFDFD;
+  background: #fdfdfd;
   /* box-shadow: 0px 4px 15px 0px rgba(0, 0, 0, 0.30); */
-  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 2px 4px 30px -4px rgb(0 0 0 / 0.1);
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+    2px 4px 30px -4px rgb(0 0 0 / 0.1);
 `;
 const Hr = styled.div`
   margin-top: 20px;
-  border-bottom : 2px solid rgb(242,234,211);
+  border-bottom: 2px solid rgb(242, 234, 211);
 `;
 
 const ProfileBox = styled.div`
@@ -65,12 +66,10 @@ const ProfileBox = styled.div`
 
 const ClickBox = styled.div`
   /* flex-direction: column; */
-  
 `;
 const Text = styled.p`
   margin-left: 30px;
   font-size: 10px;
-  
 `;
 const Btn = styled.button`
   font-size: 15px;
@@ -85,8 +84,8 @@ const Btn = styled.button`
   margin-bottom: 20px;
   transition: background-color 0.3s ease;
   &:hover {
-  /* background-color: #f3ece2; */
-  border-color: #c0b692;
+    /* background-color: #f3ece2; */
+    border-color: #c0b692;
   }
   cursor: pointer;
 `;
@@ -95,7 +94,7 @@ const Profile = styled.img`
   height: 170px;
   border-radius: 50%;
   /* 이미지 상태에 따라 태두리 색 다르게 */
-  border: 7px solid ${props => props.hasFile ? 'beige' : 'transparent'};
+  border: 7px solid ${(props) => (props.hasFile ? "beige" : "transparent")};
   cursor: pointer;
 `;
 const InputBox = styled.div`
@@ -119,9 +118,9 @@ const SubmitBtn = styled.button`
   /* font-weight: bold; */
   transition: background-color, 0.3s ease;
   &:hover {
-  background-color: #f0aa48;
-  color: #f7f5e1;
-  border-color: #574934;;
+    background-color: #f0aa48;
+    color: #f7f5e1;
+    border-color: #574934;
   }
 `;
 
@@ -142,63 +141,80 @@ function DesignerSignUp() {
   };
 
   // 파일을 선택했을 때 호출되는 이벤트 핸들러
-  function handleFileChange(event){
+  function handleFileChange(event) {
     const file = event.target.files[0];
     // 파일 타입이 image를 포함하는지 확인 후 객체 생성
-    if (file && file.type.includes('image')) {
+    if (file && file.type.includes("image")) {
       const reader = new FileReader();
       reader.onloadend = () => {
         setSelectedFile(reader.result);
       };
       reader.readAsDataURL(file);
-    } else {   // 선택된 파일이 이미지 파일이 아닌 경우 alert 창 띄우기
-      swal('⚠️ Image 파일 형식을 선택해주세요 :)');
+    } else {
+      // 선택된 파일이 이미지 파일이 아닌 경우 alert 창 띄우기
+      swal("⚠️ Image 파일 형식을 선택해주세요 :)");
     }
-  };
+  }
   function Send() {
     // 선택한 파일 사용하여 필요한 작업 수행
     // 예: 파일 업로드, 서버에 데이터 전송 등
   }
 
   return (
-  
     <Container>
       <StepWrapper>
         <Step top="step1" bottom="회원 유형 선택" />
         <Step top="step2" bottom="약관 동의" />
-        <Step top="step3" bottom="회원 정보 입력" bgcolor="rgb(244,153,26)"/>
+        <Step top="step3" bottom="회원 정보 입력" bgcolor="rgb(244,153,26)" />
         <Step top="step4" bottom="가입 완료" />
       </StepWrapper>
-      <Hr/>
+      <Hr />
       <SignupBox>
         <InfoBox>
           <Title>Sign Up</Title>
-            <Wrapper>
-              <ProfileBox>
+          <Wrapper>
+            <ProfileBox>
               {/* 버튼을 클릭하면 파일 선택 다이얼로그를 나타내는 input 요소 */}
-              <input type="file" style={{ display: 'none' }} ref={fileInputRef} onChange={handleFileChange} />
+              <input
+                type="file"
+                style={{ display: "none" }}
+                ref={fileInputRef}
+                onChange={handleFileChange}
+              />
               {/* 프로필 사진 or 연산자는 앞의 피연산자 기준*/}
-              <Profile src={selectedFile || './icon/designerr.png'} alt="Profile" hasFile={selectedFile !== null} />
-                <ClickBox>
-                  <Btn onClick={handleImageClick}>프로필 이미지 첨부</Btn>
-                  <Text>디자이너 프로필에 사용될 사진을 첨부해주세요</Text>
-                </ClickBox>
-              </ProfileBox>
-              <InputBox>
-                <SignUpInput text="이름" placeholder="회원명"/>
-                <SignUpInput text="아이디" placeholder="아이디"/>
-                {/* <Btn>중복확인</Btn> */}
-                <SignUpInput text="이메일" placeholder="이메일"/>
-                {/* <Btn>중복확인</Btn> */}
-                <SignUpInput text="등록번호" placeholder="미용사 자격증 등록번호"/>
-                <SignUpInput text="비밀번호" placeholder="8~16자리의 비밀번호를 입력해주세요"/>
-                <SignUpInput text="비밀번호 확인" placeholder="비밀번호 확인 ✔" />
+              <Profile
+                src={selectedFile || "./icon/designerr.png"}
+                alt="Profile"
+                hasFile={selectedFile !== null}
+              />
+              <ClickBox>
+                <Btn onClick={handleImageClick}>프로필 이미지 첨부</Btn>
+                <Text>디자이너 프로필에 사용될 사진을 첨부해주세요</Text>
+              </ClickBox>
+            </ProfileBox>
+            <InputBox>
+              <SignUpInput text="이름" placeholder="회원명" />
+              <SignUpInput text="아이디" placeholder="아이디" />
+              {/* <Btn>중복확인</Btn> */}
+              <SignUpInput text="이메일" placeholder="이메일" />
+              {/* <Btn>중복확인</Btn> */}
+              <SignUpInput
+                text="등록번호"
+                placeholder="미용사 자격증 등록번호"
+              />
+              <SignUpInput
+                text="비밀번호"
+                placeholder="8~16자리의 비밀번호를 입력해주세요"
+              />
+              <SignUpInput text="비밀번호 확인" placeholder="비밀번호 확인 ✔" />
               <CenterBox>
-                <SubmitBtn onClick={() => navigate('/complete')}>회원 가입하기</SubmitBtn>
-              </CenterBox>  
-              </InputBox>
-			      </Wrapper>
-          </InfoBox>
+                <SubmitBtn onClick={() => navigate("/complete")}>
+                  회원 가입하기
+                </SubmitBtn>
+              </CenterBox>
+            </InputBox>
+          </Wrapper>
+        </InfoBox>
       </SignupBox>
     </Container>
   );

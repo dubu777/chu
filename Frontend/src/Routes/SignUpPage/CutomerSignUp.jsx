@@ -6,7 +6,11 @@ import Step from "../../components/SignUpComponent/Step";
 import swal from "sweetalert";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { signUpRequest, checkDuplicateId, checkDuplicateEmail } from '../../apis/auth';
+import {
+  signUpRequest,
+  checkDuplicateId,
+  checkDuplicateEmail,
+} from "../../apis/auth";
 
 import { useForm } from "react-hook-form";
 import { Check } from "@mui/icons-material";
@@ -172,9 +176,9 @@ const SignUpInput = styled.input`
   margin-top: 5px;
   outline: none; /* 포커스된 상태의 외곽선을 제거 */
   &:focus {
-    border: 2px solid rgb(244,153,26);
+    border: 2px solid rgb(244, 153, 26);
     + span {
-      color: rgb(244,153,26);
+      color: rgb(244, 153, 26);
     }
   }
 `;
@@ -182,15 +186,13 @@ const ErrorMessage = styled.span`
   font-size: 10px;
   color: red;
 `;
-const Form = styled.form`
-`;
+const Form = styled.form``;
 const InputWrap = styled.div`
   display: flex;
   justify-content: space-around;
 `;
 const CheckBox = styled.div`
   display: flex;
-  
 `;
 const CheckBtn = styled.button`
   background-color: #574934;
@@ -239,6 +241,8 @@ function CustomerSignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [gender, setGender] = useState("");
+  const [isIdAvailable, setIsIdAvailable] = useState(false);
+  const [isEmailAvailable, setIsEmailAvailable] = useState(false);
   const handleGenderChange = (event) => {
     setGender(event.target.value);
   };
@@ -255,66 +259,53 @@ function CustomerSignUp() {
     try {
       const idCheckResult = await checkDuplicateId(id, userType);
       if (idCheckResult) {
-        swal("Error", "이미 사용 중인 아이디입니다.", "error"); 
-        return;
+        swal("Error", "이미 사용 중인 아이디입니다.", "error");
+        setIsIdAvailable(idCheckResult);
+        return idCheckResult;
+      } else {
+        setIsIdAvailable(idCheckResult);
+        return idCheckResult;
       }
-      } catch (error) {
-        console.error('ID Check Error:', error);
-        swal("Error", "아이디 중복 체크에 실패했습니다.", "error");
-        return;
-      }
-    } 
+    } catch (error) {
+      console.error("ID Check Error:", error);
+      swal("Error", "아이디 중복 체크에 실패했습니다.", "error");
+      return;
+    }
+  };
 
   const handleEmailCheck = async () => {
     try {
       const emailCheckResult = await checkDuplicateEmail(email, userType);
       if (emailCheckResult) {
         swal("Error", "이미 사용 중인 이메일입니다.", "error");
-        return;
+        setIsEmailAvailable(emailCheckResult);
+        return emailCheckResult;
+      } else {
+        setIsEmailAvailable(emailCheckResult);
+        return emailCheckResult;
       }
     } catch (error) {
-      console.error('Email Check Error:', error);
+      console.error("Email Check Error:", error);
       swal("Error", "이메일 중복 체크에 실패했습니다.", "error");
       return;
     }
-  }
-  const onSubmit = async (data) => {
-    try {
-      const idCheckResult = await checkDuplicateId(data.id, userType);
-      if (idCheckResult) {
-        swal("Error", "이미 사용 중인 아이디입니다.", "error");
-        return;
-      }
-    } catch (error) {
-      console.error('ID Check Error:', error);
-      swal("Error", "아이디 중복 체크에 실패했습니다.", "error");
-      return;
-    }
+  };
+  const onSubmit = async () => {
+    if (!isIdAvailable) return;
 
-    try {
-      const emailCheckResult = await checkDuplicateEmail(data.email, userType);
-      if (emailCheckResult) {
-        swal("Error", "이미 사용 중인 이메일입니다.", "error");
-        return;
-      }
-    } catch (error) {
-      console.error('Email Check Error:', error);
-      swal("Error", "이메일 중복 체크에 실패했습니다.", "error");
-      return;
-    }
+    if (!isEmailAvailable) return;
 
-    console.log(data);
     try {
       // 회원가입 API 요청
       const signUpResult = await signUpRequest(customerData);
-      console.log('Sign-up success:', signUpResult);
+      console.log("Sign-up success:", signUpResult);
       swal("Success", "회원가입이 완료되었습니다.", "success");
-      navigate('/login')
+      navigate("/login");
     } catch (error) {
-      console.error('Sign-up error:', error);
+      console.error("Sign-up error:", error);
       swal("Error", "회원가입에 실패했습니다.", "error");
     }
-  }
+  };
 
   return (
     <Container>
@@ -342,45 +333,47 @@ function CustomerSignUp() {
                       </SignUpTextBox>
                       <SignUpInput
                         placeholder="이름"
-                        {...register("name", { required: "이름을 입력해주세요." })}
+                        {...register("name", {
+                          required: "이름을 입력해주세요.",
+                        })}
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                       />
                     </SignUpInputWrapper>
+                    <ErrorMessage>{errors?.name?.message}</ErrorMessage>
                     <SignUpInputWrapper>
                       <SignUpTextBox>
                         <SignUpText>아이디</SignUpText>
                       </SignUpTextBox>
-                      <CheckBox>
                       <SignUpInput
                         placeholder="아이디"
-                        {...register("id", { required: "아이디를 입력해주세요." })}
+                        {...register("id", {
+                          required: "아이디를 입력해주세요.",
+                        })}
                         value={id}
                         onChange={(e) => setId(e.target.value)}
+                        onBlur={handleIdCheck}
                       />
-                      <CheckBtn type="button" onClick={handleIdCheck}>중복체크</CheckBtn>
-                      </CheckBox>
                     </SignUpInputWrapper>
-                    {/* 이메일 에러 메시지 출력 */}
+                    <ErrorMessage>{errors?.id?.message}</ErrorMessage>
                     <SignUpInputWrapper>
                       <SignUpTextBox>
                         <SignUpText>이메일</SignUpText>
                       </SignUpTextBox>
-                      <CheckBox>
                       <SignUpInput
                         placeholder="이메일"
                         {...register("email", {
                           required: "이메일을 입력해주세요.",
                           pattern: {
-                            value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
+                            value:
+                              /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
                             message: "올바른 이메일 형식이 아닙니다.",
                           },
                         })}
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
+                        onBlur={handleEmailCheck}
                       />
-                      <CheckBtn type="button" onClick={handleEmailCheck}>중복체크</CheckBtn>
-                      </CheckBox>
                     </SignUpInputWrapper>
                     <ErrorMessage>{errors?.email?.message}</ErrorMessage>
                     <RadioContainer>
@@ -413,8 +406,10 @@ function CustomerSignUp() {
                         {...register("pwd", {
                           required: "비밀번호를 입력해주세요.",
                           pattern: {
-                            value: /(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}/,
-                            message: "영문, 숫자, 특수문자를 포함한 8자 이상의 비밀번호를 입력해주세요.",
+                            value:
+                              /(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}/,
+                            message:
+                              "영문, 숫자, 특수문자를 포함한 8자 이상의 비밀번호를 입력해주세요.",
                           },
                         })}
                         value={password}
@@ -422,7 +417,6 @@ function CustomerSignUp() {
                       />
                     </SignUpInputWrapper>
                     <ErrorMessage>{errors?.pwd?.message}</ErrorMessage>
-                    {/* 비밀번호 확인 에러 메시지 출력 */}
                     <SignUpInputWrapper>
                       <SignUpTextBox>
                         <SignUpText>비밀번호 확인</SignUpText>
@@ -433,7 +427,8 @@ function CustomerSignUp() {
                         {...register("pwd1", {
                           required: "비밀번호 확인을 입력해주세요.",
                           validate: (value) =>
-                            value === watch("pwd") || "비밀번호가 일치하지 않습니다.",
+                            value === watch("pwd") ||
+                            "비밀번호가 일치하지 않습니다.",
                         })}
                       />
                     </SignUpInputWrapper>
@@ -441,9 +436,7 @@ function CustomerSignUp() {
                   </SignUpInputBox>
                 </InputWrap>
                 <CenterBox>
-                  <SubmitBtn type="submit">
-                    회원 가입하기
-                  </SubmitBtn>
+                  <SubmitBtn type="submit">회원 가입하기</SubmitBtn>
                 </CenterBox>
               </InputBox>
             </Form>
