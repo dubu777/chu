@@ -10,18 +10,20 @@ export const customerlogIn = async (username, password) => {
       "pwd" : password
     });
     // 서버로부터 받은 토큰을 반환
-    return response.data.result.token.accessToken;
+    console.log("Server Response:", response.data);
+    return response.data.result;
   } catch (error) {
     throw new Error('로그인 실패');
   }
 };
 
-export const designerlogin = async (username, password) => {
+export const designerlogIn = async (username, password) => {
   try {
     const response = await axios.post(`${BASE_URL}/designer/sign-in`, {
       "id" : username,
       "pwd" : password,
     });
+    console.log(response.data.result)
     return response.data.result;
   } catch (error) {
     throw new Error('로그인 실패');

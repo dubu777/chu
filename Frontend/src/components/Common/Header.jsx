@@ -1,9 +1,10 @@
 import { styled } from "styled-components";
 import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useRecoilCallback } from "recoil";
 import { loginState, useToggleLoginState, useIsLoggedIn } from "../../recoil/auth";
 import { useState } from "react";
+import { accessTokenState } from "../../recoil/auth";
 
 const Nav = styled(motion.nav)`
   display: flex;
@@ -83,17 +84,14 @@ const logoVariants = {
 function Header() {
   const navigate = useNavigate();
   const [isLogIn, setIsLogIn] = useRecoilState(loginState);
-  /// 임의로 버튼으로 상태만들어서 login test중
-    const setToggleLoginState = useToggleLoginState();
-  
-    const handleLoginClick = () => {
-      setToggleLoginState();
-    };
-    console.log(setToggleLoginState);
-  
-  const deleteTokenFromLocalStorage = () => {
-    localStorage.removeItem('accessTokenState'); 
-  }
+    const [token, setToken] = useRecoilState(accessTokenState);
+
+    // 토큰 삭제를 위한 콜백 함수
+    const handleLogout = useRecoilCallback(({ snapshot }) => async () => {
+      // 토큰 삭제
+      setToken(null);
+      // 토큰 삭제 후 추가적으로 해야 할 작업이 있다면 이곳에 추가하세요.
+    });
   return (
     <Nav>
       <Col>
@@ -130,14 +128,14 @@ function Header() {
           <Link to="/designermypage">디자이너MyPage//</Link>
           <Link to="/customermypage">CustomerMyPage//</Link> */}
 
-          { useIsLoggedIn() ?  
+          { isLogIn ?  
             <>
               <Item 
                 variants={logoVariants}
                 whileHover="active"
                 initial="nomal"
-                onClick={deleteTokenFromLocalStorage}
-                >Log OUt
+                onClick={handleLogout}
+                >Log Out
               </Item>
               <Link to="/customermypage">
                 <Item 
@@ -169,7 +167,6 @@ function Header() {
               </Link>
             </>
           }
-            <button onClick={handleLoginClick}>로그인테스트</button>
         
       </Col>
     </Nav>

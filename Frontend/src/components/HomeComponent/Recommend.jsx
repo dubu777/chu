@@ -48,13 +48,12 @@ function Recommend(){
     "img/opofol6.jpg",
   ]
   const [isLogIn, setIsLogIn] = useRecoilState(loginState);
-  const isLoggedIn = useIsLoggedIn();
   const navigate = useNavigate();
   return(
   
   
     <Container>
-      { isLoggedIn ?
+      { isLogIn ?
       <Wrapper>
       <Text>계란형 얼굴에는 이런 헤어스타일이 잘 어울려요</Text>
       <ImgBox>

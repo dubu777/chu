@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from 'recoil';
 import React, { useState } from 'react';
-import { customerlogIn, designerlogin } from '../../apis/auth';
+import { customerlogIn, designerlogIn, login2 } from '../../apis/auth';
 import { accessTokenState, loginResultState, loginState } from '../../recoil/auth';
 
 const Container = styled.div`
@@ -118,30 +118,34 @@ function LogIn() {
 const handleUserTypeChange = (event) => {
 	setUserType(event.target.value);
 };
+
   const handleLogin = async () => {
 		if (userType === "customer") {
 			try {
-				const result = await customerlogIn(username, password, userType);
+				const result = await customerlogIn(username, password);
 				console.log(result);
 				setLoginResult(result);
 				setAccessToken(result.token.accessToken);
 				navigate("/")
+				return;
 			} catch (error) {
 				console.error(error);
 			}
 		}
 		if (userType === "designer") {
 			try {
-				const result = await designerlogin(username, password, userType);
+				const result = await designerlogIn(username, password);
 				console.log(result);
 				setLoginResult(result);
 				setAccessToken(result.token.accessToken);
 				navigate("/")
+				return;
 			} catch (error) {
 				console.error(error);
 			}
 		}
 	};
+
 	console.log('Username:', username);
   console.log('Password:', password);
 	console.log('userType:', userType )

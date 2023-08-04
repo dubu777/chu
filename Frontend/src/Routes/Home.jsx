@@ -3,7 +3,7 @@ import css from "../font/font.css"
 import MainView from "../components/HomeComponent/MainView";
 import React, { useState, useEffect, useRef } from 'react';
 import { motion,AnimatePresence,useAnimation }from "framer-motion";
-
+import {loginState} from ".././recoil/auth";
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
