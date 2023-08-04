@@ -1,5 +1,6 @@
 server:
   port: 9090
+
 #  ssl:
 #    key-store: ${SSL_KEY_PATH}keystore.p12
 #    key-store-type: PKCS12
