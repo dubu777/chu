@@ -111,7 +111,7 @@ function DesignerList() {
   const handleLikeClick = () => {
     setLiked((prevLiked) => !prevLiked); // 좋아요 상태를 토글
   };
-  // const {data, isLoading} = useQuery(["byRating"], getByRating)
+  const navigate = useNavigate();
   const [data, setData] = useState(
     {
       "allCutHairStyle": [
@@ -202,7 +202,10 @@ function DesignerList() {
       <Wrap>
       <Wrapper>
         <Box>
-          <DesignerImg src="./icon/designerimg.png"/>
+          <DesignerImg 
+            src="./icon/designerimg.png"
+            onClick={() => navigate("/designerdetail")}
+          />
         </Box>
         <InfoBox>
           <Name>재현 디자이너</Name>

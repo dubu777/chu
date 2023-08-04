@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import swal from "sweetalert";
+import Recommend from "./Recommend";
+
 
 const ClickImg = styled.img`
   height: 310px;
@@ -65,6 +67,7 @@ function MainView(){
           </Link>
         </Box>
       </Wrapper>
+      <Recommend/>
   </Container>
   )
 }
