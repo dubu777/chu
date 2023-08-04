@@ -25,6 +25,9 @@ public interface CustomerService {
     // 고객 비밀번호 찾기
     ResponseFindPwdDto findPwd(String name, String email, String id);
 
+    // 고객 비밀번호 변경
+    void changePwd(RequestCustomerChangePwdDto param);
+
     
     // 고객 로그인
     //boolean signIn(RequestSignInDto requestSignInDto);

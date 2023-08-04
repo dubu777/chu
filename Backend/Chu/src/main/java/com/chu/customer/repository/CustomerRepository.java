@@ -3,6 +3,8 @@ package com.chu.customer.repository;
 import com.chu.customer.domain.*;
 import com.chu.global.domain.*;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.ArrayList;
 
@@ -19,6 +21,10 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
     Customer findByNameAndEmail(String name, String email);
 
     Customer findByNameAndEmailAndId(String name, String email, String id);
+
+    @Modifying
+    @Query("UPDATE Customer c SET c.pwd = :pwd WHERE c.seq = :seq")
+    void changePwd(int seq, String pwd);
 //    boolean checkId(String id);
 //
 //    boolean checkEmail(String email);
