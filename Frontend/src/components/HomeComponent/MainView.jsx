@@ -4,6 +4,7 @@ import styled from "styled-components";
 import swal from "sweetalert";
 import {listViewState} from "../../recoil/designer";
 import {listinfo} from "../../apis/designer";
+import { useEffect } from "react";
 
 
 const ClickImg = styled.img`
@@ -59,10 +60,14 @@ function MainView(){
 
     } catch(error){
       console.log(error)
+    }
+  };
+  useEffect(() => {   // seq값 변경에 따른 dataTest 함수 호출
+    dataTest();
+  }, [seq]);
 
-  }
-}
   console.log(data);
+
   return(
     <Container>
     <Title>Style의 발견 🎁</Title>
