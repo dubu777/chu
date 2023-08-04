@@ -182,7 +182,7 @@ const handleUserTypeChange = (event) => {
 							checked={userType === "customer"}
 							onChange={handleUserTypeChange}
 						/>
-						남자
+						일반회원
 					</TypeLabel>
 					<TypeLabel>
 						<CustomRadio
@@ -191,7 +191,7 @@ const handleUserTypeChange = (event) => {
 							checked={userType === "designer"}
 							onChange={handleUserTypeChange}
 						/>
-						여자
+						디자이너
 					</TypeLabel>
 				</RadioContainer>
 				<FindBox><Link to="/findid">Find id</Link></FindBox>
