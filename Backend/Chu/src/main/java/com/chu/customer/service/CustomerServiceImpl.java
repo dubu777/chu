@@ -1,6 +1,8 @@
 package com.chu.customer.service;
 
+import com.chu.consulting.domain.Consulting;
 import com.chu.consulting.domain.ConsultingResult;
+import com.chu.consulting.repository.ConsultingRepository;
 import com.chu.consulting.repository.ConsultingResultRepository;
 import com.chu.customer.domain.*;
 import com.chu.customer.repository.CustomerAlertRepository;
@@ -45,6 +47,7 @@ public class CustomerServiceImpl implements CustomerService{
     private final WorldcupRepository worldcupRepository;
     private final CustomerAlertRepository customerAlertRepository;
     private final ConsultingResultRepository consultingResultRepository;
+    private final ConsultingRepository consultingRepository;
     private final HairStyleDictRepository hairStyleDictRepository;
     private final HairStyleImgRepository hairStyleImgRepository;
     private final TestRepository testRepository;
@@ -130,13 +133,13 @@ public class CustomerServiceImpl implements CustomerService{
 
             TokenDto tokenDto = new TokenDto(accessToken,refreshToken);
 
-            // Redis 저장 : 만료 시간 설정으로 자동 삭제 처리
-            redisTemplate.opsForValue().set(
-                    authentication.getName(),
-                    refreshToken,
-                    refreshTokenExpire,
-                    TimeUnit.MILLISECONDS
-            );
+//            // Redis 저장 : 만료 시간 설정으로 자동 삭제 처리
+//            redisTemplate.opsForValue().set(
+//                    authentication.getName(),
+//                    refreshToken,
+//                    refreshTokenExpire,
+//                    TimeUnit.MILLISECONDS
+//            );
 
             //HttpHeaders httpHeaders = new HttpHeaders();
             //httpHeaders.add("Authorization", "Bearer "+tokenDto.getAccessToken());
@@ -222,17 +225,35 @@ public class CustomerServiceImpl implements CustomerService{
             List<AlertCustomerOnLoginDto> list6 = new ArrayList<>();
             int customerSeq = responseCustomerLoginInfoDto.getCustomerSeq();
 
+            // 고객 번호로 알림 가져오기
+            List<CustomerAlert> alertList = new ArrayList<>();
+            alertList = customerAlertRepository.getCustomerAlertBySeq(customerSeq);
 
+            for(CustomerAlert c : alertList){
+                // 상담 번호로 consulting - designer seq 받아오기
+                Consulting consulting = consultingRepository.getConsultingBySeq(c.getSeq());
 
+                // 받아온 designer seq로 디자이너 정보 받아오기
+                consulting.setDesigner(designerRepository.getDesignerBySeq(consulting.getSeq()));
 
+                // AlertCustomerOnLoginDto 객체 생성
+                AlertCustomerOnLoginDto dto = new AlertCustomerOnLoginDto();
+                dto.setAlertSeq(c.getSeq());
+                dto.setConsultingSeq(consulting.getSeq());
+                dto.setCheck(c.getIsCheck());
+                dto.setPushDate(consulting.getCancelDate());
+                dto.setDesignerName(consulting.getDesigner().getName());
 
+                list6.add(dto);
+            }
 
+            responseCustomerLoginDetailDto.setAlert(list6);
 
-            return responseCustomerLoginDetailDto;
-
-        } catch(AuthenticationException e){
-            throw new Exception("Invalid credentials supplied", HttpStatus.BAD_REQUEST);
+        } catch(Exception e){
+            e.printStackTrace();
         }
+
+        return responseCustomerLoginDetailDto;
     }
 
     // 아이디 찾기
