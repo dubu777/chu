@@ -27,7 +27,7 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
 
     @Override
     public String getSavedImgFilePath(MultipartFile file) throws IOException {
-        String uploadDir = "/path/in/container/";
+        String uploadDir = "/chu/upload/images/customer/";
         String fileName = file.getOriginalFilename();
 
         File directory = new File(uploadDir);
