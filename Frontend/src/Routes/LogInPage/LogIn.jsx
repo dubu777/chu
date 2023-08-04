@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from 'recoil';
 import React, { useState } from 'react';
-import { login, login2 } from '../../apis/auth';
+import { customerlogIn, designerlogin } from '../../apis/auth';
 import { accessTokenState, loginResultState, loginState } from '../../recoil/auth';
 
 const Container = styled.div`
@@ -73,11 +73,34 @@ const FindBox = styled.div`
 	color: white;
 `;
 
+const RadioContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 10px 10px;
+`;
 
+const CustomRadio = styled.input`
+  width: 15px;
+  height: 15px;
+  margin-right: 10px;
+  border-radius: 50%;
+  border: 2px solid #333;
+  background-color: ${(props) => (props.checked ? "#333" : "transparent")};
+  cursor: pointer;
+`;
+
+const TypeLabel = styled.label`
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+  cursor: pointer;
+`;
 function LogIn() {
 
 	const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+	const [userType, setUserType] = useState('');
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
 	const [loginResult, setLoginResult] = useRecoilState(loginResultState);
 	const navigate = useNavigate();
@@ -92,24 +115,36 @@ function LogIn() {
 //       console.error(error);
 //     }
 //   };
-
-  const handleLogin2 = async () => {
-		console.log('Username:', username);
-		console.log('Password:', password);
-		try {
-			const result = await login2(username, password);
-			console.log(result);
-			setLoginResult(result);
-			console.log(result.userType);
-			setAccessToken(result.token.accessToken);
-			navigate("/")
-		} catch (error) {
-			console.error(error);
+const handleUserTypeChange = (event) => {
+	setUserType(event.target.value);
+};
+  const handleLogin = async () => {
+		if (userType === "customer") {
+			try {
+				const result = await customerlogIn(username, password, userType);
+				console.log(result);
+				setLoginResult(result);
+				setAccessToken(result.token.accessToken);
+				navigate("/")
+			} catch (error) {
+				console.error(error);
+			}
+		}
+		if (userType === "designer") {
+			try {
+				const result = await designerlogin(username, password, userType);
+				console.log(result);
+				setLoginResult(result);
+				setAccessToken(result.token.accessToken);
+				navigate("/")
+			} catch (error) {
+				console.error(error);
+			}
 		}
 	};
-
 	console.log('Username:', username);
   console.log('Password:', password);
+	console.log('userType:', userType )
 	return(
 		<Container>
 			<Wrapper>
@@ -133,12 +168,32 @@ function LogIn() {
 					<P><Link to="/signup">Sign up</Link></P>
 					<P><Btn 
 								type="submit" 
-								onClick={handleLogin2}
+								onClick={handleLogin}
 							>
 								Log in
 							</Btn></P>
 				</SubmitBox> 
 				<br></br>
+				<RadioContainer>
+					<TypeLabel>
+						<CustomRadio
+							type="radio"
+							value="customer"
+							checked={userType === "customer"}
+							onChange={handleUserTypeChange}
+						/>
+						남자
+					</TypeLabel>
+					<TypeLabel>
+						<CustomRadio
+							type="radio"
+							value="designer"
+							checked={userType === "designer"}
+							onChange={handleUserTypeChange}
+						/>
+						여자
+					</TypeLabel>
+				</RadioContainer>
 				<FindBox><Link to="/findid">Find id</Link></FindBox>
 				<FindBox><Link to="/findpw">Find Password</Link></FindBox>
 			</Wrapper>

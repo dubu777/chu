@@ -3,7 +3,7 @@ import axios from 'axios';
 //const BASE_URL = 'https://i9b111.q.ssafy.io:9090/api';
 const BASE_URL = 'http://localhost:9090/api';
 
-export const login = async (username, password) => {
+export const customerlogIn = async (username, password) => {
   try {
     const response = await axios.post(`${BASE_URL}/customer/sign-in`, {
       "id" : username,
@@ -16,11 +16,11 @@ export const login = async (username, password) => {
   }
 };
 
-export const login2 = async (username, password) => {
+export const designerlogin = async (username, password) => {
   try {
-    const response = await axios.post(`${BASE_URL}/customer/sign-in`, {
+    const response = await axios.post(`${BASE_URL}/designer/sign-in`, {
       "id" : username,
-      "pwd" : password
+      "pwd" : password,
     });
     return response.data.result;
   } catch (error) {
