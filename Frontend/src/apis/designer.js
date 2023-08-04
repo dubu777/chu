@@ -16,7 +16,7 @@ import axios from "axios";
 
 export const listinfo = async(seq)=> {
     try {
-        const response = await axios.get(`https://localhost:9090/api/designer/search/review-score`, {
+        const response = await axios.get(`https://i9b111.q.ssafy.io:9090/api/designer/search/review-score`, {
             params : {"customerSeq" : 1}
         })
         return response.data.result

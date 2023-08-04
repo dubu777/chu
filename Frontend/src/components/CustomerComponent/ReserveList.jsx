@@ -13,9 +13,10 @@ const Container = styled.div`
   justify-content: center;
   width: 80%;
   margin: 0 auto;
+  padding-top: 20px;
 `;
 const Hr = styled.div`
-  margin: 20px 0 20px 0;
+  /* margin: 20px 0 20px 0; */
   border-bottom : 2px solid rgba(0, 0, 0, 0.1);
 `;
 const Wrap = styled.div`
@@ -36,11 +37,15 @@ const Wrapper = styled.div`
 `;
 const Box = styled.div`
   display: flex;
-  
 `;
-
+const ReviewBox =styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 const DetailBox = styled.div`
-  margin-top: 5px;
+  margin-top: 40px;
+  display: flex;
+  justify-content: end;
 `;
 const DesignerImg = styled.img`
   width: 100px;
@@ -64,7 +69,7 @@ const Icon = styled.img`
   margin-right: 3px;
 `;
 const StarBox = styled(motion.div)`
-  width: 70px;
+  /* width: 70px; */
   height: 35px;
   display: flex;
   align-items: center;
@@ -93,14 +98,20 @@ const ResultBtn = styled(motion.button)`
 `;
 const Text = styled.span`
   font-size: 14px;
+  /* font-weight: bold; */
+  text-align: center;
+  margin-right: 5px;
+`;
+const BoldText = styled.span`
+  font-size: 14px;
   font-weight: bold;
   text-align: center;
 `;
 const CommentBox = styled.div`
 display: flex;
-justify-content: center;
+/* justify-content: center; */
 align-items: center;
-
+margin: 20px 0px 10px 0px;
 `;
 
 const Overlay = styled(motion.div)`
@@ -288,22 +299,42 @@ function ReserveList() {
                   <DesignerImg src={data.designerImg}/>
                   <StarBox>
                     <Icon src="./icon/star.png"/>
-                    <Text>{data.allReviewScore}</Text>
+                    <BoldText>{data.allReviewScore}</BoldText>
                   </StarBox>
                 </ProfileBox>
                 <InfoBox>
                   <Name>{data.name} 디자이너</Name>
                   <Box>
+                    <ReviewBox>
                     <CommentBox>
                       <Text>"{data.reviewContent}"</Text>
                     </CommentBox>
                     <StarBox>
-                      <Text>나의 평점: </Text>
+                      <Text>나의 평점 </Text>
                       <Icon src="./icon/star.png"/>
-                      <Text>{data.myReviewScore}</Text>
+                      <BoldText> {data.myReviewScore}</BoldText>
                     </StarBox>
+                    </ReviewBox>
                   </Box>
-                  <DetailBox >
+                  {/* <DetailBox >
+                    <ResultBtn 
+                    onClick={() =>onBoxClicked(data.consultingSeq + "")}
+                    layoutId={data.consultingSeq}
+                    variants={ResultBtnVariants}
+                    initial="nomal"
+                    whileHover="hover"
+                    >상담 결과 보기</ResultBtn>
+                  </DetailBox> */}
+                </InfoBox>
+              </Box>
+            </Wrapper>
+            <Box>
+              <ReviewBox>
+                <Box>
+              <Day>{data.consultingDate}({data.consultingDateDay })</Day>
+              <Time> {data.consultingStartTime} ~ {data.consultingEndTime}</Time>
+              </Box>
+              <DetailBox >
                     <ResultBtn 
                     onClick={() =>onBoxClicked(data.consultingSeq + "")}
                     layoutId={data.consultingSeq}
@@ -312,12 +343,7 @@ function ReserveList() {
                     whileHover="hover"
                     >상담 결과 보기</ResultBtn>
                   </DetailBox>
-                </InfoBox>
-              </Box>
-            </Wrapper>
-            <Box>
-              <Day>{data.consultingDate}({data.consultingDateDay })</Day>
-              <Time> {data.consultingStartTime} ~ {data.consultingEndTime}</Time>
+                  </ReviewBox>
             </Box>
           </Wrap>
           <Hr/>
