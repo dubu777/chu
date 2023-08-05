@@ -17,6 +17,17 @@ import java.util.ArrayList;
 @Service
 @RequiredArgsConstructor
 public class DesignerServiceImpl implements DesignerService{
+
+    private final DesignerRepository designerRepository;
+    @Override
+    public boolean checkId(String id) {
+        return designerRepository.existsById(id);
+    }
+
+    @Override
+    public boolean checkEmail(String email) {
+        return designerRepository.existsByEmail(email);
+    }
 //
 //    // repo 주입
 //    private final DesignerRepository designerRepository;

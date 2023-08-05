@@ -14,6 +14,7 @@ import java.util.ArrayList;
 @RestController
 @RequestMapping("/designer")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000")
 public class DesignerController {
     private final DesignerService designerService;
 //

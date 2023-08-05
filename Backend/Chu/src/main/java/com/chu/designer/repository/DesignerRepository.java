@@ -9,10 +9,12 @@ import java.util.ArrayList;
 
 public interface DesignerRepository extends JpaRepository<Designer, Integer> {
     Designer getDesignerBySeq(int seq);
-//    boolean checkId(String id);
-//
-//    boolean checkEmail(String email);
-//
+
+    // ID 중복검사
+    boolean existsById(String Id);
+
+    // email 중복검사
+    boolean existsByEmail(String email);
 //    boolean signUp(RequestDesignerSignUpDto requestDesignerSignUpDto);
 //
 //    boolean signIn(RequestSignInDto requestSignInDto);
