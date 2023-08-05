@@ -8,7 +8,7 @@ export default class OpenViduVideoComponent extends Component {
         // HTML video 요소를 가져오기
         this.videoRef = React.createRef();
     }
-
+ 
     componentDidUpdate(props) {
         if (props && !!this.videoRef) {
             this.props.streamManager.addVideoElement(this.videoRef.current);

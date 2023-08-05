@@ -10,7 +10,7 @@ const Container = styled.div`
 const Video = styled.div`
   width : 300px;
   border-radius: 0.3rem;
-`;
+`; 
 
 export default class UserVideoComponent extends Component {
 
