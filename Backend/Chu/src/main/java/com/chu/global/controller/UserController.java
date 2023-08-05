@@ -31,7 +31,7 @@ public class UserController {
                 isExist = customerService.checkId(id);
             }
             else{
-                //isExist = designerService.checkId(id);
+                isExist = designerService.checkId(id);
             }
         } catch(Exception e){
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));
@@ -50,7 +50,7 @@ public class UserController {
                 isExist = customerService.checkEmail(email);
             }
             else{
-                //isExist = designerService.checkEmail(email);
+                isExist = designerService.checkEmail(email);
             }
         } catch(Exception e){
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));

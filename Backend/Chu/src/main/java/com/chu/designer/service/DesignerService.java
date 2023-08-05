@@ -7,12 +7,12 @@ import java.sql.Date;
 import java.util.ArrayList;
 
 public interface DesignerService {
-//
-//    // 아이디 중복체크
-//    boolean checkId(String id);
-//
-//    //이메일 중복체크
-//    boolean checkEmail(String email);
+
+    // 아이디 중복체크
+    boolean checkId(String id);
+
+    //이메일 중복체크
+    boolean checkEmail(String email);
 //
 //    // 디자이너 회원가입
 //    boolean signUp(RequestDesignerSignUpDto requestDesignerSignUpDto);
