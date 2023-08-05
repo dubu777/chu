@@ -13,7 +13,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
 
@@ -137,7 +139,7 @@ public class DesignerDetailController {
 //        }
 //    }
 //
-//    @GetMapping("/portfolio")
+//    @GetMapping("/portfolio/{designer-seq}")
 //    public ResponseEntity<HttpResponseDto> getPortfolio(@PathVariable("designer-seq") int designerSeq) {
 //
 //        ArrayList<ImageDto> portfolioList = designerDetailService.getPortfolio(designerSeq);
@@ -151,19 +153,22 @@ public class DesignerDetailController {
 //        }
 //    }
 //
-//    @PostMapping("/portfolio")
-//    public ResponseEntity<HttpResponseDto> postPortfolio(@PathVariable("designer-seq") int designerSeq, @RequestParam String img) {
-//
-//        boolean isSuccess = designerDetailService.postPortfolioImage(designerSeq, img);
-//
-//        if (isSuccess) {
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(200, null);
-//            return ResponseEntity.ok(httpResponseDto);
-//        } else {
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
-//            return ResponseEntity.ok(httpResponseDto);
-//        }
-//    }
+    @PostMapping("/portfolio/{designer-seq}")
+    public ResponseEntity<HttpResponseDto> postPortfolio(@PathVariable("designer-seq") int designerSeq, @RequestPart("img") MultipartFile file) {
+
+        try{
+            String filePath = designerDetailService.getSavedImgFilePath(file);
+            designerDetailService.postPortfolioImage(designerSeq, filePath);
+
+        } catch (Exception e){
+            e.printStackTrace();
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
+        }
+
+        HttpResponseDto httpResponseDto = new HttpResponseDto(200, null);
+        return ResponseEntity.ok(httpResponseDto);
+    }
 //
 //    @DeleteMapping("/portfolio")
 //    public ResponseEntity<HttpResponseDto> deletePortfolio(@PathVariable("designer-seq") int designerSeq, @RequestParam int imageSeq) {

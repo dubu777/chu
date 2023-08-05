@@ -57,7 +57,6 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
         Customer customer = customerDetailRepository.getById(customerSeq);
         customer.getImagePath().setSavedImgName(fileName);
 
-
         return true;
     }
     /*

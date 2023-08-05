@@ -15,7 +15,7 @@ public class ImagePath {
     private String uploadImgName;
     private String savedImgName;
 
-    protected ImagePath() {
+    public ImagePath() {
 
     }
 

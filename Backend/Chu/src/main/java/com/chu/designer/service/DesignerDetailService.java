@@ -7,7 +7,9 @@ import com.chu.designer.domain.ResponseDesignerMyPageUpdateShowDto;
 import com.chu.designer.domain.ResponseDesignerMyPageDto;
 import com.chu.global.domain.ImageDto;
 import com.chu.global.domain.TimeDto;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
 
@@ -40,8 +42,10 @@ public interface DesignerDetailService {
 //    // 디자이너 포트폴리오 조회
 //    ArrayList<ImageDto> getPortfolio(int designerSeq);
 //
-//    // 디자이너 포트폴리오 업데이트
-//    boolean postPortfolioImage(int designerSeq, String img);
+    // 이미지 경로 가져오기
+    String getSavedImgFilePath(MultipartFile file) throws IOException;
+    // 디자이너 포트폴리오 업데이트
+    boolean postPortfolioImage(int designerSeq, String img);
 //
 //    // 디자이너 포트폴리오 삭제
 //    boolean deletePortfolioImage(int designerSeq, int imageSeq);
