@@ -115,7 +115,10 @@ function Header() {
         <Search >
           {/* 나중에 다 옮기기 */}
           <Link to="/consultresultpage">상담결과 작성//</Link>
-          <Link to="/viduroom">openvidu//</Link>
+
+          {/* 선진 수정 */}
+          <Link to="/viduroom">상담사가 방 생성//</Link>
+          
           <Link to="/designermypage">디자이너MyPage//</Link>
           <Link to="/customermypage">CustomerMyPage//</Link>
           <Link to="usertype">
