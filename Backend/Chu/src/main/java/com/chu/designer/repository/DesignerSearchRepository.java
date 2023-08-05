@@ -5,11 +5,18 @@ import com.chu.designer.domain.ResponseDesignerDetailInfoDto;
 import com.chu.designer.domain.ResponseDesignerSearchAreaDto;
 import com.chu.designer.domain.DesignerSearchDto;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public interface DesignerSearchRepository extends JpaRepository<Designer, Integer> {
+
+    @Query("SELECT d FROM Designer d WHERE d.seq IN :seqs")
+    List<Designer> findBySeqIn(@Param("seqs") Collection<Integer> seqs);
+
 
     // 이 주의 인기 디자이너
     //List<Designer> findTop6By
