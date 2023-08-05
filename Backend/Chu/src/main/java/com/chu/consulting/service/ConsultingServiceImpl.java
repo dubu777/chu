@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -38,6 +40,15 @@ public class ConsultingServiceImpl implements ConsultingService {
         }
 
         return sessionId;
+    }
+
+    @Override
+    @Transactional
+    public void updateConsultingUrl(int consultingSeq, String url) {
+        Consulting consulting = new Consulting();
+        consulting.setUrl(url);
+        String c_url = consulting.getUrl();
+        consultingRepository.updateConsultingUrl(consultingSeq, c_url);
     }
 
     @Override
@@ -76,12 +87,6 @@ public class ConsultingServiceImpl implements ConsultingService {
     public ResponseConsultingResultDto getConsultingResult(int consultingSeq) {
 //        return consultingRepository.getConsultingResult(consultingSeq);
         return null;
-    }
-
-    @Override
-    public boolean updateConsultingUrl(int consultingSeq, String url) {
-//        return consultingRepository.updateConsultingUrl(consultingSeq, url);
-        return true;
     }
 
     @Override

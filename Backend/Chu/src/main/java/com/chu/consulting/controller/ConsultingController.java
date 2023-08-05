@@ -18,7 +18,7 @@ public class ConsultingController {
 
     private final ConsultingService consultingService;
 
-    @GetMapping("/")
+    @GetMapping("/{consulting_seq}")
     public ResponseEntity<HttpResponseDto> participantConsulting(@PathVariable("consulting_seq") int consultingSeq) {
 
         String sessionId = null;
@@ -48,19 +48,17 @@ public class ConsultingController {
         }
     }
 
-    @PatchMapping("/")
-    public ResponseEntity<HttpResponseDto> updateConsultingUrl(@PathVariable("consulting-seq") int consultingSeq, @RequestParam String url){
+    @PatchMapping("/{consulting_seq}")
+    public ResponseEntity<HttpResponseDto> updateConsultingSessionId(@PathVariable("consulting_seq") int consultingSeq, @RequestParam String sessionId){
 
-        boolean isSuccess = consultingService.updateConsultingUrl(consultingSeq, url);
+        try{
+            consultingService.updateConsultingUrl(consultingSeq, sessionId);
+        } catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));
+        }
 
-        if (isSuccess) {
-            HttpResponseDto httpResponseDto = new HttpResponseDto(200, null);
-            return ResponseEntity.ok(httpResponseDto);
-        }
-        else {
-            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
-            return ResponseEntity.ok(httpResponseDto);
-        }
+        return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), null));
     }
 
     @DeleteMapping("/")

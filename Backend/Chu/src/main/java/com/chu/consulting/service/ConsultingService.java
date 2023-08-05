@@ -16,7 +16,7 @@ public interface ConsultingService {
     ResponseConsultingResultDto getConsultingResult(int consultingSeq);
 
     // 상담 URL 업데이트
-    boolean updateConsultingUrl(int consultingSeq, String url);
+    void updateConsultingUrl(int consultingSeq, String url);
 
     // 상담 후기 수정
     boolean updateConsultingReview(RequestConsultingReviewDto requestConsultingReviewDto);
