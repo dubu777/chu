@@ -15,6 +15,7 @@ public interface CustomerDetailService {
 
     // 마이페이지 들어갈때 가져올 것들
     ResponseCustomerDetailDto getCustomerDetail(int customerSeq);
+
 //
 //    // 고객정보 수정 눌렀을때 가져올 것들
 //    ResponseCustomerDetailInfoDto getCustomerUpdateDetailInfo(int customerSeq);

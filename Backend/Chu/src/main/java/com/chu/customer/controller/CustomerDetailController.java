@@ -21,6 +21,8 @@ public class CustomerDetailController {
 
     private final CustomerDetailService customerDetailService;
 
+
+
 //    @GetMapping("/{customer_seq}")
 //    public ResponseEntity<HttpResponseDto> getCustomerDetailInfo(@PathVariable("customer_seq") int customerSeq){
 //        ResponseCustomerDetailInfoDto responseCustomerDetailInfoDto = customerDetailService.getCustomerUpdateDetailInfo(customerSeq);
@@ -62,6 +64,9 @@ public class CustomerDetailController {
             return ResponseEntity.ok(httpResponseDto);
         }
     }
+
+    @GetMapping("/mypage/{fileName}")
+
 
     @PatchMapping("/img/{customer_seq}")
     public ResponseEntity<HttpResponseDto> patchImg(@PathVariable("customer_seq") int customerSeq, @RequestPart("img") MultipartFile file) throws IOException {

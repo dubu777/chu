@@ -52,3 +52,7 @@ jwt:
 #OPENVIDU:
 #  PASSWORD: ${OPENVIDU_PASSWORD}
 #  URL: ${OPENVIDU_URL}
+
+custom:
+  path:
+    upload-images: 'chu/upload/images/customer/'

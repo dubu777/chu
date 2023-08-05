@@ -80,14 +80,25 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
     @Override
     public ResponseCustomerDetailDto getCustomerDetail(int customerSeq) {
         ResponseCustomerDetailDto responseCustomerDetailDto = new ResponseCustomerDetailDto();
+        //responseCustomerDetailDto.setCustomer(customerDetailRepository.getCustomerInfo(customerSeq));
 
-        responseCustomerDetailDto.setCustomer(customerDetailRepository.getCustomerInfo(customerSeq));
-        responseCustomerDetailDto.setCustomerHairConditionList(customerDetailRepository.getCustomerHairCondition(customerSeq));
+        // 마이페이지 들어갈때 고객 프로필 사진컬럼에 값이 있으면 서버에서 가져온다
+        String originImgName = "img1.png";      //디비가서 찾아온 값
 
-        responseCustomerDetailDto.setResponsePastConsultingDtoList(customerDetailRepository.getPastConsultingList(customerSeq));
-        responseCustomerDetailDto.setResponseFutureConsultingDtoList(customerDetailRepository.getFutureConsultingList(customerSeq));
+
+        //responseCustomerDetailDto.setCustomerHairConditionList(customerDetailRepository.getCustomerHairCondition(customerSeq));
+
+        //responseCustomerDetailDto.setResponsePastConsultingDtoList(customerDetailRepository.getPastConsultingList(customerSeq));
+        //responseCustomerDetailDto.setResponseFutureConsultingDtoList(customerDetailRepository.getFutureConsultingList(customerSeq));
 
         return responseCustomerDetailDto;
+    }
+
+    public MultipartFile getCustomerDetailProfile(String originImgName) {
+
+
+
+
     }
 //
 //    @Override
