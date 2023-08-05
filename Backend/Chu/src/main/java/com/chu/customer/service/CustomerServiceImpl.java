@@ -32,6 +32,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -74,6 +75,8 @@ public class CustomerServiceImpl implements CustomerService{
         Customer newCustomer = customer;
         // 비밀번호 암호화
         newCustomer.hashPassword(bCryptPasswordEncoder);
+        // createDate 세팅
+        newCustomer.setCreatedDate(LocalDateTime.now());
         customerRepository.save(customer);
     }
 

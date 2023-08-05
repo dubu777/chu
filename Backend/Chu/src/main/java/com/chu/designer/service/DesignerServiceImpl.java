@@ -7,9 +7,11 @@ import com.chu.global.domain.*;
 import com.chu.worldcup.repository.WorldcupRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 public class DesignerServiceImpl implements DesignerService{
 
     private final DesignerRepository designerRepository;
+    private final PasswordEncoder bCryptPasswordEncoder;
     @Override
     public boolean checkId(String id) {
         return designerRepository.existsById(id);
@@ -28,6 +31,26 @@ public class DesignerServiceImpl implements DesignerService{
     public boolean checkEmail(String email) {
         return designerRepository.existsByEmail(email);
     }
+
+    // 회원가입
+    @Override
+    public void signUp(Designer designer) {
+        Designer newDesigner = designer;
+        // 비밀번호 암호화
+        newDesigner.hashPassword(bCryptPasswordEncoder);
+        // createDate 세팅
+        newDesigner.setCreatedDate(LocalDateTime.now());
+        // 기본 가격 세팅
+        newDesigner.setCost(5000);
+        designerRepository.save(designer);
+    }
+
+    @Override
+    public ResponseDesignerLoginDetailDto signIn(RequestSignInDto requestSignInDto) {
+        return null;
+    }
+
+    // 로그인 테스트
 //
 //    // repo 주입
 //    private final DesignerRepository designerRepository;

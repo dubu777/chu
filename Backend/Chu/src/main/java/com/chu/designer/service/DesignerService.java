@@ -11,8 +11,14 @@ public interface DesignerService {
     // 아이디 중복체크
     boolean checkId(String id);
 
-    //이메일 중복체크
+    // 이메일 중복체크
     boolean checkEmail(String email);
+
+    // 디자이너 회원가입
+    void signUp(Designer designer);
+
+    // 디자이너 로그인
+    ResponseDesignerLoginDetailDto signIn(RequestSignInDto requestSignInDto);
 //
 //    // 디자이너 회원가입
 //    boolean signUp(RequestDesignerSignUpDto requestDesignerSignUpDto);

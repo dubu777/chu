@@ -38,7 +38,6 @@ public class CustomerController {
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), null));
-
     }
 
     // 로그인
