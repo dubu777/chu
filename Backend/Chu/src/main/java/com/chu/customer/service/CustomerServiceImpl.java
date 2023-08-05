@@ -134,7 +134,6 @@ public class CustomerServiceImpl implements CustomerService{
         ResponseCustomerLoginDetailDto responseCustomerLoginDetailDto = new ResponseCustomerLoginDetailDto();
 
         try{
-
             // 1) token setting
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -142,7 +141,6 @@ public class CustomerServiceImpl implements CustomerService{
                             requestSignInDto.getPwd()
                     )
             );
-
 
             String refreshToken = jwtTokenProvider.generateRefreshToken(authentication);
             String accessToken = jwtTokenProvider.generateAccessToken(authentication);

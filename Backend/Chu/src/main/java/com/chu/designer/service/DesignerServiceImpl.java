@@ -4,9 +4,13 @@ import com.chu.designer.domain.*;
 import com.chu.designer.repository.DesignerAlertRepository;
 import com.chu.designer.repository.DesignerRepository;
 import com.chu.global.domain.*;
+import com.chu.global.jwt.JwtTokenProvider;
 import com.chu.worldcup.repository.WorldcupRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +26,9 @@ public class DesignerServiceImpl implements DesignerService{
 
     private final DesignerRepository designerRepository;
     private final PasswordEncoder bCryptPasswordEncoder;
+    private final AuthenticationManager authenticationManager;
+    private final JwtTokenProvider jwtTokenProvider;
+
     @Override
     public boolean checkId(String id) {
         return designerRepository.existsById(id);
@@ -47,7 +54,42 @@ public class DesignerServiceImpl implements DesignerService{
 
     @Override
     public ResponseDesignerLoginDetailDto signIn(RequestSignInDto requestSignInDto) {
-        return null;
+        ResponseDesignerLoginDetailDto responseDesignerLoginDetailDto = new ResponseDesignerLoginDetailDto();
+
+        try{
+            // 1) token setting
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            requestSignInDto.getId(),
+                            requestSignInDto.getPwd()
+                    )
+            );
+
+            String refreshToken = jwtTokenProvider.generateRefreshToken(authentication);
+            String accessToken = jwtTokenProvider.generateAccessToken(authentication);
+
+            TokenDto tokenDto = new TokenDto(accessToken, refreshToken);
+
+            // Redis 저장 : 만료 시간 설정으로 자동 삭제 처리
+//            redisTemplate.opsForValue().set(
+//                    authentication.getName(),
+//                    refreshToken,
+//                    refreshTokenExpire,
+//                    TimeUnit.MILLISECONDS
+//            );
+
+            responseDesignerLoginDetailDto.setToken(tokenDto);
+
+
+
+            // 2) DesignerInfo setting
+
+
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return responseDesignerLoginDetailDto;
     }
 
     // 로그인 테스트
