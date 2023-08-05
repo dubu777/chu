@@ -94,12 +94,12 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
         return responseCustomerDetailDto;
     }
 
-    public MultipartFile getCustomerDetailProfile(String originImgName) {
-
-
-
-
-    }
+//    public MultipartFile getCustomerDetailProfile(String originImgName) {
+//
+//
+//
+//
+//    }
 //
 //    @Override
 //    public ResponseCustomerDetailInfoDto getCustomerUpdateDetailInfo(int customerSeq) {
