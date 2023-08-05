@@ -87,10 +87,8 @@ public class DesignerSearchServiceImpl implements DesignerSearchService{
         // 디자이너 헤어스타일 태그정보에서 해당 태그가 있는 디자이너 seq를 찾아서 저장. 중복없기 위해 Set 사용
         Set<Integer> designerList = new HashSet<>();
         for (Integer seq : hairStyleSeqs) {
-            log.info("서비스 들어온 seq: "+seq);
             designerList.addAll(designerTagInfoRepository.findDesignerSeqByHairStyleSeq(seq));
         }
-        log.info("서비스 designerList : " + designerList);
 
         // 여기 코드 중복 너무 많음. 수정 일단 다음에 .....
 
