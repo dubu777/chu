@@ -10,6 +10,7 @@ import java.util.Set;
 public interface DesignerTagInfoRepository extends JpaRepository<DesignerTagInfo, Integer> {
     List<DesignerTagInfo> findByDesignerSeq(Integer designerSeq);
 
-//    @Query("SELECT dti.designer.seq FROM DesignerTagInfo dti WHERE dti.hairStyleDict.seq = :hairStyleSeq")
-//    List<Integer> searchDesigner(Integer seq);
+    @Query(value ="SELECT designer_seq FROM designer_tag_info WHERE hair_style_seq = :seq", nativeQuery = true)
+    List<Integer> findDesignerSeqByHairStyleSeq(Integer seq);
+
 }
