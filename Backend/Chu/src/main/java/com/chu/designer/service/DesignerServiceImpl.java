@@ -210,6 +210,33 @@ public class DesignerServiceImpl implements DesignerService{
         return response;
     }
 
+    // 비밀번호 찾기
+    @Override
+    public ResponseFindPwdDto findPwd(String name, String email, String id) {
+
+        ResponseFindPwdDto response = new ResponseFindPwdDto();
+        Designer designer = new Designer();
+
+        try{
+            designer = designerRepository.findByNameAndEmailAndId(name, email, id);
+
+            // 일치하는 사용자 존재 X
+            if(designer == null){
+                response.setExists(false);
+                response.setSeq(0);
+            }
+            // 일치하는 사용자 존재
+            else{
+                response.setExists(true);
+                response.setSeq(designer.getSeq());
+            }
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return response;
+    }
+
     // 로그인 테스트
 //
 //    // repo 주입

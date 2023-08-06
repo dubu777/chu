@@ -22,6 +22,9 @@ public interface DesignerService {
 
     // 디자이너 아이디 찾기
     ResponseFindIdDto findId(String name, String email);
+
+    // 디자이너 비밀번호 찾기
+    ResponseFindPwdDto findPwd(String name, String email, String id);
 //
 //    // 디자이너 회원가입
 //    boolean signUp(RequestDesignerSignUpDto requestDesignerSignUpDto);
