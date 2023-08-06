@@ -30,20 +30,20 @@ public class DesignerDetailRepositoryImpl implements DesignerDetailRepository {
     @Override
     public ArrayList<ResponseHairStyleLabelDto> getHairStyleTag(int designerSeq) {
         ArrayList<ResponseHairStyleLabelDto> list = new ArrayList<>();
-        
+
         // 로직
-        
+
         // 디자이너가 잘하는 머리 조회
-        
+
         return list;
     }
 
     @Override
     public ArrayList<TimeDto> getPossibleTimeList(int designerSeq) {
         ArrayList<TimeDto> list = new ArrayList<>();
-        
+
         // 오늘 디자이너 가능 시간 조회
-        
+
         return list;
     }
 
@@ -73,9 +73,9 @@ public class DesignerDetailRepositoryImpl implements DesignerDetailRepository {
         ResponseDesignerAreaInfo responseDesignerAreaInfo = new ResponseDesignerAreaInfo();
 
         // 로직
-        
+
         // 디자이너 지역 정보 조회
-        
+
         return responseDesignerAreaInfo;
     }
 
@@ -93,7 +93,7 @@ public class DesignerDetailRepositoryImpl implements DesignerDetailRepository {
         ArrayList<ResponsePermHairStyleDto> allPermHairStyle = new ArrayList<>();
 
         // 전체 펌스타일 조회
-        
+
         return allPermHairStyle;
     }
 
@@ -169,7 +169,7 @@ public class DesignerDetailRepositoryImpl implements DesignerDetailRepository {
     @Override
     public ArrayList<ImageDto> getConfusionImages(int consultinSeq) {
         ArrayList<ImageDto> resultList = new ArrayList<>();
-        
+
         // 합성 이미지 정보 반환
 
         return resultList;

@@ -1,42 +1,44 @@
 package com.chu.designer.domain;
 
+import com.chu.consulting.domain.Review;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+import java.util.List;
+
 // 디자이너 상세 (예약 ) 페이지 사용
+@Getter @Setter @ToString
 public class ResponseDesignerDetailInfoDto {
 
-//    "designerSeq" : 1,
-//            "name" : "재현",
-//            "introduction" : " ",
-//            "address" : "",
-//            "salonName" : "",
-//            "designerImg" : "",
-//            "allReviewScore" : 4.8,
-//            "likeCnt" : 78,
-//            "isLike" : true,
-//            "hairStyleLabel" : [
-//            "레이어드컷",
-//            "복구펌"
-//            ],
-//            "portfolio" : [
-//    {
-//        "imgSeq" : 1,
-//            "imgName" : "img1.png",
-//            "sequence" : 1
-//    },
-//    {
-//        "imgSeq" : 2,
-//            "imgName" : "img2.png",
-//            "sequence" : 2
-//    },
-//            ],
-//            "review" : [
-//    {
-//        "customerIdx" : 1,
-//            "consulting_date" : "2022.12.15 17:54",
-//            "review_score" : 4.7,
-//            "customerId" : "ssafy",
-//            "reviewContent" : "좋아요 !"
-//    }
-//        ],
-//                "cost" : 5000
+    private Integer designerSeq;
+    private String name;
+    private String introduction;
+    private String address;
+    private String salonName;
+    private String designerImg;
+    private Double allReviewScore;
+    private Integer likeCnt;
+    private Boolean isLike;
+    private List<String> hairStyleLabel;
+    private List<DesignerPortfolio> portfolio;
+    private List<Review> review;
+    private Integer cost;
+
+    public ResponseDesignerDetailInfoDto(Designer designer, Double reviewScore, Integer likeCnt, List<String> hairStyleLabels, List<DesignerPortfolio> portfolio, List<Review> review) {
+        this.designerSeq = designer.getSeq();
+        this.name = designer.getName();
+        this.introduction = designer.getIntroduction();
+        this.address = designer.getAddress();
+        this.salonName = designer.getSalonName();
+        this.designerImg = (designer.getImagePath() != null) ? designer.getImagePath().getSavedImgName() : null;
+        //this.allReviewScore = (리뷰스코어 가져오면 ==null) ? 0.0 : reviewScore;
+//        this.isLike = isLike;
+        this.hairStyleLabel = hairStyleLabels;
+        this.portfolio = portfolio;
+        this.review = review;
+        this.cost = designer.getCost();
+
+    }
 
 }

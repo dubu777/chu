@@ -1,5 +1,6 @@
 package com.chu.designer.service;
 
+import com.chu.consulting.domain.Review;
 import com.chu.consulting.repository.ConsultingRepository;
 import com.chu.designer.domain.*;
 import com.chu.designer.repository.DesignerSearchRepository;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class DesignerSearchServiceImpl implements DesignerSearchService{
+public class DesignerSearchServiceImpl implements DesignerSearchService {
 
     private final DesignerSearchRepository designerSearchRepository;
     private final DesignerLikeRepository designerLikeRepository;
@@ -29,10 +30,10 @@ public class DesignerSearchServiceImpl implements DesignerSearchService{
     // 1. 헤어스타일 목록 가져오기
     @Override
     public List<HairStyleDto> showCategoryView(int categorySeq) {
-        
+
         List<HairStyleDict> allCutHairStyle = hairStyleDictRepository.findByHairStyleCategorySeq(categorySeq);
         List<HairStyleDto> tmpResult = new ArrayList<>();
-        for(HairStyleDict hs : allCutHairStyle) {
+        for (HairStyleDict hs : allCutHairStyle) {
             tmpResult.add(new HairStyleDto(hs));
         }
         return tmpResult;
@@ -87,8 +88,10 @@ public class DesignerSearchServiceImpl implements DesignerSearchService{
         // 디자이너 헤어스타일 태그정보에서 해당 태그가 있는 디자이너 seq를 찾아서 저장. 중복없기 위해 Set 사용
         Set<Integer> designerList = new HashSet<>();
         for (Integer seq : hairStyleSeqs) {
+            log.info("서비스 들어온 seq: " + seq);
             designerList.addAll(designerTagInfoRepository.findDesignerSeqByHairStyleSeq(seq));
         }
+        log.info("서비스 designerList : " + designerList);
 
         // 여기 코드 중복 너무 많음. 수정 일단 다음에 .....
 
@@ -126,22 +129,36 @@ public class DesignerSearchServiceImpl implements DesignerSearchService{
             reviewScoreSeq++;
         }
 
-        //List<DesignerSearchDto> result =
         return result;
     }
+
+    @Override
+    public ResponseDesignerDetailInfoDto getDesignerDetailInfo(Integer designerSeq, Integer customerSeq) {
+
+        ResponseDesignerDetailInfoDto result;
+
+        // 디자이너 엔티티에 있는 정보 가져오기
+        Designer designer = designerSearchRepository.findBySeq(designerSeq);
+        // 결과:  Designer(seq=1, id=wonyoung, name=원영, pwd=1234, email=young@gmail.com, gender=F, introduction=여성 펌 전문 디자이너 원영입니다 ^_^, certificationNum=1234-5678, address=대전 유성구 덕명동 154-15, latitude=36.3472301, longitude=127.2957758539, salonName=공간 헤어, imagePath=com.chu.global.domain.ImagePath@6880d11d, reviewScore=4.9, cost=5000, createdDate=2023-07-22T00:44:28)
+
+        // 다른 테이블에서 조인해서 가져올 정보
+        Double reviewScore=0.0;
+        Integer likeCnt = 0;
+        List<String> hairStyleLabels = null;
+        List<DesignerPortfolio> portfolio = null;
+        List<Review> review = null;
+
+
+        result = new ResponseDesignerDetailInfoDto(designer,reviewScore, likeCnt, hairStyleLabels, portfolio, review);
+        log.info("dto :" +result);
+
+
+        return result;
+    }
+}
 
 //    @Override
 //    public List<ResponseDesignerSearchAreaDto> search2AllArea() {
 //        return designerSearchRepository.search2AllArea();
 //    }
-//
-//    @Override
-//    public ResponseDesignerDetailInfoDto getDesignerDetailInfo(int designerSeq, int customerSeq) {
-//        return designerSearchRepository.getDesignerDetailInfo(designerSeq, customerSeq);
-//    }
-//
-//    @Override
-//    public List<DesignerSearchDto> search2Like(int customerSeq) {
-//        return designerSearchRepository.search2Like(customerSeq);
-//    }
-}
+
