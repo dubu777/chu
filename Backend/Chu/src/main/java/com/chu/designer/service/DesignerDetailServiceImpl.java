@@ -59,14 +59,36 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
         imagePath.setSavedImgName(img);
 
         DesignerPortfolio designerPortfolio = new DesignerPortfolio(designer, imagePath);
-        designerDetailRepository.save(designerPortfolio);
+
+        try{
+            designerDetailRepository.save(designerPortfolio);
+        } catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
 
         return true;
     }
 
     @Override
     public ArrayList<ImageDto> getPortfolio(int designerSeq) {
-        return (ArrayList<ImageDto>) designerDetailRepository.getPortfolioByDesignerPortfolio(designerSeq);
+        try{
+            return (ArrayList<ImageDto>) designerDetailRepository.getPortfolioByDesignerPortfolio(designerSeq);
+        } catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public boolean deletePortfolioImage(int imageSeq) {
+        try{
+            designerDetailRepository.deletePortfolioImage(imageSeq);
+        } catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 //    private final DesignerDetailRepository designerDetailRepository;
 //
@@ -167,13 +189,4 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
 //    }
 //
 //
-//    @Override
-//    public boolean postPortfolioImage(int designerSeq, String img) {
-//        return designerDetailRepository.postPortfolioImage(designerSeq, img);
-//    }
-//
-//    @Override
-//    public boolean deletePortfolioImage(int designerSeq, int imageSeq) {
-//        return designerDetailRepository.deletePortfolioImage(designerSeq, imageSeq);
-//    }
 }

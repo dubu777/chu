@@ -173,18 +173,19 @@ public class DesignerDetailController {
         HttpResponseDto httpResponseDto = new HttpResponseDto(200, null);
         return ResponseEntity.ok(httpResponseDto);
     }
-//
-//    @DeleteMapping("/portfolio")
-//    public ResponseEntity<HttpResponseDto> deletePortfolio(@PathVariable("designer-seq") int designerSeq, @RequestParam int imageSeq) {
-//
-//        boolean isSuccess = designerDetailService.deletePortfolioImage(designerSeq, imageSeq);
-//
-//        if (isSuccess) {
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(200, null);
-//            return ResponseEntity.ok(httpResponseDto);
-//        } else {
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
-//            return ResponseEntity.ok(httpResponseDto);
-//        }
-//    }
+
+    @DeleteMapping("/portfolio/{designer-seq}")
+    public ResponseEntity<HttpResponseDto> deletePortfolio(@PathVariable("designer-seq") int designerSeq, @RequestParam int imageSeq) {
+
+        try{
+//            designerDetailService.deletePortfolioImage(designerSeq, imageSeq);
+            designerDetailService.deletePortfolioImage(imageSeq);
+        } catch (Exception e){
+            e.printStackTrace();
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
+        }
+        HttpResponseDto httpResponseDto = new HttpResponseDto(200, null);
+        return ResponseEntity.ok(httpResponseDto);
+    }
 }

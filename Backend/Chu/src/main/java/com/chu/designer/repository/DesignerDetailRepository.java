@@ -50,15 +50,5 @@ public interface DesignerDetailRepository extends JpaRepository<DesignerPortfoli
     @Query(value = "SELECT imagePath.savedImgName FROM DesignerPortfolio WHERE designer.seq = :designerSeq")
     List<ImageDto> getPortfolioByDesignerPortfolio(int designerSeq);
 
-    @Query(value = "SELECT c.designer.seq, AVG(c.review.reviewScore)" +
-            " FROM Consulting c" +
-            " GROUP BY c.designer.seq")
-    List<Object[]> getReviewScoreByDesigner();
-
-
-
-//    boolean postPortfolioImage(DesignerPortfolio designerPortfolio);
-//
-//    boolean deletePortfolioImage(int designerSeq, int imageSeq);
-
+    boolean deletePortfolioImage(int imageSeq);
 }
