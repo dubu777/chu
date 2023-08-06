@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public interface CustomerDetailService {
     // 고객 이미지를 통해 파일 경로명을 받아옴
-    String getSavedImgFilePath(MultipartFile file) throws IOException;
+    String getSavedImgFilePath(Integer customerSeq, MultipartFile file) throws IOException;
     // 고객 이미지 수정
     Boolean patchImage(Integer customerSeq, String fileName);
 
