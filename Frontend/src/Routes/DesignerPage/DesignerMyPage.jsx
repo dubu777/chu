@@ -45,12 +45,13 @@ const HashTag = styled.button`
   height: 30px;
   margin-right: 10px;
   padding: 2px 15px;
+  /* margin-top: 5px; */
 `
 const InfoBox = styled.div`
   /* border: solid 2px;
   border-color: #afadaa; */
   width: 30%;
-  margin-top: 155px;
+  margin-top: 140px;
   margin-left: -120px;
 `;
 const ChangeBox = styled.div`
@@ -86,7 +87,8 @@ const Wrapper = styled.div`
 `;
 
 const TextBox = styled.div`
-  
+  display: flex;
+  align-items: center;
 `;
 
 const Box = styled.div`
@@ -114,7 +116,7 @@ const EditBox = styled.div`
   margin-bottom: 25px;
   margin-top: 5px;
   display: flex;
-  align-items: center;
+  /* align-items: center; */
 `;
 const TextArea = styled.div`
   border: none;
@@ -148,7 +150,7 @@ function DesignerMyPage(){
     "name" : "재현",
         "cost" : "5000",
         "email" : "ssafy@ssafy.com",
-        "introduction" : " 남자 펌 전문 !",
+        "introduction" : "차홍 청담점의 재현 디자이너 입니다 :)",
         "img" : "img1.png",
         "hairStyleTag" : [
             "시스루펌",
@@ -245,7 +247,26 @@ function DesignerMyPage(){
         <InfoBox>
           <Text>{data.cost}</Text>
           <Text>{data.email}</Text>
-          <Text>{data.introduction}</Text>
+          <introductionWrapper>
+            {isEditing ? (
+          <EditBox>
+            <TextArea
+              contentEditable
+              placeholder="소개글을 작성해주세요"
+              onBlur={handleIntroductionChange}
+              >
+              {introduction || data.introduction}
+            </TextArea>
+              <EditBtn onClick={handleSaveButtonClick}>완료</EditBtn>
+            </EditBox>
+            ) : (
+              <EditBox>
+                <Text>{data.introduction || "소개글이 없습니다."}</Text>
+                <EditBtn onClick={handleEditButtonClick}>수정</EditBtn>
+              </EditBox>
+
+              )}
+          </introductionWrapper>
           {data.hairStyleTag.map((word, index) => (
             <HashTag key={index}> #{word} </HashTag>
           ))}

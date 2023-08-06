@@ -19,6 +19,23 @@ export const listinfo = async(seq)=> {
 
 };
 
+// 디자이너 리스트 뷰 스타일 필터 api
+export const submitStyleFilter = async(seq, hairStyleSeqNumbers)=> {
+    console.log('응답:',seq, hairStyleSeqNumbers)
+    try {
+        const response = await axios.get(`${BASE_URL}/designer/search/filter`, {
+            params : {
+                "hairStyle" : hairStyleSeqNumbers,
+                "customerSeq" : 2
+        }
+        })
+        return response.data.result
+    } catch(error) {
+        throw new Error('데이터 못가져옴')
+    }
+
+};
+
 // 디자이너 프로필 이미지 첨부 api
 export const attachDesignerImage = async(seq, formData) => {
     try {
