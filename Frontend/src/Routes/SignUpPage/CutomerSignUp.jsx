@@ -230,8 +230,11 @@ function CustomerSignUp() {
   const {
     register,
     handleSubmit,
+    setError,
+    clearErrors,
     formState: { errors },
     watch,
+    
   } = useForm();
 
   const userType = "customer";
@@ -332,12 +335,18 @@ function CustomerSignUp() {
                       <SignUpInput
                         placeholder="이름"
                         {...register("name", {
+                          required: "이름을 입력해주세요.",
                         })}
                         value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        onChange={(e) => {setName(e.target.value)
+                        clearErrors("name")
+                        }}
+                        
                       />
                     </SignUpInputWrapper>
-                    <ErrorMessage>{errors?.name?.message}</ErrorMessage>
+                    {errors.name?.type === "required" && (
+                      <ErrorMessage>이름을 입력해주세요.</ErrorMessage>
+                    )}
                     <SignUpInputWrapper>
                       <SignUpTextBox>
                         <SignUpText>아이디</SignUpText>
@@ -346,7 +355,9 @@ function CustomerSignUp() {
                         placeholder="아이디"
                         {...register("id")}
                         value={id}
-                        onChange={(e) => setId(e.target.value)}
+                        onChange={(e) => {setId(e.target.value)
+                        clearErrors("id")
+                        }}
                         onBlur={handleIdCheck}
                       />
                     </SignUpInputWrapper>
@@ -358,6 +369,7 @@ function CustomerSignUp() {
                       <SignUpInput
                         placeholder="이메일"
                         {...register("email", {
+                          required: "이메일을 입력해주세요.",
                           pattern: {
                             value:
                               /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
@@ -398,6 +410,7 @@ function CustomerSignUp() {
                         placeholder="8~16자리의 비밀번호를 입력해주세요"
                         type="password"
                         {...register("pwd", {
+                          required: "비밀번호를 입력해주세요.",
                           pattern: {
                             value:
                               /(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}/,
@@ -418,6 +431,7 @@ function CustomerSignUp() {
                         placeholder="비밀번호 확인 ✔"
                         type="password"
                         {...register("pwd1", {
+                          required: "비밀번호 확인을 입력해주세요.",
                           validate: (value) =>
                             value === watch("pwd") ||
                             "비밀번호가 일치하지 않습니다.",
