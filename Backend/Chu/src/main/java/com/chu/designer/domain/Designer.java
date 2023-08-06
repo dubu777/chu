@@ -2,6 +2,7 @@ package com.chu.designer.domain;
 
 import com.chu.global.domain.ImagePath;
 import lombok.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -46,4 +47,9 @@ public class Designer {
 //                .build();
 //    }
 
+    public Designer hashPassword(PasswordEncoder passwordEncoder){
+        this.pwd = passwordEncoder.encode(this.pwd);
+
+        return this;
+    }
 }

@@ -1,14 +1,18 @@
 package com.chu.designer.controller;
+import com.chu.customer.domain.RequestCustomerChangePwdDto;
 import com.chu.designer.domain.*;
 import com.chu.designer.service.DesignerService;
 import com.chu.global.domain.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.ws.Response;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -17,94 +21,101 @@ import java.util.ArrayList;
 @CrossOrigin(origins = "http://localhost:3000")
 public class DesignerController {
     private final DesignerService designerService;
-//
-//    // 회원 가입
-//    @PostMapping(value = "/sign-up")
-//    public ResponseEntity<HttpResponseDto> signUp(@RequestBody RequestDesignerSignUpDto requestDesignerSignUpDto) {
-//        log.info(requestDesignerSignUpDto.toString());
-//        boolean isSuccess = designerService.signUp(requestDesignerSignUpDto);
-//
-//        if(isSuccess) {
-//            ResponseDesignerLoginDetailDto responseDesignerLoginDetailDto = designerService.getLoginDesignerDetail(requestDesignerSignUpDto.getId());
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseDesignerLoginDetailDto);
-//            return ResponseEntity.ok(httpResponseDto);
-//        } else {
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
-//            return ResponseEntity.ok(httpResponseDto);
-//        }
-//    }
-//
-//    // 로그인
-//    @PostMapping(value = "/sign-in")
-//    public ResponseEntity<HttpResponseDto> signIn(@RequestBody RequestSignInDto requestSignInDto) {
-//        boolean isDesigner = true;
-//
-//        isDesigner = designerService.signIn(requestSignInDto);
-//
-//        // 로그인 성공
-//        if (isDesigner) {
-//            ResponseDesignerLoginDetailDto responseDesignerLoginDetailDto = designerService.getLoginDesignerDetail(requestSignInDto.getId());
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseDesignerLoginDetailDto);
-//            return ResponseEntity.ok(httpResponseDto);
-//        }
-//        // 로그인 실패
-//        else {
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
-//            return ResponseEntity.ok(httpResponseDto);
-//        }
-//    }
-//
-//    @GetMapping("/find-id")
-//    public ResponseEntity<HttpResponseDto> findId(@RequestParam String name, @RequestParam String email) {
-//
-//        RequestFindIdDto requestFindIdDto = new RequestFindIdDto();
-//        requestFindIdDto.setName(name);
-//        requestFindIdDto.setEmail(email);
-//
-//        String id = designerService.findId(requestFindIdDto);
-//
-//        if (id != null) {
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(200, id);
-//            return ResponseEntity.ok(httpResponseDto);
-//        } else {
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
-//            return ResponseEntity.ok(httpResponseDto);
-//        }
-//    }
-//
-//    @GetMapping("/find-pwd")
-//    public ResponseEntity<HttpResponseDto> findPwd(@RequestParam String id, @RequestParam String name, @RequestParam String email) {
-//
-//        RequestFindPwdDto requestFindPwdDto = new RequestFindPwdDto();
-//        requestFindPwdDto.setName(name);
-//        requestFindPwdDto.setId(id);
-//        requestFindPwdDto.setEmail(email);
-//
-//        int seq = designerService.isValidUser(requestFindPwdDto);
-//
-//        // 존재하는 유저일 경우
-//        if (seq == 1) {
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(200, seq);
-//            return ResponseEntity.ok(httpResponseDto);
-//        } else {
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
-//            return ResponseEntity.ok(httpResponseDto);
-//        }
-//    }
-//
-//    @PatchMapping("/change-pwd")
-//    public ResponseEntity<HttpResponseDto> changePwd(@RequestBody RequestChangePwdDto requestChangePwdDto) {
-//        boolean isSuccess = designerService.changePwd(requestChangePwdDto);
-//
-//        if (isSuccess) {
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(200, null);
-//            return ResponseEntity.ok(httpResponseDto);
-//        } else {
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
-//            return ResponseEntity.ok(httpResponseDto);
-//        }
-//    }
-//
+
+    // 회원가입
+    @PostMapping(value = "/sign-up")
+    public ResponseEntity<HttpResponseDto> signUp(@RequestBody RequestDesignerSignUpDto requestDesignerSignUpDto){
+
+        try{
+            // requestDto -> Designer entity 변환
+            Designer designer = requestDesignerSignUpDto.toDesignerEntity();
+            designerService.signUp(designer);
+        } catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), null));
+    }
+
+    // 로그인
+    @PostMapping(value = "/sign-in")
+    public ResponseEntity<HttpResponseDto> signIn(@RequestBody RequestSignInDto requesSignInDto){
+
+        ResponseDesignerLoginDetailDto responseDesignerLoginDetailDto = null;
+
+        try{
+            responseDesignerLoginDetailDto = designerService.signIn(requesSignInDto);
+        } catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), responseDesignerLoginDetailDto));
+    }
+
+    // 아이디 찾기
+    @GetMapping(value = "/find-id")
+    public ResponseEntity<HttpResponseDto> findId(@RequestParam String name, @RequestParam String email){
+
+        ResponseFindIdDto response = new ResponseFindIdDto();
+
+        try{
+            response = designerService.findId(name, email);
+        } catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), response));
+    }
+
+    // 비밀번호 찾기
+    @GetMapping(value = "/find-pwd")
+    public ResponseEntity<HttpResponseDto> findPwd(@RequestParam String name, @RequestParam String email, @RequestParam String id){
+
+        ResponseFindPwdDto response = new ResponseFindPwdDto();
+
+        try{
+            response = designerService.findPwd(name, email, id);
+        } catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), response));
+    }
+
+    // 디자이너 비밀번호 변경
+    @PutMapping(value = "/change-pwd")
+    public ResponseEntity<HttpResponseDto> changePwd(@RequestBody RequestCustomerChangePwdDto param){
+
+        try{
+            designerService.changePwd(param);
+        } catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), null));
+    }
+
+    // 날짜 별 상담 가능시간 조회
+    @GetMapping("/date/{designerSeq}")
+    public ResponseEntity<HttpResponseDto> getPossibleTimeOfDate(@PathVariable("designerSeq") int designerSeq, @RequestParam String date){
+
+        List<ResponseTimeStateDto> response = new ArrayList<>();
+
+        try{
+            response = designerService.getTimeStateList(designerSeq, date);
+        } catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), response));
+    }
+
 //    @GetMapping("/date")
 //    public ResponseEntity<HttpResponseDto> getPossibleTimeOfDate(@PathVariable("designer_seq") int designerSeq, @RequestParam Date date) {
 //        ArrayList<ResponseTimeStateDto> responseTimeStateDtoList = new ArrayList<>();

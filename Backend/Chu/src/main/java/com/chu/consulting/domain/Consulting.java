@@ -5,12 +5,13 @@ import com.chu.designer.domain.Designer;
 import com.chu.global.domain.ImagePath;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Getter @Setter
+@Getter @Setter @ToString
 public class Consulting {
 
     @Id

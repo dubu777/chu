@@ -56,5 +56,4 @@ jwt:
 
 custom:
   path:
-#    upload-images: '/home/ubuntu/chu/upload/images/customer/'
     upload-images: '/chu/upload/images/customer/'

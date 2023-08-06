@@ -1,10 +1,12 @@
 package com.chu.global.controller;
 
 import com.chu.customer.service.CustomerService;
+import com.chu.designer.domain.ResponseMainPageDto;
 import com.chu.designer.service.DesignerService;
 import com.chu.global.domain.RequestAlertCreateDto;
 import com.chu.global.domain.RequestAlertReadDto;
 import com.chu.global.domain.HttpResponseDto;
+import com.chu.global.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -20,6 +22,7 @@ public class UserController {
 
     private final CustomerService customerService;
     private final DesignerService designerService;
+    private final UserService userService;
 
     // 아이디 중복확인
     @GetMapping("/check-id")
@@ -57,6 +60,23 @@ public class UserController {
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), isExist));
+
+    }
+
+    // 로그인없이 메인페이지
+    @GetMapping(value = "/main")
+    public ResponseEntity<HttpResponseDto> signIn(){
+
+        ResponseMainPageDto responseMainPageDto = null;
+
+        try{
+            responseMainPageDto = userService.getMain();
+        } catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), responseMainPageDto));
 
     }
 

@@ -9,13 +9,12 @@ import javax.persistence.Embeddable;
 
 @Embeddable
 @Getter @Setter
-
 public class ImagePath {
 
     private String uploadImgName;
     private String savedImgName;
 
-    protected ImagePath() {
+    public ImagePath() {
 
     }
 

@@ -1,18 +1,38 @@
 package com.chu.designer.service;
 
+import com.chu.customer.domain.RequestCustomerChangePwdDto;
 import com.chu.designer.domain.*;
 import com.chu.global.domain.*;
 
-import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public interface DesignerService {
 
     // 아이디 중복체크
     boolean checkId(String id);
 
-    //이메일 중복체크
+    // 이메일 중복체크
     boolean checkEmail(String email);
+
+    // 디자이너 회원가입
+    void signUp(Designer designer);
+
+    // 디자이너 로그인
+    ResponseDesignerLoginDetailDto signIn(RequestSignInDto requestSignInDto);
+
+    // 디자이너 아이디 찾기
+    ResponseFindIdDto findId(String name, String email);
+
+    // 디자이너 비밀번호 찾기
+    ResponseFindPwdDto findPwd(String name, String email, String id);
+
+    // 디자이너 비밀번호 변경
+    void changePwd(RequestCustomerChangePwdDto param);
+
+    // 날짜 별 상담 가능시간 조회
+    List<ResponseTimeStateDto> getTimeStateList(int designerSeq, String date);
 //
 //    // 디자이너 회원가입
 //    boolean signUp(RequestDesignerSignUpDto requestDesignerSignUpDto);

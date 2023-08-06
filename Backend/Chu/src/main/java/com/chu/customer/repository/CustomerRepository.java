@@ -25,6 +25,8 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
     @Modifying
     @Query("UPDATE Customer c SET c.pwd = :pwd WHERE c.seq = :seq")
     void changePwd(int seq, String pwd);
+
+    Customer getCustomerBySeq(int seq);
 //    boolean checkId(String id);
 //
 //    boolean checkEmail(String email);
