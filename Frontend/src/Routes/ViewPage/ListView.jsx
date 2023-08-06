@@ -6,7 +6,7 @@ import DesignerList from "../../components/DesignerComponent/DesignerList";
 import axios from "axios";
 import { useRecoilState } from "recoil";
 import {listViewState} from "../../recoil/designer";
-import {submitStyleFilter} from "../../apis/designer"
+import {listinfo, submitStyleFilter} from "../../apis/designer"
 import { async } from "q";
 
 
@@ -158,13 +158,26 @@ const SearchImg = styled.img`
 const SubmitBtn = styled.button`
 `;
 function ListView() {
-  const [data, setData] = useRecoilState(listViewState);
+  const [data, setData] = useState(null);
   const [selectedStyle, setSelectedStyle] = useState([]);
   const [filterData, setFilterData] = useState(null);
-  const displayData = filterData || data;
+  const seq =2;
+  // const displayData = filterData || data;
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await listinfo(seq);
+        setData(response);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    fetchData(); // 페이지가 마운트될 때
+    }, []); // 마운트 시에만 실행
 
   const toggleStyleType = (tag) => {
-    // 선택된 태그를 { hairStyleSeq, hairStyleLabel } 형식의 객체로 생성
     const selectedTag = {
       'hairStyleSeq': tag.hairStyleSeq,
       'hairStyleLabel': tag.hairStyleLabel,
@@ -205,25 +218,16 @@ function ListView() {
     setHandleMap((prev) => !prev);
   };
 
-  // selectedStyle 배열의 변경 상태를 확인하고 콘솔에 출력
-  // 백엔드로 보내야 할 통신 데이터
-  // useEffect(() => {
-  //   const hairStyleSeqNumbers = selectedStyle.map((tag) => tag.hairStyleSeq);
-  //   console.log(hairStyleSeqNumbers);
-  //   console.log("hairStyleSeq numbers:", hairStyleSeqNumbers);
-  //   }, [selectedStyle]);
-  const seq =2; 
-  const submitFilter = async (seq) => {
+  // 스타일 필터 제출 통신
+  const submitFilter = async(seq) => {
     try {
       const hairStyleSeqNumbers = selectedStyle.map((tag) => tag.hairStyleSeq);
-      const filterData = await submitStyleFilter(seq, hairStyleSeqNumbers);  
-      console.log(filterData)
-      setFilterData(filterData)
+      const filterData = await submitStyleFilter(hairStyleSeqNumbers);  
+      setData(filterData)
     }catch(error){
       console.log(error)
     }
   };
-
 
   return (
     <Container>
@@ -311,7 +315,7 @@ function ListView() {
       </MapBtn>
       </BtnBox>
       </BtnWrapper>
-          <DesignerList data={displayData} sortOrder={sortOrder} />
+          <DesignerList data={data} sortOrder={sortOrder} />
         </>
         : null }
         <p>...loading</p>

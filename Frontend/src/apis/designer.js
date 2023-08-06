@@ -5,38 +5,37 @@ import { async } from "q";
 // const BASE_URL = 'https://i9b111.q.ssafy.io:9090/api';
 const BASE_URL = "http://localhost:9090/api"
 
-
 // 디자이너 리스트 뷰 api
 export const listinfo = async(seq)=> {
     try {
         const response = await axios.get(`${BASE_URL}/designer/search/review-score`, {
-            params : {"customerSeq" : 1}
+            params : {"customerSeq" : 2}
         })
+        console.log('리스트 뷰 데이터 가져오기 성공')
+        console.log(response.data.result)
         return response.data.result
     } catch(error) {
         throw new Error('데이터 못가져옴')
     }
-
 };
 
 // 디자이너 리스트 뷰 스타일 필터 api
-export const submitStyleFilter = async(seq, hairStyleSeqNumbers)=> {
-    console.log('응답:',seq, hairStyleSeqNumbers)
+export const submitStyleFilter = async(hairStyleSeqNumbers)=> {
     try {
+        const hairStyleSeqs = hairStyleSeqNumbers.join(',');
         const response = await axios.get(`${BASE_URL}/designer/search/filter`, {
             params : {
-                "hairStyle" : hairStyleSeqNumbers,
-                "customerSeq" : 2
+                "hairStyleSeqs" : hairStyleSeqs,
+                "customerSeq" : 1,
         }
         })
         return response.data.result
     } catch(error) {
         throw new Error('데이터 못가져옴')
     }
-
 };
 
-// 디자이너 프로필 이미지 첨부 api
+// 디자이너 프로필 사진 등록 api
 export const attachDesignerImage = async(seq, formData) => {
     try {
         console.log("try문 진입")
@@ -51,14 +50,6 @@ export const attachDesignerImage = async(seq, formData) => {
     } catch (error) {
         throw new Error('이미지 보내기 실패');
     }
-    // if (response.status === 200) {
-    //     console.log("이미지가 성공적으로 첨부되었습니다.");
-    //   } else {
-    //     console.log("이미지 첨부 실패:", response.status);
-    //   }
-    // } catch (error) {
-    //   console.error("API 요청 실패:", error);
-    // }
 };
 
 // 마이페이지-포트폴리오 조회
@@ -82,7 +73,7 @@ export const postPortfolio = async(seq, formData) => {
             },
         });
         console.log("성공")
-        return response.data
+        return response.data.result
     } catch(error) {
         throw new Error('디자이너 포트폴리오 등록 실패')
     }

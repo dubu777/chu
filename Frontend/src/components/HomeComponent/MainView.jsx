@@ -2,9 +2,6 @@ import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import swal from "sweetalert";
-import {listViewState} from "../../recoil/designer";
-import {listinfo} from "../../apis/designer";
-import { useEffect } from "react";
 import { motion,AnimatePresence,useAnimation }from "framer-motion";
 
 
@@ -63,23 +60,6 @@ const P = styled.p`
 `;
 
 function MainView(){
-  const [data, setData] = useRecoilState(listViewState);
-  const seq = 2
-  const dataTest = async () => {
-    try {
-      const data = await listinfo(seq);
-      console.log(data)
-      setData(data)
-
-    } catch(error){
-      console.log(error)
-    }
-  };
-  useEffect(() => {   // seq값 변경에 따른 dataTest 함수 호출
-    dataTest();
-  }, [seq]);
-
-  console.log(data);
 
   return(
     <Container>
@@ -87,7 +67,7 @@ function MainView(){
     <br></br>
       <Wrapper>
         <Box 
-          onClick={dataTest}
+          // onClick={dataTest}
           variants={pofolVariants}
 					initial="nomal"
 					whileHover="hover">
