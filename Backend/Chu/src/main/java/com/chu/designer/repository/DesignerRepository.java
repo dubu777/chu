@@ -16,6 +16,8 @@ public interface DesignerRepository extends JpaRepository<Designer, Integer> {
     // email 중복검사
     boolean existsByEmail(String email);
 
+    Designer findById(String Id);
+
     // 로그인
 
 //    boolean signUp(RequestDesignerSignUpDto requestDesignerSignUpDto);

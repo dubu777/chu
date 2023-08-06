@@ -14,7 +14,7 @@ public class DesignerAlert {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer seq;
 
-    private boolean isCheck;
+    private Boolean isCheck;
 
     private LocalDateTime createdDate;
 

@@ -1,6 +1,7 @@
 package com.chu.global.domain;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -16,7 +17,10 @@ public class HairStyleImg {
     @JoinColumn(name = "hair_style_seq")
     private HairStyleDict hairStyleDict;
 
-
     @Embedded
     private ImagePath imagePath;
+
+    public HairStyleImg(){
+        this.imagePath = new ImagePath();
+    }
 }
