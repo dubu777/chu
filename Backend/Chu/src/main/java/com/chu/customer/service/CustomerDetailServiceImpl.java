@@ -44,9 +44,14 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
             }
         }
 
-        file.transferTo(destFile);
-        log.info("서비스 >>> 파일 저장 성공! filePath : " + filePath);
-        return filePath;
+        try {
+            file.transferTo(destFile);
+            log.info("서비스 >>> 파일 저장 성공! filePath : " + filePath);
+            return filePath;
+        } catch (IOException e) {
+            log.error("파일 저장 실패:", e);
+            throw new IOException("파일 저장 실패: " + e.getMessage(), e);
+        }
     }
 
     @Override
@@ -55,7 +60,6 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
 
         Customer customer = customerDetailRepository.getById(customerSeq);
         customer.getImagePath().setSavedImgName(fileName);
-
 
         return true;
     }
@@ -71,18 +75,29 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
     }
     */
 
+
+    @Override
+    public ResponseCustomerDetailDto getCustomerDetail(int customerSeq) {
+        ResponseCustomerDetailDto responseCustomerDetailDto = new ResponseCustomerDetailDto();
+        //responseCustomerDetailDto.setCustomer(customerDetailRepository.getCustomerInfo(customerSeq));
+
+        // 마이페이지 들어갈때 고객 프로필 사진컬럼에 값이 있으면 서버에서 가져온다
+        String originImgName = "img1.png";      //디비가서 찾아온 값
+
+
+        //responseCustomerDetailDto.setCustomerHairConditionList(customerDetailRepository.getCustomerHairCondition(customerSeq));
+
+        //responseCustomerDetailDto.setResponsePastConsultingDtoList(customerDetailRepository.getPastConsultingList(customerSeq));
+        //responseCustomerDetailDto.setResponseFutureConsultingDtoList(customerDetailRepository.getFutureConsultingList(customerSeq));
+
+        return responseCustomerDetailDto;
+    }
+
+//    public MultipartFile getCustomerDetailProfile(String originImgName) {
 //
-//    @Override
-//    public ResponseCustomerDetailDto getCustomerDetail(int customerSeq) {
-//        ResponseCustomerDetailDto responseCustomerDetailDto = new ResponseCustomerDetailDto();
 //
-//        responseCustomerDetailDto.setCustomer(customerDetailRepository.getCustomerInfo(customerSeq));
-//        responseCustomerDetailDto.setCustomerHairConditionList(customerDetailRepository.getCustomerHairCondition(customerSeq));
 //
-//        responseCustomerDetailDto.setResponsePastConsultingDtoList(customerDetailRepository.getPastConsultingList(customerSeq));
-//        responseCustomerDetailDto.setResponseFutureConsultingDtoList(customerDetailRepository.getFutureConsultingList(customerSeq));
 //
-//        return responseCustomerDetailDto;
 //    }
 //
 //    @Override

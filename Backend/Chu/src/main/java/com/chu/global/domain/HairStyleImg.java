@@ -15,4 +15,8 @@ public class HairStyleImg {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hair_style_seq")
     private HairStyleDict hairStyleDict;
+
+
+    @Embedded
+    private ImagePath imagePath;
 }

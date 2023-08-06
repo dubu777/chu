@@ -67,23 +67,24 @@ public class DesignerSearchController {
         }
     }
 
-//    @GetMapping("/filter")
-//    public ResponseEntity<HttpResponseDto> search2Filter(@RequestParam("hairStyle") Integer[] hairStyleSeq,
-//                                                         @RequestParam int customerSeq) {
-//        List<DesignerSearchDto> designerSearchDtoList = designerSearchService.search2Filter(customerSeq, hairStyleSeq);
-//
-//        if(designerSearchDtoList.size() != 0){
-//            ResponseDesignerSearchDto responseDesignerSearchDto = new ResponseDesignerSearchDto();
-//            responseDesignerSearchDto.setDesignerListCnt(designerSearchDtoList.size());
-//            responseDesignerSearchDto.setDesignerList(designerSearchDtoList);
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseDesignerSearchDto);
-//            return ResponseEntity.ok(httpResponseDto);
-//        }
-//        else{
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
-//            return ResponseEntity.ok(httpResponseDto);
-//        }
-//    }
+    @GetMapping("/filter")
+    public ResponseEntity<HttpResponseDto> search2Filter(@RequestParam("hairStyleSeqs") Integer[] hairStyleSeqs,
+                                                         @RequestParam int customerSeq) {
+        log.info("컨트롤러 hairStyleSeqs 파라미터로 들어온 배열 : " + hairStyleSeqs);
+        List<DesignerSearchDto> designerSearchDtoList = designerSearchService.search2Filter(customerSeq, hairStyleSeqs);
+
+        if(designerSearchDtoList.size() != 0){
+            ResponseDesignerSearchDto responseDesignerSearchDto = new ResponseDesignerSearchDto();
+            responseDesignerSearchDto.setDesignerListCnt(designerSearchDtoList.size());
+            responseDesignerSearchDto.setDesignerList(designerSearchDtoList);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseDesignerSearchDto);
+            return ResponseEntity.ok(httpResponseDto);
+        }
+        else{
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
+        }
+    }
 
 //    @GetMapping("/name")
 //    public ResponseEntity<HttpResponseDto> search2Name(@RequestParam int customerSeq, @RequestParam String name){

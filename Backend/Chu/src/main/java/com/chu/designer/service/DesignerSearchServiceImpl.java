@@ -82,31 +82,54 @@ public class DesignerSearchServiceImpl implements DesignerSearchService{
 //        return designerSearchRepository.search2Name(customerSeq, name);
 //    }
 
-//    @Override
-//    public List<DesignerSearchDto> search2Filter(int customerSeq, Integer[] hairStyleSeq) {
-//        // 디자이너 헤어스타일 태그정보에서 해당 태그가 있는 디자이너 seq를 찾아서 저장. 중복없기 위해 Set 사용
-//        Set<Integer> designerList = new HashSet<>();
-//        for (Integer seq : hairStyleSeq) {
-//            designerList.addAll(designerTagInfoRepository.searchDesigner(seq));
-//            System.out.println(designerList);
-//        }
-//
-//
-//        //List<DesignerSearchDto> result =
-//
-//        return null;
-//    }
-//
-//    @Override
-//    public List<DesignerSearchDto> search2LikeCount(int customerSeq) {
-//        return designerSearchRepository.search2LikeCount(customerSeq);
-//    }
-//
-//    @Override
-//    public List<DesignerSearchDto> search2ReviewScore(int customerSeq) {
-//        return null;
-//    }
-//
+    @Override
+    public List<DesignerSearchDto> search2Filter(int customerSeq, Integer[] hairStyleSeqs) {
+        // 디자이너 헤어스타일 태그정보에서 해당 태그가 있는 디자이너 seq를 찾아서 저장. 중복없기 위해 Set 사용
+        Set<Integer> designerList = new HashSet<>();
+        for (Integer seq : hairStyleSeqs) {
+            designerList.addAll(designerTagInfoRepository.findDesignerSeqByHairStyleSeq(seq));
+        }
+
+        // 여기 코드 중복 너무 많음. 수정 일단 다음에 .....
+
+        // 한번에 담아서 보낼 dto 리스트
+        List<DesignerSearchDto> result = new ArrayList<>();
+
+        List<Designer> designers = designerSearchRepository.findBySeqIn(designerList);
+        // 디자이너별 리뷰 평균 점수 가져오기(Integer,Double) [[1, 4.5], [2, 3.8], [3, 4.2] ...]
+        List<Object[]> reviewScore = consultingRepository.getReviewScoreByDesigner();
+
+        int reviewScoreSeq = 0;
+
+        for (Designer designer : designers) {
+            // 좋아요 수
+            Integer likeCnt = designerLikeRepository.countByDesignerSeq(designer.getSeq());
+            // 리뷰 수
+            Integer reviewCnt = consultingRepository.countByDesignerSeq(designer.getSeq());
+            // 헤어스타일 라벨링
+            List<DesignerTagInfo> hairStyleTagSeqs = designerTagInfoRepository.findByDesignerSeq(designer.getSeq());
+            List<String> hairStyleLabels = new ArrayList<>();
+            for (DesignerTagInfo tag : hairStyleTagSeqs) {
+                Integer seq = tag.getSeq();
+                HairStyleDict hairStyleDict = hairStyleDictRepository.findBySeq(seq);
+                hairStyleLabels.add(hairStyleDict.getHairStyleLabel());
+            }
+            // 평점
+            Double reviewScoreByDesigner = (reviewScoreSeq < reviewScore.size() && (reviewScore.get(reviewScoreSeq)[1] != null)) ? (Double) reviewScore.get(reviewScoreSeq)[1] : 0.0;
+            // 고객 로그인시, 해당 디자이너의 좋아요 상태. 로그인 하지 않았으면 false를 입력.
+            Optional<DesignerLike> designerLikeOptional = Optional
+                    .ofNullable(designerLikeRepository.findByCustomerSeqAndDesignerSeq(customerSeq, designer.getSeq()));
+            Boolean isLike = designerLikeOptional.map(DesignerLike::getLikeStatus).orElse(false);
+            // dto 객체에 감싸서 보낸다
+            DesignerSearchDto dto = new DesignerSearchDto(designer, likeCnt, reviewCnt, hairStyleLabels, reviewScoreByDesigner, isLike);
+            result.add(dto);
+            reviewScoreSeq++;
+        }
+
+        //List<DesignerSearchDto> result =
+        return result;
+    }
+
 //    @Override
 //    public List<ResponseDesignerSearchAreaDto> search2AllArea() {
 //        return designerSearchRepository.search2AllArea();

@@ -1,9 +1,10 @@
 server:
   port: 9090
-  ssl:
-    key-store: ${SSL_KEY_PATH}keystore.p12
-    key-store-type: PKCS12
-    key-store-password: ${SSL_PASSWORD}
+
+#  ssl:
+#    key-store: ${SSL_KEY_PATH}keystore.p12
+#    key-store-type: PKCS12
+#    key-store-password: ${SSL_PASSWORD}
   servlet:
     context-path: /api
 
@@ -52,3 +53,8 @@ jwt:
 #OPENVIDU:
 #  PASSWORD: ${OPENVIDU_PASSWORD}
 #  URL: ${OPENVIDU_URL}
+
+custom:
+  path:
+#    upload-images: '/home/ubuntu/chu/upload/images/customer/'
+    upload-images: '/chu/upload/images/customer/'
