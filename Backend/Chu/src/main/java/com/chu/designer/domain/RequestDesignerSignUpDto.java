@@ -4,11 +4,24 @@ import lombok.Data;
 
 @Data
 public class RequestDesignerSignUpDto {
+    String name;
     String id;
-    //    		"name" : "ssafy",
-//                    "id" : "id",
-//                    "email" : "ssafy@gmail.com",
-//                    "gender" : "M",
-//                    "pwd" : "123465678",
-//                    "certification_num" : "aaaaaa"
+    String email;
+    char gender;
+    String pwd;
+    String certificationNum;
+
+    public Designer toDesignerEntity(){
+        Designer designer = new Designer();
+
+        designer.setName(this.getName());
+        designer.setId(this.getId());
+        designer.setEmail(this.getEmail());
+        designer.setGender(this.getGender());
+        designer.setPwd(this.getPwd());
+        designer.setCertificationNum(this.certificationNum);
+
+        return designer;
+    }
+
 }

@@ -4,9 +4,11 @@ import com.chu.designer.service.DesignerService;
 import com.chu.global.domain.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.ws.Response;
 import java.sql.Date;
 import java.util.ArrayList;
 
@@ -17,6 +19,39 @@ import java.util.ArrayList;
 @CrossOrigin(origins = "http://localhost:3000")
 public class DesignerController {
     private final DesignerService designerService;
+
+    // 회원가입
+    @PostMapping(value = "/sign-up")
+    public ResponseEntity<HttpResponseDto> signUp(@RequestBody RequestDesignerSignUpDto requestDesignerSignUpDto){
+
+        try{
+            // requestDto -> Designer entity 변환
+            Designer designer = requestDesignerSignUpDto.toDesignerEntity();
+            designerService.signUp(designer);
+        } catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), null));
+    }
+
+    // 로그인
+    @PostMapping(value = "/sign-in")
+    public ResponseEntity<HttpResponseDto> signIn(@RequestBody RequestSignInDto requesSignInDto){
+
+        ResponseDesignerLoginDetailDto responseDesignerLoginDetailDto = null;
+
+        try{
+            responseDesignerLoginDetailDto = designerService.signIn(requesSignInDto);
+        } catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), responseDesignerLoginDetailDto));
+
+    }
 //
 //    // 회원 가입
 //    @PostMapping(value = "/sign-up")

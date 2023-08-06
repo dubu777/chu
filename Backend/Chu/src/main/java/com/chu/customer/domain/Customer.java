@@ -5,6 +5,7 @@ import com.chu.global.domain.ImagePath;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -42,7 +43,8 @@ public class Customer {
 
    public Customer() {
       this.faceDict = new FaceDict();
-      this.faceDict.setSeq(1);
+//      this.faceDict.setSeq(1);
+      this.imagePath = new ImagePath();
    }
 
    public Customer hashPassword(PasswordEncoder passwordEncoder){

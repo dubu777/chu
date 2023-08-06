@@ -7,7 +7,6 @@ import com.chu.consulting.repository.ConsultingResultRepository;
 import com.chu.customer.domain.*;
 import com.chu.customer.repository.CustomerAlertRepository;
 import com.chu.customer.repository.CustomerRepository;
-import com.chu.customer.repository.TestRepository;
 import com.chu.designer.domain.Designer;
 import com.chu.designer.repository.DesignerRepository;
 import com.chu.designer.repository.DesignerSearchRepository;
@@ -32,6 +31,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -51,7 +51,6 @@ public class CustomerServiceImpl implements CustomerService{
     private final ConsultingRepository consultingRepository;
     private final HairStyleDictRepository hairStyleDictRepository;
     private final HairStyleImgRepository hairStyleImgRepository;
-    private final TestRepository testRepository;
     private final PasswordEncoder bCryptPasswordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider jwtTokenProvider;
@@ -74,6 +73,9 @@ public class CustomerServiceImpl implements CustomerService{
         Customer newCustomer = customer;
         // 비밀번호 암호화
         newCustomer.hashPassword(bCryptPasswordEncoder);
+        // createDate 세팅
+        newCustomer.setCreatedDate(LocalDateTime.now());
+        newCustomer.getFaceDict().setSeq(1);
         customerRepository.save(customer);
     }
 
@@ -124,14 +126,14 @@ public class CustomerServiceImpl implements CustomerService{
     }
 */
 
-    // 로그인 테스트
+    // customer 로그인
     @Override
+    @Transactional  // faceDict LazyInitializationException
     public ResponseCustomerLoginDetailDto signIn(RequestSignInDto requestSignInDto) {
 
         ResponseCustomerLoginDetailDto responseCustomerLoginDetailDto = new ResponseCustomerLoginDetailDto();
 
         try{
-
             // 1) token setting
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -139,7 +141,6 @@ public class CustomerServiceImpl implements CustomerService{
                             requestSignInDto.getPwd()
                     )
             );
-
 
             String refreshToken = jwtTokenProvider.generateRefreshToken(authentication);
             String accessToken = jwtTokenProvider.generateAccessToken(authentication);
@@ -175,7 +176,10 @@ public class CustomerServiceImpl implements CustomerService{
             for(Designer d : designerList){
                 ResponseBestDesignerDto dto = new ResponseBestDesignerDto();
 
-                dto.setImg(d.getImagePath().getSavedImgName());
+                if(d.getImagePath() == null)
+                    dto.setImg(null);
+                else dto.setImg(d.getImagePath().getSavedImgName());
+
                 dto.setName(d.getName());
                 dto.setDesignerSeq(d.getSeq());
 
@@ -185,33 +189,47 @@ public class CustomerServiceImpl implements CustomerService{
             responseCustomerLoginDetailDto.setBestDesigner(list);
 
 
-//
-//            // 4) recommendImg setting
-//            List<FaceImageNameDto> list4 = new ArrayList<>();
-//
-//            // 4-1) 고객 얼굴형 받아오기
-//            int faceSeq = customer.getFaceDict().getSeq();
-//
-//            // 4-2) cunsulting result 테이블에서 얼굴형 일치하는 데이터 6개 가져오기
-//            List<ConsultingResult> conResultList= consultingResultRepository.findTop6ByFaceSeq(faceSeq);
-//
-//            // conResultList에서 헤어스타일 seq로 hairStyleDict 테이블에서 데이터 뽑아내기
-//            List<HairStyleDict> hairStyleDictList = new ArrayList<>();
-//            for(int i=0; i<conResultList.size(); i++){
-//                ConsultingResult c = conResultList.get(i);
-//
-//                HairStyleDict h = hairStyleDictRepository.findBySeq(c.getSeq());
-//
-//                // 헤어스타일 seq 받기
-//                int hairStyleSeq = h.getSeq();
-//                // 받은 seq로 헤어스타일 이미지 테이블에서 이미지 받아오기
-//                HairStyleImg hairStyleImg = hairStyleImgRepository.findByHairStyleSeq(hairStyleSeq);
-//
-//                // 리스트에 넣기
-//                list4.add(new FaceImageNameDto(hairStyleSeq, hairStyleImg.getImagePath().getUploadImgName(), h.getHairStyleLabel()));
-//            }
-//
-//            responseCustomerLoginDetailDto.setRecommendImg(list4);
+
+            // 4) recommendImg setting
+            List<FaceImageNameDto> list4 = new ArrayList<>();
+
+            // 4-1) 고객 얼굴형 받아오기
+            int faceSeq = customer.getFaceDict().getSeq();
+
+            // 4-2) cunsulting result 테이블에서 얼굴형 일치하는 데이터 6개 가져오기
+            List<ConsultingResult> conResultList= consultingResultRepository.findTop6BySeq(faceSeq);
+
+            // conResultList에서 헤어스타일 seq로 hairStyleDict 테이블에서 데이터 뽑아내기
+            List<HairStyleDict> hairStyleDictList = new ArrayList<>();
+            for(int i=0; i<conResultList.size(); i++){
+                ConsultingResult c = conResultList.get(i);
+
+                HairStyleDict h = hairStyleDictRepository.findBySeq(c.getSeq());
+
+                // 헤어스타일 seq 받기
+                int hairStyleSeq = h.getSeq();
+                // 받은 seq로 헤어스타일 이미지 테이블에서 이미지 받아오기
+                HairStyleImg hairStyleImg = new HairStyleImg();
+                hairStyleImg = hairStyleImgRepository.findBySeq(hairStyleSeq);
+
+                // hairStyleImg 가 null이 아닌 경우에만
+                if(hairStyleImg != null){
+                    // 리스트에 넣기
+                    FaceImageNameDto  dto = new FaceImageNameDto();
+                    dto.setSeq(hairStyleSeq);
+                    dto.setLabel(h.getHairStyleLabel());
+
+                    if(hairStyleImg.getImagePath() == null)
+                        dto.setImg(null);
+                    else
+                        dto.setImg(hairStyleImg.getImagePath().getUploadImgName());
+                    //list4.add(new FaceImageNameDto(hairStyleSeq, hairStyleImg.getImagePath().getUploadImgName(), h.getHairStyleLabel()));
+                    list4.add(dto);
+                }
+
+            }
+
+            responseCustomerLoginDetailDto.setRecommendImg(list4);
 
 
 
@@ -247,7 +265,7 @@ public class CustomerServiceImpl implements CustomerService{
                 Consulting consulting = consultingRepository.getConsultingBySeq(c.getSeq());
 
                 // 받아온 designer seq로 디자이너 정보 받아오기
-                consulting.setDesigner(designerRepository.getDesignerBySeq(consulting.getSeq()));
+                consulting.setDesigner(designerRepository.getDesignerBySeq(consulting.getDesigner().getSeq()));
 
                 // AlertCustomerOnLoginDto 객체 생성
                 AlertCustomerOnLoginDto dto = new AlertCustomerOnLoginDto();
