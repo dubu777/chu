@@ -22,7 +22,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         System.out.println(uploadImagesPath);   // /home/ubuntu/chu/upload/images/customer/
         registry.addResourceHandler("/api/profile/**")       //url패턴 설정
-                .addResourceLocations("file:/" + uploadImagesPath)
+                .addResourceLocations("file:///" + uploadImagesPath)
                 .setCachePeriod(3600)
                 .resourceChain(true)
                 .addResolver(new PathResourceResolver());
