@@ -12,6 +12,7 @@ import {attachImage} from "../../apis/customer";
 import { useRecoilState } from "recoil";
 import swal from "sweetalert";
 import axios from 'axios';
+import { event } from "jquery";
 
 const Container = styled.div`
 
@@ -189,45 +190,91 @@ function CustomerMyPage(){
 
   const fileInputRef = useRef(null);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [file,setFile] = useState()
   // const [recodilFormData, setrecodilFormData] = useRecoilState(formDataState);
   const seq = 2
   // 사진을 클릭하면 파일 선택 다이얼로그를 나타내는 함수
-  const handleImageClick = async () => {
-
+  const handleImageClick = () => {
     fileInputRef.current.click();
-
-    const formData = new FormData();  // 폼 데이터 생성
-    formData.append("img", fileInputRef.current.files[0]);
-    // setrecodilFormData(formData)
-    try {
-      const response = await attachImage(seq, formData);
-      console.log(response)
-      
-    } catch(error){
-      console.log(error)
+  }
+  // 파일을 선택했을 때 호출되는 이벤트 핸들러
+  // onChange
+  const handleFileChange=(e)=>{
+    e.preventDefault();
+    const formData = new FormData();
+    
+    if(e.target.files){
+      const uploadFile = e.target.files[0]
+      formData.append('img',uploadFile)
+      console.log(formData)
+      setFile(uploadFile)
+      console.log(uploadFile)
+      console.log('===useState===')
+      console.log(file)
     }
   };
+    // const file = event.target.files[0];
+    // // 파일 타입이 image를 포함하는지 확인 후 객체 생성
+    // if (file && file.type.includes('image')) {
+    //   const reader = new FileReader();
+    //   reader.onloadend = () => {
+    //     setSelectedFile(reader.result);
+    //   };
+    //   reader.readAsDataURL(file);
+    // } else {   // 선택된 파일이 이미지 파일이 아닌 경우 alert 창 띄우기
+    //   swal('⚠️ Image 파일 형식을 선택해주세요 :)');
+    // }
+    // };
 
+  // const handleSubmitImage = async () => {
+  //   if (selectedFile) {
+  //     const formData = new FormData();  // 폼 데이터 생성 
+  //     // formData.append("img", fileInputRef.current.files[0]);
+  //     formData.append("img", selectedFile);
+  //     console.log("선택된 파일 접근")
+  //   try {
+  //     const response = await attachImage(seq, formData);
+  //     console.log(response);
+      
+  //   } catch(error){
+  //     console.log(error);
+  //     }
+  //   }
+  // };
+
+  const handleSubmitImage = async(e) => {
+    e.preventDefault();
+    const seq =2;
+    if (fileInputRef.current.files[0]) {
+      const formData = new FormData();
+      formData.append('img', fileInputRef.current.files[0]);
+      for (const keyValue of formData) console.log(keyValue);
+
+      try {
+        const file = await attachImage(seq, formData);
+        console.log(file)
+      } catch(error){
+        console.log(error)
+      }}
+    };
+    //   try {
+    //     const response = await axios.patch(`http://localhost:9090/api/customer/detail/img/${seq}`, formData, {
+    //       headers: {
+    //         'Content-Type': 'multipart/form-data' // 필요한 경우 헤더 설정
+    //       },
+    //     });
+    //     console.log(response);
+    //     // API 호출 결과 처리
+    //   } catch (error) {
+    //     console.log(error);
+    //     // 에러 처리
+    //   }
+    // }
+  
   const [activeBtn, setActiveBtn] = useState('recent'); // 'recent' or 'designer'
 
   const handleBtnClick = (btnType) => {
     setActiveBtn(btnType);
-  };
-
-
-  // 파일을 선택했을 때 호출되는 이벤트 핸들러
-  function handleFileChange(event){
-    const file = event.target.files[0];
-    // 파일 타입이 image를 포함하는지 확인 후 객체 생성
-    if (file && file.type.includes('image')) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setSelectedFile(reader.result);
-      };
-      reader.readAsDataURL(file);
-    } else {   // 선택된 파일이 이미지 파일이 아닌 경우 alert 창 띄우기
-      swal('⚠️ Image 파일 형식을 선택해주세요 :)');
-    }
   };
   return(
     <Container>
@@ -238,10 +285,21 @@ function CustomerMyPage(){
               <NameText>{data.name}</NameText>
               <div>
                 {/* 버튼을 클릭하면 파일 선택 다이얼로그를 나타내는 input 요소 */}
-                <input type="file" style={{ display: 'none' }} ref={fileInputRef} onChange={handleFileChange} />
+                <input 
+                  type="file" 
+                  style={{ display: 'none' }} 
+                  ref={fileInputRef} 
+                  onChange={handleFileChange} />
 
                 {/* 프로필 사진 or 연산자는 앞의 피연산자 기준*/}
-                <Profile onClick={handleImageClick} src={selectedFile || './icon/profile2.png'} alt="Profile" hasFile={selectedFile !== null} />
+                <Profile 
+                  onClick={handleImageClick} 
+                  src={selectedFile || './icon/profile2.png'} 
+                  alt="Profile" 
+                  hasFile={selectedFile !== null} 
+                />
+                {/* 이미지 제출 버튼 */}
+                  <button onClick={handleSubmitImage}>사진 제출</button>
               </div>
             </ImgBox>
             <InfoBox>
@@ -289,6 +347,4 @@ function CustomerMyPage(){
     </Container>
     )
 }
-
-
 export default CustomerMyPage;
