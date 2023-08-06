@@ -51,7 +51,7 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
     }
 
     @Override
-    public boolean postPortfolioImage(int designerSeq, String img) {
+    public int postPortfolioImage(int designerSeq, String img) {
 
         // 디자이너 정보 가져오기
         Designer designer = designerRepository.getDesignerBySeq(designerSeq);
@@ -60,14 +60,17 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
 
         DesignerPortfolio designerPortfolio = new DesignerPortfolio(designer, imagePath);
 
+        int imgSeq = -1;
+
         try{
-            designerDetailRepository.save(designerPortfolio);
+            DesignerPortfolio designerPortfolioReturn = designerDetailRepository.save(designerPortfolio);
+            imgSeq = designerPortfolioReturn.getSeq();
         } catch (Exception e){
             e.printStackTrace();
-            return false;
+            return -1;
         }
 
-        return true;
+        return imgSeq;
     }
 
     @Override

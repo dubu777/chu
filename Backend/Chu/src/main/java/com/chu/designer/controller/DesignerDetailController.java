@@ -160,9 +160,11 @@ public class DesignerDetailController {
     @PostMapping("/portfolio/{designer-seq}")
     public ResponseEntity<HttpResponseDto> postPortfolio(@PathVariable("designer-seq") int designerSeq, @RequestPart("img") MultipartFile file) {
 
+        int imgSeq = -1;
+
         try{
             String filePath = designerDetailService.getSavedImgFilePath(file);
-            designerDetailService.postPortfolioImage(designerSeq, filePath);
+            imgSeq = designerDetailService.postPortfolioImage(designerSeq, filePath);
 
         } catch (Exception e){
             e.printStackTrace();
@@ -170,7 +172,7 @@ public class DesignerDetailController {
             return ResponseEntity.ok(httpResponseDto);
         }
 
-        HttpResponseDto httpResponseDto = new HttpResponseDto(200, null);
+        HttpResponseDto httpResponseDto = new HttpResponseDto(200, imgSeq);
         return ResponseEntity.ok(httpResponseDto);
     }
 
