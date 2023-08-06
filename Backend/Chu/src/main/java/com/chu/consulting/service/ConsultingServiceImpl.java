@@ -1,18 +1,44 @@
-//package com.chu.consulting.service;
-//
-//import com.chu.consulting.domain.*;
-//import com.chu.consulting.repository.ConsultingRepository;
-//import lombok.RequiredArgsConstructor;
-//import lombok.extern.slf4j.Slf4j;
-//import org.springframework.stereotype.Service;
-//
-//@Slf4j
-//@Service
-//@RequiredArgsConstructor
-//public class ConsultingServiceImpl implements ConsultingService {
-//
-//    private final ConsultingRepository consultingRepository;
-//
+package com.chu.consulting.service;
+
+import com.chu.consulting.domain.*;
+import com.chu.consulting.repository.ConsultingRepository;
+import com.chu.designer.repository.ReservationAvailableSlotRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class ConsultingServiceImpl implements ConsultingService {
+
+    private final ConsultingRepository consultingRepository;
+    private final ReservationAvailableSlotRepository reservationAvailableSlotRepository;
+
+    // 상담 예약하기
+    @Override
+    @Transactional
+    public void postConsulting(Consulting consulting) {
+
+        try{
+            consulting.setCreatedDate(LocalDateTime.now());
+            // 상담 예약하기
+            consultingRepository.save(consulting);
+
+            // 예약 완료 후 ‘reservation_available_slot’ 테이블 ‘state’ 컬럼 ‘R’로 바꾸기
+            String date = consulting.getConsultingDate().getDate();
+            String time = consulting.getConsultingDate().getTime();
+            int designerSeq = consulting.getDesigner().getSeq();
+            reservationAvailableSlotRepository.updateReserveSlotState(date, time, designerSeq);
+
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
 //    @Override
 //    public String participantConsulting(int consultingSeq) {
 //        return consultingRepository.participantConsulting(consultingSeq);
@@ -94,4 +120,4 @@
 //
 //        return isSuccess;
 //    }
-//}
+}
