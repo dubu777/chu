@@ -183,6 +183,33 @@ public class DesignerServiceImpl implements DesignerService{
         return responseDesignerLoginDetailDto;
     }
 
+    // 아이디 찾기
+    @Override
+    public ResponseFindIdDto findId(String name, String email) {
+
+        ResponseFindIdDto response = new ResponseFindIdDto();
+        Designer designer = new Designer();
+
+        try{
+            designer = designerRepository.findByNameAndEmail(name, email);
+
+            // 일치하는 사용자 존재X
+            if(designer == null){
+                response.setExists(false);
+                response.setId(null);
+            }
+            // 일치하는 사용자 존재
+            else{
+                response.setExists(true);
+                response.setId(designer.getId());
+            }
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return response;
+    }
+
     // 로그인 테스트
 //
 //    // repo 주입

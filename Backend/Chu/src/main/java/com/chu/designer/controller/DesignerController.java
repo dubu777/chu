@@ -50,7 +50,22 @@ public class DesignerController {
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), responseDesignerLoginDetailDto));
+    }
 
+    // 아이디 찾기
+    @GetMapping(value = "/find-id")
+    public ResponseEntity<HttpResponseDto> findId(@RequestParam String name, @RequestParam String email){
+
+        ResponseFindIdDto response = new ResponseFindIdDto();
+
+        try{
+            response = designerService.findId(name, email);
+        } catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), response));
     }
 //
 //    // 회원 가입

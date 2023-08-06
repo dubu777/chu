@@ -18,6 +18,9 @@ public interface DesignerRepository extends JpaRepository<Designer, Integer> {
 
     Designer findById(String Id);
 
+    // 아이디 찾기
+    Designer findByNameAndEmail(String name, String email);
+
     // 로그인
 
 //    boolean signUp(RequestDesignerSignUpDto requestDesignerSignUpDto);
