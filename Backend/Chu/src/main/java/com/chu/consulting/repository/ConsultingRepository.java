@@ -2,9 +2,11 @@ package com.chu.consulting.repository;
 
 import com.chu.consulting.domain.*;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ConsultingRepository extends JpaRepository<Consulting, Integer> {
@@ -23,6 +25,11 @@ public interface ConsultingRepository extends JpaRepository<Consulting, Integer>
 
     // 상담 번호로 상담 정보 받아오기
     Consulting getConsultingBySeq(int seq);
+
+    // 상담 취소하기 (cancel date update)
+    @Modifying
+    @Query("UPDATE Consulting c SET c.cancelDate = :now WHERE c.seq = :consultingSeq")
+    void updateCancelDate(int consultingSeq, LocalDateTime now);
 
 
 
