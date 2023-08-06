@@ -1,17 +1,17 @@
 package com.chu.designer.repository;
 
 import com.chu.consulting.domain.ResponseConsultingDto;
-import com.chu.designer.domain.Designer;
-import com.chu.designer.domain.RequestDesignerInfoUpdateDto;
-import com.chu.designer.domain.RequestReservationPossibleDateAndTimeDto;
-import com.chu.designer.domain.ResponseDesignerAreaInfo;
+import com.chu.designer.domain.*;
 import com.chu.global.domain.*;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.sql.Date;
 import java.util.ArrayList;
 
-public interface DesignerDetailRepository {
-//
+public interface DesignerDetailRepository extends JpaRepository<DesignerPortfolio, Integer> {
+    //
 //    Designer getDesignerInfo(int designerSeq);
 //
 //    ArrayList<ResponseHairStyleLabelDto> getHairStyleTag(int designerSeq);
@@ -46,7 +46,9 @@ public interface DesignerDetailRepository {
 //
 //    ArrayList<ImageDto> getPortfolio(int designerSeq);
 //
-//    boolean postPortfolioImage(int designerSeq, String img);
+
+
+    boolean postPortfolioImage(DesignerPortfolio designerPortfolio);
 //
 //    boolean deletePortfolioImage(int designerSeq, int imageSeq);
 

@@ -54,17 +54,12 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
     public boolean postPortfolioImage(int designerSeq, String img) {
 
         // 디자이너 정보 가져오기
-        Designer designer = designerRepository.findById(designerSeq).orElseThrow(() -> new RuntimeException("Designer not found"));
-
-        DesignerPortfolio designerPortfolio = new DesignerPortfolio();
-        // 디자이너 정보 넣기
-        designerPortfolio.setDesigner(designer);
-
+        Designer designer = designerRepository.getDesignerBySeq(designerSeq);
         ImagePath imagePath = new ImagePath();
         imagePath.setSavedImgName(img);
-        designerPortfolio.setImagePath(imagePath);
 
-        designerDetailRepository.postPortfolioImage(designerPortfolio);
+        DesignerPortfolio designerPortfolio = new DesignerPortfolio(designer, imagePath);
+        designerDetailRepository.save(designerPortfolio);
 
         return true;
     }

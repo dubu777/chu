@@ -25,4 +25,9 @@ public class DesignerPortfolio {
     @JoinColumn(name = "designer_seq")
     private Designer designer;
 
+    public DesignerPortfolio(Designer designer, ImagePath imagePath) {
+        this.designer = designer;
+        this.imagePath = imagePath;
+    }
+
 }
