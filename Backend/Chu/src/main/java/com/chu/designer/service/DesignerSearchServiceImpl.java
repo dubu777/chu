@@ -91,10 +91,8 @@ public class DesignerSearchServiceImpl implements DesignerSearchService {
         // 디자이너 헤어스타일 태그정보에서 해당 태그가 있는 디자이너 seq를 찾아서 저장. 중복없기 위해 Set 사용
         Set<Integer> designerList = new HashSet<>();
         for (Integer seq : hairStyleSeqs) {
-            log.info("서비스 들어온 seq: " + seq);
             designerList.addAll(designerTagInfoRepository.findDesignerSeqByHairStyleSeq(seq));
         }
-        log.info("서비스 designerList : " + designerList);
 
         // 여기 코드 중복 너무 많음. 수정 일단 다음에 .....
 
@@ -160,7 +158,6 @@ public class DesignerSearchServiceImpl implements DesignerSearchService {
         }
         // 디자이너 포트폴리오 사진
         List<DesignerPortfolio> portfolios = designerPortfolioRepository.findByDesignerSeq(designer.getSeq());
-        log.info("서비스 디자이너 포폴 리스트 출력 : " + portfolios);
         List<ResponsePortfolioDto> portfolioDto = new ArrayList<>();
         for (DesignerPortfolio p : portfolios) {
             ResponsePortfolioDto dto = new ResponsePortfolioDto(p.getSeq(), p.getImagePath().getSavedImgName(), p.getOrders());
@@ -168,7 +165,6 @@ public class DesignerSearchServiceImpl implements DesignerSearchService {
         }
         // 디자이너 리뷰
         List<Consulting> consultings = consultingRepository.findByDesignerSeq(designerSeq);
-        log.info("서비스 상담엔티티: "+consultings);
         List<Review> reviews = new ArrayList<>();
         for(Consulting consulting : consultings) {
             if(consulting.getReview() == null) continue;
