@@ -20,7 +20,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        System.out.println(uploadImagesPath);   // /home/ubuntu/chu/upload/images/customer/
+        System.out.println(uploadImagesPath);   //     /chu/upload/images/customer/
         registry.addResourceHandler("/profile/**")       //url패턴 설정
                 .addResourceLocations("file:///" + uploadImagesPath)
                 .setCachePeriod(3600)

@@ -59,6 +59,13 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
     public Boolean patchImage(Integer customerSeq, String fileName) {
 
         Customer customer = customerDetailRepository.getById(customerSeq);
+
+        // fileName 고유하게 변경
+        String newFileName = customer.getSeq() + fileName;
+        log.info("new File Name: "+ newFileName);
+
+        // 저장
+        customer.getImagePath().setUploadImgName(fileName);
         customer.getImagePath().setSavedImgName(fileName);
 
         return true;
