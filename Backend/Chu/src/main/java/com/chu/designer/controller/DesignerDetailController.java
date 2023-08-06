@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -138,21 +139,24 @@ public class DesignerDetailController {
 //            return ResponseEntity.ok(httpResponseDto);
 //        }
 //    }
-//
-//    @GetMapping("/portfolio/{designer-seq}")
-//    public ResponseEntity<HttpResponseDto> getPortfolio(@PathVariable("designer-seq") int designerSeq) {
-//
-//        ArrayList<ImageDto> portfolioList = designerDetailService.getPortfolio(designerSeq);
-//
-//        if (portfolioList.size() != 0) {
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(200, portfolioList);
-//            return ResponseEntity.ok(httpResponseDto);
-//        } else {
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
-//            return ResponseEntity.ok(httpResponseDto);
-//        }
-//    }
-//
+
+    @GetMapping("/portfolio/{designer-seq}")
+    public ResponseEntity<HttpResponseDto> getPortfolio(@PathVariable("designer-seq") int designerSeq) {
+
+        List<ImageDto> portfolioList = new ArrayList<>();
+
+        try{
+            portfolioList = designerDetailService.getPortfolio(designerSeq);
+        } catch (Exception e){
+            e.printStackTrace();
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
+        }
+
+        HttpResponseDto httpResponseDto = new HttpResponseDto(200, portfolioList);
+        return ResponseEntity.ok(httpResponseDto);
+    }
+
     @PostMapping("/portfolio/{designer-seq}")
     public ResponseEntity<HttpResponseDto> postPortfolio(@PathVariable("designer-seq") int designerSeq, @RequestPart("img") MultipartFile file) {
 

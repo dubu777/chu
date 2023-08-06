@@ -63,6 +63,11 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
 
         return true;
     }
+
+    @Override
+    public ArrayList<ImageDto> getPortfolio(int designerSeq) {
+        return (ArrayList<ImageDto>) designerDetailRepository.getPortfolioByDesignerPortfolio(designerSeq);
+    }
 //    private final DesignerDetailRepository designerDetailRepository;
 //
 //    @Override
@@ -161,10 +166,6 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
 //        return resultList;
 //    }
 //
-//    @Override
-//    public ArrayList<ImageDto> getPortfolio(int designerSeq) {
-//        return designerDetailRepository.getPortfolio(designerSeq);
-//    }
 //
 //    @Override
 //    public boolean postPortfolioImage(int designerSeq, String img) {
