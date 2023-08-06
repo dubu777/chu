@@ -1,21 +1,23 @@
-//package com.chu.consulting.controller;
-//
-//import com.chu.consulting.domain.*;
-//import com.chu.consulting.service.ConsultingService;
-//import com.chu.global.domain.HttpResponseDto;
-//import lombok.RequiredArgsConstructor;
-//import lombok.extern.slf4j.Slf4j;
-//import org.springframework.http.ResponseEntity;
-//import org.springframework.web.bind.annotation.*;
-//
-//@Slf4j
-//@RestController
-//@RequestMapping("/consulting")
-//@RequiredArgsConstructor
-//
-//public class ConsultingController {
-//
-//    private final ConsultingService consultingService;
+package com.chu.consulting.controller;
+
+import com.chu.consulting.domain.*;
+import com.chu.consulting.service.ConsultingService;
+import com.chu.global.domain.HttpResponseDto;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@Slf4j
+@RestController
+@RequestMapping("/consulting")
+@CrossOrigin(origins = "http://localhost:3000")
+@RequiredArgsConstructor
+
+public class ConsultingController {
+
+    private final ConsultingService consultingService;
 //
 //    @GetMapping("/")
 //    public ResponseEntity<HttpResponseDto> participantConsulting(@PathVariable("consulting_seq") int consultingSeq) {
@@ -32,6 +34,21 @@
 //        }
 //    }
 //
+    // 상담 예약하기
+    @PostMapping("")
+    public ResponseEntity<HttpResponseDto> postConsulting(@RequestBody RequestConsultingDto requestConsultingDto){
+
+        try{
+            // requestConsultingDto -> entity 만들기
+            Consulting consulting = requestConsultingDto.toConsultingEntity();
+            consultingService.postConsulting(consulting);
+        } catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), null));
+    }
 //    @PostMapping("/")
 //    public ResponseEntity<HttpResponseDto> postConsulting(@RequestBody RequestConsultingDto requestConsultingDto) {
 //
@@ -137,4 +154,4 @@
 //        }
 //    }
 //
-//}
+}
