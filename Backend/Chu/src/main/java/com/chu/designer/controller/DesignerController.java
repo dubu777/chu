@@ -1,4 +1,5 @@
 package com.chu.designer.controller;
+import com.chu.customer.domain.RequestCustomerChangePwdDto;
 import com.chu.designer.domain.*;
 import com.chu.designer.service.DesignerService;
 import com.chu.global.domain.*;
@@ -50,8 +51,55 @@ public class DesignerController {
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), responseDesignerLoginDetailDto));
-
     }
+
+    // 아이디 찾기
+    @GetMapping(value = "/find-id")
+    public ResponseEntity<HttpResponseDto> findId(@RequestParam String name, @RequestParam String email){
+
+        ResponseFindIdDto response = new ResponseFindIdDto();
+
+        try{
+            response = designerService.findId(name, email);
+        } catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), response));
+    }
+
+    // 비밀번호 찾기
+    @GetMapping(value = "/find-pwd")
+    public ResponseEntity<HttpResponseDto> findPwd(@RequestParam String name, @RequestParam String email, @RequestParam String id){
+
+        ResponseFindPwdDto response = new ResponseFindPwdDto();
+
+        try{
+            response = designerService.findPwd(name, email, id);
+        } catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), response));
+    }
+
+    // 비밀번호 변경
+    @PutMapping(value = "/change-pwd")
+    public ResponseEntity<HttpResponseDto> changePwd(@RequestBody RequestCustomerChangePwdDto param){
+
+        try{
+            designerService.changePwd(param);
+        } catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), null));
+    }
+
+
 //
 //    // 회원 가입
 //    @PostMapping(value = "/sign-up")

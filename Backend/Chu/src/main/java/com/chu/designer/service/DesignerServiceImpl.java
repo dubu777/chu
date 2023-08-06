@@ -2,6 +2,7 @@ package com.chu.designer.service;
 
 import com.chu.consulting.domain.Consulting;
 import com.chu.consulting.repository.ConsultingRepository;
+import com.chu.customer.domain.RequestCustomerChangePwdDto;
 import com.chu.customer.repository.CustomerRepository;
 import com.chu.designer.domain.*;
 import com.chu.designer.repository.DesignerAlertRepository;
@@ -20,6 +21,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
 import java.util.concurrent.TimeUnit;
 
 import java.sql.Date;
@@ -181,6 +184,72 @@ public class DesignerServiceImpl implements DesignerService{
         }
 
         return responseDesignerLoginDetailDto;
+    }
+
+    // 아이디 찾기
+    @Override
+    public ResponseFindIdDto findId(String name, String email) {
+
+        ResponseFindIdDto response = new ResponseFindIdDto();
+        Designer designer = new Designer();
+
+        try{
+            designer = designerRepository.findByNameAndEmail(name, email);
+
+            // 일치하는 사용자 존재X
+            if(designer == null){
+                response.setExists(false);
+                response.setId(null);
+            }
+            // 일치하는 사용자 존재
+            else{
+                response.setExists(true);
+                response.setId(designer.getId());
+            }
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return response;
+    }
+
+    // 비밀번호 찾기
+    @Override
+    public ResponseFindPwdDto findPwd(String name, String email, String id) {
+
+        ResponseFindPwdDto response = new ResponseFindPwdDto();
+        Designer designer = new Designer();
+
+        try{
+            designer = designerRepository.findByNameAndEmailAndId(name, email, id);
+
+            // 일치하는 사용자 존재 X
+            if(designer == null){
+                response.setExists(false);
+                response.setSeq(0);
+            }
+            // 일치하는 사용자 존재
+            else{
+                response.setExists(true);
+                response.setSeq(designer.getSeq());
+            }
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return response;
+    }
+
+    // 디자이너 비밀번호 변경
+    @Override
+    @Transactional
+    public void changePwd(RequestCustomerChangePwdDto param) {
+        Designer d = new Designer();
+        d.setPwd(param.getPwd());
+        d.hashPassword(bCryptPasswordEncoder);
+        String pwd = d.getPwd();
+
+        designerRepository.changePwd(param.getCustomerSeq(), pwd);
     }
 
     // 로그인 테스트

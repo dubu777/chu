@@ -295,7 +295,6 @@ public class CustomerServiceImpl implements CustomerService{
         Customer customer = new Customer();
 
         try{
-
             customer = customerRepository.findByNameAndEmail(name, email);
 
             // 일치하는 사용자 존재X
