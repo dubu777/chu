@@ -26,10 +26,10 @@ public interface DesignerSearchService {
 //
 //    // 디자이너 조회 전체(차후 프론트에서 지역으로 정렬)
 //    List<ResponseDesignerSearchAreaDto> search2AllArea();
-//
-//    // 디자이너 상세 정보 조회
-//    ResponseDesignerDetailInfoDto getDesignerDetailInfo(int designerSeq, int customerSeq);
-//
+
+    // 디자이너 상세 정보 조회
+    ResponseDesignerDetailInfoDto getDesignerDetailInfo(Integer designerSeq, Integer customerSeq);
+
 //    // 디자이너 좋아요 여부 조회
 //    List<DesignerSearchDto> search2Like(int customerSeq);
 }

@@ -3,12 +3,13 @@ package com.chu.designer.domain;
 import com.chu.global.domain.ImagePath;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Getter @Setter
+@Getter @Setter @ToString
 public class DesignerPortfolio {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

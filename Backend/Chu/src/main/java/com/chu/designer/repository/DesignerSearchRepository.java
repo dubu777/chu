@@ -17,6 +17,8 @@ public interface DesignerSearchRepository extends JpaRepository<Designer, Intege
     @Query("SELECT d FROM Designer d WHERE d.seq IN :seqs")
     List<Designer> findBySeqIn(@Param("seqs") Collection<Integer> seqs);
 
+    Designer findBySeq(Integer designerSeq);
+
 
     // 이 주의 인기 디자이너
     List<Designer> findTop6ByOrderByReviewScoreDesc();

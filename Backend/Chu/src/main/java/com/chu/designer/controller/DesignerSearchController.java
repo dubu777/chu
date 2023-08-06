@@ -117,20 +117,20 @@ public class DesignerSearchController {
 //            return ResponseEntity.ok(httpResponseDto);
 //        }
 //    }
-//
-//    //
-//    @GetMapping("/detail")
-//    public ResponseEntity<HttpResponseDto> getDesignerDetailInfo(@PathVariable("designer-seq") int designerSeq, @RequestParam int customerSeq){
-//
-//        ResponseDesignerDetailInfoDto responseDesignerDetailInfoDto = designerSearchService.getDesignerDetailInfo(designerSeq, customerSeq);
-//
-//        if(responseDesignerDetailInfoDto != null){
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseDesignerDetailInfoDto);
-//            return ResponseEntity.ok(httpResponseDto);
-//        }
-//        else{
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
-//            return ResponseEntity.ok(httpResponseDto);
-//        }
-//    }
+
+    @GetMapping("/detail/{designer-seq}")
+    public ResponseEntity<HttpResponseDto> getDesignerDetailInfo(@PathVariable("designer-seq") Integer designerSeq, @RequestParam("customerSeq") Integer customerSeq){
+
+
+        ResponseDesignerDetailInfoDto responseDesignerDetailInfoDto = designerSearchService.getDesignerDetailInfo(designerSeq, customerSeq);
+
+        if(responseDesignerDetailInfoDto != null){
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseDesignerDetailInfoDto);
+            return ResponseEntity.ok(httpResponseDto);
+        }
+        else{
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
+        }
+    }
 }
