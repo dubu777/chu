@@ -1,4 +1,5 @@
 package com.chu.designer.controller;
+import com.chu.customer.domain.RequestCustomerChangePwdDto;
 import com.chu.designer.domain.*;
 import com.chu.designer.service.DesignerService;
 import com.chu.global.domain.*;
@@ -84,7 +85,21 @@ public class DesignerController {
         return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), response));
     }
 
-    
+    // 비밀번호 변경
+    @PutMapping(value = "/change-pwd")
+    public ResponseEntity<HttpResponseDto> changePwd(@RequestBody RequestCustomerChangePwdDto param){
+
+        try{
+            designerService.changePwd(param);
+        } catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), null));
+    }
+
+
 //
 //    // 회원 가입
 //    @PostMapping(value = "/sign-up")

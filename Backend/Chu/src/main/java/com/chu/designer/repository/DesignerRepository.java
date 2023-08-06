@@ -3,6 +3,8 @@ package com.chu.designer.repository;
 import com.chu.designer.domain.*;
 import com.chu.global.domain.*;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -24,7 +26,10 @@ public interface DesignerRepository extends JpaRepository<Designer, Integer> {
     // 비밀번호 찾기
     Designer findByNameAndEmailAndId(String name, String email, String id);
 
-    // 로그인
+    // 비밀번호 변경
+    @Modifying
+    @Query("UPDATE Designer d SET d.pwd = :pwd WHERE d.seq = :seq")
+    void changePwd(int seq, String pwd);
 
 //    boolean signUp(RequestDesignerSignUpDto requestDesignerSignUpDto);
 //

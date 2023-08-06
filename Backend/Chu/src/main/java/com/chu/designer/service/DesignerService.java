@@ -1,5 +1,6 @@
 package com.chu.designer.service;
 
+import com.chu.customer.domain.RequestCustomerChangePwdDto;
 import com.chu.designer.domain.*;
 import com.chu.global.domain.*;
 
@@ -25,6 +26,9 @@ public interface DesignerService {
 
     // 디자이너 비밀번호 찾기
     ResponseFindPwdDto findPwd(String name, String email, String id);
+
+    // 디자이너 비밀번호 변경
+    void changePwd(RequestCustomerChangePwdDto param);
 //
 //    // 디자이너 회원가입
 //    boolean signUp(RequestDesignerSignUpDto requestDesignerSignUpDto);
