@@ -8,6 +8,7 @@ import com.chu.designer.domain.*;
 import com.chu.designer.repository.DesignerAlertRepository;
 import com.chu.designer.repository.DesignerRepository;
 import com.chu.designer.repository.DesignerSearchRepository;
+import com.chu.designer.repository.ReservationAvailableSlotRepository;
 import com.chu.global.domain.*;
 import com.chu.global.jwt.JwtTokenProvider;
 import com.chu.global.repository.HairStyleDictRepository;
@@ -23,9 +24,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +48,7 @@ public class DesignerServiceImpl implements DesignerService{
     private final ConsultingRepository consultingRepository;
     private final CustomerRepository customerRepository;
     private final RedisTemplate<String, String> redisTemplate;
+    private final ReservationAvailableSlotRepository reservationAvailableSlotRepository;
 
     private long refreshTokenExpire = 6000000;
 
@@ -250,6 +252,28 @@ public class DesignerServiceImpl implements DesignerService{
         String pwd = d.getPwd();
 
         designerRepository.changePwd(param.getCustomerSeq(), pwd);
+    }
+
+
+    @Override
+    public List<ResponseTimeStateDto> getTimeStateList(int designerSeq, String date) {
+
+        List<ResponseTimeStateDto> response = new ArrayList<>();
+        List<ReservationAvailableSlot> list = new ArrayList<>();
+        try{
+            list = reservationAvailableSlotRepository.availableSlot(designerSeq, date);
+
+            for(ReservationAvailableSlot r : list){
+                ResponseTimeStateDto dto = new ResponseTimeStateDto();
+                dto.setTime(r.getTime());
+                dto.setState(r.getState());
+
+                response.add(dto);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return response;
     }
 
     // 로그인 테스트
