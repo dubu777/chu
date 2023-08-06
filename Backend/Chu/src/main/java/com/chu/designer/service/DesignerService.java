@@ -4,8 +4,9 @@ import com.chu.customer.domain.RequestCustomerChangePwdDto;
 import com.chu.designer.domain.*;
 import com.chu.global.domain.*;
 
-import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public interface DesignerService {
 
@@ -29,6 +30,9 @@ public interface DesignerService {
 
     // 디자이너 비밀번호 변경
     void changePwd(RequestCustomerChangePwdDto param);
+
+    // 날짜 별 상담 가능시간 조회
+    List<ResponseTimeStateDto> getTimeStateList(int designerSeq, String date);
 //
 //    // 디자이너 회원가입
 //    boolean signUp(RequestDesignerSignUpDto requestDesignerSignUpDto);
