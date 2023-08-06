@@ -47,8 +47,8 @@ public interface DesignerDetailRepository extends JpaRepository<DesignerPortfoli
 //    ArrayList<ImageDto> getConfusionImages(int consultinSeq);
 //
 
-    @Query(value = "SELECT imagePath.savedImgName FROM DesignerPortfolio WHERE designer.seq = :designerSeq")
+    @Query(value = "SELECT seq, imagePath.savedImgName FROM DesignerPortfolio WHERE designer.seq = :designerSeq")
     List<ImageDto> getPortfolioByDesignerPortfolio(int designerSeq);
 
-    boolean deletePortfolioImage(int imageSeq);
+    void deleteBySeq(int imageSeq);
 }

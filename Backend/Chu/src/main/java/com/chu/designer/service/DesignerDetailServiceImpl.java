@@ -83,7 +83,7 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
     @Override
     public boolean deletePortfolioImage(int imageSeq) {
         try{
-            designerDetailRepository.deletePortfolioImage(imageSeq);
+            designerDetailRepository.deleteBySeq(imageSeq);
         } catch (Exception e){
             e.printStackTrace();
             return false;

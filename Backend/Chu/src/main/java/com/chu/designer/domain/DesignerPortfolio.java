@@ -30,4 +30,7 @@ public class DesignerPortfolio {
         this.imagePath = imagePath;
     }
 
+    public DesignerPortfolio() {
+        
+    }
 }
