@@ -8,7 +8,7 @@ import LikeDesigner from "../../components/CustomerComponent/LikeDesigner";
 // import ProfileImg from "../../components/CustomerComponent/ProfileImg";
 import { Link } from "react-router-dom";
 import {formDataState} from "../../recoil/customer";
-import {attachImage} from "../../apis/customer";
+import {attachCustomerImage} from "../../apis/customer";
 import { useRecoilState } from "recoil";
 import swal from "sweetalert";
 import axios from 'axios';
@@ -251,7 +251,7 @@ function CustomerMyPage(){
       for (const keyValue of formData) console.log(keyValue);
 
       try {
-        const file = await attachImage(seq, formData);
+        const file = await attachCustomerImage(seq, formData);
         console.log(file)
       } catch(error){
         console.log(error)

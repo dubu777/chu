@@ -1,14 +1,14 @@
 import axios from "axios";
 
 // 서버 url
-const BASE_URL = 'https://i9b111.q.ssafy.io:9090/api';
-const Test_URL = "http://localhost:9090/api"
+// const BASE_URL = 'https://i9b111.q.ssafy.io:9090/api';
+const BASE_URL = "http://localhost:9090/api"
 
 // 이미지 첨부 api
-export const attachImage = async(seq, formData) => {
+export const attachCustomerImage = async(seq, formData) => {
     try {
         console.log("try문 진입")
-        const response = await axios.patch(`${Test_URL}/customer/detail/img/${seq}`, formData, {
+        const response = await axios.patch(`${BASE_URL}/customer/detail/img/${seq}`, formData, {
             headers: {
                 // Origin: 'http://localhost:3000',
                 'Content-Type': 'multipart/form-data'

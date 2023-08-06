@@ -1,5 +1,8 @@
 import { styled } from "styled-components";
 import { useState, useEffect } from "react";
+import { async } from "q";
+import { func } from "prop-types";
+import {getPortfolio, deletePortfolio} from "../../apis/designer"
 
 const Container = styled.div`
   display: flex;
@@ -93,12 +96,37 @@ function Portfolio(){
      
       ]
     });
-    const handleDelete = (imgSeq) => {
-      // imgSeq와 일치하는 이미지 삭제
-      // 해당 이미지를 제외한 나머지 이미지들로 배열 업데이트
-      const updatedImgs = data.imgs.filter((img) => img.imgSeq !== imgSeq);
-      setData({ ...data, imgs: updatedImgs });
+    // 컴포넌트 마운트 될 때 API호출 
+    const [data1, setData1] = useState([]);
+    const seq = 2;
+    // useEffect(()=> {
+    //   async function Portfolio() {
+    //     try {
+    //       const data1 = await getPortfolio(seq);
+    //       setData1(data1)
+    //     } catch(error){
+    //       console.log(error)
+    //     }
+    //   }
+    //   Portfolio();
+    // }, []);
+
+    // imgSeq와 일치하는 이미지 삭제
+    // 해당 이미지를 제외한 나머지 이미지들로 배열 업데이트
+    const handleDelete = async (imgSeq) => {
+      try {
+        const result = await deletePortfolio(seq, imgSeq);
+        if (result){
+          const updatedImgs = data.imgs.filter((img) => img.imgSeq !== imgSeq);
+          setData({ ...data, imgs: updatedImgs });
+          console.log(imgSeq, '번 이미지 삭제')
+        }
+      } catch(error){
+        console.log(error)
+      }
     };
+
+    // 이미지 등록 - API 맞춰서 수정해야함
     const handleFileChange = (event) => {
       const file = event.target.files[0];
       const reader = new FileReader();
@@ -111,12 +139,6 @@ function Portfolio(){
     };
     reader.readAsDataURL(file);
   };
-    //   const newImg = {
-    //     imgSeq: data.imgs.length + 1,
-    //     imgName: URL.createObjectURL(file)
-    //   };
-    //   setData({ ...data, imgs: [...data.imgs, newImg] });
-    // };
   
     return(
       <Container>
@@ -146,7 +168,6 @@ function Portfolio(){
 }
 
 export default Portfolio;
-
 
 
 

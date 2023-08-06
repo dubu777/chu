@@ -1,12 +1,13 @@
 // 여기는 디자이너 마이페이지
 import styled from "styled-components";
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import ProfileImg from "../../components/CustomerComponent/ProfileImg";
 import axios from 'axios';
 import ReserveCalendar from "../../components/DesignerComponent/ReserveCalendar";
 import AllReserveList from "../../components/DesignerComponent/AllReserveList";
 import Portfolio from "../../components/DesignerComponent/Portfolio";
 import { useNavigate } from "react-router";
+import {attachDesignerImage} from "../../apis/designer";
 
 const Container = styled.div`
 
@@ -33,9 +34,8 @@ const NameText = styled.h1`
   /* font-weight: bold; */
 `;
 const Text = styled.p`
-  /* margin-top: 20px; */
+  margin-bottom: 20px;
   font-size: large;
-  padding: 10px 0px;
 `;
 const HashTag = styled.button`
   border: 0;
@@ -44,14 +44,13 @@ const HashTag = styled.button`
   color: white;
   height: 30px;
   margin-right: 10px;
-  margin-top: 5px;
   padding: 2px 15px;
 `
 const InfoBox = styled.div`
   /* border: solid 2px;
   border-color: #afadaa; */
   width: 30%;
-  margin-top: 130px;
+  margin-top: 155px;
   margin-left: -120px;
 `;
 const ChangeBox = styled.div`
@@ -83,6 +82,10 @@ const Wrapper = styled.div`
   width: 60%; 
   /* hesight: 500px; */
   margin: 170px auto 10px auto;
+  
+`;
+
+const TextBox = styled.div`
   
 `;
 
@@ -130,6 +133,14 @@ const EditBtn =styled.button`
   border-radius: 0.7rem;
   margin-left: 10px;
 `;
+const Profile = styled.img`
+  width: 270px;
+  height: 270px;
+  border-radius: 50%;
+  /* 이미지 상태에 따라 태두리 색 다르게 */
+  border: 7px solid ${props => props.hasFile ? 'lightblue' : 'transparent'};
+  cursor: pointer;
+`;
 
 function DesignerMyPage(){
   const navigate = useNavigate();
@@ -137,7 +148,7 @@ function DesignerMyPage(){
     "name" : "재현",
         "cost" : "5000",
         "email" : "ssafy@ssafy.com",
-        "introduction" : "레이어드 전문 디자이너 차홍 청담점의 재현입니다~",
+        "introduction" : " 남자 펌 전문 !",
         "img" : "img1.png",
         "hairStyleTag" : [
             "시스루펌",
@@ -154,7 +165,42 @@ function DesignerMyPage(){
   const [activeBtn, setActiveBtn] = useState('calendar'); // 'recent' or 'designer'
   const [introduction, setIntroduction] = useState(data.introduction || ""); // data.introduction의 값이 없으면 빈 문자열로 초기화
   const [isEditing, setIsEditing] = useState(false); // 수정 상태 체크
-  
+  const [selectedFile, setSelectedFile] = useState(null);
+  const fileInputRef = useRef(null);
+
+  const [file,setFile] = useState()
+  const handleImageClick = () => {
+    fileInputRef.current.click();
+  }
+  const handleFileChange=(e)=>{
+    e.preventDefault();
+    const formData = new FormData();
+    
+    if(e.target.files){
+      const uploadFile = e.target.files[0]
+      formData.append('img',uploadFile)
+      console.log(formData)
+      setFile(uploadFile)
+      console.log(uploadFile)
+      console.log('===useState===')
+      console.log(file)
+    }
+  };
+  const handleSubmitImage = async(e) => {
+    e.preventDefault();
+    const seq =2;
+    if (fileInputRef.current.files[0]) {
+      const formData = new FormData();
+      formData.append('img', fileInputRef.current.files[0]);
+      for (const keyValue of formData) console.log(keyValue);
+
+      try {
+        const file = await attachDesignerImage(seq, formData);
+        console.log(file)
+      } catch(error){
+        console.log(error)
+      }}
+    };
   const handleIntroductionChange = (event) => {
     setIntroduction(event.target.innerText);
   }
@@ -165,47 +211,46 @@ function DesignerMyPage(){
     setData({...data, introduction});
     setIsEditing(false);
   };
-  const handleBtnClick = (btnType) => {
+  // 누른 버튼에 따라 
+  const handleBtnClick = async (btnType) => {
     setActiveBtn(btnType);
   };
-  
+
 
   return(
     <Container>
      <ProfileWrapper>
         <ImgBox>
           <NameText>{data.name}디자이너</NameText>
-            <ProfileImg />
+          <div>
+                {/* 버튼을 클릭하면 파일 선택 다이얼로그를 나타내는 input 요소 */}
+                <input 
+                  type="file" 
+                  style={{ display: 'none' }} 
+                  ref={fileInputRef} 
+                  onChange={handleFileChange} />
+
+                {/* 프로필 사진 or 연산자는 앞의 피연산자 기준*/}
+                <Profile 
+                  onClick={handleImageClick} 
+                  src={selectedFile || './icon/profile2.png'} 
+                  alt="Profile" 
+                  hasFile={selectedFile !== null} 
+                />
+                {/* 이미지 제출 버튼 */}
+                  <button onClick={handleSubmitImage}>사진 제출</button>
+              </div>
         </ImgBox>
         
         <InfoBox>
           <Text>{data.cost}</Text>
           <Text>{data.email}</Text>
-          
-          <introductionWrapper>
-            {isEditing ? (
-          <EditBox>
-            <TextArea
-              contentEditable
-              placeholder="소개글을 작성해주세요"
-              onInput={handleIntroductionChange}
-              >
-              {introduction || data.introduction}
-            </TextArea>
-              <EditBtn onClick={handleSaveButtonClick}>완료</EditBtn>
-            </EditBox>
-            ) : (
-              <EditBox>
-                <Text>{data.introduction || "소개글이 없습니다."}</Text>
-                <EditBtn onClick={handleEditButtonClick}>수정</EditBtn>
-              </EditBox>
-
-              )}
-          </introductionWrapper>
+          <Text>{data.introduction}</Text>
           {data.hairStyleTag.map((word, index) => (
             <HashTag key={index}> #{word} </HashTag>
           ))}
         </InfoBox>
+
         <ChangeBox>
           <ChangeBtn onClick={() => navigate("/editdesignerinfo")}>회원 정보 변경</ChangeBtn>
         </ChangeBox>
