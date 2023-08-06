@@ -26,9 +26,10 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
     private final CustomerDetailRepository customerDetailRepository;
 
     @Override
-    public String getSavedImgFilePath(MultipartFile file) throws IOException {
+    public String getSavedImgFilePath(Integer customerSeq, MultipartFile file) throws IOException {
         String uploadDir = "/chu/upload/images/customer/";
-        String fileName = file.getOriginalFilename();
+        String originalFilename = file.getOriginalFilename();
+        String fileName = customerSeq + "_" + originalFilename;
 
         File directory = new File(uploadDir);
         String filePath = uploadDir + fileName;
@@ -60,9 +61,7 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
 
         Customer customer = customerDetailRepository.getById(customerSeq);
 
-        // fileName 고유하게 변경
-        String newFileName = customer.getSeq() + fileName;
-        log.info("new File Name: "+ newFileName);
+
 
         // 저장
         customer.getImagePath().setUploadImgName(fileName);

@@ -1,8 +1,15 @@
-//package com.chu.consulting.service;
+package com.chu.consulting.service;
+
+import com.chu.consulting.domain.Consulting;
+import com.chu.consulting.domain.RequestConsultingDto;
+
 //
 //import com.chu.consulting.domain.*;
 //
-//public interface ConsultingService {
+public interface ConsultingService {
+
+    // 상담 예약하기
+    void postConsulting(Consulting consulting);
 //    // 상담 참여
 //    String participantConsulting(int consultingSeq);
 //
@@ -26,4 +33,4 @@
 //
 //    // 상담 결과 수정
 //    boolean updateConsultingResult(RequestConsultingUpdateDto requestConsultingUpdateDto);
-//}
+}

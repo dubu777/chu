@@ -11,14 +11,14 @@ import java.time.LocalTime;
 @Getter @Setter
 public class ConsultingDate {
 
-    private LocalDate date;
-    private LocalTime time;
+    private String date;
+    private String time;
 
     protected ConsultingDate() {
 
     }
 
-    public ConsultingDate(LocalDate date, LocalTime time) {
+    public ConsultingDate(String date, String time) {
         this.date = date;
         this.time = time;
     }
