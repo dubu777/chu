@@ -2,11 +2,12 @@ package com.chu.consulting.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.Embeddable;
 
 @Embeddable
-@Getter @Setter
+@Getter @Setter @ToString
 public class Review {
 
     private Float reviewScore;
