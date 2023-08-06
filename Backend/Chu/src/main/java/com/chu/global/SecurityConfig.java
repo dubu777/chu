@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
+@Order(2)
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
@@ -47,8 +49,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
 
-        http.authorizeRequests().antMatchers("/**").permitAll();
-
+        http.cors();
             // jwt 사용하므로 request 보내기 어려움
         http.csrf().disable();
 
@@ -60,6 +61,7 @@ public class SecurityConfig {
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
             // 필터 순서 설정
             //.addFilterBefore(new JwtAuthentiationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
+        http.authorizeRequests().antMatchers("/**").permitAll();
 
 
 

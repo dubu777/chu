@@ -5,12 +5,13 @@ import com.chu.consulting.domain.ResponsePastConsultingDto;
 import lombok.Data;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Data
 public class ResponseCustomerDetailDto {
 
     Customer customer;
-    ArrayList<CustomerHairCondition> customerHairConditionList;
-    ArrayList<ResponseFutureConsultingDto> responseFutureConsultingDtoList;
-    ArrayList<ResponsePastConsultingDto> responsePastConsultingDtoList;
+    List<CustomerHairCondition> customerHairConditionList;
+    List<ResponseFutureConsultingDto> responseFutureConsultingDtoList;
+    List<ResponsePastConsultingDto> responsePastConsultingDtoList;
 }

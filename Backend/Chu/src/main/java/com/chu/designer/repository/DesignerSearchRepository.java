@@ -21,7 +21,8 @@ public interface DesignerSearchRepository extends JpaRepository<Designer, Intege
 
 
     // 이 주의 인기 디자이너
-    //List<Designer> findTop6By
+    List<Designer> findTop6ByOrderByReviewScoreDesc();
+
 //    List<DesignerSearchDto> search2Name(int customerSeq, String name);
 //
 //    List<DesignerSearchDto> search2Filter(int customerSeq, String[] hairStyle);

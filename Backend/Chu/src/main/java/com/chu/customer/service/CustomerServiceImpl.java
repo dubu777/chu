@@ -1,14 +1,21 @@
 package com.chu.customer.service;
 
+import com.chu.consulting.domain.Consulting;
+import com.chu.consulting.domain.ConsultingResult;
+import com.chu.consulting.repository.ConsultingRepository;
+import com.chu.consulting.repository.ConsultingResultRepository;
 import com.chu.customer.domain.*;
 import com.chu.customer.repository.CustomerAlertRepository;
 import com.chu.customer.repository.CustomerRepository;
 import com.chu.customer.repository.TestRepository;
 import com.chu.designer.domain.Designer;
 import com.chu.designer.repository.DesignerRepository;
+import com.chu.designer.repository.DesignerSearchRepository;
 import com.chu.global.domain.*;
 import com.chu.global.exception.Exception;
 import com.chu.global.jwt.JwtTokenProvider;
+import com.chu.global.repository.HairStyleDictRepository;
+import com.chu.global.repository.HairStyleImgRepository;
 import com.chu.worldcup.repository.WorldcupRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +30,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,8 +44,13 @@ public class CustomerServiceImpl implements CustomerService{
 
     private final CustomerRepository customerRepository;
     private final DesignerRepository designerRepository;
+    private final DesignerSearchRepository designerSearchRepository;
     private final WorldcupRepository worldcupRepository;
     private final CustomerAlertRepository customerAlertRepository;
+    private final ConsultingResultRepository consultingResultRepository;
+    private final ConsultingRepository consultingRepository;
+    private final HairStyleDictRepository hairStyleDictRepository;
+    private final HairStyleImgRepository hairStyleImgRepository;
     private final TestRepository testRepository;
     private final PasswordEncoder bCryptPasswordEncoder;
     private final AuthenticationManager authenticationManager;
@@ -91,6 +104,18 @@ public class CustomerServiceImpl implements CustomerService{
         return response;
     }
 
+    // 고객 비밀번호 변경
+    @Override
+    @Transactional
+    public void changePwd(RequestCustomerChangePwdDto param) {
+        Customer c = new Customer();
+        c.setPwd(param.getPwd());
+        c.hashPassword(bCryptPasswordEncoder);
+        String pwd = c.getPwd();
+
+        customerRepository.changePwd(param.getCustomerSeq(), pwd);
+    }
+
 
     /*
     @Override
@@ -121,18 +146,20 @@ public class CustomerServiceImpl implements CustomerService{
 
             TokenDto tokenDto = new TokenDto(accessToken,refreshToken);
 
-            // Redis 저장 : 만료 시간 설정으로 자동 삭제 처리
-            redisTemplate.opsForValue().set(
-                    authentication.getName(),
-                    refreshToken,
-                    refreshTokenExpire,
-                    TimeUnit.MILLISECONDS
-            );
+//            // Redis 저장 : 만료 시간 설정으로 자동 삭제 처리
+//            redisTemplate.opsForValue().set(
+//                    authentication.getName(),
+//                    refreshToken,
+//                    refreshTokenExpire,
+//                    TimeUnit.MILLISECONDS
+//            );
 
             //HttpHeaders httpHeaders = new HttpHeaders();
             //httpHeaders.add("Authorization", "Bearer "+tokenDto.getAccessToken());
 
             responseCustomerLoginDetailDto.setToken(tokenDto);
+
+
 
             // 2) customerInfo setting
             Customer customer = customerRepository.findById(requestSignInDto.getId());
@@ -140,15 +167,106 @@ public class CustomerServiceImpl implements CustomerService{
 
             responseCustomerLoginDetailDto.setCustomerInfo(responseCustomerLoginInfoDto);
 
+
+
             // 3) bestDesigner setting
-            //List<Designer> designerList = designerRepository
+            List<Designer> designerList = designerSearchRepository.findTop6ByOrderByReviewScoreDesc();
+            List<ResponseBestDesignerDto> list = new ArrayList<>();
+            for(Designer d : designerList){
+                ResponseBestDesignerDto dto = new ResponseBestDesignerDto();
+
+                dto.setImg(d.getImagePath().getSavedImgName());
+                dto.setName(d.getName());
+                dto.setDesignerSeq(d.getSeq());
+
+                list.add(dto);
+            }
+
+            responseCustomerLoginDetailDto.setBestDesigner(list);
 
 
-            return responseCustomerLoginDetailDto;
+//
+//            // 4) recommendImg setting
+//            List<FaceImageNameDto> list4 = new ArrayList<>();
+//
+//            // 4-1) 고객 얼굴형 받아오기
+//            int faceSeq = customer.getFaceDict().getSeq();
+//
+//            // 4-2) cunsulting result 테이블에서 얼굴형 일치하는 데이터 6개 가져오기
+//            List<ConsultingResult> conResultList= consultingResultRepository.findTop6ByFaceSeq(faceSeq);
+//
+//            // conResultList에서 헤어스타일 seq로 hairStyleDict 테이블에서 데이터 뽑아내기
+//            List<HairStyleDict> hairStyleDictList = new ArrayList<>();
+//            for(int i=0; i<conResultList.size(); i++){
+//                ConsultingResult c = conResultList.get(i);
+//
+//                HairStyleDict h = hairStyleDictRepository.findBySeq(c.getSeq());
+//
+//                // 헤어스타일 seq 받기
+//                int hairStyleSeq = h.getSeq();
+//                // 받은 seq로 헤어스타일 이미지 테이블에서 이미지 받아오기
+//                HairStyleImg hairStyleImg = hairStyleImgRepository.findByHairStyleSeq(hairStyleSeq);
+//
+//                // 리스트에 넣기
+//                list4.add(new FaceImageNameDto(hairStyleSeq, hairStyleImg.getImagePath().getUploadImgName(), h.getHairStyleLabel()));
+//            }
+//
+//            responseCustomerLoginDetailDto.setRecommendImg(list4);
 
-        } catch(AuthenticationException e){
-            throw new Exception("Invalid credentials supplied", HttpStatus.BAD_REQUEST);
+
+
+            // 5. statisticsImg setting
+            List<FaceImageNameDto> list5 = new ArrayList<>();
+
+            // 5-1) hairStyleImg 테이블에서 이미지 5개 가져오기
+            List<HairStyleImg> hairStyleImgList = hairStyleImgRepository.findTop5ByOrderBySeq();
+
+            for(HairStyleImg i : hairStyleImgList){
+                int seq = i.getSeq();
+
+                // 헤어스타일 라벨 가져오기
+                HairStyleDict hairStyleDict= hairStyleDictRepository.findBySeq(seq);
+
+                list5.add(new FaceImageNameDto(seq, i.getImagePath().getSavedImgName(), hairStyleDict.getHairStyleLabel()));
+            }
+
+            responseCustomerLoginDetailDto.setStatisticsImg(list5);
+
+
+
+            // 6. alert setting
+            List<AlertCustomerOnLoginDto> list6 = new ArrayList<>();
+            int customerSeq = responseCustomerLoginInfoDto.getCustomerSeq();
+
+            // 고객 번호로 알림 가져오기
+            List<CustomerAlert> alertList = new ArrayList<>();
+            alertList = customerAlertRepository.getCustomerAlertBySeq(customerSeq);
+
+            for(CustomerAlert c : alertList){
+                // 상담 번호로 consulting - designer seq 받아오기
+                Consulting consulting = consultingRepository.getConsultingBySeq(c.getSeq());
+
+                // 받아온 designer seq로 디자이너 정보 받아오기
+                consulting.setDesigner(designerRepository.getDesignerBySeq(consulting.getSeq()));
+
+                // AlertCustomerOnLoginDto 객체 생성
+                AlertCustomerOnLoginDto dto = new AlertCustomerOnLoginDto();
+                dto.setAlertSeq(c.getSeq());
+                dto.setConsultingSeq(consulting.getSeq());
+                dto.setCheck(c.getIsCheck());
+                dto.setPushDate(consulting.getCancelDate());
+                dto.setDesignerName(consulting.getDesigner().getName());
+
+                list6.add(dto);
+            }
+
+            responseCustomerLoginDetailDto.setAlert(list6);
+
+        } catch(Exception e){
+            e.printStackTrace();
         }
+
+        return responseCustomerLoginDetailDto;
     }
 
     // 아이디 찾기
