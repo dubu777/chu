@@ -1,6 +1,9 @@
 package com.chu.consulting.service;
 
 import com.chu.consulting.domain.*;
+import com.chu.global.domain.ImageDto;
+
+import java.util.List;
 
 public interface ConsultingService {
     // 상담 참여
@@ -26,4 +29,6 @@ public interface ConsultingService {
 
     // 상담 결과 수정
     boolean updateConsultingResult(RequestConsultingUpdateDto requestConsultingUpdateDto);
+
+    List<ImageDto> getConfusionImageList(int consultingSeq);
 }

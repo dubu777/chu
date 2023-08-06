@@ -1,6 +1,9 @@
 package com.chu.global.domain;
 
+import lombok.Data;
+
+@Data
 public class ImageDto {
-//                    "imgSeq" : 1,
-//                            "imgName" : "img1.png"
+    int imgSeq;
+    String imgName;
 }

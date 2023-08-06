@@ -2,14 +2,16 @@ package com.chu.consulting.service;
 
 import com.chu.consulting.domain.*;
 import com.chu.consulting.repository.ConsultingRepository;
-import com.chu.customer.domain.Customer;
-import com.chu.global.domain.ResponseFindIdDto;
+import com.chu.consulting.repository.ConsultingVirtualImgRepository;
+import com.chu.global.domain.ImageDto;
 import com.chu.global.exception.Exception;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -17,6 +19,20 @@ import javax.transaction.Transactional;
 public class ConsultingServiceImpl implements ConsultingService {
 
     private final ConsultingRepository consultingRepository;
+    private final ConsultingVirtualImgRepository consultingVirtualImgRepository;
+
+    @Override
+    public List<ImageDto> getConfusionImageList(int consultingSeq) {
+
+        List<ImageDto> imageList = new ArrayList<>();
+        try{
+            imageList = consultingVirtualImgRepository.getVirtualImagesInfoBySeq(consultingSeq);
+        } catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+        return imageList;
+    }
 
     @Override
     public String participantConsulting(int consultingSeq) {
