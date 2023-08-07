@@ -1,8 +1,8 @@
 import axios from "axios";
 
 // 서버 url
-// const BASE_URL = 'https://i9b111.q.ssafy.io:9090/api';
-const BASE_URL = "http://localhost:9090/api"
+const BASE_URL = 'https://i9b111.q.ssafy.io:9090/api';
+// const BASE_URL = "http://localhost:9090/api"
 
 // 이미지 첨부 api
 export const attachCustomerImage = async(seq, formData) => {
