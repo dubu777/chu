@@ -29,7 +29,7 @@ export const designerlogIn = async (username, password) => {
   }
 };
 
-export const findId = async (username, useremail) => {
+export const customerFindId = async (username, useremail) => {
   try {
     const response = await axios.get(`${BASE_URL}/customer/find-id`, { params: {
       name: username,
@@ -38,10 +38,22 @@ export const findId = async (username, useremail) => {
     console.log(response.data.result)
     return response.data.result;
   } catch (error) {
-    throw new Error('로그인 실패');
+    throw new Error('아이디 찾기 실패');
   }
 };
 
+export const designerFindId = async (username, useremail) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/designer/find-id`, { params: {
+      name: username,
+      email: useremail,
+    }});
+    console.log(response.data.result)
+    return response.data.result;
+  } catch (error) {
+    throw new Error('아이디 찾기 실패');
+  }
+};
 export const signUpRequest = async (customerData) => {
   console.log(customerData);
   try {

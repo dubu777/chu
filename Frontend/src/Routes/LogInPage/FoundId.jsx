@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-
+import { useRecoilState } from "recoil";
+import { setFindId, setExistState } from "../../recoil/auth";
 
 const Container = styled.div`
 	background: url('./img/findid.jpg');
@@ -67,13 +68,15 @@ const Btn = styled.button`
 
 
 function FoundId() {
+	const [findIdResult, setFindIdResult] = useRecoilState(setFindId);
+
 	return(
 		<Container>
 			<Wrapper>
 				<TopBox>
 					<Title>ID</Title>
-					<Text>ooo님의 아이디는</Text>
-					<Text>'ssafy12' 입니다.</Text>
+					<Text>아이디 찾기 완료</Text>
+					<Text>아이디 : {findIdResult}</Text>
 				</TopBox>
 				<BottomBox>
 					<Btn><Link to="/login">Log in</Link></Btn>
