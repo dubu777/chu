@@ -116,6 +116,24 @@ public class DesignerController {
         return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), response));
     }
 
+    // 알림 조회
+    @GetMapping(value = "/alert/{designerSeq}")
+    public ResponseEntity<HttpResponseDto> getAlert(@PathVariable int designerSeq){
+
+        List<AlertDesignerOnLoginDto> alert = new ArrayList<>();
+
+        try{
+            alert = designerService.getAlert(designerSeq);
+
+        } catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), alert));
+
+    }
+
 //    @GetMapping("/date")
 //    public ResponseEntity<HttpResponseDto> getPossibleTimeOfDate(@PathVariable("designer_seq") int designerSeq, @RequestParam Date date) {
 //        ArrayList<ResponseTimeStateDto> responseTimeStateDtoList = new ArrayList<>();

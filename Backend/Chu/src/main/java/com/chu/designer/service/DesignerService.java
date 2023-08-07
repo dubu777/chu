@@ -33,7 +33,10 @@ public interface DesignerService {
 
     // 날짜 별 상담 가능시간 조회
     List<ResponseTimeStateDto> getTimeStateList(int designerSeq, String date);
-//
+
+    // 디자이너 알림 조회
+    List<AlertDesignerOnLoginDto> getAlert(int designerSeq);
+
 //    // 디자이너 회원가입
 //    boolean signUp(RequestDesignerSignUpDto requestDesignerSignUpDto);
 //

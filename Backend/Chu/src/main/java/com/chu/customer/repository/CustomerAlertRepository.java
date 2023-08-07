@@ -9,7 +9,7 @@ import java.util.List;
 public interface CustomerAlertRepository extends JpaRepository<CustomerAlert, Integer> {
 
 //    ArrayList<CustomerAlert> getAlertToCustomer(int customerSeq);
-    List<CustomerAlert> getCustomerAlertBySeq(int customerSeq);
+    List<CustomerAlert> getCustomerAlertByCustomerSeq(int customerSeq);
 
 
 }

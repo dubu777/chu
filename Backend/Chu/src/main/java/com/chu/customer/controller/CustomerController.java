@@ -105,6 +105,7 @@ public class CustomerController {
         return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), null));
     }
 
+    // 알림 조회
     @GetMapping(value = "/alert/{customerSeq}")
     public ResponseEntity<HttpResponseDto> getAlert(@PathVariable int customerSeq){
 
