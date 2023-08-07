@@ -2,6 +2,12 @@ package com.chu.consulting.service;
 
 import com.chu.consulting.domain.*;
 import com.chu.consulting.repository.ConsultingRepository;
+import com.chu.customer.domain.Customer;
+import com.chu.customer.repository.CustomerRepository;
+import com.chu.designer.domain.Designer;
+import com.chu.designer.domain.DesignerLike;
+import com.chu.designer.repository.DesignerLikeRepository;
+import com.chu.designer.repository.DesignerRepository;
 import com.chu.designer.repository.ReservationAvailableSlotRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +34,9 @@ public class ConsultingServiceImpl implements ConsultingService {
     private final ConsultingRepository consultingRepository;
     private final ReservationAvailableSlotRepository reservationAvailableSlotRepository;
     private final ConsultingVirtualImgRepository consultingVirtualImgRepository;
+    private final DesignerLikeRepository designerLikeRepository;
+    private final CustomerRepository customerRepository;
+    private final DesignerRepository designerRepository;
 
     // 상담 예약하기
     @Override
@@ -71,6 +80,62 @@ public class ConsultingServiceImpl implements ConsultingService {
             return null;
         }
         return imageList;
+    }
+
+    // 상담 후기 등록
+    @Override
+    @Transactional
+    public void updateConsultingReview(RequestConsultingReviewDto requestConsultingReviewDto) {
+
+        try{
+            // consulting seq
+            int consultingSeq = requestConsultingReviewDto.getConsultingSeq();
+            Consulting consulting = consultingRepository.getConsultingBySeq(consultingSeq);
+            int customerSeq = consulting.getCustomer().getSeq();
+            int designerSeq = consulting.getDesigner().getSeq();
+
+            // 좋아요 눌렀으면 update
+            if(requestConsultingReviewDto.getIsLike()){
+                // designer_like 테이블에 (고객 seq, 디자이너 seq) 쌍 존재하는지 확인
+                DesignerLike entity = null;
+                entity = designerLikeRepository.findByCustomerSeqAndDesignerSeq(customerSeq, designerSeq);
+
+                // 테이블에 데이터 존재하지 않으면 삽입
+                if(entity == null){
+                    DesignerLike designerLike = new DesignerLike();
+
+                    Customer customer = customerRepository.getCustomerBySeq(customerSeq);
+                    designerLike.setCustomer(customer);
+
+                    Designer designer = designerRepository.getDesignerBySeq(designerSeq);
+                    designerLike.setDesigner(designer);
+
+                    designerLike.setLikeStatus(true);
+
+                    designerLike.setCreateDate(LocalDateTime.now());
+
+                    designerLikeRepository.save(designerLike);
+                }
+                // 데이터 존재하면 status만 바꾸기
+                else{
+                    designerLikeRepository.updateStatusTrue(customerSeq, designerSeq);
+                }
+            }
+
+            // 평점, reviewContent 업데이트하기
+            consultingRepository.updateScoreAndContent(requestConsultingReviewDto.getReviewScore(), requestConsultingReviewDto.getReviewContent(), consultingSeq);
+
+            // 평점 등록 후 디자이너 평점 업데이트하기
+            // 평점 구하기
+            double reviewScore = consultingRepository.getReviewScoreByDesigner(designerSeq);
+//            System.out.println(">>>>" + reviewScore);
+
+            // 평점 업데이트하기
+            designerRepository.updateReviewScore(reviewScore, designerSeq);
+
+        } catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
 

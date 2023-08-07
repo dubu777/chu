@@ -84,6 +84,19 @@ public class ConsultingController {
         return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), null));
     }
 
+    // 상담 후기 등록
+    @PatchMapping("/review")
+    public ResponseEntity<HttpResponseDto> updateConsultingReview(@RequestBody RequestConsultingReviewDto requestConsultingReviewDto){
+
+        try{
+            consultingService.updateConsultingReview(requestConsultingReviewDto);
+        } catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), null));
+    }
 
 //
 //    @PatchMapping("/")
