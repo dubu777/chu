@@ -51,6 +51,7 @@ const P = styled.p`
 
 function MainView(){
   const [data, setData] = useRecoilState(listViewState);
+  
   const seq = 2
   const dataTest = async () => {
     try {
