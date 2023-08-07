@@ -318,6 +318,16 @@ public class CustomerServiceImpl implements CustomerService{
         return responseCustomerLoginDetailDto;
     }
 
+    @Override
+    @Transactional
+    public void checkAlert(int alertSeq) {
+        try{
+            customerAlertRepository.checkAlert(alertSeq);
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
     // 아이디 찾기
     @Override
     public ResponseFindIdDto findId(String name, String email) {
