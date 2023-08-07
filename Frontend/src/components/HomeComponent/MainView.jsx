@@ -3,6 +3,7 @@ import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import swal from "sweetalert";
 import { motion,AnimatePresence,useAnimation }from "framer-motion";
+import Recommend from "./Recommend";
 
 
 const ClickImg = styled.img`
@@ -90,6 +91,7 @@ function MainView(){
           </Link>
         </Box>
       </Wrapper>
+      <Recommend/>
   </Container>
   )
 }
