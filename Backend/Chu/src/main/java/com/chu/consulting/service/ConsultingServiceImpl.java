@@ -45,6 +45,16 @@ public class ConsultingServiceImpl implements ConsultingService {
             int designerSeq = consulting.getDesigner().getSeq();
             reservationAvailableSlotRepository.updateReserveSlotStateToR(date, time, designerSeq);
 
+            // 예약 완료 후 상담 idx 받기
+            int seq = consulting.getSeq();
+
+            // SessionId 설정
+            String url = seq + "@" + consulting.getCustomer().getSeq() + "&" + consulting.getDesigner().getSeq();
+
+            // 생성한 SessionId db에 업데이트하기
+            consultingRepository.updateConsultingUrl(seq, url);
+
+
         } catch(Exception e){
             e.printStackTrace();
         }
