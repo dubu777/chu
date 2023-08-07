@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -104,61 +105,21 @@ public class CustomerController {
         return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), null));
     }
 
+    @GetMapping(value = "/alert/{customerSeq}")
+    public ResponseEntity<HttpResponseDto> getAlert(@PathVariable int customerSeq){
 
+        List<AlertCustomerOnLoginDto> alert = new ArrayList<>();
 
-//    @GetMapping("/find-id")
-//    public ResponseEntity<HttpResponseDto> findId(@RequestParam String name, @RequestParam String email){
-//
-//        RequestFindIdDto requestFindIdDto = new RequestFindIdDto();
-//        requestFindIdDto.setName(name);
-//        requestFindIdDto.setEmail(email);
-//
-//        String id = customerService.findId(requestFindIdDto);
-//
-//        if(id != null){
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(200, id);
-//            return ResponseEntity.ok(httpResponseDto);
-//        }
-//        else{
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
-//            return ResponseEntity.ok(httpResponseDto);
-//        }
-//    }
-//
-//    @GetMapping("/find-pwd")
-//    public ResponseEntity<HttpResponseDto> findPwd(@RequestParam String id, @RequestParam String name, @RequestParam String email){
-//
-//        RequestFindPwdDto requestFindPwdDto = new RequestFindPwdDto();
-//        requestFindPwdDto.setName(name);
-//        requestFindPwdDto.setId(id);
-//        requestFindPwdDto.setEmail(email);
-//
-//        int seq = customerService.isValidUser(requestFindPwdDto);
-//
-//        // 존재하는 유저일 경우
-//        if(seq == 1){
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(200, seq);
-//            return ResponseEntity.ok(httpResponseDto);
-//        }
-//        else{
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
-//            return ResponseEntity.ok(httpResponseDto);
-//        }
-//    }
-//
-//    @PatchMapping("/change-pwd")
-//    public ResponseEntity<HttpResponseDto> changePwd(@RequestBody RequestChangePwdDto requestChangePwdDto) {
-//        boolean isSuccess = customerService.changePwd(requestChangePwdDto);
-//
-//        if(isSuccess){
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(200, null);
-//            return ResponseEntity.ok(httpResponseDto);
-//        }
-//        else{
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
-//            return ResponseEntity.ok(httpResponseDto);
-//        }
-//    }
+        try{
+            alert = customerService.getAlert(customerSeq);
+        } catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), alert));
+    }
+
 //
 //    @PostMapping("/like")
 //    public ResponseEntity<HttpResponseDto> changeLikeInfo(@RequestBody RequestLikeDto requestLikeDto){
