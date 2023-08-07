@@ -1,10 +1,7 @@
 package com.chu.designer.controller;
 
 import com.chu.consulting.domain.ResponseConsultingDto;
-import com.chu.designer.domain.RequestDesignerInfoUpdateDto;
-import com.chu.designer.domain.RequestReservationPossibleDateAndTimeDto;
-import com.chu.designer.domain.ResponseDesignerMyPageUpdateShowDto;
-import com.chu.designer.domain.ResponseDesignerMyPageDto;
+import com.chu.designer.domain.*;
 import com.chu.designer.service.DesignerDetailService;
 import com.chu.global.domain.HttpResponseDto;
 import com.chu.global.domain.ImageDto;

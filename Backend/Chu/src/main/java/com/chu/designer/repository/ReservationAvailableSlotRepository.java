@@ -16,5 +16,10 @@ public interface ReservationAvailableSlotRepository extends JpaRepository<Reserv
     // 상담 예약 완료 후 ‘reservation_available_slot’ 테이블 ‘state’ 컬럼 ‘R’로 바꾸기
     @Modifying
     @Query("UPDATE ReservationAvailableSlot r SET r.state = 'R' WHERE r.date = :date and r.time = :time and r.designer.seq = :designerSeq")
-    void updateReserveSlotState(String date, String time, int designerSeq);
+    void updateReserveSlotStateToR(String date, String time, int designerSeq);
+
+    // 상담 취소 후 'reservation_available_slot' 테이블 'state' 컬럼 'P'로 바꾸기
+    @Modifying
+    @Query("UPDATE ReservationAvailableSlot r SET r.state = 'P' WHERE r.date = :date and r.time = :time and r.designer.seq = :designerSeq")
+    void updateReserveSlotStateToP(String date, String time, int designerSeq);
 }
