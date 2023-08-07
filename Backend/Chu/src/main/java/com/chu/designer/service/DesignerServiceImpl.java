@@ -307,6 +307,16 @@ public class DesignerServiceImpl implements DesignerService{
         return list;
     }
 
+    @Override
+    @Transactional
+    public void checkAlert(int alertSeq) {
+        try{
+            designerAlertRepository.checkAlert(alertSeq);
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
     // 로그인 테스트
 //
 //    // repo 주입
