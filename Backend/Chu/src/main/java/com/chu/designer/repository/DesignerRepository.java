@@ -32,8 +32,6 @@ public interface DesignerRepository extends JpaRepository<Designer, Integer> {
     @Query("UPDATE Designer d SET d.pwd = :pwd WHERE d.seq = :seq")
     void changePwd(int seq, String pwd);
 
-
-
 //    boolean signUp(RequestDesignerSignUpDto requestDesignerSignUpDto);
 //
 //    boolean signIn(RequestSignInDto requestSignInDto);
