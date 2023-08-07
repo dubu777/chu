@@ -124,6 +124,7 @@ const handleUserTypeChange = (event) => {
 		}
 		if (userType === "designer") {
 			try {
+				console.log(">>>>>>>>>>>>>>>>>>>>>>");
 				const result = await designerlogIn(username, password);
 				console.log(result);
 				setLoginResult(result);
@@ -136,9 +137,9 @@ const handleUserTypeChange = (event) => {
 		}
 	};
 
-	console.log('Username:', username);
-  console.log('Password:', password);
-	console.log('userType:', userType )
+	// console.log('Username:', username);
+  // console.log('Password:', password);
+	// console.log('userType:', userType )
 	return(
 		<Container>
 			<Wrapper>

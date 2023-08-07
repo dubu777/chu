@@ -302,7 +302,7 @@ function CustomerSignUp() {
     try {
       // 회원가입 API 요청
       console.log("formDATA: ", formData);
-      const signUpResult = await signUpRequest(customerData);
+      const signUpResult = await signUpRequest(customerData, "customer");
       console.log("Sign-up success:", signUpResult);
       swal("Success", "회원가입이 완료되었습니다.", "success");
       navigate("/login");

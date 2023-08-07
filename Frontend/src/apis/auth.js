@@ -23,7 +23,8 @@ export const designerlogIn = async (username, password) => {
       "id" : username,
       "pwd" : password,
     });
-    console.log(response.data.result)
+    console.log("<<<<<<<<<<<<<<<<<<<<");
+    console.log("<<<<<<<<<<<<",response.data.result)
     return response.data.result;
   } catch (error) {
     throw new Error('로그인 실패');
@@ -43,6 +44,18 @@ export const signUpRequest = async (customerData) => {
   console.log(customerData);
   try {
     const response = await axios.post(`${BASE_URL}/customer/sign-up`, customerData);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const designerSignUpRequest = async (designerData) => {
+  console.log(designerData);
+  try {
+    const response = await axios.post(`${BASE_URL}/designer/sign-up`, designerData);
+    console.log(response.data);
     return response.data;
   } catch (error) {
     throw error;

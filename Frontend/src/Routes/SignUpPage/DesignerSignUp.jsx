@@ -6,7 +6,7 @@ import swal from "sweetalert";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import {
-  signUpRequest,
+  designerSignUpRequest,
   checkDuplicateId,
   checkDuplicateEmail,
 } from "../../apis/auth";
@@ -69,7 +69,8 @@ const ProfileBox = styled.div`
 `;
 
 const ClickBox = styled.div`
-  /* flex-direction: column; */
+  display: flex;
+  flex-direction: column;
 `;
 const Text = styled.p`
   margin-left: 30px;
@@ -248,7 +249,7 @@ function DesignerSignUp() {
   const email = watch("email");
   const gender = watch("gender");
   const certificationNum = watch("certificationNum")
-  const customerData = {
+  const designerData = {
     name: name,
     id: id,
     email: email,
@@ -257,7 +258,7 @@ function DesignerSignUp() {
     certificationNum: certificationNum
   };
 
-  console.log(customerData);
+  console.log(designerData, "deisgner");
 
   const handleIdCheck = async () => {
     const currentId = getValues("id");
@@ -301,17 +302,17 @@ function DesignerSignUp() {
   const onSubmit = async (formData) => {
     if (isIdAvailable || isEmailAvailable) return;
     
-    if (!selectedFile) {
-      setError("profileImage", {
-        type: "manual",
-        message: "프로필 이미지를 첨부해주세요."
-      });
-      return;
-    }
+    // if (!selectedFile) {
+    //   setError("profileImage", {
+    //     type: "manual",
+    //     message: "프로필 이미지를 첨부해주세요."
+    //   });
+    //   return;
+    // }
     try {
       // 회원가입 API 요청
       console.log("formDATA: ", formData);
-      const signUpResult = await signUpRequest(customerData);
+      const signUpResult = await designerSignUpRequest(designerData, "deisgner");
       console.log("Sign-up success:", signUpResult);
       swal("Success", "회원가입이 완료되었습니다.", "success");
       navigate("/login");
@@ -334,15 +335,13 @@ function DesignerSignUp() {
           <Title>Sign Up</Title>
           <Wrapper>
             <Form onSubmit={handleSubmit(onSubmit)}>
-              <ProfileBox>
-                {/* 버튼을 클릭하면 파일 선택 다이얼로그를 나타내는 input 요소 */}
+              {/* <ProfileBox>
                 <input
                   type="file"
                   style={{ display: "none" }}
                   ref={fileInputRef}
                   onChange={handleFileChange}
                 />
-                {/* 프로필 사진 or 연산자는 앞의 피연산자 기준*/}
                 <Profile
                   src={selectedFile || "./icon/designerr.png"}
                   alt="Profile"
@@ -350,9 +349,9 @@ function DesignerSignUp() {
                 />
                 <ClickBox>
                   <Btn onClick={handleImageClick}>프로필 이미지 첨부</Btn>
-                  <Text>디자이너 프로필에 사용될 사진을 첨부해주세요</Text>
+                  <ErrorMessage>디자이너 프로필에 사용될 사진을 첨부해주세요</ErrorMessage>
                 </ClickBox>
-              </ProfileBox>
+              </ProfileBox> */}
               <InputBox>
                 <InputWrap>
                   <SignUpInputBox>
