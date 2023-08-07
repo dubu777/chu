@@ -8,6 +8,5 @@ import java.util.List;
 
 public interface DesignerAlertRepository extends JpaRepository<DesignerAlert, Integer>{
 
-    //ArrayList<DesignerAlert> getAlertToDesigner(int designerSeq);
     List<DesignerAlert> getDesignerAlertBySeq(int designerSeq);
 }
