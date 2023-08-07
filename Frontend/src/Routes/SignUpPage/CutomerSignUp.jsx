@@ -228,25 +228,25 @@ function CustomerSignUp() {
   const {
     register,
     handleSubmit,
+    watch,
+    setValue,
+    getValues,
     setError,
     clearErrors,
     formState: { errors },
-    watch,
-    
-  } = useForm({mode: 'onBlur'});
+  } = useForm({ mode: "onBlur" });
 
   const userType = "customer";
 
-  const [name, setName] = useState("");
-  const [id, setId] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [gender, setGender] = useState("");
   const [isIdAvailable, setIsIdAvailable] = useState(false);
   const [isEmailAvailable, setIsEmailAvailable] = useState(false);
-  const handleGenderChange = (event) => {
-    setGender(event.target.value);
-  };
+
+  const password = watch("pwd");
+  const name = watch("name");
+  const id = watch("id");
+  const email = watch("email");
+  const gender = watch("gender");
+
   const customerData = {
     name: name,
     id: id,
@@ -254,19 +254,20 @@ function CustomerSignUp() {
     gender: gender,
     pwd: password,
   };
+
   console.log(customerData);
-  console.log(isIdAvailable);
-  console.log(isEmailAvailable);
+
   const handleIdCheck = async () => {
+    const currentId = getValues("id");
     try {
-      const idCheckResult = await checkDuplicateId(id, userType);
+      const idCheckResult = await checkDuplicateId(currentId, userType);
       if (idCheckResult) {
         swal("Error", "이미 사용 중인 아이디입니다.", "error");
         setIsIdAvailable(idCheckResult);
-        return idCheckResult;
+        return;
       } else {
         setIsIdAvailable(idCheckResult);
-        return idCheckResult;
+        return;
       }
     } catch (error) {
       console.error("ID Check Error:", error);
@@ -275,15 +276,19 @@ function CustomerSignUp() {
     }
   };
   const handleEmailCheck = async () => {
+    const currentEmail = getValues("email");
     try {
-      const emailCheckResult = await checkDuplicateEmail(email, userType);
+      const emailCheckResult = await checkDuplicateEmail(
+        currentEmail,
+        userType
+      );
       if (emailCheckResult) {
         swal("Error", "이미 사용 중인 이메일입니다.", "error");
         setIsEmailAvailable(emailCheckResult);
-        return emailCheckResult;
-      } else {  
+        return;
+      } else {
         setIsEmailAvailable(emailCheckResult);
-        return emailCheckResult;
+        return;
       }
     } catch (error) {
       console.error("Email Check Error:", error);
@@ -291,11 +296,12 @@ function CustomerSignUp() {
       return;
     }
   };
-  const onSubmit = async () => {
+  const onSubmit = async (formData) => {
     if (isIdAvailable || isEmailAvailable) return;
 
     try {
       // 회원가입 API 요청
+      console.log("formDATA: ", formData);
       const signUpResult = await signUpRequest(customerData);
       console.log("Sign-up success:", signUpResult);
       swal("Success", "회원가입이 완료되었습니다.", "success");
@@ -335,11 +341,10 @@ function CustomerSignUp() {
                         {...register("name", {
                           required: "이름을 입력해주세요.",
                         })}
-                        value={name}
-                        onChange={(e) => {setName(e.target.value)
-                        clearErrors("name")
+                        onChange={(e) => {
+                          setValue("name", e.target.value);
+                          clearErrors("name");
                         }}
-                        
                       />
                     </SignUpInputWrapper>
                     {errors.name?.type === "required" && (
@@ -354,12 +359,11 @@ function CustomerSignUp() {
                         {...register("id", {
                           required: "아이디를 입력해주세요.",
                         })}
-                        value={id}
-                        onChange={(e) => setId(e.target.value)}
-                        onBlur={() => {
-                        handleIdCheck();
-                        // clearErrors("id");
+                        onChange={(e) => {
+                          setValue("id", e.target.value);
+                          clearErrors("id");
                         }}
+                        onBlur={handleIdCheck}
                       />
                     </SignUpInputWrapper>
                     <span>{errors.id?.type}</span>
@@ -380,8 +384,10 @@ function CustomerSignUp() {
                             message: "올바른 이메일 형식이 아닙니다.",
                           },
                         })}
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        onChange={(e) => {
+                          setValue("email", e.target.value);
+                          clearErrors("email");
+                        }}
                         onBlur={handleEmailCheck}
                       />
                     </SignUpInputWrapper>
@@ -396,8 +402,8 @@ function CustomerSignUp() {
                         <CustomRadio
                           type="radio"
                           value="M"
-                          checked={gender === "M"}
-                          onChange={handleGenderChange}
+                          {...register("gender")}
+                          checked={watch("gender") === "M"}
                         />
                         남자
                       </GenderLabel>
@@ -405,12 +411,15 @@ function CustomerSignUp() {
                         <CustomRadio
                           type="radio"
                           value="F"
-                          checked={gender === "F"}
-                          onChange={handleGenderChange}
+                          {...register("gender")}
+                          checked={watch("gender") === "F"}
                         />
                         여자
                       </GenderLabel>
                     </RadioContainer>
+                    <SignUpInputWrapper>
+                      {/* 여기에 다음 입력 항목이 오면 됩니다. */}
+                    </SignUpInputWrapper>
                     <SignUpInputWrapper>
                       <SignUpTextBox>
                         <SignUpText>비밀번호</SignUpText>
@@ -427,11 +436,10 @@ function CustomerSignUp() {
                               "영문, 숫자, 특수문자를 포함한 8자 이상의 비밀번호를 입력해주세요.",
                           },
                         })}
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
                       />
+                      <ErrorMessage>{errors?.pwd?.message}</ErrorMessage>
                     </SignUpInputWrapper>
-                    <ErrorMessage>{errors?.pwd?.message}</ErrorMessage>
+
                     <SignUpInputWrapper>
                       <SignUpTextBox>
                         <SignUpText>비밀번호 확인</SignUpText>
@@ -442,12 +450,12 @@ function CustomerSignUp() {
                         {...register("pwd1", {
                           required: "비밀번호 확인을 입력해주세요.",
                           validate: (value) =>
-                            value === watch("pwd") ||
+                            value === password ||
                             "비밀번호가 일치하지 않습니다.",
                         })}
                       />
+                      <ErrorMessage>{errors?.pwd1?.message}</ErrorMessage>
                     </SignUpInputWrapper>
-                    <ErrorMessage>{errors?.pwd1?.message}</ErrorMessage>
                   </SignUpInputBox>
                 </InputWrap>
                 <CenterBox>
@@ -463,4 +471,3 @@ function CustomerSignUp() {
 }
 
 export default CustomerSignUp;
-            

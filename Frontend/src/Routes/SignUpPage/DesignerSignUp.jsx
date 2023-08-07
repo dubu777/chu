@@ -150,7 +150,7 @@ const GenderLabel = styled.label`
   align-items: center;
   margin-right: 20px;
   cursor: pointer;
-  `;
+`;
 
 const CenterBox = styled.div`
   display: flex;
@@ -209,72 +209,67 @@ function DesignerSignUp() {
   const fileInputRef = useRef(null);
   const [selectedFile, setSelectedFile] = useState(null);
 
-  // 사진을 클릭하면 파일 선택 다이얼로그를 나타내는 함수
   const handleImageClick = () => {
     fileInputRef.current.click();
   };
-
-  // 파일을 선택했을 때 호출되는 이벤트 핸들러
+  
   function handleFileChange(event) {
     const file = event.target.files[0];
-    // 파일 타입이 image를 포함하는지 확인 후 객체 생성
     if (file && file.type.includes("image")) {
       const reader = new FileReader();
       reader.onloadend = () => {
         setSelectedFile(reader.result);
+        clearErrors("profileImage"); // 이미지 선택 후 오류 초기화
       };
       reader.readAsDataURL(file);
     } else {
-      // 선택된 파일이 이미지 파일이 아닌 경우 alert 창 띄우기
       swal("⚠️ Image 파일 형식을 선택해주세요 :)");
     }
-  }
-  function Send() {
-    // 선택한 파일 사용하여 필요한 작업 수행
-    // 예: 파일 업로드, 서버에 데이터 전송 등
   }
   const {
     register,
     handleSubmit,
+    watch,
+    setValue,
+    getValues,
     setError,
     clearErrors,
     formState: { errors },
-    watch,
-    
-  } = useForm();
+  } = useForm({ mode: "onBlur" });
 
   const userType = "designer";
 
-  const [name, setName] = useState("");
-  const [id, setId] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [gender, setGender] = useState("");
-  const [certificationNum, SetCertificationNum] = useState("");
   const [isIdAvailable, setIsIdAvailable] = useState(false);
   const [isEmailAvailable, setIsEmailAvailable] = useState(false);
-  const handleGenderChange = (event) => {
-    setGender(event.target.value);
-  };
-  const designerData = {
+
+  const password = watch("pwd");
+  const name = watch("name");
+  const id = watch("id");
+  const email = watch("email");
+  const gender = watch("gender");
+  const certificationNum = watch("certificationNum")
+  const customerData = {
     name: name,
     id: id,
     email: email,
     gender: gender,
     pwd: password,
-    certificationNum: certificationNum,
+    certificationNum: certificationNum
   };
 
+  console.log(customerData);
+
   const handleIdCheck = async () => {
+    const currentId = getValues("id");
     try {
-      const idCheckResult = await checkDuplicateId(id, userType);
+      const idCheckResult = await checkDuplicateId(currentId, userType);
       if (idCheckResult) {
         swal("Error", "이미 사용 중인 아이디입니다.", "error");
         setIsIdAvailable(idCheckResult);
-        return idCheckResult;
+        return;
       } else {
         setIsIdAvailable(idCheckResult);
-        return idCheckResult;
+        return;
       }
     } catch (error) {
       console.error("ID Check Error:", error);
@@ -283,15 +278,19 @@ function DesignerSignUp() {
     }
   };
   const handleEmailCheck = async () => {
+    const currentEmail = getValues("email");
     try {
-      const emailCheckResult = await checkDuplicateEmail(email, userType);
+      const emailCheckResult = await checkDuplicateEmail(
+        currentEmail,
+        userType
+      );
       if (emailCheckResult) {
         swal("Error", "이미 사용 중인 이메일입니다.", "error");
         setIsEmailAvailable(emailCheckResult);
-        return emailCheckResult;
-      } else {  
+        return;
+      } else {
         setIsEmailAvailable(emailCheckResult);
-        return emailCheckResult;
+        return;
       }
     } catch (error) {
       console.error("Email Check Error:", error);
@@ -299,12 +298,20 @@ function DesignerSignUp() {
       return;
     }
   };
-  const onSubmit = async () => {
+  const onSubmit = async (formData) => {
     if (isIdAvailable || isEmailAvailable) return;
-
+    
+    if (!selectedFile) {
+      setError("profileImage", {
+        type: "manual",
+        message: "프로필 이미지를 첨부해주세요."
+      });
+      return;
+    }
     try {
       // 회원가입 API 요청
-      const signUpResult = await signUpRequest(designerData);
+      console.log("formDATA: ", formData);
+      const signUpResult = await signUpRequest(customerData);
       console.log("Sign-up success:", signUpResult);
       swal("Success", "회원가입이 완료되었습니다.", "success");
       navigate("/login");
@@ -327,25 +334,25 @@ function DesignerSignUp() {
           <Title>Sign Up</Title>
           <Wrapper>
             <Form onSubmit={handleSubmit(onSubmit)}>
-            <ProfileBox>
-              {/* 버튼을 클릭하면 파일 선택 다이얼로그를 나타내는 input 요소 */}
-              <input
-                type="file"
-                style={{ display: "none" }}
-                ref={fileInputRef}
-                onChange={handleFileChange}
-              />
-              {/* 프로필 사진 or 연산자는 앞의 피연산자 기준*/}
-              <Profile
-                src={selectedFile || "./icon/designerr.png"}
-                alt="Profile"
-                hasFile={selectedFile !== null}
-              />
-              <ClickBox>
-                <Btn onClick={handleImageClick}>프로필 이미지 첨부</Btn>
-                <Text>디자이너 프로필에 사용될 사진을 첨부해주세요</Text>
-              </ClickBox>
-            </ProfileBox>
+              <ProfileBox>
+                {/* 버튼을 클릭하면 파일 선택 다이얼로그를 나타내는 input 요소 */}
+                <input
+                  type="file"
+                  style={{ display: "none" }}
+                  ref={fileInputRef}
+                  onChange={handleFileChange}
+                />
+                {/* 프로필 사진 or 연산자는 앞의 피연산자 기준*/}
+                <Profile
+                  src={selectedFile || "./icon/designerr.png"}
+                  alt="Profile"
+                  hasFile={selectedFile !== null}
+                />
+                <ClickBox>
+                  <Btn onClick={handleImageClick}>프로필 이미지 첨부</Btn>
+                  <Text>디자이너 프로필에 사용될 사진을 첨부해주세요</Text>
+                </ClickBox>
+              </ProfileBox>
               <InputBox>
                 <InputWrap>
                   <SignUpInputBox>
@@ -358,11 +365,10 @@ function DesignerSignUp() {
                         {...register("name", {
                           required: "이름을 입력해주세요.",
                         })}
-                        value={name}
-                        onChange={(e) => {setName(e.target.value)
-                        clearErrors("name")
+                        onChange={(e) => {
+                          setValue("name", e.target.value);
+                          clearErrors("name");
                         }}
-                        
                       />
                     </SignUpInputWrapper>
                     {errors.name?.type === "required" && (
@@ -377,14 +383,17 @@ function DesignerSignUp() {
                         {...register("id", {
                           required: "아이디를 입력해주세요.",
                         })}
-                        value={id}
-                        onChange={(e) => {setId(e.target.value)
-                        clearErrors("id")
+                        onChange={(e) => {
+                          setValue("id", e.target.value);
+                          clearErrors("id");
                         }}
                         onBlur={handleIdCheck}
                       />
                     </SignUpInputWrapper>
-                    <ErrorMessage>{errors?.id?.message}</ErrorMessage>
+                    <span>{errors.id?.type}</span>
+                    {errors.id?.type === "required" && (
+                      <ErrorMessage>아이디를 입력해주세요.</ErrorMessage>
+                    )}
                     <SignUpInputWrapper>
                       <SignUpTextBox>
                         <SignUpText>이메일</SignUpText>
@@ -399,19 +408,44 @@ function DesignerSignUp() {
                             message: "올바른 이메일 형식이 아닙니다.",
                           },
                         })}
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        onChange={(e) => {
+                          setValue("email", e.target.value);
+                          clearErrors("email");
+                        }}
                         onBlur={handleEmailCheck}
                       />
                     </SignUpInputWrapper>
-                    <ErrorMessage>{errors?.email?.message}</ErrorMessage>
+                    {errors?.email?.type === "pattern" && (
+                      <ErrorMessage>{errors?.email?.message}</ErrorMessage>
+                    )}
+                    {errors?.email?.type === "required" && (
+                      <ErrorMessage>이메일을 입력해주세요.</ErrorMessage>
+                    )}
+                    <SignUpInputWrapper>
+                      <SignUpTextBox>
+                        <SignUpText>자격증 번호</SignUpText>
+                      </SignUpTextBox>
+                      <SignUpInput
+                        placeholder="자격증 번호"
+                        {...register("certificationNum", {
+                          required: "자격증 번호를 입력해주세요.",
+                        })}
+                        onChange={(e) => {
+                          setValue("certificationNum", e.target.value);
+                          clearErrors("certificationNum");
+                        }}
+                      />
+                    </SignUpInputWrapper>
+                    {errors.certificationNum?.type === "required" && (
+                      <ErrorMessage>자격증 번호를 입력해주세요.</ErrorMessage>
+                    )}
                     <RadioContainer>
                       <GenderLabel>
                         <CustomRadio
                           type="radio"
                           value="M"
-                          checked={gender === "M"}
-                          onChange={handleGenderChange}
+                          {...register("gender")}
+                          checked={watch("gender") === "M"}
                         />
                         남자
                       </GenderLabel>
@@ -419,12 +453,15 @@ function DesignerSignUp() {
                         <CustomRadio
                           type="radio"
                           value="F"
-                          checked={gender === "F"}
-                          onChange={handleGenderChange}
+                          {...register("gender")}
+                          checked={watch("gender") === "F"}
                         />
                         여자
                       </GenderLabel>
                     </RadioContainer>
+                    <SignUpInputWrapper>
+                      {/* 여기에 다음 입력 항목이 오면 됩니다. */}
+                    </SignUpInputWrapper>
                     <SignUpInputWrapper>
                       <SignUpTextBox>
                         <SignUpText>비밀번호</SignUpText>
@@ -441,11 +478,9 @@ function DesignerSignUp() {
                               "영문, 숫자, 특수문자를 포함한 8자 이상의 비밀번호를 입력해주세요.",
                           },
                         })}
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
                       />
+                      <ErrorMessage>{errors?.pwd?.message}</ErrorMessage>
                     </SignUpInputWrapper>
-                    <ErrorMessage>{errors?.pwd?.message}</ErrorMessage>
                     <SignUpInputWrapper>
                       <SignUpTextBox>
                         <SignUpText>비밀번호 확인</SignUpText>
@@ -456,12 +491,12 @@ function DesignerSignUp() {
                         {...register("pwd1", {
                           required: "비밀번호 확인을 입력해주세요.",
                           validate: (value) =>
-                            value === watch("pwd") ||
+                            value === password ||
                             "비밀번호가 일치하지 않습니다.",
                         })}
                       />
+                      <ErrorMessage>{errors?.pwd1?.message}</ErrorMessage>
                     </SignUpInputWrapper>
-                    <ErrorMessage>{errors?.pwd1?.message}</ErrorMessage>
                   </SignUpInputBox>
                 </InputWrap>
                 <CenterBox>
