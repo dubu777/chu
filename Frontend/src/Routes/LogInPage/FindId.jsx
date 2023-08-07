@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { setFindId, setExistState } from "../../recoil/auth";
 import { useRecoilState } from "recoil";
 import { customerFindId, designerFindId } from "../../apis/auth";
-import React, { useState } from "react";
+import React, { useState } from "react"; 
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -16,7 +16,7 @@ const Container = styled.div`
   flex-direction: column;
   padding-left: 150px;
   font-family: "Cormorant Garamond";
-`;
+`; 
 
 const Wrapper = styled.div`
   border: 0;
@@ -96,28 +96,38 @@ function FindId() {
   };
 
   const handleFindId = async () => {
-    if (userType === "customer") {
-      try {
-        const result = await customerFindId(username, useremail);
-        console.log(result);
-        setFindIdResult(result.id);
-        setExistsState(result.exists);
-        navigate("/foundid");
-      } catch (error) {
-        console.error(error);
+
+    if(username != null && useremail != null) {
+      if (userType === "customer") {
+        try {
+          const result = await customerFindId(username, useremail);
+          console.log(result);
+          setFindIdResult(result.id);
+          setExistsState(result.exists);
+          navigate("/foundid");
+        } catch (error) {
+          console.error(error);
+        }
+      }
+  
+      else if (userType === "designer") {
+        try {
+          const result = await designerFindId(username, useremail);
+          console.log(result);
+          setFindIdResult(result.id);
+          setExistsState(result.exists);
+          navigate("/foundid");
+        } catch (error) {
+          console.error(error);
+        }
+      }
+
+      else{
+        alert("당신은 고객입니까 디자이너입니까 민지입니까")
       }
     }
-
-    if (userType === "designer") {
-      try {
-        const result = await designerFindId(username, useremail);
-        console.log(result);
-        setFindIdResult(result.id);
-        setExistsState(result.exists);
-        navigate("/foundid");
-      } catch (error) {
-        console.error(error);
-      }
+    else{
+      alert("아이디와 이메일을 모두 입력해주세요!");
     }
   };
 

@@ -1,6 +1,11 @@
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useRecoilState } from "recoil";
+import { customerFindPw, designerFindPw } from "../../apis/auth";
+import { setFindPwd, setExistPwState, setAuthNumber } from "../../recoil/auth";
+
+import emailjs from "emailjs-com";
 
 const Container = styled.div`
 	background: url('./img/password.jpg');
@@ -9,7 +14,7 @@ const Container = styled.div`
 	width: 100vw;
   	height: 100vh;
 	display:flex;
-	justify-content: center;
+	justify-content: center; 
 	flex-direction: column;
 	padding-left: 150px;
 	font-family: 'Cormorant Garamond';
@@ -89,12 +94,75 @@ function FindPw() {
 	const [useremail, setuseremail] = useState("");
 	const [userType, setUserType] = useState("");
 
-	const navigate = useNavigate();
+	const [findPwResult, setFindPwResult] = useRecoilState(setFindPwd);
+	const [existPwState, setExistsPwState] = useRecoilState(setExistPwState);
+	const [authNum, setAuthNumberResult] = useRecoilState(setAuthNumber);
+
+	const navigate = useNavigate(); 
 	
   const handleUserTypeChange = (event) => {
     setUserType(event.target.value);
   };
-	console.log(userId,username,useremail);
+
+  const handleFindPw = async () => {
+	if(userId != null && username != null && useremail != null){
+		if (userType === "customer") {
+			try {
+				const result = await customerFindPw(userId, username, useremail);
+				console.log(result);
+				setFindPwResult(result.seq);
+				setExistsPwState(userType);
+				// 여기서 이메일 보내기
+
+				let confirmNumber = Math.floor(Math.random() * 900001) + 100000;
+
+				let templateParams = {
+					user_email: useremail,
+					sys_code: confirmNumber,
+				};
+				emailjs.init("c0nz-ynLc-qYrorYn");
+				emailjs.send("service_chu", "template_chu", templateParams);
+				setAuthNumberResult(confirmNumber);
+				navigate("/authnum");
+			} catch (error) {
+				console.error(error);
+			}
+		}
+	
+		else if (userType === "designer") {
+			try {
+				const result = await designerFindPw(userId, username, useremail);
+				console.log(result);
+				setFindPwResult(result.seq);
+				setExistsPwState(userType);
+				// 여기서 이메일 보내기
+
+				let confirmNumber = Math.floor(Math.random() * 900001) + 100000;
+
+				let templateParams = {
+					user_email: useremail,
+					sys_code: confirmNumber,
+				};
+				emailjs.init("c0nz-ynLc-qYrorYn");
+				emailjs.send("service_chu", "template_chu", templateParams);
+				setAuthNumberResult(confirmNumber);
+				
+				navigate("/authnum");
+			} catch (error) {
+				console.error(error);
+			}
+		}
+	
+		else{
+			alert("당신은 고객입니까 디자이너입니까 지윤입니까")
+		}
+	}
+	else{
+		alert("아이디와 이름, 이메일을 모두 입력해주세요!");
+	}
+	
+  }
+
 	return(
 		<Container>
 			<Wrapper>
@@ -116,7 +184,7 @@ function FindPw() {
             value={useremail}
             onChange={(e) => setuseremail(e.target.value)}
           ></Input>
-					<Btn><Link to="/authnum">email 인증</Link></Btn>
+			<Btn type="submit" onClick={handleFindPw}>email 인증</Btn>
 				</Box>
 				<RadioContainer>
           <TypeLabel>
