@@ -22,6 +22,7 @@ export const listinfo = async(seq)=> {
 // 디자이너 리스트 뷰 스타일 필터 api
 export const submitStyleFilter = async(hairStyleSeqNumbers)=> {
     try {
+        console.log('스타일 try문 진입')
         const hairStyleSeqs = hairStyleSeqNumbers.join(',');
         const response = await axios.get(`${BASE_URL}/designer/search/filter`, {
             params : {
@@ -29,6 +30,7 @@ export const submitStyleFilter = async(hairStyleSeqNumbers)=> {
                 "customerSeq" : 1,
         }
         })
+        console.log(response.data.result)
         return response.data.result
     } catch(error) {
         throw new Error('데이터 못가져옴')
@@ -39,9 +41,8 @@ export const submitStyleFilter = async(hairStyleSeqNumbers)=> {
 export const attachDesignerImage = async(seq, formData) => {
     try {
         console.log("try문 진입")
-        const response = await axios.patch(`${BASE_URL}/customer/detail/img/${seq}`, formData, {
+        const response = await axios.post(`${BASE_URL}/customer/detail/img/${seq}`, formData, {
             headers: {
-                // Origin: 'http://localhost:3000',
                 'Content-Type': 'multipart/form-data'
             },
         });
@@ -55,6 +56,7 @@ export const attachDesignerImage = async(seq, formData) => {
 // 마이페이지-포트폴리오 조회
 export const getPortfolio = async(seq) => {
     try {
+        console.log('포트폴리호 조회 try')
         const response = await axios.get(`${BASE_URL}/designer/detail/portfolio/${seq}`, {
         })
         return response.data.result

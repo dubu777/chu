@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { styled } from "styled-components";
 import { useState, useEffect } from "react";
 import { async } from "q";
@@ -97,19 +98,19 @@ function Portfolio(){
       ]
     });
     // 컴포넌트 마운트 될 때 API호출 
-    const [data1, setData1] = useState([]);
+    // const [data, setData] = useState([]);
     const seq = 2;
     // 마운트 될 때 실행
     // useEffect(()=> {
-    //   async function Portfolio() {
+    //   async function fetchData() {
     //     try {
-    //       const data1 = await getPortfolio(seq);
-    //       setData1(data1)
+    //       const response = await getPortfolio(seq);
+    //       setData(response)
     //     } catch(error){
-    //       console.log(error)
+    //       console.log('프로필 사진 조회 실패:', error)
     //     }
     //   }
-    //   Portfolio();
+    //   fetchData();
     // }, []);
 
     // imgSeq와 일치하는 이미지 삭제
@@ -148,6 +149,8 @@ function Portfolio(){
   
     return(
       <Container>
+        { data ? (
+          <>
         <Wrapper>
         <ImgWrapper>
         {data.imgs.map((img) => (
@@ -160,17 +163,21 @@ function Portfolio(){
       ))}
       </ImgWrapper>
       </Wrapper>
-      {data.imgs.length === 0 && (
+      {data.imgs.length === 0 || (null && (
             <MessageBox>
               <IconImg src={"./icon/file.png"}></IconImg>
               <UploadText>포트폴리오 사진을 업로드 해주세요 :)</UploadText>
             </MessageBox>
-      )}
+      ))}
       <UploadBox>
           <input type="file" onChange={handleFileChange} />
       </UploadBox>
+      </>
+        ) : (
+        <p>...loading</p>
+      )}
       </Container>
-    )
-}
+    
+)}
 
 export default Portfolio;

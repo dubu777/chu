@@ -1,4 +1,5 @@
 // 여기는 디자이너 마이페이지
+/* eslint-disable */
 import styled from "styled-components";
 import React, {useState, useEffect, useRef} from "react";
 import ProfileImg from "../../components/CustomerComponent/ProfileImg";
