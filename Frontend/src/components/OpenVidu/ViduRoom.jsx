@@ -10,14 +10,14 @@ import MicOutlinedIcon from "@mui/icons-material/MicOutlined";
 import HeadsetIcon from "@mui/icons-material/Headset";
 import VideocamOffOutlinedIcon from "@mui/icons-material/VideocamOffOutlined";
 import MicOffIcon from "@mui/icons-material/MicOff";
-import HeadsetOffIcon from "@mui/icons-material/HeadsetOff";
+import HeadsetOffIcon from "@mui/icons-material/HeadsetOff"; 
 import CallEndIcon from "@mui/icons-material/CallEnd";
 import ChatIcon from "@mui/icons-material/Chat";
 // import ChatBox from "../Chat/ChatBox";
 
 // 로컬 미디어 서버 주소
-const OPENVIDU_SERVER_URL = 'https://' + window.location.hostname + ':4443';
-const OPENVIDU_SERVER_SECRET = "MY_SECRET";
+const OPENVIDU_SERVER_URL = 'https://' + 'i9b111.q.ssafy.io' + ':8443';
+const OPENVIDU_SERVER_SECRET = "sunjin";
 
 // 전체 화면
 const Container = styled.div`
@@ -208,6 +208,23 @@ const Img = styled.img`
     height: 300px; */
     margin-right: 10px;
 `;
+
+// 버튼 클릭 핸들러
+// const getSessionId = () => {
+//   // API URL
+//   // const apiUrl = 'https://i9b111.q.io.ssafy.io/api/consulting/{상담 번호}';
+
+//   // API 호출
+//   axios.get(apiUrl)
+//     .then(response => {
+//       // API로부터 받아온 데이터를 상태에 저장
+      
+//     })
+//     .catch(error => {
+//       console.error('Error fetching data:', error);
+//     });
+// };
+
 class ViduRoom extends Component {
     
   render() {
@@ -216,6 +233,9 @@ class ViduRoom extends Component {
         <Header>
           <StudyTitle>Hair Consulting</StudyTitle>
         </Header>
+
+        {/* <button onClick={getSessionId}>상담 번호에 따른 세션 아이디</button> */}
+
         <Hr />
         <Middle>
           {this.state.session === undefined ? (
@@ -263,7 +283,9 @@ class ViduRoom extends Component {
                       <UserVideoComponent
                         streamManager={this.state.publisher}
                       />
-                      
+                      <UserVideoComponent
+                        streamManager={this.state.publisher}
+                      />
                     </StreamContainer>
                   ) : null}
                   {this.state.subscribers.map((sub, i) => (
@@ -338,7 +360,7 @@ class ViduRoom extends Component {
     this.userRef = React.createRef();
 
     this.state = {
-      mySessionId: "SessionA",
+      mySessionId: "1",
       myUserName: "Participant" + Math.floor(Math.random() * 100),
       session: undefined,
       mainStreamManager: undefined,
