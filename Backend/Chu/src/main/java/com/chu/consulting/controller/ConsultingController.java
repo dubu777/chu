@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -57,12 +58,11 @@ public class ConsultingController {
     }
 
     // 상담 취소하기
-    @PutMapping("/{consultingSeq}")
+    @PutMapping("/cancel/{consultingSeq}")
     public ResponseEntity<HttpResponseDto> cancelConsulting(@PathVariable int consultingSeq){
-        // requestbody로 userType 받기
+
         try{
             consultingService.cancelConsulting(consultingSeq);
-
         } catch(Exception e){
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));
