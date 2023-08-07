@@ -1,11 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
-import axios from "axios";
 import styled from "styled-components";
 import Step from "../../components/SignUpComponent/Step";
 import DesignerUserInfo from "../../components/SignUpComponent/DesignerUserInfo";
 import swal from "sweetalert";
-import SignUpInput from "../../components/SignUpComponent/SignUpInput";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import {
+  signUpRequest,
+  checkDuplicateId,
+  checkDuplicateEmail,
+} from "../../apis/auth";
 
 const Container = styled.div`
   text-align: center;
@@ -124,12 +128,82 @@ const SubmitBtn = styled.button`
   }
 `;
 
+const RadioContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 10px 10px;
+`;
+
+const CustomRadio = styled.input`
+  width: 15px;
+  height: 15px;
+  margin-right: 10px;
+  border-radius: 50%;
+  border: 2px solid #333;
+  background-color: ${(props) => (props.checked ? "#333" : "transparent")};
+  cursor: pointer;
+`;
+
+const GenderLabel = styled.label`
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+  cursor: pointer;
+  `;
+
 const CenterBox = styled.div`
   display: flex;
   justify-content: center;
   margin-bottom: 10px;
 `;
-
+const SignUpInputBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 60%;
+  margin: 15px 0;
+`;
+const SignUpInputWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+  flex-direction: column;
+`;
+const SignUpTextBox = styled.div`
+  display: flex;
+  justify-content: start;
+  margin: 0 0 5px 8px;
+`;
+const SignUpText = styled.span`
+  font-size: 14px;
+  font-weight: bold;
+`;
+const SignUpInput = styled.input`
+  height: 45px;
+  width: 100%;
+  border: solid 1px;
+  border-color: #d5d5d4;
+  border-radius: 5.5px;
+  padding-left: 20px;
+  margin-top: 5px;
+  outline: none; /* 포커스된 상태의 외곽선을 제거 */
+  &:focus {
+    border: 2px solid rgb(244, 153, 26);
+    + span {
+      color: rgb(244, 153, 26);
+    }
+  }
+`;
+const ErrorMessage = styled.span`
+  font-size: 10px;
+  color: red;
+`;
+const Form = styled.form``;
+const InputWrap = styled.div`
+  display: flex;
+  justify-content: space-around;
+`;
 function DesignerSignUp() {
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
@@ -159,7 +233,86 @@ function DesignerSignUp() {
     // 선택한 파일 사용하여 필요한 작업 수행
     // 예: 파일 업로드, 서버에 데이터 전송 등
   }
+  const {
+    register,
+    handleSubmit,
+    setError,
+    clearErrors,
+    formState: { errors },
+    watch,
+    
+  } = useForm();
 
+  const userType = "designer";
+
+  const [name, setName] = useState("");
+  const [id, setId] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [gender, setGender] = useState("");
+  const [certificationNum, SetCertificationNum] = useState("");
+  const [isIdAvailable, setIsIdAvailable] = useState(false);
+  const [isEmailAvailable, setIsEmailAvailable] = useState(false);
+  const handleGenderChange = (event) => {
+    setGender(event.target.value);
+  };
+  const designerData = {
+    name: name,
+    id: id,
+    email: email,
+    gender: gender,
+    pwd: password,
+    certificationNum: certificationNum,
+  };
+
+  const handleIdCheck = async () => {
+    try {
+      const idCheckResult = await checkDuplicateId(id, userType);
+      if (idCheckResult) {
+        swal("Error", "이미 사용 중인 아이디입니다.", "error");
+        setIsIdAvailable(idCheckResult);
+        return idCheckResult;
+      } else {
+        setIsIdAvailable(idCheckResult);
+        return idCheckResult;
+      }
+    } catch (error) {
+      console.error("ID Check Error:", error);
+      swal("Error", "아이디 중복 체크에 실패했습니다.", "error");
+      return;
+    }
+  };
+  const handleEmailCheck = async () => {
+    try {
+      const emailCheckResult = await checkDuplicateEmail(email, userType);
+      if (emailCheckResult) {
+        swal("Error", "이미 사용 중인 이메일입니다.", "error");
+        setIsEmailAvailable(emailCheckResult);
+        return emailCheckResult;
+      } else {  
+        setIsEmailAvailable(emailCheckResult);
+        return emailCheckResult;
+      }
+    } catch (error) {
+      console.error("Email Check Error:", error);
+      swal("Error", "이메일 중복 체크에 실패했습니다.", "error");
+      return;
+    }
+  };
+  const onSubmit = async () => {
+    if (isIdAvailable || isEmailAvailable) return;
+
+    try {
+      // 회원가입 API 요청
+      const signUpResult = await signUpRequest(designerData);
+      console.log("Sign-up success:", signUpResult);
+      swal("Success", "회원가입이 완료되었습니다.", "success");
+      navigate("/login");
+    } catch (error) {
+      console.error("Sign-up error:", error);
+      swal("Error", "회원가입에 실패했습니다.", "error");
+    }
+  };
   return (
     <Container>
       <StepWrapper>
@@ -173,6 +326,7 @@ function DesignerSignUp() {
         <InfoBox>
           <Title>Sign Up</Title>
           <Wrapper>
+            <Form onSubmit={handleSubmit(onSubmit)}>
             <ProfileBox>
               {/* 버튼을 클릭하면 파일 선택 다이얼로그를 나타내는 input 요소 */}
               <input
@@ -192,27 +346,127 @@ function DesignerSignUp() {
                 <Text>디자이너 프로필에 사용될 사진을 첨부해주세요</Text>
               </ClickBox>
             </ProfileBox>
-            <InputBox>
-              <SignUpInput text="이름" placeholder="회원명" />
-              <SignUpInput text="아이디" placeholder="아이디" />
-              {/* <Btn>중복확인</Btn> */}
-              <SignUpInput text="이메일" placeholder="이메일" />
-              {/* <Btn>중복확인</Btn> */}
-              <SignUpInput
-                text="등록번호"
-                placeholder="미용사 자격증 등록번호"
-              />
-              <SignUpInput
-                text="비밀번호"
-                placeholder="8~16자리의 비밀번호를 입력해주세요"
-              />
-              <SignUpInput text="비밀번호 확인" placeholder="비밀번호 확인 ✔" />
-              <CenterBox>
-                <SubmitBtn onClick={() => navigate("/complete")}>
-                  회원 가입하기
-                </SubmitBtn>
-              </CenterBox>
-            </InputBox>
+              <InputBox>
+                <InputWrap>
+                  <SignUpInputBox>
+                    <SignUpInputWrapper>
+                      <SignUpTextBox>
+                        <SignUpText>이름</SignUpText>
+                      </SignUpTextBox>
+                      <SignUpInput
+                        placeholder="이름"
+                        {...register("name", {
+                          required: "이름을 입력해주세요.",
+                        })}
+                        value={name}
+                        onChange={(e) => {setName(e.target.value)
+                        clearErrors("name")
+                        }}
+                        
+                      />
+                    </SignUpInputWrapper>
+                    {errors.name?.type === "required" && (
+                      <ErrorMessage>이름을 입력해주세요.</ErrorMessage>
+                    )}
+                    <SignUpInputWrapper>
+                      <SignUpTextBox>
+                        <SignUpText>아이디</SignUpText>
+                      </SignUpTextBox>
+                      <SignUpInput
+                        placeholder="아이디"
+                        {...register("id")}
+                        value={id}
+                        onChange={(e) => {setId(e.target.value)
+                        clearErrors("id")
+                        }}
+                        onBlur={handleIdCheck}
+                      />
+                    </SignUpInputWrapper>
+                    <ErrorMessage>{errors?.id?.message}</ErrorMessage>
+                    <SignUpInputWrapper>
+                      <SignUpTextBox>
+                        <SignUpText>이메일</SignUpText>
+                      </SignUpTextBox>
+                      <SignUpInput
+                        placeholder="이메일"
+                        {...register("email", {
+                          required: "이메일을 입력해주세요.",
+                          pattern: {
+                            value:
+                              /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
+                            message: "올바른 이메일 형식이 아닙니다.",
+                          },
+                        })}
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        onBlur={handleEmailCheck}
+                      />
+                    </SignUpInputWrapper>
+                    <ErrorMessage>{errors?.email?.message}</ErrorMessage>
+                    <RadioContainer>
+                      <GenderLabel>
+                        <CustomRadio
+                          type="radio"
+                          value="M"
+                          checked={gender === "M"}
+                          onChange={handleGenderChange}
+                        />
+                        남자
+                      </GenderLabel>
+                      <GenderLabel>
+                        <CustomRadio
+                          type="radio"
+                          value="F"
+                          checked={gender === "F"}
+                          onChange={handleGenderChange}
+                        />
+                        여자
+                      </GenderLabel>
+                    </RadioContainer>
+                    <SignUpInputWrapper>
+                      <SignUpTextBox>
+                        <SignUpText>비밀번호</SignUpText>
+                      </SignUpTextBox>
+                      <SignUpInput
+                        placeholder="8~16자리의 비밀번호를 입력해주세요"
+                        type="password"
+                        {...register("pwd", {
+                          required: "비밀번호를 입력해주세요.",
+                          pattern: {
+                            value:
+                              /(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}/,
+                            message:
+                              "영문, 숫자, 특수문자를 포함한 8자 이상의 비밀번호를 입력해주세요.",
+                          },
+                        })}
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                      />
+                    </SignUpInputWrapper>
+                    <ErrorMessage>{errors?.pwd?.message}</ErrorMessage>
+                    <SignUpInputWrapper>
+                      <SignUpTextBox>
+                        <SignUpText>비밀번호 확인</SignUpText>
+                      </SignUpTextBox>
+                      <SignUpInput
+                        placeholder="비밀번호 확인 ✔"
+                        type="password"
+                        {...register("pwd1", {
+                          required: "비밀번호 확인을 입력해주세요.",
+                          validate: (value) =>
+                            value === watch("pwd") ||
+                            "비밀번호가 일치하지 않습니다.",
+                        })}
+                      />
+                    </SignUpInputWrapper>
+                    <ErrorMessage>{errors?.pwd1?.message}</ErrorMessage>
+                  </SignUpInputBox>
+                </InputWrap>
+                <CenterBox>
+                  <SubmitBtn type="submit">회원 가입하기</SubmitBtn>
+                </CenterBox>
+              </InputBox>
+            </Form>
           </Wrapper>
         </InfoBox>
       </SignupBox>

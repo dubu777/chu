@@ -1,7 +1,6 @@
 import { styled } from "styled-components";
 import CustomerUserInfo from "../../components/SignUpComponent/CutomerUserInfo";
 import React, { useState, useEffect, useRef } from "react";
-import axios from "axios";
 import Step from "../../components/SignUpComponent/Step";
 import swal from "sweetalert";
 import { useNavigate } from "react-router-dom";
@@ -13,7 +12,6 @@ import {
 } from "../../apis/auth";
 
 import { useForm } from "react-hook-form";
-import { Check } from "@mui/icons-material";
 
 const Container = styled.div`
   text-align: center;
@@ -235,7 +233,7 @@ function CustomerSignUp() {
     formState: { errors },
     watch,
     
-  } = useForm();
+  } = useForm({mode: 'onBlur'});
 
   const userType = "customer";
 
@@ -353,15 +351,21 @@ function CustomerSignUp() {
                       </SignUpTextBox>
                       <SignUpInput
                         placeholder="아이디"
-                        {...register("id")}
+                        {...register("id", {
+                          required: "아이디를 입력해주세요.",
+                        })}
                         value={id}
-                        onChange={(e) => {setId(e.target.value)
-                        clearErrors("id")
+                        onChange={(e) => setId(e.target.value)}
+                        onBlur={() => {
+                        handleIdCheck();
+                        // clearErrors("id");
                         }}
-                        onBlur={handleIdCheck}
                       />
                     </SignUpInputWrapper>
-                    <ErrorMessage>{errors?.id?.message}</ErrorMessage>
+                    <span>{errors.id?.type}</span>
+                    {errors.id?.type === "required" && (
+                      <ErrorMessage>아이디를 입력해주세요.</ErrorMessage>
+                    )}
                     <SignUpInputWrapper>
                       <SignUpTextBox>
                         <SignUpText>이메일</SignUpText>
@@ -381,7 +385,12 @@ function CustomerSignUp() {
                         onBlur={handleEmailCheck}
                       />
                     </SignUpInputWrapper>
-                    <ErrorMessage>{errors?.email?.message}</ErrorMessage>
+                    {errors?.email?.type === "pattern" && (
+                      <ErrorMessage>{errors?.email?.message}</ErrorMessage>
+                    )}
+                    {errors?.email?.type === "required" && (
+                      <ErrorMessage>이메일을 입력해주세요.</ErrorMessage>
+                    )}
                     <RadioContainer>
                       <GenderLabel>
                         <CustomRadio
@@ -454,3 +463,4 @@ function CustomerSignUp() {
 }
 
 export default CustomerSignUp;
+            
