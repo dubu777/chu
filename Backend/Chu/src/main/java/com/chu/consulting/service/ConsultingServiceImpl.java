@@ -2,6 +2,7 @@ package com.chu.consulting.service;
 
 import com.chu.consulting.domain.*;
 import com.chu.consulting.repository.ConsultingRepository;
+import com.chu.consulting.repository.ConsultingResultRepository;
 import com.chu.customer.domain.Customer;
 import com.chu.customer.repository.CustomerRepository;
 import com.chu.designer.domain.Designer;
@@ -9,6 +10,8 @@ import com.chu.designer.domain.DesignerLike;
 import com.chu.designer.repository.DesignerLikeRepository;
 import com.chu.designer.repository.DesignerRepository;
 import com.chu.designer.repository.ReservationAvailableSlotRepository;
+import com.chu.global.domain.FaceDict;
+import com.chu.global.domain.HairStyleDict;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -37,6 +40,7 @@ public class ConsultingServiceImpl implements ConsultingService {
     private final DesignerLikeRepository designerLikeRepository;
     private final CustomerRepository customerRepository;
     private final DesignerRepository designerRepository;
+    private final ConsultingResultRepository consultingResultRepository;
 
     // 상담 예약하기
     @Override
@@ -132,6 +136,70 @@ public class ConsultingServiceImpl implements ConsultingService {
 
             // 평점 업데이트하기
             designerRepository.updateReviewScore(reviewScore, designerSeq);
+
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    // 상담 결과 등록
+    @Override
+    @Transactional
+    public void updateConsultingResult(RequestConsultingResultDto requestConsultingResultDto) {
+
+        try{
+            // 1) 상담 결과 내용 상담 테이블에 update 하기
+            int consultingSeq = requestConsultingResultDto.getConsultingSeq();
+            String result = requestConsultingResultDto.getReviewResult();
+
+            consultingRepository.updateConsultingResult(consultingSeq, result);
+
+
+
+            // 2) consulting_result 테이블에 헤어스타일 seq 추가하기
+
+            // 2-1) 상담 seq로 Consulting 받아와서 얼굴형 받아오기
+            Consulting consulting = consultingRepository.getConsultingBySeq(consultingSeq);
+
+            // 2-2) Consulting으로 Customer 받아오기
+            Customer customer = consulting.getCustomer();
+
+            // 2-3) Customer로 얼굴형 받아오기
+            int faceSeq = customer.getFaceDict().getSeq();
+
+            // 2-4) 받아온 faceSeq + 헤어스타일Seq + 상담Seq : consulting_result 테이블에 저장하기
+            int[] selectedHairStyle = requestConsultingResultDto.getSelectedHairStyle();
+            for(int hairStyleSeq : selectedHairStyle){
+
+                // consulting_seq 세팅
+                ConsultingResult consultingResult = new ConsultingResult();
+                consultingResult.setConsulting(consulting);
+
+                // hair_style_seq 세팅
+                HairStyleDict hd = new HairStyleDict();
+                hd.setSeq(hairStyleSeq);
+                consultingResult.setHairStyleDict(hd);
+
+                // face_seq 세팅
+                FaceDict fd = new FaceDict();
+                fd.setSeq(faceSeq);
+                consultingResult.setFaceDict(fd);
+
+                // 저장
+                consultingResultRepository.save(consultingResult);
+            }
+
+
+
+            // 3) consulting_virtual_img : isSelected 업데이트하기
+            int[] selectedImgs = requestConsultingResultDto.getSelectedImgs();
+            for(int imgSeq : selectedImgs){
+
+                consultingVirtualImgRepository.updateIsSelected(imgSeq);
+
+            }
+
+
 
         } catch(Exception e){
             e.printStackTrace();
