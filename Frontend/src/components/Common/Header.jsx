@@ -1,7 +1,10 @@
 import { styled } from "styled-components";
 import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
-
+import { useRecoilState, useRecoilValue, useRecoilCallback } from "recoil";
+import { loginState, useToggleLoginState, useIsLoggedIn } from "../../recoil/auth";
+import { useState } from "react";
+import { accessTokenState } from "../../recoil/auth";
 
 const Nav = styled(motion.nav)`
   display: flex;
@@ -80,7 +83,15 @@ const logoVariants = {
 
 function Header() {
   const navigate = useNavigate();
+  const [isLogIn, setIsLogIn] = useRecoilState(loginState);
+    const [token, setToken] = useRecoilState(accessTokenState);
 
+    // 토큰 삭제를 위한 콜백 함수
+    const handleLogout = useRecoilCallback(({ snapshot }) => async () => {
+      // 토큰 삭제
+      setToken(null);
+      // 토큰 삭제 후 추가적으로 해야 할 작업이 있다면 이곳에 추가하세요.
+    });
   return (
     <Nav>
       <Col>
@@ -101,43 +112,62 @@ function Header() {
               >Home
             </Item>
           </Link>
-          <Link to="designerdetail">
+          {/* <Link to="designerdetail">
             <Item 
               variants={logoVariants}
               whileHover="active"
               initial="nomal"
               >DesignerDetail
             </Item>
-          </Link>
+          </Link> */}
         </Items>
       </Col>
       <Col>
-        <Search >
-          {/* 나중에 다 옮기기 */}
-          <Link to="/consultresultpage">상담결과 작성//</Link>
-
-          {/* 선진 수정 */}
-          <Link to="/viduroom">상담사가 방 생성//</Link>
-          
+          {/* <Link to="/consultresultpage">상담결과 작성//</Link>
+          <Link to="/viduroom">openvidu//</Link>
           <Link to="/designermypage">디자이너MyPage//</Link>
-          <Link to="/customermypage">CustomerMyPage//</Link>
-          <Link to="usertype">
-            <Item 
-              variants={logoVariants}
-              whileHover="active"
-              initial="nomal"
-              >Sign up
-            </Item>
-          </Link>
-          <Link to="/login">
-            <Item 
-              variants={logoVariants}
-              whileHover="active"
-              initial="nomal"
-              >Log in
-            </Item>
-          </Link>
-        </Search>
+          <Link to="/customermypage">CustomerMyPage//</Link> */}
+
+          { isLogIn ?  
+            <>
+              <Item 
+                variants={logoVariants}
+                whileHover="active"
+                initial="nomal"
+                onClick={handleLogout}
+                >Log Out
+              </Item>
+              <Link to="/customermypage">
+                <Item 
+                  variants={logoVariants}
+                  whileHover="active"
+                  initial="nomal"
+                  >My Page
+                </Item>
+              </Link>
+
+            </>
+          : 
+            <>
+              <Link to="usertype">
+                <Item 
+                  variants={logoVariants}
+                  whileHover="active"
+                  initial="nomal"
+                  >Sign up
+                </Item>
+              </Link>
+              <Link to="/login">
+                <Item 
+                  variants={logoVariants}
+                  whileHover="active"
+                  initial="nomal"
+                  >Log in
+                </Item>
+              </Link>
+            </>
+          }
+        
       </Col>
     </Nav>
   );

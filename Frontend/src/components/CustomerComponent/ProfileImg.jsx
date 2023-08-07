@@ -1,6 +1,9 @@
 import { styled } from "styled-components";
 import React, { useState, useRef } from 'react';
 import swal from "sweetalert";
+import {formDataState} from "../../recoil/customer";
+import { useRecoilValue } from "recoil";
+
 
 const Profile = styled.img`
   width: 270px;
@@ -14,11 +17,19 @@ const Profile = styled.img`
 function ProfileImg() {
   const fileInputRef = useRef(null);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [formData, setFormData] = useRecoilValue(formDataState);
 
   // 사진을 클릭하면 파일 선택 다이얼로그를 나타내는 함수
   const handleImageClick = () => {
+
     fileInputRef.current.click();
+
+    const formData = new FormData();  // 폼 데이터 생성
+    formData.append("profileImg", fileInputRef.current.files[0]);
+    setFormData(formData)
   };
+
+
 
   // 파일을 선택했을 때 호출되는 이벤트 핸들러
   function handleFileChange(event){

@@ -122,7 +122,7 @@ const LikeBtn = styled.img`
 `;
 function DesignerList(props) {
   const { data, sortOrder } = props;
-
+  const navigate = useNavigate();
   // 필터에 따라 내림차순으로 정렬하는 함수
   const sortByLikeCnt = (designers) => {
     return designers.slice().sort((a, b) => b.likeCnt - a.likeCnt);
@@ -148,7 +148,7 @@ function DesignerList(props) {
   const handleLikeClick = () => {
     setLiked((prevLiked) => !prevLiked); // 좋아요 상태를 토글
   };
- 
+
   return (
     <div>
     {sortedData.map((item) => (
@@ -157,7 +157,10 @@ function DesignerList(props) {
       <Wrap>
       <Wrapper>
         <Box>
-          <DesignerImg src="./icon/designerimg.png"/>
+          <DesignerImg 
+            src="./icon/designerimg.png"
+            onClick={() => navigate("/designerdetail")}
+          />
         </Box>
         <InfoBox>
           <StarBox>

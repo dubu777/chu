@@ -6,6 +6,8 @@ import DesignerList from "../../components/DesignerComponent/DesignerList";
 import axios from "axios";
 import { useRecoilState } from "recoil";
 import {listViewState} from "../../recoil/designer";
+import {listinfo, submitStyleFilter} from "../../apis/designer"
+import { async } from "q";
 
 
 const Container = styled.div`
@@ -152,108 +154,32 @@ const SearchImg = styled.img`
   width: 18px;
   height: 18px;
   margin: 0 10px;
-
+`;
+const SubmitBtn = styled.button`
 `;
 function ListView() {
   const [data, setData] = useRecoilState(listViewState);
-  // const [data, setData] = useState(
-  //   {
-  //     "allCutHairStyle": [
-  //         {
-  //             "hairStyleSeq": 1,
-  //             "hairStyleLabel": "젤리펌"
-  //         },
-  //         {
-  //             "hairStyleSeq": 2,
-  //             "hairStyleLabel": "히피펌"
-  //         },
-  //         {
-  //             "hairStyleSeq": 3,
-  //             "hairStyleLabel": "가르마펌"
-  //         },
-  //         {
-  //             "hairStyleSeq": 4,
-  //             "hairStyleLabel": "쉐도우펌"
-  //         }
-  //     ],
-  //     "allPermHairStyle": [
-  //         {
-  //             "hairStyleSeq": 5,
-  //             "hairStyleLabel": "레이어드컷"
-  //         },
-  //         {
-  //             "hairStyleSeq": 6,
-  //             "hairStyleLabel": "허쉬컷"
-  //         },
-  //         {
-  //             "hairStyleSeq": 7,
-  //             "hairStyleLabel": "가일컷"
-  //         },
-  //         {
-  //             "hairStyleSeq": 8,
-  //             "hairStyleLabel": "울프컷"
-  //         }
-  //     ],
-  //     "designerListCnt": 3,
-  //     "designerList": [
-  //         {
-  //             "designerSeq": 1,
-  //             "designerImg": "202307211500",
-  //             "reviewScore": 4.5,
-  //             "designerName": "원영",
-  //             "introduction": "여성 펌 전문 디자이너 원영입니다 ^_^",
-  //             "reviewCnt": 3,
-  //             "hairStyleLabel": [
-  //                 "젤리펌",
-  //                 "히피펌",
-  //                 "가르마펌",
-  //                 "쉐도우펌"
-  //             ],
-  //             "likeCnt": 1,
-  //             "isLike": true,
-  //             "cost": 5000
-  //         },
-  //         {
-  //             "designerSeq": 2,
-  //             "designerImg": "202307211503",
-  //             "reviewScore": 2.0,
-  //             "designerName": "시영",
-  //             "introduction": "남성 커트 전문 디자이너 시영입니다.",
-  //             "reviewCnt": 131,
-  //             "hairStyleLabel": [
-  //                 "다운펌",
-  //                 "엘리자벳펌",
-  //                 "가르마펌",
-  //                 "쉐도우펌"
-  //             ],
-  //             "likeCnt": 15,
-  //             "isLike": false,
-  //             "cost": 7000
-  //         },
-  //         {
-  //             "designerSeq": 3,
-  //             "designerImg": "202307211505",
-  //             "reviewScore": 5.0,
-  //             "designerName": "승종",
-  //             "introduction": "남성 펌 전문 디자이너 승종입니다.",
-  //             "reviewCnt": 14,
-  //             "hairStyleLabel": [
-  //                 "야호펌",
-  //                 "하이펌",
-  //                 "으악펌",
-  //                 "그냥펌"
-  //             ],
-  //             "likeCnt": 100,
-  //             "isLike": false,
-  //             "cost": 6000
-  //         }
-  //     ]
-  // }
-  // );
   const [selectedStyle, setSelectedStyle] = useState([]);
+  const [filterData, setFilterData] = useState();
+  const sendData = filterData && filterData.designerListCnt ? filterData : data;
+  // console.log('senddata는 : ', sendData)
+  const seq =2;
+  // const displayData = filterData || data;
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await listinfo(seq);
+        setData(response);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    fetchData(); // 페이지가 마운트될 때
+    }, []); // 마운트 시에만 실행
 
   const toggleStyleType = (tag) => {
-    // 선택된 태그를 { hairStyleSeq, hairStyleLabel } 형식의 객체로 생성
     const selectedTag = {
       'hairStyleSeq': tag.hairStyleSeq,
       'hairStyleLabel': tag.hairStyleLabel,
@@ -265,19 +191,20 @@ function ListView() {
     );
   
     if (isTagSelected) {
-      // 이미 선택된 태그인 경우, 해당 태그를 제거합니다.
+      // 이미 선택된 태그인 경우, 해당 태그를 제거
       setSelectedStyle((prev) =>
         prev.filter((selectedTag) => selectedTag.hairStyleSeq !== tag.hairStyleSeq)
       );
     } else {
-      // 선택되지 않은 태그인 경우, 해당 태그를 추가합니다.
+      // 선택되지 않은 태그인 경우, 해당 태그를 추가
       setSelectedStyle((prev) => [...prev, selectedTag]);
     }
   };
   // DesignerList에서 사용할 정렬 기준을 상태로 관리
   const [sortOrder, setSortOrder] = useState(null);
   const [activeBtn, setActiveBtn] = useState(null); // 초기 상태는 아무 버튼도 선택되지 않은 상태로 설정
-  // 정렬 기준을 바꾸는 함수
+  
+  // 정렬 기준 바꾸는 함수
   const handleSortClick = (btnName) => {
     if (sortOrder === btnName) {
       setSortOrder(null); // 버튼 해제시 정렬 기준을 null로 설정
@@ -287,23 +214,28 @@ function ListView() {
   };
   const handleBtnClick = async (btnName) => {
     await handleSortClick(btnName); // 버튼을 클릭하면 정렬 기준이 변경되도록 함
-  setActiveBtn(btnName); // 클릭한 버튼을 활성화 상태로 변경
+    setActiveBtn(btnName); // 클릭한 버튼을 활성화 상태로 변경
 };
   const [handleMap, setHandleMap] = useState(false);
   const toggleMap = () => {
     setHandleMap((prev) => !prev);
   };
 
-  // selectedStyle 배열의 변경 상태를 확인하고 콘솔에 출력
-  // 백엔드로 보내야 할 통신 데이터
-  useEffect(() => {
-    const hairStyleSeqNumbers = selectedStyle.map((tag) => tag.hairStyleSeq);
-    console.log("hairStyleSeq numbers:", hairStyleSeqNumbers);
-  }, [selectedStyle]);
-  
+  // 스타일 필터 제출 통신
+  const submitFilter = async(seq) => {
+    try {
+      const hairStyleSeqNumbers = selectedStyle.map((tag) => tag.hairStyleSeq);
+      const filterData = await submitStyleFilter(hairStyleSeqNumbers);  
+      setFilterData(filterData)
+      console.log(filterData.designerListCnt)
+    }catch(error){
+      console.log(error)
+    }
+  };
+
   return (
     <Container>
-      { data ?
+      { sendData ? (
       <>
       <Box>
         <SearchBox>
@@ -351,6 +283,7 @@ function ListView() {
               >#{tag.hairStyleLabel}
             </SelectTag>
               ))}
+              <SubmitBtn onClick={submitFilter}>조회</SubmitBtn>
       </SelectedBox>
         <SelectedText></SelectedText>
           <SelectedBox>
@@ -386,11 +319,11 @@ function ListView() {
       </MapBtn>
       </BtnBox>
       </BtnWrapper>
-          <DesignerList data={data} sortOrder={sortOrder} />
+          <DesignerList data={sendData} sortOrder={sortOrder} />
         </>
-        : null }
+        ) : (
         <p>...loading</p>
-    </Container>
-  );
-}
+  )}
+  </Container>
+)};
 export default ListView;
