@@ -161,7 +161,7 @@ const SignUpInputBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 60%;
+  width: 80%;
   margin: 15px 0;
 `;
 const SignUpInputWrapper = styled.div`
@@ -374,7 +374,9 @@ function DesignerSignUp() {
                       </SignUpTextBox>
                       <SignUpInput
                         placeholder="아이디"
-                        {...register("id")}
+                        {...register("id", {
+                          required: "아이디를 입력해주세요.",
+                        })}
                         value={id}
                         onChange={(e) => {setId(e.target.value)
                         clearErrors("id")

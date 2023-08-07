@@ -146,7 +146,7 @@ const SignUpInputBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 60%;
+  width: 80%;
   margin: 15px 0;
 `;
 const SignUpInputWrapper = styled.div`
