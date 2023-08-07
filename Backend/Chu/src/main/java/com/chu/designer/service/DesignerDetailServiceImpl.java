@@ -3,6 +3,9 @@ package com.chu.designer.service;
 import com.chu.consulting.domain.ResponseConsultingDto;
 import com.chu.customer.domain.Customer;
 import com.chu.designer.domain.*;
+import com.chu.designer.repository.DesignerRepository;
+import com.chu.designer.repository.ReservationAvailableSlotRepository;
+import com.chu.global.repository.DesignerTagInfoRepository;
 import com.chu.designer.repository.DesignerDetailRepository;
 import com.chu.designer.repository.DesignerRepository;
 import com.chu.global.domain.*;
@@ -17,6 +20,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -25,6 +29,8 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
 
     private final DesignerDetailRepository designerDetailRepository;
     private final DesignerRepository designerRepository;
+    private final DesignerTagInfoRepository designerTagInfoRepository;
+    private final ReservationAvailableSlotRepository reservationAvailableSlotRepository;
 
     @Override
     public String getSavedImgFilePath(MultipartFile file) throws IOException {
@@ -107,26 +113,36 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
         }
         return true;
     }
-//    private final DesignerDetailRepository designerDetailRepository;
-//
-//    @Override
-//    public ResponseDesignerMyPageDto getMyPageInfo(int designerSeq) {
-//        ResponseDesignerMyPageDto responseDesignerMyPageDto = new ResponseDesignerMyPageDto();
-//        // 디자이너 정보
-//        Designer designer = designerDetailRepository.getDesignerInfo(designerSeq);
-//
-//        // 여기서 필요한거 뽑아쓰기
-//
-//        // 디자이너가 잘하는 머리 스타일
-//        ArrayList<ResponseHairStyleLabelDto> responseHairStyleLabelDtoArrayList = designerDetailRepository.getHairStyleTag(designerSeq);
-//
-//        // 디자이너가 그날 가능한 시간
-//        ArrayList<TimeDto> possibleTimeList = designerDetailRepository.getPossibleTimeList(designerSeq);
-//
-//
-//        return responseDesignerMyPageDto;
-//    }
-//
+
+    @Override
+    public ResponseDesignerMyPageDto getMyPageInfo(int designerSeq) {
+
+        // 디자이너 정보
+        Designer designer = designerRepository.getDesignerBySeq(designerSeq);
+        if(designer == null) return null;
+
+        // 디자이너가 잘하는 머리 스타일
+        List<String> designerTags = new ArrayList<>();
+        for( DesignerTagInfo dti : designerTagInfoRepository.findByDesignerSeqWithHairStyleDict(designerSeq)) {
+            designerTags.add(dti.getHairStyleDict() != null ? dti.getHairStyleDict().getHairStyleLabel() : null);
+        }
+
+        // 디자이너가 그날 가능한 시간
+        List<String> possibleTimes = reservationAvailableSlotRepository.findAvailableTimeByDesignerSeq(designerSeq);
+
+        ResponseDesignerMyPageDto result = ResponseDesignerMyPageDto.builder()
+                .name(designer.getName())
+                .cost(designer.getCost())
+                .email(designer.getEmail())
+                .introduction(designer.getIntroduction())
+                .img(designer.getImagePath() != null ? designer.getImagePath().getSavedImgName() : null)
+                .hairStyleTag(designerTags)
+                .selectTime(possibleTimes)
+                .build();
+
+        return result;
+    }
+
 //    @Override
 //    public boolean patchIntroduction(int designerSeq, String introduction) {
 //        return designerDetailRepository.patchIntroduction(designerSeq, introduction);
@@ -205,5 +221,13 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
 //        return resultList;
 //    }
 //
+//    @Override
+//    public boolean postPortfolioImage(int designerSeq, String img) {
+//        return designerDetailRepository.postPortfolioImage(designerSeq, img);
+//    }
 //
+//    @Override
+//    public boolean deletePortfolioImage(int designerSeq, int imageSeq) {
+//        return designerDetailRepository.deletePortfolioImage(designerSeq, imageSeq);
+//    }
 }

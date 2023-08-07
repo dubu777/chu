@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface DesignerDetailRepository extends JpaRepository<DesignerPortfolio, Integer> {
-    //
+
 //    Designer getDesignerInfo(int designerSeq);
 //
 //    ArrayList<ResponseHairStyleLabelDto> getHairStyleTag(int designerSeq);

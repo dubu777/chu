@@ -13,4 +13,7 @@ public interface DesignerTagInfoRepository extends JpaRepository<DesignerTagInfo
     @Query(value ="SELECT designer_seq FROM designer_tag_info WHERE hair_style_seq = :seq", nativeQuery = true)
     List<Integer> findDesignerSeqByHairStyleSeq(Integer seq);
 
+    @Query("SELECT dti FROM DesignerTagInfo dti JOIN FETCH dti.hairStyleDict WHERE dti.designer.seq = :designerSeq")
+    List<DesignerTagInfo> findByDesignerSeqWithHairStyleDict(Integer designerSeq);
+
 }
