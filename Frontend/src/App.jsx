@@ -42,7 +42,7 @@ function App() {
         <Route path="customersignup" element={<CustomerSignUp/>} />
         <Route path="designersignup" element={<DesignerSignUp/>} />
         <Route path="complete" element={<Complete/>} />
-        <Route path="designerdetail" element={<DesignerDetail/>} />
+        <Route path="designerdetail/:designerSeq" element={<DesignerDetail/>} />
         <Route path="worlducupimgupload" element={<WorldcupImgUpload/>} />
         <Route path="customermypage" element={<CustomerMyPage/>} >
           <Route path="result/:consultingSeq" element={<CustomerMyPage/>} />
