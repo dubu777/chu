@@ -118,6 +118,7 @@ public class CustomerServiceImpl implements CustomerService{
         customerRepository.changePwd(param.getCustomerSeq(), pwd);
     }
 
+    // 고객 알림 조회
     @Override
     public List<AlertCustomerOnLoginDto> getAlert(int customerSeq) {
 
@@ -125,7 +126,7 @@ public class CustomerServiceImpl implements CustomerService{
 
         // 고객 번호로 알림 가져오기
         List<CustomerAlert> alertList = new ArrayList<>();
-        alertList = customerAlertRepository.getCustomerAlertBySeq(customerSeq);
+        alertList = customerAlertRepository.getCustomerAlertByCustomerSeq(customerSeq);
 
         for(CustomerAlert c : alertList){
             // 상담 번호로 consulting - designer seq 받아오기
@@ -288,7 +289,7 @@ public class CustomerServiceImpl implements CustomerService{
 
             // 고객 번호로 알림 가져오기
             List<CustomerAlert> alertList = new ArrayList<>();
-            alertList = customerAlertRepository.getCustomerAlertBySeq(customerSeq);
+            alertList = customerAlertRepository.getCustomerAlertByCustomerSeq(customerSeq);
 
             for(CustomerAlert c : alertList){
                 // 상담 번호로 consulting - designer seq 받아오기
