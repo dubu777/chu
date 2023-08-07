@@ -71,12 +71,17 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
         // 현재 고객 엔티티 호출. 이거 이렇게 하면 고객 나오나? -> 찍어보기 암튼 저장되는듯
         Customer customer = customerDetailRepository.getById(customerSeq);
 
+        // fileName 고유하게 변경
+        String newFileName = customer.getSeq() + fileName;
+        log.info("new File Name: "+ newFileName);
+
         // 저장
         customer.getImagePath().setUploadImgName(fileName);
-        //customer.getImagePath().setSavedImgName(fileName);  // 원본파일명 저장은 안될듯.
+        customer.getImagePath().setSavedImgName(fileName);
 
         return true;
     }
+
     /*
     @PutMapping("/api/v2/members/{id}")
     public UpdateMemberResponse updateMemberV2(@PathVariable("id") Long id,

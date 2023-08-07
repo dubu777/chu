@@ -9,6 +9,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import com.chu.consulting.repository.ConsultingVirtualImgRepository;
+import com.chu.global.domain.ImageDto;
+import com.chu.global.exception.Exception;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -17,6 +27,7 @@ public class ConsultingServiceImpl implements ConsultingService {
 
     private final ConsultingRepository consultingRepository;
     private final ReservationAvailableSlotRepository reservationAvailableSlotRepository;
+    private final ConsultingVirtualImgRepository consultingVirtualImgRepository;
 
     // 상담 예약하기
     @Override
@@ -38,6 +49,76 @@ public class ConsultingServiceImpl implements ConsultingService {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public List<ImageDto> getConfusionImageList(int consultingSeq) {
+
+        List<ImageDto> imageList = new ArrayList<>();
+        try{
+            imageList = consultingVirtualImgRepository.getVirtualImagesInfoBySeq(consultingSeq);
+        } catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+        return imageList;
+    }
+
+
+    // 상담 취소하기
+    @Override
+    @Transactional
+    public void cancelConsulting(int consultingSeq) {
+
+        try{
+            // consulting 테이블 cancel_date 컬럼 업데이트하기
+            LocalDateTime now = LocalDateTime.now();
+            consultingRepository.updateCancelDate(consultingSeq, now);
+
+            // reservation_available_slot 테이블 state 컬럼 P로 바꾸기
+
+            // 고객이 취소한 경우 디자이너에게 알림 생성하기
+
+            // 디자이너가 취소한 경우 고객에게 알림 생성하기
+
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    @Transactional
+    public void updateConsultingUrl(int consultingSeq, String url) {
+        Consulting consulting = new Consulting();
+        consulting.setUrl(url);
+        String c_url = consulting.getUrl();
+        consultingRepository.updateConsultingUrl(consultingSeq, c_url);
+    }
+
+    @Override
+    public String participantConsulting(int consultingSeq) {
+
+        String sessionId = null;
+        Consulting consulting = new Consulting();
+
+        try{
+            consulting = consultingRepository.getConsultingBySeq(consultingSeq);
+
+            // 일치하는 상담이 없다면
+            if(consulting == null){
+                sessionId = null;
+            }
+            // 일치하는 사용자 존재
+            else{
+                sessionId = consulting.getUrl();
+            }
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return sessionId;
+    }
+
+
 
 //    @Override
 //    public String participantConsulting(int consultingSeq) {
@@ -72,24 +153,21 @@ public class ConsultingServiceImpl implements ConsultingService {
 //        else{
 //            return false;
 //        }
-//    }
-//
+//        return true;
+    
+
 //    @Override
 //    public ResponseConsultingResultDto getConsultingResult(int consultingSeq) {
-//        return consultingRepository.getConsultingResult(consultingSeq);
+////        return consultingRepository.getConsultingResult(consultingSeq);
+//        return null;
 //    }
-//
-//    @Override
-//    public boolean updateConsultingUrl(int consultingSeq, String url) {
-//        return consultingRepository.updateConsultingUrl(consultingSeq, url);
-//    }
-//
+
 //    @Override
 //    public boolean updateConsultingReview(RequestConsultingReviewDto requestConsultingReviewDto) {
 //
 //        boolean isSuccess = true;
-//        // 로직
-//
+        // 로직
+
 //        // 해당 상담 번호로 리뷰 등록
 //        consultingRepository.updateReviewContent(requestConsultingReviewDto);
 //
@@ -104,7 +182,8 @@ public class ConsultingServiceImpl implements ConsultingService {
 //
 //    @Override
 //    public ResponseConsultingReviewInfoDto getConsultingResultDetailInfo(int consultingSeq) {
-//        return consultingRepository.getConsultingResultDetailInfo(consultingSeq);
+////        return consultingRepository.getConsultingResultDetailInfo(consultingSeq);
+//        return null;
 //    }
 //
 //    @Override
@@ -113,11 +192,12 @@ public class ConsultingServiceImpl implements ConsultingService {
 //        boolean isSuccess = true;
 //
 //        // 상담 결과 헤어스타일 등록
-//        consultingRepository.updateConsultingResultStyle(requestConsultingUpdateDto);
-//
-//        // 상담 결과 이미지 등록
-//        consultingRepository.updateSelectedConsultingResultImage(requestConsultingUpdateDto);
-//
-//        return isSuccess;
+////        consultingRepository.updateConsultingResultStyle(requestConsultingUpdateDto);
+////
+////        // 상담 결과 이미지 등록
+////        consultingRepository.updateSelectedConsultingResultImage(requestConsultingUpdateDto);
+////
+////        return isSuccess;
+////    }
 //    }
 }

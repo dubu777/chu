@@ -7,9 +7,12 @@ import com.chu.designer.domain.ResponseDesignerMyPageUpdateShowDto;
 import com.chu.designer.domain.ResponseDesignerMyPageDto;
 import com.chu.global.domain.ImageDto;
 import com.chu.global.domain.TimeDto;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.List;
 
 public interface DesignerDetailService {
 //
@@ -37,12 +40,14 @@ public interface DesignerDetailService {
 //    // 디자이너 상담 예약 내역 조회
 //    ArrayList<ResponseConsultingDto> getReservationList(int designerSeq);
 //
-//    // 디자이너 포트폴리오 조회
-//    ArrayList<ImageDto> getPortfolio(int designerSeq);
-//
-//    // 디자이너 포트폴리오 업데이트
-//    boolean postPortfolioImage(int designerSeq, String img);
-//
-//    // 디자이너 포트폴리오 삭제
-//    boolean deletePortfolioImage(int designerSeq, int imageSeq);
+    // 디자이너 포트폴리오 조회
+    List<ImageDto> getPortfolio(int designerSeq);
+
+    // 이미지 경로 가져오기
+    String getSavedImgFilePath(MultipartFile file) throws IOException;
+    // 디자이너 포트폴리오 업데이트
+    int postPortfolioImage(int designerSeq, String img);
+
+    // 디자이너 포트폴리오 삭제
+    boolean deletePortfolioImage(int imageSeq);
 }
