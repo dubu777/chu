@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const Container = styled.div`
 	background: url('./img/password.jpg');
@@ -57,10 +58,43 @@ const Btn = styled.button`
 	color: white;
 	cursor: pointer;
 `;
+const RadioContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 10px 10px;
+`;
 
+const CustomRadio = styled.input`
+  width: 15px;
+  height: 15px;
+  margin-right: 10px;
+  border-radius: 50%;
+  border: 2px solid #333;
+  background-color: ${(props) => (props.checked ? "#333" : "transparent")};
+  cursor: pointer;
+`;
+
+const TypeLabel = styled.label`
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+  cursor: pointer;
+`;
 
 
 function FindPw() {
+	const [userId, setUserId] = useState("");
+	const [username, setUsername] = useState("");
+	const [useremail, setuseremail] = useState("");
+	const [userType, setUserType] = useState("");
+
+	const navigate = useNavigate();
+	
+  const handleUserTypeChange = (event) => {
+    setUserType(event.target.value);
+  };
+
 	return(
 		<Container>
 			<Wrapper>
@@ -71,6 +105,26 @@ function FindPw() {
 					<Input type="email" placeholder="e-mail"></Input>
 					<Btn><Link to="/authnum">email 인증</Link></Btn>
 				</Box>
+				<RadioContainer>
+          <TypeLabel>
+            <CustomRadio
+              type="radio"
+              value="customer"
+              checked={userType === "customer"}
+              onChange={handleUserTypeChange}
+            />
+            일반회원
+          </TypeLabel>
+          <TypeLabel>
+            <CustomRadio
+              type="radio"
+              value="designer"
+              checked={userType === "designer"}
+              onChange={handleUserTypeChange}
+            />
+            디자이너
+          </TypeLabel>
+        </RadioContainer>
 			</Wrapper>
 		</Container>
 	);
