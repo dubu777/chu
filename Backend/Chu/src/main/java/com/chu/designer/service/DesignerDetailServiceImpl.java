@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -74,10 +75,23 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
     }
 
     @Override
-    public ArrayList<ImageDto> getPortfolio(int designerSeq) {
+    public List<ImageDto> getPortfolio(int designerSeq) {
+
+        List<ImageDto> imgList =new ArrayList<>();
+
         try{
-            return (ArrayList<ImageDto>) designerDetailRepository.getPortfolioByDesignerPortfolio(designerSeq);
+            List<DesignerPortfolio> designerPortfolios = designerDetailRepository.getPortfolioByDesignerPortfolio(designerSeq);
+
+            for (int i = 0; i < designerPortfolios.size(); i++) {
+                ImageDto imgDto = new ImageDto();
+                imgDto.setImgSeq(designerPortfolios.get(i).getSeq());
+                imgDto.setImgName(designerPortfolios.get(i).getImagePath().getSavedImgName());
+                imgList.add(imgDto);
+            }
+
+            return imgList;
         } catch (Exception e){
+
             e.printStackTrace();
             return null;
         }
