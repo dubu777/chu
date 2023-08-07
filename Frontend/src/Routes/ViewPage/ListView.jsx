@@ -158,9 +158,11 @@ const SearchImg = styled.img`
 const SubmitBtn = styled.button`
 `;
 function ListView() {
-  const [data, setData] = useState(null);
+  const [data, setData] = useRecoilState(listViewState);
   const [selectedStyle, setSelectedStyle] = useState([]);
-  const [filterData, setFilterData] = useState(null);
+  const [filterData, setFilterData] = useState();
+  const sendData = filterData && filterData.designerListCnt ? filterData : data;
+  // console.log('senddata는 : ', sendData)
   const seq =2;
   // const displayData = filterData || data;
 
@@ -201,7 +203,8 @@ function ListView() {
   // DesignerList에서 사용할 정렬 기준을 상태로 관리
   const [sortOrder, setSortOrder] = useState(null);
   const [activeBtn, setActiveBtn] = useState(null); // 초기 상태는 아무 버튼도 선택되지 않은 상태로 설정
-  // 정렬 기준을 바꾸는 함수
+  
+  // 정렬 기준 바꾸는 함수
   const handleSortClick = (btnName) => {
     if (sortOrder === btnName) {
       setSortOrder(null); // 버튼 해제시 정렬 기준을 null로 설정
@@ -223,7 +226,8 @@ function ListView() {
     try {
       const hairStyleSeqNumbers = selectedStyle.map((tag) => tag.hairStyleSeq);
       const filterData = await submitStyleFilter(hairStyleSeqNumbers);  
-      setData(filterData)
+      setFilterData(filterData)
+      console.log(filterData.designerListCnt)
     }catch(error){
       console.log(error)
     }
@@ -231,7 +235,7 @@ function ListView() {
 
   return (
     <Container>
-      { data ?
+      { sendData ? (
       <>
       <Box>
         <SearchBox>
@@ -315,11 +319,11 @@ function ListView() {
       </MapBtn>
       </BtnBox>
       </BtnWrapper>
-          <DesignerList data={data} sortOrder={sortOrder} />
+          <DesignerList data={sendData} sortOrder={sortOrder} />
         </>
-        : null }
+        ) : (
         <p>...loading</p>
-    </Container>
-  );
-}
+  )}
+  </Container>
+)};
 export default ListView;
