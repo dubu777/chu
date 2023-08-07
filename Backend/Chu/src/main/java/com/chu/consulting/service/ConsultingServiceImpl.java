@@ -16,7 +16,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +27,7 @@ public class ConsultingServiceImpl implements ConsultingService {
 
     private final ConsultingRepository consultingRepository;
     private final ReservationAvailableSlotRepository reservationAvailableSlotRepository;
+    private final ConsultingVirtualImgRepository consultingVirtualImgRepository;
 
     // 상담 예약하기
     @Override
@@ -153,19 +153,19 @@ public class ConsultingServiceImpl implements ConsultingService {
 //        else{
 //            return false;
 //        }
-        return true;
+//        return true;
     
 
-    @Override
-    public ResponseConsultingResultDto getConsultingResult(int consultingSeq) {
-//        return consultingRepository.getConsultingResult(consultingSeq);
-        return null;
-    }
+//    @Override
+//    public ResponseConsultingResultDto getConsultingResult(int consultingSeq) {
+////        return consultingRepository.getConsultingResult(consultingSeq);
+//        return null;
+//    }
 
-    @Override
-    public boolean updateConsultingReview(RequestConsultingReviewDto requestConsultingReviewDto) {
-
-        boolean isSuccess = true;
+//    @Override
+//    public boolean updateConsultingReview(RequestConsultingReviewDto requestConsultingReviewDto) {
+//
+//        boolean isSuccess = true;
         // 로직
 
 //        // 해당 상담 번호로 리뷰 등록
@@ -177,27 +177,27 @@ public class ConsultingServiceImpl implements ConsultingService {
 //        // 디자이너 평점 수정
 //        consultingRepository.updateDesignerReviewScore(requestConsultingReviewDto);
 //
-        return isSuccess;
-    }
-
-    @Override
-    public ResponseConsultingReviewInfoDto getConsultingResultDetailInfo(int consultingSeq) {
-//        return consultingRepository.getConsultingResultDetailInfo(consultingSeq);
-        return null;
-    }
-
-    @Override
-    public boolean updateConsultingResult(RequestConsultingUpdateDto requestConsultingUpdateDto) {
-
-        boolean isSuccess = true;
-
-        // 상담 결과 헤어스타일 등록
-//        consultingRepository.updateConsultingResultStyle(requestConsultingUpdateDto);
-//
-//        // 상담 결과 이미지 등록
-//        consultingRepository.updateSelectedConsultingResultImage(requestConsultingUpdateDto);
-//
 //        return isSuccess;
 //    }
-    }
+//
+//    @Override
+//    public ResponseConsultingReviewInfoDto getConsultingResultDetailInfo(int consultingSeq) {
+////        return consultingRepository.getConsultingResultDetailInfo(consultingSeq);
+//        return null;
+//    }
+//
+//    @Override
+//    public boolean updateConsultingResult(RequestConsultingUpdateDto requestConsultingUpdateDto) {
+//
+//        boolean isSuccess = true;
+//
+//        // 상담 결과 헤어스타일 등록
+////        consultingRepository.updateConsultingResultStyle(requestConsultingUpdateDto);
+////
+////        // 상담 결과 이미지 등록
+////        consultingRepository.updateSelectedConsultingResultImage(requestConsultingUpdateDto);
+////
+////        return isSuccess;
+////    }
+//    }
 }
