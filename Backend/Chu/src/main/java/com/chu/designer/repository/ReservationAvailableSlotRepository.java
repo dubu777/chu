@@ -4,9 +4,8 @@ import com.chu.designer.domain.ReservationAvailableSlot;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 public interface ReservationAvailableSlotRepository extends JpaRepository<ReservationAvailableSlot, Integer> {
@@ -17,4 +16,13 @@ public interface ReservationAvailableSlotRepository extends JpaRepository<Reserv
     @Modifying
     @Query("UPDATE ReservationAvailableSlot r SET r.state = 'R' WHERE r.date = :date and r.time = :time and r.designer.seq = :designerSeq")
     void updateReserveSlotState(String date, String time, int designerSeq);
+
+    @Query(value = "SELECT time\n" +
+            "FROM reservation_available_slot\n" +
+            "WHERE DATE_FORMAT(date, '%Y-%m-%d') = CURRENT_DATE\n" +
+            "AND designer_seq = :designerSeq\n" +
+            "AND state='P'", nativeQuery = true)
+    //@Query("SELECT r.time FROM ReservationAvailableSlot r WHERE FUNCTION('DATE_FORMAT', r.date, '%Y-%m-%d') = CURRENT_DATE AND r.designerSeq = :designerSeq AND r.state = 'P'")
+    List<String> findAvailableTimeByDesignerSeq(@Param("designerSeq") Integer designerSeq);
+
 }

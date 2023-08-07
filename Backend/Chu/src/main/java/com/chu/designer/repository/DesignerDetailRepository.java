@@ -1,16 +1,17 @@
-package com.chu.designer.repository;
-
-import com.chu.consulting.domain.ResponseConsultingDto;
-import com.chu.designer.domain.Designer;
-import com.chu.designer.domain.RequestDesignerInfoUpdateDto;
-import com.chu.designer.domain.RequestReservationPossibleDateAndTimeDto;
-import com.chu.designer.domain.ResponseDesignerAreaInfo;
-import com.chu.global.domain.*;
-
-import java.sql.Date;
-import java.util.ArrayList;
-
-public interface DesignerDetailRepository {
+//package com.chu.designer.repository;
+//
+//import com.chu.consulting.domain.ResponseConsultingDto;
+//import com.chu.designer.domain.Designer;
+//import com.chu.designer.domain.RequestDesignerInfoUpdateDto;
+//import com.chu.designer.domain.RequestReservationPossibleDateAndTimeDto;
+//import com.chu.designer.domain.ResponseDesignerAreaInfo;
+//import com.chu.global.domain.*;
+//import org.springframework.data.jpa.repository.JpaRepository;
+//
+//import java.sql.Date;
+//import java.util.ArrayList;
+//
+//public interface DesignerDetailRepository extends JpaRepository<Designer, Integer> {
 //
 //    Designer getDesignerInfo(int designerSeq);
 //
@@ -49,5 +50,5 @@ public interface DesignerDetailRepository {
 //    boolean postPortfolioImage(int designerSeq, String img);
 //
 //    boolean deletePortfolioImage(int designerSeq, int imageSeq);
-
-}
+//
+//}

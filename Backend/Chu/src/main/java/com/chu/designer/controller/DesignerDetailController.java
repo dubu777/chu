@@ -24,8 +24,8 @@ import java.util.ArrayList;
 public class DesignerDetailController {
 
     private final DesignerDetailService designerDetailService;
-//
-//    @GetMapping("/")
+
+//    @GetMapping("/{designer-seq}")
 //    public ResponseEntity<HttpResponseDto> getDesignerDetailInfo(@PathVariable("designer-seq") int designerSeq) {
 //        ResponseDesignerMyPageUpdateShowDto responseDesignerMyPageUpdateShowDto = new ResponseDesignerMyPageUpdateShowDto();
 //
@@ -39,7 +39,7 @@ public class DesignerDetailController {
 //            return ResponseEntity.ok(httpResponseDto);
 //        }
 //    }
-//
+
 //    @PutMapping("/")
 //    public ResponseEntity<HttpResponseDto> updateDesignerInfo(@PathVariable("designer-seq") int designerSeq, @RequestBody RequestDesignerInfoUpdateDto requestDesignerInfoUpdateDto) {
 //
@@ -53,20 +53,20 @@ public class DesignerDetailController {
 //            return ResponseEntity.ok(httpResponseDto);
 //        }
 //    }
-//
-//    @GetMapping("/mypage")
-//    public ResponseEntity<HttpResponseDto> getMyPageInfo(@PathVariable("designer-seq") int designerSeq) {
-//        ResponseDesignerMyPageDto responseDesignerMyPageDto = designerDetailService.getMyPageInfo(designerSeq);
-//
-//        if (responseDesignerMyPageDto != null) {
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseDesignerMyPageDto);
-//            return ResponseEntity.ok(httpResponseDto);
-//        } else {
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
-//            return ResponseEntity.ok(httpResponseDto);
-//        }
-//    }
-//
+
+    @GetMapping("/mypage/{designer-seq}")
+    public ResponseEntity<HttpResponseDto> getMyPageInfo(@PathVariable("designer-seq") int designerSeq) {
+        ResponseDesignerMyPageDto responseDesignerMyPageDto = designerDetailService.getMyPageInfo(designerSeq);
+
+        if (responseDesignerMyPageDto != null) {
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseDesignerMyPageDto);
+            return ResponseEntity.ok(httpResponseDto);
+        } else {
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
+        }
+    }
+
 //    @PatchMapping("/introduction")
 //    public ResponseEntity<HttpResponseDto> patchIntroduction(@PathVariable("designer-seq") int designerSeq, @RequestParam String introduction) {
 //
