@@ -147,16 +147,16 @@ public class CustomerServiceImpl implements CustomerService{
 
             TokenDto tokenDto = new TokenDto(accessToken,refreshToken);
 
-//            // Redis 저장 : 만료 시간 설정으로 자동 삭제 처리
-//            redisTemplate.opsForValue().set(
-//                    authentication.getName(),
-//                    refreshToken,
-//                    refreshTokenExpire,
-//                    TimeUnit.MILLISECONDS
-//            );
+            // Redis 저장 : 만료 시간 설정으로 자동 삭제 처리
+            redisTemplate.opsForValue().set(
+                    authentication.getName(),
+                    refreshToken,
+                    refreshTokenExpire,
+                    TimeUnit.MILLISECONDS
+            );
 
-            //HttpHeaders httpHeaders = new HttpHeaders();
-            //httpHeaders.add("Authorization", "Bearer "+tokenDto.getAccessToken());
+//            HttpHeaders httpHeaders = new HttpHeaders();
+//            httpHeaders.add("Authorization", "Bearer "+tokenDto.getAccessToken());
 
             responseCustomerLoginDetailDto.setToken(tokenDto);
 
