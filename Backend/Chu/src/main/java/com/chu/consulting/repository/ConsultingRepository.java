@@ -12,7 +12,6 @@ import java.util.List;
 public interface ConsultingRepository extends JpaRepository<Consulting, Integer> {
     Integer countByDesignerSeq(Integer seq);
 
-
     @Query(value = "SELECT c.designer.seq, AVG(c.review.reviewScore)" +
             " FROM Consulting c" +
             " GROUP BY c.designer.seq")
@@ -31,7 +30,10 @@ public interface ConsultingRepository extends JpaRepository<Consulting, Integer>
     @Query("UPDATE Consulting c SET c.cancelDate = :now WHERE c.seq = :consultingSeq")
     void updateCancelDate(int consultingSeq, LocalDateTime now);
 
-
+    // 세션ID를 url 컬럼에 기록
+    @Modifying
+    @Query("UPDATE Consulting c SET c.url = :url WHERE c.seq = :seq")
+    void updateConsultingUrl(int seq, String url);
 
 
 //    String participantConsulting(int consultingSeq);

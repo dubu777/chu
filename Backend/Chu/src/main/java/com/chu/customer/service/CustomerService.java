@@ -6,6 +6,7 @@ import com.chu.global.domain.*;
 import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface CustomerService {
 //
@@ -28,12 +29,18 @@ public interface CustomerService {
     // 고객 비밀번호 변경
     void changePwd(RequestCustomerChangePwdDto param);
 
+    // 고객 알림 조회
+    List<AlertCustomerOnLoginDto> getAlert(int customerSeq);
+
     
     // 고객 로그인
     //boolean signIn(RequestSignInDto requestSignInDto);
 //
     // 로그인 테스트
     ResponseCustomerLoginDetailDto signIn(RequestSignInDto requestSignInDto);
+
+    // 고객 알림 읽음 처리
+    void checkAlert(int alertSeq);
 //
 //    // 고객 정보 조회
 //    Customer getCustomerInfo(String id);

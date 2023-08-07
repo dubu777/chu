@@ -2,12 +2,18 @@ package com.chu.consulting.controller;
 
 import com.chu.consulting.domain.*;
 import com.chu.consulting.service.ConsultingService;
+import com.chu.designer.domain.HairStyleDto;
+import com.chu.designer.service.DesignerSearchService;
 import com.chu.global.domain.HttpResponseDto;
+import com.chu.global.domain.ImageDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -18,22 +24,23 @@ import org.springframework.web.bind.annotation.*;
 public class ConsultingController {
 
     private final ConsultingService consultingService;
-//
-//    @GetMapping("/")
-//    public ResponseEntity<HttpResponseDto> participantConsulting(@PathVariable("consulting_seq") int consultingSeq) {
-//
-//        String url = consultingService.participantConsulting(consultingSeq);
-//
-//        if (url != null) {
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(200, url);
-//            return ResponseEntity.ok(httpResponseDto);
-//        }
-//        else {
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
-//            return ResponseEntity.ok(httpResponseDto);
-//        }
-//    }
-//
+    private final DesignerSearchService designerSearchService;
+
+    @GetMapping("/{consulting_seq}")
+    public ResponseEntity<HttpResponseDto> participantConsulting(@PathVariable("consulting_seq") int consultingSeq) {
+
+        String sessionId = null;
+
+        try{
+            sessionId = consultingService.participantConsulting(consultingSeq);
+        } catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), sessionId));
+    }
+
     // 상담 예약하기
     @PostMapping("")
     public ResponseEntity<HttpResponseDto> postConsulting(@RequestBody RequestConsultingDto requestConsultingDto){
@@ -51,9 +58,9 @@ public class ConsultingController {
     }
 
     // 상담 취소하기
-    @PutMapping("/{consultingSeq}")
+    @PutMapping("/cancel/{consultingSeq}")
     public ResponseEntity<HttpResponseDto> cancelConsulting(@PathVariable int consultingSeq){
-        // requestbody로 userType 받기
+
         try{
             consultingService.cancelConsulting(consultingSeq);
         } catch(Exception e){
@@ -63,6 +70,20 @@ public class ConsultingController {
 
         return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), null));
     }
+
+    @PatchMapping("/{consulting_seq}")
+    public ResponseEntity<HttpResponseDto> updateConsultingSessionId(@PathVariable("consulting_seq") int consultingSeq, @RequestParam String sessionId){
+
+        try{
+            consultingService.updateConsultingUrl(consultingSeq, sessionId);
+        } catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), null));
+    }
+
 
 //
 //    @PatchMapping("/")
@@ -140,19 +161,28 @@ public class ConsultingController {
 //        }
 //    }
 //
-//    @GetMapping("/result-element")
-//    public ResponseEntity<HttpResponseDto> getConsultingResultDetailInfo(@RequestParam int consultingSeq){
-//
-//        ResponseConsultingReviewInfoDto responseConsultingReviewInfoDto = consultingService.getConsultingResultDetailInfo(consultingSeq);
-//
-//        if (responseConsultingReviewInfoDto != null) {
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseConsultingReviewInfoDto);
-//            return ResponseEntity.ok(httpResponseDto);
-//        }
-//        else {
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
-//            return ResponseEntity.ok(httpResponseDto);
-//        }
-//    }
-//
+    @GetMapping("/result-element")
+    public ResponseEntity<HttpResponseDto> getConsultingResultDetailInfo(@RequestParam int consultingSeq){
+
+        ResponseConsultingReviewInfoDto responseConsultingReviewInfoDto = new ResponseConsultingReviewInfoDto();
+
+        try{
+            List<HairStyleDto> allCutHairStyle = designerSearchService.showCategoryView(1);
+            List<HairStyleDto> allPermHairStyle = designerSearchService.showCategoryView(2);
+            List<ImageDto> imgs = consultingService.getConfusionImageList(consultingSeq);
+
+            responseConsultingReviewInfoDto.setCutHairStyle(allCutHairStyle);
+            responseConsultingReviewInfoDto.setPermHairStyle(allPermHairStyle);
+            responseConsultingReviewInfoDto.setImgs(imgs);
+
+        } catch (Exception e){
+            e.printStackTrace();
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
+        }
+
+        HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseConsultingReviewInfoDto);
+        return ResponseEntity.ok(httpResponseDto);
+    }
+
 }

@@ -1,18 +1,19 @@
-//package com.chu.designer.repository;
-//
-//import com.chu.consulting.domain.ResponseConsultingDto;
-//import com.chu.designer.domain.Designer;
-//import com.chu.designer.domain.RequestDesignerInfoUpdateDto;
-//import com.chu.designer.domain.RequestReservationPossibleDateAndTimeDto;
-//import com.chu.designer.domain.ResponseDesignerAreaInfo;
-//import com.chu.global.domain.*;
-//import org.springframework.data.jpa.repository.JpaRepository;
-//
-//import java.sql.Date;
-//import java.util.ArrayList;
-//
-//public interface DesignerDetailRepository extends JpaRepository<Designer, Integer> {
-//
+package com.chu.designer.repository;
+
+import com.chu.consulting.domain.ResponseConsultingDto;
+import com.chu.designer.domain.*;
+import com.chu.global.domain.*;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
+import javax.transaction.Transactional;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+
+public interface DesignerDetailRepository extends JpaRepository<DesignerPortfolio, Integer> {
+
 //    Designer getDesignerInfo(int designerSeq);
 //
 //    ArrayList<ResponseHairStyleLabelDto> getHairStyleTag(int designerSeq);
@@ -45,10 +46,9 @@
 //
 //    ArrayList<ImageDto> getConfusionImages(int consultinSeq);
 //
-//    ArrayList<ImageDto> getPortfolio(int designerSeq);
-//
-//    boolean postPortfolioImage(int designerSeq, String img);
-//
-//    boolean deletePortfolioImage(int designerSeq, int imageSeq);
-//
-//}
+
+    @Query(value = "SELECT dp FROM DesignerPortfolio dp WHERE dp.designer.seq = :designerSeq")
+    List<DesignerPortfolio> getPortfolioByDesignerPortfolio(int designerSeq);
+
+    void deleteBySeq(int imageSeq);
+}
