@@ -3,12 +3,12 @@ import css from "../font/font.css";
 import MainView from "../components/HomeComponent/MainView";
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
-import { loginState } from ".././recoil/auth";
+import { loginState, loginResultState } from ".././recoil/auth";
 import { useRecoilState } from 'recoil';
 import { accessTokenState } from '.././recoil/auth';
-import { RecoilRoot, useRecoilValueLoadable } from 'recoil';
 import { useQuery } from "react-query";
 import { fetchMain } from "../apis/common";
+
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -106,10 +106,10 @@ const Name = styled.p`
 `;
 
 function Home() {
-  // const accessToken = localStorage.getItem('accessTokenState');
+  const [loginResult, setLoginResult] = useRecoilState(loginResultState);
   const [token, setToken] = useRecoilState(accessTokenState);
-  console.log(token);
   const { isLoading, data } = useQuery(["noLogInMain"], fetchMain);
+  console.log(loginResult);
   if (isLoading) {
     return <div>Loading...{data}</div>;
   }

@@ -1,8 +1,12 @@
 import {styled} from "styled-components";
 import 'react-calendar/dist/Calendar.css'; // css import
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { loginResultState, loginState } from '../../recoil/auth';
+import { useRecoilState } from 'recoil';
+import { useQuery } from "react-query";
+import { getDesignerDetail } from '../../apis/designer';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -221,17 +225,18 @@ const pofolVariants = {
 
 function DesignerDetail() {
 	const navigate = useNavigate();
+	const [designerDetail, setDesignerDetail] = useState(null);
 	const [handleLike, setHandleLike] = useState(false); // 좋아요 상태를 state로 관리
 	const OPofolImgs = [
-		"img/opofol1.jpg",
-		"img/opofol2.jpg",
-		"img/opofol3.jpg",
-		"img/opofol4.jpg",
-		"img/opofol5.jpg",
-		"img/opofol6.jpg",
-		"img/opofol7.jpg",
-		"img/opofol8.jpg",
-		"img/opofol9.jpg",
+		"/img/opofol1.jpg",
+		"/img/opofol2.jpg",
+		"/img/opofol3.jpg",
+		"/img/opofol4.jpg",
+		"/img/opofol5.jpg",
+		"/img/opofol6.jpg",
+		"/img/opofol7.jpg",
+		"/img/opofol8.jpg",
+		"/img/opofol9.jpg",
 	];
 	const settings = {
     className: "center",
@@ -267,53 +272,7 @@ function DesignerDetail() {
 			}
 		]
 	};
-	const [data, setData] = useState({
-		"designerSeq" : 1,
-		"name" : "소희",
-		"introduction" : "고객님의 이미지 맞춤으로 트랜디한 스타일을 찾아드리겠습니다.",
-		"address" : "대전 봉명동",
-		"salonName" : "Chu헤어",
-		"designerImg" : "",
-		"allReviewScore" : 4.8,
-		"likeCnt" : 78,
-		"isLike" : true,
-		"hairStyleLabel" : [
-								"레이어드컷",
-								"복구펌",
-								"히피펌",
-								"C컬"
-		],
-		"portfolio" : [
-				{
-						"imgSeq" : 1,
-						"imgName" : "img1.png",
-						"sequence" : 1
-				},
-				{
-						"imgSeq" : 2,
-						"imgName" : "img2.png",
-						"sequence" : 2
-				},
-		],
-		"review" : [
-				{
-						"customerIdx" : 1,
-						"consulting_date" : "2022.12.15 17:54",
-						"review_score" : 4.7,
-						"customerId" : "ssafy",
-						"reviewContent" : "좋아요!"
-				},
-				{
-					"customerIdx" : 2,
-					"consulting_date" : "2022.12.16 17:54",
-					"review_score" : 4.5,
-					"customerId" : "wjh1224",
-					"reviewContent" : "덕문에 인생 머리 찾았어요!"					
-				}
-		],
-		"cost" : 5000
-			
-	})
+	
   const toggleLike = () => {
     setHandleLike((prev) => !prev); // 좋아요 상태를 토글
   };
@@ -335,23 +294,31 @@ function DesignerDetail() {
   const handleTimeClick = (time) => {
     setSelectedTime(time);
   };
-  return(
+	const { designerSeq } = useParams();
+	const [loginResult, setLoginResult] = useRecoilState(loginResultState);
+	const customerSeq = loginResult ? loginResult.customerInfo.customerSeq : 0;
+  const { data, isLoading, isError } = useQuery(['designerDetail', designerSeq, customerSeq], () => getDesignerDetail(designerSeq, customerSeq));
+	
+	if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error loading designer details</div>;
+  
+	return(
 		<Container>
 			<Wrapper>
 				<Wrap>
 				<InfoWrapper>
 					<DesignerInfoBox>
-						<DesignerImg src="icon/designerimg.png"/>
+						<DesignerImg src="/icon/designerimg.png"/>
 						<DesignerNameWrap>
 							<DesignerNameBox>
 							<DesignerName>{data.name} 디자이너</DesignerName>
 							<LikeBox onClick={toggleLike} handlelike={handleLike}>
 								{handleLike ? (
 									// 좋아요가 눌려있을 때 빨간색 하트 아이콘
-									<Icon src="icon/hearto.png" />
+									<Icon src="/icon/hearto.png" />
 								) : (
 									// 좋아요가 눌려있지 않을 때 빈 하트 아이콘
-									<Icon src="icon/heartx.png" />
+									<Icon src="/icon/heartx.png" />
 								)}
 								<Text>{data.likeCnt}</Text>
 							</LikeBox>
@@ -359,11 +326,11 @@ function DesignerDetail() {
 							<Hr/>
 							<Box>
 								<Box>
-								<CostIcon src="icon/money.png"/>
+								<CostIcon src="/icon/money.png"/>
 								<Text>{data.cost}</Text>
 								</Box>
 								<ReservBox onClick={() => navigate("/reservation")} whileHover={{backgroundColor: "rgb(244,153,26)"}}>
-									<Icon src="./icon/reservBtn.png"/>
+									<Icon src="/icon/reservBtn.png"/>
 									<Text>예약</Text>
 								</ReservBox>
 							</Box>
@@ -401,7 +368,7 @@ function DesignerDetail() {
 				<InfoBox>
 					<SubTitle>별점</SubTitle>
 					<Box>
-						<Icon src="icon/star.png" />
+						<Icon src="/icon/star.png" />
 						<Text>{data.allReviewScore}</Text>
 					</Box>
 					<SubTitle>상담후기</SubTitle>
@@ -415,7 +382,7 @@ function DesignerDetail() {
 								<ReviewIdBox>
 									{review.customerId}
 								</ReviewIdBox>
-								<SIcon src="icon/star.png" />
+								<SIcon src="/icon/star.png" />
 								<Text>{review.review_score}</Text>
 							</Box>
 							<Text>{review.reviewContent}</Text>

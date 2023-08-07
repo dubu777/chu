@@ -113,7 +113,7 @@ const handleUserTypeChange = (event) => {
 		if (userType === "customer") {
 			try {
 				const result = await customerlogIn(username, password);
-				console.log(result);
+				console.log(">>>>>>>>>>", result);
 				setLoginResult(result);
 				setAccessToken(result.token.accessToken);
 				navigate("/")
@@ -124,7 +124,6 @@ const handleUserTypeChange = (event) => {
 		}
 		if (userType === "designer") {
 			try {
-				console.log(">>>>>>>>>>>>>>>>>>>>>>");
 				const result = await designerlogIn(username, password);
 				console.log(result);
 				setLoginResult(result);
@@ -136,10 +135,8 @@ const handleUserTypeChange = (event) => {
 			}
 		}
 	};
+	console.log(loginResult);
 
-	// console.log('Username:', username);
-  // console.log('Password:', password);
-	// console.log('userType:', userType )
 	return(
 		<Container>
 			<Wrapper>

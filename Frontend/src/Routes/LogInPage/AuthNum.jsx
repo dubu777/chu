@@ -1,5 +1,8 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { useState } from 'react';
+import { useRecoilState } from "recoil";
+import { Link, useNavigate } from "react-router-dom";
+import { setAuthNumber } from "../../recoil/auth";
 
 const Container = styled.div`
 	background: url('./img/password.jpg');
@@ -10,7 +13,7 @@ const Container = styled.div`
 	display:flex;
 	justify-content: center;
 	flex-direction: column;
-	padding-left: 150px;
+	padding-left: 150px; 
 	font-family: 'Cormorant Garamond';
 `;
 
@@ -58,16 +61,37 @@ const Btn = styled.button`
 `;
 
 
+
 function AuthNum() {
+
+	const [authNum, setAuthNumberResult] = useRecoilState(setAuthNumber);
+	const [userInputAuthNum, setUserInputAuthNum] = useState('');
+	const navigate = useNavigate();
+
+	const handleCheckAuthNum = (event) => {
+		if(userInputAuthNum == authNum){
+			alert("인증에 성공하였습니다! 비밀번호 변경 페이지로 이동합니다!");
+			navigate("/changepw");
+		}
+		else{
+			alert("인증 비밀번호가 잘못 됐네요! 다시 이메일 인증을 시도해주세요!");
+			navigate("/findpw");
+		}
+	}
+
+	const handleInputChange = (event) => {
+		setUserInputAuthNum(event.target.value);
+	}
+
 	return(
 		<Container>
 			<Wrapper>
 				<Box>
 					<Title>인증번호 확인</Title>
 					<br></br>
-					<Input placeholder="인증번호 입력"></Input>
+					<Input placeholder="인증번호 입력" value={userInputAuthNum} onChange={handleInputChange}></Input>
 					<br></br>
-						<Btn type="submit"><Link to="/changepw">확인</Link></Btn>
+						<Btn type="submit" onClick={handleCheckAuthNum}>확인</Btn>
 				</Box>				
 			</Wrapper>
 		</Container>
