@@ -37,6 +37,9 @@ public interface DesignerService {
     // 디자이너 알림 조회
     List<AlertDesignerOnLoginDto> getAlert(int designerSeq);
 
+    // 디자이너 알림 읽음 처리
+    void checkAlert(int alertSeq);
+
 //    // 디자이너 회원가입
 //    boolean signUp(RequestDesignerSignUpDto requestDesignerSignUpDto);
 //
