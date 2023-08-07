@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,20 +68,25 @@ public class ConsultingServiceImpl implements ConsultingService {
         consultingRepository.updateConsultingUrl(consultingSeq, c_url);
     }
 
+    // 상담 예약하기
     @Override
-    public boolean createConsulting(RequestConsultingDto requestConsultingDto) {
-        // 상담 가능 상태 테이블 상태 변경
-//        boolean updateImpossibleConsulting = consultingRepository.updateImpossibleConsulting(requestConsultingDto);
-//        // 상담 테이블 행 추가
-//        boolean createConsultingState = consultingRepository.createConsulting(requestConsultingDto);
-//
-//        if (updateImpossibleConsulting && createConsultingState) {
-//            return true;
-//        }
-//        else{
-//            return false;
-//        }
-        return true;
+    @org.springframework.transaction.annotation.Transactional
+    public void postConsulting(Consulting consulting) {
+
+        try{
+            consulting.setCreatedDate(LocalDateTime.now());
+            // 상담 예약하기
+            consultingRepository.save(consulting);
+
+            // 예약 완료 후 ‘reservation_available_slot’ 테이블 ‘state’ 컬럼 ‘R’로 바꾸기
+            String date = consulting.getConsultingDate().getDate();
+            String time = consulting.getConsultingDate().getTime();
+            int designerSeq = consulting.getDesigner().getSeq();
+            reservationAvailableSlotRepository.updateReserveSlotState(date, time, designerSeq);
+
+        } catch(java.lang.Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override

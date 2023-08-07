@@ -9,8 +9,8 @@ public interface ConsultingService {
     // 상담 참여
     String participantConsulting(int consultingSeq);
 
-    // 상담 신청, 내역 생성
-    boolean createConsulting(RequestConsultingDto requestConsultingDto);
+    // 상담 예약하기
+    void postConsulting(Consulting consulting);
 
     // 상담 취소
     boolean deleteConsulting(int consultingSeq);

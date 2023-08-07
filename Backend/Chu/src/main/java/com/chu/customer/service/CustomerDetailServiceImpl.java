@@ -27,12 +27,11 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
 
     @Override
     public String getSavedImgFilePath(MultipartFile file) throws IOException {
-        String rootDir = "/home/ubuntu";
-        String uploadDir = "/chu/images/profile/";
+        String uploadDir = "/chu/upload/images/customer/";
         String fileName = file.getOriginalFilename();
 
-        File directory = new File(rootDir + uploadDir);
-        String filePath = rootDir + uploadDir + fileName;
+        File directory = new File(uploadDir);
+        String filePath = uploadDir + fileName;
         File destFile = new File(filePath);
         System.out.println(filePath);
 
@@ -45,9 +44,14 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
             }
         }
 
-        file.transferTo(destFile);
-        log.info("서비스 >>> 파일 저장 성공! filePath : " + filePath);
-        return filePath;
+        try {
+            file.transferTo(destFile);
+            log.info("서비스 >>> 파일 저장 성공! filePath : " + filePath);
+            return filePath;
+        } catch (IOException e) {
+            log.error("파일 저장 실패:", e);
+            throw new IOException("파일 저장 실패: " + e.getMessage(), e);
+        }
     }
 
     @Override
@@ -55,10 +59,18 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
     public Boolean patchImage(Integer customerSeq, String fileName) {
 
         Customer customer = customerDetailRepository.getById(customerSeq);
+
+        // fileName 고유하게 변경
+        String newFileName = customer.getSeq() + fileName;
+        log.info("new File Name: "+ newFileName);
+
+        // 저장
+        customer.getImagePath().setUploadImgName(fileName);
         customer.getImagePath().setSavedImgName(fileName);
 
         return true;
     }
+
     /*
     @PutMapping("/api/v2/members/{id}")
     public UpdateMemberResponse updateMemberV2(@PathVariable("id") Long id,

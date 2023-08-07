@@ -17,6 +17,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/consulting")
+@CrossOrigin(origins = "http://localhost:3000")
 @RequiredArgsConstructor
 
 public class ConsultingController {
@@ -39,19 +40,20 @@ public class ConsultingController {
         return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), sessionId));
     }
 
-    @PostMapping("/")
-    public ResponseEntity<HttpResponseDto> postConsulting(@RequestBody RequestConsultingDto requestConsultingDto) {
+    // 상담 예약하기
+    @PostMapping("")
+    public ResponseEntity<HttpResponseDto> postConsulting(@RequestBody RequestConsultingDto requestConsultingDto){
 
-        boolean isSuccess = consultingService.createConsulting(requestConsultingDto);
+        try{
+            // requestConsultingDto -> entity 만들기
+            Consulting consulting = requestConsultingDto.toConsultingEntity();
+            consultingService.postConsulting(consulting);
+        } catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));
+        }
 
-        if (isSuccess) {
-            HttpResponseDto httpResponseDto = new HttpResponseDto(200, null);
-            return ResponseEntity.ok(httpResponseDto);
-        }
-        else {
-            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
-            return ResponseEntity.ok(httpResponseDto);
-        }
+        return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), null));
     }
 
     @PatchMapping("/{consulting_seq}")
