@@ -94,15 +94,28 @@ function FindPw() {
   const handleUserTypeChange = (event) => {
     setUserType(event.target.value);
   };
-
+	console.log(userId,username,useremail);
 	return(
 		<Container>
 			<Wrapper>
 				<Box>
 					<Title>Find Password</Title>
-					<Input placeholder="ID"></Input>
-					<Input placeholder="Name"></Input>
-					<Input type="email" placeholder="e-mail"></Input>
+					<Input
+            placeholder="ID"
+            value={userId}
+            onChange={(e) => setUserId(e.target.value)}
+          ></Input>
+					<Input
+            placeholder="Name"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          ></Input>
+					<Input
+            type="email"
+            placeholder="e-mail"
+            value={useremail}
+            onChange={(e) => setuseremail(e.target.value)}
+          ></Input>
 					<Btn><Link to="/authnum">email 인증</Link></Btn>
 				</Box>
 				<RadioContainer>
