@@ -25,7 +25,11 @@ public interface ConsultingService {
 
     // 상담 후기 등록
     void updateConsultingReview(RequestConsultingReviewDto requestConsultingReviewDto);
-//
+
+    // 상담 결과 등록
+    void updateConsultingResult(RequestConsultingResultDto requestConsultingResultDto);
+
+
 //    // 상담 신청, 내역 생성
 //    boolean createConsulting(RequestConsultingDto requestConsultingDto);
 //

@@ -98,36 +98,22 @@ public class ConsultingController {
         return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), null));
     }
 
-//
-//    @PatchMapping("/")
-//    public ResponseEntity<HttpResponseDto> updateConsultingUrl(@PathVariable("consulting-seq") int consultingSeq, @RequestParam String url){
-//
-//        boolean isSuccess = consultingService.updateConsultingUrl(consultingSeq, url);
-//
-//        if (isSuccess) {
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(200, null);
-//            return ResponseEntity.ok(httpResponseDto);
-//        }
-//        else {
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
-//            return ResponseEntity.ok(httpResponseDto);
-//        }
-//    }
-//
-//    @DeleteMapping("/")
-//    public ResponseEntity<HttpResponseDto> deleteConsulting(@PathVariable("consulting-seq") int consultingSeq) {
-//
-//        boolean isSuccess = consultingService.deleteConsulting(consultingSeq);
-//
-//        if (isSuccess) {
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(200, null);
-//            return ResponseEntity.ok(httpResponseDto);
-//        }
-//        else {
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
-//            return ResponseEntity.ok(httpResponseDto);
-//        }
-//    }
+    // 상담 결과 등록
+    @PatchMapping("/result")
+    public ResponseEntity<HttpResponseDto> updateConsultingResult(@RequestBody RequestConsultingResultDto requestConsultingResultDto){
+
+        try{
+            consultingService.updateConsultingResult(requestConsultingResultDto);
+        } catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), null));
+    }
+
+
+
 //
 //    @GetMapping("/result")
 //    public ResponseEntity<HttpResponseDto> getConsultingResult(@PathVariable("consulting-seq") int consultingSeq) {

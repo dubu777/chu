@@ -41,6 +41,10 @@ public interface ConsultingRepository extends JpaRepository<Consulting, Integer>
     @Query("UPDATE Consulting c SET c.review.reviewScore = :score, c.review.reviewContent = :content WHERE c.seq = :seq")
     void updateScoreAndContent(double score, String content, int seq);
 
+    // 상담 결과 업데이트
+    @Modifying
+    @Query("UPDATE Consulting c SET c.result = :result WHERE c.seq = :seq")
+    void updateConsultingResult(int seq, String result);
 
 
 //    String participantConsulting(int consultingSeq);
