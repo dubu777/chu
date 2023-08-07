@@ -10,6 +10,9 @@ public interface ConsultingService {
 
     // 상담 예약하기
     void postConsulting(Consulting consulting);
+
+    // 상담 취소하기
+    void cancelConsulting(int consultingSeq);
 //    // 상담 참여
 //    String participantConsulting(int consultingSeq);
 //

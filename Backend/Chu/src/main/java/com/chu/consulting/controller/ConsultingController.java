@@ -49,20 +49,21 @@ public class ConsultingController {
 
         return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), null));
     }
-//    @PostMapping("/")
-//    public ResponseEntity<HttpResponseDto> postConsulting(@RequestBody RequestConsultingDto requestConsultingDto) {
-//
-//        boolean isSuccess = consultingService.createConsulting(requestConsultingDto);
-//
-//        if (isSuccess) {
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(200, null);
-//            return ResponseEntity.ok(httpResponseDto);
-//        }
-//        else {
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
-//            return ResponseEntity.ok(httpResponseDto);
-//        }
-//    }
+
+    // 상담 취소하기
+    @PutMapping("/{consultingSeq}")
+    public ResponseEntity<HttpResponseDto> cancelConsulting(@PathVariable int consultingSeq){
+        // requestbody로 userType 받기
+        try{
+            consultingService.cancelConsulting(consultingSeq);
+        } catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), null));
+    }
+
 //
 //    @PatchMapping("/")
 //    public ResponseEntity<HttpResponseDto> updateConsultingUrl(@PathVariable("consulting-seq") int consultingSeq, @RequestParam String url){

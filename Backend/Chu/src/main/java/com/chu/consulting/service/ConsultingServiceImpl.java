@@ -39,6 +39,27 @@ public class ConsultingServiceImpl implements ConsultingService {
         }
     }
 
+    // 상담 취소하기
+    @Override
+    @Transactional
+    public void cancelConsulting(int consultingSeq) {
+
+        try{
+            // consulting 테이블 cancel_date 컬럼 업데이트하기
+            LocalDateTime now = LocalDateTime.now();
+            consultingRepository.updateCancelDate(consultingSeq, now);
+
+            // reservation_available_slot 테이블 state 컬럼 P로 바꾸기
+
+            // 고객이 취소한 경우 디자이너에게 알림 생성하기
+
+            // 디자이너가 취소한 경우 고객에게 알림 생성하기
+
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
 //    @Override
 //    public String participantConsulting(int consultingSeq) {
 //        return consultingRepository.participantConsulting(consultingSeq);
