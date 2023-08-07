@@ -19,8 +19,8 @@ public interface DesignerDetailService {
     // 디자이너 마이페이지 정보 조회
     ResponseDesignerMyPageDto getMyPageInfo(int designerSeq);
 
-//    // 디자이너 한줄평 수정
-//    boolean patchIntroduction(int designerSeq, String introduction);
+    // 디자이너 한줄평 수정
+    boolean patchIntroduction(int designerSeq, String introduction);
 //
 //    // 디자이너 대표 이미지 수정
 //    boolean patchImg(int designerSeq, String img);

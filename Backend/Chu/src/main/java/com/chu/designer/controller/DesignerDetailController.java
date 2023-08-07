@@ -1,21 +1,20 @@
 package com.chu.designer.controller;
 
-import com.chu.consulting.domain.ResponseConsultingDto;
 import com.chu.designer.domain.*;
 import com.chu.designer.service.DesignerDetailService;
 import com.chu.global.domain.HttpResponseDto;
 import com.chu.global.domain.ImageDto;
-import com.chu.global.domain.TimeDto;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -67,19 +66,29 @@ public class DesignerDetailController {
         }
     }
 
-//    @PatchMapping("/introduction")
-//    public ResponseEntity<HttpResponseDto> patchIntroduction(@PathVariable("designer-seq") int designerSeq, @RequestParam String introduction) {
-//
-//        boolean isSuccess = designerDetailService.patchIntroduction(designerSeq, introduction);
-//
-//        if (isSuccess) {
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(200, introduction);
-//            return ResponseEntity.ok(httpResponseDto);
-//        } else {
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
-//            return ResponseEntity.ok(httpResponseDto);
-//        }
-//    }
+    @PatchMapping("/introduction/{designer-seq}")
+    public ResponseEntity<HttpResponseDto> patchIntroduction(@PathVariable("designer-seq") int designerSeq,
+                                                             @RequestParam String introduction) throws JsonProcessingException {
+
+        boolean isSuccess = designerDetailService.patchIntroduction(designerSeq, introduction);
+
+        if (isSuccess) {
+            // Introduction 객체를 Map<String, Object> 형태로 변환
+            Map<String, Object> dataMap = new HashMap<>();
+            dataMap.put("introduction", introduction);
+
+            // HttpResponseDto 객체 생성
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, dataMap);
+
+            return ResponseEntity.ok(httpResponseDto);
+        } else {
+            Map<String, Object> dataMap = new HashMap<>();
+            dataMap.put("introduction", null);
+
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, dataMap);
+            return ResponseEntity.ok(httpResponseDto);
+        }
+    }
 //
 //    @PatchMapping("/img")
 //    public ResponseEntity<HttpResponseDto> patchImg(@PathVariable("designer-seq") int designerSeq, @RequestParam String img) {

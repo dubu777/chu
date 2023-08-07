@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
@@ -143,10 +144,16 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
         return result;
     }
 
-//    @Override
-//    public boolean patchIntroduction(int designerSeq, String introduction) {
-//        return designerDetailRepository.patchIntroduction(designerSeq, introduction);
-//    }
+    @Override
+    @Transactional
+    public boolean patchIntroduction(int designerSeq, String introduction) {
+        Designer designer = designerRepository.getDesignerBySeq(designerSeq);
+        if(designer==null) return false;
+        designer.setIntroduction(introduction);
+
+        return true;
+    }
+
 //
 //    @Override
 //    public boolean patchImg(int designerSeq, String img) {
