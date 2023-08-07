@@ -38,6 +38,9 @@ public interface CustomerService {
 //
     // 로그인 테스트
     ResponseCustomerLoginDetailDto signIn(RequestSignInDto requestSignInDto);
+
+    // 고객 알림 읽음 처리
+    void checkAlert(int alertSeq);
 //
 //    // 고객 정보 조회
 //    Customer getCustomerInfo(String id);

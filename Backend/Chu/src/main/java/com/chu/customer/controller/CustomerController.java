@@ -121,6 +121,20 @@ public class CustomerController {
         return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), alert));
     }
 
+    // 알림 읽음 처리
+    @PutMapping(value = "/alert/{alertSeq}")
+    public ResponseEntity<HttpResponseDto> checkAlert(@PathVariable int alertSeq){
+
+        try{
+            customerService.checkAlert(alertSeq);
+        } catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), null));
+    }
+
 //
 //    @PostMapping("/like")
 //    public ResponseEntity<HttpResponseDto> changeLikeInfo(@RequestBody RequestLikeDto requestLikeDto){
