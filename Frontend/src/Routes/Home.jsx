@@ -7,6 +7,8 @@ import { loginState } from ".././recoil/auth";
 import { useRecoilState } from 'recoil';
 import { accessTokenState } from '.././recoil/auth';
 import { RecoilRoot, useRecoilValueLoadable } from 'recoil';
+import { useQuery } from "react-query";
+import { fetchMain } from "../apis/common";
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -105,57 +107,10 @@ function Home() {
   // const accessToken = localStorage.getItem('accessTokenState');
   const [token, setToken] = useRecoilState(accessTokenState);
   console.log(token);
-
-
-  const [data, setdata] = useState({
-    bestDesigner: [
-      {
-        img: "designer1.png",
-        name: "재현",
-        designerIdx: 1,
-      },
-      {
-        img: "designer2.png",
-        name: "지윤",
-        designerIdx: 2,
-      },
-
-      {
-        img: "designer3.png",
-        name: "민지",
-        designerIdx: 3,
-      },
-      {
-        img: "designer3.png",
-        name: "재현",
-        designerIdx: 3,
-      },
-      {
-        img: "designer3.png",
-        name: "선진",
-        designerIdx: 3,
-      },
-      {
-        img: "designer3.png",
-        name: "하진",
-        designerIdx: 3,
-      },
-    ],
-    statistics: [
-      {
-        img: "faceImg1.png",
-        label: "레이어드컷",
-      },
-      {
-        img: "faceImg2.png",
-        label: "허쉬컷",
-      },
-      {
-        img: "faceImg3.png",
-        label: "레이어드컷",
-      },
-    ],
-  });
+  const { isLoading, data } = useQuery(["noLogInMain"], fetchMain);
+  if (isLoading) {
+    return <div>Loading...{data}</div>;
+  }
   return (
     <Wrapper>
       <Main src="img/banner-lmg.png"></Main>

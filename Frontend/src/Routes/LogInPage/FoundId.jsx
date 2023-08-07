@@ -12,9 +12,7 @@ const Container = styled.div`
 	justify-content: center;
 	flex-direction: column;
 	padding-left: 150px;
-	/* font-family: 'Cormorant Garamond'; */
 	font-family: "San Francisco";
-	/* font-family: 'NanumSquareNeo-Variable'; */
 `;
 
 const Wrapper = styled.div`

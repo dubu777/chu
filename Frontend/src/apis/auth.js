@@ -23,8 +23,6 @@ export const designerlogIn = async (username, password) => {
       "id" : username,
       "pwd" : password,
     });
-    console.log("<<<<<<<<<<<<<<<<<<<<");
-    console.log("<<<<<<<<<<<<",response.data.result)
     return response.data.result;
   } catch (error) {
     throw new Error('로그인 실패');
@@ -33,7 +31,11 @@ export const designerlogIn = async (username, password) => {
 
 export const findId = async (username, useremail) => {
   try {
-    const response = await axios.get(`${BASE_URL}/customer/find-id?name=${username}&email=${useremail}`);
+    const response = await axios.get(`${BASE_URL}/customer/find-id`, { params: {
+      name: username,
+      email: useremail,
+    }});
+    console.log(response.data.result)
     return response.data.result;
   } catch (error) {
     throw new Error('로그인 실패');
