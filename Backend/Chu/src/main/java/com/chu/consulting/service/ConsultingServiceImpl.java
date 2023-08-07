@@ -43,7 +43,7 @@ public class ConsultingServiceImpl implements ConsultingService {
             String date = consulting.getConsultingDate().getDate();
             String time = consulting.getConsultingDate().getTime();
             int designerSeq = consulting.getDesigner().getSeq();
-            reservationAvailableSlotRepository.updateReserveSlotState(date, time, designerSeq);
+            reservationAvailableSlotRepository.updateReserveSlotStateToR(date, time, designerSeq);
 
         } catch(Exception e){
             e.printStackTrace();
@@ -70,15 +70,20 @@ public class ConsultingServiceImpl implements ConsultingService {
     public void cancelConsulting(int consultingSeq) {
 
         try{
-            // consulting 테이블 cancel_date 컬럼 업데이트하기
+            // 1) consulting 테이블 cancel_date 컬럼 업데이트하기
             LocalDateTime now = LocalDateTime.now();
             consultingRepository.updateCancelDate(consultingSeq, now);
 
-            // reservation_available_slot 테이블 state 컬럼 P로 바꾸기
 
-            // 고객이 취소한 경우 디자이너에게 알림 생성하기
-
-            // 디자이너가 취소한 경우 고객에게 알림 생성하기
+            // 2) reservation_available_slot 테이블 state 컬럼 P로 바꾸기
+            // 2-1) 상담 번호로 상담 받아오기
+            Consulting consulting = consultingRepository.getConsultingBySeq(consultingSeq);
+            // 2-2) 상담에서 날짜, 시간, 디자이너 seq 뽑기
+            String date = consulting.getConsultingDate().getDate();
+            String time = consulting.getConsultingDate().getTime();
+            int designerSeq = consulting.getDesigner().getSeq();
+            // 2-3) reservation_available_slot 테이블 state 컬럼 P로 update
+            reservationAvailableSlotRepository.updateReserveSlotStateToP(date, time, designerSeq);
 
         } catch(Exception e){
             e.printStackTrace();
