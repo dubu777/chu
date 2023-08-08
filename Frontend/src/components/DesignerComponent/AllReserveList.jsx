@@ -223,19 +223,24 @@ function AllReserveList(){
     const getSession = async () => {
     try {
       const response  = await getSessionId(consultSeq);
-      console.log(response)
-      setSessionId(response)
+      console.log('가져왔다',response);
+      setSessionId(response);
 
     } catch(error){
       console.log(error)
     }
   };
+  useEffect(() => {
+    if (sessionId) {
+      console.log("나이거보내고싶어", sessionId);
+      navigate(`/viduroom/${sessionId}`);
+    }
+  }, [sessionId]);
 
-  const goViduRoom = () => {
-     navigate('/viduroom', {state: {sessionId}});
-    //  navigate(`/viduroom/${sessionId}`);
-  };
-
+  // const sendSession = () => {
+  //   console.log("나이거보내고싶어", sessionId)
+  //   navigate(`/viduroom/${sessionId}`);
+  // };
 
   // useEffect(() => {   // consultSeq 변경에 따른 API get 함수 호출
   //   getSession();
@@ -272,10 +277,7 @@ function AllReserveList(){
                         <ModalBtn onClick={()=>openModal(item)}>상세 보기</ModalBtn>
                       </Box>
                       <Box>
-                        <EnterBtn onClick={()=>
-                        {getSession()
-                          goViduRoom()
-                        }}>
+                        <EnterBtn onClick={()=>getSession()}>
                           {/* <Link to={{ pathname: '/viduroom', state: { sessionData: 'sessionId' } }}>상담 입장</Link> */}
                         상담입장</EnterBtn>
                       </Box>
