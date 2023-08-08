@@ -93,7 +93,6 @@ export const postPortfolio = async (seq, formData) => {
       formData,
       {
         headers: {
-          // Origin: 'http://localhost:3000',
           "Content-Type": "multipart/form-data",
         },
       }
