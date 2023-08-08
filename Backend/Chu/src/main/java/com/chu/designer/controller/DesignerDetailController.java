@@ -159,7 +159,10 @@ public class DesignerDetailController {
             return ResponseEntity.ok(httpResponseDto);
         }
 
-        HttpResponseDto httpResponseDto = new HttpResponseDto(200, portfolioList);
+        Map<String, List<ImageDto>> result = new HashMap<>();
+        result.put("imgs", portfolioList);
+
+        HttpResponseDto httpResponseDto = new HttpResponseDto(200, result);
         return ResponseEntity.ok(httpResponseDto);
     }
 
