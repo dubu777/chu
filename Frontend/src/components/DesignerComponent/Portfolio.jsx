@@ -125,13 +125,13 @@ function Portfolio(){
   const handleFileChange = async(event) => {
     const file = event.target.files[0];
     const formData = new FormData();
-    formData.append("image", file);
+    formData.append("img", file);
 
     try {
       // 이미지를 서버에 업로드하고 imgSeq를 받아옴
       const response = await postPortfolio(seq, formData);
         const newImg = {
-          imgSeq: response.imgSeq, // 서버에서 받아온 imgSeq 사용
+          imgSeq: response, // 서버에서 받아온 imgSeq 사용
           imgName: URL.createObjectURL(file),
         }
         setData({ ...data, imgs: [...data.imgs, newImg] });
