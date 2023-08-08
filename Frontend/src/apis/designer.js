@@ -108,10 +108,10 @@ export const postPortfolio = async (seq, formData) => {
 export const deletePortfolio = async (seq, imgSeq) => {
   console.log(seq, imgSeq);
   try {
-    const response = await axios.delete(
+    const response = await axios.delete( 
       `${BASE_URL}/designer/detail/portfolio/${seq}`,
       {
-        params: { imgSeq: imgSeq },
+        params: { "imgSeq": imgSeq },
       }
     );
     return response.data.result;
