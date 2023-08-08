@@ -4,7 +4,7 @@ import ViduRoom from "./ViduRoom";
 import { loginResultState, loginState } from '../../recoil/auth';
 import { useRecoilState, useRecoilValue  } from 'recoil';
 import { useQuery } from "react-query";
-import { fetchMain } from "../apis/common";
+import { fetchMain } from "../../apis/common.js";
 
 function ViduRoomWrapper() {
     // loginResultState에 담겨있는 로그인 회원 정보를 조회해온 뒤 사용(토큰)

@@ -111,7 +111,7 @@ export const deletePortfolio = async (seq, imgSeq) => {
     const response = await axios.delete( 
       `${BASE_URL}/designer/detail/portfolio/${seq}`,
       {
-        params: { "imgSeq": imgSeq },
+        params: { "imageSeq": imgSeq },
       }
     );
     return response.data.result;
