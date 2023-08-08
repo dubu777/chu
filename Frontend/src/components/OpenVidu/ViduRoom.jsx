@@ -1,27 +1,7 @@
-/* eslint-disable */
-import React, { Component } from "react";
-import { OpenVidu } from "openvidu-browser";
-import axios from "axios";
-import { Link, useNavigate, useHistory } from "react-router-dom";
-// import { styled } from '@emotion/styled';
-import styled from "styled-components";
-import UserVideoComponent from "./UserVideoComponent";
-import VideocamOutlinedIcon from "@mui/icons-material/VideocamOutlined";
-import MicOutlinedIcon from "@mui/icons-material/MicOutlined";
-import HeadsetIcon from "@mui/icons-material/Headset";
-import VideocamOffOutlinedIcon from "@mui/icons-material/VideocamOffOutlined";
-import MicOffIcon from "@mui/icons-material/MicOff";
-import HeadsetOffIcon from "@mui/icons-material/HeadsetOff"; 
-import CallEndIcon from "@mui/icons-material/CallEnd";
-import ChatIcon from "@mui/icons-material/Chat";
-// import ChatBox from "../Chat/ChatBox";
-
-
-
 import axios from 'axios';
 import { OpenVidu } from 'openvidu-browser';
 import React, { Component } from 'react';
-import './App.css';
+// import './App.css';
 import UserVideoComponent from './UserVideoComponent';
 
 // 로컬 미디어 서버 주소
@@ -29,7 +9,7 @@ const OPENVIDU_SERVER_URL = 'https://' + 'i9b111.q.ssafy.io' + ':8443';
 const OPENVIDU_SERVER_SECRET = "sunjin";
 
 
-class Viduroom extends Component {
+class ViduRoom extends Component {
     constructor(props) {
         super(props);
 
@@ -407,4 +387,4 @@ class Viduroom extends Component {
     }
 }
 
-export default viduRoom;
+export default ViduRoom;
