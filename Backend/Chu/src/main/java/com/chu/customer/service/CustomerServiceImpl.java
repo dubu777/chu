@@ -118,6 +118,37 @@ public class CustomerServiceImpl implements CustomerService{
         customerRepository.changePwd(param.getCustomerSeq(), pwd);
     }
 
+    // 고객 알림 조회
+    @Override
+    public List<AlertCustomerOnLoginDto> getAlert(int customerSeq) {
+
+        List<AlertCustomerOnLoginDto> list = new ArrayList<>();
+
+        // 고객 번호로 알림 가져오기
+        List<CustomerAlert> alertList = new ArrayList<>();
+        alertList = customerAlertRepository.getCustomerAlertByCustomerSeq(customerSeq);
+
+        for(CustomerAlert c : alertList){
+            // 상담 번호로 consulting - designer seq 받아오기
+            Consulting consulting = consultingRepository.getConsultingBySeq(c.getSeq());
+
+            // 받아온 designer seq로 디자이너 정보 받아오기
+            consulting.setDesigner(designerRepository.getDesignerBySeq(consulting.getDesigner().getSeq()));
+
+            // AlertCustomerOnLoginDto 객체 생성
+            AlertCustomerOnLoginDto dto = new AlertCustomerOnLoginDto();
+            dto.setAlertSeq(c.getSeq());
+            dto.setConsultingSeq(consulting.getSeq());
+            dto.setCheck(c.getIsCheck());
+            dto.setPushDate(consulting.getCancelDate());
+            dto.setDesignerName(consulting.getDesigner().getName());
+
+            list.add(dto);
+        }
+
+        return list;
+    }
+
 
     /*
     @Override
@@ -258,7 +289,7 @@ public class CustomerServiceImpl implements CustomerService{
 
             // 고객 번호로 알림 가져오기
             List<CustomerAlert> alertList = new ArrayList<>();
-            alertList = customerAlertRepository.getCustomerAlertBySeq(customerSeq);
+            alertList = customerAlertRepository.getCustomerAlertByCustomerSeq(customerSeq);
 
             for(CustomerAlert c : alertList){
                 // 상담 번호로 consulting - designer seq 받아오기
@@ -285,6 +316,16 @@ public class CustomerServiceImpl implements CustomerService{
         }
 
         return responseCustomerLoginDetailDto;
+    }
+
+    @Override
+    @Transactional
+    public void checkAlert(int alertSeq) {
+        try{
+            customerAlertRepository.checkAlert(alertSeq);
+        } catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     // 아이디 찾기

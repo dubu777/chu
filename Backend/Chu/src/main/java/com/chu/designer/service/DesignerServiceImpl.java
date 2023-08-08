@@ -159,7 +159,7 @@ public class DesignerServiceImpl implements DesignerService{
 
             // 디자이너 번호로 알림 가져오기
             List<DesignerAlert> alertList = new ArrayList<>();
-            alertList = designerAlertRepository.getDesignerAlertBySeq(designerSeq);
+            alertList = designerAlertRepository.getDesignerAlertByDesignerSeq(designerSeq);
 
             for(DesignerAlert c : alertList){
                 // 상담 번호로 consulting - customer seq 받아오기
@@ -274,6 +274,47 @@ public class DesignerServiceImpl implements DesignerService{
             e.printStackTrace();
         }
         return response;
+    }
+
+    @Override
+    public List<AlertDesignerOnLoginDto> getAlert(int designerSeq) {
+
+        List<AlertDesignerOnLoginDto> list = new ArrayList<>();
+
+        // 디자이너 번호로 알림 가져오기
+        List<DesignerAlert> alertList = new ArrayList<>();
+
+        alertList = designerAlertRepository.getDesignerAlertByDesignerSeq(designerSeq);
+
+        for(DesignerAlert c : alertList){
+            // 상담 번호로 consulting - customer seq 받아오기
+            Consulting consulting = consultingRepository.getConsultingBySeq(c.getSeq());
+
+            // 받아온 customer seq로 고객 정보 받아오기
+            consulting.setCustomer(customerRepository.getCustomerBySeq(consulting.getCustomer().getSeq()));
+
+            // AlertDesignerOnLoginDto 객체 생성
+            AlertDesignerOnLoginDto dto = new AlertDesignerOnLoginDto();
+            dto.setAlertSeq(c.getSeq());
+            dto.setConsultingSeq(consulting.getSeq());
+            dto.setCheck(c.getIsCheck());
+            dto.setPushDate(consulting.getCancelDate());
+            dto.setCustomerName(consulting.getCustomer().getName());
+
+            list.add(dto);
+        }
+
+        return list;
+    }
+
+    @Override
+    @Transactional
+    public void checkAlert(int alertSeq) {
+        try{
+            designerAlertRepository.checkAlert(alertSeq);
+        } catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     // 로그인 테스트

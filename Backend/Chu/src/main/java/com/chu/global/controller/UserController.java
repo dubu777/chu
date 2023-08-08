@@ -80,27 +80,19 @@ public class UserController {
 
     }
 
+    @PostMapping("/alert")
+    public ResponseEntity<HttpResponseDto> createAlert(@RequestBody RequestAlertCreateDto requestAlertCreateDto){
 
-//    // 이메일 중복확인
-//    @GetMapping("/check-email")
-//    public ResponseEntity<HttpResponseDto> checkEmail(@RequestParam String email){
-//        log.info("email = {email}", email);
-//
-//        // 존재하지 않으면 가능 -> true
-//        boolean existsCustomer = customerService.checkEmail(email);
-//        // 존재하지 않으면 가능 -> true
-//        boolean existsDesigner = designerService.checkEmail(email);
-//
-//        // 두 테이블 모두 존재하지 않아야함
-//        if (existsCustomer && existsDesigner) {
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(200, true);
-//            return ResponseEntity.ok(httpResponseDto);
-//        }
-//        else{
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(204, false);
-//            return ResponseEntity.ok(httpResponseDto);
-//        }
-//    }
+        try{
+            userService.createAlert(requestAlertCreateDto);
+        } catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), null));
+
+    }
 //
 //    @PostMapping("/alert")
 //    public ResponseEntity<HttpResponseDto> creatAlert(@RequestBody RequestAlertCreateDto requestAlertCreateDto) {

@@ -27,6 +27,8 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
     void changePwd(int seq, String pwd);
 
     Customer getCustomerBySeq(int seq);
+
+
 //    boolean checkId(String id);
 //
 //    boolean checkEmail(String email);

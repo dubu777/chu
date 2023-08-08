@@ -10,6 +10,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 
 public interface DesignerRepository extends JpaRepository<Designer, Integer> {
+
     Designer getDesignerBySeq(int seq);
 
     // ID 중복검사
@@ -30,6 +31,12 @@ public interface DesignerRepository extends JpaRepository<Designer, Integer> {
     @Modifying
     @Query("UPDATE Designer d SET d.pwd = :pwd WHERE d.seq = :seq")
     void changePwd(int seq, String pwd);
+
+    // 평점 업데이트
+    @Modifying
+    @Query("UPDATE Designer d SET d.reviewScore = :score WHERE d.seq = :seq")
+    void updateReviewScore(double score, int seq);
+
 
 //    boolean signUp(RequestDesignerSignUpDto requestDesignerSignUpDto);
 //

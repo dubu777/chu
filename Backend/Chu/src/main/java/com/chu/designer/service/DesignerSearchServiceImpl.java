@@ -4,6 +4,7 @@ import com.chu.consulting.domain.Consulting;
 import com.chu.consulting.domain.Review;
 import com.chu.consulting.repository.ConsultingRepository;
 import com.chu.designer.domain.*;
+import com.chu.designer.repository.DesignerLikeRepository;
 import com.chu.designer.repository.DesignerPortfolioRepository;
 import com.chu.designer.repository.DesignerSearchRepository;
 import com.chu.global.domain.HairStyleDict;
@@ -15,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service

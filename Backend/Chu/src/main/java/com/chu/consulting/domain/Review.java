@@ -10,14 +10,14 @@ import javax.persistence.Embeddable;
 @Getter @Setter @ToString
 public class Review {
 
-    private Float reviewScore;
+    private Double reviewScore;
     private String reviewContent;
 
     protected Review() {
 
     }
 
-    public Review(Float reviewScore, String reviewContent) {
+    public Review(Double reviewScore, String reviewContent) {
         this.reviewScore = reviewScore;
         this.reviewContent = reviewContent;
     }

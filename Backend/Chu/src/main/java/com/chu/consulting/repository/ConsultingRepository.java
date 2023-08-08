@@ -17,6 +17,7 @@ public interface ConsultingRepository extends JpaRepository<Consulting, Integer>
             " GROUP BY c.designer.seq")
     List<Object[]> getReviewScoreByDesigner();
 
+    // 평점 구하기
     @Query(value = "SELECT AVG(c.review.reviewScore) FROM Consulting c WHERE c.designer.seq = :designerSeq GROUP BY c.designer.seq")
     Double getReviewScoreByDesigner(@Param("designerSeq") Integer designerSeq);
 
@@ -34,6 +35,16 @@ public interface ConsultingRepository extends JpaRepository<Consulting, Integer>
     @Modifying
     @Query("UPDATE Consulting c SET c.url = :url WHERE c.seq = :seq")
     void updateConsultingUrl(int seq, String url);
+
+    // 상담 후기 등록 : 평점, reviewContent 업데이트
+    @Modifying
+    @Query("UPDATE Consulting c SET c.review.reviewScore = :score, c.review.reviewContent = :content WHERE c.seq = :seq")
+    void updateScoreAndContent(double score, String content, int seq);
+
+    // 상담 결과 업데이트
+    @Modifying
+    @Query("UPDATE Consulting c SET c.result = :result WHERE c.seq = :seq")
+    void updateConsultingResult(int seq, String result);
 
 
 //    String participantConsulting(int consultingSeq);
