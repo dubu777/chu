@@ -127,7 +127,7 @@ function Header() {
           <Link to="/viduroom">openvidu//</Link>
           <Link to="/designermypage">디자이너MyPage//</Link>
           <Link to="/customermypage">CustomerMyPage//</Link> */}
-
+          <Link to="/designermypage">디자이너MyPage//</Link>
           { isLogIn ?  
             <>
               <Item 
