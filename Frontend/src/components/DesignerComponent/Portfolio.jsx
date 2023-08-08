@@ -1,5 +1,6 @@
 import { styled } from "styled-components";
 import { useState, useEffect } from "react";
+import {getPortfolio, deletePortfolio} from "../../apis/designer";
 
 const Container = styled.div`
   display: flex;
@@ -64,42 +65,6 @@ const UploadText = styled.p`
 
 function Portfolio(){
   const [data, setData] = useState(
-<<<<<<< Updated upstream
-    {
-      imgs : [
-        {
-            "imgSeq" : 1,
-            "imgName" : "/img/opofol5.jpg"
-        },
-        {
-            "imgSeq" : 2,
-            "imgName" : "/img/opofol1.jpg"
-        },
-        {
-            "imgSeq" : 3,
-            "imgName" : "./img/opofol4.jpg"
-        },
-        {
-          "imgSeq" : 4,
-          "imgName" : "/img/opofol5.jpg"
-      },
-      {
-          "imgSeq" : 5,
-          "imgName" : "/img/opofol1.jpg"
-      },
-      {
-          "imgSeq" : 6,
-          "imgName" : "./img/opofol4.jpg"
-      },
-     
-      ]
-    });
-    const handleDelete = (imgSeq) => {
-      // imgSeq와 일치하는 이미지 삭제
-      // 해당 이미지를 제외한 나머지 이미지들로 배열 업데이트
-      const updatedImgs = data.imgs.filter((img) => img.imgSeq !== imgSeq);
-      setData({ ...data, imgs: updatedImgs });
-=======
     );
     // 컴포넌트 마운트 될 때 API호출 
     const seq = 2;
@@ -129,7 +94,6 @@ function Portfolio(){
       } catch(error){
         console.log(error)
       }
->>>>>>> Stashed changes
     };
     const handleFileChange = (event) => {
       const file = event.target.files[0];
@@ -181,78 +145,3 @@ function Portfolio(){
 export default Portfolio;
 
 
-
-
-// 다중 파일 업로드(구현 실패)
-// import { styled } from "styled-components";
-// import { useState, useEffect } from "react";
-
-// const Img = styled.img`
-//   width: 200px;
-//   height: 400px;
-// `;
-
-// function Portfolio(){
-//   const [selectedFiles, setSelectedFiles] = useState([]);
-//   const [data, setdata] = useState(
-//     {
-//       imgs : [
-//         {
-//             "imgSeq" : 1,
-//             "imgName" : "img1.png"
-//         },
-//         {
-//             "imgSeq" : 2,
-//             "imgName" : "img2.png"
-//         },
-//         {
-//             "imgSeq" : 3,
-//             "imgName" : "img3.png"
-//         },
-//       ]
-//     });
-
-
-//   function handleFileChange(e) {
-//     // const files = Array.from(e.target.files);
-//     // setSelectedFiles((prevSelected) => [...prevSelected, ...files]);
-//     const files = Array.from(e.target.files);
-//     setSelectedFiles((prevSelected) => [...prevSelected, ...files]);
-
-//   files.forEach((file) => {
-//     const reader = new FileReader();
-//     reader.onloadend = () => {
-//       // 읽어온 파일의 데이터를 사용하여 미리보기할 수 있습니다.
-//       console.log(reader.result);
-//     };
-//     reader.readAsDataURL(file);
-//   })};
-
-//   function handleRemove(index) {
-//     setSelectedFiles((prevSelected) => {
-//       const newSelected = [...prevSelected];
-//       newSelected.splice(index, 1);
-//       return newSelected;
-//     });
-//   }
-//     return(
-//       <div>
-//       <input type="file" multiple onChange={handleFileChange} />
-
-//       <div>
-//         {selectedFiles.map((file, index) => (
-//           <div key={index}>
-//             {file.type.includes('image/') ? (
-//               <Img src={URL.createObjectURL(file)} alt={`Preview ${index}`} />
-//             ) : (
-//               <span>{file.name}</span>
-//             )}
-//             <button onClick={() => handleRemove(index)}>삭제</button>
-//           </div>
-//         ))}
-//       </div>
-//     </div>
-//     )
-// }
-
-// export default Portfolio;

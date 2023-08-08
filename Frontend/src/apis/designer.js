@@ -1,18 +1,7 @@
-// import axios from "axios";
-
-// export const listinfo = async(seq)=> {
-//     try {
-//         const response = await axios.get('http://localhost:9090/api/designer/search/review-score',{
-//             "customerSeq" : seq
-//         })
-//         return response.data.result
-//     } catch(error) {
-//         throw new Error('데이터 못가져옴')
-//     }
-
-// };
-   
 import axios from "axios";
+
+const BASE_URL = 'https://i9b111.q.ssafy.io:9090/api';
+//const BASE_URL = 'http://localhost:9090/api';
 
 export const listinfo = async(seq)=> {
     try {
@@ -23,10 +12,8 @@ export const listinfo = async(seq)=> {
     } catch(error) {
         throw new Error('데이터 못가져옴')
     }
+  }
 
-<<<<<<< Updated upstream
-};
-=======
 // 디자이너 프로필 사진 등록 api
 export const attachDesignerImage = async (seq, formData) => {
   try {
@@ -95,4 +82,3 @@ export const deletePortfolio = async (seq, imgSeq) => {
     throw new Error("디자이너 포트폴리오 삭제 실패");
   }
 };
->>>>>>> Stashed changes

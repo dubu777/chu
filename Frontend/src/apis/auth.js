@@ -1,12 +1,7 @@
 import axios from 'axios';
 
-<<<<<<< Updated upstream
 const BASE_URL = 'https://i9b111.q.ssafy.io:9090/api';
 //const BASE_URL = 'http://localhost:9090/api';
-=======
-// const BASE_URL = 'https://i9b111.q.ssafy.io:9090/api';
-const BASE_URL = 'http://localhost:9090/api';
->>>>>>> Stashed changes
 
 export const login = async (username, password) => {
   try {
