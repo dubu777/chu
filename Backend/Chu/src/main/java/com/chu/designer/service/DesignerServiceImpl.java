@@ -17,13 +17,15 @@ import com.chu.worldcup.repository.WorldcupRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
+
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -77,9 +79,10 @@ public class DesignerServiceImpl implements DesignerService{
 
     // 로그인
     @Override
-    public ResponseDesignerLoginDetailDto signIn(RequestSignInDto requestSignInDto) {
-        ResponseDesignerLoginDetailDto responseDesignerLoginDetailDto = new ResponseDesignerLoginDetailDto();
+    @Transactional
+    public ResponseUserLoginToken signIn(RequestSignInDto requestSignInDto) {
 
+        ResponseUserLoginToken responseDesignerLoginToken = new ResponseUserLoginToken();
         try{
             // 1) token setting
             Authentication authentication = authenticationManager.authenticate(
@@ -94,20 +97,42 @@ public class DesignerServiceImpl implements DesignerService{
 
             TokenDto tokenDto = new TokenDto(accessToken, refreshToken);
 
-            // Redis 저장 : 만료 시간 설정으로 자동 삭제 처리
-            redisTemplate.opsForValue().set(
-                    authentication.getName(),
-                    refreshToken,
-                    refreshTokenExpire,
-                    TimeUnit.MILLISECONDS
-            );
+//            // Redis 저장 : 만료 시간 설정으로 자동 삭제 처리
+//            redisTemplate.opsForValue().set(
+//                    authentication.getName(),
+//                    refreshToken,
+//                    refreshTokenExpire,
+//                    TimeUnit.MILLISECONDS
+//            );
+            Designer designer = designerRepository.findById(requestSignInDto.getId());
 
-            responseDesignerLoginDetailDto.setToken(tokenDto);
+            // refresh token MySQL에 저장하기
+            designerRepository.updateRefreshToken(designer.getSeq(), refreshToken);
 
+            // HTTP 요청 헤더에 "Authorization" 헤더를 추가하는 코드
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.add("Authorization", "Bearer "+tokenDto.getAccessToken());
 
+            responseDesignerLoginToken.setToken(tokenDto);
+
+            responseDesignerLoginToken.setUserSeq(designer.getSeq());
+
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return responseDesignerLoginToken;
+    }
+
+    // designer 로그인 후 메인페이지
+    @Override
+    public ResponseDesignerLoginDetailDto getMainPageInfo(int designerSeq) {
+        ResponseDesignerLoginDetailDto responseDesignerLoginDetailDto = new ResponseDesignerLoginDetailDto();
+
+        try{
 
             // 2) DesignerInfo setting
-            Designer designer = designerRepository.findById(requestSignInDto.getId());
+            Designer designer = designerRepository.findBySeq(designerSeq);
             ResponseDesignerLoginInfoDto responseDesignerLoginInfoDto = new ResponseDesignerLoginInfoDto().entityToDto(designer);
 
             responseDesignerLoginDetailDto.setDesignerInfo(responseDesignerLoginInfoDto);
@@ -155,7 +180,6 @@ public class DesignerServiceImpl implements DesignerService{
 
             // 5. alert setting
             List<AlertDesignerOnLoginDto> list5 = new ArrayList<>();
-            int designerSeq = responseDesignerLoginInfoDto.getDesignerSeq();
 
             // 디자이너 번호로 알림 가져오기
             List<DesignerAlert> alertList = new ArrayList<>();

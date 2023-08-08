@@ -1,11 +1,8 @@
 package com.chu.customer.service;
 
-import antlr.Token;
 import com.chu.customer.domain.*;
 import com.chu.global.domain.*;
-import org.springframework.http.ResponseEntity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface CustomerService {
@@ -37,7 +34,7 @@ public interface CustomerService {
     //boolean signIn(RequestSignInDto requestSignInDto);
 //
     // 로그인
-    ResponseCustomerLoginToken signIn(RequestSignInDto requestSignInDto);
+    ResponseUserLoginToken signIn(RequestSignInDto requestSignInDto);
 
     // 로그인 후 메인페이지 정보
     ResponseCustomerLoginDetailDto getMainPageInfo(int customerSeq);
