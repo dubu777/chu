@@ -1,6 +1,7 @@
 import {styled} from "styled-components";
+import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css'; // css import
-import Calendar from "../../components/ReservationComponent/Calendar";
+// import Calendar from "../../components/ReservationComponent/Calendar";
 import { useState } from "react";
 import { motion,AnimatePresence,useAnimation } from "framer-motion";
 import Slider from "react-slick";
@@ -21,6 +22,14 @@ const LeftWrap = styled.div`
 	height: 100%;
 	margin: 40px 10px;
 `;
+const CalendarContainer = styled.div`
+  /* ~~~ container styles ~~~ */
+  width: 100%;
+  max-width: 600px;
+  padding: 10px;
+  border-radius: 3px;
+`;
+
 const RigthWrap = styled.div`
 	display: flex;
   flex-direction: column;
@@ -240,11 +249,13 @@ const EmtyBox = styled.div`
 	width: 100px;
 	height: 80px;
 `;
-// function formatDateString(date) {
-// 	const month = (date.getMonth() + 1).toString().padStart(2, '0');
-// 	const day = date.getDate().toString().padStart(2, '0');
-// 	return `${month}/${day}`;
-// }
+
+function formatDateString(date) {
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const day = date.getDate().toString().padStart(2, '0');
+  return `${month}/${day}`;
+}
+
 function Reservation() {
 	const [handleLike, setHandleLike] = useState(false); // 좋아요 상태를 state로 관리
 	const settings = {
@@ -305,6 +316,7 @@ function Reservation() {
 		"img/opofol9.jpg",
 	];
 	const [data, setData] = useState();
+	const [value, onChange] = useState(new Date());
 	const [selectedDate, setSelectedDate] = useState(null);
 	const [selectedTime, setSelectedTime] = useState(null);
 	// const selectedDateString = formatDateString(selectedDate);
@@ -344,8 +356,12 @@ function Reservation() {
             <ResevBox>
               <SubTitle>예약날짜</SubTitle>
               <Hr/>
-              <Calendar onChange={date => setSelectedDate(date)} value={selectedDate} />
-							{/* {selectedDateString} */}
+              <CalendarContainer>
+        				<Calendar onChange={onChange} value={value} />
+          				<div>
+            				<p>{formatDateString(value)}</p>
+          				</div>
+      				</CalendarContainer>
 						</ResevBox>
             <ResevBox>
               <SubTitle>예약시간</SubTitle>

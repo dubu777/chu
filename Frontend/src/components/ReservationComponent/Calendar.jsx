@@ -19,13 +19,13 @@ const CalendarContainer = styled.div`
 
 function ReserveCalendar() {
     const [value, onChange] = useState(new Date());
-    console.log(value)
+    // console.log(value)
     return (
       <CalendarContainer>
         <Calendar onChange={onChange} value={value} />
-          {/* <div>
+          <div>
             <p>{formatDateString(value)}</p>
-          </div> */}
+          </div>
       </CalendarContainer>
     );
   }
