@@ -59,12 +59,19 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
     }
 
     @Override
-    public int postPortfolioImage(int designerSeq, String img) {
+    public String getUploadImgFilePath(MultipartFile file) throws IOException {
+        String uploadName = file.getOriginalFilename();
+        return uploadName;
+    }
+
+    @Override
+    public int postPortfolioImage(int designerSeq, String img, String uploadName) {
 
         // 디자이너 정보 가져오기
         Designer designer = designerRepository.getDesignerBySeq(designerSeq);
         ImagePath imagePath = new ImagePath();
         imagePath.setSavedImgName(img);
+        imagePath.setUploadImgName(uploadName);
 
         DesignerPortfolio designerPortfolio = new DesignerPortfolio(designer, imagePath);
 
