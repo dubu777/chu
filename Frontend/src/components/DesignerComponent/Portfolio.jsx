@@ -64,6 +64,7 @@ const UploadText = styled.p`
 
 function Portfolio(){
   const [data, setData] = useState(
+<<<<<<< Updated upstream
     {
       imgs : [
         {
@@ -98,6 +99,37 @@ function Portfolio(){
       // 해당 이미지를 제외한 나머지 이미지들로 배열 업데이트
       const updatedImgs = data.imgs.filter((img) => img.imgSeq !== imgSeq);
       setData({ ...data, imgs: updatedImgs });
+=======
+    );
+    // 컴포넌트 마운트 될 때 API호출 
+    const seq = 2;
+    // 마운트 될 때 실행
+    useEffect(()=> {
+      async function fetchData() {
+        try {
+          const response = await getPortfolio(seq);
+          setData(response)
+        } catch(error){
+          console.log('프로필 사진 조회 실패:', error)
+        }
+      }
+      fetchData();
+    }, []);
+
+    // imgSeq와 일치하는 이미지 삭제
+    // 해당 이미지를 제외한 나머지 이미지들로 배열 업데이트
+    const handleDelete = async (imgSeq) => {
+      try {
+        const result = await deletePortfolio(seq, imgSeq);
+        if (result){
+          const updatedImgs = data.imgs.filter((img) => img.imgSeq !== imgSeq);
+          setData({ ...data, imgs: updatedImgs });
+          console.log(imgSeq, '번 이미지 삭제')
+        }
+      } catch(error){
+        console.log(error)
+      }
+>>>>>>> Stashed changes
     };
     const handleFileChange = (event) => {
       const file = event.target.files[0];
@@ -126,6 +158,7 @@ function Portfolio(){
         <ImgBox key={img.imgSeq}>
           <Img src={img.imgName} alt="Image" />
           <DeleteBtn onClick={() => handleDelete(img.imgSeq)}>
+            <p>{img.imgSeq}//{img.imgName}</p>
             <DeleteImg src={"./icon/bin.png"}></DeleteImg>
           </DeleteBtn>
         </ImgBox>

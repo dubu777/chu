@@ -335,7 +335,19 @@ function DesignerDetail() {
   const handleTimeClick = (time) => {
     setSelectedTime(time);
   };
+<<<<<<< Updated upstream
   return(
+=======
+	const { designerSeq } = useParams();
+	const [loginResult, setLoginResult] = useRecoilState(loginResultState);
+	const customerSeq = loginResult ? loginResult.customerInfo.customerSeq : 0;
+  	const { data, isLoading, isError } = useQuery(['designerDetail', designerSeq, customerSeq], () => getDesignerDetail(designerSeq, customerSeq));
+	
+	if (isLoading) return <div>Loading...</div>;
+  	if (isError) return <div>Error loading designer details</div>;
+  
+	return(
+>>>>>>> Stashed changes
 		<Container>
 			<Wrapper>
 				<Wrap>

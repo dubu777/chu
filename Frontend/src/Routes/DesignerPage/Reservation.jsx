@@ -240,6 +240,11 @@ const EmtyBox = styled.div`
 	width: 100px;
 	height: 80px;
 `;
+// function formatDateString(date) {
+// 	const month = (date.getMonth() + 1).toString().padStart(2, '0');
+// 	const day = date.getDate().toString().padStart(2, '0');
+// 	return `${month}/${day}`;
+// }
 function Reservation() {
 	const [handleLike, setHandleLike] = useState(false); // 좋아요 상태를 state로 관리
 	const settings = {
@@ -299,57 +304,11 @@ function Reservation() {
 		"img/opofol8.jpg",
 		"img/opofol9.jpg",
 	];
-	const [data, setData] = useState({
-		"designerSeq" : 1,
-		"name" : "소희",
-		"introduction" : "고객님의 이미지 맞춤으로 트랜디한 스타일을 찾아드리겠습니다.",
-		"address" : "대전 봉명동",
-		"salonName" : "Chu헤어",
-		"designerImg" : "",
-		"allReviewScore" : 4.8,
-		"likeCnt" : 78,
-		"isLike" : true,
-		"hairStyleLabel" : [
-								"레이어드컷",
-								"복구펌",
-								"히피펌",
-								"C컬"
-		],
-		"portfolio" : [
-				{
-						"imgSeq" : 1,
-						"imgName" : "img1.png",
-						"sequence" : 1
-				},
-				{
-						"imgSeq" : 2,
-						"imgName" : "img2.png",
-						"sequence" : 2
-				},
-		],
-		"review" : [
-				{
-						"customerIdx" : 1,
-						"consulting_date" : "2022.12.15 17:54",
-						"review_score" : 4.7,
-						"customerId" : "ssafy",
-						"reviewContent" : "좋아요!"
-				},
-				{
-					"customerIdx" : 2,
-					"consulting_date" : "2022.12.16 17:54",
-					"review_score" : 4.5,
-					"customerId" : "wjh1224",
-					"reviewContent" : "덕문에 인생 머리 찾았어요!"					
-				}
-		],
-		"cost" : 5000			
-	})
-  const toggleLike = () => {
-    setHandleLike((prev) => !prev); // 좋아요 상태를 토글
-  };
-
+	const [data, setData] = useState();
+	const [selectedDate, setSelectedDate] = useState(null);
 	const [selectedTime, setSelectedTime] = useState(null);
+	// const selectedDateString = formatDateString(selectedDate);
+
   const hours = Array.from({ length: 14 }, (_, index) => index + 9);
   const minutes = ['00', '30'];
   const timeSlots = [];
@@ -359,6 +318,10 @@ function Reservation() {
       timeSlots.push(time);
     });
   });
+	const handleDateSelect = (date) => {
+    setSelectedDate(date);
+  };
+
   const handleTimeClick = (time) => {
     // 이미 선택된 시간과 같으면 선택 해제
     setSelectedTime((prevTime) => (prevTime === time ? null : time));
@@ -381,8 +344,9 @@ function Reservation() {
             <ResevBox>
               <SubTitle>예약날짜</SubTitle>
               <Hr/>
-              <Calendar/>
-            </ResevBox>
+              <Calendar onChange={date => setSelectedDate(date)} value={selectedDate} />
+							{/* {selectedDateString} */}
+						</ResevBox>
             <ResevBox>
               <SubTitle>예약시간</SubTitle>
               <Hr/>

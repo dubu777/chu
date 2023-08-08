@@ -112,6 +112,7 @@ function Header() {
         </Items>
       </Col>
       <Col>
+<<<<<<< Updated upstream
         <Search >
           {/* 나중에 다 옮기기 */}
           <Link to="/consultresultpage">상담결과 작성//</Link>
@@ -138,6 +139,53 @@ function Header() {
             </Item>
           </Link>
         </Search>
+=======
+          {/* <Link to="/consultresultpage">상담결과 작성//</Link> */}
+          {/* <Link to="/viduroom">openvidu//</Link> */}
+          <Link to="/designermypage">디자이너MyPage//</Link>
+          {/* <Link to="/customermypage">CustomerMyPage//</Link> */}
+
+          { isLogIn ?  
+            <>
+              <Item 
+                variants={logoVariants}
+                whileHover="active"
+                initial="nomal"
+                onClick={handleLogout}
+                >Log Out
+              </Item>
+              <Link to="/customermypage">
+                <Item 
+                  variants={logoVariants}
+                  whileHover="active"
+                  initial="nomal"
+                  >My Page
+                </Item>
+              </Link>
+
+            </>
+          : 
+            <>
+              <Link to="usertype">
+                <Item 
+                  variants={logoVariants}
+                  whileHover="active"
+                  initial="nomal"
+                  >Sign up
+                </Item>
+              </Link>
+              <Link to="/login">
+                <Item 
+                  variants={logoVariants}
+                  whileHover="active"
+                  initial="nomal"
+                  >Log in
+                </Item>
+              </Link>
+            </>
+          }
+        
+>>>>>>> Stashed changes
       </Col>
     </Nav>
   );
