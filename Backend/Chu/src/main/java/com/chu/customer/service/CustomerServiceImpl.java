@@ -18,15 +18,11 @@ import com.chu.global.repository.HairStyleImgRepository;
 import com.chu.worldcup.repository.WorldcupRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,7 +30,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 
 @Slf4j
@@ -160,9 +155,9 @@ public class CustomerServiceImpl implements CustomerService{
     // customer 로그인
     @Override
     @Transactional  // faceDict LazyInitializationException
-    public ResponseCustomerLoginToken signIn(RequestSignInDto requestSignInDto) {
+    public ResponseUserLoginToken signIn(RequestSignInDto requestSignInDto) {
 
-        ResponseCustomerLoginToken responseCustomerLoginToken = new ResponseCustomerLoginToken();
+        ResponseUserLoginToken responseCustomerLoginToken = new ResponseUserLoginToken();
 
         try{
             // 1) token setting
@@ -196,7 +191,7 @@ public class CustomerServiceImpl implements CustomerService{
 
             responseCustomerLoginToken.setToken(tokenDto);
 
-            responseCustomerLoginToken.setCustomerSeq(customer.getSeq());
+            responseCustomerLoginToken.setUserSeq(customer.getSeq());
 
         } catch(Exception e){
             e.printStackTrace();
@@ -206,7 +201,7 @@ public class CustomerServiceImpl implements CustomerService{
     }
 
 
-    // customer 로그인
+    // customer 로그인 후 메인페이지
     @Override
     @Transactional  // faceDict LazyInitializationException
     public ResponseCustomerLoginDetailDto getMainPageInfo(int customerSeq) {

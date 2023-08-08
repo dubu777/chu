@@ -2,7 +2,6 @@ package com.chu.customer.controller;
 
 import com.chu.customer.domain.*;
 import com.chu.customer.service.CustomerService;
-import com.chu.designer.domain.DesignerSearchDto;
 import com.chu.designer.domain.ResponseDesignerSearchDto;
 import com.chu.designer.service.DesignerSearchService;
 import com.chu.global.domain.*;
@@ -47,7 +46,7 @@ public class CustomerController {
 
         // null 이면 일치하는 회원 없음 return
         // null 아니면 아래 로직 수행
-        ResponseCustomerLoginToken responseCustomerLoginToken = null;
+        ResponseUserLoginToken responseCustomerLoginToken = null;
 
         try{
             responseCustomerLoginToken = customerService.signIn(requestSignInDto);

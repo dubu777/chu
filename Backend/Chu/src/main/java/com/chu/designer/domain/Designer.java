@@ -1,6 +1,7 @@
 package com.chu.designer.domain;
 
 import com.chu.global.domain.ImagePath;
+import com.chu.global.domain.TokenDto;
 import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -36,6 +37,7 @@ public class Designer {
 
     private Integer cost;
     private LocalDateTime createdDate;
+    private String RefreshToken;
 
 //    public DesignerSearchDto showDesignerView() {
 //        return DesignerSearchDto.builder()
