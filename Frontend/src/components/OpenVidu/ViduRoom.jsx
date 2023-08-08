@@ -561,11 +561,13 @@ class ViduRoom extends Component {
                         <UserVideoComponent
                           streamManager={this.state.publisher}
                         />
+                        <div>{this.state.myUserName}</div>
                       </StreamContainer>
                     ) : null}
                     {this.state.subscribers.map((sub, i) => (
                       <StreamContainer key={i} className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(sub)}>
                         <UserVideoComponent streamManager={sub} />
+                        <div>{sub.state.myUserName}</div>
                       </StreamContainer>
                     ))}
                   </StreamContainerWrapper>
