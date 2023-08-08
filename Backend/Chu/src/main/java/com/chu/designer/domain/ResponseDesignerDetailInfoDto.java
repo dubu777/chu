@@ -23,21 +23,4 @@ public class ResponseDesignerDetailInfoDto {
     private List<Review> review;
     private Integer cost;
 
-//    @Builder
-//    public ResponseDesignerDetailInfoDto(Designer designer, Double reviewScore, Integer likeCnt, Boolean isLike, List<String> hairStyleLabels, List<ResponsePortfolioDto> portfolio, List<Review> review) {
-//        this.designerSeq = designer.getSeq();
-//        this.name = designer.getName();
-//        this.introduction = designer.getIntroduction();
-//        this.address = designer.getAddress();
-//        this.salonName = designer.getSalonName();
-//        this.designerImg = (designer.getImagePath() != null) ? designer.getImagePath().getSavedImgName() : null;
-//        this.allReviewScore = designer.getReviewScore();
-//        this.likeCnt = likeCnt;
-//        this.isLike = isLike;
-//        this.hairStyleLabel = hairStyleLabels;
-//        this.portfolio = portfolio;
-//        this.review = review;
-//        this.cost = designer.getCost();
-//    }
-
 }

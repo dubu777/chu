@@ -1,4 +1,4 @@
-package com.chu.designer.domain;
+package com.chu.global.domain;
 
 import com.chu.global.domain.HairStyleDict;
 import lombok.Getter;

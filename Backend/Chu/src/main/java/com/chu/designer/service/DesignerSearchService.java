@@ -1,8 +1,8 @@
 package com.chu.designer.service;
 
 import com.chu.designer.domain.*;
+import com.chu.global.domain.HairStyleDto;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface DesignerSearchService {

@@ -25,8 +25,8 @@ public interface DesignerDetailService {
 //    // 디자이너 대표 이미지 수정
 //    boolean patchImg(int designerSeq, String img);
 //
-//    // 디지이너 마이페이지 수정페이지 정보 조회
-//    ResponseDesignerMyPageUpdateShowDto getDesignerMyPageUpdateInfo(int designerSeq);
+    // 디자이너 마이페이지 수정페이지 정보 조회
+    ResponseDesignerMyPageUpdateShowDto getDesignerMyPageUpdateInfo(int designerSeq);
 //
 //    // 디자이너 정보 수정
 //    boolean updateDesignerInfo(int designerSeq, RequestDesignerInfoUpdateDto requestDesignerInfoUpdateDto);

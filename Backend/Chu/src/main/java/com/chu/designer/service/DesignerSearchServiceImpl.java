@@ -8,6 +8,7 @@ import com.chu.designer.repository.DesignerLikeRepository;
 import com.chu.designer.repository.DesignerPortfolioRepository;
 import com.chu.designer.repository.DesignerSearchRepository;
 import com.chu.global.domain.HairStyleDict;
+import com.chu.global.domain.HairStyleDto;
 import com.chu.global.repository.DesignerTagInfoRepository;
 import com.chu.global.repository.HairStyleDictRepository;
 import lombok.RequiredArgsConstructor;

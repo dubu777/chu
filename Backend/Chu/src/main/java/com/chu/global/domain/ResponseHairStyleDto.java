@@ -1,6 +1,8 @@
 package com.chu.global.domain;
 
 public class ResponseHairStyleDto {
-//                    "hairStyleSeq" : 3,
-//                            "hairStyleLabel" : "중단발"
+
+    private Integer hairStyleSeq;
+    private String hairStyleLabel;
+
 }

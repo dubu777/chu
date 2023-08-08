@@ -9,6 +9,7 @@ import com.chu.global.repository.DesignerTagInfoRepository;
 import com.chu.designer.repository.DesignerDetailRepository;
 import com.chu.designer.repository.DesignerRepository;
 import com.chu.global.domain.*;
+import com.chu.global.repository.HairStyleDictRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,20 +19,23 @@ import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Optional;
-import java.util.List;
+
+import static java.util.stream.IntStream.builder;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class DesignerDetailServiceImpl implements DesignerDetailService {
 
+    private final DesignerSearchService designerSearchService;
+
     private final DesignerDetailRepository designerDetailRepository;
     private final DesignerRepository designerRepository;
     private final DesignerTagInfoRepository designerTagInfoRepository;
     private final ReservationAvailableSlotRepository reservationAvailableSlotRepository;
+    private final HairStyleDictRepository hairStyleDictRepository;
 
     @Override
     public String getSavedImgFilePath(MultipartFile file) throws IOException {
@@ -154,33 +158,60 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
         return true;
     }
 
-//
+    //
 //    @Override
 //    public boolean patchImg(int designerSeq, String img) {
 //        return designerDetailRepository.patchImg(designerSeq, img);
 //    }
 //
-//    @Override
-//    public ResponseDesignerMyPageUpdateShowDto getDesignerMyPageUpdateInfo(int designerSeq) {
-//        ResponseDesignerMyPageUpdateShowDto responseDesignerMyPageUpdateShowDto = new ResponseDesignerMyPageUpdateShowDto();
-//
-//        Designer designer = designerDetailRepository.getDesignerInfo(designerSeq);
-//
-//        // 생각해보니 디자이너 지역이 디자이너 안에 있네.. 이거 한 번 고쳐주라.. 나 지금 0721 2256인데 너무 힘들거든,,
-//
-//        ResponseDesignerAreaInfo designerAreaInfo = designerDetailRepository.getDesignerAreaInfo(designerSeq);
-//
-//        ArrayList<ResponseHairStyleDto> allCutHairStyle = designerDetailRepository.getAllCutHairStyle();
-//
-//        ArrayList<ResponsePermHairStyleDto> allPermHairStyle = designerDetailRepository.getAllPermHairStyle();
-//
-//        ArrayList<ResponseHairStyleDto> myCutHairStyle = designerDetailRepository.getMyCutHairStyle(designerSeq);
-//
-//        ArrayList<ResponsePermHairStyleDto> myPermHairStyle = designerDetailRepository.getMyPermHairStyle(designerSeq);
-//
-//        return responseDesignerMyPageUpdateShowDto;
-//    }
-//
+    @Override
+    public ResponseDesignerMyPageUpdateShowDto getDesignerMyPageUpdateInfo(int designerSeq) {
+
+        ResponseDesignerMyPageUpdateShowDto result = null;
+
+        try {
+            // 디자이너 관련 필드에 필요한 데이터
+            Designer designer = designerRepository.getDesignerBySeq(designerSeq);
+
+            // 전체 헤어스타일 태그 데이터
+            List<HairStyleDto> allCutHairStyle = designerSearchService.showCategoryView(1);
+            List<HairStyleDto> allPermHairStyle = designerSearchService.showCategoryView(2);
+
+            // 해당 디자이너의 헤어스타일 태그 시퀀스
+            List<Integer> myHairStyleSeq = new ArrayList<>();
+            for (DesignerTagInfo dti : designerTagInfoRepository.findByDesignerSeq(designerSeq)) {
+                myHairStyleSeq.add(dti.getHairStyleDict() != null ? dti.getHairStyleDict().getSeq() : null);   //1,2,5
+            }
+
+            // 해당 헤어스타일 시퀀스 하나와 헤어스타일 사전을 돌면서 해당 카테고리 데이터만 가져오기. 객체를 Map 변환
+            Map<String, Object> myCutHairStyleMap = new HashMap<>();
+            myCutHairStyleMap.put("hairStyleSeq", hairStyleDictRepository.findByMyHairStyleCategorySeq(1, myHairStyleSeq));
+
+            Map<String, Object> myPermHairStyleMap = new HashMap<>();
+            myPermHairStyleMap.put("hairStyleSeq", hairStyleDictRepository.findByMyHairStyleCategorySeq(2, myHairStyleSeq));
+
+            result = ResponseDesignerMyPageUpdateShowDto.builder()
+                    .name(designer.getName())
+                    .id(designer.getId())
+                    .email(designer.getEmail())
+                    .price(designer.getCost())
+                    .certificationNum(designer.getCertificationNum())
+                    .salonName(designer.getSalonName())
+                    .latitude(designer.getLatitude())
+                    .longitude(designer.getLongitude())
+                    .address(designer.getAddress())
+                    .allCutHairStyle(allCutHairStyle)
+                    .allPermHairStyle(allPermHairStyle)
+                    .myCutHairStyle(myCutHairStyleMap)
+                    .myPermHairStyle(myPermHairStyleMap)
+                    .build();
+        } catch (Exception e) {
+            return null;
+        }
+
+        return result;
+    }
+
 //    @Override
 //    public boolean updateDesignerInfo(int designerSeq, RequestDesignerInfoUpdateDto requestDesignerInfoUpdateDto) {
 //
