@@ -294,51 +294,51 @@ function DesignerDetail() {
   const handleTimeClick = (time) => {
     setSelectedTime(time);
   };
-    const { designerSeq } = useParams();
-    const [loginResult, setLoginResult] = useRecoilState(loginResultState);
-    const customerSeq = loginResult ? loginResult.customerInfo.customerSeq : 0;
+	const { designerSeq } = useParams();
+	const [loginResult, setLoginResult] = useRecoilState(loginResultState);
+	const customerSeq = loginResult ? loginResult.customerInfo.customerSeq : 0;
   const { data, isLoading, isError } = useQuery(['designerDetail', designerSeq, customerSeq], () => getDesignerDetail(designerSeq, customerSeq));
-    
-    if (isLoading) return <div>Loading...</div>;
+	
+	if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error loading designer details</div>;
   
-    return(
-        <Container>
-            <Wrapper>
-                <Wrap>
-                <InfoWrapper>
-                    <DesignerInfoBox>
-                        <DesignerImg src="/icon/designerimg.png"/>
-                        <DesignerNameWrap>
-                            <DesignerNameBox>
-                            <DesignerName>{data.name} 디자이너</DesignerName>
-                            <LikeBox onClick={toggleLike} handlelike={handleLike}>
-                                {handleLike ? (
-                                    // 좋아요가 눌려있을 때 빨간색 하트 아이콘
-                                    <Icon src="/icon/hearto.png" />
-                                ) : (
-                                    // 좋아요가 눌려있지 않을 때 빈 하트 아이콘
-                                    <Icon src="/icon/heartx.png" />
-                                )}
-                                <Text>{data.likeCnt}</Text>
-                            </LikeBox>
-                            </DesignerNameBox>
-                            <Hr/>
-                            <Box>
-                                <Box>
-                                <CostIcon src="/icon/money.png"/>
-                                <Text>{data.cost}</Text>
-                                </Box>
-                                <ReservBox onClick={() => navigate("/reservation")} whileHover={{backgroundColor: "rgb(244,153,26)"}}>
-                                    <Icon src="/icon/reservBtn.png"/>
-                                    <Text>예약</Text>
-                                </ReservBox>
-                            </Box>
-                        </DesignerNameWrap>
-                    </DesignerInfoBox>
-                    <InfoBox>
-                        <Address>{data.address}</Address>
-                        <HashBox>
+	return(
+		<Container>
+			<Wrapper>
+				<Wrap>
+				<InfoWrapper>
+					<DesignerInfoBox>
+						<DesignerImg src="/icon/designerimg.png"/>
+						<DesignerNameWrap>
+							<DesignerNameBox>
+							<DesignerName>{data.name} 디자이너</DesignerName>
+							<LikeBox onClick={toggleLike} handlelike={handleLike}>
+								{handleLike ? (
+									// 좋아요가 눌려있을 때 빨간색 하트 아이콘
+									<Icon src="/icon/hearto.png" />
+								) : (
+									// 좋아요가 눌려있지 않을 때 빈 하트 아이콘
+									<Icon src="/icon/heartx.png" />
+								)}
+								<Text>{data.likeCnt}</Text>
+							</LikeBox>
+							</DesignerNameBox>
+							<Hr/>
+							<Box>
+								<Box>
+								<CostIcon src="/icon/money.png"/>
+								<Text>{data.cost}</Text>
+								</Box>
+								<ReservBox onClick={() => navigate("/reservation")} whileHover={{backgroundColor: "rgb(244,153,26)"}}>
+									<Icon src="/icon/reservBtn.png"/>
+									<Text>예약</Text>
+								</ReservBox>
+							</Box>
+						</DesignerNameWrap>
+					</DesignerInfoBox>
+					<InfoBox>
+						<Address>{data.address}</Address>
+						<HashBox>
             {
               data.hairStyleLabel.map((tag, index) => (
                 <HashTag key={index}>#{tag}</HashTag>
@@ -364,40 +364,38 @@ function DesignerDetail() {
                   ))
                 }
               </StyledSlider>
-                </PofolWrap>
-                <InfoBox>
-                    <SubTitle>별점</SubTitle>
-                    <Box>
-                        <Icon src="/icon/star.png" />
-                        <Text>{data.allReviewScore}</Text>
-                    </Box>
-                    <SubTitle>상담후기</SubTitle>
-                </InfoBox>
-                <Hr/>
-                {data.review.map((review, index) => (
-                <ReviewInfoBox key={index}>
-                    <ReviewWrap>
-                        <ReviewInfoBox>
-                            <Box>
-                                <ReviewIdBox>
-                                    {review.customerId}
-                                </ReviewIdBox>
-                                <SIcon src="/icon/star.png" />
-                                <Text>{review.review_score}</Text>
-                            </Box>
-                            <Text>{review.reviewContent}</Text>
-                        </ReviewInfoBox>
-                        <Text>{review.consulting_date}</Text>
-                    </ReviewWrap>
-                    <Hr/>
-                </ReviewInfoBox>
-                ))
-                }
-                </Wrap>
-            </Wrapper>
-        </Container>
+				</PofolWrap>
+				<InfoBox>
+					<SubTitle>별점</SubTitle>
+					<Box>
+						<Icon src="/icon/star.png" />
+						<Text>{data.allReviewScore}</Text>
+					</Box>
+					<SubTitle>상담후기</SubTitle>
+				</InfoBox>
+				<Hr/>
+				{data.review.map((review, index) => (
+				<ReviewInfoBox key={index}>
+					<ReviewWrap>
+						<ReviewInfoBox>
+							<Box>
+								<ReviewIdBox>
+									{review.customerId}
+								</ReviewIdBox>
+								<SIcon src="/icon/star.png" />
+								<Text>{review.review_score}</Text>
+							</Box>
+							<Text>{review.reviewContent}</Text>
+						</ReviewInfoBox>
+						<Text>{review.consulting_date}</Text>
+					</ReviewWrap>
+					<Hr/>
+				</ReviewInfoBox>
+				))
+				}
+				</Wrap>
+			</Wrapper>
+		</Container>
   );
 }
-
-
 export default DesignerDetail;

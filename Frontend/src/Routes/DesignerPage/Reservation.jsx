@@ -385,13 +385,13 @@ function Reservation() {
                 {
                   PofolImgs.map((item, index) => (
                     <PofolImg 
-											key={index} 
-											src={item}
-											variants={pofolVariants}
-											initial="nomal"
-											whileHover="hover"
-											onClick={() => handleImageClick(item)}
-											/>
+						key={index} 
+						src={item}
+						variants={pofolVariants}
+						initial="nomal"
+						whileHover="hover"
+						onClick={() => handleImageClick(item)}
+						/>
                   ))
                 }
               </StyledSlider>
@@ -405,13 +405,13 @@ function Reservation() {
                 { 
                   OPofolImgs.map((item, index) => (
                     <PofolImg 
-											key={index} 
-											src={item}
-											variants={pofolVariants}
-											initial="nomal"
-											whileHover="hover"
-											onClick={() => handleImageClick(item)}
-											/>
+						key={index} 
+						src={item}
+						variants={pofolVariants}
+						initial="nomal"
+						whileHover="hover"
+						onClick={() => handleImageClick(item)}
+						/>
                   ))
                 }
               </StyledSlider>
