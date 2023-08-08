@@ -160,9 +160,9 @@ public class CustomerServiceImpl implements CustomerService{
     // customer 로그인
     @Override
     @Transactional  // faceDict LazyInitializationException
-    public ResponseCustomerLoginDetailDto signIn(RequestSignInDto requestSignInDto) {
+    public ResponseCustomerLoginToken signIn(RequestSignInDto requestSignInDto) {
 
-        ResponseCustomerLoginDetailDto responseCustomerLoginDetailDto = new ResponseCustomerLoginDetailDto();
+        ResponseCustomerLoginToken responseCustomerLoginToken = new ResponseCustomerLoginToken();
 
         try{
             // 1) token setting
@@ -178,24 +178,45 @@ public class CustomerServiceImpl implements CustomerService{
 
             TokenDto tokenDto = new TokenDto(accessToken,refreshToken);
 
-            // Redis 저장 : 만료 시간 설정으로 자동 삭제 처리
-            redisTemplate.opsForValue().set(
-                    authentication.getName(),
-                    refreshToken,
-                    refreshTokenExpire,
-                    TimeUnit.MILLISECONDS
-            );
+//            // Redis 저장 : 만료 시간 설정으로 자동 삭제 처리
+//            redisTemplate.opsForValue().set(
+//                    authentication.getName(),
+//                    refreshToken,
+//                    refreshTokenExpire,
+//                    TimeUnit.MILLISECONDS
+//            );
+            Customer customer = customerRepository.findById(requestSignInDto.getId());
+
+            // refresh token MySQL에 저장하기
+            customerRepository.updateRefreshToken(customer.getSeq() ,refreshToken);
 
             // HTTP 요청 헤더에 "Authorization" 헤더를 추가하는 코드
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.add("Authorization", "Bearer "+tokenDto.getAccessToken());
 
-            responseCustomerLoginDetailDto.setToken(tokenDto);
+            responseCustomerLoginToken.setToken(tokenDto);
+
+            responseCustomerLoginToken.setCustomerSeq(customer.getSeq());
+
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return responseCustomerLoginToken;
+    }
 
 
+    // customer 로그인
+    @Override
+    @Transactional  // faceDict LazyInitializationException
+    public ResponseCustomerLoginDetailDto getMainPageInfo(int customerSeq) {
+
+        ResponseCustomerLoginDetailDto responseCustomerLoginDetailDto = new ResponseCustomerLoginDetailDto();
+
+        try{
 
             // 2) customerInfo setting
-            Customer customer = customerRepository.findById(requestSignInDto.getId());
+            Customer customer = customerRepository.findBySeq(customerSeq);
             ResponseCustomerLoginInfoDto responseCustomerLoginInfoDto = new ResponseCustomerLoginInfoDto().entityToDto(customer);
 
             responseCustomerLoginDetailDto.setCustomerInfo(responseCustomerLoginInfoDto);
@@ -286,7 +307,6 @@ public class CustomerServiceImpl implements CustomerService{
 
             // 6. alert setting
             List<AlertCustomerOnLoginDto> list6 = new ArrayList<>();
-            int customerSeq = responseCustomerLoginInfoDto.getCustomerSeq();
 
             // 고객 번호로 알림 가져오기
             List<CustomerAlert> alertList = new ArrayList<>();

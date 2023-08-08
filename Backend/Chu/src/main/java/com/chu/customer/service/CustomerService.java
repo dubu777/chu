@@ -36,8 +36,11 @@ public interface CustomerService {
     // 고객 로그인
     //boolean signIn(RequestSignInDto requestSignInDto);
 //
-    // 로그인 테스트
-    ResponseCustomerLoginDetailDto signIn(RequestSignInDto requestSignInDto);
+    // 로그인
+    ResponseCustomerLoginToken signIn(RequestSignInDto requestSignInDto);
+
+    // 로그인 후 메인페이지 정보
+    ResponseCustomerLoginDetailDto getMainPageInfo(int customerSeq);
 
     // 고객 알림 읽음 처리
     void checkAlert(int alertSeq);
