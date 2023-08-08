@@ -1,9 +1,12 @@
 video {
     width: 100%;
+    /* margin-left: 20px;
+    padding-left: 500px; */
     height: auto;
     float: left;
     cursor: pointer;
 }
+/* 참가자 명 */
 .streamcomponent div {
     position: absolute;
     /* background: #f8f8f8; */

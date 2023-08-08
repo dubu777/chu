@@ -24,6 +24,7 @@ import EditDesignerInfo from "./Routes/DesignerPage/EditDesignerInfo";
 import EditCustomerInfo from "./Routes/CustomerPage/EditCustomerInfo";
 import Reservation from "./Routes/DesignerPage/Reservation";
 import ConsultResultPage from "./Routes/ConsultPage/ConsultResultPage";
+import ViduRoomWrapper from "./components/OpenVidu/ViduRoomWrapper";
 
 function App() {
   return (
@@ -31,7 +32,7 @@ function App() {
       <Header/>
       <Routes>
         <Route path="/" element={<Home/>} />
-        <Route path="/viduroom" element={<ViduRoom/>} />
+        <Route path="/viduroom/:id" element={<ViduRoomWrapper/>} />
         <Route path="login" element={<LogIn/>} />
         <Route path="findid" element={<FindId/>} />
         <Route path="findpw" element={<FindPw/>}/>
