@@ -3,7 +3,10 @@
 import { styled } from "styled-components";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import {getSessionId} from "../../apis/openvidu";
+import { useRecoilState, useRecoilValue} from "recoil";
+import {sessionIdState} from "../../recoil/openvidu";
 
 const Container = styled.div`
   /* display: flex; */
@@ -158,7 +161,8 @@ const CloseButton = styled.button`
   margin-top: 10px;
 `;
 function AllReserveList(){
-    const [data, setdata] = useState({
+  const navigate = useNavigate();
+  const [data, setdata] = useState({
         "consultingList" : [
             {
                 "consultingSeq" : 1,
@@ -203,6 +207,7 @@ function AllReserveList(){
     // 모달 상태 관리
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
+    const [sessionId, setSessionId] = useRecoilState(sessionIdState);
 
     const openModal = (item) => {    // 모달 열기
       setSelectedItem(item);
@@ -212,6 +217,31 @@ function AllReserveList(){
     const closeModal = () => {  // 모달 닫기
       setIsModalOpen(false);
     };
+
+    // sessoionId API 호출
+    const consultSeq = 2;
+    const getSession = async () => {
+    try {
+      const response  = await getSessionId(consultSeq);
+      console.log(response)
+      setSessionId(response)
+
+    } catch(error){
+      console.log(error)
+    }
+  };
+
+  const goViduRoom = () => {
+     navigate('/viduroom', {state: {sessionId}});
+    //  navigate(`/viduroom/${sessionId}`);
+  };
+
+
+  // useEffect(() => {   // consultSeq 변경에 따른 API get 함수 호출
+  //   getSession();
+  // }, []);
+
+
     return(
         <Container>
       <Wrap>
@@ -242,7 +272,12 @@ function AllReserveList(){
                         <ModalBtn onClick={()=>openModal(item)}>상세 보기</ModalBtn>
                       </Box>
                       <Box>
-                        <EnterBtn>상담 입장</EnterBtn>
+                        <EnterBtn onClick={()=>
+                        {getSession()
+                          goViduRoom()
+                        }}>
+                          {/* <Link to={{ pathname: '/viduroom', state: { sessionData: 'sessionId' } }}>상담 입장</Link> */}
+                        상담입장</EnterBtn>
                       </Box>
                         {/* 모달 */}
       {isModalOpen && selectedItem && (
@@ -269,7 +304,7 @@ function AllReserveList(){
           </ModalContent>
         </Modal>
       )}
-                </ReserveBox>
+      </ReserveBox>
                 
             ))}
       </Wrapper>

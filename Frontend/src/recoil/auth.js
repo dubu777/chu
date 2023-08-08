@@ -9,7 +9,8 @@ export const accessTokenState = atom({
   effects_UNSTABLE: [persistAtom], // Recoil Persist를 적용
 });
 
-export const loginResultState = atom({ 
+// 로그인시 받을 데이터
+export const loginResultState = atom({
   key: 'loginResultState',
   default: null,
 });

@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { useQuery } from "react-query";
+
 
 const Container = styled.div`
   display: flex;
@@ -159,12 +159,15 @@ function DesignerList(props) {
         <Box>
           <DesignerImg 
             src="./icon/designerimg.png"
-            onClick={() => navigate("/designerdetail")}
+            onClick={() => navigate(`/designerdetail/${item.designerSeq}`)}
           />
         </Box>
         <InfoBox>
           <StarBox>
-            <Name>{item.designerName}디자이너</Name>
+            <Name 
+              onClick={() => navigate(`/designerdetail/${item.designerSeq}`)}
+            >{item.designerName}디자이너
+            </Name>
             <Icon src="./icon/star.png"/>
             <Text>{item.reviewScore}</Text>
           </StarBox>
