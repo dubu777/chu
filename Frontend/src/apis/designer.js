@@ -73,17 +73,15 @@ export const attachDesignerImage = async (seq, formData) => {
 };
 
 // 마이페이지-포트폴리오 조회
-export const getPortfolio = async (seq) => {
-  try {
-    console.log("포트폴리호 조회 try");
-    const response = await axios.get(
-      `${BASE_URL}/designer/detail/portfolio/${seq}`,
-      {}
-    );
-    return response.data.result;
-  } catch (error) {
-    throw new Error("디자이너 포트폴리오 조회 실패");
-  }
+export const getPortfolio = async(seq) => {
+    try {
+        console.log('포트폴리호 조회 try')
+        const response = await axios.get(`${BASE_URL}/designer/detail/portfolio/${seq}`, {
+        })
+        return response.data.result;
+    } catch(error) {
+        throw new Error('디자이너 포트폴리오 조회 실패')
+    }
 };
 
 // 마이페이지-포트폴리오 등록
