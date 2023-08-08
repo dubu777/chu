@@ -1,6 +1,7 @@
 package com.chu.designer.domain;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -10,6 +11,7 @@ import java.util.Objects;
 // 디자이너의 정보를 담고 있는 DTO
 @Getter @Setter
 @ToString
+@NoArgsConstructor
 public class DesignerSearchDto {
 
     private Integer designerSeq;

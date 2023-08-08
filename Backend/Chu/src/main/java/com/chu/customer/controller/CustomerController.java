@@ -135,6 +135,19 @@ public class CustomerController {
         return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), null));
     }
 
+    // 좋아요 한 디자이너 조회
+    @GetMapping("/like/{customerSeq}")
+    public ResponseEntity<HttpResponseDto> getLikeDesignerList(@PathVariable("customerSeq") int customerSeq){
+
+        ResponseDesignerSearchDto response = new ResponseDesignerSearchDto();
+        try{
+            response = designerSearchService.getLikeDesignerList(customerSeq);
+        } catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), response));
+    }
 //
 //    @PostMapping("/like")
 //    public ResponseEntity<HttpResponseDto> changeLikeInfo(@RequestBody RequestLikeDto requestLikeDto){
