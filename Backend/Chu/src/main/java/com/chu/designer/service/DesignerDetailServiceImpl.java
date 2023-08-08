@@ -99,7 +99,7 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
             for (int i = 0; i < designerPortfolios.size(); i++) {
                 ImageDto imgDto = new ImageDto();
                 imgDto.setImgSeq(designerPortfolios.get(i).getSeq());
-                imgDto.setImgName(designerPortfolios.get(i).getImagePath().getSavedImgName());
+                imgDto.setImgName(designerPortfolios.get(i).getImagePath().getUploadImgName());
                 imgList.add(imgDto);
             }
 
