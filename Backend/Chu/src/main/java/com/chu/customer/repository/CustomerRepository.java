@@ -12,6 +12,8 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 
     Customer findById(String Id);
 
+    Customer findBySeq(int seq);
+
     // ID 중복검사
     boolean existsById(String Id);
 
@@ -27,6 +29,10 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
     void changePwd(int seq, String pwd);
 
     Customer getCustomerBySeq(int seq);
+
+    @Modifying
+    @Query("UPDATE Customer c SET c.RefreshToken = :token WHERE c.seq = :seq")
+    void updateRefreshToken(int seq, String token);
 
 
 //    boolean checkId(String id);

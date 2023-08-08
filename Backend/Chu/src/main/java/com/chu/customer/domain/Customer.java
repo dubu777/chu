@@ -41,6 +41,8 @@ public class Customer {
    @JoinColumn(name="face_seq")
    private FaceDict faceDict;
 
+   private String RefreshToken;
+
    public Customer() {
       this.faceDict = new FaceDict();
 //      this.faceDict.setSeq(1);

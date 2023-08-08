@@ -2,7 +2,6 @@ package com.chu.customer.controller;
 
 import com.chu.customer.domain.*;
 import com.chu.customer.service.CustomerService;
-import com.chu.designer.domain.DesignerSearchDto;
 import com.chu.designer.domain.ResponseDesignerSearchDto;
 import com.chu.designer.service.DesignerSearchService;
 import com.chu.global.domain.*;
@@ -47,10 +46,26 @@ public class CustomerController {
 
         // null 이면 일치하는 회원 없음 return
         // null 아니면 아래 로직 수행
+        ResponseUserLoginToken responseCustomerLoginToken = null;
+
+        try{
+            responseCustomerLoginToken = customerService.signIn(requestSignInDto);
+        } catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), responseCustomerLoginToken));
+    }
+
+    // 로그인 후 메인페이지 정보 return
+    @GetMapping(value = "/main/{customerSeq}")
+    public ResponseEntity<HttpResponseDto> getMainPageInfo(@PathVariable int customerSeq){
+
         ResponseCustomerLoginDetailDto responseCustomerLoginDetailDto = null;
 
         try{
-            responseCustomerLoginDetailDto = customerService.signIn(requestSignInDto);
+            responseCustomerLoginDetailDto = customerService.getMainPageInfo(customerSeq);
         } catch(Exception e){
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));
