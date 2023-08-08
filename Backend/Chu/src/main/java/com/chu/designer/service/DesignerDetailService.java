@@ -45,8 +45,10 @@ public interface DesignerDetailService {
 
     // 이미지 경로 가져오기
     String getSavedImgFilePath(MultipartFile file) throws IOException;
+
+    String getUploadImgFilePath(MultipartFile file) throws IOException;
     // 디자이너 포트폴리오 업데이트
-    int postPortfolioImage(int designerSeq, String img);
+    int postPortfolioImage(int designerSeq, String img, String uploadName);
 
     // 디자이너 포트폴리오 삭제
     boolean deletePortfolioImage(int imageSeq);
