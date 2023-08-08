@@ -35,7 +35,13 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .addResolver(new PathResourceResolver());
 
         registry.addResourceHandler("/portfolio/**")
-                .addResourceLocations("file:///" + "/chu/upload/images/designer/portfolio")
+                .addResourceLocations("file:///" + "/chu/upload/images/designer/portfolio/")
+                .setCachePeriod(3600)
+                .resourceChain(true)
+                .addResolver(new PathResourceResolver());
+
+        registry.addResourceHandler("/designer-profile/**")
+                .addResourceLocations("file:///" + "/chu/upload/images/designer/")
                 .setCachePeriod(3600)
                 .resourceChain(true)
                 .addResolver(new PathResourceResolver());
