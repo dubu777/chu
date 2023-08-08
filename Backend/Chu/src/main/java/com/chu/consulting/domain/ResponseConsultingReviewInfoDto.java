@@ -1,11 +1,9 @@
 package com.chu.consulting.domain;
 
-import com.chu.designer.domain.HairStyleDto;
-import com.chu.global.domain.ResponseHairStyleDto;
+import com.chu.global.domain.HairStyleDto;
 import com.chu.global.domain.ImageDto;
 import lombok.Data;
 
-import java.util.ArrayList;
 import java.util.List;
 
 

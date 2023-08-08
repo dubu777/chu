@@ -42,10 +42,26 @@ public class DesignerController {
     @PostMapping(value = "/sign-in")
     public ResponseEntity<HttpResponseDto> signIn(@RequestBody RequestSignInDto requesSignInDto){
 
+        ResponseUserLoginToken responseDesignerLoginToken = null;
+
+        try{
+            responseDesignerLoginToken = designerService.signIn(requesSignInDto);
+        } catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), responseDesignerLoginToken));
+    }
+
+    // 로그인 후 메인페이지
+    @GetMapping(value = "/main/{designerSeq}")
+    public ResponseEntity<HttpResponseDto> getMainPageInfo(@PathVariable int designerSeq){
+
         ResponseDesignerLoginDetailDto responseDesignerLoginDetailDto = null;
 
         try{
-            responseDesignerLoginDetailDto = designerService.signIn(requesSignInDto);
+            responseDesignerLoginDetailDto = designerService.getMainPageInfo(designerSeq);
         } catch(Exception e){
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));

@@ -1,8 +1,8 @@
 package com.chu.designer.domain;
 
+import com.chu.global.domain.HairStyleDto;
 import lombok.Data;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Data

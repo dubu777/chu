@@ -37,6 +37,12 @@ public interface DesignerRepository extends JpaRepository<Designer, Integer> {
     @Query("UPDATE Designer d SET d.reviewScore = :score WHERE d.seq = :seq")
     void updateReviewScore(double score, int seq);
 
+    @Modifying
+    @Query("UPDATE Designer d SET d.RefreshToken = :token WHERE d.seq = :seq")
+    void updateRefreshToken(int seq, String token);
+
+    Designer findBySeq(int seq);
+
 
 //    boolean signUp(RequestDesignerSignUpDto requestDesignerSignUpDto);
 //

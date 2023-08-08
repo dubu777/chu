@@ -10,7 +10,6 @@ import java.util.List;
 
 @Data
 public class ResponseDesignerLoginDetailDto {
-    TokenDto token;
     String userType = "designer";
     ResponseDesignerLoginInfoDto designerInfo;
     List<ResponseBestDesignerDto> bestDesigner;

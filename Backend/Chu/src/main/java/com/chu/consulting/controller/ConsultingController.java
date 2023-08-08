@@ -2,7 +2,7 @@ package com.chu.consulting.controller;
 
 import com.chu.consulting.domain.*;
 import com.chu.consulting.service.ConsultingService;
-import com.chu.designer.domain.HairStyleDto;
+import com.chu.global.domain.HairStyleDto;
 import com.chu.designer.service.DesignerSearchService;
 import com.chu.global.domain.HttpResponseDto;
 import com.chu.global.domain.ImageDto;
@@ -13,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @RestController

@@ -20,7 +20,10 @@ public interface DesignerService {
     void signUp(Designer designer);
 
     // 디자이너 로그인
-    ResponseDesignerLoginDetailDto signIn(RequestSignInDto requestSignInDto);
+    ResponseUserLoginToken signIn(RequestSignInDto requestSignInDto);
+
+    // 로그인 후 메인페이지 정보
+    ResponseDesignerLoginDetailDto getMainPageInfo(int designerSeq);
 
     // 디자이너 아이디 찾기
     ResponseFindIdDto findId(String name, String email);
