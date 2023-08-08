@@ -274,7 +274,8 @@ class ViduRoom extends Component {
 
     this.state = {
       mySessionId: this.props.sessionId,
-      myUserName: this.props.userName,
+      // myUserName: this.props.userName,
+      myUserName: 'Participant' + Math.floor(Math.random() * 100),
       session: undefined,
       mainStreamManager: undefined,
       publisher: undefined,
