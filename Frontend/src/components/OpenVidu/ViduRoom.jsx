@@ -389,6 +389,7 @@ class ViduRoom extends Component {
           var subscriber = mySession.subscribe(event.stream, undefined);
           var subscribers = this.state.subscribers;
           subscribers.push(subscriber);
+          console.log("subscriber 찾기 함수 안");
           console.log(subscribers);
 
           // Update the state with the new subscribers
@@ -396,7 +397,8 @@ class ViduRoom extends Component {
             subscribers: subscribers,
           });
         });
-
+        console.log("subscriber 찾기 함수 밖");
+        console.log(this.state.subscribers);
         // On every Stream destroyed...
         mySession.on('streamDestroyed', (event) => {
 
