@@ -86,23 +86,23 @@ public class DesignerSearchController {
         }
     }
 
-//    @GetMapping("/name")
-//    public ResponseEntity<HttpResponseDto> search2Name(@RequestParam int customerSeq, @RequestParam String name){
-//
-//        List<DesignerSearchDto> designerSearchDtoList = designerSearchService.search2Name(customerSeq, name);
-//
-//        if(designerSearchDtoList.size() != 0){
-//            ResponseDesignerSearchDto responseDesignerSearchDto = new ResponseDesignerSearchDto();
-//            responseDesignerSearchDto.setDesignerListCnt(designerSearchDtoList.size());
-//            responseDesignerSearchDto.setDesignerList(designerSearchDtoList);
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseDesignerSearchDto);
-//            return ResponseEntity.ok(httpResponseDto);
-//        }
-//        else{
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
-//            return ResponseEntity.ok(httpResponseDto);
-//        }
-//    }
+    @GetMapping("/name")
+    public ResponseEntity<HttpResponseDto> search2Name(@RequestParam int customerSeq, @RequestParam String name){
+
+        List<DesignerSearchDto> designerSearchDtoList = designerSearchService.search2Name(customerSeq, name);
+
+        if(designerSearchDtoList.size() != 0){
+            ResponseDesignerSearchDto responseDesignerSearchDto = new ResponseDesignerSearchDto();
+            responseDesignerSearchDto.setDesignerListCnt(designerSearchDtoList.size());
+            responseDesignerSearchDto.setDesignerList(designerSearchDtoList);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseDesignerSearchDto);
+            return ResponseEntity.ok(httpResponseDto);
+        }
+        else{
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
+        }
+    }
 
 //    @GetMapping("/around")
 //    public ResponseEntity<HttpResponseDto> search2AllArea(){

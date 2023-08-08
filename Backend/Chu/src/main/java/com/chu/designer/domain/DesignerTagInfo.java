@@ -15,7 +15,6 @@ public class DesignerTagInfo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private Integer seq;
 
     private LocalDateTime createdTime;

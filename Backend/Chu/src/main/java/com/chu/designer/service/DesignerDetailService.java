@@ -27,9 +27,9 @@ public interface DesignerDetailService {
 //
     // 디자이너 마이페이지 수정페이지 정보 조회
     ResponseDesignerMyPageUpdateShowDto getDesignerMyPageUpdateInfo(int designerSeq);
-//
-//    // 디자이너 정보 수정
-//    boolean updateDesignerInfo(int designerSeq, RequestDesignerInfoUpdateDto requestDesignerInfoUpdateDto);
+
+    // 디자이너 정보 수정
+    boolean updateDesignerInfo(int designerSeq, RequestDesignerInfoUpdateDto requestDesignerInfoUpdateDto);
 //
 //    // 디자이너 상담 가능 시간 수정
 //    boolean updatePossibleReservationTime(int designerSeq, RequestReservationPossibleDateAndTimeDto requestReservationPossibleDateAndTimeDto);
