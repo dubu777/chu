@@ -39,7 +39,7 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
 
     @Override
     public String getSavedImgFilePath(MultipartFile file) throws IOException {
-        String uploadDir = "/chu/upload/images/designer/";
+        String uploadDir = "/chu/upload/images/designer/portfolio/";
         String fileName = file.getOriginalFilename();
 
         File directory = new File(uploadDir);

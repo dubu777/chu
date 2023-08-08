@@ -186,8 +186,9 @@ public class CustomerServiceImpl implements CustomerService{
                     TimeUnit.MILLISECONDS
             );
 
-//            HttpHeaders httpHeaders = new HttpHeaders();
-//            httpHeaders.add("Authorization", "Bearer "+tokenDto.getAccessToken());
+            // HTTP 요청 헤더에 "Authorization" 헤더를 추가하는 코드
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.add("Authorization", "Bearer "+tokenDto.getAccessToken());
 
             responseCustomerLoginDetailDto.setToken(tokenDto);
 

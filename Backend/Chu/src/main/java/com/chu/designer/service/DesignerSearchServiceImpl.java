@@ -6,6 +6,7 @@ import com.chu.consulting.repository.ConsultingRepository;
 import com.chu.designer.domain.*;
 import com.chu.designer.repository.DesignerLikeRepository;
 import com.chu.designer.repository.DesignerPortfolioRepository;
+import com.chu.designer.repository.DesignerRepository;
 import com.chu.designer.repository.DesignerSearchRepository;
 import com.chu.global.domain.HairStyleDict;
 import com.chu.global.domain.HairStyleDto;
@@ -30,6 +31,7 @@ public class DesignerSearchServiceImpl implements DesignerSearchService {
     private final DesignerTagInfoRepository designerTagInfoRepository;
     private final HairStyleDictRepository hairStyleDictRepository;
     private final DesignerPortfolioRepository designerPortfolioRepository;
+    private final DesignerRepository designerRepository;
 
     // 1. 헤어스타일 목록 가져오기
     @Override
@@ -189,6 +191,84 @@ public class DesignerSearchServiceImpl implements DesignerSearchService {
                 .build();
 
         return result;
+    }
+
+    @Override
+    public ResponseDesignerSearchDto getLikeDesignerList(int customerSeq) {
+
+        ResponseDesignerSearchDto responseDesignerSearchDto = new ResponseDesignerSearchDto();
+
+        try{
+
+            // 1. designerList 구하기
+            List<DesignerSearchDto> list = new ArrayList<>();
+
+            // 1-1) 고객 번호 일치하는 designerLikeDto 가져오기
+            List<DesignerLike> designerLikes = new ArrayList<>();
+            designerLikes = designerLikeRepository.findAllByCustomerSeq(customerSeq);
+
+            for(DesignerLike dl : designerLikes){
+                // 좋아요 상태 false 이면 continue
+                if(!dl.getLikeStatus())
+                    continue;
+
+                DesignerSearchDto dto= new DesignerSearchDto();
+
+                // 1-2) 디자이너 seq 구하기
+                int designerSeq = dl.getDesigner().getSeq();
+
+                // 1-3) Designer entity 구하기
+                Designer designer = designerRepository.getDesignerBySeq(designerSeq);
+
+                // DesignerSearchDto 채우기
+                dto.setDesignerSeq(designerSeq);
+                dto.setDesignerImg(designer.getImagePath().getSavedImgName());
+                dto.setReviewScore(designer.getReviewScore());
+                dto.setDesignerName(designer.getName());
+                dto.setIntroduction(designer.getIntroduction());
+
+                // 리뷰 수
+                int reviewCnt = consultingRepository.countByDesignerSeq(designerSeq);
+                dto.setReviewCnt(reviewCnt);
+
+                // 헤어스타일 라벨링
+                List<DesignerTagInfo> hairStyleTagSeqs = designerTagInfoRepository.findByDesignerSeq(designerSeq);
+                List<String> hairStyleLabels = new ArrayList<>();
+                for (DesignerTagInfo tag : hairStyleTagSeqs) {
+                    Integer seq = tag.getSeq();
+                    HairStyleDict hairStyleDict = hairStyleDictRepository.findBySeq(seq);
+                    hairStyleLabels.add(hairStyleDict.getHairStyleLabel());
+                }
+                dto.setHairStyleLabel(hairStyleLabels);
+
+                dto.setLikeCnt(designerLikeRepository.countByDesignerSeq(designerSeq));
+
+                DesignerLike designerLike = designerLikeRepository.findByCustomerSeqAndDesignerSeq(customerSeq, designerSeq);
+                if(designerLike == null)
+                    dto.setIsLike(false);
+                else{
+                    if(designerLike.getLikeStatus())
+                        dto.setIsLike(true);
+                }
+
+                dto.setCost(designer.getCost());
+
+                list.add(dto);
+            }
+
+            responseDesignerSearchDto.setDesignerList(list);
+
+            // 2. designerListCnt 구하기
+            int listCnt = list.size();
+
+            responseDesignerSearchDto.setDesignerListCnt(listCnt);
+
+        } catch(Exception e){
+            e.printStackTrace();
+            return responseDesignerSearchDto;
+        }
+
+        return responseDesignerSearchDto;
     }
 }
 //    @Override
