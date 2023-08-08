@@ -148,7 +148,8 @@ function Portfolio(){
       <ImgWrapper>
       {data.imgs.map((img) => (
       <ImgBox key={img.imgSeq}>
-        <Img src={img.imgName} alt="Image" />
+        <Img src={`https://i9b111.q.ssafy.io:9090/api/designer/portfolio/${img.imgName}`}
+alt="Image" />
         <DeleteBtn onClick={() => handleDelete(img.imgSeq)}>
           <DeleteImg src={"./icon/bin.png"}></DeleteImg>
         </DeleteBtn>
