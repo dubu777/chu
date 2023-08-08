@@ -24,7 +24,7 @@ const OPENVIDU_SERVER_SECRET = "sunjin";
 const Container = styled.div`
   /* height: 100vh; */
   width: 100%;
-  background-color: #373631;
+  background-color: #fffdf5;
 `;
 
 const Header = styled.div`
@@ -36,7 +36,7 @@ const Header = styled.div`
 `;
 
 const StudyTitle = styled.p`
-  color: white;
+  color: #4f4d4b;
   font-size: 20px;
   font-weight: 500;
 `;
@@ -44,14 +44,15 @@ const StudyTitle = styled.p`
 const Middle = styled.div`
   width: 100%;
   /* display: flex; */
-  overflow: hidden;
+  /* overflow: hidden; */
 `;
 
-const Left = styled.div`
-  /* flex: 3;
-  width: 100%;
-  display: flex; */
-  /* justify-content: right; */
+const MainBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
 `;
 
 const Right = styled.div`
@@ -72,20 +73,64 @@ const Chat = styled.div`
   display: flex;
 `;
 
+// 중심 
 const VideoContainer = styled.div`
-  /* margin-top: 30px; */
-  /* width: 50%; */
-  /* height: 77vh; */
-  overflow: hidden;
-  /* display: flex; */
+  width: 90%;
+  display: flex;
+  /* flex-direction: column; */
+  /* overflow: hidden; */
   justify-content: center;
+  text-align: center;
+  /* border: 2px solid lightgray; */
 `;
-
+const LeftBox = styled.div`
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* justify-content: center;
+  align-items: center; */
+  border-radius: 0.4rem;
+  padding-right: 20px;
+  background-color: #3e3d3b;
+`;
+const RightBox = styled.div`
+  /* border: 2px solid red; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  margin-left: 50px;
+  border-radius: 0.4rem;
+  background-color: #fffdf6;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+    2px 4px 30px -4px rgb(0 0 0 / 0.1);
+`;
+const ConsultBox = styled.div`
+  width : 90%;
+  height: 350px;
+  background-color: black;
+  /* margin-left: 100px; */
+  margin-bottom: 20px;
+  margin-top: 0px;
+`;
+const ImageBox = styled.div`
+    display: flex;
+    justify-content: space-between;
+    /* margin-left: 100px; */
+`;
+const Img = styled.img`
+    width: 100px;
+    height: 130px;
+    margin: 0px 5px;
+`;
 const StreamContainerWrapper = styled.div`
   /* display: grid; */
   /* place-items: center; */
+  display: flex;
+  flex-direction: column;
   margin-left: 20px;
-  margin-top: 20px;
+  margin-top: 10px;
+  padding-top: 10px;
   ${(props) =>
     props.primary
       ? `
@@ -95,12 +140,12 @@ const StreamContainerWrapper = styled.div`
     grid-template-columns: repeat(4, 1fr);
     `}
   grid-gap: 20px;
-  /* height: 100px; */
+  /* height: 100px;
   padding: 10px;
   @media screen and (max-width: 800px) {
     /* 카메라 뒤 흰 배경 */
     /* background-color: #ffffff; */
-  }
+  /* } */
 `;
 
 const StreamContainer = styled.div`
@@ -110,6 +155,7 @@ const StreamContainer = styled.div`
   /* min-height: 34vh;
   overflow: hidden; */
   box-sizing: border-box;
+  margin-bottom: 10px;
 `;
 
 const Bottom = styled.div`
@@ -122,7 +168,7 @@ const Bottom = styled.div`
 
 const BottomBox = styled.div`
   display: flex;
-  height: 100%;
+  height: 110%;
   width: 20%;
   align-items: center;
   justify-content: space-around;
@@ -164,12 +210,18 @@ const ChatIconBox = styled.div`
 `;
 
 const JoinInput = styled.input`
-    width: 100px ;
-    height: 30px;
-    border-radius: 0.4rem;
-    border: 0;
-    background-color: #555142;
-    color: white;
+    width: 120px;
+    height: 33px;
+    font-size: 20px;
+    border-radius: 1.2rem;
+    border: 2px solid #4d4b49;
+    /* background-color: #555142; */
+    color: #4d4b49;
+    &:hover {
+    background-color: #f0aa48;
+    color: #f7f5e1;
+    border-color: #574934;;
+    }
 `;
 const Hr = styled.hr`
   color  : beige;
@@ -181,6 +233,21 @@ const StartText = styled.h1`
     font-size: 20px;
     /* color: black; */
 `;
+const Backdrop = styled.div`
+  display  : flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.9); /* 어둡게 처리할 색상 */
+  z-index: 10; /* JoinBox보다 더 위에 올라가도록 설정 */
+  display: ${(props) => (props.show ? "block" : "none")}; /* show 값에 따라 표시 여부 조절 */
+`;
+
 const JoinBox = styled.div`
   display  : flex;
   flex-direction: column;
@@ -189,44 +256,16 @@ const JoinBox = styled.div`
   /* width: 50%; */
   border: 2px solid;
   padding: 50px;
+  width: 400px;
   border-radius: 0.5rem;
   background-color: beige;
   color: black;
-  
+  margin: auto;
+  margin-top: 250px;
 `;
-const ConsultBox = styled.div`
-  width : 750px;
-  height: 350px;
-  background-color: black;
-  margin-left: 400px;
-  margin-bottom: 20px;
+const MarginBox = styled.div `
+  height: 10px;
 `;
-const ImageBox = styled.div`
-    display: flex;
-    justify-content: space-around;
-    margin-left: 400px;
-`;
-const Img = styled.img`
-    /* width: 200px;
-    height: 300px; */
-    margin-right: 10px;
-`;
-
-// 버튼 클릭 핸들러
-// const getSessionId = () => {
-//   // API URL
-//   // const apiUrl = 'https://i9b111.q.io.ssafy.io/api/consulting/{상담 번호}';
-
-//   // API 호출
-//   axios.get(apiUrl)
-//     .then(response => {
-//       // API로부터 받아온 데이터를 상태에 저장
-      
-//     })
-//     .catch(error => {
-//       console.error('Error fetching data:', error);
-//     });
-// };
 
 class ViduRoom extends Component {
   constructor(props) {
@@ -262,7 +301,6 @@ class ViduRoom extends Component {
         <Header>
           <StudyTitle>Hair Consulting</StudyTitle>
         </Header>
-
         <Hr />
         <Middle>
           {this.state.session === undefined ? (
@@ -278,6 +316,7 @@ class ViduRoom extends Component {
               }}
               id="join"
             >
+            <Backdrop show={true}>
               <JoinBox>
                 <StartText style={{ color: "black" }}> 상담이 곧 시작됩니다 🙂 </StartText>
                 <form
@@ -287,7 +326,6 @@ class ViduRoom extends Component {
                 >
                   <p className="text-center">
                     <JoinInput
-                      className="btn btn-lg btn-success"
                       name="commit"
                       type="submit"
                       value="Start"
@@ -295,11 +333,13 @@ class ViduRoom extends Component {
                   </p>
                 </form>
               </JoinBox>
+            </Backdrop>
             </div>
           ) : null}
-          <Left>
+          <MainBox>
             <VideoContainer>
               {this.state.session !== undefined ? (
+                <LeftBox>
                 <StreamContainerWrapper
                   primary={this.state.isChat}
                   ref={this.userRef}
@@ -310,6 +350,7 @@ class ViduRoom extends Component {
                       <UserVideoComponent
                         streamManager={this.state.publisher}
                       />
+                      <MarginBox></MarginBox>
                       <UserVideoComponent
                         streamManager={this.state.publisher}
                       />
@@ -321,19 +362,26 @@ class ViduRoom extends Component {
                     </StreamContainer>
                   ))}
                 </StreamContainerWrapper>
+                </LeftBox>
               ) : null}
-              <div>
-                        <ConsultBox></ConsultBox>
+                  <RightBox>
+                        <ConsultBox>
+
+                        </ConsultBox>
+                          <Hr></Hr>
                         <ImageBox>
                           <Img src="../icon/designerimg.png" alt="여기에 헤어 사진" />
                           <Img src="../icon/designerimg.png" alt="여기에 헤어 사진" />
                           <Img src="../icon/designerimg.png" alt="여기에 헤어 사진" />
                           <Img src="../icon/designerimg.png" alt="여기에 헤어 사진" />
                           <Img src="../icon/designerimg.png" alt="여기에 헤어 사진" />
+                          <Img src="../icon/designerimg.png" alt="여기에 헤어 사진" />
+                          <Img src="../icon/designerimg.png" alt="여기에 헤어 사진" />
+                          <Img src="../icon/designerimg.png" alt="여기에 헤어 사진" />
                         </ImageBox>
-                  </div>
+                  </RightBox>
             </VideoContainer>
-          </Left>
+          </MainBox>
           {/* <Right primary={this.state.isChat}>
             <Chat>
               <ChatBox />
