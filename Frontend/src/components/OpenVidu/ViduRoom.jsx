@@ -389,6 +389,7 @@ class ViduRoom extends Component {
           var subscriber = mySession.subscribe(event.stream, undefined);
           var subscribers = this.state.subscribers;
           subscribers.push(subscriber);
+          console.log(subscriber);
 
           // Update the state with the new subscribers
           this.setState({
@@ -567,7 +568,7 @@ class ViduRoom extends Component {
                     {this.state.subscribers.map((sub, i) => (
                       <StreamContainer key={i} className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(sub)}>
                         <UserVideoComponent streamManager={sub} />
-                        <div>{sub.state.myUserName}</div>
+                        {/* <div>{sub.state.myUserName}</div> */}
                       </StreamContainer>
                     ))}
                   </StreamContainerWrapper>
