@@ -32,4 +32,8 @@ public interface DesignerSearchService {
 
 //    // 디자이너 좋아요 여부 조회
 //    List<DesignerSearchDto> search2Like(int customerSeq);
+
+    // 좋아요 한 디자이너 조회
+    ResponseDesignerSearchDto getLikeDesignerList(int customerSeq);
+
 }

@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
+
 public interface DesignerLikeRepository extends JpaRepository<DesignerLike, Integer> {
 
     Integer countByDesignerSeq(Integer designerSeq);
@@ -15,4 +17,6 @@ public interface DesignerLikeRepository extends JpaRepository<DesignerLike, Inte
     @Modifying
     @Query("UPDATE DesignerLike l SET l.likeStatus = true WHERE l.customer.seq = :customerSeq and l.designer.seq = :designerSeq")
     void updateStatusTrue(int customerSeq, int designerSeq);
+
+    List<DesignerLike> findAllByCustomerSeq(Integer customerSeq);
 }
