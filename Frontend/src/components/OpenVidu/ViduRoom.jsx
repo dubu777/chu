@@ -274,8 +274,8 @@ class ViduRoom extends Component {
 
     this.state = {
       mySessionId: this.props.sessionId,
-      // myUserName: this.props.userName,
-      myUserName: 'Participant' + Math.floor(Math.random() * 100),
+      myUserName: this.props.userName,
+      // myUserName: 'Participant' + Math.floor(Math.random() * 100),
       session: undefined,
       mainStreamManager: undefined,
       publisher: undefined,
@@ -483,6 +483,8 @@ class ViduRoom extends Component {
       publisher: undefined,
       userType: undefined,
     });
+    {/* 상담 종료 버튼 */ }
+    <Link to="/designermypage"></Link>
   }
 
   async switchCamera() {
@@ -623,8 +625,7 @@ class ViduRoom extends Component {
             </Icon>
 
             <Icon primary onClick={this.leaveSession}>
-              {/* 상담 종료 버튼 */}
-              <Link to="/designermypage"><CallEndIcon /></Link>
+              <CallEndIcon />
             </Icon>
           </BottomBox>
           <ChatIconBox
