@@ -12,8 +12,6 @@ import java.time.LocalDateTime;
 @Entity
 @Getter @Setter
 @ToString
-//@AllArgsConstructor
-//@NoArgsConstructor(access = AccessLevel.PUBLIC) //@NoArgsConstructor AccessLevel.PROTECTED: 기본 생성자 막고 싶은데, JPA 스팩상 PROTECTED로 열어두어야 함
 public class Designer {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

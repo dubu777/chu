@@ -5,9 +5,11 @@ import com.chu.global.domain.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.List;
 
 public interface DesignerRepository extends JpaRepository<Designer, Integer> {
 
@@ -42,6 +44,10 @@ public interface DesignerRepository extends JpaRepository<Designer, Integer> {
     void updateRefreshToken(int seq, String token);
 
     Designer findBySeq(int seq);
+
+    // 디자이너 뷰 - 이름으로 검색하기
+    @Query("SELECT d FROM Designer d WHERE d.name LIKE %:name%")
+    List<Designer> findByName(@Param("name") String name);
 
 
 //    boolean signUp(RequestDesignerSignUpDto requestDesignerSignUpDto);
