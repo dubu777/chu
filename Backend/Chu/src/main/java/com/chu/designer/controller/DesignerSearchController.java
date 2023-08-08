@@ -2,13 +2,13 @@ package com.chu.designer.controller;
 
 import com.chu.designer.domain.*;
 import com.chu.designer.service.DesignerSearchService;
+import com.chu.global.domain.HairStyleDto;
 import com.chu.global.domain.HttpResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;

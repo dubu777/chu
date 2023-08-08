@@ -28,10 +28,20 @@ public class WebMvcConfig implements WebMvcConfigurer {
         // 2. 컨트롤러를 ResourceHandler를 여러개 매핑시켜 문제를 해결한다.
         // 3. 이 방법이 맞나 의구심이 너무 든다.
         System.out.println(uploadImagesPath);   //     /chu/upload/images/customer/
-        registry.addResourceHandler("/profile/**")       //url패턴 설정
+        registry.addResourceHandler("/customer-profile/**")       //url패턴 설정
                 .addResourceLocations("file:///" + uploadImagesPath)
+                .setCachePeriod(3600)
+                .resourceChain(true)
+                .addResolver(new PathResourceResolver());
+
+        registry.addResourceHandler("/portfolio/**")
+                .addResourceLocations("file:///" + "/chu/upload/images/designer/portfolio/")
+                .setCachePeriod(3600)
+                .resourceChain(true)
+                .addResolver(new PathResourceResolver());
+
+        registry.addResourceHandler("/designer-profile/**")
                 .addResourceLocations("file:///" + "/chu/upload/images/designer/")
-                .addResourceLocations("file:///" + "/chu/upload/images/consulting/")
                 .setCachePeriod(3600)
                 .resourceChain(true)
                 .addResolver(new PathResourceResolver());

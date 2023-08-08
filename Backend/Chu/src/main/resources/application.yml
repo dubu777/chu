@@ -7,6 +7,10 @@ server:
 #    key-store-password: ${SSL_PASSWORD}
   servlet:
     context-path: /api
+    multipart:
+      enabled: true
+
+
 
 # DB_USERNAME=111;DB_PASSWORD=151;DB_URL=jdbc:mysql://13.125.135.111:3306/chu?serverTimezone=UTC&useUnicode=yes&characterEncoding=UTF-8;
 spring:
