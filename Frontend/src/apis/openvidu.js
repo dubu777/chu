@@ -5,7 +5,8 @@ const BASE_URL = 'https://i9b111.q.ssafy.io:9090/api';
 
 
 // session ID get요청
-export const getSessionId = async(consultingSeq)=> {
+export const getSessionId = async(consultingSeq, setSessionId)=> {
+
     try {
         console.log("try접근")
         // const response = await axios.get(`${BASE_URL}/consulting/${consultingSeq}`)

@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import { OpenVidu } from "openvidu-browser";
 import axios from "axios";
-import { Link, useNavigate} from "react-router-dom";
+import { Link, useNavigate, useHistory } from "react-router-dom";
 // import { styled } from '@emotion/styled';
 import styled from "styled-components";
 import UserVideoComponent from "./UserVideoComponent";
@@ -14,9 +14,6 @@ import MicOffIcon from "@mui/icons-material/MicOff";
 import HeadsetOffIcon from "@mui/icons-material/HeadsetOff"; 
 import CallEndIcon from "@mui/icons-material/CallEnd";
 import ChatIcon from "@mui/icons-material/Chat";
-import {sessionIdState} from "../../recoil/openvidu";
-import { useRecoilValue } from "recoil";
-import { useLocation } from "react-router-dom";
 // import ChatBox from "../Chat/ChatBox";
 
 // 로컬 미디어 서버 주소
@@ -31,7 +28,7 @@ const Container = styled.div`
 `;
 
 const Header = styled.div`
-  height: 8vh;
+  height: 6vh;
   display: flex;
   align-items: center;
   padding: 0 50px;
@@ -41,7 +38,7 @@ const Header = styled.div`
 const StudyTitle = styled.p`
   color: white;
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 500;
 `;
 
 const Middle = styled.div`
@@ -79,14 +76,16 @@ const VideoContainer = styled.div`
   /* margin-top: 30px; */
   /* width: 50%; */
   /* height: 77vh; */
-  /* overflow: hidden; */
+  overflow: hidden;
   /* display: flex; */
   justify-content: center;
 `;
 
 const StreamContainerWrapper = styled.div`
-  display: grid;
-  place-items: center;
+  /* display: grid; */
+  /* place-items: center; */
+  margin-left: 20px;
+  margin-top: 20px;
   ${(props) =>
     props.primary
       ? `
@@ -96,11 +95,11 @@ const StreamContainerWrapper = styled.div`
     grid-template-columns: repeat(4, 1fr);
     `}
   grid-gap: 20px;
-  height: 100px;
+  /* height: 100px; */
   padding: 10px;
   @media screen and (max-width: 800px) {
     /* 카메라 뒤 흰 배경 */
-    background-color: #ffffff;
+    /* background-color: #ffffff; */
   }
 `;
 
@@ -196,7 +195,7 @@ const JoinBox = styled.div`
   
 `;
 const ConsultBox = styled.div`
-  width : 600px;
+  width : 750px;
   height: 350px;
   background-color: black;
   margin-left: 400px;
@@ -229,12 +228,35 @@ const Img = styled.img`
 //     });
 // };
 
-
-
 class ViduRoom extends Component {
+  constructor(props) {
+    super(props);
+    console.log(this.props.sessionId);
+    this.userRef = React.createRef();
+
+    this.state = {
+      mySessionId: this.props.sessionId,
+      myUserName: "Participant" + Math.floor(Math.random() * 100),
+      session: undefined,
+      mainStreamManager: undefined,
+      publisher: undefined, // 로컬 웹캠 스트림
+      subscribers: [], // 다른 사용자의 활성 스트림
+      isMike: true,
+      isCamera: true,
+      isSpeaker: true,
+      isChat: false,
+    };
+    console.log('내가 찾고싶은거', this.state.mySessionId)
+
+    this.joinSession = this.joinSession.bind(this);
+    this.leaveSession = this.leaveSession.bind(this);
+    this.handleMainVideoStream = this.handleMainVideoStream.bind(this);
+    this.onbeforeunload = this.onbeforeunload.bind(this);
+    this.handleToggle = this.handleToggle.bind(this);
+    this.createSessionAndGenerateURL = this.createSessionAndGenerateURL.bind(this);
+  }
+
   render() {
-    // const sessiondata = this.props.location.state?.sessionId || "No data Session" ;
-    // console.log(this.props.location.state)
     return (
       <Container>
         <Header>
@@ -303,11 +325,11 @@ class ViduRoom extends Component {
               <div>
                         <ConsultBox></ConsultBox>
                         <ImageBox>
-                          <Img src="icon/designerimg.png" alt="여기에 헤어 사진" />
-                          <Img src="icon/designerimg.png" alt="여기에 헤어 사진" />
-                          <Img src="icon/designerimg.png" alt="여기에 헤어 사진" />
-                          <Img src="icon/designerimg.png" alt="여기에 헤어 사진" />
-                          <Img src="icon/designerimg.png" alt="여기에 헤어 사진" />
+                          <Img src="../icon/designerimg.png" alt="여기에 헤어 사진" />
+                          <Img src="../icon/designerimg.png" alt="여기에 헤어 사진" />
+                          <Img src="../icon/designerimg.png" alt="여기에 헤어 사진" />
+                          <Img src="../icon/designerimg.png" alt="여기에 헤어 사진" />
+                          <Img src="../icon/designerimg.png" alt="여기에 헤어 사진" />
                         </ImageBox>
                   </div>
             </VideoContainer>
@@ -359,34 +381,6 @@ class ViduRoom extends Component {
       </Container>
     );
   }
-  
-  constructor(props) {
-    super(props);
-    this.userRef = React.createRef();
-
-    this.state = {
-      mySessionId: "",
-      myUserName: "Participant" + Math.floor(Math.random() * 100),
-      session: undefined,
-      mainStreamManager: undefined,
-      publisher: undefined, // 로컬 웹캠 스트림
-      subscribers: [], // 다른 사용자의 활성 스트림
-      isMike: true,
-      isCamera: true,
-      isSpeaker: true,
-      isChat: false,
-    };
-    // console.log('data들어왔니', data)
-    
-
-    this.joinSession = this.joinSession.bind(this);
-    this.leaveSession = this.leaveSession.bind(this);
-    this.handleMainVideoStream = this.handleMainVideoStream.bind(this);
-    this.onbeforeunload = this.onbeforeunload.bind(this);
-    this.handleToggle = this.handleToggle.bind(this);
-    this.createSessionAndGenerateURL = this.createSessionAndGenerateURL.bind(this);
-  }
-
 //   componentDidMount() {
 //     // this.leaveSession();
 //     window.addEventListener("beforeunload", this.onbeforeunload);
@@ -576,45 +570,6 @@ async componentDidMount() {
     );
   }
 
-  
-//   createSession(sessionId) {
-//     return new Promise((resolve, reject) => {
-//       let data = JSON.stringify({ customSessionId: sessionId });
-
-//       axios
-//         .post(OPENVIDU_SERVER_URL + "/openvidu/api/sessions", data, {
-//           headers: {
-//             Authorization: `Basic ${btoa(
-//               `OPENVIDUAPP:${OPENVIDU_SERVER_SECRET}`
-//             )}`,
-//             "Content-Type": "application/json",
-//           },
-//         })
-//         .then((res) => {
-//           resolve(res.data.id);
-//         })
-//         .catch((res) => {
-//           let error = Object.assign({}, res);
-
-//           if (error?.response?.status === 409) {
-//             resolve(sessionId);
-//           } else if (
-//             window.confirm(
-//               'No connection to OpenVidu Server. This may be a certificate error at "' +
-//                 OPENVIDU_SERVER_URL +
-//                 '"\n\nClick OK to navigate and accept it. If no certifica' +
-//                 "te warning is shown, then check that your OpenVidu Server is up and running at" +
-//                 ' "' +
-//                 OPENVIDU_SERVER_URL +
-//                 '"'
-//             )
-//           ) {
-//             window.location.assign(OPENVIDU_SERVER_URL + "/accept-certificate");
-//           }
-//         });
-//     });
-//   }
-
 // 방 개설자가 방을 생성하고 세션의 고유 ID를 얻는 함수
 async createSession() {
     const response = await fetch(`${OPENVIDU_SERVER_URL}/openvidu/api/sessions`, {
@@ -636,8 +591,6 @@ async createSession() {
     try {
       const sessionId = await this.createSession.bind(this)();
       const sessionURL = this.generateSessionURL(sessionId);
-      // console.log('생성된 세션 ID:', sessionId);
-      // console.log('생성된 세션 URL:', sessionURL);
       return sessionURL;
     } catch (error) {
       // console.error('세션 생성 및 URL 생성 오류:', error);
@@ -679,30 +632,6 @@ async createToken(sessionId) {
     }
   }
 }
-//   createToken(sessionId) {
-//     return new Promise((resolve, reject) => {
-//       let data = {};
-
-//       axios
-//         .post(
-//           `${OPENVIDU_SERVER_URL}/openvidu/api/sessions/${sessionId}/connection`,
-//           data,
-//           {
-//             headers: {
-//               Authorization: `Basic ${btoa(
-//                 `OPENVIDUAPP:${OPENVIDU_SERVER_SECRET}`
-//               )}`,
-//               "Content-Type": "application/json",
-//             },
-//           }
-//         )
-//         .then((res) => {
-//           resolve(res.data.token);
-//         })
-//         .catch((error) => reject(error));
-//     });
-//   }
-// }
 
 export default ViduRoom;
 
