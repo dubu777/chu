@@ -3,23 +3,274 @@ import { OpenVidu } from 'openvidu-browser';
 import React, { Component } from 'react';
 // import './App.css';
 import UserVideoComponent from './UserVideoComponent';
+import { styled } from 'styled-components';
+
+// 전체 화면
+const Container = styled.div`
+  /* height: 100vh; */
+  width: 100%;
+  background-color: #fffdf5;
+`;
+
+const Header = styled.div`
+  height: 6vh;
+  display: flex;
+  align-items: center;
+  padding: 0 50px;
+  justify-content: center;
+`;
+
+const StudyTitle = styled.p`
+  color: #4f4d4b;
+  font-size: 20px;
+  font-weight: 500;
+`;
+
+const Middle = styled.div`
+  width: 100%;
+  /* display: flex; */
+  /* overflow: hidden; */
+`;
+
+const MainBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+`;
+
+const Right = styled.div`
+  position: relative;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  transition: 0.5s;
+  ${(props) =>
+    props.primary ? `right:0; flex:1;` : `right:calc(-100vw/3); flex:0;`}
+`;
+
+const Chat = styled.div`
+  width: 100%;
+  height: 93%;
+  border-radius: 5px;
+  background-color: white;
+  display: flex;
+`;
+
+// 중심 
+const VideoContainer = styled.div`
+  width: 90%;
+  display: flex;
+  /* flex-direction: column; */
+  /* overflow: hidden; */
+  justify-content: center;
+  text-align: center;
+  /* border: 2px solid lightgray; */
+`;
+const LeftBox = styled.div`
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* justify-content: center;
+  align-items: center; */
+  border-radius: 0.4rem;
+  padding-right: 20px;
+  background-color: #3e3d3b;
+`;
+const RightBox = styled.div`
+  /* border: 2px solid red; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  margin-left: 50px;
+  border-radius: 0.4rem;
+  background-color: #fffdf6;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+    2px 4px 30px -4px rgb(0 0 0 / 0.1);
+`;
+const ConsultBox = styled.div`
+  width : 90%;
+  height: 350px;
+  background-color: black;
+  /* margin-left: 100px; */
+  margin-bottom: 20px;
+  margin-top: 0px;
+`;
+const ImageBox = styled.div`
+    display: flex;
+    justify-content: space-between;
+    /* margin-left: 100px; */
+`;
+const Img = styled.img`
+    width: 100px;
+    height: 130px;
+    margin: 0px 5px;
+`;
+const StreamContainerWrapper = styled.div`
+  /* display: grid; */
+  /* place-items: center; */
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+  margin-top: 10px;
+  padding-top: 10px;
+  ${(props) =>
+    props.primary
+      ? `
+    grid-template-columns: repeat(3, 1fr);
+    `
+      : `
+    grid-template-columns: repeat(4, 1fr);
+    `}
+  grid-gap: 20px;
+  /* height: 100px;
+  padding: 10px;
+  @media screen and (max-width: 800px) {
+    /* 카메라 뒤 흰 배경 */
+    /* background-color: #ffffff; */
+  /* } */
+`;
+
+const StreamContainer = styled.div`
+  width: 100%;
+  position: relative;
+  border-radius: 5px;
+  /* min-height: 34vh;
+  overflow: hidden; */
+  box-sizing: border-box;
+  margin-bottom: 10px;
+`;
+
+const Bottom = styled.div`
+  height: 13vh;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  align-items: center;
+`;
+
+const BottomBox = styled.div`
+  display: flex;
+  height: 110%;
+  width: 20%;
+  align-items: center;
+  justify-content: space-around;
+`;
+
+const Icon = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #333;
+  color: white;
+  cursor: pointer;
+  transition: 0.1s;
+  &:hover {
+    background-color: #3c4043;
+  }
+
+  ${(props) =>
+    props.primary &&
+    `
+      background-color: red;
+      color: white;
+      &:hover{
+          background-color: red;
+      }
+    `}
+`;
+
+const ChatIconBox = styled.div`
+  position: absolute;
+  color: white;
+  right: 60px;
+  top: 50%;
+  bottom: 50%;
+  cursor: pointer;
+`;
+
+const JoinInput = styled.input`
+    width: 120px;
+    height: 33px;
+    font-size: 20px;
+    border-radius: 1.2rem;
+    border: 2px solid #4d4b49;
+    /* background-color: #555142; */
+    color: #4d4b49;
+    &:hover {
+    background-color: #f0aa48;
+    color: #f7f5e1;
+    border-color: #574934;;
+    }
+`;
+const Hr = styled.hr`
+  color  : beige;
+  opacity: 50%;
+  width: 80%;
+`;
+const StartText = styled.h1`
+    margin-bottom: 40px;
+    font-size: 20px;
+    /* color: black; */
+`;
+const Backdrop = styled.div`
+  display  : flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.9); /* 어둡게 처리할 색상 */
+  z-index: 10; /* JoinBox보다 더 위에 올라가도록 설정 */
+  display: ${(props) => (props.show ? "block" : "none")}; /* show 값에 따라 표시 여부 조절 */
+`;
+
+const JoinBox = styled.div`
+  display  : flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  /* width: 50%; */
+  border: 2px solid;
+  padding: 50px;
+  width: 400px;
+  border-radius: 0.5rem;
+  background-color: beige;
+  color: black;
+  margin: auto;
+  margin-top: 250px;
+`;
+const MarginBox = styled.div `
+  height: 10px;
+`;
 
 // 로컬 미디어 서버 주소
 const OPENVIDU_SERVER_URL = 'https://' + 'i9b111.q.ssafy.io' + ':8443';
 const OPENVIDU_SERVER_SECRET = "sunjin";
 
-
 class ViduRoom extends Component {
     constructor(props) {
         super(props);
+        console.log('으악세션', this.props.sessionId);
+        console.log('으악이름', this.props.userName);
+        console.log('으악타입', this.props.userType);
 
         this.state = {
-            mySessionId: 'SessionA',
-            myUserName: 'Participant' + Math.floor(Math.random() * 100),
+            mySessionId: this.props.sessionId,
+            myUserName: this.props.userName,
             session: undefined,
             mainStreamManager: undefined,
             publisher: undefined,
             subscribers: [],
+            userType: this.props.userType,
         };
 
         this.joinSession = this.joinSession.bind(this);
@@ -184,7 +435,8 @@ class ViduRoom extends Component {
             mySessionId: 'SessionA',
             myUserName: 'Participant' + Math.floor(Math.random() * 100),
             mainStreamManager: undefined,
-            publisher: undefined
+            publisher: undefined,
+            userType: undefined,
         });
     }
 
@@ -230,47 +482,30 @@ class ViduRoom extends Component {
         return (
             <div className="container">
                 {this.state.session === undefined ? (
-                    <div id="join">
-                        <div id="img-div">
-                            <img src="resources/images/openvidu_grey_bg_transp_cropped.png" alt="OpenVidu logo" />
-                        </div>
-                        <div id="join-dialog" className="jumbotron vertical-center">
-                            <h1> Join a video session </h1>
-                            <form className="form-group" onSubmit={this.joinSession}>
-                                <p>
-                                    <label>Participant: </label>
-                                    <input
-                                        className="form-control"
-                                        type="text"
-                                        id="userName"
-                                        value={myUserName}
-                                        onChange={this.handleChangeUserName}
-                                        required
-                                    />
-                                </p>
-                                <p>
-                                    <label> Session: </label>
-                                    <input
-                                        className="form-control"
-                                        type="text"
-                                        id="sessionId"
-                                        value={mySessionId}
-                                        onChange={this.handleChangeSessionId}
-                                        required
-                                    />
-                                </p>
-                                <p className="text-center">
-                                    <input className="btn btn-lg btn-success" name="commit" type="submit" value="JOIN" />
-                                </p>
-                            </form>
-                        </div>
-                    </div>
+                  <Backdrop show={true}>
+                  <JoinBox>
+                    <StartText style={{ color: "black" }}> 상담이 곧 시작됩니다 🙂 </StartText>
+                    <form
+                      style={{ display: "flex", justifyContent: "center" }}
+                      className="form-group"
+                      onSubmit={this.joinSession}
+                    >
+                      <p className="text-center">
+                        <JoinInput
+                          name="commit"
+                          type="submit"
+                          value="Start"
+                        />
+                      </p>
+                    </form>
+                  </JoinBox>
+                </Backdrop>
                 ) : null}
 
                 {this.state.session !== undefined ? (
                     <div id="session">
                         <div id="session-header">
-                            <h1 id="session-title">{mySessionId}</h1>
+                            <h1 id="session-title">상담번호: {mySessionId}</h1>
                             <input
                                 className="btn btn-large btn-danger"
                                 type="button"
