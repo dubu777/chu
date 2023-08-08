@@ -389,16 +389,16 @@ class ViduRoom extends Component {
           var subscriber = mySession.subscribe(event.stream, undefined);
           var subscribers = this.state.subscribers;
           subscribers.push(subscriber);
-          console.log("subscriber 찾기 함수 안");
-          console.log(subscribers);
+          // console.log("subscriber 찾기 함수 안");
+          // console.log(subscribers);
 
           // Update the state with the new subscribers
           this.setState({
             subscribers: subscribers,
           });
         });
-        console.log("subscriber 찾기 함수 밖");
-        console.log(this.state.subscribers);
+        // console.log("subscriber 찾기 함수 밖");
+        // console.log(this.state.subscribers);
         // On every Stream destroyed...
         mySession.on('streamDestroyed', (event) => {
 
@@ -564,13 +564,12 @@ class ViduRoom extends Component {
                         <UserVideoComponent
                           streamManager={this.state.publisher}
                         />
-                        <div>{this.state.myUserName}</div>
+                        {/* <div>{this.state.myUserName}</div> */}
                       </StreamContainer>
                     ) : null}
                     {this.state.subscribers.map((sub, i) => (
                       <StreamContainer key={i} className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(sub)}>
                         <UserVideoComponent streamManager={sub} />
-                        {/* <div>{sub.state.myUserName}</div> */}
                       </StreamContainer>
                     ))}
                   </StreamContainerWrapper>
