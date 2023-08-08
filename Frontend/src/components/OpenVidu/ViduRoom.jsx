@@ -280,6 +280,10 @@ class ViduRoom extends Component {
       publisher: undefined,
       subscribers: [],
       userType: this.props.userType,
+      isMike: true,
+      isCamera: true,
+      isSpeaker: true,
+      isChat: false,
     };
 
     this.joinSession = this.joinSession.bind(this);
@@ -289,6 +293,7 @@ class ViduRoom extends Component {
     this.handleChangeUserName = this.handleChangeUserName.bind(this);
     this.handleMainVideoStream = this.handleMainVideoStream.bind(this);
     this.onbeforeunload = this.onbeforeunload.bind(this);
+    this.handleToggle = this.handleToggle.bind(this);
   }
 
   componentDidMount() {
@@ -331,6 +336,33 @@ class ViduRoom extends Component {
       this.setState({
         subscribers: subscribers,
       });
+    }
+  }
+
+  handleToggle(kind) {
+    if (this.state.publisher) {
+      switch (kind) {
+        case "camera":
+          this.setState({ isCamera: !this.state.isCamera }, () => {
+            console.log(this.state.publisher);
+            this.state.publisher.publishVideo(this.state.isCamera);
+          });
+          break;
+
+        case "speaker":
+          this.setState({ isSpeaker: !this.state.isSpeaker }, () => {
+            this.state.subscribers.forEach((s) =>
+              s.subscribeToAudio(this.state.isSpeaker)
+            );
+          });
+          break;
+
+        case "mike":
+          this.setState({ isMike: !this.state.isMike }, () => {
+            this.state.publisher.publishAudio(this.state.isMike);
+          });
+          break;
+      }
     }
   }
 
