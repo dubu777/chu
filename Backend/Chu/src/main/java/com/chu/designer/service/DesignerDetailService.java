@@ -37,8 +37,8 @@ public interface DesignerDetailService {
 //    // 디자이너 해당 날짜 상담 가능 시간 내역 조회
 //    ArrayList<TimeDto> getPossibleReservationTime(int designerSeq, Date date);
 //
-//    // 디자이너 상담 예약 내역 조회
-//    ArrayList<ResponseConsultingDto> getReservationList(int designerSeq);
+    // 디자이너 상담 예약 내역 조회
+    List<ResponseConsultingDto> getReservationList(int designerSeq);
 //
     // 디자이너 포트폴리오 조회
     List<ImageDto> getPortfolio(int designerSeq);
