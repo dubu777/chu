@@ -307,7 +307,7 @@ function CustomerMyPage(){
                   // src={selectedFile || './icon/profile2.png'} 
                   src={selectedFile || `${BASE_URL}/customer-profile/${data.img}`}
                   alt="Profile" 
-                  hasFile={selectedFile !== null} 
+                  // hasFile={selectedFile !== null} 
                 />
                 {/* 이미지 제출 버튼 */}
                   <button onClick={handleSubmitImage}>사진 제출</button>
