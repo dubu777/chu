@@ -46,10 +46,12 @@ export const getDesignerMyPage = async (designerSeq) => {
 // 디자이너 한 줄 소개글 수정
 export const updateIntroduction = async (designerSeq, introduction) => {
   try{
-    console.log("소개글 데이터 되라",designerSeq,introduction);
-    const response = await axios.post(`${BASE_URL}/designer/detail/introduction/${designerSeq}`, { params : {
-      "introduction": introduction,
-    }});
+    console.log(designerSeq);
+    console.log(introduction);
+    const response = await axios.patch(`${BASE_URL}/designer/detail/introduction/${designerSeq}?introduction=${introduction}`, 
+
+    );
+    console.log(response.data)
     return response.data;
   } catch (error) {
     throw new Error("소개글 데이터 못가져옴");
@@ -98,9 +100,9 @@ export const attachDesignerImage = async (seq, formData) => {
 export const getAllReserveList = async (designerSeq) => {
   try {
     console.log('trytry')
-      const response = await axios.get(`${BASE_URL}/designer/detail/reservation-list/${designerSeq}`)
-      // const response = await axios.get(`${BASE_URL}/designer/detail/reservation-list/2`);
-      console.log('응답몬', response.data);
+      // const response = await axios.get(`${BASE_URL}/designer/detail/reservation-list/${designerSeq}`)
+      const response = await axios.get(`${BASE_URL}/designer/detail/reservation-list/2`)
+      console.log('응답몬', response);
       return response.data.result
   } catch(error) {
       throw new Error('디자이너 상담 예약목록 API 요청 실패')
