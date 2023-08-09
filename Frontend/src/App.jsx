@@ -25,6 +25,7 @@ import EditCustomerInfo from "./Routes/CustomerPage/EditCustomerInfo";
 import Reservation from "./Routes/DesignerPage/Reservation";
 import ConsultResultPage from "./Routes/ConsultPage/ConsultResultPage";
 import ViduRoomWrapper from "./components/OpenVidu/ViduRoomWrapper";
+import LikeDesigner from "./components/CustomerComponent/LikeDesigner";
 
 function App() {
   return (
@@ -54,6 +55,7 @@ function App() {
         <Route path="editdesignerinfo" element={<EditDesignerInfo/>} />
         <Route path="consultresultpage" element={<ConsultResultPage/>} />
         <Route path="reservation" element={<Reservation/>} />
+        <Route path="likedesigner" element={<LikeDesigner/>} />
         <Route path="/modaltest" element={<Survey/>}>
           <Route path="/modaltest/1" element={<Survey/>}/>
         </Route>

@@ -1,12 +1,15 @@
 // 디자이너의 상담 예약 리스트 컴포넌트
 
 import { styled } from "styled-components";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {getSessionId} from "../../apis/openvidu";
 import { useRecoilState, useRecoilValue} from "recoil";
 import {sessionIdState} from "../../recoil/openvidu";
+import { useQuery } from "react-query";
+import {getAllReserveList} from "../../apis"
+
 
 const Container = styled.div`
   /* display: flex; */
@@ -162,9 +165,14 @@ const CloseButton = styled.button`
 `;
 function AllReserveList(){
   const navigate = useNavigate();
-  const [data, setdata] = useState({
-        "consultingList" : [
-            {
+  const { designerSeq } = useParams();
+  // console.log("상담 예약 목록 조회의 디자이너 seq",designerSeq);
+  // const { data, isError, isLoading } = useQuery(['allReserveList', designerSeq], () => getAllReserveList(designerSeq));
+
+  // console.log(data)
+    
+  const [data, setdata] = useState([{
+            
                 "consultingSeq" : 1,
                 "consultingDate" : "2023-07-19",
                 "consultingMemo" : "상담 전달사항",
@@ -202,8 +210,8 @@ function AllReserveList(){
                 ],
                 "time" : "10:00"
             },
-        ] 
-    })
+        
+          ])
     // 모달 상태 관리
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
@@ -259,7 +267,7 @@ function AllReserveList(){
           <Box>상담 입장</Box>
         </TitleBox>
       <Wrapper>
-      {data.consultingList.map((item) => (
+      {data.map((item) => (
                 <ReserveBox key={item.consultingSeq}>
                       <Box>
                         <CustomerImg src="./icon/user.png"/>
@@ -313,7 +321,7 @@ function AllReserveList(){
       </Wrap>
     </Container>
 
-    )
+    );
 }
 
 export default AllReserveList;

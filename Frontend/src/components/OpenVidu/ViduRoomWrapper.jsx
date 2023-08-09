@@ -11,17 +11,16 @@ function ViduRoomWrapper() {
     // 로그인 시에는 seq와 토큰만 들어옴
     // 회원 정보를 어디서 가져왕..? => home 에서의 useQuery~~~~
 
-    const { isLoading, data } = useQuery(["noLogInMain"], fetchMain);
-
-    console.log('현재 고객의 타입!', data.userType);
-    console.log('현재 고객의 타입!', data.designerInfo);
+    // console.log('현재 고객의 타입!', data.userType);
+    // console.log('현재 고객의 타입!', data.designerInfo);
     // const { id } = useParams();
 
     const id = '1';
     const username  = '원재현';
     const usertype  = 'designer';
+    const imgs = ['login.jpg', 'worldcup1.jpg', 'worldcup2.jpg', 'worldcup4.jpg']
 
-    return <ViduRoom sessionId={id} userName = {username} userType ={ usertype }/>;
+    return <ViduRoom sessionId={id} userName = {username} userType ={ usertype } imgs = {imgs}/>;
 }
 
 export default ViduRoomWrapper;

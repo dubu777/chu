@@ -103,6 +103,8 @@ function Header() {
   // 로그 아웃 함수(토큰 삭제)
   const handleLogout = useRecoilCallback(({ snapshot }) => async () => {
     setToken(null);
+    localStorage.removeItem('userType');
+    localStorage.removeItem('userSeq');
   });
   return (
     <Nav>

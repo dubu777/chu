@@ -135,10 +135,13 @@ const Profile = styled.img`
 function DesignerMyPage() {
   const navigate = useNavigate();
   const { designerSeq } = useParams();
+  // console.log("마이페이지 시퀀스", designerSeq);
   const { data, isLoading, isError } = useQuery(
     ["designerMyPage", designerSeq],
     () => getDesignerMyPage(designerSeq)
   );
+  // console.log(data)
+
   const mutation = useMutation(updateIntroduction)
   const [activeBtn, setActiveBtn] = useState("calendar"); // 'recent' or 'designer'
   // const [introduction, setIntroduction] = useState(data.introduction || ""); 
@@ -150,8 +153,7 @@ function DesignerMyPage() {
     // 초기화 함수를 사용하여 데이터가 로드되었을 때 introduction 값을 설정합니다.
     return data?.introduction || "";
   });
-  
-  console.log("마이페이지 시퀀스", designerSeq);
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -179,7 +181,6 @@ function DesignerMyPage() {
 
   const handleSubmitImage = async (e) => {
     e.preventDefault();
-    const seq = 2;
     if (fileInputRef.current.files[0]) {
       const formData = new FormData();
       formData.append("img", fileInputRef.current.files[0]);

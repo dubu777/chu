@@ -106,6 +106,15 @@ const ConsultBox = styled.div`
   /* margin-left: 100px; */
   margin-bottom: 20px;
   margin-top: 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+`;
+const Show = styled.div`
+  background-color: white;
+  width: 100px;
+  height: 100px;
 `;
 const ImageBox = styled.div`
     display: flex;
@@ -116,6 +125,10 @@ const Img = styled.img`
     width: 100px;
     height: 130px;
     margin: 0px 5px;
+`;
+const ResultImg = styled.img`
+    width: 100%;
+    height: 350px;
 `;
 const StreamContainerWrapper = styled.div`
   /* display: grid; */
@@ -271,6 +284,7 @@ class ViduRoom extends Component {
         console.log('으악세션', this.props.sessionId);
         console.log('으악이름', this.props.userName);
         console.log('으악타입', this.props.userType);
+        console.log('이미지', this.props.imgs);
 
         this.state = {
             mySessionId: this.props.sessionId,
@@ -285,6 +299,7 @@ class ViduRoom extends Component {
             isCamera: true,
             isSpeaker: true,
             isChat: false,
+            imgs: this.props.imgs,
             test: 1
             // 타겟이미지들 넣기
             // [ desinger1.png, designer2.png, ..., ]
@@ -335,7 +350,6 @@ class ViduRoom extends Component {
             });
         }
     }
-
     //   handleImageClick(index){
     //     // desinger일 경우에만 합성 이미지 핸들링 가능
     //     if(this.state.userType === 'designer'){
@@ -362,6 +376,16 @@ class ViduRoom extends Component {
         });
     }
 
+    getCurrentImage() {
+        const { imgs } = this.props;
+        const { test } = this.state;
+
+        if (test >= 0 && test < imgs.length) {
+            return `../img/${imgs[test]}`;
+        } else {
+            return null; // 인덱스가 범위를 벗어날 경우 예외 처리
+        }
+    }
     deleteSubscriber(streamManager) {
         let subscribers = this.state.subscribers;
         let index = subscribers.indexOf(streamManager, 0);
@@ -444,7 +468,8 @@ class ViduRoom extends Component {
                 mySession.on('exception', (exception) => {
                     console.warn(exception);
                 });
-
+                
+                // signal 신호를 받을 때 해당 이벤트의 data가 customClick 이라면 test데이터 변경
                 mySession.on('signal', (event) => {
                     const payload = JSON.parse(event.data);
                     if (payload.action === "customClick") {
@@ -565,6 +590,8 @@ class ViduRoom extends Component {
     render() {
         const mySessionId = this.state.mySessionId;
         const myUserName = this.state.myUserName;
+        const { imgs, test } = this.state;
+        const currentImage = imgs[test] || null;
 
         return (
             <Container>
@@ -619,36 +646,22 @@ class ViduRoom extends Component {
                                 </LeftBox>
                             ) : null}
                             <RightBox>
+                                <p>{this.state.test}</p>
                                 <ConsultBox>
-                                    <div>{this.state.test}</div>
-                                    {/* <img src=`https://i9b111.q.ssafy.io/${this.state.confusionImages[${this.state.test}.imgName]} alt="" /> */}
+                                    {currentImage && <ResultImg src={`../img/${currentImage}`} alt="Current" />}
                                 </ConsultBox>
                                 <Hr></Hr>
                                 <ImageBox>
-                                    {/* 여기에 for문처럼 img태그 하나씩 넣고 onclick 이벤트에 인자로 i값을 넣는거야 */}
-                                    {/* 그럼 i번호를 단 합성 이미지 녀석을 찾아서 저 위에 큰 컨설팅 박스 사진을 바꾸는거야 */}
-                                    {/* <Img src="../icon/designerimg.png" alt="여기에 헤어 사진" />
-                                    <Img src="../icon/designerimg.png" alt="여기에 헤어 사진" />
-                                    <Img src="../icon/designerimg.png" alt="여기에 헤어 사진" />
-                                    <Img src="../icon/designerimg.png" alt="여기에 헤어 사진" />
-                                    <Img src="../icon/designerimg.png" alt="여기에 헤어 사진" />
-                                    <Img src="../icon/designerimg.png" alt="여기에 헤어 사진" />
-                                    <Img src="../icon/designerimg.png" alt="여기에 헤어 사진" />
-                                    <Img src="../icon/designerimg.png" alt="여기에 헤어 사진" /> */}
-
-                                    {/* <button onClick={this.handleCustomClickEvent}>Click me</button> */}
-                                    {/* 저기 배열을 통신을 통해 가져온 타겟 이미지 배열로 변경 imgName -> img */}
-                                    {/* this.state.targetImages */}
-                                    {['designerimg.png', 'designerimg.png', 'designerimg.png'].map((imgName, index) => (
-                                        <Img
-                                            key={index}
-                                            src={`../icon/${imgName}`}
-                                            // 배열에 하나하나 이미지 이름 꺼내서 넣기
-                                            // src={`https://i9b111.q.ssafy.io/api/consulting/${img.imgName}`}
-                                            alt="여기에 헤어 사진"
-                                            onClick={() => this.handleCustomClickEvent(index)
-                                            } // 여기에 원하는 로직 추가
-                                        />
+                                    {['designerimg.png', 'designerimg.png', 'designerimg.png', 'designerimg.png'].map((imgName, index) => (
+                                      <Img
+                                        key={index}
+                                        src={`../icon/${imgName}`}
+                                        // 배열에 하나하나 이미지 이름 꺼내서 넣기
+                                        // src={`https://i9b111.q.ssafy.io/api/consulting/${img.imgName}`}
+                                        alt="여기에 헤어 사진"
+                                        onClick={() => this.handleCustomClickEvent(index)
+                                        } // 여기에 원하는 로직 추가
+                                      />
                                     ))}
 
                                 </ImageBox>
