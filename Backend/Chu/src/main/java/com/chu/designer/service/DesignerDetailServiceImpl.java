@@ -20,6 +20,7 @@ import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.List;
 
@@ -81,7 +82,7 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
         imagePath.setUploadImgName(uploadName);
 
         DesignerPortfolio designerPortfolio = new DesignerPortfolio(designer, imagePath);
-
+        designerPortfolio.setCreatedDate(LocalDateTime.now());
         int imgSeq = -1;
 
         try{
