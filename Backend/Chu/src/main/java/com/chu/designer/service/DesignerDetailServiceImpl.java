@@ -12,6 +12,7 @@ import com.chu.global.domain.*;
 import com.chu.global.repository.HairStyleDictRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,6 +23,7 @@ import java.sql.Date;
 import java.util.*;
 import java.util.List;
 
+
 import static java.util.stream.IntStream.builder;
 
 @Slf4j
@@ -30,12 +32,13 @@ import static java.util.stream.IntStream.builder;
 public class DesignerDetailServiceImpl implements DesignerDetailService {
 
     private final DesignerSearchService designerSearchService;
-
     private final DesignerDetailRepository designerDetailRepository;
     private final DesignerRepository designerRepository;
     private final DesignerTagInfoRepository designerTagInfoRepository;
     private final ReservationAvailableSlotRepository reservationAvailableSlotRepository;
     private final HairStyleDictRepository hairStyleDictRepository;
+    private final PasswordEncoder bCryptPasswordEncoder;
+
 
     @Override
     public String getSavedImgFilePath(MultipartFile file) throws IOException {
@@ -63,12 +66,19 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
     }
 
     @Override
-    public int postPortfolioImage(int designerSeq, String img) {
+    public String getUploadImgFilePath(MultipartFile file) throws IOException {
+        String uploadName = file.getOriginalFilename();
+        return uploadName;
+    }
+
+    @Override
+    public int postPortfolioImage(int designerSeq, String img, String uploadName) {
 
         // 디자이너 정보 가져오기
         Designer designer = designerRepository.getDesignerBySeq(designerSeq);
         ImagePath imagePath = new ImagePath();
         imagePath.setSavedImgName(img);
+        imagePath.setUploadImgName(uploadName);
 
         DesignerPortfolio designerPortfolio = new DesignerPortfolio(designer, imagePath);
 
@@ -96,7 +106,7 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
             for (int i = 0; i < designerPortfolios.size(); i++) {
                 ImageDto imgDto = new ImageDto();
                 imgDto.setImgSeq(designerPortfolios.get(i).getSeq());
-                imgDto.setImgName(designerPortfolios.get(i).getImagePath().getSavedImgName());
+                imgDto.setImgName(designerPortfolios.get(i).getImagePath().getUploadImgName());
                 imgList.add(imgDto);
             }
 
@@ -212,17 +222,41 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
         return result;
     }
 
-//    @Override
-//    public boolean updateDesignerInfo(int designerSeq, RequestDesignerInfoUpdateDto requestDesignerInfoUpdateDto) {
-//
-//        // 디자이너 정보 수정
-//        boolean isSuccess = designerDetailRepository.updateDesignerInfo(designerSeq, requestDesignerInfoUpdateDto);
-//
-//        // 디자이너 잘하는 헤어스타일 수정
-//        // 이게 전부 삭제하고 다시 전부 넣을지 고민해보고 해야할듯
-//
-//        return true;
-//    }
+    @Override
+    @Transactional
+    public boolean updateDesignerInfo(int designerSeq, RequestDesignerInfoUpdateDto updateDto) {
+
+        try{
+            Designer designer = designerRepository.getDesignerBySeq(designerSeq);
+            designer.setName(updateDto.getName());
+            designer.setEmail(updateDto.getEmail());
+            designer.setCost(updateDto.getCost());
+            designer.setPwd(updateDto.getPwd());
+            designer.hashPassword(bCryptPasswordEncoder);    // 비밀번호 암호화
+            designer.setSalonName(updateDto.getSalonName());
+            designer.setLatitude(updateDto.getLatitude());
+            designer.setLongitude(updateDto.getLongitude());
+            designer.setAddress(updateDto.getAddress());
+
+            // 해당 디자이너가 들어있는 데이터를 전부 삭제한다
+            designerTagInfoRepository.deleteByDesignerSeq(designerSeq);
+
+            // 새로 받은 값들을 해당 디자이너와 함께 데이터를 추가한다
+            for(Integer tagSeq : updateDto.getMyHairStyleTag()) {
+                DesignerTagInfo dti = new DesignerTagInfo();
+                dti.setDesigner(designer);
+
+                HairStyleDict hairStyleDict = hairStyleDictRepository.findBySeq(tagSeq);
+                dti.setHairStyleDict(hairStyleDict);
+
+                designerTagInfoRepository.save(dti);
+            }
+        } catch(Exception e) {
+            return false;
+        }
+        return true;
+
+    }
 //
 //    @Override
 //    public boolean updatePossibleReservationTime(int designerSeq, RequestReservationPossibleDateAndTimeDto requestReservationPossibleDateAndTimeDto) {

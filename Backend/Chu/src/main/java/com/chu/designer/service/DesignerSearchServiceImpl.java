@@ -84,10 +84,50 @@ public class DesignerSearchServiceImpl implements DesignerSearchService {
         return result;
     }
 
-//    @Override
-//    public List<DesignerSearchDto> search2Name(int customerSeq, String name) {
-//        return designerSearchRepository.search2Name(customerSeq, name);
-//    }
+    @Override
+    public List<DesignerSearchDto> search2Name(int customerSeq, String name) {
+
+        List<DesignerSearchDto> result = new ArrayList<>();
+
+        // 디자이너 이름에 검색어가 포함된 디자이너 리스트를 가져온다.
+        List<Designer> designers = designerRepository.findByName(name);
+
+
+        // 여기 코드 중복 너무 많음. 수정 일단 다음에 .....
+
+        // 디자이너별 리뷰 평균 점수 가져오기(Integer,Double) [[1, 4.5], [2, 3.8], [3, 4.2] ...]
+        List<Object[]> reviewScore = consultingRepository.getReviewScoreByDesigner();
+
+        int reviewScoreSeq = 0;
+
+        for (Designer designer : designers) {
+            // 좋아요 수
+            Integer likeCnt = designerLikeRepository.countByDesignerSeq(designer.getSeq());
+            // 리뷰 수
+            Integer reviewCnt = consultingRepository.countByDesignerSeq(designer.getSeq());
+            // 헤어스타일 라벨링
+            List<DesignerTagInfo> hairStyleTagSeqs = designerTagInfoRepository.findByDesignerSeq(designer.getSeq());
+            List<String> hairStyleLabels = new ArrayList<>();
+            for (DesignerTagInfo tag : hairStyleTagSeqs) {
+                Integer seq = tag.getSeq();
+                HairStyleDict hairStyleDict = hairStyleDictRepository.findBySeq(seq);
+
+                hairStyleLabels.add(hairStyleDict.getHairStyleLabel());
+            }
+            // 평점
+            Double reviewScoreByDesigner = (reviewScoreSeq < reviewScore.size() && (reviewScore.get(reviewScoreSeq)[1] != null)) ? (Double) reviewScore.get(reviewScoreSeq)[1] : 0.0;
+            // 고객 로그인시, 해당 디자이너의 좋아요 상태. 로그인 하지 않았으면 false를 입력.
+            Optional<DesignerLike> designerLikeOptional = Optional
+                    .ofNullable(designerLikeRepository.findByCustomerSeqAndDesignerSeq(customerSeq, designer.getSeq()));
+            Boolean isLike = designerLikeOptional.map(DesignerLike::getLikeStatus).orElse(false);
+            // dto 객체에 감싸서 보낸다
+            DesignerSearchDto dto = new DesignerSearchDto(designer, likeCnt, reviewCnt, hairStyleLabels, reviewScoreByDesigner, isLike);
+            result.add(dto);
+            reviewScoreSeq++;
+        }
+
+        return result;
+    }
 
     @Override
     public List<DesignerSearchDto> search2Filter(int customerSeq, Integer[] hairStyleSeqs) {
@@ -146,6 +186,7 @@ public class DesignerSearchServiceImpl implements DesignerSearchService {
         // 결과:  Designer(seq=1, id=wonyoung, name=원영, pwd=1234, email=young@gmail.com, gender=F, introduction=여성 펌 전문 디자이너 원영입니다 ^_^, certificationNum=1234-5678, address=대전 유성구 덕명동 154-15, latitude=36.3472301, longitude=127.2957758539, salonName=공간 헤어, imagePath=com.chu.global.domain.ImagePath@6880d11d, reviewScore=4.9, cost=5000, createdDate=2023-07-22T00:44:28)
 
         // 다른 테이블에서 조인해서 가져올 정보
+
         Integer likeCnt = designerLikeRepository.countByDesignerSeq(designer.getSeq());
         // 고객이 해당 디자이너 좋아요 체크 여부
         Optional<DesignerLike> designerLikeOptional = Optional

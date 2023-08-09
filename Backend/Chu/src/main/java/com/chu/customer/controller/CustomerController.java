@@ -163,27 +163,23 @@ public class CustomerController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), response));
     }
-//
-//    @PostMapping("/like")
-//    public ResponseEntity<HttpResponseDto> changeLikeInfo(@RequestBody RequestLikeDto requestLikeDto){
-//
-//        int likeCount = customerService.changeLikeInfo(requestLikeDto);
-//
-//        ResponseLikeDto responseLikeDto = new ResponseLikeDto();
-//        responseLikeDto.setLikeCnt(likeCount);
-//        responseLikeDto.setLike(requestLikeDto.isLike());
-//
-//        // 예외 처리 다시 필요
-//        if(responseLikeDto != null){
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseLikeDto);
-//            return ResponseEntity.ok(httpResponseDto);
-//        }
-//        else{
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
-//            return ResponseEntity.ok(httpResponseDto);
-//        }
-//    }
-//
+
+    @PostMapping("/like")
+    public ResponseEntity<HttpResponseDto> changeLikeInfo(@RequestBody RequestLikeDto requestLikeDto){
+
+        ResponseLikeDto responseLikeDto = customerService.changeLikeInfo(requestLikeDto);
+
+        // 예외 처리 다시 필요
+        if(responseLikeDto != null){
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseLikeDto);
+            return ResponseEntity.ok(httpResponseDto);
+        }
+        else{
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
+        }
+    }
+
 //    @GetMapping("/like")
 //    public ResponseEntity<HttpResponseDto> getLikeDesignerInfo(@PathVariable("customer-seq") int customerSeq){
 //

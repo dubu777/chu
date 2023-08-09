@@ -8,6 +8,8 @@ import com.chu.customer.domain.*;
 import com.chu.customer.repository.CustomerAlertRepository;
 import com.chu.customer.repository.CustomerRepository;
 import com.chu.designer.domain.Designer;
+import com.chu.designer.domain.DesignerLike;
+import com.chu.designer.repository.DesignerLikeRepository;
 import com.chu.designer.repository.DesignerRepository;
 import com.chu.designer.repository.DesignerSearchRepository;
 import com.chu.global.domain.*;
@@ -46,6 +48,7 @@ public class CustomerServiceImpl implements CustomerService{
     private final ConsultingRepository consultingRepository;
     private final HairStyleDictRepository hairStyleDictRepository;
     private final HairStyleImgRepository hairStyleImgRepository;
+    private final DesignerLikeRepository designerLikeRepository;
     private final PasswordEncoder bCryptPasswordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider jwtTokenProvider;
@@ -421,11 +424,44 @@ public class CustomerServiceImpl implements CustomerService{
 //        return customerRepository.changePwd(requestChangePwdDto);
 //    }
 //
-//    @Override
-//    public int changeLikeInfo(RequestLikeDto requestLikeDto) {
-//        return customerRepository.changeLikeInfo(requestLikeDto);
-//    }
-//
+    @Override
+    @Transactional
+    public ResponseLikeDto changeLikeInfo(RequestLikeDto requestLikeDto) {
+
+        // 디자이너 혹은 고객이 없는 시퀀스가 들어오면 null 반환
+        if(!designerRepository.existsBySeq(requestLikeDto.getDesignerSeq()) || !customerRepository.existsBySeq(requestLikeDto.getCustomerSeq())) return null;
+
+        if(requestLikeDto.getIsLike()) {    // 좋아요
+            // 쌍이 존재하는지 확인
+            int likeCnt = designerLikeRepository.countByCustomerSeqAndDesignerSeq(requestLikeDto.getCustomerSeq(), requestLikeDto.getDesignerSeq());
+            log.info("likeCnt "+ likeCnt);
+            if(likeCnt == 1) {
+                // like_status 를 true로 update
+                DesignerLike designerLike = designerLikeRepository.findByCustomerSeqAndDesignerSeq(requestLikeDto.getCustomerSeq(), requestLikeDto.getDesignerSeq());
+                designerLike.setLikeStatus(true);
+
+            } else if(likeCnt == 0) {
+                // insert
+                Designer designer = designerRepository.findBySeq(requestLikeDto.getDesignerSeq());
+                Customer customer = customerRepository.findBySeq(requestLikeDto.getCustomerSeq());
+
+                DesignerLike designerLike = new DesignerLike(customer, designer,true, LocalDateTime.now());
+                designerLikeRepository.save(designerLike);
+            }
+        } else {    //좋아요 취소
+            DesignerLike designerLike = designerLikeRepository.findByCustomerSeqAndDesignerSeq(requestLikeDto.getCustomerSeq(), requestLikeDto.getDesignerSeq());
+            designerLike.setLikeStatus(false);
+        }
+        // 갱신된 좋아요 수 구하기
+        Integer likeCnt = designerLikeRepository.countByDesignerSeq(requestLikeDto.getDesignerSeq());
+
+        ResponseLikeDto responseLikeDto = new ResponseLikeDto();
+        responseLikeDto.setLikeCnt(likeCnt);
+        responseLikeDto.setIsLike(designerLikeRepository.findByCustomerSeqAndDesignerSeq(requestLikeDto.getCustomerSeq(), requestLikeDto.getDesignerSeq()).getLikeStatus());
+
+        return responseLikeDto;
+    }
+
 //    @Override
 //    public ArrayList<ResponseAlertCustomerDto> getAlertList(int customerSeq) {
 //        return customerRepository.getAlertList(customerSeq);

@@ -12,9 +12,9 @@ public interface DesignerSearchService {
     // 디자이너 조회 - 조건 없이 기본 정렬(디자이너 seq 오름차순)
     List<DesignerSearchDto> searchList(int customerSeq);
 
-//    // 디자이너 조회 - 이름
-//    List<DesignerSearchDto> search2Name(int customerSeq, String name);
-//
+    // 디자이너 조회 - 이름
+    List<DesignerSearchDto> search2Name(int customerSeq, String name);
+
     // 디자이너 조회 - 필터
     List<DesignerSearchDto> search2Filter(int customerSeq, Integer[] hairStyleSeqs);
 //

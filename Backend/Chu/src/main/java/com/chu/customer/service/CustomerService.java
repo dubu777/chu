@@ -55,10 +55,10 @@ public interface CustomerService {
 //
 //    // 고객 비밀번호 변경
 //    boolean changePwd(RequestChangePwdDto requestChangePwdDto);
-//
-//    // 좋아요 상태 변경
-//    int changeLikeInfo(RequestLikeDto requestLikeDto);
-//
+
+    // 좋아요 상태 변경
+    ResponseLikeDto changeLikeInfo(RequestLikeDto requestLikeDto);
+
 //    // 알림 내역 조회
 //    ArrayList<ResponseAlertCustomerDto> getAlertList(int customerSeq);
 //
