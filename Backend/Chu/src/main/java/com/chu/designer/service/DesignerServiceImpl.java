@@ -5,10 +5,7 @@ import com.chu.consulting.repository.ConsultingRepository;
 import com.chu.customer.domain.RequestCustomerChangePwdDto;
 import com.chu.customer.repository.CustomerRepository;
 import com.chu.designer.domain.*;
-import com.chu.designer.repository.DesignerAlertRepository;
-import com.chu.designer.repository.DesignerRepository;
-import com.chu.designer.repository.DesignerSearchRepository;
-import com.chu.designer.repository.ReservationAvailableSlotRepository;
+import com.chu.designer.repository.*;
 import com.chu.global.domain.*;
 import com.chu.global.jwt.JwtTokenProvider;
 import com.chu.global.repository.HairStyleDictRepository;
@@ -51,6 +48,7 @@ public class DesignerServiceImpl implements DesignerService{
     private final CustomerRepository customerRepository;
     private final RedisTemplate<String, String> redisTemplate;
     private final ReservationAvailableSlotRepository reservationAvailableSlotRepository;
+    private final DesignerPortfolioRepository designerPortfolioRepository;
 
     private long refreshTokenExpire = 6000000;
 
@@ -339,6 +337,43 @@ public class DesignerServiceImpl implements DesignerService{
         } catch(Exception e){
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public ResponseRsvPageDto getReservationPage(int designerSeq) {
+
+        ResponseRsvPageDto response = new ResponseRsvPageDto();
+
+        try{
+            // 디자이너 포트폴리오 setting
+            List<String> designerPortfolio = new ArrayList<>();
+
+            List<DesignerPortfolio> portfolios = designerPortfolioRepository.findByDesignerSeq(designerSeq);
+
+            for(DesignerPortfolio dp : portfolios){
+                designerPortfolio.add(dp.getImagePath().getUploadImgName());
+            }
+
+            response.setDesignerPortfolio(designerPortfolio);
+
+
+            // 랜덤 포트폴리오 setting
+            List<String> randomPortfolio = new ArrayList<>();
+
+            List<DesignerPortfolio> randportfolios = new ArrayList<>();
+            randportfolios = designerPortfolioRepository.getRandom();
+
+            for(DesignerPortfolio dp : randportfolios){
+                randomPortfolio.add(dp.getImagePath().getUploadImgName());
+            }
+
+            response.setRandomPortfolio(randomPortfolio);
+
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return response;
     }
 
     // 로그인 테스트
