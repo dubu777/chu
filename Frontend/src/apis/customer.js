@@ -1,8 +1,8 @@
 import axios from "axios";
 
 // 서버 url
-const BASE_URL = 'https://i9b111.q.ssafy.io/api';
-// const BASE_URL = "http://localhost:9090/api"
+// const BASE_URL = 'https://i9b111.q.ssafy.io/api';
+const BASE_URL = "http://localhost:9090/api"
 
 // 이미지 첨부 api
 export const attachCustomerImage = async(seq, formData) => {
@@ -25,8 +25,8 @@ export const attachCustomerImage = async(seq, formData) => {
 //     "img" : formData,
 
 
-// 고객 마이페이지 조회
-export const getCustomerMyPage = async (customerSeq)=> {
+// 고객 마이페이지 조회(최근 상담 내역 포함)
+export const getCustomerMyPage = async (customerSeq) => {
     try {
         const response = await axios.get(`${BASE_URL}/customer/detail/mypage/${customerSeq}`)
         return response.data.result
@@ -35,6 +35,16 @@ export const getCustomerMyPage = async (customerSeq)=> {
     }
 
 };
+
+// 고객 마이페이지(좋아요한 디자이너)
+export const getLikeDesignerList = async (customerSeq) => {
+    try {
+        const response = await axios.get(`${BASE_URL}/customer/like/${customerSeq}`)
+        return response.data.result;
+    } catch (error) {
+        throw new Error("좋아요한 디자이너 API 요청 실패", error)
+    }
+}
 
 // 로그인시 유저 데이터 받아옴
 export const getCustomerLogInData = async (customerSeq) => {
@@ -46,3 +56,4 @@ export const getCustomerLogInData = async (customerSeq) => {
     }
 
 };
+

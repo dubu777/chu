@@ -2,8 +2,8 @@ import axios from 'axios';
 
 
 
-const BASE_URL = 'https://i9b111.q.ssafy.io/api';
-// const BASE_URL = 'http://localhost:9090/api';
+// const BASE_URL = 'https://i9b111.q.ssafy.io/api';
+const BASE_URL = 'http://localhost:9090/api';
 
 //토큰이 필요한 api요청을 보내는 axios인스턴스
 const getPersistedAccessToken = () => {

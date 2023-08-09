@@ -2,7 +2,8 @@ import { styled } from "styled-components";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-
+import { useQueryClient, useMutation } from "react-query";
+import { toggleLikeButton } from "../../apis";
 
 const Container = styled.div`
   display: flex;
@@ -122,7 +123,23 @@ const LikeBtn = styled.img`
 `;
 function DesignerList(props) {
   const { data, sortOrder } = props;
+  const customerSeq = localStorage.getItem('userSeq')
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
+
+  //designerList를 키로 가진 query를 무효화 하여 새로운 데이터를 받아오게함
+  const mutation = useMutation(toggleLikeButton, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('designerList'); 
+    },
+  });
+
+  const handleLikeClick = (designerSeq, currentLikeStatus) => {
+    const newLikeStatus = !currentLikeStatus; 
+    mutation.mutate({designerSeq, customerSeq, isLike: newLikeStatus});
+  };
+
+
   // 필터에 따라 내림차순으로 정렬하는 함수
   const sortByLikeCnt = (designers) => {
     return designers.slice().sort((a, b) => b.likeCnt - a.likeCnt);
@@ -144,38 +161,38 @@ function DesignerList(props) {
     ? sortByReviewCnt(data.designerList)
     : data.designerList;
   
-  const [liked, setLiked] = useState(false); // 좋아요 상태를 state로 관리
-  const handleLikeClick = () => {
-    setLiked((prevLiked) => !prevLiked); // 좋아요 상태를 토글
-  };
+  // const [liked, setLiked] = useState(false); // 좋아요 상태를 state로 관리
+  // const handleLikeClick = () => {
+  //   setLiked((prevLiked) => !prevLiked); // 좋아요 상태를 토글
+  // };
 
   return (
     <div>
-    {sortedData.map((item) => (
-    <Container key={item.designerSeq}>
+    {sortedData.map((data) => (
+    <Container key={data.designerSeq}>
       <Hr/>
       <Wrap>
       <Wrapper>
         <Box>
           <DesignerImg 
-            src="./icon/designerimg.png"
-            onClick={() => navigate(`/designerdetail/${item.designerSeq}`)}
+            src="/icon/designerimg.png"
+            onClick={() => navigate(`/designerdetail/${data.designerSeq}`)}
           />
         </Box>
         <InfoBox>
           <StarBox>
             <Name 
-              onClick={() => navigate(`/designerdetail/${item.designerSeq}`)}
-            >{item.designerName}디자이너
+              onClick={() => navigate(`/designerdetail/${data.designerSeq}`)}
+            >{data.designerName}디자이너
             </Name>
-            <Icon src="./icon/star.png"/>
-            <Text>{item.reviewScore}</Text>
+            <Icon src="/icon/star.png"/>
+            <Text>{data.reviewScore}</Text>
           </StarBox>
-          <Intro>{item.introduction}</Intro>
-          <Reviewer>방문자 리뷰 {item.reviewCnt}</Reviewer>
+          <Intro>{data.introduction}</Intro>
+          <Reviewer>방문자 리뷰 {data.reviewCnt}</Reviewer>
           <Box>
             {
-              item.hairStyleLabel.map((tag, index) => (
+              data.hairStyleLabel.map((tag, index) => (
                 <HashTag key={index} >#{tag}</HashTag>
               ))
             }
@@ -184,22 +201,22 @@ function DesignerList(props) {
       </Wrapper>
       <LikeBox>
         <HeartBox>
-        {item.liked ? (
+        {data.isLike ? (
           // 좋아요가 눌려있을 때 빨간색 하트 아이콘
-          <LikeBtn src="./icon/hearto.png" onClick={handleLikeClick}/>
+          <LikeBtn src="/icon/hearto.png" onClick={() => handleLikeClick(data.designerSeq, data.isLike)}/>
         ) : (
           // 좋아요가 눌려있지 않을 때 빈 하트 아이콘
-          <LikeBtn src="./icon/heartx.png" onClick={handleLikeClick}/>
+          <LikeBtn src="/icon/heartx.png" onClick={() => handleLikeClick(data.designerSeq, data.isLike)}/>
         )}
-        <Text>{item.likeCnt}</Text>
+        <Text>{data.likeCnt}</Text>
         </HeartBox>
           <Box>
             <CostBox>
-              <Icon src="./icon/money.png"/>
-              <Text>{item.cost}</Text>
+              <Icon src="/icon/money.png"/>
+              <Text>{data.cost}</Text>
             </CostBox>
             <ReservBox whileHover={{backgroundColor: "rgb(244,153,26)"}}>
-              <Icon src="./icon/reservBtn.png"/>
+              <Icon src="/icon/reservBtn.png"/>
               <Text>예약</Text>
             </ReservBox>
           </Box>
