@@ -1,14 +1,15 @@
 package com.chu.consulting.domain;
 
+import lombok.Data;
+
+@Data
 public class ResponseFutureConsultingDto {
-//    {
-//        "consultingSeq" : 11,
-//            "designerImg" : "img2.png",
-//            "reviewScore" : 4.8,
-//            "name" : "민지",
-//            "consultingDate" : "08.22",
-//            "consultingDateDay" : "금",
-//            "consultingStartTime" : "18:30",
-//            "url" : " ",
-//    }
+
+    int consultingSeq;
+    String designerImg;
+    double reviewScore;
+    String name;
+    String consultingDate;
+    String consultingStartTime;
+    String url;
 }
