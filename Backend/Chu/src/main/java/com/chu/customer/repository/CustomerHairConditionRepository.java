@@ -9,4 +9,7 @@ public interface CustomerHairConditionRepository extends JpaRepository<CustomerH
 
     List<CustomerHairCondition> findAllByCustomerSeq(int customerSeq);
 
+    // 기존 데이터들 삭제
+    void deleteAllByCustomerSeq(int customerSeq);
+
 }
