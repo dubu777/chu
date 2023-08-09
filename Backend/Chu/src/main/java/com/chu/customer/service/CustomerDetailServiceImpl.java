@@ -18,6 +18,7 @@ import com.chu.global.repository.HairConditionDictRepository;
 import com.chu.global.repository.HairStyleDictRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -45,6 +46,7 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
     private final ConsultingRepository consultingRepository;
     private final DesignerRepository designerRepository;
     private final HairConditionDictRepository hairConditionDictRepository;
+    private final PasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public String getSavedImgFilePath(Integer customerSeq, MultipartFile file) throws IOException {
@@ -288,8 +290,52 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
     }
 
     @Override
+    @Transactional
     public void putCustomerDetailInfo(int customerSeq, RequestCustomerDetailChangeDto requestCustomerDetailChangeDto) {
-        
+
+        try{
+            Customer customer = customerRepository.getCustomerBySeq(customerSeq);
+
+            // 1) pwd 업데이트 : null 이 아닐 때만
+            if(requestCustomerDetailChangeDto.getPwd() != null){
+
+                String pwd = requestCustomerDetailChangeDto.getPwd();
+                customer.setPwd(pwd);
+                customer.hashPassword(bCryptPasswordEncoder);
+                pwd = customer.getPwd();
+
+                customerRepository.changePwd(customerSeq, pwd);
+            }
+
+
+            // 2) myFace 업데이트
+            int faceSeq = requestCustomerDetailChangeDto.getMyFace();
+
+            customerRepository.updateFaceSeq(customerSeq, faceSeq);
+
+
+            // 3) myHairCondition 업데이트
+            // 3-1) 기존 데이터들 삭제하기
+            customerHairConditionRepository.deleteAllByCustomerSeq(customerSeq);
+
+            List<Integer> myHairCondition = requestCustomerDetailChangeDto.getMyHairCondition();
+
+            for(int hc : myHairCondition){
+                CustomerHairCondition dto = new CustomerHairCondition();
+
+                dto.setCustomer(customer);
+
+                HairConditionDict dict = hairConditionDictRepository.findBySeq(hc);
+
+                dto.setHairConditionDict(dict);
+
+                // db에 dto 넣기
+                customerHairConditionRepository.save(dto);
+            }
+
+        } catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     /*
