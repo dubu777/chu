@@ -56,7 +56,7 @@ const Right = styled.div`
   align-items: center;
   transition: 0.5s;
   ${(props) =>
-    props.primary ? `right:0; flex:1;` : `right:calc(-100vw/3); flex:0;`}
+        props.primary ? `right:0; flex:1;` : `right:calc(-100vw/3); flex:0;`}
 `;
 
 const Chat = styled.div`
@@ -126,11 +126,11 @@ const StreamContainerWrapper = styled.div`
   margin-top: 10px;
   padding-top: 10px;
   ${(props) =>
-    props.primary
-      ? `
+        props.primary
+            ? `
     grid-template-columns: repeat(3, 1fr);
     `
-      : `
+            : `
     grid-template-columns: repeat(4, 1fr);
     `}
   grid-gap: 20px;
@@ -184,8 +184,8 @@ const Icon = styled.div`
   }
 
   ${(props) =>
-    props.primary &&
-    `
+        props.primary &&
+        `
       background-color: red;
       color: white;
       &:hover{
@@ -266,351 +266,369 @@ const OPENVIDU_SERVER_URL = 'https://' + 'i9b111.q.ssafy.io' + ':8443';
 const OPENVIDU_SERVER_SECRET = "sunjin";
 
 class ViduRoom extends Component {
-  constructor(props) {
-    super(props);
-    console.log('으악세션', this.props.sessionId);
-    console.log('으악이름', this.props.userName);
-    console.log('으악타입', this.props.userType);
+    constructor(props) {
+        super(props);
+        console.log('으악세션', this.props.sessionId);
+        console.log('으악이름', this.props.userName);
+        console.log('으악타입', this.props.userType);
 
-    this.state = {
-      mySessionId: this.props.sessionId,
-      myUserName: this.props.userName,
-      // myUserName: 'Participant' + Math.floor(Math.random() * 100),
-      session: undefined,
-      mainStreamManager: undefined,
-      publisher: undefined,
-      subscribers: [],
-      userType: this.props.userType,
-      isMike: true,
-      isCamera: true,
-      isSpeaker: true,
-      isChat: false,
-      // 타겟이미지들 넣기
-      // 합성이미지들 넣기
-      // 현재메인이미지 [0] 초기값
-    };
+        this.state = {
+            mySessionId: this.props.sessionId,
+            myUserName: this.props.userName,
+            // myUserName: 'Participant' + Math.floor(Math.random() * 100),
+            session: undefined,
+            mainStreamManager: undefined,
+            publisher: undefined,
+            subscribers: [],
+            userType: this.props.userType,
+            isMike: true,
+            isCamera: true,
+            isSpeaker: true,
+            isChat: false,
+            test: 1
+            // 타겟이미지들 넣기
+            // 합성이미지들 넣기
+            // 현재메인이미지 [0] 초기값
+        };
 
-    this.joinSession = this.joinSession.bind(this);
-    this.leaveSession = this.leaveSession.bind(this);
-    this.switchCamera = this.switchCamera.bind(this);
-    this.handleChangeSessionId = this.handleChangeSessionId.bind(this);
-    this.handleChangeUserName = this.handleChangeUserName.bind(this);
-    this.handleMainVideoStream = this.handleMainVideoStream.bind(this);
-    this.onbeforeunload = this.onbeforeunload.bind(this);
-    this.handleToggle = this.handleToggle.bind(this);
-  }
-
-  componentDidMount() {
-    window.addEventListener('beforeunload', this.onbeforeunload);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('beforeunload', this.onbeforeunload);
-  }
-
-  onbeforeunload(event) {
-    this.leaveSession();
-  }
-
-  handleChangeSessionId(e) {
-    this.setState({
-      mySessionId: e.target.value,
-    });
-  }
-
-  handleChangeUserName(e) {
-    this.setState({
-      myUserName: e.target.value,
-    });
-  }
-
-  handleMainVideoStream(stream) {
-    if (this.state.mainStreamManager !== stream) {
-      this.setState({
-        mainStreamManager: stream
-      });
+        this.joinSession = this.joinSession.bind(this);
+        this.leaveSession = this.leaveSession.bind(this);
+        this.switchCamera = this.switchCamera.bind(this);
+        this.handleChangeSessionId = this.handleChangeSessionId.bind(this);
+        this.handleChangeUserName = this.handleChangeUserName.bind(this);
+        this.handleMainVideoStream = this.handleMainVideoStream.bind(this);
+        this.onbeforeunload = this.onbeforeunload.bind(this);
+        this.handleToggle = this.handleToggle.bind(this);
     }
-  }
 
-//   handleImageClick(index){
-//     // desinger일 경우에만 합성 이미지 핸들링 가능
-//     if(this.state.userType === 'designer'){
-//       this.state.메인이미지 = `https://i9b111.q.ssafy.io/api/consulting-image/${this.state.confusionImage[index].imgName}`};
-//     }
-//     여기서 바뀐다고 다른 사람의 상태가 바뀔까? 난 아니라고 봐
-//     그럼 뭘 해야하냐? 그럼 streamManager 이 녀석을 건드려야할 것 같은데
-//     그건 지금 난 졸려서 못해
-//     내일의 내가 할꺼야
-//   }
-
-  deleteSubscriber(streamManager) {
-    let subscribers = this.state.subscribers;
-    let index = subscribers.indexOf(streamManager, 0);
-    if (index > -1) {
-      subscribers.splice(index, 1);
-      this.setState({
-        subscribers: subscribers,
-      });
+    componentDidMount() {
+        window.addEventListener('beforeunload', this.onbeforeunload);
     }
-  }
 
-  handleToggle(kind) {
-    if (this.state.publisher) {
-      switch (kind) {
-        case "camera":
-          this.setState({ isCamera: !this.state.isCamera }, () => {
-            console.log(this.state.publisher);
-            this.state.publisher.publishVideo(this.state.isCamera);
-          });
-          break;
-
-        case "speaker":
-          this.setState({ isSpeaker: !this.state.isSpeaker }, () => {
-            this.state.subscribers.forEach((s) =>
-              s.subscribeToAudio(this.state.isSpeaker)
-            );
-          });
-          break;
-
-        case "mike":
-          this.setState({ isMike: !this.state.isMike }, () => {
-            this.state.publisher.publishAudio(this.state.isMike);
-          });
-          break;
-      }
+    componentWillUnmount() {
+        window.removeEventListener('beforeunload', this.onbeforeunload);
     }
-  }
 
-  joinSession() {
-    // --- 1) Get an OpenVidu object ---
+    onbeforeunload(event) {
+        this.leaveSession();
+    }
 
-    this.OV = new OpenVidu();
-
-    // --- 2) Init a session ---
-
-    this.setState(
-      {
-        session: this.OV.initSession(),
-      },
-      () => {
-        var mySession = this.state.session;
-
-        // --- 3) Specify the actions when events take place in the session ---
-
-        // On every new Stream received...
-        mySession.on('streamCreated', (event) => {
-          // Subscribe to the Stream to receive it. Second parameter is undefined
-          // so OpenVidu doesn't create an HTML video by its own
-          var subscriber = mySession.subscribe(event.stream, undefined);
-          var subscribers = this.state.subscribers;
-          subscribers.push(subscriber);
-          // console.log("subscriber 찾기 함수 안");
-          // console.log(subscribers);
-
-          // Update the state with the new subscribers
-          this.setState({
-            subscribers: subscribers,
-          });
+    handleChangeSessionId(e) {
+        this.setState({
+            mySessionId: e.target.value,
         });
-        // console.log("subscriber 찾기 함수 밖");
-        // console.log(this.state.subscribers);
-        // On every Stream destroyed...
-        mySession.on('streamDestroyed', (event) => {
+    }
 
-          // Remove the stream from 'subscribers' array
-          this.deleteSubscriber(event.stream.streamManager);
+    handleChangeUserName(e) {
+        this.setState({
+            myUserName: e.target.value,
         });
+    }
 
-        // On every asynchronous exception...
-        mySession.on('exception', (exception) => {
-          console.warn(exception);
-        });
-
-        // --- 4) Connect to the session with a valid user token ---
-
-        // 'getToken' method is simulating what your server-side should do.
-        // 'token' parameter should be retrieved and returned by your own backend
-        this.getToken().then((token) => {
-          // First param is the token got from OpenVidu Server. Second param can be retrieved by every user on event
-          // 'streamCreated' (property Stream.connection.data), and will be appended to DOM as the user's nickname
-          mySession
-            .connect(
-              token,
-              { clientData: this.state.myUserName },
-            )
-            .then(async () => {
-              var devices = await this.OV.getDevices();
-              var videoDevices = devices.filter(device => device.kind === 'videoinput');
-
-              // --- 5) Get your own camera stream ---
-
-              // Init a publisher passing undefined as targetElement (we don't want OpenVidu to insert a video
-              // element: we will manage it on our own) and with the desired properties
-              let publisher = this.OV.initPublisher(undefined, {
-                audioSource: undefined, // The source of audio. If undefined default microphone
-                videoSource: videoDevices[0].deviceId, // The source of video. If undefined default webcam
-                publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
-                publishVideo: true, // Whether you want to start publishing with your video enabled or not
-                resolution: '640x480', // The resolution of your video
-                frameRate: 30, // The frame rate of your video
-                insertMode: 'APPEND', // How the video is inserted in the target element 'video-container'
-                mirror: false, // Whether to mirror your local video or not
-              });
-
-              // --- 6) Publish your stream ---
-
-              mySession.publish(publisher);
-
-              // Set the main video in the page to display our webcam and store our Publisher
-              this.setState({
-                currentVideoDevice: videoDevices[0],
-                mainStreamManager: publisher,
-                publisher: publisher,
-              });
-            })
-            .catch((error) => {
-              console.log('There was an error connecting to the session:', error.code, error.message);
+    handleMainVideoStream(stream) {
+        if (this.state.mainStreamManager !== stream) {
+            this.setState({
+                mainStreamManager: stream
             });
-        });
-      },
-    );
-  }
-
-  leaveSession() {
-
-    // --- 7) Leave the session by calling 'disconnect' method over the Session object ---
-
-    const mySession = this.state.session;
-
-    if (mySession) {
-      mySession.disconnect();
-    }
-
-    // Empty all properties...
-    this.OV = null;
-    this.setState({
-      session: undefined,
-      subscribers: [],
-      mySessionId: 'SessionA',
-      myUserName: 'Participant' + Math.floor(Math.random() * 100),
-      mainStreamManager: undefined,
-      publisher: undefined,
-      userType: undefined,
-    });
-    {/* 상담 종료 버튼 */ }
-    <Link to="/designermypage"></Link>
-  }
-
-  async switchCamera() {
-    try {
-      const devices = await this.OV.getDevices()
-      var videoDevices = devices.filter(device => device.kind === 'videoinput');
-
-      if (videoDevices && videoDevices.length > 1) {
-
-        var newVideoDevice = videoDevices.filter(device => device.deviceId !== this.state.currentVideoDevice.deviceId)
-
-        if (newVideoDevice.length > 0) {
-          // Creating a new publisher with specific videoSource
-          // In mobile devices the default and first camera is the front one
-          var newPublisher = this.OV.initPublisher(undefined, {
-            videoSource: newVideoDevice[0].deviceId,
-            publishAudio: true,
-            publishVideo: true,
-            mirror: true
-          });
-
-          //newPublisher.once("accessAllowed", () => {
-          await this.state.session.unpublish(this.state.mainStreamManager)
-
-          await this.state.session.publish(newPublisher)
-          this.setState({
-            currentVideoDevice: newVideoDevice,
-            mainStreamManager: newPublisher,
-            publisher: newPublisher,
-          });
         }
-      }
-    } catch (e) {
-      console.error(e);
     }
-  }
 
-  render() {
-    const mySessionId = this.state.mySessionId;
-    const myUserName = this.state.myUserName;
+    //   handleImageClick(index){
+    //     // desinger일 경우에만 합성 이미지 핸들링 가능
+    //     if(this.state.userType === 'designer'){
+    //       this.state.메인이미지 = `https://i9b111.q.ssafy.io/api/consulting-image/${this.state.confusionImage[index].imgName}`};
+    //     }
+    //     여기서 바뀐다고 다른 사람의 상태가 바뀔까? 난 아니라고 봐
+    //     그럼 뭘 해야하냐? 그럼 streamManager 이 녀석을 건드려야할 것 같은데
+    //     그건 지금 난 졸려서 못해
+    //     내일의 내가 할꺼야
+    //   }
 
-    return (
-      <Container>
-        <Header>
-          <StudyTitle>Hair Consulting</StudyTitle>
-        </Header>
-        <Hr />
-        <div className="container">
-          {this.state.session === undefined ? (
-            <Backdrop show={true}>
-              <JoinBox>
-                <StartText style={{ color: "black" }}> 상담이 곧 시작됩니다 🙂 </StartText>
-                <form
-                  style={{ display: "flex", justifyContent: "center" }}
-                  className="form-group"
-                  onSubmit={this.joinSession}
-                >
-                  <p className="text-center">
-                    <JoinInput
-                      name="commit"
-                      type="submit"
-                      value="Start"
-                    />
-                  </p>
-                </form>
-              </JoinBox>
-            </Backdrop>
-          ) : null}
-          <MainBox>
-            <VideoContainer>
-              {this.state.session !== undefined ? (
-                <LeftBox>
-                  <StreamContainerWrapper
-                    primary={this.state.isChat}
-                    ref={this.userRef}
-                  >
-                    {this.state.publisher !== undefined ? (
-                      <StreamContainer className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(this.state.publisher)}>
-                        {/* 비디오 */}
-                        <UserVideoComponent
-                          streamManager={this.state.publisher}
-                        />
-                        {/* <div>{this.state.myUserName}</div> */}
-                      </StreamContainer>
+    handleCustomClickEvent() {
+        const data = { action: "customClick" }; // 여기에 원하는 데이터를 포함시킬 수 있습니다.
+        this.state.session.signal({
+            data: JSON.stringify(data),
+            to: [], // 이 배열을 비워둘 경우 세션의 모든 참가자에게 신호가 전달됩니다.
+        });
+    }
+
+    deleteSubscriber(streamManager) {
+        let subscribers = this.state.subscribers;
+        let index = subscribers.indexOf(streamManager, 0);
+        if (index > -1) {
+            subscribers.splice(index, 1);
+            this.setState({
+                subscribers: subscribers,
+            });
+        }
+    }
+
+    handleToggle(kind) {
+        if (this.state.publisher) {
+            switch (kind) {
+                case "camera":
+                    this.setState({ isCamera: !this.state.isCamera }, () => {
+                        console.log(this.state.publisher);
+                        this.state.publisher.publishVideo(this.state.isCamera);
+                    });
+                    break;
+
+                case "speaker":
+                    this.setState({ isSpeaker: !this.state.isSpeaker }, () => {
+                        this.state.subscribers.forEach((s) =>
+                            s.subscribeToAudio(this.state.isSpeaker)
+                        );
+                    });
+                    break;
+
+                case "mike":
+                    this.setState({ isMike: !this.state.isMike }, () => {
+                        this.state.publisher.publishAudio(this.state.isMike);
+                    });
+                    break;
+            }
+        }
+    }
+
+    joinSession() {
+        // --- 1) Get an OpenVidu object ---
+
+        this.OV = new OpenVidu();
+
+        // --- 2) Init a session ---
+
+        this.setState(
+            {
+                session: this.OV.initSession(),
+            },
+            () => {
+                var mySession = this.state.session;
+
+                // --- 3) Specify the actions when events take place in the session ---
+
+                // On every new Stream received...
+                mySession.on('streamCreated', (event) => {
+                    // Subscribe to the Stream to receive it. Second parameter is undefined
+                    // so OpenVidu doesn't create an HTML video by its own
+                    var subscriber = mySession.subscribe(event.stream, undefined);
+                    var subscribers = this.state.subscribers;
+                    subscribers.push(subscriber);
+                    // console.log("subscriber 찾기 함수 안");
+                    // console.log(subscribers);
+
+                    // Update the state with the new subscribers
+                    this.setState({
+                        subscribers: subscribers,
+                    });
+                });
+                // console.log("subscriber 찾기 함수 밖");
+                // console.log(this.state.subscribers);
+                // On every Stream destroyed...
+                mySession.on('streamDestroyed', (event) => {
+
+                    // Remove the stream from 'subscribers' array
+                    this.deleteSubscriber(event.stream.streamManager);
+                });
+
+                // On every asynchronous exception...
+                mySession.on('exception', (exception) => {
+                    console.warn(exception);
+                });
+
+                mySession.on('signal', (event) => {
+                    const data = JSON.parse(event.data);
+                    if (data.action === "customClick") {
+                        this.state.test = 2;
+                    }
+                });
+
+                // --- 4) Connect to the session with a valid user token ---
+
+                // 'getToken' method is simulating what your server-side should do.
+                // 'token' parameter should be retrieved and returned by your own backend
+                this.getToken().then((token) => {
+                    // First param is the token got from OpenVidu Server. Second param can be retrieved by every user on event
+                    // 'streamCreated' (property Stream.connection.data), and will be appended to DOM as the user's nickname
+                    mySession
+                        .connect(
+                            token,
+                            { clientData: this.state.myUserName },
+                        )
+                        .then(async () => {
+                            var devices = await this.OV.getDevices();
+                            var videoDevices = devices.filter(device => device.kind === 'videoinput');
+
+                            // --- 5) Get your own camera stream ---
+
+                            // Init a publisher passing undefined as targetElement (we don't want OpenVidu to insert a video
+                            // element: we will manage it on our own) and with the desired properties
+                            let publisher = this.OV.initPublisher(undefined, {
+                                audioSource: undefined, // The source of audio. If undefined default microphone
+                                videoSource: videoDevices[0].deviceId, // The source of video. If undefined default webcam
+                                publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
+                                publishVideo: true, // Whether you want to start publishing with your video enabled or not
+                                resolution: '640x480', // The resolution of your video
+                                frameRate: 30, // The frame rate of your video
+                                insertMode: 'APPEND', // How the video is inserted in the target element 'video-container'
+                                mirror: false, // Whether to mirror your local video or not
+                            });
+
+                            // --- 6) Publish your stream ---
+
+                            mySession.publish(publisher);
+
+                            // Set the main video in the page to display our webcam and store our Publisher
+                            this.setState({
+                                currentVideoDevice: videoDevices[0],
+                                mainStreamManager: publisher,
+                                publisher: publisher,
+                            });
+                        })
+                        .catch((error) => {
+                            console.log('There was an error connecting to the session:', error.code, error.message);
+                        });
+                });
+            },
+        );
+    }
+
+    leaveSession() {
+
+        // --- 7) Leave the session by calling 'disconnect' method over the Session object ---
+
+        const mySession = this.state.session;
+
+        if (mySession) {
+            mySession.disconnect();
+        }
+
+        // Empty all properties...
+        this.OV = null;
+        this.setState({
+            session: undefined,
+            subscribers: [],
+            mySessionId: 'SessionA',
+            myUserName: 'Participant' + Math.floor(Math.random() * 100),
+            mainStreamManager: undefined,
+            publisher: undefined,
+            userType: undefined,
+        });
+        {/* 상담 종료 버튼 */ }
+        <Link to="/designermypage"></Link>
+    }
+
+    async switchCamera() {
+        try {
+            const devices = await this.OV.getDevices()
+            var videoDevices = devices.filter(device => device.kind === 'videoinput');
+
+            if (videoDevices && videoDevices.length > 1) {
+
+                var newVideoDevice = videoDevices.filter(device => device.deviceId !== this.state.currentVideoDevice.deviceId)
+
+                if (newVideoDevice.length > 0) {
+                    // Creating a new publisher with specific videoSource
+                    // In mobile devices the default and first camera is the front one
+                    var newPublisher = this.OV.initPublisher(undefined, {
+                        videoSource: newVideoDevice[0].deviceId,
+                        publishAudio: true,
+                        publishVideo: true,
+                        mirror: true
+                    });
+
+                    //newPublisher.once("accessAllowed", () => {
+                    await this.state.session.unpublish(this.state.mainStreamManager)
+
+                    await this.state.session.publish(newPublisher)
+                    this.setState({
+                        currentVideoDevice: newVideoDevice,
+                        mainStreamManager: newPublisher,
+                        publisher: newPublisher,
+                    });
+                }
+            }
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    render() {
+        const mySessionId = this.state.mySessionId;
+        const myUserName = this.state.myUserName;
+
+        return (
+            <Container>
+                <Header>
+                    <StudyTitle>Hair Consulting</StudyTitle>
+                </Header>
+                <Hr />
+                <div className="container">
+                    {this.state.session === undefined ? (
+                        <Backdrop show={true}>
+                            <JoinBox>
+                                <StartText style={{ color: "black" }}> 상담이 곧 시작됩니다 🙂 </StartText>
+                                <form
+                                    style={{ display: "flex", justifyContent: "center" }}
+                                    className="form-group"
+                                    onSubmit={this.joinSession}
+                                >
+                                    <p className="text-center">
+                                        <JoinInput
+                                            name="commit"
+                                            type="submit"
+                                            value="Start"
+                                        />
+                                    </p>
+                                </form>
+                            </JoinBox>
+                        </Backdrop>
                     ) : null}
-                    {this.state.subscribers.map((sub, i) => (
-                      <StreamContainer key={i} className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(sub)}>
-                        <UserVideoComponent streamManager={sub} />
-                      </StreamContainer>
-                    ))}
-                  </StreamContainerWrapper>
-                </LeftBox>
-              ) : null}
-              <RightBox>
-                <ConsultBox>
-                    <img src={this.state.메인이미지} alt="" />
-                </ConsultBox>
-                <Hr></Hr>
-                <ImageBox>
-                  {/* 여기에 for문처럼 img태그 하나씩 넣고 onclick 이벤트에 인자로 i값을 넣는거야 */}
-                  {/* 그럼 i번호를 단 합성 이미지 녀석을 찾아서 저 위에 큰 컨설팅 박스 사진을 바꾸는거야 */}
-                  {/* <Img src="../icon/designerimg.png" alt="여기에 헤어 사진" />
-                  <Img src="../icon/designerimg.png" alt="여기에 헤어 사진" />
-                  <Img src="../icon/designerimg.png" alt="여기에 헤어 사진" />
-                  <Img src="../icon/designerimg.png" alt="여기에 헤어 사진" />
-                  <Img src="../icon/designerimg.png" alt="여기에 헤어 사진" />
-                  <Img src="../icon/designerimg.png" alt="여기에 헤어 사진" />
-                  <Img src="../icon/designerimg.png" alt="여기에 헤어 사진" />
-                  <Img src="../icon/designerimg.png" alt="여기에 헤어 사진" /> */}
+                    <MainBox>
+                        <VideoContainer>
+                            {this.state.session !== undefined ? (
+                                <LeftBox>
+                                    <StreamContainerWrapper
+                                        primary={this.state.isChat}
+                                        ref={this.userRef}
+                                    >
+                                        {this.state.publisher !== undefined ? (
+                                            <StreamContainer className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(this.state.publisher)}>
+                                                {/* 비디오 */}
+                                                <UserVideoComponent
+                                                    streamManager={this.state.publisher}
+                                                />
+                                                {/* <div>{this.state.myUserName}</div> */}
+                                            </StreamContainer>
+                                        ) : null}
+                                        {this.state.subscribers.map((sub, i) => (
+                                            <StreamContainer key={i} className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(sub)}>
+                                                <UserVideoComponent streamManager={sub} />
+                                            </StreamContainer>
+                                        ))}
+                                    </StreamContainerWrapper>
+                                </LeftBox>
+                            ) : null}
+                            <RightBox>
+                                <ConsultBox>
+                                    <img src={this.state.메인이미지} alt="" />
+                                </ConsultBox>
+                                <Hr></Hr>
+                                <ImageBox>
+                                    {/* 여기에 for문처럼 img태그 하나씩 넣고 onclick 이벤트에 인자로 i값을 넣는거야 */}
+                                    {/* 그럼 i번호를 단 합성 이미지 녀석을 찾아서 저 위에 큰 컨설팅 박스 사진을 바꾸는거야 */}
+                                    <Img src="../icon/designerimg.png" alt="여기에 헤어 사진" />
+                                    <Img src="../icon/designerimg.png" alt="여기에 헤어 사진" />
+                                    <Img src="../icon/designerimg.png" alt="여기에 헤어 사진" />
+                                    <Img src="../icon/designerimg.png" alt="여기에 헤어 사진" />
+                                    <Img src="../icon/designerimg.png" alt="여기에 헤어 사진" />
+                                    <Img src="../icon/designerimg.png" alt="여기에 헤어 사진" />
+                                    <Img src="../icon/designerimg.png" alt="여기에 헤어 사진" />
+                                    <Img src="../icon/designerimg.png" alt="여기에 헤어 사진" />
 
-                  {/* 저기 배열을 통신을 통해 가져온 타겟 이미지 배열로 변경 imgName -> img */}
-                  {/* {['designerimg.png', 'designerimg.png', 'designerimg.png'].map((imgName, index) => (
+                                    <button onClick={this.handleCustomClickEvent}>Click me</button>
+                                    <div>{ this.state.test }</div>
+                                    {/* 저기 배열을 통신을 통해 가져온 타겟 이미지 배열로 변경 imgName -> img */}
+                                    {/* {['designerimg.png', 'designerimg.png', 'designerimg.png'].map((imgName, index) => (
                     <Img
                       key={index}
                       src={`../icon/${imgName}`}
@@ -620,126 +638,126 @@ class ViduRoom extends Component {
                       onClick={() => handleImageClick(index)} // 여기에 원하는 로직 추가
                     />
                   ))} */}
-                </ImageBox>
-              </RightBox>
-            </VideoContainer>
-          </MainBox>
-        </div>
-        <Bottom>
-          <BottomBox>
-            <Icon
-              primary={!this.state.isCamera}
-              onClick={() => this.handleToggle("camera")}
-            >
-              {this.state.isCamera ? (
-                <VideocamOutlinedIcon />
-              ) : (
-                <VideocamOffOutlinedIcon />
-              )}
-            </Icon>
+                                </ImageBox>
+                            </RightBox>
+                        </VideoContainer>
+                    </MainBox>
+                </div>
+                <Bottom>
+                    <BottomBox>
+                        <Icon
+                            primary={!this.state.isCamera}
+                            onClick={() => this.handleToggle("camera")}
+                        >
+                            {this.state.isCamera ? (
+                                <VideocamOutlinedIcon />
+                            ) : (
+                                <VideocamOffOutlinedIcon />
+                            )}
+                        </Icon>
 
-            <Icon
-              primary={!this.state.isMike}
-              onClick={() => this.handleToggle("mike")}
-            >
-              {this.state.isMike ? <MicOutlinedIcon /> : <MicOffIcon />}
-            </Icon>
+                        <Icon
+                            primary={!this.state.isMike}
+                            onClick={() => this.handleToggle("mike")}
+                        >
+                            {this.state.isMike ? <MicOutlinedIcon /> : <MicOffIcon />}
+                        </Icon>
 
-            <Icon
-              primary={!this.state.isSpeaker}
-              onClick={() => this.handleToggle("speaker")}
-            >
-              {this.state.isSpeaker ? <HeadsetIcon /> : <HeadsetOffIcon />}
-            </Icon>
+                        <Icon
+                            primary={!this.state.isSpeaker}
+                            onClick={() => this.handleToggle("speaker")}
+                        >
+                            {this.state.isSpeaker ? <HeadsetIcon /> : <HeadsetOffIcon />}
+                        </Icon>
 
-            <Icon primary onClick={this.leaveSession}>
-              <CallEndIcon />
-            </Icon>
-          </BottomBox>
-          <ChatIconBox
-            onClick={() => this.setState({ isChat: !this.state.isChat })}
-          >
-            <ChatIcon />
-          </ChatIconBox>
-        </Bottom>
-      </Container>
-    );
-  }
+                        <Icon primary onClick={this.leaveSession}>
+                            <CallEndIcon />
+                        </Icon>
+                    </BottomBox>
+                    <ChatIconBox
+                        onClick={() => this.setState({ isChat: !this.state.isChat })}
+                    >
+                        <ChatIcon />
+                    </ChatIconBox>
+                </Bottom>
+            </Container>
+        );
+    }
 
-  /**
-   * --------------------------
-   * SERVER-SIDE RESPONSIBILITY
-   * --------------------------
-   * These methods retrieve the mandatory user token from OpenVidu Server.
-   * This behavior MUST BE IN YOUR SERVER-SIDE IN PRODUCTION (by using
-   * the API REST, openvidu-java-client or openvidu-node-client):
-   *   1) Initialize a Session in OpenVidu Server	(POST /openvidu/api/sessions)
-   *   2) Create a Connection in OpenVidu Server (POST /openvidu/api/sessions/<SESSION_ID>/connection)
-   *   3) The Connection.token must be consumed in Session.connect() method
-   */
+    /**
+     * --------------------------
+     * SERVER-SIDE RESPONSIBILITY
+     * --------------------------
+     * These methods retrieve the mandatory user token from OpenVidu Server.
+     * This behavior MUST BE IN YOUR SERVER-SIDE IN PRODUCTION (by using
+     * the API REST, openvidu-java-client or openvidu-node-client):
+     *   1) Initialize a Session in OpenVidu Server	(POST /openvidu/api/sessions)
+     *   2) Create a Connection in OpenVidu Server (POST /openvidu/api/sessions/<SESSION_ID>/connection)
+     *   3) The Connection.token must be consumed in Session.connect() method
+     */
 
-  getToken() {
-    return this.createSession(this.state.mySessionId).then((sessionId) => this.createToken(sessionId));
-  }
+    getToken() {
+        return this.createSession(this.state.mySessionId).then((sessionId) => this.createToken(sessionId));
+    }
 
-  createSession(sessionId) {
-    return new Promise((resolve, reject) => {
-      var data = JSON.stringify({ customSessionId: sessionId });
-      axios
-        .post(OPENVIDU_SERVER_URL + '/openvidu/api/sessions', data, {
-          headers: {
-            Authorization: 'Basic ' + btoa('OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET),
-            'Content-Type': 'application/json',
-          },
-        })
-        .then((response) => {
-          console.log('CREATE SESION', response);
-          resolve(response.data.id);
-        })
-        .catch((response) => {
-          var error = Object.assign({}, response);
-          if (error?.response?.status === 409) {
-            resolve(sessionId);
-          } else {
-            console.log(error);
-            console.warn(
-              'No connection to OpenVidu Server. This may be a certificate error at ' +
-              OPENVIDU_SERVER_URL,
-            );
-            if (
-              window.confirm(
-                'No connection to OpenVidu Server. This may be a certificate error at "' +
-                OPENVIDU_SERVER_URL +
-                '"\n\nClick OK to navigate and accept it. ' +
-                'If no certificate warning is shown, then check that your OpenVidu Server is up and running at "' +
-                OPENVIDU_SERVER_URL +
-                '"',
-              )
-            ) {
-              window.location.assign(OPENVIDU_SERVER_URL + '/accept-certificate');
-            }
-          }
+    createSession(sessionId) {
+        return new Promise((resolve, reject) => {
+            var data = JSON.stringify({ customSessionId: sessionId });
+            axios
+                .post(OPENVIDU_SERVER_URL + '/openvidu/api/sessions', data, {
+                    headers: {
+                        Authorization: 'Basic ' + btoa('OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET),
+                        'Content-Type': 'application/json',
+                    },
+                })
+                .then((response) => {
+                    console.log('CREATE SESION', response);
+                    resolve(response.data.id);
+                })
+                .catch((response) => {
+                    var error = Object.assign({}, response);
+                    if (error?.response?.status === 409) {
+                        resolve(sessionId);
+                    } else {
+                        console.log(error);
+                        console.warn(
+                            'No connection to OpenVidu Server. This may be a certificate error at ' +
+                            OPENVIDU_SERVER_URL,
+                        );
+                        if (
+                            window.confirm(
+                                'No connection to OpenVidu Server. This may be a certificate error at "' +
+                                OPENVIDU_SERVER_URL +
+                                '"\n\nClick OK to navigate and accept it. ' +
+                                'If no certificate warning is shown, then check that your OpenVidu Server is up and running at "' +
+                                OPENVIDU_SERVER_URL +
+                                '"',
+                            )
+                        ) {
+                            window.location.assign(OPENVIDU_SERVER_URL + '/accept-certificate');
+                        }
+                    }
+                });
         });
-    });
-  }
+    }
 
-  createToken(sessionId) {
-    return new Promise((resolve, reject) => {
-      var data = {};
-      axios
-        .post(OPENVIDU_SERVER_URL + "/openvidu/api/sessions/" + sessionId + "/connection", data, {
-          headers: {
-            Authorization: 'Basic ' + btoa('OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET),
-            'Content-Type': 'application/json',
-          },
-        })
-        .then((response) => {
-          console.log('TOKEN', response);
-          resolve(response.data.token);
-        })
-        .catch((error) => reject(error));
-    });
-  }
+    createToken(sessionId) {
+        return new Promise((resolve, reject) => {
+            var data = {};
+            axios
+                .post(OPENVIDU_SERVER_URL + "/openvidu/api/sessions/" + sessionId + "/connection", data, {
+                    headers: {
+                        Authorization: 'Basic ' + btoa('OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET),
+                        'Content-Type': 'application/json',
+                    },
+                })
+                .then((response) => {
+                    console.log('TOKEN', response);
+                    resolve(response.data.token);
+                })
+                .catch((error) => reject(error));
+        });
+    }
 }
 
 export default ViduRoom;
