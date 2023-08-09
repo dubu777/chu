@@ -4,6 +4,9 @@ import motion from "framer-motion";
 import { useState } from "react";
 import { useRecoilState } from "recoil";
 import { loginState, useIsLoggedIn } from "../../recoil/auth";
+import { useQuery } from "react-query";
+import { getCustomerLogInData } from "../../apis";
+import { BASE_URL } from '../../apis/rootUrl';
 
 const Container = styled.div`
 	display: flex;
@@ -47,8 +50,10 @@ function Recommend(){
     "img/opofol5.jpg",
     "img/opofol6.jpg",
   ]
+  // const customerSeq = localStorage.getItem('userSeq')
   const [isLogIn, setIsLogIn] = useRecoilState(loginState);
   const navigate = useNavigate();
+  // const { data, isError, isLoading } = useQuery(['RecommendPageData', customerSeq], () => getCustomerLogInData(customerSeq))
   return(
   
   
@@ -58,7 +63,7 @@ function Recommend(){
       <Text>계란형 얼굴에는 이런 헤어스타일이 잘 어울려요</Text>
       <ImgBox>
       {Imgs.map((item, index) => (
-        <RecommendImg src={item} key={index}/>
+        <RecommendImg src={item.img} key={index}/>
       ))}
       </ImgBox>
       </Wrapper>

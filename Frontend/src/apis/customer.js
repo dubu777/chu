@@ -41,8 +41,8 @@ export const getCustomerLogInData = async (customerSeq) => {
     try {
         const response = await axios.get(`${BASE_URL}/customer/main/${customerSeq}`)
         return response.data.result
-    } catch(error) {
-        throw new Error('디자이너 리스트 조회 실패')
+    } catch(error) { 
+        throw new Error('로그인시 가져올 데이터 조회 실패')
     }
 
 };
