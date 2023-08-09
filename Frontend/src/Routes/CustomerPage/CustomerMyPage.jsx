@@ -118,7 +118,7 @@ const Profile = styled.img`
 function CustomerMyPage(){
 
   const { customerSeq } = useParams();
-  console.log("커스터머 시퀀스",customerSeq);
+  // console.log("커스터머 시퀀스",customerSeq);
   const { data, isLoading, isError } = useQuery(
     ["customerMyPage", customerSeq],
     () => getCustomerMyPage(customerSeq)

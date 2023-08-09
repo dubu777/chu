@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// const BASE_URL = "https://i9b111.q.ssafy.io/api";
-const BASE_URL = 'http://localhost:9090/api';
+const BASE_URL = "https://i9b111.q.ssafy.io/api";
+// const BASE_URL = 'http://localhost:9090/api';
 
 //메인 페이지 요청(비로그인)
 export const fetchMain = async () => {

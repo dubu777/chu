@@ -1,8 +1,8 @@
 import axios from "axios";
 import { loginState } from "../recoil/auth";
 // 서버 url
-// const BASE_URL = 'https://i9b111.q.ssafy.io/api';
-const BASE_URL = "http://localhost:9090/api"
+const BASE_URL = 'https://i9b111.q.ssafy.io/api';
+// const BASE_URL = "http://localhost:9090/api"
 
 // 디자이너 리스트 뷰 api
 export const listinfo = async (seq) => {
@@ -94,11 +94,25 @@ export const attachDesignerImage = async (seq, formData) => {
   }
 };
 
+// 디자이너 모든 예약 내역 조회(마이페이지 탭2)
+export const getAllReserveList = async (designerSeq) => {
+  try {
+    console.log('trytry')
+      const response = await axios.get(`${BASE_URL}/designer/detail/reservation-list/${designerSeq}`)
+      // const response = await axios.get(`${BASE_URL}/designer/detail/reservation-list/2`);
+      console.log('응답몬', response.data);
+      return response.data.result
+  } catch(error) {
+      throw new Error('디자이너 상담 예약목록 API 요청 실패')
+  }
+
+};
+
 // 마이페이지-포트폴리오 조회
 export const getPortfolio = async (seq) => {
   console.log('seq',seq)
   try {
-    console.log("포트폴리호 조회 try");
+    console.log("포트폴리오 조회 try");
     const response = await axios.get(`${BASE_URL}/designer/detail/portfolio/${seq}`);
     console.log(response.data.result)
     return response.data.result;

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// const BASE_URL = 'https://i9b111.q.ssafy.io/api';
-const BASE_URL = 'http://localhost:9090/api';
+const BASE_URL = 'https://i9b111.q.ssafy.io/api';
+// const BASE_URL = 'http://localhost:9090/api';
 
 //고객 로그인
 export const customerlogIn = async (username, password) => {
