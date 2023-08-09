@@ -6,6 +6,7 @@ import com.chu.global.domain.HairStyleDto;
 import com.chu.global.domain.HttpResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -102,6 +103,21 @@ public class DesignerSearchController {
             HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
             return ResponseEntity.ok(httpResponseDto);
         }
+    }
+
+    @GetMapping("/around")
+    public ResponseEntity<HttpResponseDto> searchAround(){
+
+        List<ResponseDesignerSearchAroundDto> list = null;
+
+        try{
+            list = designerSearchService.search2AllArea();
+        } catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), list));
     }
 
 //    @GetMapping("/around")
