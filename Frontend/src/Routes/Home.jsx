@@ -120,7 +120,7 @@ function Home() {
     const token = getPersistedAccessToken();
     console.log('Token from localStorage:', token);
   }, []);
-
+ 
   const [loginResult, setLoginResult] = useRecoilState(loginResultState);
   const [token, setToken] = useRecoilState(accessTokenState);
   const { isLoading, data, isError } = useQuery(["noLogInMain"], fetchMain);

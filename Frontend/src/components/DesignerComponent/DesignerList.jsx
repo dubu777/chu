@@ -158,7 +158,7 @@ function DesignerList(props) {
       <Wrapper>
         <Box>
           <DesignerImg 
-            src="./icon/designerimg.png"
+            src={`${BASE_URL}/designer-profile/${item.designerImg}`}
             onClick={() => navigate(`/designerdetail/${item.designerSeq}`)}
           />
         </Box>
