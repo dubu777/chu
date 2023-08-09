@@ -127,6 +127,11 @@ function Header() {
         </Items>
       </Col>
       <Col>
+          {/* <Link to="/consultresultpage">상담결과 작성//</Link>
+          <Link to="/viduroom">openvidu//</Link>
+          <Link to="/designermypage">디자이너MyPage//</Link>
+          <Link to="/customermypage">CustomerMyPage//</Link> */}
+          <Link to="/designermypage">디자이너MyPage//</Link>
           { isLogIn ?  
             <>
               <Item 

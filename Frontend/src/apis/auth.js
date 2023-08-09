@@ -14,7 +14,7 @@ export const customerlogIn = async (username, password) => {
     console.log("Server Response:", response.data);
     return response.data.result;
   } catch (error) {
-    throw new Error('로그인 실패');
+    throw new Error('로그인 실패'); 
   }
 };
 
@@ -23,7 +23,7 @@ export const designerlogIn = async (username, password) => {
   try {
     const response = await axios.post(`${BASE_URL}/designer/sign-in`, {
       "id" : username,
-      "pwd" : password,
+      "pwd" : password, 
     });
     return response.data.result;
   } catch (error) {
@@ -45,7 +45,20 @@ export const customerFindId = async (username, useremail) => {
   }
 };
 
-// 디자이너 아이디 찾기
+export const customerFindPw = async (userid, username, useremail) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/customer/find-pwd`, { params: {
+      id: userid,
+      name: username,
+      email: useremail,
+    }});
+    console.log(response.data.result)
+    return response.data.result;
+  } catch (error) {
+    throw new Error('통신 에러');
+  }
+};
+
 export const designerFindId = async (username, useremail) => {
   try {
     const response = await axios.get(`${BASE_URL}/designer/find-id`, { params: {
@@ -59,7 +72,20 @@ export const designerFindId = async (username, useremail) => {
   }
 };
 
-// 고객 회원가입 
+export const designerFindPw = async (userid, username, useremail) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/designer/find-pwd`, { params: {
+      id: userid,
+      name: username,
+      email: useremail,
+    }});
+    console.log(response.data.result)
+    return response.data.result;
+  } catch (error) {
+    throw new Error('통신 에러');
+  }
+};
+
 export const signUpRequest = async (customerData) => {
   console.log(customerData);
   try {
@@ -116,3 +142,33 @@ export const checkDuplicateEmail = async (email, userType) => {
     throw error;
   }
 };
+
+export const changePwdCustomer = async (seq, newPassword) => {
+  try{
+    console.log(newPassword);
+    const response = await axios.put(`${BASE_URL}/customer/change-pwd`, {
+      params: {
+        "customerSeq" : seq,
+        "pwd": newPassword,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const changePwdDesigner = async (seq, newPassword) => {
+  try{
+    console.log(newPassword);
+    const response = await axios.put(`${BASE_URL}/designer/change-pwd`, {
+      params: {
+        "designerSeq" : seq,
+        "pwd": newPassword,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
