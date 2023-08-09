@@ -172,8 +172,8 @@ public class DesignerDetailController {
 
         try{
             String filePath = designerDetailService.getSavedImgFilePath(file);
-            imgSeq = designerDetailService.postPortfolioImage(designerSeq, filePath);
-
+            String uploadFilePath = designerDetailService.getUploadImgFilePath(file);
+            imgSeq = designerDetailService.postPortfolioImage(designerSeq, filePath, uploadFilePath);
         } catch (Exception e){
             e.printStackTrace();
             HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
