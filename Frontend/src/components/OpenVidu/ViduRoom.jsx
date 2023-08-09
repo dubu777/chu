@@ -299,6 +299,7 @@ class ViduRoom extends Component {
         this.handleMainVideoStream = this.handleMainVideoStream.bind(this);
         this.onbeforeunload = this.onbeforeunload.bind(this);
         this.handleToggle = this.handleToggle.bind(this);
+        this.handleCustomClickEvent = this.handleCustomClickEvent.bind(this);
     }
 
     componentDidMount() {
@@ -610,7 +611,7 @@ class ViduRoom extends Component {
                             ) : null}
                             <RightBox>
                                 <ConsultBox>
-                                    <img src={this.state.메인이미지} alt="" />
+                                    {/* <img src={this.state.메인이미지} alt="" /> */}
                                 </ConsultBox>
                                 <Hr></Hr>
                                 <ImageBox>
