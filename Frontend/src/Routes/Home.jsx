@@ -122,12 +122,14 @@ function Home() {
 
   const [loginResult, setLoginResult] = useRecoilState(loginResultState);
   const [token, setToken] = useRecoilState(accessTokenState);
-  const { isLoading, data } = useQuery(["noLogInMain"], fetchMain);
+  const { isLoading, data, isError } = useQuery(["noLogInMain"], fetchMain);
 
   if (isLoading) {
     return <div>Loading...{data}</div>;
   }
-  
+  if (isError) {
+    return <div>홈 페이지 에러{data}</div>;
+  }
   return (
     <Wrapper>
       <Main src="/img/banner-lmg.png"></Main>
