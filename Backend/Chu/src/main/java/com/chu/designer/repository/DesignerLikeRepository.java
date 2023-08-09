@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface DesignerLikeRepository extends JpaRepository<DesignerLike, Integer> {
 
+    @Query("SELECT count(*) FROM DesignerLike dl WHERE dl.designer.seq = :designerSeq AND dl.likeStatus = true")
     Integer countByDesignerSeq(Integer designerSeq);
 
     DesignerLike findByCustomerSeqAndDesignerSeq(Integer customerSeq, Integer designerSeq);
@@ -19,4 +20,6 @@ public interface DesignerLikeRepository extends JpaRepository<DesignerLike, Inte
     void updateStatusTrue(int customerSeq, int designerSeq);
 
     List<DesignerLike> findAllByCustomerSeq(Integer customerSeq);
+
+    Integer countByCustomerSeqAndDesignerSeq(Integer customerSeq, Integer designerSeq);
 }

@@ -15,6 +15,8 @@ public interface DesignerRepository extends JpaRepository<Designer, Integer> {
 
     Designer getDesignerBySeq(int seq);
 
+    boolean existsBySeq(Integer designerSeq);
+
     // ID 중복검사
     boolean existsById(String Id);
 

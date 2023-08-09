@@ -45,7 +45,6 @@ public class Customer {
 
    public Customer() {
       this.faceDict = new FaceDict();
-//      this.faceDict.setSeq(1);
       this.imagePath = new ImagePath();
    }
 

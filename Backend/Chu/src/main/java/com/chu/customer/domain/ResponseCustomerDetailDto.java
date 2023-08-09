@@ -10,8 +10,15 @@ import java.util.List;
 @Data
 public class ResponseCustomerDetailDto {
 
-    Customer customer;
-    List<CustomerHairCondition> customerHairConditionList;
+//    Customer customer;
+    int customerSeq;
+    String name;
+    String id;
+    String email;
+    String img;
+//    List<CustomerHairCondition> customerHairConditionList;
+    List<String> hairCondition;
+    String faceLabel;
     List<ResponseFutureConsultingDto> responseFutureConsultingDtoList;
     List<ResponsePastConsultingDto> responsePastConsultingDtoList;
 }
