@@ -48,16 +48,12 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
 
         // 우분투 서버 저장 경로
         String uploadDir = "/chu/upload/images/customer/";
-        // 원본 파일명
-        String originalFilename = file.getOriginalFilename();
-        // 저장될 고유 파일명
-        String fileName = customerSeq + "_" + originalFilename;
 
-        // 저장될 경로로 디렉토리 객체 생성
+        String fileName = file.getOriginalFilename();
+
         File directory = new File(uploadDir);
-        // 저장될 경로 + 파일명
         String filePath = uploadDir + fileName;
-        // 저장될 경로로 파일 객체 생성
+
         File destFile = new File(filePath);
         System.out.println(filePath);
 
@@ -70,16 +66,9 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
             }
         }
 
-        try {
-            // 파일 지정해놓은 경로에 저장
-            file.transferTo(destFile);
-            log.info("서비스 >>> 파일 저장 성공! filePath : " + filePath);
-            // 저장된 파일 경로 리턴 -> 여기서 db에 저장해야되는 게 정확히 뭐와 뭔지 알아야할듯.
-            return filePath;
-        } catch (IOException e) {
-            log.error("파일 저장 실패:", e);
-            throw new IOException("파일 저장 실패: " + e.getMessage(), e);
-        }
+        file.transferTo(destFile);
+        log.info("서비스 >>> 파일 저장 성공! filePath : " + filePath);
+        return filePath;
     }
 
     @Override
