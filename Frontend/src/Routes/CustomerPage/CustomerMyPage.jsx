@@ -260,7 +260,7 @@ function CustomerMyPage(){
                 <Profile 
                   onClick={handleImageClick} 
                   // src={selectedFile || './icon/profile2.png'} 
-                  src={selectedFile || `${BASE_URL}/customer-profile/${customerSeq}_${data.img}`}
+                  src={selectedFile || `${BASE_URL}/customer-profile/${data.customerSeq}_${data.img}`}
                   alt="Profile" 
                   // hasFile={selectedFile !== null} 
                 />
