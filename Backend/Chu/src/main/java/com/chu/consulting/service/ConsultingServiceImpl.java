@@ -106,17 +106,14 @@ public class ConsultingServiceImpl implements ConsultingService {
 
                 // 테이블에 데이터 존재하지 않으면 삽입
                 if(entity == null){
-                    DesignerLike designerLike = new DesignerLike();
 
                     Customer customer = customerRepository.getCustomerBySeq(customerSeq);
-                    designerLike.setCustomer(customer);
-
                     Designer designer = designerRepository.getDesignerBySeq(designerSeq);
-                    designerLike.setDesigner(designer);
-
-                    designerLike.setLikeStatus(true);
-
-                    designerLike.setCreateDate(LocalDateTime.now());
+                    //designerLike.setCustomer(customer);
+                    //designerLike.setDesigner(designer);
+                    //designerLike.setLikeStatus(true);
+                    //designerLike.setCreateDate(LocalDateTime.now());
+                    DesignerLike designerLike = new DesignerLike(customer, designer,true, LocalDateTime.now());
 
                     designerLikeRepository.save(designerLike);
                 }
