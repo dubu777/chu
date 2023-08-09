@@ -193,9 +193,6 @@ function DesignerMyPage() {
       }
     }
   };
-  // const handleIntroductionChange = (event) => {
-  //   setIntroduction(event.target.innerText);
-  // };
   const handleEditButtonClick = () => {
     setIsEditing(true);
   };
