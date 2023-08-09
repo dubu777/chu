@@ -1,11 +1,19 @@
 package com.chu.customer.service;
 
-import com.chu.customer.domain.Customer;
-import com.chu.customer.domain.RequestCustomerDetailChangeDto;
-import com.chu.customer.domain.ResponseCustomerDetailDto;
-import com.chu.customer.domain.ResponseCustomerDetailInfoDto;
+import com.chu.consulting.domain.Consulting;
+import com.chu.consulting.domain.ResponseFutureConsultingDto;
+import com.chu.consulting.domain.ResponsePastConsultingDto;
+import com.chu.consulting.repository.ConsultingRepository;
+import com.chu.customer.domain.*;
 import com.chu.customer.repository.CustomerDetailRepository;
+import com.chu.customer.repository.CustomerHairConditionRepository;
 import com.chu.customer.repository.CustomerRepository;
+import com.chu.designer.domain.Designer;
+import com.chu.designer.repository.DesignerRepository;
+import com.chu.global.domain.FaceDict;
+import com.chu.global.domain.HairStyleDict;
+import com.chu.global.repository.FaceDictRepository;
+import com.chu.global.repository.HairStyleDictRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -17,6 +25,10 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -24,6 +36,12 @@ import java.io.IOException;
 public class CustomerDetailServiceImpl implements CustomerDetailService {
 
     private final CustomerDetailRepository customerDetailRepository;
+    private final CustomerRepository customerRepository;
+    private final CustomerHairConditionRepository customerHairConditionRepository;
+    private final HairStyleDictRepository hairStyleDictRepository;
+    private final FaceDictRepository faceDictRepository;
+    private final ConsultingRepository consultingRepository;
+    private final DesignerRepository designerRepository;
 
     @Override
     public String getSavedImgFilePath(Integer customerSeq, MultipartFile file) throws IOException {
@@ -82,6 +100,123 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
         return true;
     }
 
+    @Override
+    public ResponseCustomerDetailDto getCustomerDetail(int customerSeq) {
+
+        ResponseCustomerDetailDto response = new ResponseCustomerDetailDto();
+
+
+        // 1) customerSeq setting
+        response.setCustomerSeq(customerSeq);
+
+        Customer customer = customerRepository.findBySeq(customerSeq);
+
+
+        // 2) name setting
+        response.setName(customer.getName());
+
+
+        // 3) id setting
+        response.setId(customer.getId());
+
+
+        // 4) email setting
+        response.setEmail(customer.getEmail());
+
+
+        // 5) img setting
+        if(customer.getImagePath() != null){
+            response.setImg(customer.getImagePath().getUploadImgName());
+        }
+
+
+        // 6) hairCondition setting : customer_hair_condition 테이블에서 customerIdx 로 받아오기
+        List<String> list = new ArrayList<>();
+
+        List<CustomerHairCondition> customerHairCondition = customerHairConditionRepository.findAllByCustomerSeq(customerSeq);
+
+        for(CustomerHairCondition ch : customerHairCondition){
+            // 모발 상태 번호 받아오기
+            int s = ch.getHairConditionDict().getSeq();
+            // 라벨링
+            HairStyleDict dict = hairStyleDictRepository.findBySeq(s);
+
+            String label = dict.getHairStyleLabel();
+
+            list.add(label);
+        }
+
+        response.setHairCondition(list);
+
+
+        // 7) faceLabel setting
+        int faceSeq = customer.getFaceDict().getSeq();
+
+        FaceDict faceDict = faceDictRepository.findBySeq(faceSeq);
+        String faceLabel = faceDict.getFaceLabel();
+
+        response.setFaceLabel(faceLabel);
+
+
+        // 8) futureConsulting setting
+        List<ResponseFutureConsultingDto> list8 = new ArrayList<>();
+
+        List<Consulting> futureConsulting = consultingRepository.getFutureConsulting(LocalDate.now().toString(), customerSeq);
+
+        for(Consulting c : futureConsulting){
+            ResponseFutureConsultingDto dto = new ResponseFutureConsultingDto();
+
+            dto.setConsultingSeq(c.getSeq());
+
+            Designer designer = designerRepository.getDesignerBySeq(c.getDesigner().getSeq());
+
+            if(designer.getImagePath() != null)
+                dto.setDesignerImg(designer.getImagePath().getSavedImgName());
+            else
+                dto.setDesignerImg(null);
+            dto.setReviewScore(designer.getReviewScore());
+            dto.setName(designer.getName());
+            dto.setConsultingDate(c.getConsultingDate().getDate().toString());
+            dto.setConsultingStartTime(c.getConsultingDate().getTime().toString());
+            dto.setUrl(c.getUrl());
+
+            list8.add(dto);
+        }
+
+        response.setResponseFutureConsultingDtoList(list8);
+
+
+        // 9) past consulting setting
+        List<ResponsePastConsultingDto> list9 = new ArrayList<>();
+
+        List<Consulting> pastConsulting = consultingRepository.getPastConsulting(LocalDate.now().toString(), customerSeq);
+
+        for(Consulting c : pastConsulting){
+            ResponsePastConsultingDto dto = new ResponsePastConsultingDto();
+
+            dto.setConsultingSeq(c.getSeq());
+
+            Designer designer = designerRepository.getDesignerBySeq(c.getDesigner().getSeq());
+
+            if(designer.getImagePath() != null)
+                dto.setDesignerImg(designer.getImagePath().getSavedImgName());
+            else
+                dto.setDesignerImg(null);
+            dto.setAllReviewScore(designer.getReviewScore());
+            dto.setName(designer.getName());
+            dto.setConsultingDate(c.getConsultingDate().getDate());
+            dto.setConsultingStartTime(c.getConsultingDate().getTime());
+            dto.setMyReviewScore(c.getReview().getReviewScore());
+            dto.setReviewContent(c.getReview().getReviewContent());
+
+            list9.add(dto);
+        }
+
+        response.setResponsePastConsultingDtoList(list9);
+
+        return response;
+    }
+
     /*
     @PutMapping("/api/v2/members/{id}")
     public UpdateMemberResponse updateMemberV2(@PathVariable("id") Long id,
@@ -94,23 +229,25 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
     }
     */
 
+//
+//    @Override
+//    public ResponseCustomerDetailDto getCustomerDetail(int customerSeq) {
+//        ResponseCustomerDetailDto responseCustomerDetailDto = new ResponseCustomerDetailDto();
+//        //responseCustomerDetailDto.setCustomer(customerDetailRepository.getCustomerInfo(customerSeq));
+//
+//        // 마이페이지 들어갈때 고객 프로필 사진컬럼에 값이 있으면 서버에서 가져온다
+//        String originImgName = "img1.png";      //디비가서 찾아온 값
+//
+//
+//        //responseCustomerDetailDto.setCustomerHairConditionList(customerDetailRepository.getCustomerHairCondition(customerSeq));
+//
+//        //responseCustomerDetailDto.setResponsePastConsultingDtoList(customerDetailRepository.getPastConsultingList(customerSeq));
+//        //responseCustomerDetailDto.setResponseFutureConsultingDtoList(customerDetailRepository.getFutureConsultingList(customerSeq));
+//
+//        return responseCustomerDetailDto;
+//    }
 
-    @Override
-    public ResponseCustomerDetailDto getCustomerDetail(int customerSeq) {
-        ResponseCustomerDetailDto responseCustomerDetailDto = new ResponseCustomerDetailDto();
-        //responseCustomerDetailDto.setCustomer(customerDetailRepository.getCustomerInfo(customerSeq));
 
-        // 마이페이지 들어갈때 고객 프로필 사진컬럼에 값이 있으면 서버에서 가져온다
-        String originImgName = "img1.png";      //디비가서 찾아온 값
-
-
-        //responseCustomerDetailDto.setCustomerHairConditionList(customerDetailRepository.getCustomerHairCondition(customerSeq));
-
-        //responseCustomerDetailDto.setResponsePastConsultingDtoList(customerDetailRepository.getPastConsultingList(customerSeq));
-        //responseCustomerDetailDto.setResponseFutureConsultingDtoList(customerDetailRepository.getFutureConsultingList(customerSeq));
-
-        return responseCustomerDetailDto;
-    }
 
 //    public MultipartFile getCustomerDetailProfile(String originImgName) {
 //

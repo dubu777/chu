@@ -215,6 +215,8 @@ public class CustomerServiceImpl implements CustomerService{
 
             // 2) customerInfo setting
             Customer customer = customerRepository.findBySeq(customerSeq);
+            if(customer == null)
+                return null;
             ResponseCustomerLoginInfoDto responseCustomerLoginInfoDto = new ResponseCustomerLoginInfoDto().entityToDto(customer);
 
             responseCustomerLoginDetailDto.setCustomerInfo(responseCustomerLoginInfoDto);

@@ -7,6 +7,7 @@ import com.chu.customer.service.CustomerDetailService;
 import com.chu.global.domain.HttpResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -50,22 +51,38 @@ public class CustomerDetailController {
 //        }
 //    }
 //
+//    @GetMapping("/mypage/{customer_seq}")
+//    public ResponseEntity<HttpResponseDto> getCustomerDetail(@PathVariable("customer_seq") int customerSeq) {
+//
+//        ResponseCustomerDetailDto responseCustomerDetailDto = customerDetailService.getCustomerDetail(customerSeq);
+//
+//        if(responseCustomerDetailDto != null) {
+//            HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseCustomerDetailDto);
+//            return ResponseEntity.ok(httpResponseDto);
+//        }
+//        else{
+//            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+//            return ResponseEntity.ok(httpResponseDto);
+//        }
+//    }
+
+    // 고객 마이페이지 조회
     @GetMapping("/mypage/{customer_seq}")
     public ResponseEntity<HttpResponseDto> getCustomerDetail(@PathVariable("customer_seq") int customerSeq) {
 
-        ResponseCustomerDetailDto responseCustomerDetailDto = customerDetailService.getCustomerDetail(customerSeq);
+        ResponseCustomerDetailDto responseCustomerDetailDto = null;
 
-        if(responseCustomerDetailDto != null) {
-            HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseCustomerDetailDto);
-            return ResponseEntity.ok(httpResponseDto);
+        try{
+            responseCustomerDetailDto = customerDetailService.getCustomerDetail(customerSeq);
+        } catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));
         }
-        else{
-            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
-            return ResponseEntity.ok(httpResponseDto);
-        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), responseCustomerDetailDto));
     }
 
-    @GetMapping("/mypage/{fileName}")
+    //@GetMapping("/mypage/{fileName}")
 
 
     @PatchMapping("/img/{customer_seq}")
