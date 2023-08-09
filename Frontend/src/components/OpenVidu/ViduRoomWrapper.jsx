@@ -18,9 +18,13 @@ function ViduRoomWrapper() {
     const id = '1';
     const username  = '원재현';
     const usertype  = 'designer';
-    const imgs = ['login.jpg', 'worldcup1.jpg', 'worldcup2.jpg', 'worldcup4.jpg']
 
-    return <ViduRoom sessionId={id} userName = {username} userType ={ usertype } imgs = {imgs}/>;
+    // 통신 API 작성되면, recoil이나 query로 이미지 배열 받아오기
+    
+    const resultimgs = ['login.jpg', 'worldcup1.jpg', 'worldcup2.jpg', 'worldcup4.jpg' ,'findid.jpg' ,'listview.jpg','password.jpg','main.jpg'];
+    const targetimgs = ['login.jpg', 'worldcup1.jpg', 'worldcup2.jpg', 'worldcup4.jpg' ,'findid.jpg' ,'listview.jpg','password.jpg','main.jpg'];
+
+    return <ViduRoom sessionId={id} userName = {username} userType ={ usertype } resultimgs = {resultimgs} targetimgs ={targetimgs}/>;
 }
 
 export default ViduRoomWrapper;

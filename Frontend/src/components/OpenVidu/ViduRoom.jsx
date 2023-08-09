@@ -299,7 +299,8 @@ class ViduRoom extends Component {
             isCamera: true,
             isSpeaker: true,
             isChat: false,
-            imgs: this.props.imgs,
+            resultimgs: this.props.resultimgs,
+            targetimgs: this.props.targetimgs,
             test: 1
             // 타겟이미지들 넣기
             // [ desinger1.png, designer2.png, ..., ]
@@ -590,8 +591,8 @@ class ViduRoom extends Component {
     render() {
         const mySessionId = this.state.mySessionId;
         const myUserName = this.state.myUserName;
-        const { imgs, test } = this.state;
-        const currentImage = imgs[test] || null;
+        const { resultimgs, test } = this.state;
+        const currentImage = resultimgs[test] || null;
 
         return (
             <Container>
@@ -652,10 +653,10 @@ class ViduRoom extends Component {
                                 </ConsultBox>
                                 <Hr></Hr>
                                 <ImageBox>
-                                    {['designerimg.png', 'designerimg.png', 'designerimg.png', 'designerimg.png'].map((imgName, index) => (
+                                    {this.state.targetimgs.map((imgName, index) => (
                                       <Img
                                         key={index}
-                                        src={`../icon/${imgName}`}
+                                        src={`../img/${imgName}`}
                                         // 배열에 하나하나 이미지 이름 꺼내서 넣기
                                         // src={`https://i9b111.q.ssafy.io/api/consulting/${img.imgName}`}
                                         alt="여기에 헤어 사진"
