@@ -28,6 +28,7 @@ import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.List;
 
@@ -270,6 +271,44 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
         }
         return true;
 
+    }
+
+    @Override
+    @Transactional
+    public void updatePossibleRsvTime(int designerSeq, RequestUpdatePossibleRsvTime requestUpdatePossibleRsvTime) {
+
+        try{
+            List<RsvDateAndTimes> list = requestUpdatePossibleRsvTime.getDateAndTimes();
+
+            for(RsvDateAndTimes dat : list){
+
+                String date = dat.getDate();
+
+                // reservation_available_slot 테이블에서 기존 날짜 삭제하기
+                reservationAvailableSlotRepository.deleteAllByDesignerSeqAndDate(designerSeq, date);
+
+                // 새로운 날짜 추가하기
+                List<String> times = dat.getTimes();
+
+                for(String time : times){
+                    ReservationAvailableSlot dto = new ReservationAvailableSlot();
+
+                    dto.setDate(date);
+                    dto.setTime(time);
+                    dto.setState('P');
+                    dto.setCreatedDate(LocalDateTime.now());
+
+                    Designer d = designerRepository.getDesignerBySeq(designerSeq);
+                    dto.setDesigner(d);
+
+                    reservationAvailableSlotRepository.save(dto);
+                }
+
+            }
+
+        } catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override
