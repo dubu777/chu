@@ -119,6 +119,7 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
     }
 
     @Override
+    @Transactional
     public boolean deletePortfolioImage(int imageSeq) {
         try{
             designerDetailRepository.deleteBySeq(imageSeq);
