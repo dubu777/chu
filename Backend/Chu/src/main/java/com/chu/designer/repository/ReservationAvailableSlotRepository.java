@@ -31,4 +31,6 @@ public interface ReservationAvailableSlotRepository extends JpaRepository<Reserv
             "AND state='P'", nativeQuery = true)
         //@Query("SELECT r.time FROM ReservationAvailableSlot r WHERE FUNCTION('DATE_FORMAT', r.date, '%Y-%m-%d') = CURRENT_DATE AND r.designerSeq = :designerSeq AND r.state = 'P'")
     List<String> findAvailableTimeByDesignerSeq(@Param("designerSeq") Integer designerSeq);
+
+    void deleteAllByDesignerSeqAndDate(int designerSeq, String date);
 }

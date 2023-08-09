@@ -216,4 +216,33 @@ public class DesignerDetailController {
 
         return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), response));
     }
+
+    //    @PutMapping("/time")
+//    public ResponseEntity<HttpResponseDto> updatePossibleReservationTime(@PathVariable("designer-seq") int designerSeq, @RequestBody RequestReservationPossibleDateAndTimeDto requestReservationPossibleDateAndTimeDto) {
+//
+//        boolean isSuccess = designerDetailService.updatePossibleReservationTime(designerSeq, requestReservationPossibleDateAndTimeDto);
+//
+//        if (isSuccess) {
+//            HttpResponseDto httpResponseDto = new HttpResponseDto(200, null);
+//            return ResponseEntity.ok(httpResponseDto);
+//        } else {
+//            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+//            return ResponseEntity.ok(httpResponseDto);
+//        }
+//    }
+
+    // 디자이너 상담 예약 가능 시간 수정
+    @PostMapping("/time/{designer-seq}")
+    public ResponseEntity<HttpResponseDto> updatePossibleRsvTime(@PathVariable("designer-seq") int designerSeq,
+                                                                 @RequestBody RequestUpdatePossibleRsvTime requestUpdatePossibleRsvTime){
+
+        try{
+            designerDetailService.updatePossibleRsvTime(designerSeq, requestUpdatePossibleRsvTime);
+        } catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), null));
+    }
 }
