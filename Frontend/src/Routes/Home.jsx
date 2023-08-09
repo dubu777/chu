@@ -8,6 +8,7 @@ import { useRecoilState } from 'recoil';
 import { accessTokenState } from '.././recoil';
 import { useQuery } from "react-query";
 import { fetchMain } from "../apis";
+import { BASE_URL } from '../apis/rootUrl';
 
 const Wrapper = styled.div`
   display: flex;
@@ -124,6 +125,9 @@ function Home() {
   const [token, setToken] = useRecoilState(accessTokenState);
   const { isLoading, data, isError } = useQuery(["noLogInMain"], fetchMain);
 
+  // const customerSeq = localStorage.getItem('userSeq')
+  // const { data1, isError1, isLoading1 } = useQuery(['RecommendPageData', customerSeq], () => getCustomerLogInData(customerSeq))
+
   if (isLoading) {
     return <div>Loading...{data}</div>;
   }
@@ -145,7 +149,7 @@ function Home() {
 					initial="nomal"
 					whileHover="hover">
           <ImgBox>
-            <ProfileImg src={"/img/opofol9.jpg"}></ProfileImg>
+            <ProfileImg src={`${BASE_URL}/designer-profile/${item.img}`}></ProfileImg>
           </ImgBox>
           <Name>{item.name}디자이너</Name>
         </ProfileBox>
