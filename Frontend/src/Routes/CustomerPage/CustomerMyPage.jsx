@@ -200,20 +200,50 @@ function CustomerMyPage(){
   }
   // 파일을 선택했을 때 호출되는 이벤트 핸들러
   // onChange
-  const handleFileChange=(e)=>{
-    e.preventDefault();
-    const formData = new FormData();
+  // const handleFileChange=(e)=>{
+  //   e.preventDefault();
+  //   const formData = new FormData();
     
-    if(e.target.files){
-      const uploadFile = e.target.files[0]
-      formData.append('img',uploadFile)
-      console.log(formData)
-      setFile(uploadFile)
-      console.log(uploadFile)
-      console.log('===useState===')
-      console.log(file)
-    }
-  };
+  //   if(e.target.files){
+  //     const uploadFile = e.target.files[0]
+  //     formData.append('img',uploadFile)
+  //     console.log(formData)
+  //     setFile(uploadFile)
+  //     console.log(uploadFile)
+  //     console.log('===useState===')
+  //     console.log(file)
+  //   }
+  // };
+
+    // 이미지 등록 - API 맞춰서 수정해야함
+    const handleFileChange = async(event) => {
+      const file = event.target.files[0];
+      const formData = new FormData();
+      formData.append("img", file);
+  
+      try {
+        // 이미지를 서버에 업로드하고 imgSeq를 받아옴
+        const response = await attachCustomerImage(customerSeq, formData);
+        setSelectedFile(`https://i9b111.q.ssafy.io/api/customer-profile/${file.name}`);
+        } catch (error) {
+          console.error(error);
+      }
+    };
+
+      // const handleSubmitImage = async(e) => {
+  //   e.preventDefault();
+  //   if (fileInputRef.current.files[0]) {
+  //     const formData = new FormData();
+  //     formData.append('img', fileInputRef.current.files[0]);
+  //     for (const keyValue of formData) console.log(keyValue);
+
+  //     try {
+  //       const file = await attachCustomerImage(customerSeq, formData);
+  //       console.log(file)
+  //     } catch(error){
+  //       console.log(error)
+  //     }}
+  //   };
 
   //통신 되면 열기
   if (isLoading) {
@@ -253,20 +283,6 @@ function CustomerMyPage(){
   //   }
   // };
 
-  const handleSubmitImage = async(e) => {
-    e.preventDefault();
-    if (fileInputRef.current.files[0]) {
-      const formData = new FormData();
-      formData.append('img', fileInputRef.current.files[0]);
-      for (const keyValue of formData) console.log(keyValue);
-
-      try {
-        const file = await attachCustomerImage(customerSeq, formData);
-        console.log(file)
-      } catch(error){
-        console.log(error)
-      }}
-    };
     //   try {
     //     const response = await axios.patch(`http://localhost:9090/api/customer/detail/img/${customerSeq}`, formData, {
     //       headers: {
@@ -310,7 +326,7 @@ function CustomerMyPage(){
                   // hasFile={selectedFile !== null} 
                 />
                 {/* 이미지 제출 버튼 */}
-                  <button onClick={handleSubmitImage}>사진 제출</button>
+                  {/* <button onClick={handleSubmitImage}>사진 제출</button> */}
               </div>
             </ImgBox>
             <InfoBox>
