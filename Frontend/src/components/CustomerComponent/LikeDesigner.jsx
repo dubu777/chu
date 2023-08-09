@@ -4,6 +4,8 @@ import { styled } from "styled-components";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useQuery, useQueryClient, useMutation } from "react-query";
+import { getLikeDesignerList, toggleLikeButton } from "../../apis";
 
 const Container = styled.div`
   display: flex;
@@ -14,7 +16,7 @@ const Container = styled.div`
 `;
 const Hr = styled.div`
   margin: 20px 0 20px 0;
-  border-bottom : 2px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
 `;
 const Wrap = styled.div`
   display: flex;
@@ -68,7 +70,7 @@ const HashTag = styled.span`
   margin-right: 5px;
   background-color: rgba(196, 192, 192, 0.5);
   border-radius: 5px;
-  margin-top:3px;
+  margin-top: 3px;
 `;
 const Icon = styled.img`
   width: 21px;
@@ -81,7 +83,7 @@ const ReservBox = styled(motion.div)`
   justify-content: center;
   align-items: center;
   border: 1px solid rgb(244, 153, 26);
-  border-radius:5px;
+  border-radius: 5px;
   margin-top: 10px;
 `;
 const Text = styled.span`
@@ -90,67 +92,105 @@ const Text = styled.span`
   text-align: center;
 `;
 const CostBox = styled.div`
-display: flex;
-justify-content: center;
-align-items: center;
-margin-top: 10px;
-margin-left: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  margin-left: 20px;
 `;
 const LikeBtn = styled.img`
   width: 27px;
   height: 27px;
   margin-right: 10px;
 `;
-function ReserveList() {
-  const hashTag = ["레이어드컷", "히피펌", "아이롱펌"]
-  const [liked, setLiked] = useState(false); // 좋아요 상태를 state로 관리
-  const handleLikeClick = () => {
-    setLiked((prevLiked) => !prevLiked); // 좋아요 상태를 토글
+const HeartBox = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 40px;
+  padding-left: 90px;
+`;
+function LikeDesigner() {
+  const customerSeq = localStorage.getItem("userSeq");
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+  //designerList를 키로 가진 query를 무효화 하여 새로운 데이터를 받아오게함
+  const mutation = useMutation(toggleLikeButton, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("likeDesigner");
+    },
+  });
+
+  const handleLikeClick = (designerSeq, currentLikeStatus) => {
+    const newLikeStatus = !currentLikeStatus;
+    mutation.mutate({ designerSeq, customerSeq, isLike: newLikeStatus });
   };
-  
+  const { data, isLoading, isError } = useQuery(
+    ["likeDesigner", customerSeq],
+    () => getLikeDesignerList(customerSeq)
+  );
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>An error occurred while fetching data.</div>;
+  }
   return (
-    <Container>
-      <Hr/>
-      <Wrap>
-      <Wrapper>
-        <Box>
-          <DesignerImg src="./icon/designerimg.png"/>
-        </Box>
-        <InfoBox>
-          <Name>재현 디자이너</Name>
-          <Intro>남자 펌, 아이롱펌 전문 디자이너 재현입니다.</Intro>
-          <Reviewer>방문자 리뷰 132</Reviewer>
-          <Box>
-            {
-              hashTag.map((tag) => (
-                <HashTag>#{tag}</HashTag>
-              ))
-            }
-          </Box>
-          <Box>
-            <ReservBox whileHover={{backgroundColor: "rgb(244,153,26)"}}>
-              <Icon src="./icon/reservBtn.png"/>
-              <Text>예약</Text>
-            </ReservBox>
-            <CostBox>
-              <Icon src="./icon/money.png"/>
-              <Text>10,000</Text>
-            </CostBox>
-          </Box>
-        </InfoBox>
-      </Wrapper>
-      <LikeBox>
-        {liked ? (
+    <>
+      {data &&
+        data.designerList &&
+        data.designerList.map((data) => (
+          <Container>
+            <Hr />
+            <Wrap>
+              <Wrapper>
+                <Box>
+                  <DesignerImg
+                    src="/icon/designerimg.png" 
+                    onClick={() => navigate(`/designerdetail/${data.designerSeq}`)}
+                  />
+                </Box>
+                <InfoBox>
+                  <Name
+                    onClick={() => navigate(`/designerdetail/${data.designerSeq}`)}
+                  >
+                    {data.designerName}
+                  </Name>
+                  <Intro>{data.introduction}</Intro>
+                  <Reviewer>방문자 리뷰 {data.reviewCnt}</Reviewer>
+                  <Box>
+                    {data.hairStyleLabel.map((tag) => (
+                      <HashTag>#{tag}</HashTag>
+                    ))}
+                  </Box>
+                  <Box>
+                    <ReservBox
+                      whileHover={{ backgroundColor: "rgb(244,153,26)" }}
+                    >
+                      <Icon src="/icon/reservBtn.png" />
+                      <Text>예약</Text>
+                    </ReservBox>
+                    <CostBox>
+                      <Icon src="/icon/money.png" />
+                      <Text>{data.cost}</Text>
+                    </CostBox>
+                  </Box>
+                </InfoBox>
+              </Wrapper>
+              <HeartBox>
+        {data.isLike ? (
           // 좋아요가 눌려있을 때 빨간색 하트 아이콘
-          <LikeBtn src="./icon/hearto.png" onClick={handleLikeClick}/>
+          <LikeBtn src="/icon/hearto.png" onClick={() => handleLikeClick(data.designerSeq, data.isLike)}/>
         ) : (
           // 좋아요가 눌려있지 않을 때 빈 하트 아이콘
-          <LikeBtn src="./icon/heartx.png" onClick={handleLikeClick}/>
+          <LikeBtn src="/icon/heartx.png" onClick={() => handleLikeClick(data.designerSeq, data.isLike)}/>
         )}
-
-      </LikeBox>
-      </Wrap>
-    </Container>
-  )
+        <Text>{data.likeCnt}</Text>
+        </HeartBox>
+            </Wrap>
+          </Container>
+        ))}
+    </>
+  );
 }
-export default ReserveList;
+export default LikeDesigner;

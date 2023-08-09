@@ -8,6 +8,7 @@ import { useRecoilState } from "recoil";
 import {listViewState} from "../../recoil/designer";
 import {listinfo, submitStyleFilter} from "../../apis/designer"
 import { async } from "q";
+import { useQuery } from "react-query";
 
 
 const Container = styled.div`
@@ -158,25 +159,12 @@ const SearchImg = styled.img`
 const SubmitBtn = styled.button`
 `;
 function ListView() {
-  const [data, setData] = useRecoilState(listViewState);
+  const customerSeq = localStorage.getItem('userSeq')
+  const { data, isError, isLoading } = useQuery(['designerList', customerSeq], () => listinfo(customerSeq))
   const [selectedStyle, setSelectedStyle] = useState([]);
   const [filterData, setFilterData] = useState();
   const sendData = filterData && filterData.designerListCnt ? filterData : data;
-  const seq = 2;
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await listinfo(seq);
-        setData(response);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-
-    fetchData(); // 페이지가 마운트될 때
-    }, []); // 마운트 시에만 실행
-
+  
   const toggleStyleType = (tag) => {
     const selectedTag = {
       'hairStyleSeq': tag.hairStyleSeq,
@@ -237,7 +225,7 @@ function ListView() {
       <>
       <Box>
         <SearchBox>
-          <SearchImg src="./icon/search.png"/>
+          <SearchImg src="/icon/search.png"/>
           <Input placeholder="Search" />
         </SearchBox>
       </Box>
