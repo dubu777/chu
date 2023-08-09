@@ -2,9 +2,8 @@ import { styled } from "styled-components";
 import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue, useRecoilCallback } from "recoil";
-import { loginState, useToggleLoginState, useIsLoggedIn } from "../../recoil/auth";
+import { accessTokenState, loginState, loginResultState, customerLogInDataState } from "../../recoil";
 import { useState } from "react";
-import { accessTokenState } from "../../recoil/auth";
 
 const Nav = styled(motion.nav)`
   display: flex;
@@ -18,10 +17,6 @@ const Nav = styled(motion.nav)`
   padding: 20px 60px;
   color: white;
   background-color: rgb(100, 93, 81);
-  /* font-family: 'Cormorant Garamond'; */
-  /* font-family: 'Pretendard-Regular'; */
-  /* font-family: "San Francisco"; */
-  /* font-family: 'NanumSquareNeo-Variable'; */
   font-family: "Sandol-B";    
   
 `;
@@ -84,14 +79,31 @@ const logoVariants = {
 function Header() {
   const navigate = useNavigate();
   const [isLogIn, setIsLogIn] = useRecoilState(loginState);
-    const [token, setToken] = useRecoilState(accessTokenState);
+  const [token, setToken] = useRecoilState(accessTokenState);
+  // 유저 정보 받아오는 Recoil. 수정 예정
+  const [loginResult, setLoginResult] = useRecoilState(loginResultState);
+  const [userData, setUserData] = useRecoilState(customerLogInDataState);
 
-    // 토큰 삭제를 위한 콜백 함수
-    const handleLogout = useRecoilCallback(({ snapshot }) => async () => {
-      // 토큰 삭제
-      setToken(null);
-      // 토큰 삭제 후 추가적으로 해야 할 작업이 있다면 이곳에 추가하세요.
-    });
+
+  //유저 시퀀스 저장
+  const UserSeq = isLogIn && localStorage.getItem("userType") === "customer" 
+  ? localStorage.getItem("userSeq")
+  : localStorage.getItem("userSeq")
+  // 유저 타입에 따른 마이페이지 router
+  const handleNavigation = () => {
+    if (localStorage.getItem("userType") === 'customer') {
+      const customerSeq = UserSeq
+      navigate(`/customermypage/${customerSeq}`);
+    } else if (localStorage.getItem("userType") === 'designer') {
+      const designerSep = UserSeq
+      navigate(`/designermypage/${designerSep}`);
+    };
+  }
+
+  // 로그 아웃 함수(토큰 삭제)
+  const handleLogout = useRecoilCallback(({ snapshot }) => async () => {
+    setToken(null);
+  });
   return (
     <Nav>
       <Col>
@@ -112,14 +124,6 @@ function Header() {
               >Home
             </Item>
           </Link>
-          {/* <Link to="designerdetail">
-            <Item 
-              variants={logoVariants}
-              whileHover="active"
-              initial="nomal"
-              >DesignerDetail
-            </Item>
-          </Link> */}
         </Items>
       </Col>
       <Col>
@@ -137,15 +141,13 @@ function Header() {
                 onClick={handleLogout}
                 >Log Out
               </Item>
-              <Link to="/customermypage">
-                <Item 
-                  variants={logoVariants}
-                  whileHover="active"
-                  initial="nomal"
-                  >My Page
-                </Item>
-              </Link>
-
+              <Item 
+                variants={logoVariants}
+                whileHover="active"
+                initial="nomal"
+                onClick={handleNavigation}
+                >My Page
+              </Item>
             </>
           : 
             <>

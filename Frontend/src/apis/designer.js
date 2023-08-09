@@ -1,5 +1,4 @@
 import axios from "axios";
-import { async } from "q";
 import { loginState } from "../recoil/auth";
 // 서버 url
 const BASE_URL = 'https://i9b111.q.ssafy.io/api';
@@ -27,13 +26,36 @@ export const getDesignerDetail = async (designerSeq, customerSeq) => {
   try {
     const response = await axios.get(`${BASE_URL}/designer/search/detail/${designerSeq}`, 
     { params: { customerSeq }});
-    console.log(">>>>>>>>>>>>", response.data.result)
     return response.data.result;
   } catch (error) {
     console.error('There was a problem with the axios operation:', error.message);
     throw error;
   }
 };
+// 디자이너 마이페이지
+export const getDesignerMyPage = async (designerSeq) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/designer/detail/mypage/${designerSeq}`);
+    return response.data.result;
+  } catch (error) {
+    console.error('디자이너 마이페이지 데이터 API 에러', error.message);
+    throw error;
+  }
+};
+
+// 디자이너 한 줄 소개글 수정
+export const updateIntroduction = async (designerSeq, introduction) => {
+  try{
+    console.log("소개글 데이터 되라",designerSeq,introduction);
+    const response = await axios.post(`${BASE_URL}/designer/detail/introduction/${designerSeq}`, { params : {
+      "introduction": introduction,
+    }});
+    return response.data;
+  } catch (error) {
+    throw new Error("소개글 데이터 못가져옴");
+  }
+};
+
 // 디자이너 리스트 뷰 스타일 필터 api
 export const submitStyleFilter = async (hairStyleSeqNumbers) => {
   try {
@@ -48,7 +70,7 @@ export const submitStyleFilter = async (hairStyleSeqNumbers) => {
     console.log(response.data.result);
     return response.data.result;
   } catch (error) {
-    throw new Error("데이터 못가져옴");
+    throw new Error("스타일 필터 데이터 못가져옴");
   }
 };
 

@@ -6,19 +6,16 @@ import ScheduleListImg from "../../components/CustomerComponent/ScheduleListImg"
 import ReserveList from "../../components/CustomerComponent/ReserveList";
 import LikeDesigner from "../../components/CustomerComponent/LikeDesigner";
 // import ProfileImg from "../../components/CustomerComponent/ProfileImg";
-import { Link } from "react-router-dom";
-import {formDataState} from "../../recoil/customer";
-import {attachCustomerImage} from "../../apis/customer";
+import { Link, useParams } from "react-router-dom";
+import {formDataState} from "../../recoil";
+import {attachCustomerImage, getCustomerMyPage} from "../../apis";
 import { useRecoilState } from "recoil";
-import swal from "sweetalert";
-import axios from 'axios';
-import { event } from "jquery";
+import { useQuery } from "react-query";
 
 const Container = styled.div`
 
 `;
 const InfoContainer = styled.div`
-  /* font-family: "Apple-B";   */
   font-family: "Blue-road";
 `;
 // 고정 프로필바
@@ -28,8 +25,6 @@ const InfoWrapper = styled.div`
 	width: 100%;
 	height: 270px;
 	background-color: #f8f1d9;
-  /* font-family: "Blue-road"; */
-  /* font-family: "Apple-B";   */
     
 `;
 const ImgBox = styled.div`
@@ -57,15 +52,11 @@ const HashTag = styled.button`
   padding: 2px 15px;
 `;
 const InfoBox = styled.div`
-  /* border: solid 2px;
-  border-color: #afadaa; */
   width: 30%;
   margin-top: 190px;
   margin-left: -120px;
 `;
 const ChangeBox = styled.div`
-  /* border: solid 2px;
-  border-color: #afadaa; */
   width: 30%;
   margin-top: 220px;
   text-align: right;
@@ -125,6 +116,15 @@ const Profile = styled.img`
 `;
 
 function CustomerMyPage(){
+
+  // 통신되면 열기
+  // const { customerSeq } = useParams();
+  // console.log("커스터머 시퀀스",customerSeq);
+  // const { data, isLoading, isError } = useQuery(
+  //   ["customerMyPage", customerSeq],
+  //   () => getCustomerMyPage(customerSeq)
+  // );
+  const customerSeq = 1
   const [data, setdata] = useState({
     "customerSeq" : 1,
         "name" : "김싸피",
@@ -184,15 +184,13 @@ function CustomerMyPage(){
                 "myReviewScore" : 4.9,
                 "reviewContent" : "옛날에 남긴 나의 한줄평",
             },
-        
         ]
   });
-
+  const [activeBtn, setActiveBtn] = useState('recent'); // 'recent' or 'designer'
   const fileInputRef = useRef(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const [file,setFile] = useState()
   // const [recodilFormData, setrecodilFormData] = useRecoilState(formDataState);
-  const seq = 2
   // 사진을 클릭하면 파일 선택 다이얼로그를 나타내는 함수
   const handleImageClick = () => {
     fileInputRef.current.click();
@@ -213,6 +211,16 @@ function CustomerMyPage(){
       console.log(file)
     }
   };
+
+  //통신 되면 열기
+  // if (isLoading) {
+  //   return <div>Loading...</div>;
+  // }
+
+  // if (isError) {
+  //   return <div>An error occurred while fetching data.</div>;
+  // }
+
     // const file = event.target.files[0];
     // // 파일 타입이 image를 포함하는지 확인 후 객체 생성
     // if (file && file.type.includes('image')) {
@@ -233,7 +241,7 @@ function CustomerMyPage(){
   //     formData.append("img", selectedFile);
   //     console.log("선택된 파일 접근")
   //   try {
-  //     const response = await attachImage(seq, formData);
+  //     const response = await attachImage(customerSeq, formData);
   //     console.log(response);
       
   //   } catch(error){
@@ -244,21 +252,20 @@ function CustomerMyPage(){
 
   const handleSubmitImage = async(e) => {
     e.preventDefault();
-    const seq =2;
     if (fileInputRef.current.files[0]) {
       const formData = new FormData();
       formData.append('img', fileInputRef.current.files[0]);
       for (const keyValue of formData) console.log(keyValue);
 
       try {
-        const file = await attachCustomerImage(seq, formData);
+        const file = await attachCustomerImage(customerSeq, formData);
         console.log(file)
       } catch(error){
         console.log(error)
       }}
     };
     //   try {
-    //     const response = await axios.patch(`http://localhost:9090/api/customer/detail/img/${seq}`, formData, {
+    //     const response = await axios.patch(`http://localhost:9090/api/customer/detail/img/${customerSeq}`, formData, {
     //       headers: {
     //         'Content-Type': 'multipart/form-data' // 필요한 경우 헤더 설정
     //       },
@@ -271,7 +278,7 @@ function CustomerMyPage(){
     //   }
     // }
   
-  const [activeBtn, setActiveBtn] = useState('recent'); // 'recent' or 'designer'
+
 
   const handleBtnClick = (btnType) => {
     setActiveBtn(btnType);

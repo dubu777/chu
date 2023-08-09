@@ -26,11 +26,20 @@ export const attachCustomerImage = async(seq, formData) => {
 
 
 // 고객 마이페이지 조회
-export const customerPage = async(seq)=> {
+export const getCustomerMyPage = async (customerSeq)=> {
     try {
-        const response = await axios.get(`${BASE_URL}/customer/detail/mypage/${seq}`, {
-            // params : {"customerSeq" : 1}
-        })
+        const response = await axios.get(`${BASE_URL}/customer/detail/mypage/${customerSeq}`)
+        return response.data.result
+    } catch(error) {
+        throw new Error('고객 마이페이지 API 요청 실패')
+    }
+
+};
+
+// 로그인시 유저 데이터 받아옴
+export const getCustomerLogInData = async (customerSeq) => {
+    try {
+        const response = await axios.get(`${BASE_URL}/customer/main/${customerSeq}`)
         return response.data.result
     } catch(error) {
         throw new Error('디자이너 리스트 조회 실패')

@@ -45,11 +45,11 @@ function App() {
         <Route path="complete" element={<Complete/>} />
         <Route path="designerdetail/:designerSeq" element={<DesignerDetail/>} />
         <Route path="worlducupimgupload" element={<WorldcupImgUpload/>} />
-        <Route path="customermypage" element={<CustomerMyPage/>} >
+        <Route path="customermypage/:customerSeq" element={<CustomerMyPage/>} >
           <Route path="result/:consultingSeq" element={<CustomerMyPage/>} />
         </Route>
         <Route path="editcustomerinfo" element={<EditCustomerInfo/>} />
-        <Route path="designermypage" element={<DesignerMyPage/>} />
+        <Route path="designermypage/:designerSeq" element={<DesignerMyPage/>} />
         <Route path="listview" element={<ListView/>} />
         <Route path="editdesignerinfo" element={<EditDesignerInfo/>} />
         <Route path="consultresultpage" element={<ConsultResultPage/>} />

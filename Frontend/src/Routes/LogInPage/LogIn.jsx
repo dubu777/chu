@@ -2,8 +2,8 @@ import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from 'recoil';
 import React, { useState } from 'react';
-import { customerlogIn, designerlogIn, login2 } from '../../apis/auth';
-import { accessTokenState, loginResultState, loginState } from '../../recoil/auth';
+import { customerlogIn, designerlogIn } from '../../apis/auth';
+import { accessTokenState, loginResultState } from '../../recoil/auth';
 
 const Container = styled.div`
 	background: url('./img/login.jpg');
@@ -104,7 +104,6 @@ function LogIn() {
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
 	const [loginResult, setLoginResult] = useRecoilState(loginResultState);
 	const navigate = useNavigate();
-
 const handleUserTypeChange = (event) => {
 	setUserType(event.target.value);
 };
@@ -116,6 +115,8 @@ const handleUserTypeChange = (event) => {
 				console.log(">>>>>>>>>>", result);
 				setLoginResult(result);
 				setAccessToken(result.token.accessToken);
+				localStorage.setItem('userSeq', result.userSeq.toString()); // 숫자를 문자열로 변환하여 저장
+				localStorage.setItem('userType', "customer");
 				navigate("/")
 				return;
 			} catch (error) {
@@ -125,9 +126,12 @@ const handleUserTypeChange = (event) => {
 		if (userType === "designer") {
 			try {
 				const result = await designerlogIn(username, password);
-				console.log(result);
+				console.log("리절트", result);
 				setLoginResult(result);
 				setAccessToken(result.token.accessToken);
+				console.log("시퀀스", result.userSeq);
+				localStorage.setItem('userSeq', result.userSeq.toString()); // 숫자를 문자열로 변환하여 저장
+				localStorage.setItem('userType', "designer");
 				navigate("/")
 				return;
 			} catch (error) {
@@ -135,7 +139,9 @@ const handleUserTypeChange = (event) => {
 			}
 		}
 	};
-	console.log(loginResult);
+	
+	// console.log(loginResult);
+	console.log("유저정보111 로컬스토리지",localStorage.getItem('userSeq'), localStorage.getItem('userType'));
 
 	return(
 		<Container>
