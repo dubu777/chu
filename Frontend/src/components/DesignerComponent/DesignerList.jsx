@@ -2,6 +2,7 @@ import { styled } from "styled-components";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { BASE_URL } from '../../apis/rootUrl'
 
 
 const Container = styled.div`
