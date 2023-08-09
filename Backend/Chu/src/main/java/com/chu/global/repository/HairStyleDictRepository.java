@@ -16,4 +16,6 @@ public interface HairStyleDictRepository extends JpaRepository<HairStyleDict, In
     @Query("SELECT hsd.seq FROM HairStyleDict hsd WHERE hsd.seq IN :my_style_tag AND hsd.hairStyleCategory.seq = :hair_style_category_seq")
     List<Integer> findByMyHairStyleCategorySeq(@Param("hair_style_category_seq") Integer categorySeq, @Param("my_style_tag") List<Integer> myHairTagSeqs);
 
+    List<HairStyleDict> findAll();
+
 }

@@ -11,8 +11,10 @@ import com.chu.customer.repository.CustomerRepository;
 import com.chu.designer.domain.Designer;
 import com.chu.designer.repository.DesignerRepository;
 import com.chu.global.domain.FaceDict;
+import com.chu.global.domain.HairConditionDict;
 import com.chu.global.domain.HairStyleDict;
 import com.chu.global.repository.FaceDictRepository;
+import com.chu.global.repository.HairConditionDictRepository;
 import com.chu.global.repository.HairStyleDictRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -42,6 +44,7 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
     private final FaceDictRepository faceDictRepository;
     private final ConsultingRepository consultingRepository;
     private final DesignerRepository designerRepository;
+    private final HairConditionDictRepository hairConditionDictRepository;
 
     @Override
     public String getSavedImgFilePath(Integer customerSeq, MultipartFile file) throws IOException {
@@ -224,6 +227,69 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
         response.setResponsePastConsultingDtoList(list9);
 
         return response;
+    }
+
+    @Override
+    public ResponseCustomerDetailInfoDto getCustomerUpdateDetailInfo(int customerSeq) {
+
+        ResponseCustomerDetailInfoDto response = new ResponseCustomerDetailInfoDto();
+
+        try{
+            Customer customer = customerRepository.getCustomerBySeq(customerSeq);
+
+            // 1) name setting
+            response.setName(customer.getName());
+
+
+            // 2) id setting
+            response.setId(customer.getId());
+
+
+            // 3) email setting
+            response.setEmail(customer.getEmail());
+
+
+            // 4) gender setting
+            response.setGender(customer.getGender());
+
+
+            // 5) faceDict setting
+            List<FaceDict> faceDictList = faceDictRepository.findAll();
+
+            response.setFaceDict(faceDictList);
+
+
+            // 6) myFace setting
+            response.setMyFace(customer.getFaceDict().getSeq());
+
+
+            // 7) hairConditionDict setting
+            List<HairConditionDict> hairConditionDictList = hairConditionDictRepository.findAll();
+
+            response.setHairConditionDict(hairConditionDictList);
+
+
+            // 8) myHairCondition setting
+            List<Integer> myList = new ArrayList<>();
+
+            List<CustomerHairCondition> list = customerHairConditionRepository.findAllByCustomerSeq(customerSeq);
+
+            for(CustomerHairCondition ch : list){
+                myList.add(ch.getHairConditionDict().getSeq());
+            }
+
+            response.setMyHairCondition(myList);
+
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return response;
+    }
+
+    @Override
+    public void putCustomerDetailInfo(int customerSeq, RequestCustomerDetailChangeDto requestCustomerDetailChangeDto) {
+        
     }
 
     /*
