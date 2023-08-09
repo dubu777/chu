@@ -438,7 +438,7 @@ class ViduRoom extends Component {
                 mySession.on('signal', (event) => {
                     const data = JSON.parse(event.data);
                     if (data.action === "customClick") {
-                        this.state.test = 2;
+                        this.setState({ test: 2 }); // setState를 사용하여 state를 변경
                     }
                 });
 
