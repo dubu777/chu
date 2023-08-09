@@ -138,7 +138,7 @@ function DesignerMyPage() {
   // console.log("마이페이지 시퀀스", designerSeq);
   const { data, isLoading, isError } = useQuery(
     ["designerMyPage", designerSeq],
-    () => getDesignerMyPage(designerSeq)
+    () => getDesignerMyPage(designerSeq) 
   );
   // console.log(data)
 
