@@ -287,7 +287,9 @@ class ViduRoom extends Component {
             isChat: false,
             test: 1
             // 타겟이미지들 넣기
+            // [ desinger1.png, designer2.png, ..., ]
             // 합성이미지들 넣기
+            // [ desinger1.png, designer2.png, ..., ]
             // 현재메인이미지 [0] 초기값
         };
 
@@ -346,6 +348,9 @@ class ViduRoom extends Component {
     //   }
 
     handleCustomClickEvent(index) {
+        // if(this.state.userType == 'designer'){
+
+        // }
         console.log(index);
         const payload = {
             action: "customClick",
@@ -615,7 +620,8 @@ class ViduRoom extends Component {
                             ) : null}
                             <RightBox>
                                 <ConsultBox>
-                                    {/* <img src={this.state.메인이미지} alt="" /> */}
+                                    <div>{this.state.test}</div>
+                                    {/* <img src=`https://i9b111.q.ssafy.io/${this.state.confusionImages[${this.state.test}.imgName]} alt="" /> */}
                                 </ConsultBox>
                                 <Hr></Hr>
                                 <ImageBox>
@@ -632,6 +638,7 @@ class ViduRoom extends Component {
 
                                     {/* <button onClick={this.handleCustomClickEvent}>Click me</button> */}
                                     {/* 저기 배열을 통신을 통해 가져온 타겟 이미지 배열로 변경 imgName -> img */}
+                                    {/* this.state.targetImages */}
                                     {['designerimg.png', 'designerimg.png', 'designerimg.png'].map((imgName, index) => (
                                         <Img
                                             key={index}
@@ -643,7 +650,7 @@ class ViduRoom extends Component {
                                             } // 여기에 원하는 로직 추가
                                         />
                                     ))}
-                                    <div>{this.state.test}</div>
+
                                 </ImageBox>
                             </RightBox>
                         </VideoContainer>
