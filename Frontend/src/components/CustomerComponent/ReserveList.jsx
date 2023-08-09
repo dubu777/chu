@@ -4,8 +4,8 @@ import { styled } from "styled-components";
 import { AnimatePresence, motion, useScroll } from "framer-motion";
 import { useMatch, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import axios from 'axios';
-import Modal from 'react-modal';
+import { useQuery } from "react-query";
+import { getCustomerMyPage } from "../../apis";
 
 const Container = styled.div`
   display: flex;
@@ -195,6 +195,12 @@ const ResultBtnVariants = {
   }
 }
 function ReserveList() {
+  const customerSeq = localStorage.getItem("userSeq")
+  console.log("커스터머 시퀀스",customerSeq);
+  const { data, isLoading, isError } = useQuery(
+    ["customerMyPage", customerSeq],
+    () => getCustomerMyPage(customerSeq)
+  );
   const {scrollY} = useScroll();
   const bigModalMatch = useMatch("customermypage/result/:consultingSeq");
   console.log(bigModalMatch)
@@ -205,92 +211,19 @@ function ReserveList() {
   const onOverlayClick = () => {
     navigate('/customermypage');
   };
-
-  const data = { 
-    "name" : "소희",
-    "consultingDate" : "07/11",
-    "designerSeq" : 1,
-    "consultingStartTime" : "22:00",
-    "hairStyle" : [
-        "레이어드컷",
-        "히피펌",
-        "검정색"
-    ],
-    "reviewResult" : "전형적인 계란형얼굴로 레이어트컷이 어울려요!",
-    "reviewImgs" : [
-        "img1.png",
-        "img2.png",
-        "img3.png"
-    ]
+  if (isLoading) {
+    return <div>Loading...</div>;
   }
 
-  const result = {
-    "customerSeq" : 1,
-    "name" : "김싸피",
-    "id" : "ssafy",
-    "email" : "ssafy@gmail.com",
-    "img" : "img1.png",
-    "hairCondition" : [
-        "얇은 모발",
-        "굵은 모발"
-    ],
-    "face" : "계란형",
-    "futureConsulting" : [
-        {
-            "consultingSeq" : 10,
-            "designerImg" : "img1.png",
-            "reviewScore" : 4.7,
-            "name" : "지윤",
-            "consultingDate" : "08.21",
-            "consultingDateDay" : "금",
-            "consultingStartTime" : "18:30",
-            "url" : " ",
-        },
-        {
-            "consultingSeq" : 11,
-            "designerImg" : "img2.png",
-            "reviewScore" : 4.8,
-            "name" : "민지",
-            "consultingDate" : "08.22",
-            "consultingDateDay" : "금",
-            "consultingStartTime" : "18:30",
-            "url" : " ",
-        }
-    
-    ],
-    "pastConsulting" : [
-        {
-            "consultingSeq" : 8,
-            "designerImg" : "icon/designerimg.png",
-            "allReviewScore" : 4.7,
-            "name" : "지윤",
-            "consultingDate" : "05.21",
-            "consultingDateDay" : "금",
-            "consultingStartTime" : "18:30",
-            "consultingEndTime" : "17:00",
-            "myReviewScore" : 4.9,
-            "reviewContent" : "최고에요!",
-        },
-        {
-            "consultingSeq" : 9,
-            "designerImg" : "icon/designerimg.png",
-            "allReviewScore" : 4.7,
-            "name" : "민지",
-            "consultingDate" : "06.21",
-            "consultingDateDay" : "금",
-            "consultingStartTime" : "18:30",
-            "consultingEndTime" : "17:00",
-            "myReviewScore" : 4.9,
-            "reviewContent" : "추천합니다!",
-        },
-      ]
-    }
+  if (isError) {
+    return <div>An error occurred while fetching data.</div>;
+  }
 
   return (
     <Container>
       <AnimatePresence>
       <Hr/>
-      {result.pastConsulting.map((data) => (
+      {data.responsePastConsultingDtoList.map((data) => (
         <BigWrap>
           <Wrap>
             <Wrapper>
@@ -298,7 +231,7 @@ function ReserveList() {
                 <ProfileBox>
                   <DesignerImg src={data.designerImg}/>
                   <StarBox>
-                    <Icon src="./icon/star.png"/>
+                    <Icon src="/icon/star.png"/>
                     <BoldText>{data.allReviewScore}</BoldText>
                   </StarBox>
                 </ProfileBox>
@@ -311,7 +244,7 @@ function ReserveList() {
                     </CommentBox>
                     <StarBox>
                       <Text>나의 평점 </Text>
-                      <Icon src="./icon/star.png"/>
+                      <Icon src="/icon/star.png"/>
                       <BoldText> {data.myReviewScore}</BoldText>
                     </StarBox>
                     </ReviewBox>

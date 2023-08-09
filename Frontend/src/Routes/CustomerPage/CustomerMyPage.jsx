@@ -71,8 +71,8 @@ const ChangeBtn = styled.button`
   
 `;
 const ReserveWrapper = styled.div`
-  border: solid 2px;
-  border-color: gray;
+  display: flex;
+  border: 2px solid gray;
   margin: 160px auto 50px auto;
   height: 150px;
   width: 60%;
@@ -117,75 +117,13 @@ const Profile = styled.img`
 
 function CustomerMyPage(){
 
-  // 통신되면 열기
-  // const { customerSeq } = useParams();
-  // console.log("커스터머 시퀀스",customerSeq);
-  // const { data, isLoading, isError } = useQuery(
-  //   ["customerMyPage", customerSeq],
-  //   () => getCustomerMyPage(customerSeq)
-  // );
-  const customerSeq = 1
-  const [data, setdata] = useState({
-    "customerSeq" : 1,
-        "name" : "김싸피",
-        "id" : "ssafy",
-        "email" : "ssafy@gmail.com",
-        "img" : "img1.png",
-        "hairCondition" : [
-            "얇은 모발",
-            "굵은 모발"
-        ],
-        "face" : "계란형",
-        "futureConsulting" : [
-            {
-                "consultingSeq" : 10,
-                "designerImg" : "img1.png",
-                "reviewScore" : 4.7,
-                "name" : "지윤",
-                "consultingDate" : "08.21",
-                "consultingDateDay" : "금",
-                "consultingStartTime" : "18:30",
-                "url" : " ",
-            },
-            {
-                "consultingSeq" : 11,
-                "designerImg" : "img2.png",
-                "reviewScore" : 4.8,
-                "name" : "민지",
-                "consultingDate" : "08.22",
-                "consultingDateDay" : "금",
-                "consultingStartTime" : "18:30",
-                "url" : " ",
-            }
-        
-        ],
-        "pastConsuting" : [
-            {
-                "consultingSeq" : 8,
-                "designerImg" : "img1.png",
-                "allReviewScore" : 4.7,
-                "name" : "지윤",
-                "consultingDate" : "05.21",
-                "consultingDateDay" : "금",
-                "consultingStartTime" : "18:30",
-                "consultingEndTime" : "17:00",
-                "myReviewScore" : 4.9,
-                "reviewContent" : "옛날에 남긴 나의 한줄평",
-            },
-            {
-                "consultingSeq" : 9,
-                "designerImg" : "img1.png",
-                "allReviewScore" : 4.7,
-                "name" : "민지",
-                "consultingDate" : "06.21",
-                "consultingDateDay" : "금",
-                "consultingStartTime" : "18:30",
-                "consultingEndTime" : "17:00",
-                "myReviewScore" : 4.9,
-                "reviewContent" : "옛날에 남긴 나의 한줄평",
-            },
-        ]
-  });
+  const { customerSeq } = useParams();
+  console.log("커스터머 시퀀스",customerSeq);
+  const { data, isLoading, isError } = useQuery(
+    ["customerMyPage", customerSeq],
+    () => getCustomerMyPage(customerSeq)
+  );
+
   const [activeBtn, setActiveBtn] = useState('recent'); // 'recent' or 'designer'
   const fileInputRef = useRef(null);
   const [selectedFile, setSelectedFile] = useState(null);
@@ -212,14 +150,13 @@ function CustomerMyPage(){
     }
   };
 
-  //통신 되면 열기
-  // if (isLoading) {
-  //   return <div>Loading...</div>;
-  // }
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
-  // if (isError) {
-  //   return <div>An error occurred while fetching data.</div>;
-  // }
+  if (isError) {
+    return <div>An error occurred while fetching data.</div>;
+  }
 
     // const file = event.target.files[0];
     // // 파일 타입이 image를 포함하는지 확인 후 객체 생성
@@ -301,7 +238,7 @@ function CustomerMyPage(){
                 {/* 프로필 사진 or 연산자는 앞의 피연산자 기준*/}
                 <Profile 
                   onClick={handleImageClick} 
-                  src={selectedFile || './icon/profile2.png'} 
+                  src={selectedFile || '/icon/profile2.png'} 
                   alt="Profile" 
                   hasFile={selectedFile !== null} 
                 />
@@ -316,7 +253,6 @@ function CustomerMyPage(){
             <HashTag key={index}> #{word} </HashTag>
             ))}
             </InfoBox>
-
             <ChangeBox>
               <ChangeBtn><Link to="/editcustomerinfo">회원 정보 변경</Link></ChangeBtn>
             </ChangeBox>
@@ -324,15 +260,8 @@ function CustomerMyPage(){
         </InfoContainer>
       {/* 예약 정보 확인하기 */}
         <ReserveWrapper>
-          <ImgBox>
             <ScheduleListImg />
-          </ImgBox>
-          <TextBox>
-          </TextBox>
-          <InfoBox>
-          </InfoBox>
         </ReserveWrapper>
-
 {/* 여기는 탭 작동 */}
         <Wrapper>
           <ClickBtn 

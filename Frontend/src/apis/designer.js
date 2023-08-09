@@ -1,8 +1,8 @@
 import axios from "axios";
 import { loginState } from "../recoil/auth";
 // 서버 url
-const BASE_URL = 'https://i9b111.q.ssafy.io/api';
-// const BASE_URL = "http://localhost:9090/api"
+// const BASE_URL = 'https://i9b111.q.ssafy.io/api';
+const BASE_URL = "http://localhost:9090/api"
 
 // 디자이너 리스트 뷰 api
 export const listinfo = async (seq) => {
