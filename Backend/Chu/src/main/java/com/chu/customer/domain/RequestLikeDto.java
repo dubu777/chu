@@ -4,12 +4,9 @@ import lombok.Data;
 
 @Data
 public class RequestLikeDto {
-    int customerSeq;
-    int designerSeq;
-    boolean isLike;
-//    {
-//        "customerSeq" : 1,
-//            "designerSeq" : 1,
-//            "isLike" : true
-//    }
+
+    Integer customerSeq;
+    Integer designerSeq;
+    Boolean isLike;
+
 }
