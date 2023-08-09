@@ -137,7 +137,7 @@ function DesignerMyPage() {
   const { designerSeq } = useParams();
   const { data, isLoading, isError } = useQuery(
     ["designerMyPage", designerSeq],
-    () => getDesignerMyPage(designerSeq)
+    () => getDesignerMyPage(designerSeq) 
   );
   const mutation = useMutation(updateIntroduction)
   const [activeBtn, setActiveBtn] = useState("calendar"); // 'recent' or 'designer'

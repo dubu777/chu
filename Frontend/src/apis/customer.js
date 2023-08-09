@@ -29,7 +29,7 @@ export const attachCustomerImage = async(seq, formData) => {
 export const getCustomerMyPage = async (customerSeq)=> {
     try {
         const response = await axios.get(`${BASE_URL}/customer/detail/mypage/${customerSeq}`)
-        return response.data.result
+        return response.data.result;
     } catch(error) {
         throw new Error('고객 마이페이지 API 요청 실패')
     }
