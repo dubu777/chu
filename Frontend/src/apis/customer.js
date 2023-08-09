@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // 서버 url
-const BASE_URL = 'https://i9b111.q.ssafy.io:9090/api';
+const BASE_URL = 'https://i9b111.q.ssafy.io/api';
 // const BASE_URL = "http://localhost:9090/api"
 
 // 이미지 첨부 api
@@ -26,11 +26,20 @@ export const attachCustomerImage = async(seq, formData) => {
 
 
 // 고객 마이페이지 조회
-export const customerPage = async(seq)=> {
+export const getCustomerMyPage = async (customerSeq)=> {
     try {
-        const response = await axios.get(`${BASE_URL}/customer/detail/mypage/${seq}`, {
-            // params : {"customerSeq" : 1}
-        })
+        const response = await axios.get(`${BASE_URL}/customer/detail/mypage/${customerSeq}`)
+        return response.data.result
+    } catch(error) {
+        throw new Error('고객 마이페이지 API 요청 실패')
+    }
+
+};
+
+// 로그인시 유저 데이터 받아옴
+export const getCustomerLogInData = async (customerSeq) => {
+    try {
+        const response = await axios.get(`${BASE_URL}/customer/main/${customerSeq}`)
         return response.data.result
     } catch(error) {
         throw new Error('디자이너 리스트 조회 실패')

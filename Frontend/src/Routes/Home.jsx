@@ -5,9 +5,9 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
 import { loginState, loginResultState } from ".././recoil/auth";
 import { useRecoilState } from 'recoil';
-import { accessTokenState } from '.././recoil/auth';
+import { accessTokenState } from '.././recoil';
 import { useQuery } from "react-query";
-import { fetchMain } from "../apis/common";
+import { fetchMain } from "../apis";
 
 const Wrapper = styled.div`
   display: flex;
@@ -106,16 +106,31 @@ const Name = styled.p`
 `;
 
 function Home() {
+  useEffect(() => {
+    const getPersistedAccessToken = () => {
+      const persistedData = localStorage.getItem('recoil-persist');
+      if (persistedData) {
+        const parsedData = JSON.parse(persistedData);
+        return parsedData.accessTokenState;
+      }
+      return null;
+    }
+
+    const token = getPersistedAccessToken();
+    console.log('Token from localStorage:', token);
+  }, []);
+
   const [loginResult, setLoginResult] = useRecoilState(loginResultState);
   const [token, setToken] = useRecoilState(accessTokenState);
   const { isLoading, data } = useQuery(["noLogInMain"], fetchMain);
-  console.log(loginResult);
+
   if (isLoading) {
     return <div>Loading...{data}</div>;
   }
+  
   return (
     <Wrapper>
-      <Main src="img/banner-lmg.png"></Main>
+      <Main src="/img/banner-lmg.png"></Main>
       <ImgText>Change Hair & U</ImgText>
       <MainWrapper>
       <Title>이주의 인기! Weekly Best Disigner ✨</Title>
@@ -128,7 +143,7 @@ function Home() {
 					initial="nomal"
 					whileHover="hover">
           <ImgBox>
-            <ProfileImg src={"./img/opofol9.jpg"}></ProfileImg>
+            <ProfileImg src={"/img/opofol9.jpg"}></ProfileImg>
           </ImgBox>
           <Name>{item.name}디자이너</Name>
         </ProfileBox>

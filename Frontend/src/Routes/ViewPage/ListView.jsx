@@ -162,9 +162,7 @@ function ListView() {
   const [selectedStyle, setSelectedStyle] = useState([]);
   const [filterData, setFilterData] = useState();
   const sendData = filterData && filterData.designerListCnt ? filterData : data;
-  // console.log('senddata는 : ', sendData)
-  const seq =2;
-  // const displayData = filterData || data;
+  const seq = 2;
 
   useEffect(() => {
     async function fetchData() {

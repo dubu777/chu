@@ -1,8 +1,9 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://i9b111.q.ssafy.io:9090/api';
+const BASE_URL = 'https://i9b111.q.ssafy.io/api';
 // const BASE_URL = 'http://localhost:9090/api';
 
+//고객 로그인
 export const customerlogIn = async (username, password) => {
   try {
     const response = await axios.post(`${BASE_URL}/customer/sign-in`, {
@@ -17,6 +18,7 @@ export const customerlogIn = async (username, password) => {
   }
 };
 
+// 디자이너 로그인
 export const designerlogIn = async (username, password) => {
   try {
     const response = await axios.post(`${BASE_URL}/designer/sign-in`, {
@@ -29,6 +31,7 @@ export const designerlogIn = async (username, password) => {
   }
 };
 
+// 고객 아이디 찾기
 export const customerFindId = async (username, useremail) => {
   try {
     const response = await axios.get(`${BASE_URL}/customer/find-id`, { params: {
@@ -42,6 +45,7 @@ export const customerFindId = async (username, useremail) => {
   }
 };
 
+// 디자이너 아이디 찾기
 export const designerFindId = async (username, useremail) => {
   try {
     const response = await axios.get(`${BASE_URL}/designer/find-id`, { params: {
@@ -54,6 +58,8 @@ export const designerFindId = async (username, useremail) => {
     throw new Error('아이디 찾기 실패');
   }
 };
+
+// 고객 회원가입 
 export const signUpRequest = async (customerData) => {
   console.log(customerData);
   try {
@@ -65,6 +71,7 @@ export const signUpRequest = async (customerData) => {
   }
 };
 
+// 디자이너 회원가입
 export const designerSignUpRequest = async (designerData) => {
   console.log(designerData);
   try {
@@ -76,7 +83,7 @@ export const designerSignUpRequest = async (designerData) => {
   }
 };
 
-// 아이디 중복 체크 요청 함수
+// 아이디 중복 체크
 export const checkDuplicateId = async (id, userType) => {
   try {
     const response = await axios.get(`${BASE_URL}/user/check-id`, { 
@@ -94,7 +101,7 @@ export const checkDuplicateId = async (id, userType) => {
   }
 };
 
-// 이메일 중복 체크 요청 함수
+// 이메일 중복 체크
 export const checkDuplicateEmail = async (email, userType) => {
   try {
     console.log(email);
