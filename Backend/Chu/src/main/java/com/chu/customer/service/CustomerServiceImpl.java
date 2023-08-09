@@ -231,7 +231,7 @@ public class CustomerServiceImpl implements CustomerService{
 
                 if(d.getImagePath() == null)
                     dto.setImg(null);
-                else dto.setImg(d.getImagePath().getSavedImgName());
+                else dto.setImg(d.getImagePath().getUploadImgName());
 
                 dto.setName(d.getName());
                 dto.setDesignerSeq(d.getSeq());
@@ -298,7 +298,7 @@ public class CustomerServiceImpl implements CustomerService{
                 // 헤어스타일 라벨 가져오기
                 HairStyleDict hairStyleDict= hairStyleDictRepository.findBySeq(seq);
 
-                list5.add(new FaceImageNameDto(seq, i.getImagePath().getSavedImgName(), hairStyleDict.getHairStyleLabel()));
+                list5.add(new FaceImageNameDto(seq, i.getImagePath().getUploadImgName(), hairStyleDict.getHairStyleLabel()));
             }
 
             responseCustomerLoginDetailDto.setStatisticsImg(list5);

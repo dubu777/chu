@@ -171,7 +171,7 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
             Designer designer = designerRepository.getDesignerBySeq(c.getDesigner().getSeq());
 
             if(designer.getImagePath() != null)
-                dto.setDesignerImg(designer.getImagePath().getSavedImgName());
+                dto.setDesignerImg(designer.getImagePath().getUploadImgName());
             else
                 dto.setDesignerImg(null);
             dto.setReviewScore(designer.getReviewScore());
@@ -199,7 +199,7 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
             Designer designer = designerRepository.getDesignerBySeq(c.getDesigner().getSeq());
 
             if(designer.getImagePath() != null)
-                dto.setDesignerImg(designer.getImagePath().getSavedImgName());
+                dto.setDesignerImg(designer.getImagePath().getUploadImgName());
             else
                 dto.setDesignerImg(null);
             dto.setAllReviewScore(designer.getReviewScore());

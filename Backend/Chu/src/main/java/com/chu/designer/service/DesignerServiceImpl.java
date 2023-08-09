@@ -147,7 +147,7 @@ public class DesignerServiceImpl implements DesignerService{
 
                 if(d.getImagePath() == null)
                     dto.setImg(null);
-                else dto.setImg(d.getImagePath().getSavedImgName());
+                else dto.setImg(d.getImagePath().getUploadImgName());
 
                 dto.setName(d.getName());
                 dto.setDesignerSeq(d.getSeq());
@@ -171,7 +171,7 @@ public class DesignerServiceImpl implements DesignerService{
                 // 헤어스타일 라벨 가져오기
                 HairStyleDict hairStyleDict= hairStyleDictRepository.findBySeq(seq);
 
-                list4.add(new FaceImageNameDto(seq, i.getImagePath().getSavedImgName(), hairStyleDict.getHairStyleLabel()));
+                list4.add(new FaceImageNameDto(seq, i.getImagePath().getUploadImgName(), hairStyleDict.getHairStyleLabel()));
             }
 
             responseDesignerLoginDetailDto.setStatisticsImg(list4);

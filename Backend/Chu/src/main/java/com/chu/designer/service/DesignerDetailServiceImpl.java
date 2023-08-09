@@ -152,7 +152,7 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
                 .cost(designer.getCost())
                 .email(designer.getEmail())
                 .introduction(designer.getIntroduction())
-                .img(designer.getImagePath() != null ? designer.getImagePath().getSavedImgName() : null)
+                .img(designer.getImagePath() != null ? designer.getImagePath().getUploadImgName() : null)
                 .hairStyleTag(designerTags)
                 .selectTime(possibleTimes)
                 .build();
