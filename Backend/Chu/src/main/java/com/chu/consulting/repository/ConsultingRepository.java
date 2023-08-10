@@ -27,6 +27,8 @@ public interface ConsultingRepository extends JpaRepository<Consulting, Integer>
     List<Consulting> findByDesignerSeq(Integer designerSeq);
     List<Consulting> findByCustomerSeq(Integer customerSeq);
 
+    Consulting findBySeq(Integer consultingSeq);
+
     // 상담 번호로 상담 정보 받아오기
     Consulting getConsultingBySeq(int seq);
 

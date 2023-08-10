@@ -12,6 +12,7 @@ import com.chu.designer.repository.DesignerRepository;
 import com.chu.designer.repository.ReservationAvailableSlotRepository;
 import com.chu.global.domain.FaceDict;
 import com.chu.global.domain.HairStyleDict;
+import com.chu.global.repository.HairStyleDictRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -41,6 +42,7 @@ public class ConsultingServiceImpl implements ConsultingService {
     private final CustomerRepository customerRepository;
     private final DesignerRepository designerRepository;
     private final ConsultingResultRepository consultingResultRepository;
+    private final HairStyleDictRepository hairStyleDictRepository;
 
     // 상담 예약하기
     @Override
@@ -201,6 +203,64 @@ public class ConsultingServiceImpl implements ConsultingService {
         } catch(Exception e){
             e.printStackTrace();
         }
+    }
+
+    // 상담 결과 조회하기
+    @Override
+    public ResponseConsultingResultDto getConsultingResult(int consultingSeq) {
+
+        ResponseConsultingResultDto  response = new ResponseConsultingResultDto();
+
+        try{
+            Consulting consulting = consultingRepository.findBySeq(consultingSeq);
+            int designerSeq = consulting.getDesigner().getSeq();
+            Designer designer = designerRepository.getDesignerBySeq(designerSeq);
+
+            response.setName(designer.getName());
+            response.setConsultingDate(consulting.getConsultingDate().getDate());
+            response.setConsultingStartTime(consulting.getConsultingDate().getTime());
+
+
+            // hairStyle setting
+            List<String> list = new ArrayList<>();
+            // consulting_result 테이블에서 상담 seq로 다 받아오기
+            List<ConsultingResult> result = consultingResultRepository.findAllByConsultingSeq(consultingSeq);
+            for(ConsultingResult cr : result){
+                // hairStyleDict 받아오기
+                HairStyleDict hd = hairStyleDictRepository.findBySeq(cr.getHairStyleDict().getSeq());
+
+                list.add(hd.getHairStyleLabel());
+            }
+            response.setHairStyle(list);
+
+
+            // reviewResult setting
+            response.setReviewResult(consulting.getResult());
+
+
+            // reviewImgs setting
+            List<String> reviewImgs = new ArrayList<>();
+            // consulting_virtual_img 테이블에서 consulting_seq로 다 받아오기
+            List<ConsultingVirtualImg> imgs = consultingVirtualImgRepository.findAllByConsultingSeq(consultingSeq);
+
+            for(ConsultingVirtualImg i : imgs){
+
+                // 상담 결과로 선택된 사진이면
+                if(i.getIsSelected()){
+
+                    // 이미지 이름 받아오기
+                    String img = i.getImagePath().getUploadImgName();
+
+                    reviewImgs.add(img);
+                }
+            }
+
+            response.setReviewImgs(reviewImgs);
+
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+        return response;
     }
 
 
