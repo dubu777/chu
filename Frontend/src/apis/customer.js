@@ -8,7 +8,7 @@ const BASE_URL = 'https://i9b111.q.ssafy.io/api';
 export const attachCustomerImage = async (seq, formData) => {
   try {
     console.log("try문 진입");
-    const response = await axios.patch(
+    const response = await axios.post(
       `${BASE_URL}/customer/detail/img/${seq}`,
       formData,
       {

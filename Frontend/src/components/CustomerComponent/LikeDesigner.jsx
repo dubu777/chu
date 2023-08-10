@@ -147,7 +147,8 @@ function LikeDesigner() {
               <Wrapper>
                 <Box>
                   <DesignerImg
-                    src="/icon/designerimg.png" 
+                    // src="/icon/designerimg.png" 
+                    src= {`https://i9b111.q.ssafy.io/api/designer-profile/${data.designerImg}}`}
                     onClick={() => navigate(`/designerdetail/${data.designerSeq}`)}
                   />
                 </Box>

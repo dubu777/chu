@@ -150,7 +150,7 @@ function CustomerMyPage(){
   //   const formData = new FormData();
     
   //   if(e.target.files){
-  //     const uploadFile = e.target.files[0]
+  //     const uploadFile = e.target.files[0] 
   //     formData.append('img',uploadFile)
   //     console.log(formData)
   //     setFile(uploadFile)
