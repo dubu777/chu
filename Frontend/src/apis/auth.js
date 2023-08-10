@@ -3,7 +3,7 @@ import axios from 'axios';
 const BASE_URL = 'https://i9b111.q.ssafy.io/api';
 // const BASE_URL = 'http://localhost:9090/api';
 
-//고객 로그인
+//고객 로그인 
 export const customerlogIn = async (username, password) => {
   try {
     const response = await axios.post(`${BASE_URL}/customer/sign-in`, {
@@ -98,10 +98,11 @@ export const signUpRequest = async (customerData) => {
 };
 
 // 디자이너 회원가입
-export const designerSignUpRequest = async (designerData) => {
+export const designerSignUpRequest = async (designerData, formdata) => {
   console.log(designerData);
+  console.log(formdata);
   try {
-    const response = await axios.post(`${BASE_URL}/designer/sign-up`, designerData);
+    const response = await axios.post(`${BASE_URL}/designer/sign-up`, designerData, formdata);
     console.log(response.data);
     return response.data;
   } catch (error) {

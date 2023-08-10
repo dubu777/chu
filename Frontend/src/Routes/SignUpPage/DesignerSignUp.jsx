@@ -10,6 +10,7 @@ import {
   checkDuplicateId,
   checkDuplicateEmail,
 } from "../../apis/auth";
+import { BASE_URL } from "../../apis/rootUrl";
 
 const Container = styled.div`
   text-align: center;
@@ -209,6 +210,10 @@ function DesignerSignUp() {
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
   const [selectedFile, setSelectedFile] = useState(null);
+  const formData = new FormData();
+  useEffect(() => {
+    setSelectedFile("profile2.png");
+  }, []);
 
   const handleImageClick = () => {
     fileInputRef.current.click();
@@ -226,6 +231,8 @@ function DesignerSignUp() {
     } else {
       swal("⚠️ Image 파일 형식을 선택해주세요 :)");
     }
+
+    formData.append("img", file);
   }
   const {
     register,
@@ -299,7 +306,7 @@ function DesignerSignUp() {
       return;
     }
   };
-  const onSubmit = async (formData) => {
+  const onSubmit = async (dd) => {
     if (isIdAvailable || isEmailAvailable) return;
     
     // if (!selectedFile) {
@@ -311,8 +318,8 @@ function DesignerSignUp() {
     // }
     try {
       // 회원가입 API 요청
-      console.log("formDATA: ", formData);
-      const signUpResult = await designerSignUpRequest(designerData, "deisgner");
+      console.log("formDATA: ", dd);
+      const signUpResult = await designerSignUpRequest(designerData, formData, "deisgner");
       console.log("Sign-up success:", signUpResult);
       swal("Success", "회원가입이 완료되었습니다.", "success");
       navigate("/login");
@@ -343,9 +350,11 @@ function DesignerSignUp() {
                   onChange={handleFileChange}
                 />
                 <Profile
-                  src={selectedFile || "./icon/designerr.png"}
+                src={selectedFile}
+                  // src={selectedFile || "./icon/designerr.png"}
+                  // src={`${BASE_URL}/designer-profile/${selectedFile}`}
                   alt="Profile"
-                  hasFile={selectedFile !== null}
+                  // hasFile={selectedFile !== null}
                 />
                 <ClickBox>
                   <Btn onClick={handleImageClick}>프로필 이미지 첨부</Btn>
