@@ -11,6 +11,8 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
+import { BASE_URL } from "../../apis/rootUrl";
+
 const Container = styled.div`
   display: flex;
   justify-content: center;
@@ -472,7 +474,8 @@ function Reservation() {
                 {imgData.designerPortfolio.map((item, index) => (
                   <PofolImg
                     key={index}
-                    src={item}
+                    // src={item}
+                    src={`${BASE_URL}/portfolio/${item}`}
                     variants={pofolVariants}
                     initial="nomal"
                     whileHover="hover"
@@ -490,7 +493,7 @@ function Reservation() {
                 {imgData.randomPortfolio.map((item, index) => (
                   <PofolImg
                     key={index}
-                    src={item}
+                    src={`${BASE_URL}/portfolio/${item}`}
                     variants={pofolVariants}
                     initial="nomal"
                     whileHover="hover"

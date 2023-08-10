@@ -379,7 +379,8 @@ function DesignerDetail() {
               {OPofolImgs.map((item, index) => (
                 <PofolImg
                   key={index}
-                  src={item}
+                  // src={item}
+                  src={`${BASE_URL}/portfolio/${item}`}
                   variants={pofolVariants}
                   initial="nomal"
                   whileHover="hover"
