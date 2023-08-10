@@ -51,7 +51,7 @@ function App() {
         <Route path="editcustomerinfo/:customerSeq" element={<EditCustomerInfo/>} />
         <Route path="designermypage/:designerSeq" element={<DesignerMyPage/>} />
         <Route path="listview" element={<ListView/>} />
-        <Route path="editdesignerinfo" element={<EditDesignerInfo/>} />
+        <Route path="editdesignerinfo/:designerSeq" element={<EditDesignerInfo/>} />
         <Route path="consultresultpage" element={<ConsultResultPage/>} />
         <Route path="reservation" element={<Reservation/>} />
         <Route path="likedesigner" element={<LikeDesigner/>} />

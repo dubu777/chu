@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import React, {useState, useEffect} from "react";
 import swal from "sweetalert";
-import SignUpInput from "../../components/SignUpComponent/SignUpInput";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
