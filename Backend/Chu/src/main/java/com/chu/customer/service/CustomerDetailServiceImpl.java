@@ -88,7 +88,7 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
         log.info("new File Name: "+ newFileName);
 
         // 저장
-        customer.getImagePath().setUploadImgName(fileName);
+        customer.getImagePath().setUploadImgName(newFileName);
         customer.getImagePath().setSavedImgName(fileName);
 
         return true;

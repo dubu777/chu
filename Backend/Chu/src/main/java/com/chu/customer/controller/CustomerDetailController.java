@@ -114,27 +114,22 @@ public class CustomerDetailController {
     //@GetMapping("/mypage/{fileName}")
 
 
-    @PatchMapping("/img/{customer_seq}")
+    @PostMapping("/img/{customer_seq}")
     public ResponseEntity<HttpResponseDto> patchImg(@PathVariable("customer_seq") int customerSeq, @RequestPart("img") MultipartFile file) throws IOException {
-
-        // 여기서 디비에 폴더경로 가져오기, 실제 파일 서버 저장 함수
-        String filePath = customerDetailService.getSavedImgFilePath(customerSeq, file);
 
         // 여기서 디비에 실제 파일 이름를 가져오는거
         String uploadFileName = designerDetailService.getUploadImgFilePath(file);
-
-        // 여기가 현재 무조건 true를 반환함.
-        // 내 아이디를 가지고 가서 변경 감지 -> imgPath를 저장파일명에 업데이트한다
-        boolean isSuccess = customerDetailService.patchImage(customerSeq, uploadFileName);
-
-        if (isSuccess) {
-            HttpResponseDto httpResponseDto = new HttpResponseDto(200, uploadFileName);
-            return ResponseEntity.ok(httpResponseDto);
-        }
-        else{
+        try{
+            // 여기서 디비에 폴더경로 가져오기, 실제 파일 서버 저장 함수
+            String filePath = customerDetailService.getSavedImgFilePath(customerSeq, file);
+            customerDetailService.patchImage(customerSeq, uploadFileName);
+        } catch (Exception e){
+            e.printStackTrace();
             HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
             return ResponseEntity.ok(httpResponseDto);
         }
+        HttpResponseDto httpResponseDto = new HttpResponseDto(200, uploadFileName);
+        return ResponseEntity.ok(httpResponseDto);
     }
 
 }

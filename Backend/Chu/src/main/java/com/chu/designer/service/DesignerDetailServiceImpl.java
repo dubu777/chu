@@ -115,8 +115,10 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
         // 디자이너 정보 가져오기
         Designer designer = designerRepository.getDesignerBySeq(designerSeq);
         ImagePath imagePath = new ImagePath();
-        imagePath.setSavedImgName(img);
-        imagePath.setUploadImgName(uploadName);
+        imagePath.setSavedImgName(uploadName);
+
+        String newFileName = designerSeq + "_" + uploadName;
+        imagePath.setUploadImgName(newFileName);
 
         DesignerPortfolio designerPortfolio = new DesignerPortfolio(designer, imagePath);
         designerPortfolio.setCreatedDate(LocalDateTime.now());
