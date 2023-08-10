@@ -333,6 +333,41 @@ public class ConsultingServiceImpl implements ConsultingService {
             response.setUrl(consulting.getUrl());
 
 
+            // targetHair setting
+            List<String> targetHair = new ArrayList<>();
+
+            // 상담 타겟 이미지 정보 리스트
+            List<ConsultingTargetInfo> targetInfos = consultingTargetInfoRepository.findAllByConsultingSeq(consultingSeq);
+
+            for(ConsultingTargetInfo info : targetInfos){
+
+                // 포트폴리오 사진 seq 구하기
+                int portfolioSeq = info.getDesignerPortfolio().getSeq();
+
+                // 포트폴리오 사진 seq로 타겟 이미지 이름(upload img name) 구하기
+                DesignerPortfolio portfolio= designerPortfolioRepository.findBySeq(portfolioSeq);
+                String uploadName = portfolio.getImagePath().getUploadImgName();
+
+                targetHair.add(uploadName);
+            }
+
+            response.setTargetHair(targetHair);
+
+
+            // confusionHair setting
+            List<String> confusionHair = new ArrayList<>();
+
+            // consultingSeq로 고객 상담 합성 사진 가져오기
+            List<ConsultingVirtualImg> virtualImgs = consultingVirtualImgRepository.findAllByConsultingSeq(consultingSeq);
+
+            for(ConsultingVirtualImg virtualImg : virtualImgs){
+
+                String uploadName = virtualImg.getImagePath().getUploadImgName();
+
+                confusionHair.add(uploadName);
+            }
+
+            response.setConfusionHair(confusionHair);
 
         } catch(Exception e){
             e.printStackTrace();
