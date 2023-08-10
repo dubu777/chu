@@ -268,7 +268,7 @@ function AllReserveList(){
           <Box>상담 입장</Box>
         </TitleBox>
       <Wrapper>
-      {data.map((item) => (
+      {data.result.map((item) => (
                 <ReserveBox key={item.consultingSeq}>
                       <Box>
                         <CustomerImg src="./icon/user.png"/>
