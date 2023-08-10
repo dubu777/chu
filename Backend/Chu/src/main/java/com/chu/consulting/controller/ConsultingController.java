@@ -118,7 +118,7 @@ public class ConsultingController {
         ResponseConsultingResultDto response = new ResponseConsultingResultDto();
 
         try{
-
+            response = consultingService.getConsultingResult(consultingSeq);
         } catch (Exception e){
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));
