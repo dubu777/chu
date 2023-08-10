@@ -117,8 +117,8 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
         ImagePath imagePath = new ImagePath();
         imagePath.setSavedImgName(uploadName);
 
-        String newFileName = designerSeq + "_" + uploadName;
-        imagePath.setUploadImgName(newFileName);
+//        String newFileName = designerSeq + "_" + uploadName;
+        imagePath.setUploadImgName(uploadName);
 
         DesignerPortfolio designerPortfolio = new DesignerPortfolio(designer, imagePath);
         designerPortfolio.setCreatedDate(LocalDateTime.now());

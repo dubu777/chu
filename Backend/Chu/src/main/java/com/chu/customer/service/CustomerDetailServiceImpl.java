@@ -85,11 +85,11 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
         Customer customer = customerDetailRepository.getById(customerSeq);
 
         // fileName 고유하게 변경
-        String newFileName = customer.getSeq() + fileName;
-        log.info("new File Name: "+ newFileName);
+//        String newFileName = customer.getSeq() + fileName;
+//        log.info("new File Name: "+ newFileName);
 
         ImagePath imagePath = new ImagePath();
-        imagePath.setUploadImgName(newFileName);
+        imagePath.setUploadImgName(fileName);
         imagePath.setSavedImgName(fileName);
 
         customer.setImagePath(imagePath);

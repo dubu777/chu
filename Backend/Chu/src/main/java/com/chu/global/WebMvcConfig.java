@@ -29,7 +29,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         // 3. 이 방법이 맞나 의구심이 너무 든다.
         System.out.println(uploadImagesPath);   //     /chu/upload/images/customer/
         registry.addResourceHandler("/customer-profile/**")       //url패턴 설정
-                .addResourceLocations("file:///" + uploadImagesPath)
+                .addResourceLocations("file:///" + "/chu/upload/images/customer/")
                 .setCachePeriod(3600)
                 .resourceChain(true)
                 .addResolver(new PathResourceResolver());
