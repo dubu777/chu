@@ -13,8 +13,6 @@ import java.util.Map;
 public class RequestDesignerInfoUpdateDto {
 
     // 디자이너 정보
-    private String name;
-    private String email;
     private Integer cost;
     private String pwd;
     private String salonName;
