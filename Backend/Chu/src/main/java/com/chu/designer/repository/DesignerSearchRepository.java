@@ -1,14 +1,10 @@
 package com.chu.designer.repository;
 
 import com.chu.designer.domain.Designer;
-import com.chu.designer.domain.ResponseDesignerDetailInfoDto;
-import com.chu.designer.domain.ResponseDesignerSearchAreaDto;
-import com.chu.designer.domain.DesignerSearchDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 

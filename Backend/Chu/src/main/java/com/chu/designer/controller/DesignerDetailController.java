@@ -1,5 +1,6 @@
 package com.chu.designer.controller;
 
+import com.chu.consulting.domain.ResponseConsultingDto;
 import com.chu.designer.domain.*;
 import com.chu.designer.service.DesignerDetailService;
 import com.chu.global.domain.HttpResponseDto;
@@ -7,6 +8,7 @@ import com.chu.global.domain.ImageDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -202,5 +204,50 @@ public class DesignerDetailController {
         }
         HttpResponseDto httpResponseDto = new HttpResponseDto(200, null);
         return ResponseEntity.ok(httpResponseDto);
+    }
+
+    // 디자이너 예약 목록 조회
+    @GetMapping("/reservation-list/{designer-seq}")
+    public ResponseEntity<HttpResponseDto> getReservationList(@PathVariable("designer-seq") int designerSeq){
+
+        List<ResponseConsultingDto> response = null;
+
+        try{
+            response = designerDetailService.getReservationList(designerSeq);
+        } catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), response));
+    }
+
+    //    @PutMapping("/time")
+//    public ResponseEntity<HttpResponseDto> updatePossibleReservationTime(@PathVariable("designer-seq") int designerSeq, @RequestBody RequestReservationPossibleDateAndTimeDto requestReservationPossibleDateAndTimeDto) {
+//
+//        boolean isSuccess = designerDetailService.updatePossibleReservationTime(designerSeq, requestReservationPossibleDateAndTimeDto);
+//
+//        if (isSuccess) {
+//            HttpResponseDto httpResponseDto = new HttpResponseDto(200, null);
+//            return ResponseEntity.ok(httpResponseDto);
+//        } else {
+//            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+//            return ResponseEntity.ok(httpResponseDto);
+//        }
+//    }
+
+    // 디자이너 상담 예약 가능 시간 수정
+    @PostMapping("/time/{designer-seq}")
+    public ResponseEntity<HttpResponseDto> updatePossibleRsvTime(@PathVariable("designer-seq") int designerSeq,
+                                                                 @RequestBody RequestUpdatePossibleRsvTime requestUpdatePossibleRsvTime){
+
+        try{
+            designerDetailService.updatePossibleRsvTime(designerSeq, requestUpdatePossibleRsvTime);
+        } catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), null));
     }
 }

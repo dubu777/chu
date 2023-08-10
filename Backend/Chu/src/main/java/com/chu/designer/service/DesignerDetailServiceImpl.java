@@ -1,7 +1,14 @@
 package com.chu.designer.service;
 
+import com.chu.consulting.domain.Consulting;
+import com.chu.consulting.domain.ConsultingVirtualImg;
 import com.chu.consulting.domain.ResponseConsultingDto;
+import com.chu.consulting.repository.ConsultingRepository;
+import com.chu.consulting.repository.ConsultingVirtualImgRepository;
 import com.chu.customer.domain.Customer;
+import com.chu.customer.domain.CustomerHairCondition;
+import com.chu.customer.repository.CustomerHairConditionRepository;
+import com.chu.customer.repository.CustomerRepository;
 import com.chu.designer.domain.*;
 import com.chu.designer.repository.DesignerRepository;
 import com.chu.designer.repository.ReservationAvailableSlotRepository;
@@ -9,6 +16,7 @@ import com.chu.global.repository.DesignerTagInfoRepository;
 import com.chu.designer.repository.DesignerDetailRepository;
 import com.chu.designer.repository.DesignerRepository;
 import com.chu.global.domain.*;
+import com.chu.global.repository.FaceDictRepository;
 import com.chu.global.repository.HairStyleDictRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,6 +47,11 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
     private final ReservationAvailableSlotRepository reservationAvailableSlotRepository;
     private final HairStyleDictRepository hairStyleDictRepository;
     private final PasswordEncoder bCryptPasswordEncoder;
+    private final ConsultingRepository consultingRepository;
+    private final CustomerRepository customerRepository;
+    private final FaceDictRepository faceDictRepository;
+    private final CustomerHairConditionRepository customerHairConditionRepository;
+    private final ConsultingVirtualImgRepository consultingVirtualImgRepository;
 
 
     @Override
@@ -250,6 +263,7 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
                 DesignerTagInfo dti = new DesignerTagInfo();
                 dti.setDesigner(designer);
 
+                dti.setCreatedTime(LocalDateTime.now());
                 HairStyleDict hairStyleDict = hairStyleDictRepository.findBySeq(tagSeq);
                 dti.setHairStyleDict(hairStyleDict);
 
@@ -260,6 +274,104 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
         }
         return true;
 
+    }
+
+    @Override
+    @Transactional
+    public void updatePossibleRsvTime(int designerSeq, RequestUpdatePossibleRsvTime requestUpdatePossibleRsvTime) {
+
+        try{
+            List<RsvDateAndTimes> list = requestUpdatePossibleRsvTime.getDateAndTimes();
+
+            for(RsvDateAndTimes dat : list){
+
+                String date = dat.getDate();
+
+                // reservation_available_slot 테이블에서 기존 날짜 삭제하기
+                reservationAvailableSlotRepository.deleteAllByDesignerSeqAndDate(designerSeq, date);
+
+                // 새로운 날짜 추가하기
+                List<String> times = dat.getTimes();
+
+                for(String time : times){
+                    ReservationAvailableSlot dto = new ReservationAvailableSlot();
+
+                    dto.setDate(date);
+                    dto.setTime(time);
+                    dto.setState('P');
+                    dto.setCreatedDate(LocalDateTime.now());
+
+                    Designer d = designerRepository.getDesignerBySeq(designerSeq);
+                    dto.setDesigner(d);
+
+                    reservationAvailableSlotRepository.save(dto);
+                }
+
+            }
+
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public List<ResponseConsultingDto> getReservationList(int designerSeq) {
+
+        List<ResponseConsultingDto> response = new ArrayList<>();
+
+        List<Consulting> consultingList =consultingRepository.findByDesignerSeq(designerSeq);
+
+        for(Consulting c : consultingList){
+            ResponseConsultingDto dto = new ResponseConsultingDto();
+
+            dto.setConsultingSeq(c.getSeq());
+            dto.setConsultingDate(c.getConsultingDate().getDate());
+            dto.setConsultingMemo(c.getMemo());
+            dto.setOriginImg(c.getImagePath().getUploadImgName());
+
+            Customer customer = customerRepository.getCustomerBySeq(c.getCustomer().getSeq());
+
+            dto.setName(customer.getName());
+            dto.setGender(customer.getGender());
+
+            FaceDict faceDict = faceDictRepository.findBySeq(customer.getFaceDict().getSeq());
+
+            dto.setFaceLabel(faceDict.getFaceLabel());
+
+
+            // hair condition setting
+            List<String> hairCondition = new ArrayList<>();
+
+            List<CustomerHairCondition> chc = customerHairConditionRepository.findAllByCustomerSeq(customer.getSeq());
+            for(CustomerHairCondition customerHairCondition : chc){
+                hairCondition.add(customerHairCondition.getHairConditionDict().getLabel());
+            }
+
+            dto.setHairCondition(hairCondition);
+
+
+            // virtualImg setting
+            List<ConsultingVirtualImg> consultingVirtualImgs = new ArrayList<>();
+            consultingVirtualImgs = consultingVirtualImgRepository.findAllByConsultingSeq(c.getSeq());
+
+            List<String> virtualImg = new ArrayList<>();
+
+            for(ConsultingVirtualImg cv : consultingVirtualImgs){
+                virtualImg.add(cv.getImagePath().getSavedImgName());
+            }
+
+            dto.setVirtualImg(virtualImg);
+
+
+            // time setting
+            dto.setTime(c.getConsultingDate().getTime());
+
+
+
+            response.add(dto);
+        }
+
+        return response;
     }
 //
 //    @Override
