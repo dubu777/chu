@@ -517,7 +517,9 @@ function Reservation() {
                       exit="exit"
                       onClick={() => handleImageClick(item)}
                     >
-                      <SImg src={item} />
+                      {/* 수정 필요 코드 */}
+                      {/* <SImg src={item} /> */}
+                      <SImg src={`${BASE_URL}/portfolio/${item}`} />
                     </SImgBox>
                   ))}
                 </AnimatePresence>
