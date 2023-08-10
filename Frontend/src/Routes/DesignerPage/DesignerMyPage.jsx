@@ -244,7 +244,7 @@ function DesignerMyPage() {
               // hasFile={selectedFile !== null}
             />
             {/* 이미지 제출 버튼 */}
-            <button onClick={handleSubmitImage}>사진 제출</button>
+            {/* <button onClick={handleSubmitImage}>사진 제출</button> */}
           </div>
         </ImgBox>
 
