@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface ConsultingService {
     // 상담 참여
-    String participantConsulting(int consultingSeq);
+    ResponseParticipantConsulting participantConsulting(int consultingSeq);
 
     // 상담 예약하기
     void postConsulting(Consulting consulting);

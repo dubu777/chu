@@ -108,12 +108,14 @@ public class CustomerServiceImpl implements CustomerService{
     @Override
     @Transactional
     public void changePwd(RequestCustomerChangePwdDto param) {
-        Customer c = new Customer();
-        c.setPwd(param.getPwd());
-        c.hashPassword(bCryptPasswordEncoder);
-        String pwd = c.getPwd();
+        if(param.getPwd() != null){
+            Customer c = new Customer();
+            c.setPwd(param.getPwd());
+            c.hashPassword(bCryptPasswordEncoder);
+            String pwd = c.getPwd();
 
-        customerRepository.changePwd(param.getCustomerSeq(), pwd);
+            customerRepository.changePwd(param.getCustomerSeq(), pwd);
+        }
     }
 
     // 고객 알림 조회
