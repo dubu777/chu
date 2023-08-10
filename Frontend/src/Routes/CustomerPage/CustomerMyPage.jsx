@@ -88,8 +88,10 @@ const Wrapper = styled.div`
   width: 60%; 
   margin: 30px auto 10px auto;
 `;
-
-const TextBox = styled.div`
+const FaceBox = styled.div`
+  
+`;
+const FaceImg = styled.img`
   
 `;
 
@@ -121,7 +123,6 @@ const Profile = styled.img`
 `;
 
 function CustomerMyPage(){
-
   // 통신되면 열기
   const { customerSeq } = useParams();
   // const customerSeq = 6;
@@ -280,8 +281,8 @@ function CustomerMyPage(){
               <Text>{data.id}</Text>
               <Text>{data.email}</Text>
               {data.hairCondition.map((word, index) => (
-            <HashTag key={index}> #{word} </HashTag>
-            ))}
+                  <HashTag key={index}> #{word} </HashTag>
+              ))}
             </InfoBox>
             <ChangeBox>
               <ChangeBtn 

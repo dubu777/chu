@@ -1,9 +1,12 @@
-import { styled } from "styled-components";
+import styled, { keyframes }  from "styled-components";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css"; // css import
 // import Calendar from "../../components/ReservationComponent/Calendar";
 import { useState } from "react";
+import { useQuery, useMutation } from "react-query";
+import { useNavigate, useParams } from "react-router";
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
+import {getPossibleTimeApi} from "../../apis"
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -28,6 +31,9 @@ const CalendarContainer = styled.div`
   max-width: 600px;
   padding: 10px;
   border-radius: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const RigthWrap = styled.div`
@@ -39,9 +45,9 @@ const RigthWrap = styled.div`
 `;
 
 const Hr = styled.div`
-  border: 1px solid rgb(197, 197, 197);
-  width: 100%;
-  margin: 10px 0;
+  border: 0.5px solid rgb(197, 197, 197);
+  width: 95%;
+  margin: 7px 0;
 `;
 
 const PofolWrap = styled.div`
@@ -119,24 +125,30 @@ const ResevBox = styled.div`
 const TimeSelectionContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
+  text-align: center;
+  /* justify-content: center; */
+  margin-bottom: 10px;
 `;
+const TimeButton = styled.button`
+  border-radius:1.0rem;
+  width: 65px;
+  height: 35px;
+  margin: 3px;
+  border: ${props => props.selected ? 'none' : '1px solid lightgray'};
+  background-color: ${props => props.selected ? '#7D705F' : 'white'}; 
+  color: ${props => props.selected ? 'white' : 'black'}; 
+  &:hover {
+    background-color: ${(props) =>
+      props.selected ? "#7D705F" : "#ebe8d9"};
+    color: ${(props) => (props.selected ? "white" : "black")};
+  }
+`;
+
 const TimeBox = styled.div`
   display: flex;
   justify-content: center;
 `;
-const TimeButton = styled(motion.button)`
-  margin: 5px 4px;
-  padding: 5px 12px;
-  width: 14.25%;
-  display: flex;
-  border: 1px solid grey;
-  border-radius: 1px;
-  background-color: rgb(242, 234, 211);
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  cursor: pointer;
-`;
+
 const TextArea = styled.textarea`
   border: 1px solid rgb(207, 200, 192);
   border-radius: 10px;
@@ -251,13 +263,27 @@ const EmtyBox = styled.div`
 `;
 
 function formatDateString(date) {
+  const year = date.getFullYear();
   const month = (date.getMonth() + 1).toString().padStart(2, "0");
   const day = date.getDate().toString().padStart(2, "0");
-  return `${month}/${day}`;
+  const clickdate = `${year}-${month}-${day}`;
+  console.log(clickdate)
+  return `${year}-${month}-${day}`;
+}
+
+function formatTimeString(time) {
+  const hours = time.split(":")[0].padStart(2, "0");
+  const minutes = time.split(":")[1].padStart(2, "0");
+  const seconds = "00"; // 초를 00으로 설정하거나 필요에 따라 수정하세요
+  return `${hours}:${minutes}:${seconds}`;
 }
 
 function Reservation() {
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const formattedSelectedDate = formatDateString(selectedDate);
+  const [selectedTime, setSelectedTime] = useState(null);
   const [handleLike, setHandleLike] = useState(false); // 좋아요 상태를 state로 관리
+  const { designerSeq } = useParams();
   const settings = {
     className: "center",
     infinite: true,
@@ -315,30 +341,58 @@ function Reservation() {
     "img/opofol8.jpg",
     "img/opofol9.jpg",
   ];
-  const [data, setData] = useState();
-  const [value, onChange] = useState(new Date());
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [selectedTime, setSelectedTime] = useState(null);
-  // const selectedDateString = formatDateString(selectedDate);
 
-  const hours = Array.from({ length: 14 }, (_, index) => index + 9);
-  const minutes = ["00", "30"];
-  const timeSlots = [];
-  hours.forEach((hour) => {
-    minutes.forEach((minute) => {
-      const time = `${hour.toString().padStart(2, "0")}:${minute}`;
-      timeSlots.push(time);
-    });
-  });
-  const handleDateSelect = (date) => {
-    setSelectedDate(date);
+  // 시간 데이터 호출
+  const { data, isError, isLoading } = useQuery(
+    ['possibleTime', designerSeq],
+     () => getPossibleTimeApi(designerSeq)
+  );
+  console.log('시간 어디 보자:', data)
+
+  const generateTimeButtons = (selectedTime, setSelectedTime, formattedSelectedDate) => {
+    const timeButtons = [];
+    const startTime = 9; // 시작 시간 (9:00)
+    const endTime = 22.5; // 종료 시간 (22:30)
+
+    for (let i = startTime; i <= endTime; i += 0.5) {
+      const hour = Math.floor(i);
+      const minute = (i - hour) * 60;
+      const formattedTime = `${hour.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")}`;
+
+      timeButtons.push(
+        <TimeButton
+          key={formattedTime}
+          onClick={() => handleTimeButtonClick(formattedTime, selectedTime)}
+          style={{
+            padding: "5px 10px",
+            margin: "5px",
+            backgroundColor: selectedTime === formattedTime ? "blue" : "white",
+            color: selectedTime === formattedTime ? "white" : "black",
+          }}
+        >
+          {formattedTime}
+        </TimeButton>
+      );
+    }
+
+    return timeButtons;
   };
 
-  const handleTimeClick = (time) => {
-    // 이미 선택된 시간과 같으면 선택 해제
-    setSelectedTime((prevTime) => (prevTime === time ? null : time));
+  const handleTimeButtonClick = (formattedTime, selectedTime) => {
+    const formattedTime1 = formatTimeString(formattedTime);
+    setSelectedTime(formattedTime1);
+
+    if (formattedTime1 === selectedTime) {
+      // 이미 선택한 시간을 클릭한 경우 취소 상태로 변경
+      setSelectedTime(null);
+    } else {
+      // 다른 시간을 선택한 경우 선택 상태로 변경
+      setSelectedTime(formattedTime1);
+    }
   };
-  // 사진 선택 코드
+
+
+  // 이미지 관련
   const [selectedImgs, setSelectedImgs] = useState([]);
   const handleImageClick = (item) => {
     if (selectedImgs.includes(item)) {
@@ -349,6 +403,8 @@ function Reservation() {
       setSelectedImgs((prev) => [...prev, item]);
     }
   };
+  console.log('우와 시간 나옴?', formattedSelectedDate,selectedTime)
+
   return (
     <Container>
       <LeftWrap>
@@ -357,9 +413,10 @@ function Reservation() {
             <SubTitle>예약날짜</SubTitle>
             <Hr />
             <CalendarContainer>
-              <Calendar onChange={onChange} value={value} />
+              {/* <Calendar onChange={onChange} value={value} onClick={handleCalendarClick}/> */}
+              <Calendar onChange={date => setSelectedDate(date)} value={selectedDate} />
               <div>
-                <p>{formatDateString(value)}</p>
+                <p>{formattedSelectedDate}</p>
               </div>
             </CalendarContainer>
           </ResevBox>
@@ -368,18 +425,7 @@ function Reservation() {
             <Hr />
             <TimeBox>
               <TimeSelectionContainer>
-                {timeSlots.map((time, index) => (
-                  <TimeButton
-                    key={index}
-                    onClick={() => handleTimeClick(time)}
-                    variants={timeBtnVariants}
-                    initial="nomal"
-                    whileHover="hover"
-                    animate={selectedTime === time ? "active" : "nomal"}
-                  >
-                    {time}
-                  </TimeButton>
-                ))}
+                {generateTimeButtons()}
               </TimeSelectionContainer>
             </TimeBox>
             <SubTitle>전달사항</SubTitle>
@@ -466,5 +512,4 @@ function Reservation() {
     </Container>
   );
 }
-
 export default Reservation;

@@ -4,11 +4,10 @@ import { styled } from "styled-components";
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import {getSessionId} from "../../apis/openvidu";
 import { useRecoilState, useRecoilValue} from "recoil";
 import {sessionIdState} from "../../recoil/openvidu";
 import { useQuery } from "react-query";
-import {getAllReserveList} from "../../apis"
+import {getSessionId, getAllReserveList} from "../../apis"
 
 
 const Container = styled.div`
@@ -166,13 +165,14 @@ const CloseButton = styled.button`
 function AllReserveList(){
   const navigate = useNavigate();
   const { designerSeq } = useParams();
-  // console.log("상담 예약 목록 조회의 디자이너 seq",designerSeq);
-  // const { data, isError, isLoading } = useQuery(['allReserveList', designerSeq], () => getAllReserveList(designerSeq));
-
-  // console.log(data)
+  console.log("상담 예약 목록 조회의 디자이너 seq",designerSeq);
+  const { data1, isError, isLoading } = useQuery(
+    ['allReserveList', designerSeq],
+     () => getAllReserveList(designerSeq)
+  );
+  console.log('이게 데이터다',data1)
     
   const [data, setdata] = useState([{
-            
                 "consultingSeq" : 1,
                 "consultingDate" : "2023-07-19",
                 "consultingMemo" : "상담 전달사항",

@@ -85,7 +85,7 @@ const SemiText = styled.p`
   margin-bottom: 8px;
 `;
 
-const FaceBox = styled.div`
+const FaceWrapper = styled.div`
   
 `;
 const HairBox = styled.div`
@@ -178,12 +178,30 @@ const typeBtnVariants = {
     backgroundColor: "rgb(87, 73, 52)",
   },
 };
+const FaceBox = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+const FaceSet = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+const FaceImg = styled.img`
+  width: 50px;
+  height: 60px;
+  /* background-color: red; */
+  
+`;
+
 function EditCustomerInfo(){
+  const BASE_URL = 'https://i9b111.q.ssafy.io/api';
   const customerSeq = localStorage.getItem('userSeq')
   const navigate = useNavigate();
   const { data, isError, isLoading } = useQuery(['customerEditData', customerSeq], () => getCustomerEditData(customerSeq));
   const [selectedFaceType, setSelectedFaceType] = useState(null);
   const [selectedHairTypes, setSelectedHairTypes] = useState([]);
+  const face = ['face1.png', 'face2.png', 'face3.png', 'face4.png', 'face5.png', 'normal.png' ]
   const handleFaceClick = (seq) => {
     setSelectedFaceType(seq);
   };
@@ -309,9 +327,14 @@ function EditCustomerInfo(){
                   </InputBox>
                 </InputWrap>
                 <Hr/>
-                <FaceBox>
+                <FaceWrapper>
                 <SemiText>회원님의 얼굴 형을 선택해주세요</SemiText>
-                  {data.faceDict.map((type) => (
+                <FaceBox>
+                  {data.faceDict.map((type, index) => (
+                    <FaceSet>
+                      {/* <FaceImg src={`${BASE_URL}/customer-profile/face_dict/${face[{index}]}`} alt=""></FaceImg> */}
+                      <FaceImg src ={`https://i9b111.q.ssafy.io/api/customer-profile/face_dict/${face[index]}`}></FaceImg>
+                      {/* <img src = "https://i9b111.q.ssafy.io/api/customer-profile/face_dict/noImg.png"></img> */}
                       <FaceBtn
                         key={type.seq}
                         type="button"
@@ -322,8 +345,10 @@ function EditCustomerInfo(){
                         animate={selectedFaceType === type.seq ? "active" : "normal"}
                       >{type.faceLabel}
                       </FaceBtn>
+                    </FaceSet>
                     ))}
-                </FaceBox>
+                    </FaceBox>
+                </FaceWrapper>
                 <Hr/>
                 <HairBox>
                 <SemiText>회원님의 모발상태를 선택해주세요</SemiText>

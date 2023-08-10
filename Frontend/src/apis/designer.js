@@ -51,10 +51,12 @@ export const getDesignerMyPage = async (designerSeq) => {
 // 디자이너 한 줄 소개글 수정
 export const updateIntroduction = async (designerSeq, introduction) => {
   try{
-    console.log("소개글 데이터 되라",designerSeq,introduction);
-    const response = await axios.post(`${BASE_URL}/designer/detail/introduction/${designerSeq}`, { params : {
-      "introduction": introduction,
-    }});
+    console.log(designerSeq);
+    console.log(introduction);
+    const response = await axios.patch(`${BASE_URL}/designer/detail/introduction/${designerSeq}?introduction=${introduction}`, 
+
+    );
+    console.log(response.data)
     return response.data;
   } catch (error) {
     throw new Error("소개글 데이터 요청 실패");
@@ -113,8 +115,8 @@ export const attachDesignerImage = async (seq, formData) => {
 export const getAllReserveList = async (designerSeq) => {
   try {
     console.log('trytry')
-      const response = await axios.get(`${BASE_URL}/designer/detail/reservation-list/${designerSeq}`)
-      // const response = await axios.get(`${BASE_URL}/designer/detail/reservation-list/2`);
+      // const response = await axios.get(`${BASE_URL}/designer/detail/reservation-list/${designerSeq}`)
+      const response = await axios.get(`${BASE_URL}/designer/detail/reservation-list/7`)
       console.log('응답몬', response.data);
       return response.data.result
   } catch(error) {
@@ -157,7 +159,7 @@ export const postPortfolio = async (seq, formData) => {
 
 // 마이페이지-포트폴리오 삭제
 export const deletePortfolio = async (seq, imgSeq) => {
-  console.log(seq, imgSeq);
+  console.log('보냈ㄷ자나', seq, imgSeq);
   try {
     const response = await axios.delete( 
       `${BASE_URL}/designer/detail/portfolio/${seq}`,
@@ -165,7 +167,9 @@ export const deletePortfolio = async (seq, imgSeq) => {
         params: { "imageSeq": imgSeq },
       }
     );
-    return response.data.result;
+    console.log('성공결과가 뭐야?', response.data.status)
+    // result 없음 주의!
+    return response.data.status;
   } catch (error) {
     throw new Error("디자이너 포트폴리오 삭제 실패");
   }
