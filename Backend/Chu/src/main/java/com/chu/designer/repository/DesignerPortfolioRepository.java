@@ -10,6 +10,8 @@ public interface DesignerPortfolioRepository extends JpaRepository<DesignerPortf
 
     List<DesignerPortfolio> findByDesignerSeq(Integer designerSeq);
 
+    DesignerPortfolio findBySeq(Integer seq);
+
     // 랜덤으로 4개 조회하기
     @Query(value = "SELECT * FROM designer_portfolio ORDER BY RAND() LIMIT 4", nativeQuery = true)
     List<DesignerPortfolio> getRandom();

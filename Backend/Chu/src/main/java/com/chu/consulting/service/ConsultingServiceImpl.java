@@ -3,11 +3,14 @@ package com.chu.consulting.service;
 import com.chu.consulting.domain.*;
 import com.chu.consulting.repository.ConsultingRepository;
 import com.chu.consulting.repository.ConsultingResultRepository;
+import com.chu.consulting.repository.ConsultingTargetInfoRepository;
 import com.chu.customer.domain.Customer;
 import com.chu.customer.repository.CustomerRepository;
 import com.chu.designer.domain.Designer;
 import com.chu.designer.domain.DesignerLike;
+import com.chu.designer.domain.DesignerPortfolio;
 import com.chu.designer.repository.DesignerLikeRepository;
+import com.chu.designer.repository.DesignerPortfolioRepository;
 import com.chu.designer.repository.DesignerRepository;
 import com.chu.designer.repository.ReservationAvailableSlotRepository;
 import com.chu.global.domain.FaceDict;
@@ -43,13 +46,18 @@ public class ConsultingServiceImpl implements ConsultingService {
     private final DesignerRepository designerRepository;
     private final ConsultingResultRepository consultingResultRepository;
     private final HairStyleDictRepository hairStyleDictRepository;
+    private final DesignerPortfolioRepository designerPortfolioRepository;
+    private final ConsultingTargetInfoRepository consultingTargetInfoRepository;
 
     // 상담 예약하기
     @Override
     @Transactional
-    public void postConsulting(Consulting consulting) {
+    public void postConsulting(RequestConsultingDto requestConsultingDto) {
 
         try{
+            // requestConsultingDto -> entity 만들기
+            Consulting consulting = requestConsultingDto.toConsultingEntity();
+
             consulting.setCreatedDate(LocalDateTime.now());
             // 상담 예약하기
             consultingRepository.save(consulting);
@@ -68,6 +76,21 @@ public class ConsultingServiceImpl implements ConsultingService {
 
             // 생성한 SessionId db에 업데이트하기
             consultingRepository.updateConsultingUrl(seq, url);
+
+            // 고객이 선택한 포트폴리오 번호 consulting_target_info에 저장하기4
+            List<Integer> portfolios = requestConsultingDto.getPortfolios();
+
+            for(int p : portfolios){
+                ConsultingTargetInfo cti = new ConsultingTargetInfo();
+
+                cti.setConsulting(consulting);
+
+                DesignerPortfolio designerPortfolio = designerPortfolioRepository.findBySeq(p);
+
+                cti.setDesignerPortfolio(designerPortfolio);
+
+                consultingTargetInfoRepository.save(cti);
+            }
 
 
         } catch(Exception e){
@@ -310,6 +333,41 @@ public class ConsultingServiceImpl implements ConsultingService {
             response.setUrl(consulting.getUrl());
 
 
+            // targetHair setting
+            List<String> targetHair = new ArrayList<>();
+
+            // 상담 타겟 이미지 정보 리스트
+            List<ConsultingTargetInfo> targetInfos = consultingTargetInfoRepository.findAllByConsultingSeq(consultingSeq);
+
+            for(ConsultingTargetInfo info : targetInfos){
+
+                // 포트폴리오 사진 seq 구하기
+                int portfolioSeq = info.getDesignerPortfolio().getSeq();
+
+                // 포트폴리오 사진 seq로 타겟 이미지 이름(upload img name) 구하기
+                DesignerPortfolio portfolio= designerPortfolioRepository.findBySeq(portfolioSeq);
+                String uploadName = portfolio.getImagePath().getUploadImgName();
+
+                targetHair.add(uploadName);
+            }
+
+            response.setTargetHair(targetHair);
+
+
+            // confusionHair setting
+            List<String> confusionHair = new ArrayList<>();
+
+            // consultingSeq로 고객 상담 합성 사진 가져오기
+            List<ConsultingVirtualImg> virtualImgs = consultingVirtualImgRepository.findAllByConsultingSeq(consultingSeq);
+
+            for(ConsultingVirtualImg virtualImg : virtualImgs){
+
+                String uploadName = virtualImg.getImagePath().getUploadImgName();
+
+                confusionHair.add(uploadName);
+            }
+
+            response.setConfusionHair(confusionHair);
 
         } catch(Exception e){
             e.printStackTrace();
