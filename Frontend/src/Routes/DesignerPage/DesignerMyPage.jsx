@@ -11,6 +11,7 @@ import { attachDesignerImage, getDesignerMyPage, updateIntroduction } from "../.
 import { designerMyPageState } from "../../recoil";
 import { useQuery, useMutation } from "react-query";
 import { useRecoilState } from "recoil";
+import { BASE_URL } from "../../apis/rootUrl";
 
 const Container = styled.div``;
 
@@ -138,7 +139,7 @@ function DesignerMyPage() {
   // console.log("마이페이지 시퀀스", designerSeq);
   const { data, isLoading, isError } = useQuery(
     ["designerMyPage", designerSeq],
-    () => getDesignerMyPage(designerSeq) 
+    () => getDesignerMyPage(designerSeq)
   );
   // console.log(data)
 
@@ -164,36 +165,51 @@ function DesignerMyPage() {
   const handleImageClick = () => {
     fileInputRef.current.click();
   };
-  const handleFileChange = (e) => {
-    e.preventDefault();
+  // const handleFileChange = (e) => {
+  //   e.preventDefault();
+  //   const formData = new FormData();
+
+  //   if (e.target.files) {
+  //     const uploadFile = e.target.files[0];
+  //     formData.append("img", uploadFile);
+  //     console.log(formData);
+  //     setFile(uploadFile);
+  //     console.log(uploadFile);
+  //     console.log("===useState===");
+  //     console.log(file);
+  //   }
+  // };
+
+  // 이미지 등록 - API 맞춰서 수정해야함
+  const handleFileChange = async (event) => {
+    const file = event.target.files[0];
     const formData = new FormData();
+    formData.append("img", file);
 
-    if (e.target.files) {
-      const uploadFile = e.target.files[0];
-      formData.append("img", uploadFile);
-      console.log(formData);
-      setFile(uploadFile);
-      console.log(uploadFile);
-      console.log("===useState===");
-      console.log(file);
+    try {
+      // 이미지를 서버에 업로드하고 imgSeq를 받아옴
+      const response = await attachCustomerImage(designerSeq, formData);
+      setSelectedFile(`https://i9b111.q.ssafy.io/api/designer-profile/${file.name}`);
+    } catch (error) {
+      console.error(error);
     }
   };
 
-  const handleSubmitImage = async (e) => {
-    e.preventDefault();
-    if (fileInputRef.current.files[0]) {
-      const formData = new FormData();
-      formData.append("img", fileInputRef.current.files[0]);
-      for (const keyValue of formData) console.log(keyValue);
+  // const handleSubmitImage = async (e) => {
+  //   e.preventDefault();
+  //   if (fileInputRef.current.files[0]) {
+  //     const formData = new FormData();
+  //     formData.append("img", fileInputRef.current.files[0]);
+  //     for (const keyValue of formData) console.log(keyValue);
 
-      try {
-        const file = await attachDesignerImage(seq, formData);
-        console.log(file);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  };
+  //     try {
+  //       const file = await attachDesignerImage(seq, formData);
+  //       console.log(file);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
+  // };
   const handleEditButtonClick = () => {
     setIsEditing(true);
   };
@@ -223,9 +239,9 @@ function DesignerMyPage() {
             {/* 프로필 사진 or 연산자는 앞의 피연산자 기준*/}
             <Profile
               onClick={handleImageClick}
-              src={selectedFile || "/icon/profile2.png"}
+              src={selectedFile || `${BASE_URL}/designer-profile/${data.img}`}
               alt="Profile"
-              hasFile={selectedFile !== null}
+              // hasFile={selectedFile !== null}
             />
             {/* 이미지 제출 버튼 */}
             <button onClick={handleSubmitImage}>사진 제출</button>

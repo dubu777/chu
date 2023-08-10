@@ -86,10 +86,10 @@ export const submitStyleFilter = async (hairStyleSeqNumbers) => {
 
 // 디자이너 프로필 사진 등록 api
 export const attachDesignerImage = async (seq, formData) => {
-  try {
+  try { 
     console.log("try문 진입");
     const response = await axios.post(
-      `${BASE_URL}/customer/detail/img/${seq}`,
+      `${BASE_URL}/designer/detail/img/${seq}`,
       formData,
       {
         headers: {
