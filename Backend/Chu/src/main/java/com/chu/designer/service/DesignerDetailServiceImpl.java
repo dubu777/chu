@@ -219,10 +219,11 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
         String newFileName = designer.getSeq() + fileName;
         log.info("new File Name: "+ newFileName);
 
+        ImagePath imagePath = new ImagePath();
+        imagePath.setUploadImgName(fileName);
+        imagePath.setSavedImgName(fileName);
         // 저장
-        designer.getImagePath().setUploadImgName(fileName);
-        designer.getImagePath().setSavedImgName(fileName);
-
+        designer.setImagePath(imagePath);
         return true;
     }
 
