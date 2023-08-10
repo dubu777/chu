@@ -47,11 +47,7 @@ public class ConsultingController {
         try{
             // 이미지 처리
 
-
-
-            // requestConsultingDto -> entity 만들기
-            Consulting consulting = requestConsultingDto.toConsultingEntity();
-            consultingService.postConsulting(consulting);
+            consultingService.postConsulting(requestConsultingDto);
         } catch(Exception e){
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));

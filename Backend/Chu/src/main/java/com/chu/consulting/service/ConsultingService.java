@@ -12,7 +12,7 @@ public interface ConsultingService {
     ResponseParticipantConsulting participantConsulting(int consultingSeq);
 
     // 상담 예약하기
-    void postConsulting(Consulting consulting);
+    void postConsulting(RequestConsultingDto requestConsultingDto);
 
     // 상담 취소하기
     void cancelConsulting(int consultingSeq);

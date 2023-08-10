@@ -5,6 +5,8 @@ import com.chu.designer.domain.Designer;
 import com.chu.global.domain.ImagePath;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class RequestConsultingDto {
     int customerSeq;
@@ -13,12 +15,7 @@ public class RequestConsultingDto {
     String time;
     String consultingMemo;
     String img;
-//        "customerSeq" : 1,
-//                "designerSeq" : 4,
-//                "date" : "2023-07-20",
-//                "time" : "12:00",
-//                "consultingMemo" : "전달사항 ~",
-//                "img" : "img1.png"
+    List<Integer> portfolios;
 
     public Consulting toConsultingEntity(){
         Consulting consulting = new Consulting();
