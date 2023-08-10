@@ -119,12 +119,9 @@ public class CustomerDetailController {
 
         // 여기서 디비에 폴더경로 가져오기, 실제 파일 서버 저장 함수
         String filePath = customerDetailService.getSavedImgFilePath(customerSeq, file);
-        log.info("이미지 로컬서버에 저장 완료");
 
         // 여기서 디비에 실제 파일 이름를 가져오는거
         String uploadFileName = designerDetailService.getUploadImgFilePath(file);
-
-        log.info("컨트롤러>>> filePath: "+ filePath);
 
         // 여기가 현재 무조건 true를 반환함.
         // 내 아이디를 가지고 가서 변경 감지 -> imgPath를 저장파일명에 업데이트한다
