@@ -133,6 +133,8 @@ function CustomerMyPage(){
     () => getCustomerMyPage(customerSeq)
   );
 
+  console.log(data);
+
   const [activeBtn, setActiveBtn] = useState('recent'); // 'recent' or 'designer'
   const fileInputRef = useRef(null);
   const [selectedFile, setSelectedFile] = useState(null);
@@ -265,7 +267,8 @@ function CustomerMyPage(){
                 <Profile 
                   onClick={handleImageClick} 
                   // src={selectedFile || './icon/profile2.png'} 
-                  src={selectedFile || `${BASE_URL}/customer-profile/${data.img}`}
+                  // src={selectedFile || `${BASE_URL}/customer-profile/${data.img}`}
+                  src={`${BASE_URL}/customer-profile/${data.img}`}
                   alt="Profile" 
                   // hasFile={selectedFile !== null} 
                 />

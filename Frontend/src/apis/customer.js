@@ -34,6 +34,11 @@ export const getCustomerMyPage = async (customerSeq) => {
     const response = await axios.get(
       `${BASE_URL}/customer/detail/mypage/${customerSeq}`
     );
+
+    if(response.data.result.img == null){
+      response.data.result.img = 'profile2.png';
+    }
+
     return response.data.result;
   } catch (error) {
     throw new Error("고객 마이페이지 API 요청 실패");
