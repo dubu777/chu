@@ -268,12 +268,14 @@ public class DesignerServiceImpl implements DesignerService{
     @Override
     @Transactional
     public void changePwd(RequestCustomerChangePwdDto param) {
-        Designer d = new Designer();
-        d.setPwd(param.getPwd());
-        d.hashPassword(bCryptPasswordEncoder);
-        String pwd = d.getPwd();
+        if(param.getPwd() != null){
+            Designer d = new Designer();
+            d.setPwd(param.getPwd());
+            d.hashPassword(bCryptPasswordEncoder);
+            String pwd = d.getPwd();
 
-        designerRepository.changePwd(param.getCustomerSeq(), pwd);
+            designerRepository.changePwd(param.getCustomerSeq(), pwd);
+        }
     }
 
 

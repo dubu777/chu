@@ -28,16 +28,16 @@ public class ConsultingController {
     @GetMapping("/{consulting_seq}")
     public ResponseEntity<HttpResponseDto> participantConsulting(@PathVariable("consulting_seq") int consultingSeq) {
 
-        String sessionId = null;
+        ResponseParticipantConsulting response = null;
 
         try{
-            sessionId = consultingService.participantConsulting(consultingSeq);
+            response = consultingService.participantConsulting(consultingSeq);
         } catch(Exception e){
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), sessionId));
+        return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), response));
     }
 
     // 상담 예약하기
@@ -115,6 +115,21 @@ public class ConsultingController {
         return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), null));
     }
 
+    // 상담 결과 조회
+    @GetMapping("/result/{consulting-seq}")
+    public ResponseEntity<HttpResponseDto> getConsultingResult(@PathVariable("consulting-seq") int consultingSeq){
+
+        ResponseConsultingResultDto response = new ResponseConsultingResultDto();
+
+        try{
+            response = consultingService.getConsultingResult(consultingSeq);
+        } catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), response));
+    }
 
 
 //

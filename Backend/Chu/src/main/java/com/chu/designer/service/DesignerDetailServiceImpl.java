@@ -257,7 +257,7 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
                     .name(designer.getName())
                     .id(designer.getId())
                     .email(designer.getEmail())
-                    .price(designer.getCost())
+                    .cost(designer.getCost())
                     .certificationNum(designer.getCertificationNum())
                     .salonName(designer.getSalonName())
                     .latitude(designer.getLatitude())
@@ -281,8 +281,6 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
 
         try{
             Designer designer = designerRepository.getDesignerBySeq(designerSeq);
-            designer.setName(updateDto.getName());
-            designer.setEmail(updateDto.getEmail());
             designer.setCost(updateDto.getCost());
             designer.setPwd(updateDto.getPwd());
             designer.hashPassword(bCryptPasswordEncoder);    // 비밀번호 암호화
