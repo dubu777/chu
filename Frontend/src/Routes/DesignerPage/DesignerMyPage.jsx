@@ -239,7 +239,7 @@ function DesignerMyPage() {
             {/* 프로필 사진 or 연산자는 앞의 피연산자 기준*/}
             <Profile
               onClick={handleImageClick}
-              src={selectedFile || `${BASE_URL}/designer-profile/${data.img}`}
+              src={`${BASE_URL}/designer-profile/${data.img}`}
               alt="Profile"
               // hasFile={selectedFile !== null}
             />

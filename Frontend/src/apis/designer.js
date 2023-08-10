@@ -36,6 +36,11 @@ export const getDesignerDetail = async (designerSeq, customerSeq) => {
 export const getDesignerMyPage = async (designerSeq) => {
   try {
     const response = await axios.get(`${BASE_URL}/designer/detail/mypage/${designerSeq}`);
+
+    if(response.data.result.img == null){
+      response.data.result.img = 'profile2.png';
+    }
+
     return response.data.result;
   } catch (error) {
     console.error('디자이너 마이페이지 데이터 요청 실패', error.message);
