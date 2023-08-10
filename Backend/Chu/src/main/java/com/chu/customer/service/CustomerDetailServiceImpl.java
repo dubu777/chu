@@ -13,6 +13,7 @@ import com.chu.designer.repository.DesignerRepository;
 import com.chu.global.domain.FaceDict;
 import com.chu.global.domain.HairConditionDict;
 import com.chu.global.domain.HairStyleDict;
+import com.chu.global.domain.ImagePath;
 import com.chu.global.repository.FaceDictRepository;
 import com.chu.global.repository.HairConditionDictRepository;
 import com.chu.global.repository.HairStyleDictRepository;
@@ -84,12 +85,17 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
         Customer customer = customerDetailRepository.getById(customerSeq);
 
         // fileName 고유하게 변경
-        String newFileName = customer.getSeq() + fileName;
-        log.info("new File Name: "+ newFileName);
+//        String newFileName = customer.getSeq() + fileName;
+//        log.info("new File Name: "+ newFileName);
 
+        ImagePath imagePath = new ImagePath();
+        imagePath.setUploadImgName(fileName);
+        imagePath.setSavedImgName(fileName);
+
+        customer.setImagePath(imagePath);
         // 저장
-        customer.getImagePath().setUploadImgName(newFileName);
-        customer.getImagePath().setSavedImgName(fileName);
+//        customer.getImagePath().setUploadImgName(newFileName);
+//        customer.getImagePath().setSavedImgName(fileName);
 
         return true;
     }

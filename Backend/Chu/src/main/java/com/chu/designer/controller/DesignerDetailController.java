@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -90,20 +91,26 @@ public class DesignerDetailController {
             return ResponseEntity.ok(httpResponseDto);
         }
     }
-//
-//    @PatchMapping("/img")
-//    public ResponseEntity<HttpResponseDto> patchImg(@PathVariable("designer-seq") int designerSeq, @RequestParam String img) {
-//
-//        boolean isSuccess = designerDetailService.patchImg(designerSeq, img);
-//
-//        if (isSuccess) {
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(200, img);
-//            return ResponseEntity.ok(httpResponseDto);
-//        } else {
-//            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
-//            return ResponseEntity.ok(httpResponseDto);
-//        }
-//    }
+
+    @PostMapping("/img/{designer-seq}")
+    public ResponseEntity<HttpResponseDto> patchImg(@PathVariable("designer-seq") int designerSeq, @RequestPart("img") MultipartFile file) throws IOException {
+
+        // 여기서 디비에 폴더경로 가져오기, 실제 파일 서버 저장 함수
+        String filePath = designerDetailService.getSavedImgFilePathDesignerProfile(file);
+
+        // 여기서 디비에 실제 파일 이름를 가져오는거
+        String uploadFileName = designerDetailService.getUploadImgFilePath(file);
+
+        boolean isSuccess = designerDetailService.patchImg(designerSeq, uploadFileName);
+
+        if (isSuccess) {
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, uploadFileName);
+            return ResponseEntity.ok(httpResponseDto);
+        } else {
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
+        }
+    }
 //
 //    @GetMapping("/time")
 //    public ResponseEntity<HttpResponseDto> getPossibleReservationTime(@PathVariable("designer-seq") int designerSeq, Date date) {

@@ -19,9 +19,9 @@ public interface DesignerDetailService {
     // 디자이너 한줄평 수정
     boolean patchIntroduction(int designerSeq, String introduction);
 //
-//    // 디자이너 대표 이미지 수정
-//    boolean patchImg(int designerSeq, String img);
-//
+    // 디자이너 대표 이미지 수정
+    boolean patchImg(int designerSeq, String img);
+
     // 디자이너 마이페이지 수정페이지 정보 조회
     ResponseDesignerMyPageUpdateShowDto getDesignerMyPageUpdateInfo(int designerSeq);
 
@@ -42,6 +42,8 @@ public interface DesignerDetailService {
 
     // 이미지 경로 가져오기
     String getSavedImgFilePath(MultipartFile file) throws IOException;
+
+    String getSavedImgFilePathDesignerProfile(MultipartFile file) throws IOException;
 
     String getUploadImgFilePath(MultipartFile file) throws IOException;
     // 디자이너 포트폴리오 업데이트
