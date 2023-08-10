@@ -173,8 +173,13 @@ public class DesignerDetailController {
         int imgSeq = -1;
 
         try{
+            // 여기서 디비에 폴더경로 가져오기, 실제 파일 서버 저장 함수
             String filePath = designerDetailService.getSavedImgFilePath(file);
+            
+            // 여기서 디비에 실제 파일 이름를 가져오는거
             String uploadFilePath = designerDetailService.getUploadImgFilePath(file);
+            
+            // 여기서 디비에 폴더경로, 실제파일 이름 저장 그리고 이미지 시퀀스 반환
             imgSeq = designerDetailService.postPortfolioImage(designerSeq, filePath, uploadFilePath);
         } catch (Exception e){
             e.printStackTrace();

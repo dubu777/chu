@@ -61,4 +61,4 @@ jwt:
 
 custom:
   path:
-    upload-images: '/chu/upload/images/customer/'
+    upload-images: "/chu/upload/images/customer/"

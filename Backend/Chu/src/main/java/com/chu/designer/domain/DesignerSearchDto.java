@@ -27,7 +27,7 @@ public class DesignerSearchDto {
 
     public DesignerSearchDto(Designer designer, Integer likeCnt, Integer reviewCnt, List<String> hairStyleLabels, Double reviewScore, Boolean isLike) {
         this.designerSeq = designer.getSeq();
-        this.designerImg = (designer.getImagePath() != null) ? designer.getImagePath().getSavedImgName() : null;
+        this.designerImg = (designer.getImagePath() != null) ? designer.getImagePath().getUploadImgName() : null;
         this.reviewScore = (reviewScore==null) ? 0.0 : reviewScore;
         this.designerName = designer.getName();
         this.introduction = designer.getIntroduction();

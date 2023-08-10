@@ -4,6 +4,7 @@ import com.chu.customer.domain.RequestCustomerDetailChangeDto;
 import com.chu.customer.domain.ResponseCustomerDetailInfoDto;
 import com.chu.customer.domain.ResponseCustomerDetailDto;
 import com.chu.customer.service.CustomerDetailService;
+import com.chu.designer.service.DesignerDetailService;
 import com.chu.global.domain.HttpResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +22,7 @@ import java.io.IOException;
 public class CustomerDetailController {
 
     private final CustomerDetailService customerDetailService;
+    private final DesignerDetailService designerDetailService;
 
     @GetMapping("/{customer_seq}")
     public ResponseEntity<HttpResponseDto> getCustomerDetailInfo(@PathVariable("customer_seq") int customerSeq){
@@ -112,25 +114,22 @@ public class CustomerDetailController {
     //@GetMapping("/mypage/{fileName}")
 
 
-    @PatchMapping("/img/{customer_seq}")
+    @PostMapping("/img/{customer_seq}")
     public ResponseEntity<HttpResponseDto> patchImg(@PathVariable("customer_seq") int customerSeq, @RequestPart("img") MultipartFile file) throws IOException {
 
-        String filePath = customerDetailService.getSavedImgFilePath(customerSeq, file);
-        log.info("이미지 로컬서버에 저장 완료");
-        log.info("컨트롤러>>> filePath: "+ filePath);
-
-        // 여기가 현재 무조건 true를 반환함.
-        // 내 아이디를 가지고 가서 변경 감지 -> imgPath를 저장파일명에 업데이트한다
-        boolean isSuccess = customerDetailService.patchImage(customerSeq, filePath);
-
-        if (isSuccess) {
-            HttpResponseDto httpResponseDto = new HttpResponseDto(200, filePath);
-            return ResponseEntity.ok(httpResponseDto);
-        }
-        else{
+        // 여기서 디비에 실제 파일 이름를 가져오는거
+        String uploadFileName = designerDetailService.getUploadImgFilePath(file);
+        try{
+            // 여기서 디비에 폴더경로 가져오기, 실제 파일 서버 저장 함수
+            String filePath = customerDetailService.getSavedImgFilePath(customerSeq, file);
+            customerDetailService.patchImage(customerSeq, uploadFileName);
+        } catch (Exception e){
+            e.printStackTrace();
             HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
             return ResponseEntity.ok(httpResponseDto);
         }
+        HttpResponseDto httpResponseDto = new HttpResponseDto(200, uploadFileName);
+        return ResponseEntity.ok(httpResponseDto);
     }
 
 }

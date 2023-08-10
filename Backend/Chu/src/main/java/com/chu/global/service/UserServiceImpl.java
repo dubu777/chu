@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService{
 
                 if(d.getImagePath() == null)
                     dto.setImg(null);
-                else dto.setImg(d.getImagePath().getSavedImgName());
+                else dto.setImg(d.getImagePath().getUploadImgName());
 
                 dto.setName(d.getName());
                 dto.setDesignerSeq(d.getSeq());

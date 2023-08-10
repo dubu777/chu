@@ -243,7 +243,7 @@ public class DesignerSearchServiceImpl implements DesignerSearchService {
         List<DesignerPortfolio> portfolios = designerPortfolioRepository.findByDesignerSeq(designer.getSeq());
         List<ResponsePortfolioDto> portfolioDto = new ArrayList<>();
         for (DesignerPortfolio p : portfolios) {
-            ResponsePortfolioDto dto = new ResponsePortfolioDto(p.getSeq(), p.getImagePath().getSavedImgName(), p.getOrders());
+            ResponsePortfolioDto dto = new ResponsePortfolioDto(p.getSeq(), p.getImagePath().getUploadImgName(), p.getOrders());
             portfolioDto.add(dto);
         }
         // 디자이너 리뷰
@@ -260,7 +260,7 @@ public class DesignerSearchServiceImpl implements DesignerSearchService {
                 .introduction(designer.getIntroduction())
                 .address(designer.getAddress())
                 .salonName(designer.getSalonName())
-                .designerImg((designer.getImagePath() != null) ? designer.getImagePath().getSavedImgName() : null)
+                .designerImg((designer.getImagePath() != null) ? designer.getImagePath().getUploadImgName() : null)
                 .allReviewScore(designer.getReviewScore())
                 .likeCnt(likeCnt)
                 .isLike(isLike)
@@ -302,7 +302,7 @@ public class DesignerSearchServiceImpl implements DesignerSearchService {
 
                 // DesignerSearchDto 채우기
                 dto.setDesignerSeq(designerSeq);
-                dto.setDesignerImg(designer.getImagePath().getSavedImgName());
+                dto.setDesignerImg(designer.getImagePath().getUploadImgName());
                 dto.setReviewScore(designer.getReviewScore());
                 dto.setDesignerName(designer.getName());
                 dto.setIntroduction(designer.getIntroduction());

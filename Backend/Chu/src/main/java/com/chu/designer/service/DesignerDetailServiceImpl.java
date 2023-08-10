@@ -91,11 +91,13 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
         // 디자이너 정보 가져오기
         Designer designer = designerRepository.getDesignerBySeq(designerSeq);
         ImagePath imagePath = new ImagePath();
-        imagePath.setSavedImgName(img);
-        imagePath.setUploadImgName(uploadName);
+        imagePath.setSavedImgName(uploadName);
+
+        String newFileName = designerSeq + "_" + uploadName;
+        imagePath.setUploadImgName(newFileName);
 
         DesignerPortfolio designerPortfolio = new DesignerPortfolio(designer, imagePath);
-
+        designerPortfolio.setCreatedDate(LocalDateTime.now());
         int imgSeq = -1;
 
         try{
@@ -165,7 +167,7 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
                 .cost(designer.getCost())
                 .email(designer.getEmail())
                 .introduction(designer.getIntroduction())
-                .img(designer.getImagePath() != null ? designer.getImagePath().getSavedImgName() : null)
+                .img(designer.getImagePath() != null ? designer.getImagePath().getUploadImgName() : null)
                 .hairStyleTag(designerTags)
                 .selectTime(possibleTimes)
                 .build();
@@ -261,6 +263,7 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
                 DesignerTagInfo dti = new DesignerTagInfo();
                 dti.setDesigner(designer);
 
+                dti.setCreatedTime(LocalDateTime.now());
                 HairStyleDict hairStyleDict = hairStyleDictRepository.findBySeq(tagSeq);
                 dti.setHairStyleDict(hairStyleDict);
 
