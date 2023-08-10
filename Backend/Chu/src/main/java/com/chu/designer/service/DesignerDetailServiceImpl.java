@@ -211,6 +211,7 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
 
     //
     @Override
+    @Transactional
     public boolean patchImg(int designerSeq, String fileName) {
 
         Designer designer = designerRepository.getDesignerBySeq(designerSeq);
