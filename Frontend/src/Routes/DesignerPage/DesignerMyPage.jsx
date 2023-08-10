@@ -189,6 +189,7 @@ function DesignerMyPage() {
     try {
       // 이미지를 서버에 업로드하고 imgSeq를 받아옴
       const response = await attachDesignerImage(designerSeq, formData);
+      console.log(response)
       setSelectedFile(`https://i9b111.q.ssafy.io/api/designer-profile/${file.name}`);
     } catch (error) {
       console.error(error);

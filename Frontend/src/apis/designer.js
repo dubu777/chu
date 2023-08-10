@@ -100,8 +100,9 @@ export const attachDesignerImage = async (seq, formData) => {
         },
       }
     );
-    console.log("성공");
-    return response.data;
+    // console.log('사진 정보',response.data.result)
+    console.log('사진 정보',response.data)
+    return response.data.result;
   } catch (error) {
     throw new Error("이미지 보내기 실패");
   }

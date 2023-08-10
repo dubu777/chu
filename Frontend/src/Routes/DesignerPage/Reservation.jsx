@@ -4,9 +4,11 @@ import "react-calendar/dist/Calendar.css"; // css import
 // import Calendar from "../../components/ReservationComponent/Calendar";
 import { useState } from "react";
 import { useQuery, useMutation } from "react-query";
+import { useRecoilState } from 'recoil';
 import { useNavigate, useParams } from "react-router";
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
 import {getPossibleTimeApi, getPortfolioShow} from "../../apis"
+import {reserveInfo, consultImg} from "../../recoil"
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -279,6 +281,7 @@ function formatDateString(date) {
 
 
 function Reservation() {
+  const [info, setInfo] = useRecoilState(reserveInfo);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const formattedSelectedDate = formatDateString(selectedDate);
   const [selectedTime, setSelectedTime] = useState(null);
@@ -321,29 +324,6 @@ function Reservation() {
     ],
   };
 
-  const PofolImgs = [
-    "img/pofol1.jpg",
-    "img/pofol2.jpg",
-    "img/pofol3.jpg",
-    "img/pofol4.jpg",
-    "img/pofol5.jpg",
-    "img/pofol6.jpg",
-    "img/pofol7.jpg",
-    "img/pofol8.jpg",
-    "img/pofol9.jpg",
-  ];
-  const OPofolImgs = [
-    "img/opofol1.jpg",
-    "img/opofol2.jpg",
-    "img/opofol3.jpg",
-    "img/opofol4.jpg",
-    "img/opofol5.jpg",
-    "img/opofol6.jpg",
-    "img/opofol7.jpg",
-    "img/opofol8.jpg",
-    "img/opofol9.jpg",
-  ];
-  
   // 시간 데이터 호출
   const { data: data, isError: Error, isLoading: Loading } = useQuery(
     ['possibleTime', designerSeq],
@@ -393,7 +373,6 @@ function Reservation() {
   const handleNoteChange = (event) => {
     setNote(event.target.value);
   };
-
   console.log('전달메세지 모냐', note)
 
   const [selectedImgs, setSelectedImgs] = useState([]);
@@ -406,7 +385,7 @@ function Reservation() {
       setSelectedImgs((prev) => [...prev, item]);
     }
   };
-  console.log('우와 시간 나옴?', formattedSelectedDate,selectedTime)
+  console.log('우와 시간 나옴?', formattedSelectedDate, selectedTime)
 
   // 상담 이미지 첨부
   const handleFileChange = (event) => {
@@ -414,21 +393,15 @@ function Reservation() {
     setSelectedFile(file);
   };
 
-  const handleUploadButtonClick = () => {
-    if (selectedFile) {
-      // 여기에 파일 업로드 로직을 추가하세요.
-      console.log("Selected file:", selectedFile);
-      // 파일 업로드 API 호출 등의 처리를 수행하면 됩니다.
-    } else {
-      console.log("No file selected.");
-    }
-  };
+
   if (imgLoading) {
     return <div>Loading...{data}</div>;
   }
   if (imgError) {
     return <div>홈 페이지 에러{data}</div>;
   }
+
+
   return (
     <Container>
       <LeftWrap>
@@ -526,21 +499,21 @@ function Reservation() {
             <StartBox>
               <SubTitle>상담 사진 등록</SubTitle>
             </StartBox>
-            <Hr />
+                <Hr/>
                   <SubmitImg
                       type="file"
                       accept="image/*"
                       onChange={handleFileChange}
                     />
-            <SText>- 이마가 보이는 사진을 업로드해 주세요.</SText>
-            <Hr />
-            <ReservBtn>상담 예약하기</ReservBtn>
-            <SText>
-              {" "}
-              - 예약취소 시, 24시간 이전에만 예약금 환불이 가능합니다.
-            </SText>
-          </ResevBox>
-        </ReservWrap>
+                  <SText>- 이마가 보이는 사진을 업로드해 주세요.</SText>
+                <Hr />
+                <ReservBtn>상담 예약하기</ReservBtn>
+                  <SText>
+                    {" "}
+                    - 예약취소 시, 24시간 이전에만 예약금 환불이 가능합니다.
+                  </SText>
+            </ResevBox>
+          </ReservWrap>
       </RigthWrap>
     </Container>
   );
