@@ -5,6 +5,8 @@ import SignUpInput from "../../components/SignUpComponent/SignUpInput";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
+import { useQuery } from "react-query";
+import { getCustomerEditData, changePassword } from "../../apis";
 
 const Container = styled.div`
   display: flex;
@@ -177,111 +179,68 @@ const typeBtnVariants = {
   },
 };
 function EditCustomerInfo(){
+  const customerSeq = localStorage.getItem('userSeq')
   const navigate = useNavigate();
-  const [gender, setGender] = useState('male');
-  const [selectedFaceType, setSelectedFaceType] = useState('');
-  const [selectedHairType, setSelectedHairType] = useState('');
-  const [faceTypes, setFaceTypes] = useState([]);
-
-  const handleGenderChange = (event) => {
-    setGender(event.target.value);
+  const { data, isError, isLoading } = useQuery(['customerEditData', customerSeq], () => getCustomerEditData(customerSeq));
+  const [selectedFaceType, setSelectedFaceType] = useState(null);
+  const [selectedHairTypes, setSelectedHairTypes] = useState([]);
+  const handleFaceClick = (seq) => {
+    setSelectedFaceType(seq);
   };
-
-  const handleFaceClick = (faceSeq) => {
-    setSelectedFaceType(faceSeq);
-
+  
+  const handleHairClick = (seq) => {
+    if (selectedHairTypes.includes(seq)) {
+      setSelectedHairTypes(selectedHairTypes.filter(type => type !== seq));
+    } else {
+      setSelectedHairTypes([...selectedHairTypes, seq]);
+    }
   };
-  const handleHairClick = (faceSeq) => {
-    setSelectedHairType(faceSeq);
-  };
-  const result = {
-    "name": "김싸피",
-    "id": "ssafy",
-    "email": "ssafy@ssafy.com",
-    "gender": "F",
-    "faceType": [
-      {
-        "faceSeq": 0,
-        "faceLabel": "선택안함",
-        "faceImg": "img0.png"
-      },
-      {
-        "faceSeq": 1,
-        "faceLabel": "역삼각형",
-        "faceImg": "img1.png"
-      },
-      {
-        "faceSeq": 2,
-        "faceLabel": "계란형",
-        "faceImg": "img2.png"
-      },
-      {
-        "faceSeq": 3,
-        "faceLabel": "긴 얼굴형",
-        "faceImg": "img3.png"
-      },
-      {
-        "faceSeq": 4,
-        "faceLabel": "둥근형",
-        "faceImg": "img4.png"
-      }
-    ],
-    "myFace": "2",
-    "hairCondition": [
-      {
-        "hairSeq": 0,
-        "hairLabel": "선택 안함"
-      },
-      {
-        "hairSeq": 1,
-        "hairLabel": "굵은 모발"
-      },
-      {
-        "hairSeq": 2,
-        "hairLabel": "얇은 모발"
-      },
-      {
-        "hairSeq": 3,
-        "hairLabel": "윤기 없음"
-      }
-    ],
-    "myHairCondition": [
-      2, 3, 4
-    ]
-  };
+  
   const {
     register,
     handleSubmit,
     formState: { errors },
     setError,
+    watch,
+    setValue,
   } = useForm({
-    defaultValues: {
-      name: result.name,
-      id: result.id,
-      email: result.email,
-    },
+    mode: "onBlur",
   });
-  const onValid = (data) => {
-    // 이메일 형식 확인 및 에러 메시지 설정
-    if (!/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(data.email)) {
-      setError("email", { message: "올바른 이메일 형식이 아닙니다." });
-      return;
-    }
-    // 비밀번호 조건 확인 및 에러 메시지 설정
-    if (data.pwd && !/(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}/.test(data.pwd)) {
-      setError("pwd", { message: "영문, 숫자, 특수문자를 포함한 8자 이상의 비밀번호를 입력해주세요." });
-      return;
-    }
-    // 비밀번호와 비밀번호 확인 일치 여부 확인 및 에러 메시지 설정
-    if (data.pwd && data.pwd !== data.pwd1) {
-      setError("pwd1", { message: "비밀번호가 일치하지 않습니다." });
-      return;
-    }
-    // 서버로 데이터 전송 등 필요한 작업 수행
-    // ...
-    console.log(data);
-  };
+  const password = watch("pwd");
 
+  const onValid = async (data) => {
+    try {
+      const requestData = {
+        "pwd": data.pwd,
+        "myFace": selectedFaceType,
+        "myHairCondition": selectedHairTypes
+      };
+      await changePassword(customerSeq, requestData);
+      swal("Success", "회면정보가 수정되었습니다.", "success");
+      navigate(`/customerMyPage/${customerSeq}`);
+      return;
+    } catch (error) {
+      console.error("Sign-up error:", error);
+      swal("Error", "회원정보수정 실패.", "error");
+    }
+  };
+  useEffect(() => {
+    if (data) {
+      setValue("name", data.name);
+      setValue("id", data.id);
+        setValue("email", data.email);
+        setSelectedFaceType(data.myFace);
+        setSelectedHairTypes(data.myHairCondition);
+      }
+    }, [data, setValue]);
+  console.log(selectedHairTypes, selectedFaceType);
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+  if (isError) {
+    return <div>An error occurred while fetching data.</div>;
+  }
+  
   return(
     <Container>
       <SignupBox>
@@ -306,15 +265,12 @@ function EditCustomerInfo(){
                       </TextBox>
                       <Input placeholder="아이디" {...register("id")} readOnly />
                     </InputWrapper>
-                    {/* 이메일 에러 메시지 출력 */}
                     <InputWrapper>
                       <TextBox>
                         <Text>이메일</Text>
                       </TextBox>
-                      <Input placeholder="이메일" {...register("email")} />
+                      <Input placeholder="이메일" {...register("email")} readOnly />
                     </InputWrapper>
-                    <ErrorMessage>{errors?.email?.message}</ErrorMessage>
-                    {/* 비밀번호 에러 메시지 출력 */}
                     <InputWrapper>
                       <TextBox>
                         <Text>비밀번호</Text>
@@ -322,11 +278,18 @@ function EditCustomerInfo(){
                       <Input
                         placeholder="8~16자리의 비밀번호를 입력해주세요"
                         type="password"
-                        {...register("pwd")}
+                        {...register("pwd", {
+                          required: "비밀번호를 입력해주세요.",
+                          pattern: {
+                            value:
+                              /(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}/,
+                            message:
+                              "영문, 숫자, 특수문자를 포함한 8자 이상의 비밀번호를 입력해주세요.",
+                          },
+                        })}
                         />
                     </InputWrapper>
                     <ErrorMessage>{errors?.pwd?.message}</ErrorMessage>
-                    {/* 비밀번호 확인 에러 메시지 출력 */}
                     <InputWrapper>
                       <TextBox>
                         <Text>비밀번호 확인</Text>
@@ -334,7 +297,12 @@ function EditCustomerInfo(){
                       <Input
                         placeholder="비밀번호 확인 ✔"
                         type="password"
-                        {...register("pwd1")}
+                        {...register("pwd1", {
+                          required: "비밀번호 확인을 입력해주세요.",
+                          validate: (value) =>
+                            value === password ||
+                            "비밀번호가 일치하지 않습니다.",
+                        })}
                         />
                     </InputWrapper>
                     <ErrorMessage>{errors?.pwd1?.message}</ErrorMessage>
@@ -343,15 +311,15 @@ function EditCustomerInfo(){
                 <Hr/>
                 <FaceBox>
                 <SemiText>회원님의 얼굴 형을 선택해주세요</SemiText>
-                  {result.faceType.map((type) => (
+                  {data.faceDict.map((type) => (
                       <FaceBtn
-                        key={type.faceSeq}
-                        type={type.faceLabel}
-                        onClick={() => handleFaceClick(type.faceSeq)}
+                        key={type.seq}
+                        type="button"
+                        onClick={() => handleFaceClick(type.seq)}
                         variants={typeBtnVariants}
                         initial="normal"
                         whileHover="hover"
-                        animate={selectedFaceType === type.faceSeq ? "active" : "normal"}
+                        animate={selectedFaceType === type.seq ? "active" : "normal"}
                       >{type.faceLabel}
                       </FaceBtn>
                     ))}
@@ -359,16 +327,16 @@ function EditCustomerInfo(){
                 <Hr/>
                 <HairBox>
                 <SemiText>회원님의 모발상태를 선택해주세요</SemiText>
-                {result.hairCondition.map((type) => (
+                {data.hairConditionDict.map((type) => (
                       <HairBtn
-                        key={type.hairSeq}
-                        type={type.hairLabel}
-                        onClick={() => handleHairClick(type.hairSeq)}
+                        key={type.seq}
+                        type="button"
+                        onClick={() => handleHairClick(type.seq)}
                         variants={typeBtnVariants}
                         initial="normal"
                         whileHover="hover"
-                        animate={selectedHairType === type.hairSeq ? "active" : "normal"}
-                      >{type.hairLabel}
+                        animate={selectedHairTypes.includes(type.seq) ? "active" : "normal"}
+                      >{type.label}
                       </HairBtn>
                     ))}
                 </HairBox>
