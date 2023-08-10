@@ -55,3 +55,37 @@ export const toggleLikeButton = async ({designerSeq, customerSeq, isLike}) => {
     throw new Error("좋아요 버튼 클릭 실패", error);
   }
 };
+
+
+// 디자이너 리스트 뷰 스타일 필터 api
+export const submitStyleFilter = async (hairStyleSeqNumbers) => {
+  try {
+    console.log("스타일 try문 진입");
+    const hairStyleSeqs = hairStyleSeqNumbers.join(",");
+    const response = await axios.get(`${BASE_URL}/designer/search/filter`, {
+      params: {
+        hairStyleSeqs: hairStyleSeqs,
+        customerSeq: 1,
+      },
+    });
+    console.log(response.data.result);
+    return response.data.result;
+  } catch (error) {
+    throw new Error("스타일 필터 요청 실패", error);
+  }
+};
+
+// 이름으로 검색
+export const searchDesigner = async (name, userSeq) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/designer/search/name`, {
+      params: {
+        "name": name,
+        "customerSeq": userSeq,
+      }})
+      console.log("이름으로 검색 되나? 됐다!", response.data.result);
+      return response.data.result;
+  } catch (error) {
+    throw new Error("이름으로 검색 요청 실패", error)
+  }
+}

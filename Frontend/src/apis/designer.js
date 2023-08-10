@@ -86,23 +86,6 @@ export const changeDesignerData = async (designerSeq, requestData) => {
   }
 };
 
-// 디자이너 리스트 뷰 스타일 필터 api
-export const submitStyleFilter = async (hairStyleSeqNumbers) => {
-  try {
-    console.log("스타일 try문 진입");
-    const hairStyleSeqs = hairStyleSeqNumbers.join(",");
-    const response = await axios.get(`${BASE_URL}/designer/search/filter`, {
-      params: {
-        hairStyleSeqs: hairStyleSeqs,
-        customerSeq: 1,
-      },
-    });
-    console.log(response.data.result);
-    return response.data.result;
-  } catch (error) {
-    throw new Error("스타일 필터 데이터 못가져옴");
-  }
-};
 
 // 디자이너 프로필 사진 등록 api
 export const attachDesignerImage = async (seq, formData) => {

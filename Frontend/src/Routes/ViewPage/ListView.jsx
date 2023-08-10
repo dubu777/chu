@@ -5,8 +5,8 @@ import React, { useState, useEffect } from "react";
 import DesignerList from "../../components/DesignerComponent/DesignerList";
 import axios from "axios";
 import { useRecoilState } from "recoil";
-import {listViewState} from "../../recoil/designer";
-import {listinfo, submitStyleFilter} from "../../apis/designer"
+import {listViewState} from "../../recoil";
+import {listinfo, submitStyleFilter, searchDesigner} from "../../apis"
 import { async } from "q";
 import { useQuery } from "react-query";
 
@@ -163,8 +163,19 @@ function ListView() {
   const { data, isError, isLoading } = useQuery(['designerList', customerSeq], () => listinfo(customerSeq))
   const [selectedStyle, setSelectedStyle] = useState([]);
   const [filterData, setFilterData] = useState();
-  const sendData = filterData && filterData.designerListCnt ? filterData : data;
-  
+  const [inputValue, setInputValue] = useState('');
+  const [searchResults, setSearchResults] = useState(null);
+  const handleSearch = async () => {
+    try {
+      const data = await searchDesigner(inputValue, customerSeq);
+      setSearchResults(data);
+    } catch (error) {
+      console.error('이름으로 검색 에러', error);
+    }
+  };
+  const sortData = filterData && filterData.designerListCnt ? filterData : data;
+  const sendData = searchResults || sortData
+  console.log(sendData);
   const toggleStyleType = (tag) => {
     const selectedTag = {
       'hairStyleSeq': tag.hairStyleSeq,
@@ -226,7 +237,12 @@ function ListView() {
       <Box>
         <SearchBox>
           <SearchImg src="/icon/search.png"/>
-          <Input placeholder="Search" />
+          <Input 
+            placeholder="Search" 
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+          />
         </SearchBox>
       </Box>
       <Wrapper>
