@@ -8,6 +8,8 @@ import SignUpInput from "../../components/SignUpComponent/SignUpInput";
 import { useNavigate } from "react-router-dom";
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
+import { getDesignerEditData } from '../../apis';
+
 const Container = styled.div`
   display: flex;
   justify-content: center;
@@ -269,6 +271,7 @@ const typeBtnVariants = {
   },
 };
 function EditDesignerInfo() {
+  const designerSeq = localStorage.getItem('userSeq')
   const navigate = useNavigate();
   const cutType = ["레이어드컷", "히메컷", "투블럭", "시스루컷", "허쉬컷", "슬릭컷", "아이비리그컷", "가일컷"]
   const permType = ["아이롱펌", "시스루펌", "C컬", "볼륨펌", "쉐도우펌", "베이비펌", "히피펌", "복구펌"]

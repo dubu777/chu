@@ -19,7 +19,6 @@ import CustomerMyPage from "./Routes/CustomerPage/CustomerMyPage";
 import DesignerMyPage from "./Routes/DesignerPage/DesignerMyPage";
 import ListView from "./Routes/ViewPage/ListView";
 import Survey from "./components/ModalComponent/Survey";
-import Result from "./components/ModalComponent/Result";
 import EditDesignerInfo from "./Routes/DesignerPage/EditDesignerInfo";
 import EditCustomerInfo from "./Routes/CustomerPage/EditCustomerInfo";
 import Reservation from "./Routes/DesignerPage/Reservation";
@@ -49,7 +48,7 @@ function App() {
         <Route path="customermypage/:customerSeq" element={<CustomerMyPage/>} >
           <Route path="result/:consultingSeq" element={<CustomerMyPage/>} />
         </Route>
-        <Route path="editcustomerinfo" element={<EditCustomerInfo/>} />
+        <Route path="editcustomerinfo/:customerSeq" element={<EditCustomerInfo/>} />
         <Route path="designermypage/:designerSeq" element={<DesignerMyPage/>} />
         <Route path="listview" element={<ListView/>} />
         <Route path="editdesignerinfo" element={<EditDesignerInfo/>} />

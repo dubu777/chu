@@ -259,7 +259,7 @@ function DesignerMyPage() {
         </InfoBox>
 
         <ChangeBox>
-          <ChangeBtn onClick={() => navigate("/editdesignerinfo")}>
+          <ChangeBtn onClick={() => navigate(`/editdesignerinfo/${designerSeq}`)}>
             회원 정보 변경
           </ChangeBtn>
         </ChangeBox>

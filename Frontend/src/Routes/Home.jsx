@@ -7,7 +7,7 @@ import { loginState, loginResultState } from ".././recoil/auth";
 import { useRecoilState } from 'recoil';
 import { accessTokenState } from '.././recoil';
 import { useQuery } from "react-query";
-import { fetchMain } from "../apis";
+import { fetchMain, customerMain, designerMain } from "../apis";
 
 const Wrapper = styled.div`
   display: flex;
@@ -106,24 +106,24 @@ const Name = styled.p`
 `;
 
 function Home() {
-  useEffect(() => {
-    const getPersistedAccessToken = () => {
-      const persistedData = localStorage.getItem('recoil-persist');
-      if (persistedData) {
-        const parsedData = JSON.parse(persistedData);
-        return parsedData.accessTokenState;
-      }
-      return null;
+  
+  const userSeq = localStorage.getItem('userSeq') || 0
+  const fetchLogInData = async (userSeq) => {
+    const userType = localStorage.getItem('userType') || 'guest';
+    switch(userType) {
+      case 'customer':
+        return await customerMain(userSeq);
+      case 'designer':
+        return await designerMain(userSeq);
+      case 'guest':
+      default:
+        return await fetchMain(userSeq);  // seq 0을 넘겨줌
     }
-
-    const token = getPersistedAccessToken();
-    console.log('Token from localStorage:', token);
-  }, []);
-
-  const [loginResult, setLoginResult] = useRecoilState(loginResultState);
-  const [token, setToken] = useRecoilState(accessTokenState);
-  const { isLoading, data, isError } = useQuery(["noLogInMain"], fetchMain);
-
+  };
+  const { data, isError, isLoading } = useQuery(['loginData', userSeq], () => fetchLogInData(userSeq));
+  console.log(data, "메인 데이터");
+  // const { isLoading, data, isError } = useQuery(["noLogInMain"], fetchMain);
+  
   if (isLoading) {
     return <div>Loading...{data}</div>;
   }

@@ -7,6 +7,7 @@ const BASE_URL = 'http://localhost:9090/api';
 export const fetchMain = async () => {
   try {
     const response = await axios.get(`${BASE_URL}/user/main`);
+    console.log("비로그인");
     return response.data.result;
   } catch (error) {
     throw new Error("메인페이지 데이터 통신 에러");
@@ -19,7 +20,7 @@ export const customerMain = async (customerSeq) => {
     const response = await axios.get(
       `${BASE_URL}/customer/main/${customerSeq}`
     );
-    // 서버로부터 받은 토큰을 반환
+    console.log("고객 로그인");
     return response.data.result;
   } catch (error) {
     throw new Error("메인페이지 고객 데이터 에러");
@@ -32,7 +33,7 @@ export const designerMain = async (designerSeq) => {
     const response = await axios.get(
       `${BASE_URL}/designer/main/${designerSeq}`
     );
-    // 서버로부터 받은 토큰을 반환
+    console.log("디자이너 로그인");
     return response.data.result;
   } catch (error) {
     throw new Error("메인페이지 디자이너 데이터 에러");

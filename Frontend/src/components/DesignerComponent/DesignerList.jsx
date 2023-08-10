@@ -197,6 +197,16 @@ function DesignerList(props) {
               ))
             }
           </Box>
+          <Box>
+            <CostBox>
+              <Icon src="/icon/money.png"/>
+              <Text>{data.cost}</Text>
+            </CostBox>
+            <ReservBox whileHover={{backgroundColor: "rgb(244,153,26)"}}>
+              <Icon src="/icon/reservBtn.png"/>
+              <Text>예약</Text>
+            </ReservBox>
+          </Box>
         </InfoBox>
       </Wrapper>
       <LikeBox>
@@ -210,16 +220,7 @@ function DesignerList(props) {
         )}
         <Text>{data.likeCnt}</Text>
         </HeartBox>
-          <Box>
-            <CostBox>
-              <Icon src="/icon/money.png"/>
-              <Text>{data.cost}</Text>
-            </CostBox>
-            <ReservBox whileHover={{backgroundColor: "rgb(244,153,26)"}}>
-              <Icon src="/icon/reservBtn.png"/>
-              <Text>예약</Text>
-            </ReservBox>
-          </Box>
+          
         </LikeBox>
       </Wrap>
     </Container>

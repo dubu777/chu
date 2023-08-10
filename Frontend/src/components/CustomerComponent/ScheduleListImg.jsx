@@ -12,6 +12,7 @@ const Container = styled.div`
   justify-content: center;
   width: 80%;
   margin: 0 auto;
+  
 `;
 const Hr = styled.div`
   margin: 20px 0 20px 0;
@@ -40,17 +41,18 @@ const InfoBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-left: 20px;
+  margin-left: 25px;
 `;
 
 const Name = styled.span`
-  font-size: 13px;
-  font-weight: bold;
+  font-size: 18px;
+  font-weight: 700;
 `;
-const Intro = styled.span`
-  font-size: 13px;
-  font-weight: 500;
-  margin-top: 3px;
+const DateText = styled.span`
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 5px;
+  color: #2d2d2d;
 `;
 
 
@@ -60,7 +62,7 @@ const ReservBtn = styled(motion.button)`
   align-items: center;
   border: 1px solid rgb(244, 153, 26);
   border-radius: 5px;
-  margin: 10px 15px 0 0;
+  margin: 15px 15px 0 0;
   padding: 5px 10px;
   font-weight: 600;
   background-color: white;
@@ -111,7 +113,7 @@ function ScheduleListImg(){
                   >
                     지윤
                   </Name>
-                  <Intro>08.21 금 08:30~07:00</Intro>
+                  <DateText>08.21 금 08:30~07:00</DateText>
                   <Box>
                     <ReservBtn
                       variants={ReservBtnVariant}

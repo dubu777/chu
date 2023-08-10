@@ -6,11 +6,12 @@ import ScheduleListImg from "../../components/CustomerComponent/ScheduleListImg"
 import ReserveList from "../../components/CustomerComponent/ReserveList";
 import LikeDesigner from "../../components/CustomerComponent/LikeDesigner";
 // import ProfileImg from "../../components/CustomerComponent/ProfileImg";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {formDataState} from "../../recoil";
 import {attachCustomerImage, getCustomerMyPage} from "../../apis";
 import { useRecoilState } from "recoil";
 import { useQuery } from "react-query";
+import { motion } from "framer-motion";
 
 const Container = styled.div`
 
@@ -62,11 +63,13 @@ const ChangeBox = styled.div`
   text-align: right;
 `;
 
-const ChangeBtn = styled.button`
+const ChangeBtn = styled(motion.button)`
   border: 0;
   border-radius: 0.4rem;
   background-color: #f9bd4f;
   width: 150px;
+  font-weight: 600;
+  color: #272626;
   height: 35px;
   
 `;
@@ -77,6 +80,7 @@ const ReserveWrapper = styled.div`
   height: 150px;
   width: 60%;
   border-radius: 0.7rem;
+  background-color: #F9F5F0;
 `;
 
 const Wrapper = styled.div`
@@ -128,6 +132,7 @@ function CustomerMyPage(){
   const fileInputRef = useRef(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const [file,setFile] = useState()
+  const navigate = useNavigate();
   // const [recodilFormData, setrecodilFormData] = useRecoilState(formDataState);
   // 사진을 클릭하면 파일 선택 다이얼로그를 나타내는 함수
   const handleImageClick = () => {
@@ -254,7 +259,12 @@ function CustomerMyPage(){
             ))}
             </InfoBox>
             <ChangeBox>
-              <ChangeBtn><Link to="/editcustomerinfo">회원 정보 변경</Link></ChangeBtn>
+              <ChangeBtn 
+                onClick={() => navigate(`/editcustomerinfo/${customerSeq}`) }
+                whileHover={{ backgroundColor: "#574934", color: "white" }}
+              >
+                회원 정보 변경
+              </ChangeBtn>
             </ChangeBox>
           </InfoWrapper>
         </InfoContainer>
