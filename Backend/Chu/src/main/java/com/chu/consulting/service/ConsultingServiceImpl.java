@@ -300,27 +300,22 @@ public class ConsultingServiceImpl implements ConsultingService {
     }
 
     @Override
-    public String participantConsulting(int consultingSeq) {
+    public ResponseParticipantConsulting participantConsulting(int consultingSeq) {
 
-        String sessionId = null;
-        Consulting consulting = new Consulting();
+        ResponseParticipantConsulting response = new ResponseParticipantConsulting();
 
         try{
-            consulting = consultingRepository.getConsultingBySeq(consultingSeq);
+            Consulting consulting = consultingRepository.getConsultingBySeq(consultingSeq);
 
-            // 일치하는 상담이 없다면
-            if(consulting == null){
-                sessionId = null;
-            }
-            // 일치하는 사용자 존재
-            else{
-                sessionId = consulting.getUrl();
-            }
+            response.setUrl(consulting.getUrl());
+
+
+
         } catch(Exception e){
             e.printStackTrace();
         }
 
-        return sessionId;
+        return response;
     }
 
 
