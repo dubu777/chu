@@ -132,7 +132,7 @@ function Portfolio(){
       const response = await postPortfolio(seq, formData);
         const newImg = {
           imgSeq: response, // 서버에서 받아온 imgSeq 사용
-          imgName: URL.createObjectURL(file),
+          imgName: file.name,
         }
         setData({ ...data, imgs: [...data.imgs, newImg] });
       } catch (error) {
@@ -159,7 +159,8 @@ alt="Image" />
     </Wrapper>
     {data.imgs.length === 0 || (null && (
           <MessageBox>
-            <IconImg src={"./icon/file.png"}></IconImg>
+            {/* <IconImg src={"./icon/file.png"}></IconImg> */}
+            <IconImg src={"/icon/file.png"}></IconImg>
             <UploadText>포트폴리오 사진을 업로드 해주세요 :)</UploadText>
           </MessageBox>
     ))}
