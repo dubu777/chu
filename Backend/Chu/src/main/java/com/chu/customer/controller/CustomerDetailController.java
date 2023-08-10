@@ -24,6 +24,34 @@ public class CustomerDetailController {
     private final CustomerDetailService customerDetailService;
     private final DesignerDetailService designerDetailService;
 
+    @GetMapping("/{customer_seq}")
+    public ResponseEntity<HttpResponseDto> getCustomerDetailInfo(@PathVariable("customer_seq") int customerSeq){
+
+        ResponseCustomerDetailInfoDto responseCustomerDetailInfoDto = null;
+
+        try{
+            responseCustomerDetailInfoDto = customerDetailService.getCustomerUpdateDetailInfo(customerSeq);
+        } catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), responseCustomerDetailInfoDto));
+    }
+
+    @PutMapping("/{customer_seq}")
+    public ResponseEntity<HttpResponseDto> putCustomerDetailInfo(@PathVariable("customer_seq") int customerSeq
+            , @RequestBody RequestCustomerDetailChangeDto requestCustomerDetailChangeDto){
+
+        try{
+            customerDetailService.putCustomerDetailInfo(customerSeq, requestCustomerDetailChangeDto);
+        } catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), null));
+    }
 
 //    @GetMapping("/{customer_seq}")
 //    public ResponseEntity<HttpResponseDto> getCustomerDetailInfo(@PathVariable("customer_seq") int customerSeq){

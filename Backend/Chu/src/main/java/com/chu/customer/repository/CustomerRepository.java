@@ -36,6 +36,10 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
     @Query("UPDATE Customer c SET c.RefreshToken = :token WHERE c.seq = :seq")
     void updateRefreshToken(int seq, String token);
 
+    @Modifying
+    @Query("UPDATE Customer c SET c.faceDict.seq = :faceSeq WHERE c.seq = :seq")
+    void updateFaceSeq(int seq, int faceSeq);
+
 
 //    boolean checkId(String id);
 //

@@ -19,4 +19,6 @@ public interface ConsultingVirtualImgRepository extends JpaRepository<Consulting
     @Modifying
     @Query("UPDATE ConsultingVirtualImg cv SET cv.isSelected = true WHERE cv.seq = :seq")
     void updateIsSelected(int seq);
+
+    List<ConsultingVirtualImg> findAllByConsultingSeq(int consultingSeq);
 }

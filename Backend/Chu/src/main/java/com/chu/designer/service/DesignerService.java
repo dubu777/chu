@@ -43,6 +43,9 @@ public interface DesignerService {
     // 디자이너 알림 읽음 처리
     void checkAlert(int alertSeq);
 
+    // 예약화면 - 디자이너 포트폴리오, 다른 디자이너 랜덤사진 4장 가져오기
+    ResponseRsvPageDto getReservationPage(int designerSeq);
+
 //    // 디자이너 회원가입
 //    boolean signUp(RequestDesignerSignUpDto requestDesignerSignUpDto);
 //

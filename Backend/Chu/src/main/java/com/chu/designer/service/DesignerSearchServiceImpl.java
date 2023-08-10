@@ -177,6 +177,45 @@ public class DesignerSearchServiceImpl implements DesignerSearchService {
     }
 
     @Override
+    public List<ResponseDesignerSearchAroundDto> search2AllArea() {
+        List<ResponseDesignerSearchAroundDto> list = new ArrayList<>();
+
+        try{
+            List<Designer> designerList = designerRepository.findAll();
+
+            for(Designer d : designerList){
+                ResponseDesignerSearchAroundDto dto = new ResponseDesignerSearchAroundDto();
+
+                dto.setDesignerSeq(d.getSeq());
+                if(d.getImagePath() != null)
+                    dto.setDesignerImg(d.getImagePath().getUploadImgName());
+                else
+                    dto.setDesignerImg(null);
+                dto.setName(d.getName());
+                dto.setReviewScore(d.getReviewScore());
+
+                List<String> dtoTagList = new ArrayList<>();
+                List<DesignerTagInfo> tagList = designerTagInfoRepository.findByDesignerSeq(d.getSeq());
+                for(DesignerTagInfo dti : tagList){
+                    dtoTagList.add(dti.getHairStyleDict().getHairStyleLabel());
+                }
+                dto.setHairStyleLabel(dtoTagList);
+
+                dto.setLatitude(d.getLatitude());
+                dto.setLongitude(d.getLongitude());
+
+
+                list.add(dto);
+            }
+
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
+    @Override
     public ResponseDesignerDetailInfoDto getDesignerDetailInfo(Integer designerSeq, Integer customerSeq) {
 
         ResponseDesignerDetailInfoDto result;
@@ -312,8 +351,5 @@ public class DesignerSearchServiceImpl implements DesignerSearchService {
         return responseDesignerSearchDto;
     }
 }
-//    @Override
-//    public List<ResponseDesignerSearchAreaDto> search2AllArea() {
-//        return designerSearchRepository.search2AllArea();
-//    }
+
 

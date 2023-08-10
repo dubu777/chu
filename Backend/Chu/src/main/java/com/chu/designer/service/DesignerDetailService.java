@@ -2,16 +2,13 @@ package com.chu.designer.service;
 
 import com.chu.consulting.domain.ResponseConsultingDto;
 import com.chu.designer.domain.RequestDesignerInfoUpdateDto;
-import com.chu.designer.domain.RequestReservationPossibleDateAndTimeDto;
+import com.chu.designer.domain.RequestUpdatePossibleRsvTime;
 import com.chu.designer.domain.ResponseDesignerMyPageUpdateShowDto;
 import com.chu.designer.domain.ResponseDesignerMyPageDto;
 import com.chu.global.domain.ImageDto;
-import com.chu.global.domain.TimeDto;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 
 public interface DesignerDetailService {
@@ -31,14 +28,14 @@ public interface DesignerDetailService {
     // 디자이너 정보 수정
     boolean updateDesignerInfo(int designerSeq, RequestDesignerInfoUpdateDto requestDesignerInfoUpdateDto);
 //
-//    // 디자이너 상담 가능 시간 수정
-//    boolean updatePossibleReservationTime(int designerSeq, RequestReservationPossibleDateAndTimeDto requestReservationPossibleDateAndTimeDto);
+    // 디자이너 상담 가능 시간 수정
+    void updatePossibleRsvTime(int designerSeq, RequestUpdatePossibleRsvTime requestUpdatePossibleRsvTime);
 //
 //    // 디자이너 해당 날짜 상담 가능 시간 내역 조회
 //    ArrayList<TimeDto> getPossibleReservationTime(int designerSeq, Date date);
 //
-//    // 디자이너 상담 예약 내역 조회
-//    ArrayList<ResponseConsultingDto> getReservationList(int designerSeq);
+    // 디자이너 상담 예약 내역 조회
+    List<ResponseConsultingDto> getReservationList(int designerSeq);
 //
     // 디자이너 포트폴리오 조회
     List<ImageDto> getPortfolio(int designerSeq);

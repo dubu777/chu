@@ -3,12 +3,11 @@ package com.chu.customer.domain;
 import lombok.Data;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Data
 public class RequestCustomerDetailChangeDto {
-    String name;
-    String email;
     String pwd;
     int myFace;
-    ArrayList<Integer> myHairCondition;
+    List<Integer> myHairCondition;
 }
