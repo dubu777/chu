@@ -1,13 +1,16 @@
 package com.chu.designer.controller;
 import com.chu.customer.domain.RequestCustomerChangePwdDto;
 import com.chu.designer.domain.*;
+import com.chu.designer.service.DesignerDetailService;
 import com.chu.designer.service.DesignerService;
 import com.chu.global.domain.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.xml.ws.Response;
 import java.sql.Date;
@@ -21,15 +24,20 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
 public class DesignerController {
     private final DesignerService designerService;
+    private final DesignerDetailService designerDetailService;
 
     // 회원가입
-    @PostMapping(value = "/sign-up")
-    public ResponseEntity<HttpResponseDto> signUp(@RequestBody RequestDesignerSignUpDto requestDesignerSignUpDto){
+    @PostMapping(value = "/sign-up", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<HttpResponseDto> signUp(@RequestBody RequestDesignerSignUpDto requestDesignerSignUpDto,
+                                                  @RequestPart(value = "img") MultipartFile img){
 
         try{
+            // 여기서 디비에 폴더경로 가져오기, 실제 파일 서버 저장 함수
+//            String filePath = designerDetailService.getSavedImgFilePathDesignerProfile(img);
+
             // requestDto -> Designer entity 변환
             Designer designer = requestDesignerSignUpDto.toDesignerEntity();
-            designerService.signUp(designer);
+            designerService.signUp(designer, img);
         } catch(Exception e){
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));
