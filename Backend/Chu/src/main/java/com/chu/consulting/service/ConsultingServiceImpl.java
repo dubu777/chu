@@ -3,11 +3,14 @@ package com.chu.consulting.service;
 import com.chu.consulting.domain.*;
 import com.chu.consulting.repository.ConsultingRepository;
 import com.chu.consulting.repository.ConsultingResultRepository;
+import com.chu.consulting.repository.ConsultingTargetInfoRepository;
 import com.chu.customer.domain.Customer;
 import com.chu.customer.repository.CustomerRepository;
 import com.chu.designer.domain.Designer;
 import com.chu.designer.domain.DesignerLike;
+import com.chu.designer.domain.DesignerPortfolio;
 import com.chu.designer.repository.DesignerLikeRepository;
+import com.chu.designer.repository.DesignerPortfolioRepository;
 import com.chu.designer.repository.DesignerRepository;
 import com.chu.designer.repository.ReservationAvailableSlotRepository;
 import com.chu.global.domain.FaceDict;
@@ -43,13 +46,18 @@ public class ConsultingServiceImpl implements ConsultingService {
     private final DesignerRepository designerRepository;
     private final ConsultingResultRepository consultingResultRepository;
     private final HairStyleDictRepository hairStyleDictRepository;
+    private final DesignerPortfolioRepository designerPortfolioRepository;
+    private final ConsultingTargetInfoRepository consultingTargetInfoRepository;
 
     // 상담 예약하기
     @Override
     @Transactional
-    public void postConsulting(Consulting consulting) {
+    public void postConsulting(RequestConsultingDto requestConsultingDto) {
 
         try{
+            // requestConsultingDto -> entity 만들기
+            Consulting consulting = requestConsultingDto.toConsultingEntity();
+
             consulting.setCreatedDate(LocalDateTime.now());
             // 상담 예약하기
             consultingRepository.save(consulting);
@@ -68,6 +76,21 @@ public class ConsultingServiceImpl implements ConsultingService {
 
             // 생성한 SessionId db에 업데이트하기
             consultingRepository.updateConsultingUrl(seq, url);
+
+            // 고객이 선택한 포트폴리오 번호 consulting_target_info에 저장하기4
+            List<Integer> portfolios = requestConsultingDto.getPortfolios();
+
+            for(int p : portfolios){
+                ConsultingTargetInfo cti = new ConsultingTargetInfo();
+
+                cti.setConsulting(consulting);
+
+                DesignerPortfolio designerPortfolio = designerPortfolioRepository.findBySeq(p);
+
+                cti.setDesignerPortfolio(designerPortfolio);
+
+                consultingTargetInfoRepository.save(cti);
+            }
 
 
         } catch(Exception e){
