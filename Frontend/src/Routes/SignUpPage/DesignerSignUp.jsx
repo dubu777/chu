@@ -335,7 +335,7 @@ function DesignerSignUp() {
           <Title>Sign Up</Title>
           <Wrapper>
             <Form onSubmit={handleSubmit(onSubmit)}>
-              {/* <ProfileBox>
+              <ProfileBox>
                 <input
                   type="file"
                   style={{ display: "none" }}
@@ -351,7 +351,7 @@ function DesignerSignUp() {
                   <Btn onClick={handleImageClick}>프로필 이미지 첨부</Btn>
                   <ErrorMessage>디자이너 프로필에 사용될 사진을 첨부해주세요</ErrorMessage>
                 </ClickBox>
-              </ProfileBox> */}
+              </ProfileBox>
               <InputBox>
                 <InputWrap>
                   <SignUpInputBox>
