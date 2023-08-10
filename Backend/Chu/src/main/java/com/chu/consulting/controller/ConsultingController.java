@@ -45,6 +45,10 @@ public class ConsultingController {
     public ResponseEntity<HttpResponseDto> postConsulting(@RequestBody RequestConsultingDto requestConsultingDto){
 
         try{
+            // 이미지 처리
+
+
+
             // requestConsultingDto -> entity 만들기
             Consulting consulting = requestConsultingDto.toConsultingEntity();
             consultingService.postConsulting(consulting);
