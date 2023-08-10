@@ -131,7 +131,7 @@ export const getAllReserveList = async (designerSeq) => {
       // const response = await axios.get(`${BASE_URL}/designer/detail/reservation-list/${designerSeq}`)
       const response = await axios.get(`${BASE_URL}/designer/detail/reservation-list/${designerSeq}`)
       console.log('응답몬', response.data);
-      return response.data;
+      return response.data.result;
   } catch(error) {
       throw new Error('디자이너 상담 예약목록 API 요청 실패')
   }
