@@ -256,7 +256,6 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
             // 해당 디자이너가 들어있는 데이터를 전부 삭제한다
             designerTagInfoRepository.deleteByDesignerSeq(designerSeq);
 
-            System.out.println("여기까지는 오류 안남");
             // 새로 받은 값들을 해당 디자이너와 함께 데이터를 추가한다
             for(Integer tagSeq : updateDto.getMyHairStyleTag()) {
                 DesignerTagInfo dti = new DesignerTagInfo();
