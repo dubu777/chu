@@ -4,6 +4,7 @@ import { useRecoilState } from 'recoil';
 import React, { useState } from 'react';
 import { customerlogIn, designerlogIn } from '../../apis/auth';
 import { accessTokenState, loginResultState } from '../../recoil/auth';
+import swal from "sweetalert";
 
 const Container = styled.div`
 	background: url('./img/login.jpg');
@@ -120,6 +121,7 @@ const handleUserTypeChange = (event) => {
 				navigate("/")
 				return;
 			} catch (error) {
+				swal("Error", "아이디 또는 비밀번호가 맞지 않습니다.", "error");
 				console.error(error);
 			}
 		}

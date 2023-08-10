@@ -105,6 +105,7 @@ function Header() {
     setToken(null);
     localStorage.removeItem('userType');
     localStorage.removeItem('userSeq');
+    navigate('/')
   });
   return (
     <Nav>

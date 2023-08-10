@@ -4,7 +4,6 @@ import React, { useState, useEffect, useRef } from "react";
 import Step from "../../components/SignUpComponent/Step";
 import swal from "sweetalert";
 import { useNavigate } from "react-router-dom";
-import { useRecoilState } from "recoil";
 import {
   signUpRequest,
   checkDuplicateId,
