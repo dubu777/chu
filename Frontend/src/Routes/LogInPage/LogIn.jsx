@@ -1,77 +1,78 @@
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import { useRecoilState } from 'recoil';
-import React, { useState } from 'react';
-import { customerlogIn, designerlogIn } from '../../apis/auth';
-import { accessTokenState, loginResultState } from '../../recoil/auth';
+import { useRecoilState } from "recoil";
+import React, { useState } from "react";
+import { customerlogIn, designerlogIn } from "../../apis/auth";
+import { accessTokenState, loginResultState } from "../../recoil/auth";
 import swal from "sweetalert";
+import { useForm } from "react-hook-form";
 
 const Container = styled.div`
-	background: url('./img/login.jpg');
-	filter: invert(5%);
-	background-size: cover ;
-	width: 100vw;
+  background: url("./img/login.jpg");
+  filter: invert(5%);
+  background-size: cover;
+  width: 100vw;
   height: 100vh;
-	display:flex;
-	justify-content: center;
-	flex-direction: column;
-	padding-left: 150px;
-	font-family: 'Cormorant Garamond';
-	/* font-family: "Apple-B";  */
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding-left: 150px;
+  font-family: "Cormorant Garamond";
+  /* font-family: "Apple-B";  */
 `;
 
 const Wrapper = styled.div`
-	border: 0;
-	border-radius: 0.8rem;
-	width: 35%;
-	height: 45%;
-	background-color: rgb(242, 234, 211, 0.5);
-	color: black;
+  border: 0;
+  border-radius: 0.8rem;
+  width: 35%;
+  height: 45%;
+  background-color: rgb(242, 234, 211, 0.5);
+  color: black;
 `;
 const Title = styled.h1`
-	margin-top: 10px;
-	margin-bottom: 18px;
-	font-size: 30px;
+  margin-top: 10px;
+  margin-bottom: 18px;
+  font-size: 30px;
 `;
 const Input = styled.input`
-	width: 75%;
-	height: 50px;
-	border: 0;
-	border-radius: 0.4rem;
-	background-color: white;
-	padding-left: 10px;
-	font-size: 18px;
-	font-family: 'Cormorant Garamond';
+  width: 75%;
+  height: 50px;
+  border: 0;
+  border-radius: 0.4rem;
+  background-color: white;
+  padding-left: 10px;
+  font-size: 18px;
+  font-family: "Cormorant Garamond";
 `;
 const P = styled.p`
-	margin-top: -15px;
+  margin-top: -15px;
 `;
 const LogInBox = styled.div`
-	justify-content: center;
-	display: flex;
-	align-items: center;
-	flex-direction: column;
-	margin-top: 20px;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 20px;
 `;
 const SubmitBox = styled.div`
-	display:flex;
-	justify-content: space-between;
-	margin-left: 12%;
-	margin-right: 12%;
-	color:white;
+  display: flex;
+  justify-content: space-between;
+  margin-left: 12%;
+  margin-right: 12%;
+  color: white;
 `;
 const Btn = styled.button`
-	border: 0;
-	border-radius: 0.4rem;
-	/* font-family: 'Cormorant Garamond'; */
-	font-size: 15px;
-	width: 60px;
+  border: 0;
+  border-radius: 0.4rem;
+  /* font-family: 'Cormorant Garamond'; */
+  font-size: 15px;
+  width: 60px;
 `;
 
 const FindBox = styled.div`
-	text-align: right;
-	margin-right: 12%;
-	color: white;
+  text-align: right;
+  margin-right: 12%;
+  color: white;
 `;
 
 const RadioContainer = styled.div`
@@ -97,112 +98,108 @@ const TypeLabel = styled.label`
   margin-right: 20px;
   cursor: pointer;
 `;
-const Form = styled.form`
-`;
+const Form = styled.form``;
 function LogIn() {
-
-	const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-	const [userType, setUserType] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [userType, setUserType] = useState("");
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
-	const [loginResult, setLoginResult] = useRecoilState(loginResultState);
-	const navigate = useNavigate();
-const handleUserTypeChange = (event) => {
-	setUserType(event.target.value);
-};
-
+  const navigate = useNavigate();
+  const handleUserTypeChange = (event) => {
+    setUserType(event.target.value);
+  };
+  const { handleSubmit } = useForm();
   const handleLogin = async () => {
-		if (userType === "customer") {
-			try {
-				const result = await customerlogIn(username, password);
-				console.log(">>>>>>>>>>", result);
-				setLoginResult(result);
-				setAccessToken(result.token.accessToken);
-				localStorage.setItem('userSeq', result.userSeq.toString()); // 숫자를 문자열로 변환하여 저장
-				localStorage.setItem('userType', "customer");
-				navigate("/")
-				return;
-			} catch (error) {
-				swal("Error", "아이디 또는 비밀번호가 맞지 않습니다.", "error");
-				console.error(error);
-			}
-		}
-		if (userType === "designer") {
-			try {
-				const result = await designerlogIn(username, password);
-				console.log("리절트", result);
-				setLoginResult(result);
-				setAccessToken(result.token.accessToken);
-				console.log("시퀀스", result.userSeq);
-				localStorage.setItem('userSeq', result.userSeq.toString()); // 숫자를 문자열로 변환하여 저장
-				localStorage.setItem('userType', "designer");
-				navigate("/")
-				return;
-			} catch (error) {
-				console.error(error);
-			}
-		}
-	};
-	
-	// console.log(loginResult);
-	console.log("유저정보111 로컬스토리지",localStorage.getItem('userSeq'), localStorage.getItem('userType'));
+    if (!username || !password || !userType) {
+      swal("Notice", "로그인 정보를 입력해주세요.", "warning");
+      return;
+    }
+    try {
+      let result;
+      if (userType === "customer") {
+        result = await customerlogIn(username, password);
+      } else if (userType === "designer") {
+        result = await designerlogIn(username, password);
+      }
 
-	return(
-		<Container>
-			<Wrapper>
-				<Form>
-				<LogInBox>
-				<Title>Log in</Title>
-				<Input 
-					type="text"
-					value={username}
-					onChange={(e) => setUsername(e.target.value)}
-					placeholder="ID" />
+      console.log("Result:", result);
+      setAccessToken(result.token.accessToken);
+      localStorage.setItem("userSeq", result.userSeq.toString());
+      localStorage.setItem("userType", userType);
+      navigate("/");
+    } catch (error) {
+      swal("Error", "아이디 또는 비밀번호를 확인해주세요.", "error");
+      console.error(error);
+    }
+  };
+
+  const onSubmit = () => {
+    handleLogin();
+  };
+
+  return (
+    <Container>
+      <Wrapper>
+        <Form onSubmit={handleSubmit(onSubmit)}>
+          <LogInBox>
+            <Title>Log in</Title>
+            <Input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="ID"
+            />
+            <br />
+            <Input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password"
+            />
+            <br />
+          </LogInBox>
           <br />
-          <Input 
-						type="password" 
-						value={password}
-						onChange={(e) => setPassword(e.target.value)}
-						placeholder="Password" />
-          <br />
-				</LogInBox>
-				<br />
-				<SubmitBox>
-					<P><Link to="/usertype">Sign up</Link></P>
-					<P><Btn 
-								type="submit" 
-								onClick={handleLogin}
-							>
-								Log in
-							</Btn></P>
-				</SubmitBox> 
-				<br></br>
-				<RadioContainer>
-					<TypeLabel>
-						<CustomRadio
-							type="radio"
-							value="customer"
-							checked={userType === "customer"}
-							onChange={handleUserTypeChange}
-						/>
-						일반회원
-					</TypeLabel>
-					<TypeLabel>
-						<CustomRadio
-							type="radio"
-							value="designer"
-							checked={userType === "designer"}
-							onChange={handleUserTypeChange}
-						/>
-						디자이너
-					</TypeLabel>
-				</RadioContainer>
-				<FindBox><Link to="/findid">Find id</Link></FindBox>
-				<FindBox><Link to="/findpw">Find Password</Link></FindBox>
-				</Form>
-			</Wrapper>
-		</Container>
-	);
+          <SubmitBox>
+            <P>
+              <Link to="/usertype">Sign up</Link>
+            </P>
+            <P>
+              <Btn type="submit" onClick={handleLogin}>
+                Log in
+              </Btn>
+            </P>
+          </SubmitBox>
+          <br></br>
+          <RadioContainer>
+            <TypeLabel>
+              <CustomRadio
+                type="radio"
+                value="customer"
+                checked={userType === "customer"}
+                onChange={handleUserTypeChange}
+              />
+              일반회원
+            </TypeLabel>
+            <TypeLabel>
+              <CustomRadio
+                type="radio"
+                value="designer"
+                checked={userType === "designer"}
+                onChange={handleUserTypeChange}
+              />
+              디자이너
+            </TypeLabel>
+          </RadioContainer>
+          <FindBox>
+            <Link to="/findid">Find id</Link>
+          </FindBox>
+          <FindBox>
+            <Link to="/findpw">Find Password</Link>
+          </FindBox>
+        </Form>
+      </Wrapper>
+    </Container>
+  );
 }
 
 export default LogIn;
