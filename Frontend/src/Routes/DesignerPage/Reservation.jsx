@@ -3,7 +3,10 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css"; // css import
 // import Calendar from "../../components/ReservationComponent/Calendar";
 import { useState } from "react";
+import { useQuery, useMutation } from "react-query";
+import { useNavigate, useParams } from "react-router";
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
+import {getPossibleTimeApi} from "../../apis"
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -251,13 +254,22 @@ const EmtyBox = styled.div`
 `;
 
 function formatDateString(date) {
+  const year = date.getFullYear();
   const month = (date.getMonth() + 1).toString().padStart(2, "0");
   const day = date.getDate().toString().padStart(2, "0");
-  return `${month}/${day}`;
+  const clickdate = `${year}-${month}-${day}`;
+  console.log(clickdate)
+  return `${year}-${month}-${day}`;
 }
 
 function Reservation() {
   const [handleLike, setHandleLike] = useState(false); // 좋아요 상태를 state로 관리
+  const { designerSeq } = useParams();
+  const { data, isLoading, isError } = useQuery(
+    ["possibleTime", designerSeq],
+    (designerSeq, clickdate) => getPossibleTimeApi(designerSeq) 
+  );
+
   const settings = {
     className: "center",
     infinite: true,
@@ -315,7 +327,6 @@ function Reservation() {
     "img/opofol8.jpg",
     "img/opofol9.jpg",
   ];
-  const [data, setData] = useState();
   const [value, onChange] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
@@ -330,8 +341,11 @@ function Reservation() {
       timeSlots.push(time);
     });
   });
-  const handleDateSelect = (date) => {
-    setSelectedDate(date);
+  // const handleDateSelect = (date) => {
+  //   setSelectedDate(date);
+  // };
+
+  const Api = (value) => {
   };
 
   const handleTimeClick = (time) => {
@@ -357,7 +371,7 @@ function Reservation() {
             <SubTitle>예약날짜</SubTitle>
             <Hr />
             <CalendarContainer>
-              <Calendar onChange={onChange} value={value} />
+              <Calendar onChange={onChange} value={value} onClick={Api()}/>
               <div>
                 <p>{formatDateString(value)}</p>
               </div>
