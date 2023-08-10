@@ -81,22 +81,6 @@ function Portfolio(){
     async function fetchData() { 
       try {
         const response = await getPortfolio(seq);
-      //   아마 이러면 데이터에 
-      //   imgs : [
-      //     {
-      //         "imgSeq" : 1,
-      //         "imgName" : "img1.png"
-      //     },
-      //     {
-      //         "imgSeq" : 2,
-      //         "imgName" : "img2.png"
-      //     },
-      //     {
-      //         "imgSeq" : 3,
-      //         "imgName" : "img3.png"
-      //     },
-      // ]
-      // 이 형태로 저장될꺼야
         setData(response)
         console.log(response);
       } catch(error){
@@ -111,6 +95,8 @@ function Portfolio(){
   const handleDelete = async (imgSeq) => {
     try {
       const result = await deletePortfolio(seq, imgSeq);
+      console.log(result)
+      // 받아오는 결과 형태 잘 확인하기
       if (result){
         const updatedImgs = data.imgs.filter((img) => img.imgSeq !== imgSeq);
         setData({ ...data, imgs: updatedImgs });
@@ -133,6 +119,7 @@ function Portfolio(){
         const newImg = {
           imgSeq: response, // 서버에서 받아온 imgSeq 사용
           imgName: file.name,
+
         }
         setData({ ...data, imgs: [...data.imgs, newImg] });
       } catch (error) {

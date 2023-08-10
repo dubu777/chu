@@ -154,7 +154,7 @@ export const postPortfolio = async (seq, formData) => {
 
 // 마이페이지-포트폴리오 삭제
 export const deletePortfolio = async (seq, imgSeq) => {
-  console.log(seq, imgSeq);
+  console.log('보냈ㄷ자나', seq, imgSeq);
   try {
     const response = await axios.delete( 
       `${BASE_URL}/designer/detail/portfolio/${seq}`,
@@ -162,7 +162,9 @@ export const deletePortfolio = async (seq, imgSeq) => {
         params: { "imageSeq": imgSeq },
       }
     );
-    return response.data.result;
+    console.log('성공결과가 뭐야?', response.data.status)
+    // result 없음 주의!
+    return response.data.status;
   } catch (error) {
     throw new Error("디자이너 포트폴리오 삭제 실패");
   }
