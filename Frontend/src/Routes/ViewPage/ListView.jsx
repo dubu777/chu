@@ -159,15 +159,18 @@ const SearchImg = styled.img`
 const SubmitBtn = styled.button`
 `;
 function ListView() {
-  const customerSeq = localStorage.getItem('userSeq') || 0
-  const { data, isError, isLoading } = useQuery(['designerList', customerSeq], () => listinfo(customerSeq))
+  const userType = localStorage.getItem('userType')
+  const userSeqFromStorage = localStorage.getItem('userSeq')
+  const userSeq = userType == 'customer' ? userSeqFromStorage : 0
+  console.log(userSeq);
+  const { data, isError, isLoading } = useQuery(['designerList', userSeq], () => listinfo(userSeq))
   const [selectedStyle, setSelectedStyle] = useState([]);
   const [filterData, setFilterData] = useState();
   const [inputValue, setInputValue] = useState('');
   const [searchResults, setSearchResults] = useState(null);
   const handleSearch = async () => {
     try {
-      const data = await searchDesigner(inputValue, customerSeq);
+      const data = await searchDesigner(inputValue, userSeq);
       setSearchResults(data);
     } catch (error) {
       console.error('이름으로 검색 에러', error);
