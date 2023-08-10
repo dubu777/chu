@@ -80,10 +80,7 @@ export const getCustomerEditData = async (customerSeq) => {
 export const changePassword = async (customerSeq, requestData) => {
   try {
     const response = await axios.put(
-      `${BASE_URL}/customer/detail/${customerSeq}`, {
-        requestData
-      }
-    );
+      `${BASE_URL}/customer/detail/${customerSeq}`,requestData);
     console.log("정보 수정 제발!!!!!!!!!", requestData);
     return response.data.result;
     

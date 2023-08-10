@@ -1,20 +1,19 @@
-import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
-import Step from '../../components/SignUpComponent/Step';
-import DesignerUserInfo from "../../components/SignUpComponent/DesignerUserInfo";
 import swal from "sweetalert";
-import SignUpInput from "../../components/SignUpComponent/SignUpInput";
 import { useNavigate } from "react-router-dom";
-import { motion } from 'framer-motion';
-import { useForm } from 'react-hook-form';
+import { motion } from "framer-motion";
+import { useForm } from "react-hook-form";
+import { getDesignerEditData, changeDesignerData } from "../../apis";
+import { useQuery, useMutation } from "react-query";
+
 const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   width: 65vw;
   /* height: 100vh; */
-  margin: 50px auto;  
+  margin: 50px auto;
 `;
 
 const Title = styled.span`
@@ -43,8 +42,9 @@ const Wrapper = styled.div`
   width: 45vw;
   height: 100%;
   border-radius: 51px;
-  background: #FDFDFD;
-  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 2px 4px 30px -4px rgb(0 0 0 / 0.1);
+  background: #fdfdfd;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+    2px 4px 30px -4px rgb(0 0 0 / 0.1);
 `;
 
 const InputWrap = styled.div`
@@ -60,7 +60,6 @@ const InputBox = styled.div`
   margin: 15px 0;
 `;
 
-
 const SubmitBtn = styled.button`
   text-align: center;
   border-radius: 7px;
@@ -73,9 +72,9 @@ const SubmitBtn = styled.button`
   width: 180px;
   transition: background-color, 0.3s ease;
   &:hover {
-  background-color: #f0aa48;
-  color: #f7f5e1;
-  border-color: #574934;;
+    background-color: #f0aa48;
+    color: #f7f5e1;
+    border-color: #574934;
   }
 `;
 const CancleBtn = styled.button`
@@ -90,9 +89,9 @@ const CancleBtn = styled.button`
   width: 180px;
   transition: background-color, 0.3s ease;
   &:hover {
-  /* background-color: #f0aa48; */
-  color: #574934;
-  border-color: #f0aa48; 
+    /* background-color: #f0aa48; */
+    color: #574934;
+    border-color: #f0aa48;
   }
 `;
 const CenterBox = styled.div`
@@ -108,7 +107,6 @@ const SelectBox = styled.div`
   justify-content: center;
   margin-bottom: 10px;
   border-bottom: 1px solid rgb(220, 220, 220);
-  
 `;
 
 const HashTag = styled(motion.span)`
@@ -199,10 +197,10 @@ const InfoText = styled.span`
 `;
 
 const Hr = styled.div`
-	/* color: #383838; */
-	border: 1px solid rgb(228, 223, 223);
-	width:100%;
-	margin: 20px 0;
+  /* color: #383838; */
+  border: 1px solid rgb(228, 223, 223);
+  width: 100%;
+  margin: 20px 0;
 `;
 const StartBox = styled.div`
   display: flex;
@@ -225,9 +223,9 @@ const Input = styled.input`
   margin-top: 5px;
   outline: none; /* 포커스된 상태의 외곽선을 제거 */
   &:focus {
-    border: 2px solid rgb(244,153,26);
+    border: 2px solid rgb(244, 153, 26);
     + span {
-      color: rgb(244,153,26);
+      color: rgb(244, 153, 26);
     }
   }
 `;
@@ -241,8 +239,7 @@ const TextBox = styled.div`
   justify-content: start;
   margin: 0 0 5px 8px;
 `;
-const Form = styled.form`
-`;
+const Form = styled.form``;
 const ErrorMessage = styled.span`
   font-size: 10px;
   color: red;
@@ -269,252 +266,219 @@ const typeBtnVariants = {
   },
 };
 function EditDesignerInfo() {
+  const designerSeq = localStorage.getItem("userSeq");
+  const { data, isError, isLoading } = useQuery(
+    ["designerEditData", designerSeq],
+    () => getDesignerEditData(designerSeq)
+  );
   const navigate = useNavigate();
-  const cutType = ["레이어드컷", "히메컷", "투블럭", "시스루컷", "허쉬컷", "슬릭컷", "아이비리그컷", "가일컷"]
-  const permType = ["아이롱펌", "시스루펌", "C컬", "볼륨펌", "쉐도우펌", "베이비펌", "히피펌", "복구펌"]
-  const [selectedCut, setSelectedCut] = useState([]);
-  const [selectedPerm, setSelectedPerm] = useState([]);
-  const [result, setResult] = useState({
-    "name" : "재현",
-    "id" : "ssafy",
-    "email" : "ssafy@ssafy.com",
-    "price" : "5000",
-    "certification_num" : "1234-56789",
-    "salonName" : "미용실 이름",
-    "latitude" : 234.2563,
-    "longitude" : 234.2563,
-    "address" : "대전광역시 유성구",
-    "allCutHairStyle" : [
-        {
-          "hairStyleSeq" : 1,
-          "hairStyleLabel" : "레이어드컷"
-        },
-        {
-          "hairStyleSeq" : 2,
-          "hairStyleLabel" : "웬디컷"
-        },
-        {
-          "hairStyleSeq" : 3,
-          "hairStyleLabel" : "댄디컷"
-        },
-        {
-          "hairStyleSeq" : 4,
-          "hairStyleLabel" : "히메컷"
-        },
-        {
-          "hairStyleSeq" : 5,
-          "hairStyleLabel" : "시스루컷"
-        },
-        {
-          "hairStyleSeq" : 6,
-          "hairStyleLabel" : "허쉬컷"
-        },
-        {
-          "hairStyleSeq" : 7,
-          "hairStyleLabel" : "슬릭컷"
-        },
-        {
-          "hairStyleSeq" : 7,
-          "hairStyleLabel" : "아이비리그컷"
-        },
-        
-    ],
-    "allPermHairStyle" : [
-        {
-          "hairStyleSeq" : 1,
-          "hairStyleLabel" : "C컬펌"
-        },
-        {
-          "hairStyleSeq" : 2,
-          "hairStyleLabel" : "뽀글펌"
-        },
-        {
-          "hairStyleSeq" : 3,
-          "hairStyleLabel" : "아이롱펌"
-        },
-        {
-          "hairStyleSeq" : 4,
-          "hairStyleLabel" : "볼륨펌"
-        },
-        {
-          "hairStyleSeq" : 5,
-          "hairStyleLabel" : "베이비펌"
-        },
-        {
-          "hairStyleSeq" : 6,
-          "hairStyleLabel" : "히피펌"
-        },
-        {
-          "hairStyleSeq" : 7,
-          "hairStyleLabel" : "시스루펌"
-        },
-        {
-          "hairStyleSeq" : 8,
-          "hairStyleLabel" : "슬릭펌"
-        },
-    ],
-    "myCutHairStyle" : [
-        {
-            "hairStyleSeq" : 2,
-            "hairStyleLabel" : "웬디컷"
-        },
-        {
-            "hairStyleSeq" : 3,
-            "hairStyleLabel" : "댄디컷"
-        }
-    ],
-    "myPermHairStyle" : [
-        {
-            "hairStyleSeq" : 3,
-            "hairStyleLabel" : "히피펌"
-        }
-    ]
-});
-const allCutHairStyles = result.allCutHairStyle.map((style) => style.hairStyleLabel);
-const allPermHairStyles = result.allPermHairStyle.map((style) => style.hairStyleLabel);
-  const toggleCutType = (tag) => {
-    if (selectedCut.includes(tag)) {
-      setSelectedCut((prev) => prev.filter((resist) => resist !== tag))
-    } else {
-      setSelectedCut((prev) => [...prev, tag]);
-    }
-  };
-  const togglePermType = (tag) => {
-    if (selectedPerm.includes(tag)) {
-      setSelectedPerm((prev) => prev.filter((resist) => resist !== tag))
-    } else {
-      setSelectedPerm((prev) => [...prev, tag]);
-    }
-  };
   const {
     register,
     handleSubmit,
     formState: { errors },
     setError,
+    watch,
+    setValue,
   } = useForm({
-    defaultValues: {
-      name: result.name,
-      id: result.id,
-      email: result.email,
-      certification_num: result.certification_num,
-      price: result.price,
-    },
+    mode: "onBlur",
   });
-  const onValid = (data) => {
-    // 이메일 형식 확인 및 에러 메시지 설정
-    if (!/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(data.email)) {
-      setError("email", { message: "올바른 이메일 형식이 아닙니다." });
-      return;
+  const watchedPassword = watch("pwd");
+  const [selectedCut, setSelectedCut] = useState([]);
+  const [selectedPerm, setSelectedPerm] = useState([]);
+
+  const handleCutClick = (seq) => {
+    if (selectedCut.includes(seq)) {
+      setSelectedCut(selectedCut.filter((type) => type !== seq));
+    } else {
+      setSelectedCut([...selectedCut, seq]);
     }
-    // 비밀번호 조건 확인 및 에러 메시지 설정
-    if (data.pwd && !/(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}/.test(data.pwd)) {
-      setError("pwd", { message: "영문, 숫자, 특수문자를 포함한 8자 이상의 비밀번호를 입력해주세요." });
-      return;
-    }
-    // 비밀번호와 비밀번호 확인 일치 여부 확인 및 에러 메시지 설정
-    if (data.pwd && data.pwd !== data.pwd1) {
-      setError("pwd1", { message: "비밀번호가 일치하지 않습니다." });
-      return;
-    }
-    if (!/^[0-9]*$/.test(data.price)) {
-      setError("price", { message: "상담 가격은 숫자만 입력 가능합니다." });
-      return;
-    }
-    // 서버로 데이터 전송 등 필요한 작업 수행
-    // ...
-    console.log(data);
   };
+  const handlePermClick = (seq) => {
+    if (selectedPerm.includes(seq)) {
+      setSelectedPerm(selectedPerm.filter((type) => type !== seq));
+    } else {
+      setSelectedPerm([...selectedPerm, seq]);
+    }
+  };
+
+  const onSubmit = async (formData) => {
+    try {
+      const combinedHairStyles = [...selectedCut, ...selectedPerm];
+      const requestData = {
+        cost: formData.cost,
+        pwsd: watchedPassword || null,
+        salonName: "제발!!!!!!",
+        latitude: 234.2563, // 예제로 고정값
+        longitude: 234.2563, // 예제로 고정값
+        address: "대전광역시 서구",
+        myHairStyleTag: combinedHairStyles,
+      };
+      await changeDesignerData(designerSeq, requestData);
+      swal("Success", "회면정보가 수정되었습니다.", "success");
+      navigate(`/designerMyPage/${designerSeq}`);
+    } catch (error) {
+      console.error("Sign-up error:", error);
+      swal("Error", "회원정보수정 실패.", "error");
+    }
+  };
+  useEffect(() => {
+    if (data) {
+      const {
+        name,
+        id,
+        email,
+        certificationNum,
+        cost,
+        salonName,
+        address,
+        myCutHairStyle,
+        myPermHairStyle,
+      } = data;
+      setValue("name", name);
+      setValue("id", id);
+      setValue("email", email);
+      setValue("certification_num", certificationNum);
+      setValue("cost", cost);
+      setValue("salonName", salonName);
+      setValue("address", address);
+      setSelectedCut(myCutHairStyle.hairStyleSeq);
+      setSelectedPerm(myPermHairStyle.hairStyleSeq);
+    }
+  }, [data, setValue]);
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+  if (isError) {
+    return <div>An error occurred while fetching data.</div>;
+  }
+  console.log(data, "디자이너 정보수정 쿼리 데이터")
+  console.log(selectedCut, selectedPerm, "select 데이터")
   return (
     <Container>
       <SignupBox>
         <InfoBox>
           <Title>회원정보 수정</Title>
-            <Wrapper>
+          <Wrapper>
             <BackBox>
-              <BackBtn src='icon/backBtn.png' onClick={() => navigate(-1)}/>
+              <BackBtn src="icon/backBtn.png" onClick={() => navigate(-1)} />
             </BackBox>
-            <Form onSubmit={(e) => {
+            <Form
+              onSubmit={(e) => {
                 e.preventDefault(); // 버블링 막기 위해 폼 제출을 막습니다.
-                handleSubmit(onValid)(e); // 유효성 검사 후 폼 제출을 처리합니다.
+                handleSubmit(onSubmit)(e); // 유효성 검사 후 폼 제출을 처리합니다.
               }}
             >
               <InputWrap>
                 <InputBox>
-                <InputWrapper>
-                      <TextBox>
-                        <Text>이름</Text>
-                      </TextBox>
-                      <Input placeholder="이름" {...register("name")} readOnly />
-                    </InputWrapper>
-                    <InputWrapper>
-                      <TextBox>
-                        <Text>아이디</Text>
-                      </TextBox>
-                      <Input placeholder="아이디" {...register("id")} readOnly />
-                    </InputWrapper>
-                    {/* 이메일 에러 메시지 출력 */}
-                    <InputWrapper>
-                      <TextBox>
-                        <Text>이메일</Text>
-                      </TextBox>
-                      <Input placeholder="이메일" {...register("email")} 
-                        />
-                    </InputWrapper>
-                    <ErrorMessage>{errors?.email?.message}</ErrorMessage>
+                  <InputWrapper>
+                    <TextBox>
+                      <Text>이름</Text>
+                    </TextBox>
+                    <Input placeholder="이름" {...register("name")} readOnly />
+                  </InputWrapper>
+                  <InputWrapper>
+                    <TextBox>
+                      <Text>아이디</Text>
+                    </TextBox>
+                    <Input placeholder="아이디" {...register("id")} readOnly />
+                  </InputWrapper>
+                  {/* 이메일 에러 메시지 출력 */}
+                  <InputWrapper>
+                    <TextBox>
+                      <Text>이메일</Text>
+                    </TextBox>
+                    <Input
+                      placeholder="이메일"
+                      {...register("email")}
+                      readOnly
+                    />
+                  </InputWrapper>
+                  <ErrorMessage>{errors?.email?.message}</ErrorMessage>
                   {/* <Btn>중복확인</Btn> */}
                   <InputWrapper>
-                      <TextBox>
-                        <Text>등록번호</Text>
-                      </TextBox>
-                      <Input placeholder="등록번호" {...register("certification_num")} />
-                    </InputWrapper>
-                    <ErrorMessage>{errors?.certification_num?.message}</ErrorMessage>
+                    <TextBox>
+                      <Text>등록번호</Text>
+                    </TextBox>
+                    <Input
+                      placeholder="등록번호"
+                      {...register("certification_num")}
+                      readOnly
+                    />
+                  </InputWrapper>
+                  <ErrorMessage>
+                    {errors?.certification_num?.message}
+                  </ErrorMessage>
                   <InputWrapper>
-                      <TextBox>
-                        <Text>비밀번호</Text>
-                      </TextBox>
-                      <Input
-                        placeholder="8~16자리의 비밀번호를 입력해주세요"
-                        type="password"
-                        {...register("pwd")}
-                        />
-                    </InputWrapper>
-                    <ErrorMessage>{errors?.pwd?.message}</ErrorMessage>
-                    {/* 비밀번호 확인 에러 메시지 출력 */}
-                    <InputWrapper>
-                      <TextBox>
-                        <Text>비밀번호 확인</Text>
-                      </TextBox>
-                      <Input
-                        placeholder="비밀번호 확인 ✔"
-                        type="password"
-                        {...register("pwd1")}
-                        />
-                    </InputWrapper>
-                    <ErrorMessage>{errors?.pwd1?.message}</ErrorMessage>
+                    <TextBox>
+                      <Text>비밀번호</Text>
+                    </TextBox>
+                    <Input
+                      placeholder="8~16자리의 비밀번호를 입력해주세요"
+                      type="password"
+                      {...register("pwd", {
+                        required: "비밀번호를 입력해주세요.",
+                        pattern: {
+                          value:
+                            /(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}/,
+                          message:
+                            "영문, 숫자, 특수문자를 포함한 8자 이상의 비밀번호를 입력해주세요.",
+                        },
+                      })}
+                    />
+                  </InputWrapper>
+                  <ErrorMessage>{errors?.pwd?.message}</ErrorMessage>
+                  {/* 비밀번호 확인 에러 메시지 출력 */}
+                  <InputWrapper>
+                    <TextBox>
+                      <Text>비밀번호 확인</Text>
+                    </TextBox>
+                    <Input
+                      placeholder="비밀번호 확인 ✔"
+                      type="password"
+                      {...register("pwd1", {
+                        required: "비밀번호 확인을 입력해주세요.",
+                        validate: (value) =>
+                          value === watchedPassword ||
+                          "비밀번호가 일치하지 않습니다.",
+                      })}
+                    />
+                  </InputWrapper>
+                  <ErrorMessage>{errors?.pwd1?.message}</ErrorMessage>
                 </InputBox>
               </InputWrap>
-              <Hr/>
-                <Box>
-                  <InfoText>상담 가격</InfoText>
-                  <SearchBox>
-                    <SearchImg src="./icon/money.png"/>
-                    <SearchInput
-                      placeholder="상담 가격"
-                      {...register("price")}
-                      />
-                    <ErrorMessage>{errors?.price?.message}</ErrorMessage>
+              <Hr />
+              <Box>
+                <InfoText>상담 가격</InfoText>
+                <SearchBox>
+                  <SearchImg src="/icon/money.png" />
+                  <SearchInput
+                    placeholder="상담 가격"
+                    {...register("cost", {
+                      required: "상담 가격을 입력해주세요.",
+                      pattern: {
+                        value: /^[0-9]+$/, // 숫자만 허용하는 정규 표현식
+                        message: "숫자만 입력해주세요.",
+                      },
+                    })}
+                  />
+                  <ErrorMessage>{errors?.cost?.message}</ErrorMessage>
                 </SearchBox>
-                </Box>
-              <Hr/>
+              </Box>
+              <Hr />
               <Box>
                 <InfoText>소속 미용실(활동지역)</InfoText>
                 <SearchBox2>
-                  <SearchImg src="./icon/search.png"/>
-                  <SearchInput placeholder={result.address} />
+                  <SearchImg src="./icon/search.png" />
+                  <SearchInput
+                    placeholder="소속 미용실"
+                    {...register("salonName", {
+                      required: "소속 미용실을 입력해주세요.",
+                    })}
+                  />
+                  <ErrorMessage>{errors?.salonName?.message}</ErrorMessage>
                 </SearchBox2>
               </Box>
-              <Hr/>
+              <Hr />
               <TagWrapper>
                 <StartBox>
                   <InfoText>추천 스타일</InfoText>
@@ -522,48 +486,51 @@ const allPermHairStyles = result.allPermHairStyle.map((style) => style.hairStyle
                 <Grid>
                   <SelectText>커트</SelectText>
                   <SelectBox>
-                    {
-                      allCutHairStyles.map((tag) => (
-                        <HashTag
-                        key={tag}
-                        onClick={() => toggleCutType(tag)}
-                        // selected={selectedCut.includes(tag)}
+                    {data.allCutHairStyle.map((style) => (
+                      <HashTag
+                        key={style.hairStyleSeq}
+                        onClick={() => handleCutClick(style.hairStyleSeq)}
                         variants={typeBtnVariants}
                         initial="normal"
                         whileHover="hover"
-                        animate={selectedCut.includes(tag) ? "active" : "normal"}
-                        >
-                          #{tag}
-                        </HashTag>
-                      ))
-                    }
+                        animate={
+                          selectedCut.includes(style.hairStyleSeq)
+                            ? "active"
+                            : "normal"
+                        }
+                      >
+                        #{style.hairStyleLabel}
+                      </HashTag>
+                    ))}
                   </SelectBox>
                   <SelectText>펌</SelectText>
                   <SelectBox>
-                    {
-                      allPermHairStyles.map((tag) => (
-                        <HashTag
-                          key={tag}
-                          onClick={() => togglePermType(tag)}
-                          variants={typeBtnVariants}
-                          initial="normal"
-                          whileHover="hover"
-                          animate={selectedPerm.includes(tag) ? "active" : "normal"}
-                          >
-                          #{tag}
-                        </HashTag>
-                      ))
-                    }
+                    {data.allPermHairStyle.map((style) => (
+                      <HashTag
+                        key={style.hairStyleSeq}
+                        onClick={() => handlePermClick(style.hairStyleSeq)}
+                        variants={typeBtnVariants}
+                        initial="normal"
+                        whileHover="hover"
+                        animate={
+                          selectedPerm.includes(style.hairStyleSeq)
+                            ? "active"
+                            : "normal"
+                        }
+                      >
+                        #{style.hairStyleLabel}
+                      </HashTag>
+                    ))}
                   </SelectBox>
                 </Grid>
               </TagWrapper>
-                <CenterBox>
-                  {/* 취소할때에는 */}
-                  <SubmitBtn type="submit">수정 완료</SubmitBtn>
-                </CenterBox>  
-                </Form>
-			      </Wrapper>
-          </InfoBox>
+              <CenterBox>
+                {/* 취소할때에는 */}
+                <SubmitBtn type="submit">수정하기</SubmitBtn>
+              </CenterBox>
+            </Form>
+          </Wrapper>
+        </InfoBox>
       </SignupBox>
     </Container>
   );

@@ -225,8 +225,8 @@ function EditCustomerInfo(){
   };
   useEffect(() => {
     if (data) {
-      setValue("name", data.name);
-      setValue("id", data.id);
+        setValue("name", data.name);
+        setValue("id", data.id);
         setValue("email", data.email);
         setSelectedFaceType(data.myFace);
         setSelectedHairTypes(data.myHairCondition);
