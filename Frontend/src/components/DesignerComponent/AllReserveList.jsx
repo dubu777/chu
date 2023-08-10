@@ -8,6 +8,7 @@ import { useRecoilState, useRecoilValue} from "recoil";
 import {sessionIdState} from "../../recoil/openvidu";
 import { useQuery } from "react-query";
 import {getSessionId, getAllReserveList} from "../../apis"
+import { BASE_URL } from "../../apis/rootUrl";
 
 
 const Container = styled.div`
@@ -166,52 +167,7 @@ function AllReserveList(){
   const navigate = useNavigate();
   const { designerSeq } = useParams();
   console.log("상담 예약 목록 조회의 디자이너 seq",designerSeq);
-  const { data1, isError, isLoading } = useQuery(
-    ['allReserveList', designerSeq],
-     () => getAllReserveList(designerSeq)
-  );
-  console.log('이게 데이터다',data1)
     
-  const [data, setdata] = useState([{
-                "consultingSeq" : 1,
-                "consultingDate" : "2023-07-19",
-                "consultingMemo" : "상담 전달사항",
-                "originImg" : "img1.png",
-                "name" : "김싸피",
-                "gender" : "남성",
-                "faceLabel" : "계란형",
-                "hairCondition" : [
-                    "얇은 모발",
-                    "반곱슬"
-                ],
-                "virtualImg" : [
-                    "./icon/woman.png",
-                    "./icon/woman.png",
-                    "./icon/woman.png"
-                ],
-                "time" : "14:00"
-            },
-            {
-                "consultingSeq" : 2,
-                "consultingDate" : "2023-07-20",
-                "consultingMemo" : "상담 전달사항",
-                "originImg" : "img2.png",
-                "name" : "송싸피",
-                "gender" : "여성",
-                "faceLabel" : "사각턱",
-                "hairCondition" : [
-                    "탈모",
-                    "반곱슬"
-                ],
-                "virtualImg" : [
-                    "img1.png",
-                    "img2.png",
-                    "img3.png"
-                ],
-                "time" : "10:00"
-            },
-        
-          ])
     // 모달 상태 관리
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
@@ -227,8 +183,8 @@ function AllReserveList(){
     };
 
     // sessoionId API 호출
-    const consultSeq = 2;
-    const getSession = async () => {
+    // const consultSeq = 1;
+    const getSession = async (consultSeq) => {
     try {
       const response  = await getSessionId(consultSeq);
       console.log('가져왔다',response);
@@ -245,15 +201,18 @@ function AllReserveList(){
     }
   }, [sessionId]);
 
-  // const sendSession = () => {
-  //   console.log("나이거보내고싶어", sessionId)
-  //   navigate(`/viduroom/${sessionId}`);
-  // };
+  const { data, isError, isLoading } = useQuery(
+    ['allReserveList', designerSeq],
+     () => getAllReserveList(designerSeq)
+  );
+  console.log('이게 데이터다',data)
 
-  // useEffect(() => {   // consultSeq 변경에 따른 API get 함수 호출
-  //   getSession();
-  // }, []);
-
+    if (isLoading) {
+      return <div>Loading...{data}</div>;
+    }
+    if (isError) {
+      return <div>홈 페이지 에러{data}</div>;
+    }
 
     return(
         <Container>
@@ -285,7 +244,7 @@ function AllReserveList(){
                         <ModalBtn onClick={()=>openModal(item)}>상세 보기</ModalBtn>
                       </Box>
                       <Box>
-                        <EnterBtn onClick={()=>getSession()}>
+                        <EnterBtn onClick={()=>getSession(item.consultingSeq)}>
                           {/* <Link to={{ pathname: '/viduroom', state: { sessionData: 'sessionId' } }}>상담 입장</Link> */}
                         상담입장</EnterBtn>
                       </Box>
@@ -297,7 +256,7 @@ function AllReserveList(){
             <div>
               <ImgBox>
                   {selectedItem.virtualImg.map((img, index) => (
-                    <VirtualImg key={index} src={img}></VirtualImg>
+                    <VirtualImg key={index} src={`${BASE_URL}/consulting-images/confusion/${img}`}></VirtualImg>
                   ))}
               </ImgBox>
               <hr />
