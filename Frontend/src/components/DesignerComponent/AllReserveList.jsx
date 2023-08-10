@@ -170,8 +170,7 @@ function AllReserveList(){
     ['allReserveList', designerSeq],
      () => getAllReserveList(designerSeq)
   );
-
-  console.log(data1)
+  console.log('이게 데이터다',data1)
     
   const [data, setdata] = useState([{
                 "consultingSeq" : 1,

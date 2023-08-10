@@ -188,6 +188,9 @@ const FaceSet = styled.div`
   align-items: center;
 `;
 const FaceImg = styled.img`
+  width: 50px;
+  height: 60px;
+  /* background-color: red; */
   
 `;
 
@@ -198,7 +201,7 @@ function EditCustomerInfo(){
   const { data, isError, isLoading } = useQuery(['customerEditData', customerSeq], () => getCustomerEditData(customerSeq));
   const [selectedFaceType, setSelectedFaceType] = useState(null);
   const [selectedHairTypes, setSelectedHairTypes] = useState([]);
-  const face = ['face1.png', 'face2.png', 'face3.png', 'face1.png', 'face1.png', 'normal.png' ]
+  const face = ['face1.png', 'face2.png', 'face3.png', 'face4.png', 'face5.png', 'normal.png' ]
   const handleFaceClick = (seq) => {
     setSelectedFaceType(seq);
   };
@@ -330,7 +333,7 @@ function EditCustomerInfo(){
                   {data.faceDict.map((type, index) => (
                     <FaceSet>
                       {/* <FaceImg src={`${BASE_URL}/customer-profile/face_dict/${face[{index}]}`} alt=""></FaceImg> */}
-                      <img src ={`https://i9b111.q.ssafy.io/api/customer-profile/face_dict/${face[index]}`}></img>
+                      <FaceImg src ={`https://i9b111.q.ssafy.io/api/customer-profile/face_dict/${face[index]}`}></FaceImg>
                       {/* <img src = "https://i9b111.q.ssafy.io/api/customer-profile/face_dict/noImg.png"></img> */}
                       <FaceBtn
                         key={type.seq}

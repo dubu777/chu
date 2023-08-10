@@ -135,11 +135,12 @@ const Profile = styled.img`
 function DesignerMyPage() {
   const navigate = useNavigate();
   const { designerSeq } = useParams();
+  // console.log("마이페이지 시퀀스", designerSeq);
   const { data, isLoading, isError } = useQuery(
     ["designerMyPage", designerSeq],
     () => getDesignerMyPage(designerSeq) 
   );
-  console.log(data)
+  // console.log(data)
 
   const mutation = useMutation(updateIntroduction)
   const [activeBtn, setActiveBtn] = useState("calendar"); // 'recent' or 'designer'
@@ -196,29 +197,10 @@ function DesignerMyPage() {
   const handleEditButtonClick = () => {
     setIsEditing(true);
   };
-  
   const handleSaveButtonClick = async () => {
-    console.log('ㅇ라ㅓ미랴ㅓㅇ',introduction)
-    try {
-      // updateIntroduction 뮤테이션 실행
-      const result = await mutation.mutateAsync( designerSeq, {introduction}, introduction );
-
-      // 결과 값의 데이터를 introduction에 할당
-      if (result.data) {
-        setIntroduction(result.data.introduction);
-      }
-
-      // 수정 상태 종료
-      setIsEditing(false);
-
-      // 뮤테이션 결과를 활용할 수 있음
-      console.log("Mutation result:", result);
-    } catch (error) {
-      // 오류 처리
-      console.error("Error updating introduction:", error);
-    }
+    mutation.mutate({ designerSeq, introduction });
+    setIsEditing(false);
   };
-
   // 누른 버튼에 따라
   const handleBtnClick = (btnType) => {
     setActiveBtn(btnType);
@@ -278,7 +260,7 @@ function DesignerMyPage() {
         </InfoBox>
 
         <ChangeBox>
-          <ChangeBtn onClick={() => navigate(`/editdesignerinfo/${designerSeq}`)}>
+          <ChangeBtn onClick={() => navigate("/editdesignerinfo")}>
             회원 정보 변경
           </ChangeBtn>
         </ChangeBox>
