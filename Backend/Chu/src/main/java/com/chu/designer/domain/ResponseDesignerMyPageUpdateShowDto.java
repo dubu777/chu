@@ -16,7 +16,7 @@ public class ResponseDesignerMyPageUpdateShowDto {
     private String name;
     private String id;
     private String email;
-    private Integer price;
+    private Integer cost;
     private String certificationNum;
     private String salonName;
     private String address;

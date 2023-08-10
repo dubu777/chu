@@ -80,6 +80,30 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
     }
 
     @Override
+    public String getSavedImgFilePathDesignerProfile(MultipartFile file) throws IOException {
+        String uploadDir = "/chu/upload/images/designer/";
+        String fileName = file.getOriginalFilename();
+
+        File directory = new File(uploadDir);
+        String filePath = uploadDir + fileName;
+
+        File destFile = new File(filePath);
+        System.out.println(filePath);
+
+        if (!directory.exists()) {
+            boolean mkdirsResult = directory.mkdirs();
+            if (mkdirsResult) {
+                System.out.println("디렉토리 생성 성공");
+            } else {
+                System.out.println("디렉토리 생성 실패");
+            }
+        }
+
+        file.transferTo(destFile);
+        return filePath;
+    }
+
+    @Override
     public String getUploadImgFilePath(MultipartFile file) throws IOException {
         String uploadName = file.getOriginalFilename();
         return uploadName;
@@ -93,8 +117,8 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
         ImagePath imagePath = new ImagePath();
         imagePath.setSavedImgName(uploadName);
 
-        String newFileName = designerSeq + "_" + uploadName;
-        imagePath.setUploadImgName(newFileName);
+//        String newFileName = designerSeq + "_" + uploadName;
+        imagePath.setUploadImgName(uploadName);
 
         DesignerPortfolio designerPortfolio = new DesignerPortfolio(designer, imagePath);
         designerPortfolio.setCreatedDate(LocalDateTime.now());
@@ -186,11 +210,23 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
     }
 
     //
-//    @Override
-//    public boolean patchImg(int designerSeq, String img) {
-//        return designerDetailRepository.patchImg(designerSeq, img);
-//    }
-//
+    @Override
+    public boolean patchImg(int designerSeq, String fileName) {
+
+        Designer designer = designerRepository.getDesignerBySeq(designerSeq);
+
+        // fileName 고유하게 변경
+        String newFileName = designer.getSeq() + fileName;
+        log.info("new File Name: "+ newFileName);
+
+        ImagePath imagePath = new ImagePath();
+        imagePath.setUploadImgName(fileName);
+        imagePath.setSavedImgName(fileName);
+        // 저장
+        designer.setImagePath(imagePath);
+        return true;
+    }
+
     @Override
     public ResponseDesignerMyPageUpdateShowDto getDesignerMyPageUpdateInfo(int designerSeq) {
 
@@ -221,7 +257,7 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
                     .name(designer.getName())
                     .id(designer.getId())
                     .email(designer.getEmail())
-                    .price(designer.getCost())
+                    .cost(designer.getCost())
                     .certificationNum(designer.getCertificationNum())
                     .salonName(designer.getSalonName())
                     .latitude(designer.getLatitude())
@@ -245,8 +281,6 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
 
         try{
             Designer designer = designerRepository.getDesignerBySeq(designerSeq);
-            designer.setName(updateDto.getName());
-            designer.setEmail(updateDto.getEmail());
             designer.setCost(updateDto.getCost());
             designer.setPwd(updateDto.getPwd());
             designer.hashPassword(bCryptPasswordEncoder);    // 비밀번호 암호화
