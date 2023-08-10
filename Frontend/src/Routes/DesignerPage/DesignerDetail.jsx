@@ -353,7 +353,7 @@ function DesignerDetail() {
                     <Text>{data.cost}</Text>
                   </Box>
                   <ReservBox
-                    onClick={() => navigate("/reservation")}
+                    onClick={() => navigate(`/reservation/${designerSeq}`)}
                     whileHover={{ backgroundColor: "rgb(244,153,26)" }}
                   >
                     <Icon src="/icon/reservBtn.png" />
