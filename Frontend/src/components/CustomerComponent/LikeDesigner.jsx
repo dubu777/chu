@@ -135,6 +135,7 @@ function LikeDesigner() {
   if (isError) {
     return <div>An error occurred while fetching data.</div>;
   }
+  console.log(data,"좋아요한 디자이너 됐다!");
   return (
     <>
       {data &&

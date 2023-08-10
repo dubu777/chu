@@ -6,11 +6,13 @@ import ScheduleListImg from "../../components/CustomerComponent/ScheduleListImg"
 import ReserveList from "../../components/CustomerComponent/ReserveList";
 import LikeDesigner from "../../components/CustomerComponent/LikeDesigner";
 // import ProfileImg from "../../components/CustomerComponent/ProfileImg";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {formDataState} from "../../recoil";
 import {attachCustomerImage, getCustomerMyPage} from "../../apis";
 import { useRecoilState } from "recoil";
 import { useQuery } from "react-query";
+import { motion } from "framer-motion";
+import { BASE_URL } from '../../apis/rootUrl';
 
 const Container = styled.div`
 
@@ -62,11 +64,13 @@ const ChangeBox = styled.div`
   text-align: right;
 `;
 
-const ChangeBtn = styled.button`
+const ChangeBtn = styled(motion.button)`
   border: 0;
   border-radius: 0.4rem;
   background-color: #f9bd4f;
   width: 150px;
+  font-weight: 600;
+  color: #272626;
   height: 35px;
   
 `;
@@ -77,6 +81,7 @@ const ReserveWrapper = styled.div`
   height: 150px;
   width: 60%;
   border-radius: 0.7rem;
+  background-color: #F9F5F0;
 `;
 
 const Wrapper = styled.div`
@@ -117,7 +122,11 @@ const Profile = styled.img`
 
 function CustomerMyPage(){
 
+  // 통신되면 열기
   const { customerSeq } = useParams();
+  // const customerSeq = 6;
+  console.log("커스터머 시퀀스",customerSeq);
+  // const { customerSeq } = useParams();
   // console.log("커스터머 시퀀스",customerSeq);
   const { data, isLoading, isError } = useQuery(
     ["customerMyPage", customerSeq],
@@ -128,6 +137,7 @@ function CustomerMyPage(){
   const fileInputRef = useRef(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const [file,setFile] = useState()
+  const navigate = useNavigate();
   // const [recodilFormData, setrecodilFormData] = useRecoilState(formDataState);
   // 사진을 클릭하면 파일 선택 다이얼로그를 나타내는 함수
   const handleImageClick = () => {
@@ -135,20 +145,50 @@ function CustomerMyPage(){
   }
   // 파일을 선택했을 때 호출되는 이벤트 핸들러
   // onChange
-  const handleFileChange=(e)=>{
-    e.preventDefault();
-    const formData = new FormData();
+  // const handleFileChange=(e)=>{
+  //   e.preventDefault();
+  //   const formData = new FormData();
     
-    if(e.target.files){
-      const uploadFile = e.target.files[0]
-      formData.append('img',uploadFile)
-      console.log(formData)
-      setFile(uploadFile)
-      console.log(uploadFile)
-      console.log('===useState===')
-      console.log(file)
-    }
-  };
+  //   if(e.target.files){
+  //     const uploadFile = e.target.files[0]
+  //     formData.append('img',uploadFile)
+  //     console.log(formData)
+  //     setFile(uploadFile)
+  //     console.log(uploadFile)
+  //     console.log('===useState===')
+  //     console.log(file)
+  //   }
+  // };
+
+    // 이미지 등록 - API 맞춰서 수정해야함
+    const handleFileChange = async(event) => {
+      const file = event.target.files[0];
+      const formData = new FormData();
+      formData.append("img", file);
+  
+      try {
+        // 이미지를 서버에 업로드하고 imgSeq를 받아옴
+        const response = await attachCustomerImage(customerSeq, formData);
+        setSelectedFile(`https://i9b111.q.ssafy.io/api/customer-profile/${file.name}`);
+        } catch (error) {
+          console.error(error);
+      }
+    };
+
+      // const handleSubmitImage = async(e) => {
+  //   e.preventDefault();
+  //   if (fileInputRef.current.files[0]) {
+  //     const formData = new FormData();
+  //     formData.append('img', fileInputRef.current.files[0]);
+  //     for (const keyValue of formData) console.log(keyValue);
+
+  //     try {
+  //       const file = await attachCustomerImage(customerSeq, formData);
+  //       console.log(file)
+  //     } catch(error){
+  //       console.log(error)
+  //     }}
+  //   };
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -187,20 +227,6 @@ function CustomerMyPage(){
   //   }
   // };
 
-  const handleSubmitImage = async(e) => {
-    e.preventDefault();
-    if (fileInputRef.current.files[0]) {
-      const formData = new FormData();
-      formData.append('img', fileInputRef.current.files[0]);
-      for (const keyValue of formData) console.log(keyValue);
-
-      try {
-        const file = await attachCustomerImage(customerSeq, formData);
-        console.log(file)
-      } catch(error){
-        console.log(error)
-      }}
-    };
     //   try {
     //     const response = await axios.patch(`http://localhost:9090/api/customer/detail/img/${customerSeq}`, formData, {
     //       headers: {
@@ -238,12 +264,13 @@ function CustomerMyPage(){
                 {/* 프로필 사진 or 연산자는 앞의 피연산자 기준*/}
                 <Profile 
                   onClick={handleImageClick} 
-                  src={selectedFile || '/icon/profile2.png'} 
+                  // src={selectedFile || './icon/profile2.png'} 
+                  src={selectedFile || `${BASE_URL}/customer-profile/${data.img}`}
                   alt="Profile" 
-                  hasFile={selectedFile !== null} 
+                  // hasFile={selectedFile !== null} 
                 />
                 {/* 이미지 제출 버튼 */}
-                  <button onClick={handleSubmitImage}>사진 제출</button>
+                  {/* <button onClick={handleSubmitImage}>사진 제출</button> */}
               </div>
             </ImgBox>
             <InfoBox>
@@ -254,7 +281,12 @@ function CustomerMyPage(){
             ))}
             </InfoBox>
             <ChangeBox>
-              <ChangeBtn><Link to="/editcustomerinfo">회원 정보 변경</Link></ChangeBtn>
+              <ChangeBtn 
+                onClick={() => navigate(`/editcustomerinfo/${customerSeq}`) }
+                whileHover={{ backgroundColor: "#574934", color: "white" }}
+              >
+                회원 정보 변경
+              </ChangeBtn>
             </ChangeBox>
           </InfoWrapper>
         </InfoContainer>

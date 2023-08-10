@@ -10,6 +10,7 @@ import { getDesignerDetail } from "../../apis/designer";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { BASE_URL } from '../../apis/rootUrl';
 import { toggleLikeButton } from "../../apis";
 
 const Container = styled.div`
@@ -320,7 +321,7 @@ function DesignerDetail() {
         <Wrap>
           <InfoWrapper>
             <DesignerInfoBox>
-              <DesignerImg src="/icon/designerimg.png" />
+            <DesignerImg src={`${BASE_URL}/designer-profile/${data.designerImg}`}/>
               <DesignerNameWrap>
                 <DesignerNameBox>
                   <DesignerName>{data.name} 디자이너</DesignerName>

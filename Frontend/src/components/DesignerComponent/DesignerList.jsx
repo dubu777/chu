@@ -176,9 +176,9 @@ function DesignerList(props) {
       <Wrapper>
         <Box>
           <DesignerImg 
-            // src={`${BASE_URL}/designer-profile/${item.designerImg}`}
+            src={`${BASE_URL}/designer-profile/${data.designerImg}`}
             // onClick={() => navigate(`/designerdetail/${item.designerSeq}`)}
-            src="/icon/designerimg.png"
+            // src="/icon/designerimg.png"
             onClick={() => navigate(`/designerdetail/${data.designerSeq}`)}
           />
         </Box>
@@ -200,6 +200,16 @@ function DesignerList(props) {
               ))
             }
           </Box>
+          <Box>
+            <CostBox>
+              <Icon src="/icon/money.png"/>
+              <Text>{data.cost}</Text>
+            </CostBox>
+            <ReservBox whileHover={{backgroundColor: "rgb(244,153,26)"}}>
+              <Icon src="/icon/reservBtn.png"/>
+              <Text>예약</Text>
+            </ReservBox>
+          </Box>
         </InfoBox>
       </Wrapper>
       <LikeBox>
@@ -213,16 +223,7 @@ function DesignerList(props) {
         )}
         <Text>{data.likeCnt}</Text>
         </HeartBox>
-          <Box>
-            <CostBox>
-              <Icon src="/icon/money.png"/>
-              <Text>{data.cost}</Text>
-            </CostBox>
-            <ReservBox whileHover={{backgroundColor: "rgb(244,153,26)"}}>
-              <Icon src="/icon/reservBtn.png"/>
-              <Text>예약</Text>
-            </ReservBox>
-          </Box>
+          
         </LikeBox>
       </Wrap>
     </Container>

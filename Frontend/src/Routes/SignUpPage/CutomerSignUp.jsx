@@ -237,7 +237,6 @@ function CustomerSignUp() {
   } = useForm({ mode: "onBlur" });
 
   const userType = "customer";
-
   const [isIdAvailable, setIsIdAvailable] = useState(false);
   const [isEmailAvailable, setIsEmailAvailable] = useState(false);
 

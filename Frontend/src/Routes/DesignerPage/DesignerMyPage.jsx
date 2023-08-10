@@ -137,7 +137,7 @@ function DesignerMyPage() {
   const { designerSeq } = useParams();
   const { data, isLoading, isError } = useQuery(
     ["designerMyPage", designerSeq],
-    () => getDesignerMyPage(designerSeq)
+    () => getDesignerMyPage(designerSeq) 
   );
   console.log(data)
 
@@ -278,7 +278,7 @@ function DesignerMyPage() {
         </InfoBox>
 
         <ChangeBox>
-          <ChangeBtn onClick={() => navigate("/editdesignerinfo")}>
+          <ChangeBtn onClick={() => navigate(`/editdesignerinfo/${designerSeq}`)}>
             회원 정보 변경
           </ChangeBtn>
         </ChangeBox>

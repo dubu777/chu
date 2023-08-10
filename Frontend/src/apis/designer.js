@@ -38,7 +38,7 @@ export const getDesignerMyPage = async (designerSeq) => {
     const response = await axios.get(`${BASE_URL}/designer/detail/mypage/${designerSeq}`);
     return response.data.result;
   } catch (error) {
-    console.error('디자이너 마이페이지 데이터 API 에러', error.message);
+    console.error('디자이너 마이페이지 데이터 요청 실패', error.message);
     throw error;
   }
 };
@@ -54,9 +54,19 @@ export const updateIntroduction = async (designerSeq, introduction) => {
     console.log(response.data)
     return response.data;
   } catch (error) {
-    throw new Error("소개글 데이터 못가져옴");
+    throw new Error("소개글 데이터 요청 실패");
   }
 };
+
+// 디자이너 회원 정보 변경 조회
+export const getDesignerEditData = async (designerSeq) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/designer/detail/${designerSeq}`)
+    return response.data.result;
+  } catch (error) {
+    throw new Error("회원 정보 변경 조회 요청 실패");
+  }
+}
 
 // 디자이너 리스트 뷰 스타일 필터 api
 export const submitStyleFilter = async (hairStyleSeqNumbers) => {
