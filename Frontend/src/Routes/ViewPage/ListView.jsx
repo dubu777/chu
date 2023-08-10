@@ -159,7 +159,7 @@ const SearchImg = styled.img`
 const SubmitBtn = styled.button`
 `;
 function ListView() {
-  const customerSeq = localStorage.getItem('userSeq')
+  const customerSeq = localStorage.getItem('userSeq') || 0
   const { data, isError, isLoading } = useQuery(['designerList', customerSeq], () => listinfo(customerSeq))
   const [selectedStyle, setSelectedStyle] = useState([]);
   const [filterData, setFilterData] = useState();

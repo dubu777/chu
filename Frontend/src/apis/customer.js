@@ -84,16 +84,8 @@ export const getCustomerEditData = async (customerSeq) => {
 // 고객 회원 정보 수정
 export const changePassword = async (customerSeq, requestData) => {
   try {
-    // const endpoint = `${BASE_URL}/customer/detail/${customerSeq}`;
-    // const body = {
-    //   requestData
-    // };
-    // const response = await axios.put(endpoint, body);
     const response = await axios.put(
-      `${BASE_URL}/customer/detail/${customerSeq}`, {
-        requestData
-      }
-    );
+      `${BASE_URL}/customer/detail/${customerSeq}`,requestData);
     console.log("정보 수정 제발!!!!!!!!!", requestData);
     return response.data.result;
     

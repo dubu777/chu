@@ -67,11 +67,24 @@ export const updateIntroduction = async (designerSeq, introduction) => {
 export const getDesignerEditData = async (designerSeq) => {
   try {
     const response = await axios.get(`${BASE_URL}/designer/detail/${designerSeq}`)
+    console.log("정보 수정 조회 제발!!!!!!!!!", response.data.result);
     return response.data.result;
   } catch (error) {
     throw new Error("회원 정보 변경 조회 요청 실패");
   }
 }
+
+// 디자이너 회원 정보 변경
+export const changeDesignerData = async (designerSeq, requestData) => {
+  try {
+    const response = await axios.put(
+      `${BASE_URL}/designer/detail/${designerSeq}`, requestData);
+    console.log("정보 수정 변경 제발!!!!!!!!!", designerSeq, requestData);
+    return response.data.result;    
+  } catch (error) {
+    throw new Error('회원 정보 수정 실패')
+  }
+};
 
 // 디자이너 리스트 뷰 스타일 필터 api
 export const submitStyleFilter = async (hairStyleSeqNumbers) => {
