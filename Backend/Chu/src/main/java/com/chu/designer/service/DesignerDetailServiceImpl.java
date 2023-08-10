@@ -261,6 +261,7 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
                 DesignerTagInfo dti = new DesignerTagInfo();
                 dti.setDesigner(designer);
 
+                dti.setCreatedTime(LocalDateTime.now());
                 HairStyleDict hairStyleDict = hairStyleDictRepository.findBySeq(tagSeq);
                 dti.setHairStyleDict(hairStyleDict);
 
