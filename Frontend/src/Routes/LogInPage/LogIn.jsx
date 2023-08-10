@@ -97,6 +97,8 @@ const TypeLabel = styled.label`
   margin-right: 20px;
   cursor: pointer;
 `;
+const Form = styled.form`
+`;
 function LogIn() {
 
 	const [username, setUsername] = useState('');
@@ -148,6 +150,7 @@ const handleUserTypeChange = (event) => {
 	return(
 		<Container>
 			<Wrapper>
+				<Form>
 				<LogInBox>
 				<Title>Log in</Title>
 				<Input 
@@ -196,6 +199,7 @@ const handleUserTypeChange = (event) => {
 				</RadioContainer>
 				<FindBox><Link to="/findid">Find id</Link></FindBox>
 				<FindBox><Link to="/findpw">Find Password</Link></FindBox>
+				</Form>
 			</Wrapper>
 		</Container>
 	);
