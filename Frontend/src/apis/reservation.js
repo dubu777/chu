@@ -75,6 +75,7 @@ export const postReserveImg = async (consultingSeq, formData) => {
       }
     );
     console.log('사진 정보',response.data)
+    console.log(response)
     return response.data.result;
   } catch (error) {
     throw new Error("이미지 보내기 실패");
