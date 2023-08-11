@@ -29,6 +29,7 @@ export const getPortfolioShow = async (designerSeq) => {
       const response = await axios.get(
         `${BASE_URL}/designer/reservation/${designerSeq}`, 
       );
+      console.log(response.data.result)
       return response.data.result;
     } catch (error) {
       throw new Error("예약페이지 포트폴리오 조회 실패;;;");
@@ -45,13 +46,15 @@ export const getCunsultingResult = async (consultingSeq) => {
   }
 }
 // 예약 정보 보내기 
-export const postReserveInfo = async(info) => {
-  console.log('넘어온 정보 확인',info)
+export const postReserveInfo = async(combinedData) => {
+  console.log('넘어온 정보 확인',combinedData)
   try{
+    console.log('API TRY')
     const response = await axios.post(
-      `${BASE_URL}/consulting`, info
+      `${BASE_URL}/consulting`, combinedData
     );
-      return response.data.result;
+    console.log("먀먀",response.data)
+    return response.data.result;
 
   } catch(error) {
     throw new error('예약 정보 보내기 실패')
