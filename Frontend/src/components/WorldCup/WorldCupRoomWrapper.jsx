@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from "react";
 import { useParams } from "react-router";
-import ViduRoom from "./WorldCupRoom";
+import WorldCupRoom from "./WorldCupRoom";
 import { loginResultState, loginState } from '../../recoil/auth';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { useQuery } from "react-query";
@@ -11,7 +11,6 @@ import { TrySharp } from "@mui/icons-material";
 function WorldCupRoomWrapper() {
     const { consultingSeq } = useParams();
     const [id, setId] = useState(null);
-    const [ttt, setTtt] = useState(null);
     const [rrr, setRrr] = useState(null);
   
     // 따로 이미 갖고 있는 데이터
@@ -23,7 +22,6 @@ function WorldCupRoomWrapper() {
         const response = await getSessionId(consultingSeq);
         console.log(response);
         setId("worldCup" + response.url);
-        setTtt(response.targetHair);
         setRrr(response.confusionHair);
       } catch (error) {
         console.log(error);
@@ -34,13 +32,10 @@ function WorldCupRoomWrapper() {
       getSession(consultingSeq);
     }, [consultingSeq]);
   
-    return id && ttt && rrr ? (
-      <ViduRoom
+    return id && rrr ? (
+      <WorldCupRoom
         sessionId={id}
-        userName={username}
-        userType={usertype}
         resultimgs={rrr}
-        targetimgs={ttt}
       />
     ) : (
       <div>Loading...</div>

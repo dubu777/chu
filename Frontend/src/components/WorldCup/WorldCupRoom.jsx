@@ -278,7 +278,7 @@ const MarginBox = styled.div`
 const OPENVIDU_SERVER_URL = 'https://' + 'i9b111.q.ssafy.io' + ':8443';
 const OPENVIDU_SERVER_SECRET = "sunjin";
 
-class WorldCup extends Component {
+class WorldCupRoom extends Component {
     constructor(props) {
         super(props);
         console.log('으악세션', this.props.sessionId);
@@ -290,19 +290,22 @@ class WorldCup extends Component {
             session: undefined,
             mainStreamManager: undefined,
             publisher: undefined,
-            subscribers: [],
+            subscribers: [], // 이녀석의 배열 크기가 쫌 중요할 듯
             isMike: true,
             isCamera: true,
             isSpeaker: true,
             isChat: false,
             resultimgs: this.props.resultimgs, // 합성 이미지 전부
-            curLeftIndex: 1, // 왼쪽에 있을 사진의 인덱스
-            curRightIndex: 0, // 오른쪽에 있을 사진의 인덱스
+            curLeftIndex: 0, // 왼쪽에 있을 사진의 인덱스
+            curRightIndex: 1, // 오른쪽에 있을 사진의 인덱스
             stage: 1, // 처음에는 1스테이지겠지
-            leftClickCount: 0, // 왼쪽 사진 클릭 횟수
-            rightClickCount: 0, // 오른쪽 사진 클릭 횟수
+            round: 1, // 처음에는 1라운드겠지 8강 - 4까지, 4강 - 2까지, 결승 - 1까지
+            isClick: false, // 클릭했는지 안 했는지? 한번만 클릭할 수 있도록
+            clickCount: [0, 0, 0, 0, 0, 0, 0, 0,], // 클릭 몇 번 당했는지? 클릭할때 변화, 스테이지 끝나면 초기화
             stageOneImages: [0, 1, 2, 3, 4, 5, 6, 7], // 첫번째 스테이지에서 쓰일 이미지들 인덱스
             stageTwoImages: [], // 두번째 스테이지에서 쓰일 이미지들 인덱스 , 스테이지 끝나면 추가됨
+            stageThreeImages: [], // 세번째 스테이지에서 쓰일 이미지들 인덱스, 스테이지 끝나면 추가됨
+            LastWinImage: 0, // 최종 우승 머리, 스테이지 끝나면 추가됨
         };
 
         this.joinSession = this.joinSession.bind(this);
@@ -313,7 +316,9 @@ class WorldCup extends Component {
         this.handleMainVideoStream = this.handleMainVideoStream.bind(this);
         this.onbeforeunload = this.onbeforeunload.bind(this);
         this.handleToggle = this.handleToggle.bind(this);
-        this.handleCustomClickEvent = this.handleCustomClickEvent.bind(this);
+        // this.handleCustomClickEvent = this.handleCustomClickEvent.bind(this);
+        this.handleWinClickEvent = this.handleWinClickEvent.bind(this);
+        // this.handleCheckRound = this.handleCheckRound.bind(this);
     }
 
     componentDidMount() {
@@ -348,31 +353,51 @@ class WorldCup extends Component {
         }
     }
 
-    handleCustomClickEvent(index) {
-        // if(this.state.userType == 'designer'){
 
-        // }
+    // 사용자가 한 번 클릭하는 이벤트
+    handleWinClickEvent(index) {
         console.log(index);
         const payload = {
-            action: "customClick",
+            action: "winClick",
             index: index
         };
         this.state.session.signal({
             data: JSON.stringify(payload),
-            to: [] // 이 배열을 비워둘 경우 세션의 모든 참가자에게 신호가 전달됩니다.
+            to: []
         });
     }
 
-    getCurrentImage() {
-        const { imgs } = this.props;
-        const { test } = this.state;
+    // handleCheckRound(index){
+    //     console.log(index);
 
-        if (test >= 0 && test < imgs.length) {
-            return `../img/${imgs[test]}`;
-        } else {
-            return null; // 인덱스가 범위를 벗어날 경우 예외 처리
-        }
-    }
+    //     // 1스테이지면 4라운드 끝나야 넘어감
+    //     if(this.state.stage == 1){
+    //         if(this.state.round )
+    //     }
+
+    //     // 2스테이지면 2라운드 끝나야 넘어감
+    //     else if(this.state.stage == 2){
+
+    //     }
+
+    //     // 3스테이지면 1라운드 끝나야 넘어감
+    //     else if(this.state.stage == 3){
+
+    //     }
+
+    //     const changeRoundPayload = {
+    //         action: "changeRound",
+    //         index: index
+    //     }
+    //     const changeStagePayload = {
+    //         action: "changeStage",
+    //         index: index
+    //     }
+    //     // 만약에 라운드가 끝났어
+
+
+    // }
+
     deleteSubscriber(streamManager) {
         let subscribers = this.state.subscribers;
         let index = subscribers.indexOf(streamManager, 0);
@@ -456,11 +481,32 @@ class WorldCup extends Component {
                     console.warn(exception);
                 });
 
-                // signal 신호를 받을 때 해당 이벤트의 data가 customClick 이라면 test데이터 변경
+                // 이게 내가 수정한 코드다
                 mySession.on('signal', (event) => {
                     const payload = JSON.parse(event.data);
-                    if (payload.action === "customClick") {
-                        this.setState({ test: payload.index });
+                    if (payload.action === "winClick") {
+                        const newClickCount = { ...this.state.clickCount };
+                        newClickCount[payload.index] = newClickCount[payload.index] + 1;
+                        this.setState({ clickCount: newClickCount });
+
+                        // 조건을 미리 검사
+                        if (newClickCount[payload.index] > 3) {
+                            const newRound = this.state.round + 1;
+                            const newCurLeftIndex = this.state.curLeftIndex + 2;
+                            const newCurRightIndex = this.state.curRightIndex + 2;
+
+                            // 한 번의 setState 호출로 상태 변경
+                            this.setState({
+                                clickCount: newClickCount,
+                                round: newRound,
+                                curLeftIndex: newCurLeftIndex,
+                                curRightIndex: newCurRightIndex
+                            });
+                        }
+                    }
+
+                    else if (payload.action === "checkRound") {
+
                     }
                 });
 
@@ -577,8 +623,7 @@ class WorldCup extends Component {
     render() {
         const mySessionId = this.state.mySessionId;
         const myUserName = this.state.myUserName;
-        const { resultimgs, test } = this.state;
-        const currentImage = resultimgs[test] || null;
+        const { resultimgs } = this.state;
 
         return (
             <Container>
@@ -634,16 +679,18 @@ class WorldCup extends Component {
                             ) : null}
                             <RightBox>
                                 <ImageBox>
-                                    <ResultImg src={`https://i9b111.q.ssafy.io/api/consulting-images/confusion/${this.state.resultimgs[curLeftIndex]}`}
+                                    <div>{this.state.clickCount[this.state.curLeftIndex]}</div>
+                                    <ResultImg src={`https://i9b111.q.ssafy.io/api/consulting-images/confusion/${this.state.resultimgs[this.state.curLeftIndex]}`}
                                         alt="Current"
-                                        onClick={() => this.handleWinClickEvent(curLeftIndex)}
+                                        onClick={() => this.handleWinClickEvent(this.state.curLeftIndex)}
                                     />
                                 </ImageBox>
                                 <Hr></Hr>
                                 <ImageBox>
-                                    <ResultImg src={`https://i9b111.q.ssafy.io/api/consulting-images/confusion/${this.state.resultimgs[curRightIndex]}`}
+                                    <div>{this.state.clickCount[this.state.curRightIndex]}</div>
+                                    <ResultImg src={`https://i9b111.q.ssafy.io/api/consulting-images/confusion/${this.state.resultimgs[this.state.curRightIndex]}`}
                                         alt="Current"
-                                        onClick={() => this.handleWinClickEvent(curRightIndex)}
+                                        onClick={() => this.handleWinClickEvent(this.state.curRightIndex)}
                                     />
                                 </ImageBox>
                                 {/* 이건 상담 코드다 */}
@@ -782,4 +829,4 @@ class WorldCup extends Component {
     }
 }
 
-export default WorldCup;
+export default WorldCupRoom;
