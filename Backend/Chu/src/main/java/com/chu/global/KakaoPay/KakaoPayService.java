@@ -40,7 +40,7 @@ public class KakaoPayService {
         params.add("quantity", "1");
         params.add("total_amount", "5000");
         params.add("tax_free_amount", "100");
-        params.add("approval_url", "http://localhost:3000/paysuccess/");
+        params.add("approval_url", "https://i9b111.q.ssafy.io/paysuccess/");
         params.add("cancel_url", "http://localhost:9090/kakaoPayCancel");
         params.add("fail_url", "http://localhost:9090/kakaoPayFail");
 
