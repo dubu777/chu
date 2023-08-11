@@ -3,9 +3,15 @@ import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilCallback } from "recoil";
 import { accessTokenState, loginState } from "../../recoil";
-import { getDesignerNotification } from "../../apis";
+import {
+  getDesignerNotification,
+  getCustomerNotification,
+  readCustomerNotification,
+  readDesignerNotification,
+} from "../../apis";
 import { useState } from "react";
 import { useQuery } from "react-query";
+import { Dropdown, Badge } from "react-bootstrap";
 
 const Nav = styled(motion.nav)`
   display: flex;
@@ -68,14 +74,16 @@ const logoVariants = {
 };
 
 function Header() {
-  const userSeq = localStorage.getItem("userSeq");
+  const userSeq = localStorage.getItem("userSeq") || 0;
+  const userType = localStorage.getItem("userType") || "guest";
   const navigate = useNavigate();
   const [isLogIn, setIsLogIn] = useRecoilState(loginState);
   const [token, setToken] = useRecoilState(accessTokenState);
+  const [show, setShow] = useState(false);
   //통신되면 해보기(알림 조회)
   // const {
   //   data: notifications = [],
-  //   isLoading, 
+  //   isLoading,
   //   isError,
   // } = useQuery(["notificationsData", userSeq], () =>
   //   getDesignerNotification(userSeq)
@@ -95,16 +103,33 @@ function Header() {
   // 로그 아웃 함수(토큰 삭제)
   const handleLogout = useRecoilCallback(({ snapshot }) => async () => {
     setToken(null);
-    localStorage.removeItem('userType');
-    localStorage.removeItem('userSeq');
-    localStorage.removeItem('userName');
-    navigate('/')
+    localStorage.removeItem("userType");
+    localStorage.removeItem("userSeq");
+    localStorage.removeItem("userName");
+    navigate("/");
   });
-  
-  // 통신되면 열기
-  // if (isLoading) return <p>Loading...</p>;
-  // if (isError) return <p>Error fetching notifications</p>;
 
+  const { data: notifications = [], refetch } = useQuery(
+    ["notifications", userType, userSeq],
+    async () => {
+      if (userType === "guest") return [];
+      if (userType === "designer") return getDesignerNotification(userSeq);
+      if (userType === "customer") return getCustomerNotification(userSeq);
+    },
+    {
+      retry: false,
+    }
+  );
+  const handleReadNotification = async (alertSeq) => {
+    try {
+      if (userType === "designer") await readDesignerNotification(alertSeq);
+      if (userType === "customer") await readCustomerNotification(alertSeq);
+      refetch();
+    } catch (error) {
+      console.error("Error reading notification", error);
+    }
+  };
+  console.log(notifications, "알람 제발 !!! 됐다!!");
   return (
     <Nav>
       <Col>
@@ -125,7 +150,7 @@ function Header() {
         </Items>
       </Col>
       <Col>
-      <Link to="/checkreserve">kakao pay</Link>
+        <Link to="/checkreserve">kakao pay</Link>
       </Col>
       <Col>
       <Link to="/worldcuproom/1">worldcuproom</Link>
@@ -149,6 +174,33 @@ function Header() {
             >
               My Page
             </Item>
+
+            <Dropdown show={show} onToggle={() => setShow(!show)}>
+              <Dropdown.Toggle variant="success">
+                알림
+                {notifications.length > 0 && (
+                  <Badge pill bg="primary">
+                    {notifications.length}
+                  </Badge>
+                )}
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu>
+                {notifications.map((notification) => (
+                  <Dropdown.Item key={notification.id}>
+                    <p>{notification.message}</p>
+                    <button
+                      onClick={() =>
+                        handleReadNotification(notification.alertSeq)
+                      }
+                    >
+                      읽기
+                    </button>
+                  </Dropdown.Item>
+                ))}
+              </Dropdown.Menu>
+            </Dropdown>
+
           </>
         ) : (
           <>
