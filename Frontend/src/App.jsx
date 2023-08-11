@@ -23,9 +23,12 @@ import EditDesignerInfo from "./Routes/DesignerPage/EditDesignerInfo";
 import EditCustomerInfo from "./Routes/CustomerPage/EditCustomerInfo";
 import Reservation from "./Routes/DesignerPage/Reservation";
 import CheckReserve from "./Routes/KakaoPage/CheckReserve";
+import PaySuccess from "./Routes/KakaoPage/PaySuccess";
 import ConsultResultPage from "./Routes/ConsultPage/ConsultResultPage";
 import ViduRoomWrapper from "./components/OpenVidu/ViduRoomWrapper";
 import LikeDesigner from "./components/CustomerComponent/LikeDesigner";
+import MapView from "./Routes/ViewPage/MapView";
+
 
 function App() {
   return (
@@ -47,15 +50,17 @@ function App() {
         <Route path="designerdetail/:designerSeq" element={<DesignerDetail/>} />
         <Route path="worlducupimgupload" element={<WorldcupImgUpload/>} />
         <Route path="customermypage/:customerSeq" element={<CustomerMyPage/>} >
-          <Route path="result/:consultingSeq" element={<CustomerMyPage/>} />
+          <Route path=":consultingSeq" element={<CustomerMyPage/>} />
         </Route>
         <Route path="editcustomerinfo/:customerSeq" element={<EditCustomerInfo/>} />
         <Route path="designermypage/:designerSeq" element={<DesignerMyPage/>} />
         <Route path="listview" element={<ListView/>} />
+        <Route path="mapview" element={<MapView/>} />
         <Route path="editdesignerinfo/:designerSeq" element={<EditDesignerInfo/>} />
         <Route path="consultresultpage" element={<ConsultResultPage/>} />
         <Route path="reservation/:designerSeq" element={<Reservation/>} />
         <Route path="checkreserve"  element={<CheckReserve/>} />
+        <Route path="paysuccess"  element={<PaySuccess/>} />
         <Route path="likedesigner" element={<LikeDesigner/>} />
         <Route path="/modaltest" element={<Survey/>}>
           <Route path="/modaltest/1" element={<Survey/>}/>

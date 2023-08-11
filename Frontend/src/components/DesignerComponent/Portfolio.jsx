@@ -113,7 +113,7 @@ function Portfolio(){
     const file = event.target.files[0];
     const formData = new FormData();
     formData.append("img", file);
-
+    console.log('폼포로포몸',formData)
     try {
       // 이미지를 서버에 업로드하고 imgSeq를 받아옴
       const response = await postPortfolio(designerSeq, formData);

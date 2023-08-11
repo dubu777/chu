@@ -195,6 +195,21 @@ const InfoText = styled.span`
   font-weight: 600;
   margin-left: 17px;
 `;
+const IntroTextArea = styled.textarea`
+  border: 0;
+  width: 70%;
+  height: 50px;
+  resize: none;
+  border-radius: 5px;
+  border: 1px solid rgb(191, 189, 189);
+  outline: none; /* 포커스된 상태의 외곽선을 제거 */
+  &:focus {
+    border: 2px solid rgb(244, 153, 26);
+    + span {
+      color: rgb(244, 153, 26);
+    }
+  }
+`;
 
 const Hr = styled.div`
   /* color: #383838; */
@@ -283,6 +298,7 @@ function EditDesignerInfo() {
     mode: "onBlur",
   });
   const watchedPassword = watch("pwd");
+  const watchIntro = watch("introduction");
   const [selectedCut, setSelectedCut] = useState([]);
   const [selectedPerm, setSelectedPerm] = useState([]);
 
@@ -308,6 +324,7 @@ function EditDesignerInfo() {
         cost: formData.cost,
         pwd: watchedPassword || null,
         salonName: "제발!!!!!!",
+        introduction: watchIntro || null,
         latitude: 234.2563, // 예제로 고정값
         longitude: 234.2563, // 예제로 고정값
         address: "대전광역시 서구",
@@ -331,6 +348,7 @@ function EditDesignerInfo() {
         cost,
         salonName,
         address,
+        introduction,
         myCutHairStyle,
         myPermHairStyle,
       } = data;
@@ -341,6 +359,7 @@ function EditDesignerInfo() {
       setValue("cost", cost);
       setValue("salonName", salonName);
       setValue("address", address);
+      setValue("introduction", introduction);
       setSelectedCut(myCutHairStyle.hairStyleSeq);
       setSelectedPerm(myPermHairStyle.hairStyleSeq);
     }
@@ -462,9 +481,9 @@ function EditDesignerInfo() {
                       },
                     })}
                   />
-                  <ErrorMessage>{errors?.cost?.message}</ErrorMessage>
                 </SearchBox>
               </Box>
+              <ErrorMessage>{errors?.cost?.message}</ErrorMessage>
               <Hr />
               <Box>
                 <InfoText>소속 미용실(활동지역)</InfoText>
@@ -476,9 +495,20 @@ function EditDesignerInfo() {
                       required: "소속 미용실을 입력해주세요.",
                     })}
                   />
-                  <ErrorMessage>{errors?.salonName?.message}</ErrorMessage>
                 </SearchBox2>
               </Box>
+              <ErrorMessage>{errors?.salonName?.message}</ErrorMessage>
+              <Hr />
+              <Box>
+                <InfoText>한 줄 소개글</InfoText>
+                  <IntroTextArea
+                    placeholder="한 줄 소개"
+                    {...register("introduction", {
+                      required: "소개글을 작성해주세요.",
+                    })}
+                  />
+              </Box>
+                  <ErrorMessage>{errors?.introduction?.message}</ErrorMessage>
               <Hr />
               <TagWrapper>
                 <StartBox>

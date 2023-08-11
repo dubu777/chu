@@ -7,12 +7,11 @@ import { useQuery, useMutation } from "react-query";
 import { useRecoilState } from 'recoil';
 import { useNavigate, useParams } from "react-router";
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
-import {getPossibleTimeApi, getPortfolioShow} from "../../apis"
+import {getPossibleTimeApi, getPortfolioShow, postReserveImg, postReserveInfo} from "../../apis"
 import {reserveInfo, consultImg} from "../../recoil"
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
 import { BASE_URL } from "../../apis/rootUrl";
 
 const Container = styled.div`
@@ -275,19 +274,69 @@ function formatDateString(date) {
   const month = (date.getMonth() + 1).toString().padStart(2, "0");
   const day = date.getDate().toString().padStart(2, "0");
   const clickdate = `${year}-${month}-${day}`;
-  console.log(clickdate)
+  // console.log(clickdate)
   return `${year}-${month}-${day}`;
 }
 
 
 function Reservation() {
-  const [info, setInfo] = useRecoilState(reserveInfo);
+  const [info, setInfo] = useRecoilState(reserveInfo); // 예약 정보 담는 recoil
+
   const [selectedDate, setSelectedDate] = useState(new Date());
   const formattedSelectedDate = formatDateString(selectedDate);
   const [selectedTime, setSelectedTime] = useState(null);
   const [note, setNote] = useState(""); 
   const [selectedFile, setSelectedFile] = useState(null);
+  const [consultingSeq, setConsultingSeq] = useState(null);
   const { designerSeq } = useParams();
+  const { customerSeq } = useParams();
+  
+  const formData = new FormData();
+  formData.append('img', selectedFile)
+
+  // 넘기고 싶은 데이터 모으기
+  const handleButtonClick = async() => {
+    const combinedData = {
+      customerSeq: '2',
+      designerSeq: designerSeq,
+      date: formattedSelectedDate,
+      time: selectedTime,
+      consultingMemo: note,
+      portfolios: selectedImgs,
+    };
+    setInfo((prevInfo) => ({
+      ...prevInfo,
+      ...combinedData,
+    }));
+    
+    console.log('보내기 전 info', info)
+    // 예약정보 보내기
+    try {
+      await setInfo((prevInfo) => ({
+        ...prevInfo,
+        ...combinedData,
+      }));
+      const response  = await postReserveInfo(info);
+      console.log('가져왔다',response);
+      setConsultingSeq(response)
+    } catch(error){
+      console.log(error)
+    }
+
+    // 예약 정보 이미지 보내기
+    // try{
+    //   const response  = await postReserveImg(consultingSeq, formData);
+    //   console.log('가져왔다',response);
+    // }catch(error){
+
+    // }
+  };
+
+  // 상담 이미지 첨부
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setSelectedFile(file);
+  };
 
   const settings = {
     className: "center",
@@ -335,7 +384,7 @@ function Reservation() {
     ['portfolio', designerSeq],
     () => getPortfolioShow(designerSeq)
   );
-    console.log('포트폴리오 왔니' , imgData)
+    // console.log('포트폴리오 왔니' , imgData)
 
   const generateTimeButtons = () => {
     const timeButtons = [];
@@ -345,8 +394,9 @@ function Reservation() {
     for (let i = startTime; i <= endTime; i += 0.5) {
       const hour = Math.floor(i);
       const minute = (i - hour) * 60;
-      const formattedTime = `${hour.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")}`;
-
+      const second = Math.floor(((i - hour) * 60 - minute) * 60);
+      const formatTime = `${hour.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")}`;
+      const formattedTime = `${hour.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")}:${second.toString().padStart(2, "0")}`;
       timeButtons.push(
         <TimeButton
           key={formattedTime}
@@ -357,11 +407,10 @@ function Reservation() {
             color: selectedTime === formattedTime ? "white" : "black",
           }}
         >
-          {formattedTime}
+          {formatTime}
         </TimeButton>
       );
     }
-
     return timeButtons;
   };
 
@@ -373,9 +422,10 @@ function Reservation() {
   const handleNoteChange = (event) => {
     setNote(event.target.value);
   };
-  console.log('전달메세지 모냐', note)
+  // console.log('전달메세지 모냐', note)
 
   const [selectedImgs, setSelectedImgs] = useState([]);
+  // console.log('선택한 사진', selectedImgs)
   const handleImageClick = (item) => {
     if (selectedImgs.includes(item)) {
       // 이미 선택된 이미지를 다시 클릭하면 선택 해제
@@ -385,13 +435,7 @@ function Reservation() {
       setSelectedImgs((prev) => [...prev, item]);
     }
   };
-  console.log('우와 시간 나옴?', formattedSelectedDate, selectedTime)
-
-  // 상담 이미지 첨부
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    setSelectedFile(file);
-  };
+  // console.log('우와 시간 나옴?', formattedSelectedDate, selectedTime)
 
 
   if (imgLoading) {
@@ -401,6 +445,8 @@ function Reservation() {
     return <div>홈 페이지 에러{data}</div>;
   }
 
+  console.log('최종 예약 정보',info)
+  // console.log('최종 예약 이미지',formData)
 
   return (
     <Container>
@@ -509,7 +555,7 @@ function Reservation() {
                     />
                   <SText>- 이마가 보이는 사진을 업로드해 주세요.</SText>
                 <Hr />
-                <ReservBtn>상담 예약하기</ReservBtn>
+                <ReservBtn onClick={handleButtonClick}>상담 예약하기</ReservBtn>
                   <SText>
                     {" "}
                     - 예약취소 시, 24시간 이전에만 예약금 환불이 가능합니다.

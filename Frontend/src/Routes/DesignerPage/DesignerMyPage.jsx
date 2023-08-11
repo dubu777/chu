@@ -108,22 +108,16 @@ const EditBox = styled.div`
   margin-top: 5px;
   display: flex;
 `;
-const TextArea = styled.textarea`
+const TextArea = styled.div`
   border: none;
   width: 400px;
   height: 40px;
   border-radius: 0.3rem;
   margin-bottom: 7px;
-  background-color: white;
+  /* background-color: white; */
   resize: none;
 `;
-const EditBtn = styled.button`
-  height: 25px;
-  border: 2px solid orange;
-  background-color: beige;
-  border-radius: 0.7rem;
-  margin-left: 10px;
-`;
+
 const Profile = styled.img`
   width: 270px;
   height: 270px;
@@ -207,23 +201,7 @@ function DesignerMyPage() {
   //     }
   //   }
   // };
-  const handleEditButtonClick = () => {
-    setIsEditing(true);
-  };
-  const handleSaveButtonClick = async () => {
-    try{
-      const response = await updateIntroduction(designerSeq, introduction);
-      if(response && response.introduction) {
-        setIntroduction(response.introduction);
-      }
-      setIsEditing(false);
-    } catch (error) {
-      console.error("한줄 소개 수정 실패", error);
-    }
-  };
-  const handleBtnClick = (btnType) => {
-    setActiveBtn(btnType);
-  };
+
   useEffect(() => {
     if(data && data.introduction) {
       setIntroduction(data.introduction);
@@ -266,23 +244,13 @@ function DesignerMyPage() {
           <Text>{data.cost}</Text>
           <Text>{data.email}</Text>
           <introductionWrapper>
-            {isEditing ? (
               <EditBox>
-                <TextArea
-                  contentEditable
-                  placeholder="소개글을 작성해주세요"
-                  onBlur={(e) => setIntroduction(e.target.value)}
-                >
-                  {introduction || data.introduction}
+                <TextArea>
+                  한 줄 소개글 : {data.introduction}
                 </TextArea>
-                <EditBtn onClick={handleSaveButtonClick}>완료</EditBtn>
+                
               </EditBox>
-            ) : (
-              <EditBox>
-                <Text>{data.introduction || "소개글이 없습니다."}</Text>
-                <EditBtn onClick={handleEditButtonClick}>수정</EditBtn>
-              </EditBox>
-            )}
+
           </introductionWrapper>
           {data.hairStyleTag.map((word, index) => (
             <HashTag key={index}> #{word} </HashTag>
