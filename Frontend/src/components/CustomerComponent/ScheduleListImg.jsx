@@ -93,6 +93,7 @@ function ScheduleListImg(){
     console.log("나이거보내고싶어", consultingSeq);
       navigate(`/viduroom/${consultingSeq}`);
   }
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
