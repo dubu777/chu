@@ -102,3 +102,14 @@ export const createNotification = async (consultingSeq, userType) => {
     throw new Error("알림 생성 실패", error)
   }
 }
+
+// 상담 취소
+export const reservationCancel = async (consultingSeq) => {
+  try {
+    const response = await axios.post(`${BASE_URL}/consulting/${consultingSeq}`)
+    console.log(response.data.status);
+    return response.data.status;
+  } catch (error) {
+    throw new Error("알림 생성 실패", error)
+  }
+}

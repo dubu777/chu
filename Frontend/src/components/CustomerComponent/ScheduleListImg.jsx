@@ -1,7 +1,7 @@
 // 회원 예약 정보
 import React, { useState } from 'react';
 import { useQuery, useQueryClient, useMutation } from "react-query";
-import { getCustomerMyPage } from "../../apis";
+import { createNotification, getCustomerMyPage, reservationCancel } from "../../apis";
 import { styled } from "styled-components";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
@@ -82,6 +82,7 @@ const ReservBtnVariant = {
 
 function ScheduleListImg(){
   const customerSeq = localStorage.getItem("userSeq");
+  const userType = localStorage.getItem('userType')
   const navigate = useNavigate();
   const [sessionId, setSessionId] = useRecoilState(sessionIdState);
   const { data, isLoading, isError } = useQuery(
@@ -92,6 +93,21 @@ function ScheduleListImg(){
   const moveToWrapper = (consultingSeq) => {
     console.log("나이거보내고싶어", consultingSeq);
       navigate(`/viduroom/${consultingSeq}`);
+  }
+
+  const handleCancel = async (consultingSeq) => {
+    try {
+      // 알림 생성
+      const notificationResult = await createNotification(consultingSeq, userType);
+      console.log(notificationResult, "알림생성");
+  
+      // 상담 취소
+      const reservationResult = await reservationCancel(consultingSeq);
+      console.log(reservationResult, "상담취소");
+  
+    } catch (error) {
+      console.error("API 호출 실패", error);
+    }
   }
 
   if (isLoading) {
@@ -135,6 +151,7 @@ function ScheduleListImg(){
                       variants={ReservBtnVariant}
                       initial="nomal"
                       whileHover="hover"
+                      onClick={() => handleCancel(data.consultingSeq)}
                       >
                       상담 취소
                     </ReservBtn>

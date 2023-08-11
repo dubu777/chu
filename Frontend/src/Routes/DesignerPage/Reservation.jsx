@@ -7,7 +7,7 @@ import { useQuery, useMutation } from "react-query";
 import { useRecoilState } from 'recoil';
 import { useNavigate, useParams } from "react-router";
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
-import {getPossibleTimeApi, getPortfolioShow, postReserveImg, postReserveInfo} from "../../apis"
+import {getPossibleTimeApi, getPortfolioShow, postReserveImg, postReserveInfo } from "../../apis"
 import {reserveInfo, consultImg} from "../../recoil"
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -281,8 +281,8 @@ function formatDateString(date) {
 
 
 function Reservation() {
+  const customerSeq = localStorage.getItem('userSeq')
   const [info, setInfo] = useRecoilState(reserveInfo); // 예약 정보 담는 recoil
-
   const [selectedDate, setSelectedDate] = useState(new Date());
   const formattedSelectedDate = formatDateString(selectedDate);
   const [selectedTime, setSelectedTime] = useState(null);
@@ -293,10 +293,9 @@ function Reservation() {
   const [consultingSeq, setConsultingSeq] = useState(null);
   const [pofolnum, setPofolNum] = useState(null);
   const { designerSeq } = useParams();
-  const { customerSeq } = useParams();
   const [requestFile, setRequestFile] = useState(null);
   const combinedData = {
-    customerSeq: '2',
+    customerSeq: customerSeq,
     designerSeq: designerSeq,
     date: formattedSelectedDate,
     time: selectedTime,
@@ -317,6 +316,7 @@ function Reservation() {
         ...prevInfo,
         ...combinedData,
       }));
+
       const response  = await postReserveInfo(combinedData);
       console.log('정보보보',response);
       setConsultingSeq(response)
@@ -325,6 +325,7 @@ function Reservation() {
         console.log('response왔어?', response)
         const formData = new FormData();
         formData.append("img", requestFile);
+
         try{
           console.log('try 페이지에 들어온 seq', response)
           const response1  = await postReserveImg(response, formData);
