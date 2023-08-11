@@ -9,6 +9,7 @@ import {
   designerSignUpRequest,
   checkDuplicateId,
   checkDuplicateEmail,
+  designerSignUpImg,
 } from "../../apis/auth";
 import { BASE_URL } from "../../apis/rootUrl";
 
@@ -210,7 +211,7 @@ function DesignerSignUp() {
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
   const [selectedFile, setSelectedFile] = useState(null);
-  const formData = new FormData();
+  const [requestFile, setRequestFile] = useState(null);
   useEffect(() => {
     setSelectedFile("profile2.png");
   }, []);
@@ -221,6 +222,7 @@ function DesignerSignUp() {
   
   function handleFileChange(event) {
     const file = event.target.files[0];
+    setRequestFile(file);
     if (file && file.type.includes("image")) {
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -228,11 +230,10 @@ function DesignerSignUp() {
         clearErrors("profileImage"); // 이미지 선택 후 오류 초기화
       };
       reader.readAsDataURL(file);
+      // setRequestFile(file);
     } else {
       swal("⚠️ Image 파일 형식을 선택해주세요 :)");
     }
-
-    formData.append("img", file);
   }
   const {
     register,
@@ -249,6 +250,7 @@ function DesignerSignUp() {
 
   const [isIdAvailable, setIsIdAvailable] = useState(false);
   const [isEmailAvailable, setIsEmailAvailable] = useState(false);
+  const [responseSeq, setResponseSeq] =useState(null);
 
   const password = watch("pwd");
   const name = watch("name");
@@ -309,25 +311,40 @@ function DesignerSignUp() {
   const onSubmit = async (dd) => {
     if (isIdAvailable || isEmailAvailable) return;
     
-    // if (!selectedFile) {
-    //   setError("profileImage", {
-    //     type: "manual",
-    //     message: "프로필 이미지를 첨부해주세요."
-    //   });
-    //   return;
-    // }
+    if (!selectedFile) {
+      setError("profileImage", {
+        type: "manual",
+        message: "프로필 이미지를 첨부해주세요."
+      });
+      return;
+    }
     try {
       // 회원가입 API 요청
       console.log("formDATA: ", dd);
-      const signUpResult = await designerSignUpRequest(designerData, formData, "deisgner");
-      console.log("Sign-up success:", signUpResult);
-      swal("Success", "회원가입이 완료되었습니다.", "success");
-      navigate("/login");
-    } catch (error) {
-      console.error("Sign-up error:", error);
-      swal("Error", "회원가입에 실패했습니다.", "error");
+      const Seq = await designerSignUpRequest(designerData, "deisgner");
+      setResponseSeq(Seq)
+      console.log(Seq)
+      console.log("회원정보 등록 success:", Seq);
+      
+    if (Seq) {
+      console.log('받았어?', Seq)
+      const formData = new FormData();
+      formData.append("img", requestFile);
+      try{
+        console.log('try', Seq);
+        const response = await designerSignUpImg(Seq, formData, "deisgner");
+        console.log('이미지 들어갔니', response)
+        swal("Success", "회원가입이 완료되었습니다.", "success");
+        navigate("/login");
+      } catch (error) {
+        console.error("프로필 사진 등록 실패:", error)
+        swal("Error", "회원가입에 실패했습니다.", "error");
+      }
     }
-  };
+  } catch (error) {
+    console.error("정보등록 error:", error);
+  }
+};
   return (
     <Container>
       <StepWrapper>
@@ -342,7 +359,7 @@ function DesignerSignUp() {
           <Title>Sign Up</Title>
           <Wrapper>
             <Form onSubmit={handleSubmit(onSubmit)}>
-              {/* <ProfileBox>
+              <ProfileBox>
                 <input
                   type="file"
                   style={{ display: "none" }}
@@ -360,7 +377,7 @@ function DesignerSignUp() {
                   <Btn onClick={handleImageClick}>프로필 이미지 첨부</Btn>
                   <ErrorMessage>디자이너 프로필에 사용될 사진을 첨부해주세요</ErrorMessage>
                 </ClickBox>
-              </ProfileBox> */}
+              </ProfileBox>
               <InputBox>
                 <InputWrap>
                   <SignUpInputBox>

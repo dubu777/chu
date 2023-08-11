@@ -97,16 +97,36 @@ export const signUpRequest = async (customerData) => {
   }
 };
 
-// 디자이너 회원가입
-export const designerSignUpRequest = async (designerData, formdata) => {
+// 디자이너 회원가입(정보)
+export const designerSignUpRequest = async (designerData) => {
   console.log(designerData);
-  console.log(formdata);
   try {
-    const response = await axios.post(`${BASE_URL}/designer/sign-up`, designerData, formdata);
+    const response = await axios.post(`${BASE_URL}/designer/sign-up`, designerData);
     console.log(response.data);
-    return response.data;
+    return response.data.result;
   } catch (error) {
     throw error;
+  }
+};
+// 디자이너 회원가입(프로필 사진)
+export const designerSignUpImg = async (Seq, formData) => {
+  console.log('퐁포옾ㅇ', formData)
+  try { 
+    console.log("try문 진입");
+    const response = await axios.post(
+      `${BASE_URL}/designer/sign-up/img/${Seq}`,
+        formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    // console.log('사진 정보',response.data.result)
+    console.log('사진 정보',response.data)
+    return response.data.result;
+  } catch (error) {
+    throw new Error("이미지 보내기 실패");
   }
 };
 

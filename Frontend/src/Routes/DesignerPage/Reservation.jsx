@@ -13,6 +13,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { BASE_URL } from "../../apis/rootUrl";
+import swal from "sweetalert";
 
 const Container = styled.div`
   display: flex;
@@ -286,56 +287,75 @@ function Reservation() {
   const formattedSelectedDate = formatDateString(selectedDate);
   const [selectedTime, setSelectedTime] = useState(null);
   const [note, setNote] = useState(""); 
+  const [selectedImgs, setSelectedImgs] = useState([]);
+  const [selectedImgSeqs, setSelectedImgSeqs] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
   const [consultingSeq, setConsultingSeq] = useState(null);
+  const [pofolnum, setPofolNum] = useState(null);
   const { designerSeq } = useParams();
   const { customerSeq } = useParams();
-  
-  const formData = new FormData();
-  formData.append('img', selectedFile)
+  const [requestFile, setRequestFile] = useState(null);
+  const combinedData = {
+    customerSeq: '2',
+    designerSeq: designerSeq,
+    date: formattedSelectedDate,
+    time: selectedTime,
+    consultingMemo: note,
+    portfolios: selectedImgSeqs,
+  };
+
+  // const formData = new FormData();
+  // formData.append('img', selectedFile)
 
   // 넘기고 싶은 데이터 모으기
   const handleButtonClick = async() => {
-    const combinedData = {
-      customerSeq: '2',
-      designerSeq: designerSeq,
-      date: formattedSelectedDate,
-      time: selectedTime,
-      consultingMemo: note,
-      portfolios: selectedImgs,
-    };
-    setInfo((prevInfo) => ({
-      ...prevInfo,
-      ...combinedData,
-    }));
-    
-    console.log('보내기 전 info', info)
+    console.log('보내기 전 info', combinedData)
     // 예약정보 보내기
     try {
+      console.log('페이지 try')
       await setInfo((prevInfo) => ({
         ...prevInfo,
         ...combinedData,
       }));
-      const response  = await postReserveInfo(info);
-      console.log('가져왔다',response);
+      const response  = await postReserveInfo(combinedData);
+      console.log('정보보보',response);
       setConsultingSeq(response)
+      //예약 정보 이미지 보내기
+      if (response) {
+        console.log('response왔어?', response)
+        const formData = new FormData();
+        formData.append("img", requestFile);
+        try{
+          console.log('try 페이지에 들어온 seq', response)
+          const response1  = await postReserveImg(response, formData);
+          console.log('이미지미지', response1);
+          swal("Success", "결제페이지로 이동합니다.", "success")
+        }catch(error){
+          console.error("Img Send Error:", error);
+        }
+      }
+      
     } catch(error){
       console.log(error)
     }
-
-    // 예약 정보 이미지 보내기
-    // try{
-    //   const response  = await postReserveImg(consultingSeq, formData);
-    //   console.log('가져왔다',response);
-    // }catch(error){
-
-    // }
   };
 
   // 상담 이미지 첨부
   const handleFileChange = (event) => {
+    // const file = event.target.files[0];
+    // setSelectedFile(file);
     const file = event.target.files[0];
-    setSelectedFile(file);
+    setRequestFile(file);
+    if (file && file.type.includes("image")) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setSelectedFile(reader.result);
+      };
+      reader.readAsDataURL(file);
+      // setRequestFile(file);
+    } else {
+      swal("⚠️ Image 파일 형식을 선택해주세요 :)");
+    }
   };
 
   const settings = {
@@ -384,7 +404,7 @@ function Reservation() {
     ['portfolio', designerSeq],
     () => getPortfolioShow(designerSeq)
   );
-    // console.log('포트폴리오 왔니' , imgData)
+    console.log('포트폴리오 왔니' , imgData)
 
   const generateTimeButtons = () => {
     const timeButtons = [];
@@ -424,15 +444,20 @@ function Reservation() {
   };
   // console.log('전달메세지 모냐', note)
 
-  const [selectedImgs, setSelectedImgs] = useState([]);
-  // console.log('선택한 사진', selectedImgs)
+  // const [selectedImgs, setSelectedImgs] = useState([]);
+  console.log('선택한 사진', selectedImgs)
+  console.log('사진 번호', selectedImgSeqs )
   const handleImageClick = (item) => {
-    if (selectedImgs.includes(item)) {
+    if (selectedImgs.includes(item.imgSeq)) {
       // 이미 선택된 이미지를 다시 클릭하면 선택 해제
-      setSelectedImgs((prev) => prev.filter((img) => img !== item));
+      // setSelectedImgs((prev) => prev.filter((img) => img !== item.imgName));
+      setSelectedImgSeqs((prev) => prev.filter((imgSeq) => imgSeq !== item.imgSeq));
+      setSelectedImgs((prev) => prev.filter((imgName) => imgName !== item.imgName));
     } else {
       // 새로운 이미지를 선택
-      setSelectedImgs((prev) => [...prev, item]);
+      // setSelectedImgs((prev) => [...prev, item.imgName]);
+      setSelectedImgSeqs((prev) => [...prev, item.imgSeq]);
+      setSelectedImgs((prev) => [...prev, item.imgName]);
     }
   };
   // console.log('우와 시간 나옴?', formattedSelectedDate, selectedTime)
@@ -445,7 +470,6 @@ function Reservation() {
     return <div>홈 페이지 에러{data}</div>;
   }
 
-  console.log('최종 예약 정보',info)
   // console.log('최종 예약 이미지',formData)
 
   return (
@@ -494,7 +518,7 @@ function Reservation() {
                   <PofolImg
                     key={index}
                     // src={item}
-                    src={`${BASE_URL}/portfolio/${item}`}
+                    src={`${BASE_URL}/portfolio/${item.imgName}`}
                     variants={pofolVariants}
                     initial="nomal"
                     whileHover="hover"
@@ -512,7 +536,7 @@ function Reservation() {
                 {imgData.randomPortfolio.map((item, index) => (
                   <PofolImg
                     key={index}
-                    src={`${BASE_URL}/portfolio/${item}`}
+                    src={`${BASE_URL}/portfolio/${item.imgName}`}
                     variants={pofolVariants}
                     initial="nomal"
                     whileHover="hover"
@@ -538,7 +562,7 @@ function Reservation() {
                     >
                       {/* 수정 필요 코드 */}
                       {/* <SImg src={item} /> */}
-                      <SImg src={`${BASE_URL}/portfolio/${item}`} />
+                      <SImg src={`${BASE_URL}/portfolio/${item.imgName}`} />
                     </SImgBox>
                   ))}
                 </AnimatePresence>
