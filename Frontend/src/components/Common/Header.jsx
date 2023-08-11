@@ -72,15 +72,14 @@ function Header() {
   const navigate = useNavigate();
   const [isLogIn, setIsLogIn] = useRecoilState(loginState);
   const [token, setToken] = useRecoilState(accessTokenState);
-  
-  //통신되면 해보기(취소 알림)
-  const {
-    data: notifications = [],
-    isLoading,
-    isError,
-  } = useQuery(["notificationsData", userSeq], () =>
-    getDesignerNotification(userSeq)
-  );
+  //통신되면 해보기(알림 조회)
+  // const {
+  //   data: notifications = [],
+  //   isLoading, 
+  //   isError,
+  // } = useQuery(["notificationsData", userSeq], () =>
+  //   getDesignerNotification(userSeq)
+  // );
 
   // 유저 타입에 따른 마이페이지 router
   const handleNavigation = () => {
@@ -100,9 +99,10 @@ function Header() {
     localStorage.removeItem("userSeq");
     navigate("/");
   });
-
-  if (isLoading) return <p>Loading...</p>;
-  if (isError) return <p>Error fetching notifications</p>;
+  
+  // 통신되면 열기
+  // if (isLoading) return <p>Loading...</p>;
+  // if (isError) return <p>Error fetching notifications</p>;
 
   return (
     <Nav>
