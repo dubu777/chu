@@ -22,6 +22,7 @@ import Survey from "./components/ModalComponent/Survey";
 import EditDesignerInfo from "./Routes/DesignerPage/EditDesignerInfo";
 import EditCustomerInfo from "./Routes/CustomerPage/EditCustomerInfo";
 import Reservation from "./Routes/DesignerPage/Reservation";
+import CheckReserve from "./Routes/KakaoPage/CheckReserve";
 import ConsultResultPage from "./Routes/ConsultPage/ConsultResultPage";
 import ViduRoomWrapper from "./components/OpenVidu/ViduRoomWrapper";
 import LikeDesigner from "./components/CustomerComponent/LikeDesigner";
@@ -53,7 +54,8 @@ function App() {
         <Route path="listview" element={<ListView/>} />
         <Route path="editdesignerinfo/:designerSeq" element={<EditDesignerInfo/>} />
         <Route path="consultresultpage" element={<ConsultResultPage/>} />
-        <Route path="reservation" element={<Reservation/>} />
+        <Route path="reservation/:designerSeq" element={<Reservation/>} />
+        <Route path="checkreserve"  element={<CheckReserve/>} />
         <Route path="likedesigner" element={<LikeDesigner/>} />
         <Route path="/modaltest" element={<Survey/>}>
           <Route path="/modaltest/1" element={<Survey/>}/>

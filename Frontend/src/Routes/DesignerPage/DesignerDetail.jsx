@@ -353,7 +353,7 @@ function DesignerDetail() {
                     <Text>{data.cost}</Text>
                   </Box>
                   <ReservBox
-                    onClick={() => navigate("/reservation")}
+                    onClick={() => navigate(`/reservation/${designerSeq}`)}
                     whileHover={{ backgroundColor: "rgb(244,153,26)" }}
                   >
                     <Icon src="/icon/reservBtn.png" />
@@ -376,10 +376,11 @@ function DesignerDetail() {
             <SubTitle>포트폴리오</SubTitle>
             <Hr />
             <StyledSlider {...settings}>
-              {OPofolImgs.map((item, index) => (
+              {data.portfolio.map((item, index) => (
                 <PofolImg
                   key={index}
-                  src={item}
+                  // src={item}
+                  src={`${BASE_URL}/portfolio/${item.imaName}`}
                   variants={pofolVariants}
                   initial="nomal"
                   whileHover="hover"

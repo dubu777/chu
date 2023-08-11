@@ -10,7 +10,7 @@ export const getSessionId = async(consultingSeq, setSessionId)=> {
     try {
         console.log("try접근")
         // const response = await axios.get(`${BASE_URL}/consulting/${consultingSeq}`)
-        const response = await axios.get(`${BASE_URL}/consulting/1`)
+        const response = await axios.get(`${BASE_URL}/consulting/${consultingSeq}`)
         console.log(response.data.result)
         return response.data.result
     } catch(error) {

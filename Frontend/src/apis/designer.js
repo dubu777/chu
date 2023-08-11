@@ -100,8 +100,9 @@ export const attachDesignerImage = async (seq, formData) => {
         },
       }
     );
-    console.log("성공");
-    return response.data;
+    // console.log('사진 정보',response.data.result)
+    console.log('사진 정보',response.data)
+    return response.data.result;
   } catch (error) {
     throw new Error("이미지 보내기 실패");
   }
@@ -112,9 +113,9 @@ export const getAllReserveList = async (designerSeq) => {
   try {
     console.log('trytry')
       // const response = await axios.get(`${BASE_URL}/designer/detail/reservation-list/${designerSeq}`)
-      const response = await axios.get(`${BASE_URL}/designer/detail/reservation-list/7`)
+      const response = await axios.get(`${BASE_URL}/designer/detail/reservation-list/${designerSeq}`)
       console.log('응답몬', response.data);
-      return response.data.result
+      return response.data.result;
   } catch(error) {
       throw new Error('디자이너 상담 예약목록 API 요청 실패')
   }

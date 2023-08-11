@@ -1,15 +1,19 @@
-import styled, { keyframes }  from "styled-components";
+import { styled } from "styled-components";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css"; // css import
 // import Calendar from "../../components/ReservationComponent/Calendar";
 import { useState } from "react";
 import { useQuery, useMutation } from "react-query";
+import { useRecoilState } from 'recoil';
 import { useNavigate, useParams } from "react-router";
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
-import {getPossibleTimeApi} from "../../apis"
+import {getPossibleTimeApi, getPortfolioShow} from "../../apis"
+import {reserveInfo, consultImg} from "../../recoil"
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+
+import { BASE_URL } from "../../apis/rootUrl";
 
 const Container = styled.div`
   display: flex;
@@ -129,19 +133,21 @@ const TimeSelectionContainer = styled.div`
   /* justify-content: center; */
   margin-bottom: 10px;
 `;
-const TimeButton = styled.button`
+const TimeButton = styled(motion.button)`
   border-radius:1.0rem;
-  width: 65px;
+  width: 62px;
   height: 35px;
   margin: 3px;
   border: ${props => props.selected ? 'none' : '1px solid lightgray'};
   background-color: ${props => props.selected ? '#7D705F' : 'white'}; 
   color: ${props => props.selected ? 'white' : 'black'}; 
-  &:hover {
-    background-color: ${(props) =>
-      props.selected ? "#7D705F" : "#ebe8d9"};
-    color: ${(props) => (props.selected ? "white" : "black")};
+  cursor: pointer;
+  :hover {
+    border: orange;
+    color: orange;
+
   }
+
 `;
 
 const TimeBox = styled.div`
@@ -261,7 +267,9 @@ const EmtyBox = styled.div`
   width: 100px;
   height: 80px;
 `;
-
+const SubmitImg = styled.input`
+  margin: 15px 0px;
+`;
 function formatDateString(date) {
   const year = date.getFullYear();
   const month = (date.getMonth() + 1).toString().padStart(2, "0");
@@ -271,19 +279,16 @@ function formatDateString(date) {
   return `${year}-${month}-${day}`;
 }
 
-function formatTimeString(time) {
-  const hours = time.split(":")[0].padStart(2, "0");
-  const minutes = time.split(":")[1].padStart(2, "0");
-  const seconds = "00"; // 초를 00으로 설정하거나 필요에 따라 수정하세요
-  return `${hours}:${minutes}:${seconds}`;
-}
 
 function Reservation() {
+  const [info, setInfo] = useRecoilState(reserveInfo);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const formattedSelectedDate = formatDateString(selectedDate);
   const [selectedTime, setSelectedTime] = useState(null);
-  const [handleLike, setHandleLike] = useState(false); // 좋아요 상태를 state로 관리
+  const [note, setNote] = useState(""); 
+  const [selectedFile, setSelectedFile] = useState(null);
   const { designerSeq } = useParams();
+
   const settings = {
     className: "center",
     infinite: true,
@@ -319,37 +324,20 @@ function Reservation() {
     ],
   };
 
-  const PofolImgs = [
-    "img/pofol1.jpg",
-    "img/pofol2.jpg",
-    "img/pofol3.jpg",
-    "img/pofol4.jpg",
-    "img/pofol5.jpg",
-    "img/pofol6.jpg",
-    "img/pofol7.jpg",
-    "img/pofol8.jpg",
-    "img/pofol9.jpg",
-  ];
-  const OPofolImgs = [
-    "img/opofol1.jpg",
-    "img/opofol2.jpg",
-    "img/opofol3.jpg",
-    "img/opofol4.jpg",
-    "img/opofol5.jpg",
-    "img/opofol6.jpg",
-    "img/opofol7.jpg",
-    "img/opofol8.jpg",
-    "img/opofol9.jpg",
-  ];
-
   // 시간 데이터 호출
-  const { data, isError, isLoading } = useQuery(
+  const { data: data, isError: Error, isLoading: Loading } = useQuery(
     ['possibleTime', designerSeq],
-     () => getPossibleTimeApi(designerSeq)
+    () => getPossibleTimeApi(designerSeq)
   );
-  console.log('시간 어디 보자:', data)
+  
+  // 포트폴리오 이미지 호출
+  const { data: imgData, isError: imgError, isLoading: imgLoading } = useQuery(
+    ['portfolio', designerSeq],
+    () => getPortfolioShow(designerSeq)
+  );
+    console.log('포트폴리오 왔니' , imgData)
 
-  const generateTimeButtons = (selectedTime, setSelectedTime, formattedSelectedDate) => {
+  const generateTimeButtons = () => {
     const timeButtons = [];
     const startTime = 9; // 시작 시간 (9:00)
     const endTime = 22.5; // 종료 시간 (22:30)
@@ -362,11 +350,10 @@ function Reservation() {
       timeButtons.push(
         <TimeButton
           key={formattedTime}
-          onClick={() => handleTimeButtonClick(formattedTime, selectedTime)}
+          variants = {timeBtnVariants}
+          onClick={() => handleTimeButtonClick(formattedTime)}
           style={{
-            padding: "5px 10px",
-            margin: "5px",
-            backgroundColor: selectedTime === formattedTime ? "blue" : "white",
+            backgroundColor: selectedTime === formattedTime ? "rgb(100, 93, 81)" : "white",
             color: selectedTime === formattedTime ? "white" : "black",
           }}
         >
@@ -378,21 +365,16 @@ function Reservation() {
     return timeButtons;
   };
 
-  const handleTimeButtonClick = (formattedTime, selectedTime) => {
-    const formattedTime1 = formatTimeString(formattedTime);
-    setSelectedTime(formattedTime1);
-
-    if (formattedTime1 === selectedTime) {
-      // 이미 선택한 시간을 클릭한 경우 취소 상태로 변경
-      setSelectedTime(null);
-    } else {
-      // 다른 시간을 선택한 경우 선택 상태로 변경
-      setSelectedTime(formattedTime1);
-    }
+  const handleTimeButtonClick = (time) => {
+    setSelectedTime(time);
   };
 
+  // 여기부터는 예약 전달 메세지 로직
+  const handleNoteChange = (event) => {
+    setNote(event.target.value);
+  };
+  console.log('전달메세지 모냐', note)
 
-  // 이미지 관련
   const [selectedImgs, setSelectedImgs] = useState([]);
   const handleImageClick = (item) => {
     if (selectedImgs.includes(item)) {
@@ -403,7 +385,22 @@ function Reservation() {
       setSelectedImgs((prev) => [...prev, item]);
     }
   };
-  console.log('우와 시간 나옴?', formattedSelectedDate,selectedTime)
+  console.log('우와 시간 나옴?', formattedSelectedDate, selectedTime)
+
+  // 상담 이미지 첨부
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setSelectedFile(file);
+  };
+
+
+  if (imgLoading) {
+    return <div>Loading...{data}</div>;
+  }
+  if (imgError) {
+    return <div>홈 페이지 에러{data}</div>;
+  }
+
 
   return (
     <Container>
@@ -430,7 +427,11 @@ function Reservation() {
             </TimeBox>
             <SubTitle>전달사항</SubTitle>
             <Hr />
-            <TextArea placeholder="내용을 입력해주세요." />
+            <TextArea 
+              placeholder="내용을 입력해주세요." 
+              value={note} 
+              onChange={handleNoteChange}
+              /> 
           </ResevBox>
         </ReservWrap>
       </LeftWrap>
@@ -443,10 +444,11 @@ function Reservation() {
               </StartBox>
               <Hr />
               <StyledSlider {...settings}>
-                {PofolImgs.map((item, index) => (
+                {imgData.designerPortfolio.map((item, index) => (
                   <PofolImg
                     key={index}
-                    src={item}
+                    // src={item}
+                    src={`${BASE_URL}/portfolio/${item}`}
                     variants={pofolVariants}
                     initial="nomal"
                     whileHover="hover"
@@ -461,10 +463,10 @@ function Reservation() {
               </StartBox>
               <Hr />
               <StyledSlider {...settings}>
-                {OPofolImgs.map((item, index) => (
+                {imgData.randomPortfolio.map((item, index) => (
                   <PofolImg
                     key={index}
-                    src={item}
+                    src={`${BASE_URL}/portfolio/${item}`}
                     variants={pofolVariants}
                     initial="nomal"
                     whileHover="hover"
@@ -488,7 +490,9 @@ function Reservation() {
                       exit="exit"
                       onClick={() => handleImageClick(item)}
                     >
-                      <SImg src={item} />
+                      {/* 수정 필요 코드 */}
+                      {/* <SImg src={item} /> */}
+                      <SImg src={`${BASE_URL}/portfolio/${item}`} />
                     </SImgBox>
                   ))}
                 </AnimatePresence>
@@ -497,17 +501,21 @@ function Reservation() {
             <StartBox>
               <SubTitle>상담 사진 등록</SubTitle>
             </StartBox>
-            <Hr />
-            <UploadBtn>파일 업로드</UploadBtn>
-            <SText>- 이마가 보이는 사진을 업로드해 주세요.</SText>
-            <Hr />
-            <ReservBtn>상담 예약하기</ReservBtn>
-            <SText>
-              {" "}
-              - 예약취소 시, 24시간 이전에만 예약금 환불이 가능합니다.
-            </SText>
-          </ResevBox>
-        </ReservWrap>
+                <Hr/>
+                  <SubmitImg
+                      type="file"
+                      accept="image/*"
+                      onChange={handleFileChange}
+                    />
+                  <SText>- 이마가 보이는 사진을 업로드해 주세요.</SText>
+                <Hr />
+                <ReservBtn>상담 예약하기</ReservBtn>
+                  <SText>
+                    {" "}
+                    - 예약취소 시, 24시간 이전에만 예약금 환불이 가능합니다.
+                  </SText>
+            </ResevBox>
+          </ReservWrap>
       </RigthWrap>
     </Container>
   );

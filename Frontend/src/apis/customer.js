@@ -19,7 +19,7 @@ export const attachCustomerImage = async (seq, formData) => {
       }
     );
     console.log("성공");
-    return response.data;
+    return response.data.result;
   } catch (error) {
     throw new Error("이미지 보내기 실패");
   }
