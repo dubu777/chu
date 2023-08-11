@@ -18,6 +18,8 @@ import WorldcupImgUpload from "./Routes/WorldCupPage/WorldcupImgUpload";
 import CustomerMyPage from "./Routes/CustomerPage/CustomerMyPage";
 import DesignerMyPage from "./Routes/DesignerPage/DesignerMyPage";
 import ListView from "./Routes/ViewPage/ListView";
+import MapView from "./Routes/ViewPage/MapView";
+
 import Survey from "./components/ModalComponent/Survey";
 import EditDesignerInfo from "./Routes/DesignerPage/EditDesignerInfo";
 import EditCustomerInfo from "./Routes/CustomerPage/EditCustomerInfo";
@@ -52,6 +54,7 @@ function App() {
         <Route path="editcustomerinfo/:customerSeq" element={<EditCustomerInfo/>} />
         <Route path="designermypage/:designerSeq" element={<DesignerMyPage/>} />
         <Route path="listview" element={<ListView/>} />
+        <Route path="mapview" element={<MapView/>} />
         <Route path="editdesignerinfo/:designerSeq" element={<EditDesignerInfo/>} />
         <Route path="consultresultpage" element={<ConsultResultPage/>} />
         <Route path="reservation/:designerSeq" element={<Reservation/>} />

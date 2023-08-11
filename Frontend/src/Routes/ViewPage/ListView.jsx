@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
+import {Link, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import DesignerList from "../../components/DesignerComponent/DesignerList";
 import axios from "axios";
@@ -9,7 +9,6 @@ import {listViewState} from "../../recoil";
 import {listinfo, submitStyleFilter, searchDesigner} from "../../apis"
 import { async } from "q";
 import { useQuery } from "react-query";
-
 
 const Container = styled.div`
   display: flex;
@@ -317,12 +316,16 @@ function ListView() {
         </Btn>
       </BtnBox>
       <BtnBox>
-      <MapBtn 
-        handleMap={handleMap}
-        onClick={toggleMap}>
-        내 주변 디자이너 찾기
-      </MapBtn>
+      
+      <Link to="/mapview">
+        <MapBtn 
+          handleMap={handleMap}
+          onClick={toggleMap}>
+          내 주변 디자이너 찾기
+        </MapBtn>
+      </Link>
       </BtnBox>
+
       </BtnWrapper>
           <DesignerList data={sendData} sortOrder={sortOrder} />
         </>
