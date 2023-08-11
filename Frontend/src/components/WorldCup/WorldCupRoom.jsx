@@ -278,35 +278,34 @@ const MarginBox = styled.div`
 const OPENVIDU_SERVER_URL = 'https://' + 'i9b111.q.ssafy.io' + ':8443';
 const OPENVIDU_SERVER_SECRET = "sunjin";
 
-class ViduRoom extends Component {
+class WorldCupRoom extends Component {
     constructor(props) {
         super(props);
         console.log('으악세션', this.props.sessionId);
-        console.log('으악이름', this.props.userName);
-        console.log('으악타입', this.props.userType);
-        console.log('이미지', this.props.imgs);
+        console.log('이미지', this.props.resultimgs);
 
         this.state = {
             mySessionId: this.props.sessionId,
-            myUserName: this.props.userName,
-            // myUserName: 'Participant' + Math.floor(Math.random() * 100),
+            myUserName: '우리친구들' + Math.floor(Math.random() * 100),
             session: undefined,
             mainStreamManager: undefined,
             publisher: undefined,
-            subscribers: [],
-            userType: this.props.userType,
+            subscribers: [], // 이녀석의 배열 크기가 쫌 중요할 듯
             isMike: true,
             isCamera: true,
             isSpeaker: true,
             isChat: false,
-            resultimgs: this.props.resultimgs,
-            targetimgs: this.props.targetimgs,
-            test: 0
-            // 타겟이미지들 넣기
-            // [ desinger1.png, designer2.png, ..., ]
-            // 합성이미지들 넣기
-            // [ desinger1.png, designer2.png, ..., ]
-            // 현재메인이미지 [0] 초기값
+            resultimgs: this.props.resultimgs, // 합성 이미지 전부
+            curLeftIndex: 0, // 왼쪽에 있을 사진의 인덱스
+            curRightIndex: 1, // 오른쪽에 있을 사진의 인덱스
+            stage: 1, // 처음에는 1스테이지겠지
+            round: 1, // 처음에는 1라운드겠지 8강 - 4까지, 4강 - 2까지, 결승 - 1까지
+            isClick: false, // 클릭했는지 안 했는지? 한번만 클릭할 수 있도록
+            clickCount: [0, 0, 0, 0, 0, 0, 0, 0,], // 클릭 몇 번 당했는지? 클릭할때 변화, 스테이지 끝나면 초기화
+            stageOneImages: [0, 1, 2, 3, 4, 5, 6, 7], // 첫번째 스테이지에서 쓰일 이미지들 인덱스
+            stageTwoImages: [], // 두번째 스테이지에서 쓰일 이미지들 인덱스 , 스테이지 끝나면 추가됨
+            stageThreeImages: [], // 세번째 스테이지에서 쓰일 이미지들 인덱스, 스테이지 끝나면 추가됨
+            LastWinImage: 0, // 최종 우승 머리, 스테이지 끝나면 추가됨
         };
 
         this.joinSession = this.joinSession.bind(this);
@@ -317,7 +316,9 @@ class ViduRoom extends Component {
         this.handleMainVideoStream = this.handleMainVideoStream.bind(this);
         this.onbeforeunload = this.onbeforeunload.bind(this);
         this.handleToggle = this.handleToggle.bind(this);
-        this.handleCustomClickEvent = this.handleCustomClickEvent.bind(this);
+        // this.handleCustomClickEvent = this.handleCustomClickEvent.bind(this);
+        this.handleWinClickEvent = this.handleWinClickEvent.bind(this);
+        // this.handleCheckRound = this.handleCheckRound.bind(this);
     }
 
     componentDidMount() {
@@ -351,42 +352,52 @@ class ViduRoom extends Component {
             });
         }
     }
-    //   handleImageClick(index){
-    //     // desinger일 경우에만 합성 이미지 핸들링 가능
-    //     if(this.state.userType === 'designer'){
-    //       this.state.메인이미지 = `https://i9b111.q.ssafy.io/api/consulting-image/${this.state.confusionImage[index].imgName}`};
-    //     }
-    //     여기서 바뀐다고 다른 사람의 상태가 바뀔까? 난 아니라고 봐
-    //     그럼 뭘 해야하냐? 그럼 streamManager 이 녀석을 건드려야할 것 같은데
-    //     그건 지금 난 졸려서 못해
-    //     내일의 내가 할꺼야
-    //   }
 
-    handleCustomClickEvent(index) {
-        // if(this.state.userType == 'designer'){
 
-        // }
+    // 사용자가 한 번 클릭하는 이벤트
+    handleWinClickEvent(index) {
         console.log(index);
         const payload = {
-            action: "customClick",
+            action: "winClick",
             index: index
         };
         this.state.session.signal({
             data: JSON.stringify(payload),
-            to: [] // 이 배열을 비워둘 경우 세션의 모든 참가자에게 신호가 전달됩니다.
+            to: []
         });
     }
 
-    getCurrentImage() {
-        const { imgs } = this.props;
-        const { test } = this.state;
+    // handleCheckRound(index){
+    //     console.log(index);
 
-        if (test >= 0 && test < imgs.length) {
-            return `../img/${imgs[test]}`;
-        } else {
-            return null; // 인덱스가 범위를 벗어날 경우 예외 처리
-        }
-    }
+    //     // 1스테이지면 4라운드 끝나야 넘어감
+    //     if(this.state.stage == 1){
+    //         if(this.state.round )
+    //     }
+
+    //     // 2스테이지면 2라운드 끝나야 넘어감
+    //     else if(this.state.stage == 2){
+
+    //     }
+
+    //     // 3스테이지면 1라운드 끝나야 넘어감
+    //     else if(this.state.stage == 3){
+
+    //     }
+
+    //     const changeRoundPayload = {
+    //         action: "changeRound",
+    //         index: index
+    //     }
+    //     const changeStagePayload = {
+    //         action: "changeStage",
+    //         index: index
+    //     }
+    //     // 만약에 라운드가 끝났어
+
+
+    // }
+
     deleteSubscriber(streamManager) {
         let subscribers = this.state.subscribers;
         let index = subscribers.indexOf(streamManager, 0);
@@ -469,12 +480,33 @@ class ViduRoom extends Component {
                 mySession.on('exception', (exception) => {
                     console.warn(exception);
                 });
-                
-                // signal 신호를 받을 때 해당 이벤트의 data가 customClick 이라면 test데이터 변경
+
+                // 이게 내가 수정한 코드다
                 mySession.on('signal', (event) => {
                     const payload = JSON.parse(event.data);
-                    if (payload.action === "customClick") {
-                        this.setState({ test: payload.index });
+                    if (payload.action === "winClick") {
+                        const newClickCount = { ...this.state.clickCount };
+                        newClickCount[payload.index] = newClickCount[payload.index] + 1;
+                        this.setState({ clickCount: newClickCount });
+
+                        // 조건을 미리 검사
+                        if (newClickCount[payload.index] > 3) {
+                            const newRound = this.state.round + 1;
+                            const newCurLeftIndex = this.state.curLeftIndex + 2;
+                            const newCurRightIndex = this.state.curRightIndex + 2;
+
+                            // 한 번의 setState 호출로 상태 변경
+                            this.setState({
+                                clickCount: newClickCount,
+                                round: newRound,
+                                curLeftIndex: newCurLeftIndex,
+                                curRightIndex: newCurRightIndex
+                            });
+                        }
+                    }
+
+                    else if (payload.action === "checkRound") {
+
                     }
                 });
 
@@ -591,8 +623,7 @@ class ViduRoom extends Component {
     render() {
         const mySessionId = this.state.mySessionId;
         const myUserName = this.state.myUserName;
-        const { resultimgs, test } = this.state;
-        const currentImage = resultimgs[test] || null;
+        const { resultimgs } = this.state;
 
         return (
             <Container>
@@ -604,7 +635,7 @@ class ViduRoom extends Component {
                     {this.state.session === undefined ? (
                         <Backdrop show={true}>
                             <JoinBox>
-                                <StartText style={{ color: "black" }}> 상담이 곧 시작됩니다 🙂 </StartText>
+                                <StartText style={{ color: "black" }}> 클릭 시 월드컵에 입장합니다 🙂 </StartText>
                                 <form
                                     style={{ display: "flex", justifyContent: "center" }}
                                     className="form-group"
@@ -647,26 +678,36 @@ class ViduRoom extends Component {
                                 </LeftBox>
                             ) : null}
                             <RightBox>
-                                <p>{this.state.test}</p>
-                                <ConsultBox>
-                                    {/* {currentImage && <ResultImg src={`../img/${currentImage}`} alt="Current" />} */}
-                                    {currentImage && <ResultImg src={`https://i9b111.q.ssafy.io/api/consulting-images/confusion/${currentImage}`} alt="Current" />}
-                                </ConsultBox>
+                                <ImageBox>
+                                    <div>{this.state.clickCount[this.state.curLeftIndex]}</div>
+                                    <ResultImg src={`https://i9b111.q.ssafy.io/api/consulting-images/confusion/${this.state.resultimgs[this.state.curLeftIndex]}`}
+                                        alt="Current"
+                                        onClick={() => this.handleWinClickEvent(this.state.curLeftIndex)}
+                                    />
+                                </ImageBox>
                                 <Hr></Hr>
                                 <ImageBox>
+                                    <div>{this.state.clickCount[this.state.curRightIndex]}</div>
+                                    <ResultImg src={`https://i9b111.q.ssafy.io/api/consulting-images/confusion/${this.state.resultimgs[this.state.curRightIndex]}`}
+                                        alt="Current"
+                                        onClick={() => this.handleWinClickEvent(this.state.curRightIndex)}
+                                    />
+                                </ImageBox>
+                                {/* 이건 상담 코드다 */}
+                                {/* <ImageBox>
                                     {this.state.targetimgs.map((imgName, index) => (
-                                      <Img
-                                        key={index}
-                                        // src={`../img/${imgName}`}
-                                        // 배열에 하나하나 이미지 이름 꺼내서 넣기
-                                        src={`https://i9b111.q.ssafy.io/api/portfolio/${imgName}`}
-                                        alt="여기에 헤어 사진"
-                                        onClick={() => this.handleCustomClickEvent(index)
-                                        } // 여기에 원하는 로직 추가
-                                      />
+                                        <Img
+                                            key={index}
+                                            // src={`../img/${imgName}`}
+                                            // 배열에 하나하나 이미지 이름 꺼내서 넣기
+                                            src={`https://i9b111.q.ssafy.io/api/portfolio/${imgName}`}
+                                            alt="여기에 헤어 사진"
+                                            onClick={() => this.handleCustomClickEvent(index)
+                                            } // 여기에 원하는 로직 추가
+                                        />
                                     ))}
 
-                                </ImageBox>
+                                </ImageBox> */}
                             </RightBox>
                         </VideoContainer>
                     </MainBox>
@@ -788,4 +829,4 @@ class ViduRoom extends Component {
     }
 }
 
-export default ViduRoom;
+export default WorldCupRoom;

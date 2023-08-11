@@ -28,6 +28,7 @@ import ConsultResultPage from "./Routes/ConsultPage/ConsultResultPage";
 import ViduRoomWrapper from "./components/OpenVidu/ViduRoomWrapper";
 import LikeDesigner from "./components/CustomerComponent/LikeDesigner";
 import MapView from "./Routes/ViewPage/MapView";
+import WorldCupRoomWrapper from "./components/WorldCup/WorldCupRoomWrapper";
 
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home/>} />
         <Route path="/viduroom/:consultingSeq" element={<ViduRoomWrapper/>} />
+        <Route path="/worldcuproom/:consultingSeq" element={<WorldCupRoomWrapper/>} />
         <Route path="login" element={<LogIn/>} />
         <Route path="findid" element={<FindId/>} />
         <Route path="findpw" element={<FindPw/>}/>

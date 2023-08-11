@@ -128,6 +128,9 @@ function Header() {
       <Link to="/checkreserve">kakao pay</Link>
       </Col>
       <Col>
+      <Link to="/worldcuproom/1">worldcuproom</Link>
+      </Col>
+      <Col>
         {isLogIn ? (
           <>
             <Item
