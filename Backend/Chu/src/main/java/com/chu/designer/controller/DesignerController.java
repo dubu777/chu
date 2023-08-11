@@ -45,8 +45,6 @@ public class DesignerController {
 
     @PostMapping(value = "/sign-up/img/{designer-seq}")
     public ResponseEntity<HttpResponseDto> signUpImg(@PathVariable("designer-seq") int designerSeq, @RequestPart("img") MultipartFile file){
-
-        String filePath = "";
         String uploadFileName = "";
         
         try {
@@ -57,9 +55,8 @@ public class DesignerController {
             // 원래 여기서 https://i9b111.q.ssafy.io/designer-profile/  fileName 으로 저장해놓으면 프론트에서 편할껀데
             
             // 이미 내가 프론트에서 저거 roor로 파일명만 넣어놔서 이거 또 바꾸면 할 일이 또 많아져서 그냥 냅둘게
-            filePath = designerDetailService.getSavedImgFilePathDesignerProfile(file);
-            // 여기서 디비에 실제 파일 이름를 가져오는거
-            uploadFileName = designerDetailService.getUploadImgFilePath(file);
+            uploadFileName = designerDetailService.getSavedImgFilePathDesignerProfile(file);
+
             designerDetailService.patchImg(designerSeq, uploadFileName);
         } catch (IOException e) {
             e.printStackTrace();
