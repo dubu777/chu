@@ -21,12 +21,13 @@ function ViduRoomWrapper() {
     // 이전 통신에서 recoil에 저장해놓을꺼야
     const { consultingSeq } = useParams();
     console.log("처음", consultingSeq);
-    const id = '1';
+    
     // const resultimgs = ['login.jpg', 'worldcup1.jpg', 'worldcup2.jpg', 'worldcup4.jpg', 'findid.jpg', 'listview.jpg', 'password.jpg', 'main.jpg'];
     const resultimgs = [];
     // const targetimgs = ['login.jpg', 'worldcup1.jpg', 'worldcup2.jpg', 'worldcup4.jpg', 'findid.jpg', 'listview.jpg', 'password.jpg', 'main.jpg'];
     const targetimgs = [];
 
+    const [id, setSessionId] = useState(null);
     const [ttt, setttt] = useState(null);
     const [rrr, setrrr] = useState(null);
 
@@ -40,15 +41,10 @@ function ViduRoomWrapper() {
         console.log('여기 왔다', consultingSeq);
         try {
             const response = await getSessionId(consultingSeq);
-            console.log('가져왔다', response);
-            console.log("카겟카겟", response.targetHair)
-            
             // 가져온 값 넣기
             setttt(response.targetHair);
             setrrr(response.confusionHair);
-
-            console.log('ttttttttt', ttt)
-            console.log('rrrrrrr', rrr)
+            setSessionId(response.url);
 
             // setIsReady(true);
         } catch (error) {
@@ -66,7 +62,7 @@ function ViduRoomWrapper() {
     //   }, [ttt, rrr]);
 
 
-    return ttt && rrr ? <ViduRoom sessionId={id} userName={username} userType={usertype} resultimgs={rrr} targetimgs={ttt} /> : <div>Loading...</div>;
+    return id && ttt && rrr ? <ViduRoom sessionId={id} userName={username} userType={usertype} resultimgs={rrr} targetimgs={ttt} /> : <div>Loading...</div>;
 }
 
 export default ViduRoomWrapper;
