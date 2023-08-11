@@ -23,9 +23,11 @@ import EditDesignerInfo from "./Routes/DesignerPage/EditDesignerInfo";
 import EditCustomerInfo from "./Routes/CustomerPage/EditCustomerInfo";
 import Reservation from "./Routes/DesignerPage/Reservation";
 import CheckReserve from "./Routes/KakaoPage/CheckReserve";
+import PaySuccess from "./Routes/KakaoPage/PaySuccess";
 import ConsultResultPage from "./Routes/ConsultPage/ConsultResultPage";
 import ViduRoomWrapper from "./components/OpenVidu/ViduRoomWrapper";
 import LikeDesigner from "./components/CustomerComponent/LikeDesigner";
+
 
 function App() {
   return (
@@ -56,6 +58,7 @@ function App() {
         <Route path="consultresultpage" element={<ConsultResultPage/>} />
         <Route path="reservation/:designerSeq" element={<Reservation/>} />
         <Route path="checkreserve"  element={<CheckReserve/>} />
+        <Route path="paysuccess"  element={<PaySuccess/>} />
         <Route path="likedesigner" element={<LikeDesigner/>} />
         <Route path="/modaltest" element={<Survey/>}>
           <Route path="/modaltest/1" element={<Survey/>}/>
