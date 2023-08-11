@@ -88,7 +88,7 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
         String filePath = uploadDir + fileName;
 
         File destFile = new File(filePath);
-        System.out.println(filePath);
+        System.out.println(fileName);
 
         if (!directory.exists()) {
             boolean mkdirsResult = directory.mkdirs();
@@ -100,7 +100,7 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
         }
 
         file.transferTo(destFile);
-        return filePath;
+        return fileName;
     }
 
     @Override
@@ -215,10 +215,6 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
     public boolean patchImg(int designerSeq, String fileName) {
 
         Designer designer = designerRepository.getDesignerBySeq(designerSeq);
-
-        // fileName 고유하게 변경
-        String newFileName = designer.getSeq() + fileName;
-        log.info("new File Name: "+ newFileName);
 
         ImagePath imagePath = new ImagePath();
         imagePath.setUploadImgName(fileName);
