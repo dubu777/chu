@@ -9,53 +9,42 @@ import { getSessionId } from "../../apis/openvidu"
 import { TrySharp } from "@mui/icons-material";
 
 function ViduRoomWrapper() {
-    // const [isReady, setIsReady] = useState(false);
-    // loginResultState에 담겨있는 로그인 회원 정보를 조회해온 뒤 사용(토큰)
-    // 로그인 시에는 seq와 토큰만 들어옴
-    // 회원 정보를 어디서 가져왕..? => home 에서의 useQuery~~~~
-
-    // console.log('현재 고객의 타입!', data.userType);
-    // console.log('현재 고객의 타입!', data.designerInfo);
-
-    // recoil에서 꺼낼거
-    // 이전 통신에서 recoil에 저장해놓을꺼야
-    const consultingSeq = 1;
-    // const { consultingSeq } = useParams();
-    console.log("처음", consultingSeq);
-    
-    const resultimgs = ['login.jpg', 'worldcup1.jpg', 'worldcup2.jpg', 'worldcup4.jpg', 'findid.jpg', 'listview.jpg', 'password.jpg', 'main.jpg'];
-    // const resultimgs = [];
-    const targetimgs = ['login.jpg', 'worldcup1.jpg', 'worldcup2.jpg', 'worldcup4.jpg', 'findid.jpg', 'listview.jpg', 'password.jpg', 'main.jpg'];
-    // const targetimgs = [];
-
-    const [id, setSessionId] = useState(null);
-    const [ttt, setttt] = useState(null);
-    const [rrr, setrrr] = useState(null);
-
+    const { consultingSeq } = useParams();
+    const [id, setId] = useState(null);
+    const [ttt, setTtt] = useState(null);
+    const [rrr, setRrr] = useState(null);
+  
     // 따로 이미 갖고 있는 데이터
-    const userSeq = localStorage.getItem("userSeq");
-    const username = localStorage.getItem("userName");
-    const usertype = localStorage.getItem("userType");
-
-    // 통신 API 작성되면, recoil이나 query로 이미지 배열 받아오기
+    const username = localStorage.getItem('userName');
+    const usertype = localStorage.getItem('userType');
+  
     const getSession = async (consultingSeq) => {
-        console.log('여기 왔다', consultingSeq);
-        try {
-            const response = await getSessionId(consultingSeq);
-            console.log(response);
-            // 가져온 값 넣기
-            // setttt(response.targetHair);
-            // setrrr(response.confusionHair);
-            // setSessionId(response.url);
-
-            // setIsReady(true);
-        } catch (error) {
-            console.log(error)
-        }
+      try {
+        const response = await getSessionId(consultingSeq);
+        console.log(response);
+        setId(response.url);
+        setTtt(response.targetHair);
+        setRrr(response.confusionHair);
+      } catch (error) {
+        console.log(error);
+      }
     };
-
-    return <ViduRoom sessionId={id} userName={username} userType={usertype} resultimgs={resultimgs} targetimgs={targetimgs} />
-
-}
-
-export default ViduRoomWrapper;
+  
+    useEffect(() => {
+      getSession(consultingSeq);
+    }, [consultingSeq]);
+  
+    return id && ttt && rrr ? (
+      <ViduRoom
+        sessionId={id}
+        userName={username}
+        userType={usertype}
+        resultimgs={rrr}
+        targetimgs={ttt}
+      />
+    ) : (
+      <div>Loading...</div>
+    );
+  }
+  
+  export default ViduRoomWrapper;
