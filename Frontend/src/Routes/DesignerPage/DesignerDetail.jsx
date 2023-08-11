@@ -376,11 +376,11 @@ function DesignerDetail() {
             <SubTitle>포트폴리오</SubTitle>
             <Hr />
             <StyledSlider {...settings}>
-              {OPofolImgs.map((item, index) => (
+              {data.portfolio.map((item, index) => (
                 <PofolImg
                   key={index}
                   // src={item}
-                  src={`${BASE_URL}/portfolio/${item}`}
+                  src={`${BASE_URL}/portfolio/${item.imaName}`}
                   variants={pofolVariants}
                   initial="nomal"
                   whileHover="hover"
