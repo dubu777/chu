@@ -170,3 +170,25 @@ export const deletePortfolio = async (seq, imgSeq) => {
     throw new Error("디자이너 포트폴리오 삭제 실패");
   }
 };
+
+// 디자이너 알림 조회
+export const getDesignerNotification = async (userSeq) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/designer/alert/${userSeq}`)
+    console.log(response.data.result);
+    return response.data.result;
+  } catch (error) {
+    throw new Error("디자이너 알림 조회 실패", error)
+  }
+}
+
+// 디자이너 알림 읽음 처리
+export const readDesignerNotification = async (alertSeq) => {
+  try {
+    const response = await axios.put(`${BASE_URL}/designer/alert/${alertSeq}`)
+    console.log(response.data.status);
+    return response.data.status;
+  } catch (error) {
+    throw new Error("디자이너 알림 조회 실패", error)
+  }
+}
