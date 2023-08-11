@@ -27,8 +27,8 @@ function MapView () {
         <div>
             <p>여기는 주변 디자이너 찾기 지도 페이지</p>
             <div id="map" style={{
-                width: "800px",
-                height: "600px"
+                width: "1400px",
+                height: "650px"
             }}>
             </div>
         </div>
