@@ -130,6 +130,9 @@ function Header() {
         </Items>
       </Col>
       <Col>
+      <Link to="/checkreserve">kakao pay</Link>
+      </Col>
+      <Col>
           { isLogIn ?  
             <>
               <Item 
