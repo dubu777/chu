@@ -33,7 +33,7 @@ function App() {
       <Header/>
       <Routes>
         <Route path="/" element={<Home/>} />
-        <Route path="/viduroom/:id" element={<ViduRoomWrapper/>} />
+        <Route path="/viduroom/:consultingSeq" element={<ViduRoomWrapper/>} />
         <Route path="login" element={<LogIn/>} />
         <Route path="findid" element={<FindId/>} />
         <Route path="findpw" element={<FindPw/>}/>
