@@ -288,6 +288,7 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
             designer.setLatitude(updateDto.getLatitude());
             designer.setLongitude(updateDto.getLongitude());
             designer.setAddress(updateDto.getAddress());
+            designer.setIntroduction(updateDto.getIntroduction());
 
             // 해당 디자이너가 들어있는 데이터를 전부 삭제한다
             designerTagInfoRepository.deleteByDesignerSeq(designerSeq);
