@@ -18,8 +18,6 @@ import WorldcupImgUpload from "./Routes/WorldCupPage/WorldcupImgUpload";
 import CustomerMyPage from "./Routes/CustomerPage/CustomerMyPage";
 import DesignerMyPage from "./Routes/DesignerPage/DesignerMyPage";
 import ListView from "./Routes/ViewPage/ListView";
-import MapView from "./Routes/ViewPage/MapView";
-
 import Survey from "./components/ModalComponent/Survey";
 import EditDesignerInfo from "./Routes/DesignerPage/EditDesignerInfo";
 import EditCustomerInfo from "./Routes/CustomerPage/EditCustomerInfo";
@@ -29,6 +27,7 @@ import PaySuccess from "./Routes/KakaoPage/PaySuccess";
 import ConsultResultPage from "./Routes/ConsultPage/ConsultResultPage";
 import ViduRoomWrapper from "./components/OpenVidu/ViduRoomWrapper";
 import LikeDesigner from "./components/CustomerComponent/LikeDesigner";
+import MapView from "./Routes/ViewPage/MapView";
 
 
 function App() {

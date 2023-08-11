@@ -15,7 +15,7 @@ function MapView () {
 
 
         </Container>
-    )
-}
+    );
+};
 
 export default MapView;
