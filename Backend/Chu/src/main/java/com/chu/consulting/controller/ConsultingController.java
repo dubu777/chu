@@ -2,6 +2,7 @@ package com.chu.consulting.controller;
 
 import com.chu.consulting.domain.*;
 import com.chu.consulting.service.ConsultingService;
+import com.chu.designer.service.DesignerDetailService;
 import com.chu.global.domain.HairStyleDto;
 import com.chu.designer.service.DesignerSearchService;
 import com.chu.global.domain.HttpResponseDto;
@@ -11,7 +12,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @Slf4j
@@ -24,6 +27,8 @@ public class ConsultingController {
 
     private final ConsultingService consultingService;
     private final DesignerSearchService designerSearchService;
+
+    private final DesignerDetailService designerDetailService;
 
     @GetMapping("/{consulting_seq}")
     public ResponseEntity<HttpResponseDto> participantConsulting(@PathVariable("consulting_seq") int consultingSeq) {
@@ -197,5 +202,25 @@ public class ConsultingController {
         HttpResponseDto httpResponseDto = new HttpResponseDto(200, responseConsultingReviewInfoDto);
         return ResponseEntity.ok(httpResponseDto);
     }
+
+    // --------------------------------------------- 사진 업로드 테스트 ---------------
+    @PostMapping("/img/{customer-seq}")
+    public ResponseEntity<HttpResponseDto> uploadImg(@PathVariable("customer-seq") int customerSeq,
+                                                     @RequestPart("img") MultipartFile file) throws IOException {
+
+        // 이미지 저장하고 옴
+
+        // 파일을 헤어상담 API 로 요청
+        try {
+            consultingService.createVirtualImgFile(file);
+            HttpResponseDto httpResponseDto = new HttpResponseDto(200, "success");
+            return ResponseEntity.ok(httpResponseDto);
+        } catch (Exception e) {
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
+        }
+
+    }
+
 
 }

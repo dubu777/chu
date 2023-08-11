@@ -18,9 +18,14 @@ import com.chu.global.domain.HairStyleDict;
 import com.chu.global.repository.HairStyleDictRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import com.chu.consulting.repository.ConsultingVirtualImgRepository;
 import com.chu.global.domain.ImageDto;
@@ -28,9 +33,14 @@ import com.chu.global.exception.Exception;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 @Slf4j
@@ -458,4 +468,42 @@ public class ConsultingServiceImpl implements ConsultingService {
 ////        return isSuccess;
 ////    }
 //    }
+
+
+    // ============================== 민지: 이미지 파일 전송 테스트
+    public void createVirtualImgFile(MultipartFile file) throws IOException {
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        String url = "http://3.34.80.231:5000/save-img";
+        // 파일 객체를 바이트 배열로 변환
+        byte[] fileData = file.getBytes();
+        log.info("파일 객체 바이트 배열로 변환 완료");
+
+        // 요청 헤더 설정
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+
+        // 요청 바디 설정
+        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+        body.add("file", fileData); // 파일 데이터 추가
+
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
+
+        // POST 요청 보내기
+        ResponseEntity<String> response = restTemplate.postForEntity(url, requestEntity, String.class);
+
+        // 응답 처리
+        if (response.getStatusCode().is2xxSuccessful()) {
+            // 요청 성공
+            String responseBody = response.getBody();
+            // 파이썬 서버의 응답 처리 작업
+        } else {
+            // 요청 실패
+            log.info("실패 왜 ,,");
+            String errorMessage = response.getStatusCode().getReasonPhrase();
+            // 에러 처리 작업
+        }
+
+    }
 }
