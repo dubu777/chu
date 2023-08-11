@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from "react";
 import { useParams } from "react-router";
-import ViduRoom from "./ViduRoom";
+import ViduRoom from "./WorldCupRoom";
 import { loginResultState, loginState } from '../../recoil/auth';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { useQuery } from "react-query";
@@ -22,7 +22,7 @@ function WorldCupRoomWrapper() {
       try {
         const response = await getSessionId(consultingSeq);
         console.log(response);
-        setId(response.url);
+        setId("worldCup" + response.url);
         setTtt(response.targetHair);
         setRrr(response.confusionHair);
       } catch (error) {
