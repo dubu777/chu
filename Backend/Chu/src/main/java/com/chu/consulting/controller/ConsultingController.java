@@ -48,14 +48,15 @@ public class ConsultingController {
     @PostMapping("")
     public ResponseEntity<HttpResponseDto> postConsulting(@RequestBody RequestConsultingDto requestConsultingDto){
 
+        int consultingSeq = -1;
         try{
-            consultingService.postConsulting(requestConsultingDto);
+            consultingSeq = consultingService.postConsulting(requestConsultingDto);
         } catch(Exception e){
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), null));
+        return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), consultingSeq));
     }
 
     @PostMapping("/img/{consulting-seq}")

@@ -52,7 +52,9 @@ public class ConsultingServiceImpl implements ConsultingService {
     // 상담 예약하기
     @Override
     @Transactional
-    public void postConsulting(RequestConsultingDto requestConsultingDto) {
+    public int postConsulting(RequestConsultingDto requestConsultingDto) {
+
+        int consultingSeq = -1;
 
         try{
             // requestConsultingDto -> entity 만들기
@@ -60,8 +62,8 @@ public class ConsultingServiceImpl implements ConsultingService {
 
             consulting.setCreatedDate(LocalDateTime.now());
             // 상담 예약하기
-            consultingRepository.save(consulting);
-
+            Consulting consultingResponse = consultingRepository.save(consulting);
+            consultingSeq = consultingResponse.getSeq();
             // 예약 완료 후 ‘reservation_available_slot’ 테이블 ‘state’ 컬럼 ‘R’로 바꾸기
             String date = consulting.getConsultingDate().getDate();
             String time = consulting.getConsultingDate().getTime();
@@ -96,6 +98,8 @@ public class ConsultingServiceImpl implements ConsultingService {
         } catch(Exception e){
             e.printStackTrace();
         }
+
+        return consultingSeq;
     }
 
     @Override

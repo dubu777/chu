@@ -15,7 +15,7 @@ public interface ConsultingService {
     ResponseParticipantConsulting participantConsulting(int consultingSeq);
 
     // 상담 예약하기
-    void postConsulting(RequestConsultingDto requestConsultingDto);
+    int postConsulting(RequestConsultingDto requestConsultingDto);
 
     void postConsultingOriginImage(int consultingSeq, String uploadFileName);
 
