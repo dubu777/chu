@@ -139,9 +139,11 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
             // 모발 상태 번호 받아오기
             int s = ch.getHairConditionDict().getSeq();
             // 라벨링
-            HairStyleDict dict = hairStyleDictRepository.findBySeq(s);
 
-            String label = dict.getHairStyleLabel();
+            HairStyleDict dict = hairStyleDictRepository.findBySeq(s);
+            String label = "";
+            if(dict != null)
+                label = dict.getHairStyleLabel();
 
             list.add(label);
         }
