@@ -301,7 +301,7 @@ class ViduRoom extends Component {
             isChat: false,
             resultimgs: this.props.resultimgs,
             targetimgs: this.props.targetimgs,
-            test: 1
+            test: 0
             // 타겟이미지들 넣기
             // [ desinger1.png, designer2.png, ..., ]
             // 합성이미지들 넣기
@@ -649,16 +649,17 @@ class ViduRoom extends Component {
                             <RightBox>
                                 <p>{this.state.test}</p>
                                 <ConsultBox>
-                                    {currentImage && <ResultImg src={`../img/${currentImage}`} alt="Current" />}
+                                    {/* {currentImage && <ResultImg src={`../img/${currentImage}`} alt="Current" />} */}
+                                    {currentImage && <ResultImg src={`https://i9b111.q.ssafy.io/api/consulting-images/confusion/${currentImage}`} alt="Current" />}
                                 </ConsultBox>
                                 <Hr></Hr>
                                 <ImageBox>
                                     {this.state.targetimgs.map((imgName, index) => (
                                       <Img
                                         key={index}
-                                        src={`../img/${imgName}`}
+                                        // src={`../img/${imgName}`}
                                         // 배열에 하나하나 이미지 이름 꺼내서 넣기
-                                        // src={`https://i9b111.q.ssafy.io/api/consulting/${img.imgName}`}
+                                        src={`https://i9b111.q.ssafy.io/api/portfolio/${imgName}`}
                                         alt="여기에 헤어 사진"
                                         onClick={() => this.handleCustomClickEvent(index)
                                         } // 여기에 원하는 로직 추가
