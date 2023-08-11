@@ -262,6 +262,7 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
                     .salonName(designer.getSalonName())
                     .latitude(designer.getLatitude())
                     .longitude(designer.getLongitude())
+                    .introduction(designer.getIntroduction())
                     .address(designer.getAddress())
                     .allCutHairStyle(allCutHairStyle)
                     .allPermHairStyle(allPermHairStyle)
