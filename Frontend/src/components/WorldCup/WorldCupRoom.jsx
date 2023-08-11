@@ -454,13 +454,14 @@ class WorldCupRoom extends Component {
                 mySession.on('signal', (event) => {
                     const payload = JSON.parse(event.data);
                     if (payload.action === "winClick") {
-                        const newClickCount = { ...this.state.clickCount };
+                        let newClickCount = { ...this.state.clickCount };
                         newClickCount[payload.index] = newClickCount[payload.index] + 1;
                         this.setState({ clickCount: newClickCount });
+                        console.log(this.state.clickCount);
+
 
                         // 일단 한 라운드 종료
                         if (newClickCount[payload.index] > 2) {
-                            newClickCount.fill(0);
                             let newRound = this.state.round + 1;
                             let newCurLeftIndex = this.state.curLeftIndex + 2;
                             let newCurRightIndex = this.state.curRightIndex + 2;
@@ -469,18 +470,23 @@ class WorldCupRoom extends Component {
                             let newStage = this.state.stage;
 
                             if (newStage === 1 && newRound === 5) {
+                                newClickCount = [0, 0, 0, 0, 0, 0, 0, 0];
                                 newRound = 1;
                                 newCurLeftIndex = 0;
                                 newCurRightIndex = 1;
                                 nextUseImages = this.state.stageTwoImages;
+                                nextUseImages[newRound - 1] = payload.index;
                                 newStage++;
                             } else if (newStage === 2 && newRound === 3) {
+                                newClickCount = [0, 0, 0, 0, 0, 0, 0, 0];
                                 newRound = 1;
                                 newCurLeftIndex = 0;
                                 newCurRightIndex = 1;
                                 nextUseImages = this.state.stageThreeImages;
+                                nextUseImages[newRound - 1] = payload.index;
                                 newStage++;
                             } else if (newStage === 3 && newRound === 2) {
+                                newClickCount = [0, 0, 0, 0, 0, 0, 0, 0];
                                 nextLastWinImage = payload.index;
                                 newStage++;
                             }
@@ -493,6 +499,7 @@ class WorldCupRoom extends Component {
                                 useImages: nextUseImages,
                                 LastWinImage: nextLastWinImage,
                                 stage: newStage,
+                                useImages: nextUseImages,
                             });
                         }
                     }
