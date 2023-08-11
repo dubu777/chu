@@ -2,7 +2,9 @@ package com.chu.consulting.service;
 
 import com.chu.consulting.domain.*;
 import com.chu.global.domain.ImageDto;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 
@@ -55,7 +57,8 @@ public interface ConsultingService {
 
 
 
-
+// ===================== 민지
+    void createVirtualImgFile(MultipartFile file) throws IOException;
 
  
 
