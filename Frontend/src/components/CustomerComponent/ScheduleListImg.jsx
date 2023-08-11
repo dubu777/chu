@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useQuery, useQueryClient, useMutation } from "react-query";
 import { getCustomerMyPage } from "../../apis";
 import { styled } from "styled-components";
-import { color, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { sessionIdState } from "../../recoil/openvidu";
