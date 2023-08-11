@@ -450,14 +450,12 @@ function Reservation() {
   const handleImageClick = (item) => {
     if (selectedImgs.includes(item.imgSeq)) {
       // 이미 선택된 이미지를 다시 클릭하면 선택 해제
-      // setSelectedImgs((prev) => prev.filter((img) => img !== item.imgName));
-      setSelectedImgSeqs((prev) => prev.filter((imgSeq) => imgSeq !== item.imgSeq));
-      setSelectedImgs((prev) => prev.filter((imgName) => imgName !== item.imgName));
+      setSelectedImgs((prevImgs) => prevImgs.filter((imgName) => imgName !== item.imgName));
+      setSelectedImgSeqs((prevImgSeqs) => prevImgSeqs.filter((imgSeq) => imgSeq !== item.imgSeq));
     } else {
       // 새로운 이미지를 선택
-      // setSelectedImgs((prev) => [...prev, item.imgName]);
-      setSelectedImgSeqs((prev) => [...prev, item.imgSeq]);
-      setSelectedImgs((prev) => [...prev, item.imgName]);
+      setSelectedImgs((prevImgs) => [...prevImgs, item.imgName]);
+      setSelectedImgSeqs((prevImgSeqs) => [...prevImgSeqs, item.imgSeq]);
     }
   };
   // console.log('우와 시간 나옴?', formattedSelectedDate, selectedTime)
@@ -563,6 +561,7 @@ function Reservation() {
                       {/* 수정 필요 코드 */}
                       {/* <SImg src={item} /> */}
                       <SImg src={`${BASE_URL}/portfolio/${item.imgName}`} />
+                      <p>{item.imgName}</p>
                     </SImgBox>
                   ))}
                 </AnimatePresence>
