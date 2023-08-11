@@ -15,21 +15,21 @@ import com.chu.designer.repository.DesignerRepository;
 import com.chu.designer.repository.ReservationAvailableSlotRepository;
 import com.chu.global.domain.FaceDict;
 import com.chu.global.domain.HairStyleDict;
+import com.chu.global.domain.ImagePath;
 import com.chu.global.repository.HairStyleDictRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import com.chu.consulting.repository.ConsultingVirtualImgRepository;
 import com.chu.global.domain.ImageDto;
 import com.chu.global.exception.Exception;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,6 +96,18 @@ public class ConsultingServiceImpl implements ConsultingService {
         } catch(Exception e){
             e.printStackTrace();
         }
+    }
+
+    @Override
+    @Transactional
+    public void postConsultingOriginImage(int consultingSeq, String uploadFileName) {
+        Consulting consulting = consultingRepository.getConsultingBySeq(consultingSeq);
+
+        ImagePath imagePath = new ImagePath();
+        imagePath.setSavedImgName(uploadFileName);
+        imagePath.setUploadImgName(uploadFileName);
+
+        consulting.setImagePath(imagePath);
     }
 
     @Override
@@ -284,6 +296,31 @@ public class ConsultingServiceImpl implements ConsultingService {
             e.printStackTrace();
         }
         return response;
+    }
+
+    @Override
+    public String getSavedImgFilePathConsultingOriginFile(MultipartFile file) throws IOException {
+        String uploadDir = "/chu/upload/images/consulting/origin/";
+        String fileName = file.getOriginalFilename();
+
+        File directory = new File(uploadDir);
+        String filePath = uploadDir + fileName;
+
+        File destFile = new File(filePath);
+        System.out.println(filePath);
+
+        if (!directory.exists()) {
+            boolean mkdirsResult = directory.mkdirs();
+            if (mkdirsResult) {
+                System.out.println("디렉토리 생성 성공");
+            } else {
+                System.out.println("디렉토리 생성 실패");
+            }
+        }
+
+        file.transferTo(destFile);
+        log.info("서비스 >>> 파일 저장 성공! filePath : " + filePath);
+        return fileName;
     }
 
 

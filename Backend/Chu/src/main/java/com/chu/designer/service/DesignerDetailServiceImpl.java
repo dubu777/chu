@@ -76,7 +76,7 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
 
         file.transferTo(destFile);
         log.info("서비스 >>> 파일 저장 성공! filePath : " + filePath);
-        return filePath;
+        return fileName;
     }
 
     @Override
