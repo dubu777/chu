@@ -1,9 +1,11 @@
 import { styled } from "styled-components";
 import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
-import { useRecoilState, useRecoilValue, useRecoilCallback } from "recoil";
-import { accessTokenState, loginState, loginResultState, customerLogInDataState } from "../../recoil";
+import { useRecoilState, useRecoilCallback } from "recoil";
+import { accessTokenState, loginState } from "../../recoil";
+import { getDesignerNotification } from "../../apis";
 import { useState } from "react";
+import { useQuery } from "react-query";
 
 const Nav = styled(motion.nav)`
   display: flex;
@@ -17,8 +19,7 @@ const Nav = styled(motion.nav)`
   padding: 20px 60px;
   color: white;
   background-color: rgb(100, 93, 81);
-  font-family: "Sandol-B";    
-  
+  font-family: "Sandol-B";
 `;
 
 const Col = styled.div`
@@ -39,7 +40,6 @@ const Items = styled.ul`
   display: flex;
   align-items: center;
 `;
-  
 
 const Item = styled(motion.li)`
   margin-right: 20px;
@@ -53,19 +53,10 @@ const Item = styled(motion.li)`
     color: ${(props) => props.theme.white.lighter};
   }
 `;
-const Search = styled.span`
-  color: white;
-  display: flex;
-  align-items: center;
-  position: relative;
-  svg {
-    height: 25px;
-  }
-`;
 
 const logoVariants = {
   normal: {
-    color: "white"
+    color: "white",
   },
   active: {
     color: "rgb(244,153,26)",
@@ -73,58 +64,61 @@ const logoVariants = {
       type: "tween",
       duration: 0.05,
     },
-  }
+  },
 };
 
 function Header() {
+  const userSeq = localStorage.getItem("userSeq");
   const navigate = useNavigate();
   const [isLogIn, setIsLogIn] = useRecoilState(loginState);
   const [token, setToken] = useRecoilState(accessTokenState);
-  // 유저 정보 받아오는 Recoil. 수정 예정
-  const [loginResult, setLoginResult] = useRecoilState(loginResultState);
-  const [userData, setUserData] = useRecoilState(customerLogInDataState);
+  
+  //통신되면 해보기(취소 알림)
+  const {
+    data: notifications = [],
+    isLoading,
+    isError,
+  } = useQuery(["notificationsData", userSeq], () =>
+    getDesignerNotification(userSeq)
+  );
 
-
-  //유저 시퀀스 저장
-  const UserSeq = isLogIn && localStorage.getItem("userType") === "customer" 
-  ? localStorage.getItem("userSeq")
-  : localStorage.getItem("userSeq")
   // 유저 타입에 따른 마이페이지 router
   const handleNavigation = () => {
-    if (localStorage.getItem("userType") === 'customer') {
-      const customerSeq = UserSeq
+    if (localStorage.getItem("userType") === "customer") {
+      const customerSeq = userSeq;
       navigate(`/customermypage/${customerSeq}`);
-    } else if (localStorage.getItem("userType") === 'designer') {
-      const designerSep = UserSeq
+    } else if (localStorage.getItem("userType") === "designer") {
+      const designerSep = userSeq;
       navigate(`/designermypage/${designerSep}`);
-    };
-  }
+    }
+  };
 
   // 로그 아웃 함수(토큰 삭제)
   const handleLogout = useRecoilCallback(({ snapshot }) => async () => {
     setToken(null);
-    localStorage.removeItem('userType');
-    localStorage.removeItem('userSeq');
-    navigate('/')
+    localStorage.removeItem("userType");
+    localStorage.removeItem("userSeq");
+    navigate("/");
   });
+
+  if (isLoading) return <p>Loading...</p>;
+  if (isError) return <p>Error fetching notifications</p>;
+
   return (
     <Nav>
       <Col>
-      <Logo 
-      onClick={() => navigate("/")}
-      variants={logoVariants}
-      whileHover="active"
-      initial="nomal"
-      >
-        Chu
-      </Logo>
+        <Logo
+          onClick={() => navigate("/")}
+          variants={logoVariants}
+          whileHover="active"
+          initial="nomal"
+        >
+          Chu
+        </Logo>
         <Items>
           <Link to="/">
-            <Item 
-              variants={logoVariants}
-              whileHover="active"
-              initial="nomal"
-              >Home
+            <Item variants={logoVariants} whileHover="active" initial="nomal">
+              Home
             </Item>
           </Link>
         </Items>
@@ -133,44 +127,39 @@ function Header() {
       <Link to="/checkreserve">kakao pay</Link>
       </Col>
       <Col>
-          { isLogIn ?  
-            <>
-              <Item 
-                variants={logoVariants}
-                whileHover="active"
-                initial="nomal"
-                onClick={handleLogout}
-                >Log Out
+        {isLogIn ? (
+          <>
+            <Item
+              variants={logoVariants}
+              whileHover="active"
+              initial="nomal"
+              onClick={handleLogout}
+            >
+              Log Out
+            </Item>
+            <Item
+              variants={logoVariants}
+              whileHover="active"
+              initial="nomal"
+              onClick={handleNavigation}
+            >
+              My Page
+            </Item>
+          </>
+        ) : (
+          <>
+            <Link to="usertype">
+              <Item variants={logoVariants} whileHover="active" initial="nomal">
+                Sign up
               </Item>
-              <Item 
-                variants={logoVariants}
-                whileHover="active"
-                initial="nomal"
-                onClick={handleNavigation}
-                >My Page
+            </Link>
+            <Link to="/login">
+              <Item variants={logoVariants} whileHover="active" initial="nomal">
+                Log in
               </Item>
-            </>
-          : 
-            <>
-              <Link to="usertype">
-                <Item 
-                  variants={logoVariants}
-                  whileHover="active"
-                  initial="nomal"
-                  >Sign up
-                </Item>
-              </Link>
-              <Link to="/login">
-                <Item 
-                  variants={logoVariants}
-                  whileHover="active"
-                  initial="nomal"
-                  >Log in
-                </Item>
-              </Link>
-            </>
-          }
-        
+            </Link>
+          </>
+        )}
       </Col>
     </Nav>
   );

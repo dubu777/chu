@@ -89,3 +89,16 @@ export const searchDesigner = async (name, userSeq) => {
     throw new Error("이름으로 검색 요청 실패", error)
   }
 }
+
+// 알림 생성
+export const createNotification = async (consultingSeq, userType) => {
+  try {
+    const response = await axios.post(`${BASE_URL}/user/alert`, {
+      "consultingSeq": consultingSeq,
+      "userType": userType,
+    })
+    return response.data.result;
+  } catch (error) {
+    throw new Error("알림 생성 실패", error)
+  }
+}
