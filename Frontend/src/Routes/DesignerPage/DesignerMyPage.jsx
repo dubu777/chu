@@ -108,16 +108,22 @@ const EditBox = styled.div`
   margin-top: 5px;
   display: flex;
 `;
-const TextArea = styled.div`
+const TextArea = styled.textarea`
   border: none;
   width: 400px;
   height: 40px;
   border-radius: 0.3rem;
   margin-bottom: 7px;
-  /* background-color: white; */
+  background-color: white;
   resize: none;
 `;
-
+const EditBtn = styled.button`
+  height: 25px;
+  border: 2px solid orange;
+  background-color: beige;
+  border-radius: 0.7rem;
+  margin-left: 10px;
+`;
 const Profile = styled.img`
   width: 270px;
   height: 270px;
@@ -139,19 +145,23 @@ function DesignerMyPage() {
 
   const mutation = useMutation(updateIntroduction)
   const [activeBtn, setActiveBtn] = useState("calendar"); // 'recent' or 'designer'
-  const [introduction, setIntroduction] = useState("");
-
-
+  // const [introduction, setIntroduction] = useState(data.introduction || ""); 
   const [isEditing, setIsEditing] = useState(false); // 수정 상태 체크
   const [selectedFile, setSelectedFile] = useState(null);
   const fileInputRef = useRef(null);
   const [file, setFile] = useState();
-  // const [introduction, setIntroduction] = useState(() => {
-  //   // 초기화 함수를 사용하여 데이터가 로드되었을 때 introduction 값을 설정합니다.
-  //   return data?.introduction || "";
-  // });
+  const [introduction, setIntroduction] = useState(() => {
+    // 초기화 함수를 사용하여 데이터가 로드되었을 때 introduction 값을 설정합니다.
+    return data?.introduction || "";
+  });
 
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
+  if (isError) {
+    return <div>An error occurred while fetching data.</div>;
+  }
   const handleImageClick = () => {
     fileInputRef.current.click();
   };
@@ -169,7 +179,7 @@ function DesignerMyPage() {
   //     console.log(file);
   //   }
   // };
-
+ 
   // 이미지 등록 - API 맞춰서 수정해야함
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
@@ -185,7 +195,7 @@ function DesignerMyPage() {
       console.error(error);
     }
   };
-  
+
   // const handleSubmitImage = async (e) => {
   //   e.preventDefault();
   //   if (fileInputRef.current.files[0]) {
@@ -201,19 +211,18 @@ function DesignerMyPage() {
   //     }
   //   }
   // };
+  const handleEditButtonClick = () => {
+    setIsEditing(true);
+  };
+  const handleSaveButtonClick = async () => {
+    mutation.mutate({ designerSeq, introduction });
+    setIsEditing(false);
+  };
+  // 누른 버튼에 따라
+  const handleBtnClick = (btnType) => {
+    setActiveBtn(btnType);
+  };
 
-  useEffect(() => {
-    if(data && data.introduction) {
-      setIntroduction(data.introduction);
-    }
-  }, [data]);
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (isError) {
-    return <div>An error occurred while fetching data.</div>;
-  }
   return (
     <Container>
       <ProfileWrapper>
@@ -244,13 +253,23 @@ function DesignerMyPage() {
           <Text>{data.cost}</Text>
           <Text>{data.email}</Text>
           <introductionWrapper>
+            {isEditing ? (
               <EditBox>
-                <TextArea>
-                  한 줄 소개글 : {data.introduction}
+                <TextArea
+                  contentEditable
+                  placeholder="소개글을 작성해주세요"
+                  onBlur={(e) => setIntroduction(e.target.value)}
+                >
+                  {introduction || data.introduction}
                 </TextArea>
-                
+                <EditBtn onClick={handleSaveButtonClick}>완료</EditBtn>
               </EditBox>
-
+            ) : (
+              <EditBox>
+                <Text>{data.introduction || "소개글이 없습니다."}</Text>
+                <EditBtn onClick={handleEditButtonClick}>수정</EditBtn>
+              </EditBox>
+            )}
           </introductionWrapper>
           {data.hairStyleTag.map((word, index) => (
             <HashTag key={index}> #{word} </HashTag>
@@ -258,7 +277,7 @@ function DesignerMyPage() {
         </InfoBox>
 
         <ChangeBox>
-          <ChangeBtn onClick={() => navigate(`/editdesignerinfo/${designerSeq}`)}>
+          <ChangeBtn onClick={() => navigate("/editdesignerinfo")}>
             회원 정보 변경
           </ChangeBtn>
         </ChangeBox>
