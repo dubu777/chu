@@ -188,7 +188,7 @@ function AllReserveList(){
     try {
       const response  = await getSessionId(consultSeq);
       console.log('가져왔다',response);
-      setSessionId(response);
+      setSessionId(response.url);
 
     } catch(error){
       console.log(error)
@@ -229,7 +229,9 @@ function AllReserveList(){
       {data.map((item) => (
                 <ReserveBox key={item.consultingSeq}>
                       <Box>
-                        <CustomerImg src="./icon/user.png"/>
+                        {/* <CustomerImg src="./icon/user.png"/> */}
+                        <CustomerImg src={`${BASE_URL}/consulting-images/origin/${item.originImg}`}/>
+                        
                       </Box>
                       <Box>
                         <Name>{item.name} </Name>

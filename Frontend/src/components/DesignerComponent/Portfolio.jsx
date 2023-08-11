@@ -74,8 +74,8 @@ function Portfolio(){
   const [data, setData] = useState();
   const [loginState, setLoginResultState] = useRecoilState(loginResultState);
   // 지금은 로그인 안된 상태라 에러 발생
-  // const seq = loginState.designerInfo.DesignerSeq;
-  const seq = 2;
+  const seq = loginState.designerInfo.DesignerSeq;
+  // const seq = 2;
   // 마운트 될 때 실행
   useEffect(()=> {
     async function fetchData() { 
