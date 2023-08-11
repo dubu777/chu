@@ -22,6 +22,7 @@ public class ResponseDesignerMyPageUpdateShowDto {
     private String address;
     private Double latitude;
     private Double longitude;
+    private String introduction;
 
     // 헤어스타일 리스트
     private List<HairStyleDto> allCutHairStyle;
