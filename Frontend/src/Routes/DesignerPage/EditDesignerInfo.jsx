@@ -306,7 +306,7 @@ function EditDesignerInfo() {
       const combinedHairStyles = [...selectedCut, ...selectedPerm];
       const requestData = {
         cost: formData.cost,
-        pwsd: watchedPassword || null,
+        pwd: watchedPassword || null,
         salonName: "제발!!!!!!",
         latitude: 234.2563, // 예제로 고정값
         longitude: 234.2563, // 예제로 고정값
@@ -353,6 +353,7 @@ function EditDesignerInfo() {
   }
   console.log(data, "디자이너 정보수정 쿼리 데이터")
   console.log(selectedCut, selectedPerm, "select 데이터")
+
   return (
     <Container>
       <SignupBox>

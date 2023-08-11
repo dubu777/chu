@@ -145,23 +145,19 @@ function DesignerMyPage() {
 
   const mutation = useMutation(updateIntroduction)
   const [activeBtn, setActiveBtn] = useState("calendar"); // 'recent' or 'designer'
-  // const [introduction, setIntroduction] = useState(data.introduction || ""); 
+  const [introduction, setIntroduction] = useState("");
+
+
   const [isEditing, setIsEditing] = useState(false); // 수정 상태 체크
   const [selectedFile, setSelectedFile] = useState(null);
   const fileInputRef = useRef(null);
   const [file, setFile] = useState();
-  const [introduction, setIntroduction] = useState(() => {
-    // 초기화 함수를 사용하여 데이터가 로드되었을 때 introduction 값을 설정합니다.
-    return data?.introduction || "";
-  });
+  // const [introduction, setIntroduction] = useState(() => {
+  //   // 초기화 함수를 사용하여 데이터가 로드되었을 때 introduction 값을 설정합니다.
+  //   return data?.introduction || "";
+  // });
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
 
-  if (isError) {
-    return <div>An error occurred while fetching data.</div>;
-  }
   const handleImageClick = () => {
     fileInputRef.current.click();
   };
@@ -195,7 +191,7 @@ function DesignerMyPage() {
       console.error(error);
     }
   };
-
+  
   // const handleSubmitImage = async (e) => {
   //   e.preventDefault();
   //   if (fileInputRef.current.files[0]) {
@@ -215,14 +211,31 @@ function DesignerMyPage() {
     setIsEditing(true);
   };
   const handleSaveButtonClick = async () => {
-    mutation.mutate({ designerSeq, introduction });
-    setIsEditing(false);
+    try{
+      const response = await updateIntroduction(designerSeq, introduction);
+      if(response && response.introduction) {
+        setIntroduction(response.introduction);
+      }
+      setIsEditing(false);
+    } catch (error) {
+      console.error("한줄 소개 수정 실패", error);
+    }
   };
-  // 누른 버튼에 따라
   const handleBtnClick = (btnType) => {
     setActiveBtn(btnType);
   };
+  useEffect(() => {
+    if(data && data.introduction) {
+      setIntroduction(data.introduction);
+    }
+  }, [data]);
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
+  if (isError) {
+    return <div>An error occurred while fetching data.</div>;
+  }
   return (
     <Container>
       <ProfileWrapper>
@@ -277,7 +290,7 @@ function DesignerMyPage() {
         </InfoBox>
 
         <ChangeBox>
-          <ChangeBtn onClick={() => navigate("/editdesignerinfo")}>
+          <ChangeBtn onClick={() => navigate(`/editdesignerinfo/${designerSeq}`)}>
             회원 정보 변경
           </ChangeBtn>
         </ChangeBox>

@@ -124,7 +124,6 @@ function Home() {
   const { data, isError, isLoading } = useQuery(['loginData', userSeq], () => fetchLogInData(userSeq));
   console.log(data, "메인 데이터");
   // const { isLoading, data, isError } = useQuery(["noLogInMain"], fetchMain);
-  
   if (isLoading) {
     return <div>Loading...{data}</div>;
   }

@@ -105,3 +105,14 @@ export const getCustomerNotification = async (userSeq) => {
     throw new Error("고객 알림 조회 실패", error)
   }
 }
+
+// 고객 알림 읽음 처리
+export const readCustomerNotification = async (alertSeq) => {
+  try {
+    const response = await axios.put(`${BASE_URL}/customer/alert/${alertSeq}`)
+    console.log(response.data.status);
+    return response.data.status;
+  } catch (error) {
+    throw new Error("고객 알림 조회 실패", error)
+  }
+}
