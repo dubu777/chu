@@ -302,10 +302,10 @@ class WorldCupRoom extends Component {
             round: 1, // 처음에는 1라운드겠지 8강 - 4까지, 4강 - 2까지, 결승 - 1까지
             isClick: false, // 클릭했는지 안 했는지? 한번만 클릭할 수 있도록
             clickCount: [0, 0, 0, 0, 0, 0, 0, 0,], // 클릭 몇 번 당했는지? 클릭할때 변화, 스테이지 끝나면 초기화
-            stageOneImages: [0, 1, 2, 3, 4, 5, 6, 7], // 첫번째 스테이지에서 쓰일 이미지들 인덱스
             stageTwoImages: [], // 두번째 스테이지에서 쓰일 이미지들 인덱스 , 스테이지 끝나면 추가됨
             stageThreeImages: [], // 세번째 스테이지에서 쓰일 이미지들 인덱스, 스테이지 끝나면 추가됨
             LastWinImage: 0, // 최종 우승 머리, 스테이지 끝나면 추가됨
+            useImages: [0, 1, 2, 3, 4, 5, 6, 7], // 첫번째 스테이지에서 쓰일 이미지들 인덱스 스테이지 끝날때마다 다른 녀석으로 바뀜
         };
 
         this.joinSession = this.joinSession.bind(this);
@@ -366,37 +366,6 @@ class WorldCupRoom extends Component {
             to: []
         });
     }
-
-    // handleCheckRound(index){
-    //     console.log(index);
-
-    //     // 1스테이지면 4라운드 끝나야 넘어감
-    //     if(this.state.stage == 1){
-    //         if(this.state.round )
-    //     }
-
-    //     // 2스테이지면 2라운드 끝나야 넘어감
-    //     else if(this.state.stage == 2){
-
-    //     }
-
-    //     // 3스테이지면 1라운드 끝나야 넘어감
-    //     else if(this.state.stage == 3){
-
-    //     }
-
-    //     const changeRoundPayload = {
-    //         action: "changeRound",
-    //         index: index
-    //     }
-    //     const changeStagePayload = {
-    //         action: "changeStage",
-    //         index: index
-    //     }
-    //     // 만약에 라운드가 끝났어
-
-
-    // }
 
     deleteSubscriber(streamManager) {
         let subscribers = this.state.subscribers;
@@ -489,24 +458,43 @@ class WorldCupRoom extends Component {
                         newClickCount[payload.index] = newClickCount[payload.index] + 1;
                         this.setState({ clickCount: newClickCount });
 
-                        // 조건을 미리 검사
-                        if (newClickCount[payload.index] > 3) {
-                            const newRound = this.state.round + 1;
-                            const newCurLeftIndex = this.state.curLeftIndex + 2;
-                            const newCurRightIndex = this.state.curRightIndex + 2;
+                        // 일단 한 라운드 종료
+                        if (newClickCount[payload.index] > 2) {
+                            newClickCount.fill(0);
+                            let newRound = this.state.round + 1;
+                            let newCurLeftIndex = this.state.curLeftIndex + 2;
+                            let newCurRightIndex = this.state.curRightIndex + 2;
+                            let nextUseImages = [...this.state.useImages];
+                            let nextLastWinImage = this.state.LastWinImage;
+                            let newStage = this.state.stage;
 
-                            // 한 번의 setState 호출로 상태 변경
+                            if (newStage === 1 && newRound === 5) {
+                                newRound = 1;
+                                newCurLeftIndex = 0;
+                                newCurRightIndex = 1;
+                                nextUseImages = this.state.stageTwoImages;
+                                newStage++;
+                            } else if (newStage === 2 && newRound === 3) {
+                                newRound = 1;
+                                newCurLeftIndex = 0;
+                                newCurRightIndex = 1;
+                                nextUseImages = this.state.stageThreeImages;
+                                newStage++;
+                            } else if (newStage === 3 && newRound === 2) {
+                                nextLastWinImage = payload.index;
+                                newStage++;
+                            }
+
                             this.setState({
                                 clickCount: newClickCount,
                                 round: newRound,
                                 curLeftIndex: newCurLeftIndex,
-                                curRightIndex: newCurRightIndex
+                                curRightIndex: newCurRightIndex,
+                                useImages: nextUseImages,
+                                LastWinImage: nextLastWinImage,
+                                stage: newStage,
                             });
                         }
-                    }
-
-                    else if (payload.action === "checkRound") {
-
                     }
                 });
 
@@ -680,7 +668,7 @@ class WorldCupRoom extends Component {
                             <RightBox>
                                 <ImageBox>
                                     <div>{this.state.clickCount[this.state.curLeftIndex]}</div>
-                                    <ResultImg src={`https://i9b111.q.ssafy.io/api/consulting-images/confusion/${this.state.resultimgs[this.state.curLeftIndex]}`}
+                                    <ResultImg src={`https://i9b111.q.ssafy.io/api/consulting-images/confusion/${this.state.resultimgs[this.state.useImages[this.state.curLeftIndex]]}`}
                                         alt="Current"
                                         onClick={() => this.handleWinClickEvent(this.state.curLeftIndex)}
                                     />
@@ -688,7 +676,7 @@ class WorldCupRoom extends Component {
                                 <Hr></Hr>
                                 <ImageBox>
                                     <div>{this.state.clickCount[this.state.curRightIndex]}</div>
-                                    <ResultImg src={`https://i9b111.q.ssafy.io/api/consulting-images/confusion/${this.state.resultimgs[this.state.curRightIndex]}`}
+                                    <ResultImg src={`https://i9b111.q.ssafy.io/api/consulting-images/confusion/${this.state.resultimgs[this.state.useImages[this.state.curRightIndex]]}`}
                                         alt="Current"
                                         onClick={() => this.handleWinClickEvent(this.state.curRightIndex)}
                                     />
