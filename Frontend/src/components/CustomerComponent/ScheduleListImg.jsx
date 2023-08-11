@@ -5,6 +5,8 @@ import { getCustomerMyPage } from "../../apis";
 import { styled } from "styled-components";
 import { color, motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { sessionIdState } from "../../recoil/openvidu";
 
 const Container = styled.div`
   display: flex;
@@ -81,11 +83,16 @@ const ReservBtnVariant = {
 function ScheduleListImg(){
   const customerSeq = localStorage.getItem("userSeq");
   const navigate = useNavigate();
+  const [sessionId, setSessionId] = useRecoilState(sessionIdState);
   const { data, isLoading, isError } = useQuery(
     ["customerMyPage", customerSeq],
     () => getCustomerMyPage(customerSeq)
   );
 
+  const moveToWrapper = (consultingSeq) => {
+    console.log("나이거보내고싶어", consultingSeq);
+      navigate(`/viduroom/${consultingSeq}`);
+  }
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -119,7 +126,8 @@ function ScheduleListImg(){
                       variants={ReservBtnVariant}
                       initial="nomal"
                       whileHover="hover"
-                    >
+                    // onClick={() => moveToWrapper(item.consultingSeq)}
+                    onClick={() => moveToWrapper(1)}>
                       상담 참여
                     </ReservBtn>
                     <ReservBtn
