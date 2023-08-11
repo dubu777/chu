@@ -2,6 +2,7 @@
 import { styled } from "styled-components";
 import { useState, useEffect } from "react";
 import { async } from "q";
+import { useParams } from "react-router";
 import { func } from "prop-types";
 import { useRecoilState } from "recoil";
 import {getPortfolio, deletePortfolio, postPortfolio} from "../../apis/designer"
@@ -72,15 +73,15 @@ function Portfolio(){
   
   // 컴포넌트 마운트 될 때 API호출 
   const [data, setData] = useState();
+  const { designerSeq } = useParams();
   const [loginState, setLoginResultState] = useRecoilState(loginResultState);
   // 지금은 로그인 안된 상태라 에러 발생
-  const seq = loginState.designerInfo.DesignerSeq;
   // const seq = 2;
   // 마운트 될 때 실행
   useEffect(()=> {
     async function fetchData() { 
       try {
-        const response = await getPortfolio(seq);
+        const response = await getPortfolio(designerSeq);
         setData(response)
         console.log(response);
       } catch(error){
