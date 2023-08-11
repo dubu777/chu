@@ -2,6 +2,7 @@ package com.chu.consulting.controller;
 
 import com.chu.consulting.domain.*;
 import com.chu.consulting.service.ConsultingService;
+import com.chu.designer.service.DesignerDetailService;
 import com.chu.global.domain.HairStyleDto;
 import com.chu.designer.service.DesignerSearchService;
 import com.chu.global.domain.HttpResponseDto;
@@ -11,7 +12,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @Slf4j
@@ -24,6 +27,7 @@ public class ConsultingController {
 
     private final ConsultingService consultingService;
     private final DesignerSearchService designerSearchService;
+    private final DesignerDetailService designerDetailService;
 
     @GetMapping("/{consulting_seq}")
     public ResponseEntity<HttpResponseDto> participantConsulting(@PathVariable("consulting_seq") int consultingSeq) {
@@ -44,17 +48,35 @@ public class ConsultingController {
     @PostMapping("")
     public ResponseEntity<HttpResponseDto> postConsulting(@RequestBody RequestConsultingDto requestConsultingDto){
 
+        int consultingSeq = -1;
         try{
-            // 이미지 처리
-
-            consultingService.postConsulting(requestConsultingDto);
+            consultingSeq = consultingService.postConsulting(requestConsultingDto);
         } catch(Exception e){
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), null));
+        return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), consultingSeq));
     }
+
+    @PostMapping("/img/{consulting-seq}")
+    public ResponseEntity<HttpResponseDto> postConsultingOriginImage(@PathVariable("consulting-seq") int consultingSeq, @RequestPart("img") MultipartFile file) throws IOException {
+
+        String fileName = "";
+        try {
+            // 여기서 디비에 폴더경로 가져오기, 실제 파일 서버 저장 함수
+            fileName = consultingService.getSavedImgFilePathConsultingOriginFile(consultingSeq, file);
+            consultingService.postConsultingOriginImage(consultingSeq, fileName);
+        } catch (Exception e) {
+            e.printStackTrace();
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
+        }
+
+        HttpResponseDto httpResponseDto = new HttpResponseDto(200, fileName);
+        return ResponseEntity.ok(httpResponseDto);
+    }
+
 
     // 상담 취소하기
     @PutMapping("/cancel/{consultingSeq}")

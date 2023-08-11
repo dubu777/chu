@@ -65,7 +65,7 @@ public class DesignerServiceImpl implements DesignerService{
 
     // 회원가입
     @Override
-    public void signUp(Designer designer, MultipartFile img) {
+    public int signUp(Designer designer) {
         Designer newDesigner = designer;
         // 비밀번호 암호화
         newDesigner.hashPassword(bCryptPasswordEncoder);
@@ -73,14 +73,8 @@ public class DesignerServiceImpl implements DesignerService{
         newDesigner.setCreatedDate(LocalDateTime.now());
         // 기본 가격 세팅
         newDesigner.setCost(5000);
-
-        String imgName = img.getOriginalFilename();
-        ImagePath imagePath = new ImagePath();
-        imagePath.setUploadImgName(imgName);
-
-        newDesigner.setImagePath(imagePath);
-        designerRepository.save(designer);
-
+        Designer designerReturn = designerRepository.save(designer);
+        return designerReturn.getSeq();
     }
 
     // 로그인
