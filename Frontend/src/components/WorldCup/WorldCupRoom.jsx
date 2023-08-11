@@ -306,6 +306,7 @@ class WorldCupRoom extends Component {
             stageThreeImages: [], // 세번째 스테이지에서 쓰일 이미지들 인덱스, 스테이지 끝나면 추가됨
             LastWinImage: 0, // 최종 우승 머리, 스테이지 끝나면 추가됨
             useImages: [0, 1, 2, 3, 4, 5, 6, 7], // 첫번째 스테이지에서 쓰일 이미지들 인덱스 스테이지 끝날때마다 다른 녀석으로 바뀜
+            frontUseImages: [], // 다음에 쓸게 널
         };
 
         this.joinSession = this.joinSession.bind(this);
@@ -459,37 +460,49 @@ class WorldCupRoom extends Component {
                         this.setState({ clickCount: newClickCount });
                         console.log(this.state.clickCount);
 
-
                         // 일단 한 라운드 종료
                         if (newClickCount[payload.index] > 2) {
                             let newRound = this.state.round + 1;
                             let newCurLeftIndex = this.state.curLeftIndex + 2;
                             let newCurRightIndex = this.state.curRightIndex + 2;
                             let nextUseImages = [...this.state.useImages];
+                            let nextFrontUseImages = [...this.state.frontUseImages];
                             let nextLastWinImage = this.state.LastWinImage;
                             let newStage = this.state.stage;
 
-                            if (newStage === 1 && newRound === 5) {
-                                newClickCount = [0, 0, 0, 0, 0, 0, 0, 0];
-                                newRound = 1;
-                                newCurLeftIndex = 0;
-                                newCurRightIndex = 1;
-                                nextUseImages = this.state.stageTwoImages;
-                                nextUseImages[newRound - 1] = payload.index;
-                                newStage++;
-                            } else if (newStage === 2 && newRound === 3) {
-                                newClickCount = [0, 0, 0, 0, 0, 0, 0, 0];
-                                newRound = 1;
-                                newCurLeftIndex = 0;
-                                newCurRightIndex = 1;
-                                nextUseImages = this.state.stageThreeImages;
-                                nextUseImages[newRound - 1] = payload.index;
-                                newStage++;
-                            } else if (newStage === 3 && newRound === 2) {
+                            if (newStage === 1) {
+                                nextFrontUseImages = this.state.stageTwoImages;
+                                nextUseImages.push(payload.index);
+                                if (newRound === 5) {
+                                    newClickCount = [0, 0, 0, 0, 0, 0, 0, 0];
+                                    newRound = 1;
+                                    newCurLeftIndex = 0;
+                                    newCurRightIndex = 1;
+                                    nextUseImages = nextFrontUseImages;
+                                    nextFrontUseImages = [];
+                                    newStage++;
+                                }
+                            }
+
+                            else if (newStage === 2) {
+                                nextFrontUseImages = this.state.stageThreeImages;
+                                nextUseImages.push(payload.index);
+                                if (newRound === 3) {
+                                    newClickCount = [0, 0, 0, 0, 0, 0, 0, 0];
+                                    newRound = 1;
+                                    newCurLeftIndex = 0;
+                                    newCurRightIndex = 1;
+                                    nextUseImages = nextFrontUseImages;
+                                    nextFrontUseImages = [];
+                                    newStage++;
+                                }
+                            }
+                            else if (newStage === 3) {
                                 newClickCount = [0, 0, 0, 0, 0, 0, 0, 0];
                                 nextLastWinImage = payload.index;
                                 newStage++;
                             }
+
 
                             this.setState({
                                 clickCount: newClickCount,
@@ -500,6 +513,7 @@ class WorldCupRoom extends Component {
                                 LastWinImage: nextLastWinImage,
                                 stage: newStage,
                                 useImages: nextUseImages,
+                                frontUseImages: nextFrontUseImages,
                             });
                         }
                     }
