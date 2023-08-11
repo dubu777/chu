@@ -303,9 +303,9 @@ public class ConsultingServiceImpl implements ConsultingService {
     }
 
     @Override
-    public String getSavedImgFilePathConsultingOriginFile(MultipartFile file) throws IOException {
+    public String getSavedImgFilePathConsultingOriginFile(int consultingSeq, MultipartFile file) throws IOException {
         String uploadDir = "/chu/upload/images/consulting/origin/";
-        String fileName = file.getOriginalFilename();
+        String fileName = consultingSeq + ".png";
 
         File directory = new File(uploadDir);
         String filePath = uploadDir + fileName;

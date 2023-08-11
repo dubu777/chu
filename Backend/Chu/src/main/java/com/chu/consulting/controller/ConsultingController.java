@@ -62,24 +62,18 @@ public class ConsultingController {
     @PostMapping("/img/{consulting-seq}")
     public ResponseEntity<HttpResponseDto> postConsultingOriginImage(@PathVariable("consulting-seq") int consultingSeq, @RequestPart("img") MultipartFile file) throws IOException {
 
-
-        String filePath = "";
-        String uploadFileName = "";
+        String fileName = "";
         try {
             // 여기서 디비에 폴더경로 가져오기, 실제 파일 서버 저장 함수
-            filePath = consultingService.getSavedImgFilePathConsultingOriginFile(file);
-
-            // 여기서 디비에 실제 파일 이름를 가져오는거
-            uploadFileName = designerDetailService.getUploadImgFilePath(file);
-
-            consultingService.postConsultingOriginImage(consultingSeq, uploadFileName);
+            fileName = consultingService.getSavedImgFilePathConsultingOriginFile(consultingSeq, file);
+            consultingService.postConsultingOriginImage(consultingSeq, fileName);
         } catch (Exception e) {
             e.printStackTrace();
             HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
             return ResponseEntity.ok(httpResponseDto);
         }
 
-        HttpResponseDto httpResponseDto = new HttpResponseDto(200, uploadFileName);
+        HttpResponseDto httpResponseDto = new HttpResponseDto(200, fileName);
         return ResponseEntity.ok(httpResponseDto);
     }
 

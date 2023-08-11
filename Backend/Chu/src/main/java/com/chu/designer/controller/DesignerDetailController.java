@@ -177,24 +177,24 @@ public class DesignerDetailController {
     @PostMapping("/portfolio/{designer-seq}")
     public ResponseEntity<HttpResponseDto> postPortfolio(@PathVariable("designer-seq") int designerSeq, @RequestPart("img") MultipartFile file) {
 
-        int imgSeq = -1;
+        int portfolioSeq = -1;
 
         try{
+            // 포트폴리오 삽입하고 행 SEQ 가져오기
+            portfolioSeq = designerDetailService.firstPostPortfolioImage(designerSeq);
+
             // 여기서 디비에 폴더경로 가져오기, 실제 파일 서버 저장 함수
-            String filePath = designerDetailService.getSavedImgFilePath(file);
-            
-            // 여기서 디비에 실제 파일 이름를 가져오는거
-            String uploadFilePath = designerDetailService.getUploadImgFilePath(file);
+            String fileName = designerDetailService.getSavedImgFilePath(file, portfolioSeq);
             
             // 여기서 디비에 폴더경로, 실제파일 이름 저장 그리고 이미지 시퀀스 반환
-            imgSeq = designerDetailService.postPortfolioImage(designerSeq, filePath, uploadFilePath);
+            designerDetailService.postPortfolioImage(portfolioSeq, fileName);
         } catch (Exception e){
             e.printStackTrace();
             HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
             return ResponseEntity.ok(httpResponseDto);
         }
 
-        HttpResponseDto httpResponseDto = new HttpResponseDto(200, imgSeq);
+        HttpResponseDto httpResponseDto = new HttpResponseDto(200, portfolioSeq);
         return ResponseEntity.ok(httpResponseDto);
     }
 

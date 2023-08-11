@@ -37,7 +37,7 @@ public interface ConsultingService {
     // 상담 결과 조회
     ResponseConsultingResultDto getConsultingResult(int consultingSeq);
 
-    String getSavedImgFilePathConsultingOriginFile(MultipartFile file) throws IOException;
+    String getSavedImgFilePathConsultingOriginFile(int consultingSeq, MultipartFile file) throws IOException;
 
 //    // 상담 신청, 내역 생성
 //    boolean createConsulting(RequestConsultingDto requestConsultingDto);

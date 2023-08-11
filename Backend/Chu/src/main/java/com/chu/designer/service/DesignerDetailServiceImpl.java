@@ -55,9 +55,12 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
 
 
     @Override
-    public String getSavedImgFilePath(MultipartFile file) throws IOException {
+    public String getSavedImgFilePath(MultipartFile file, int portfolioSeq) throws IOException {
         String uploadDir = "/chu/upload/images/designer/portfolio/";
-        String fileName = file.getOriginalFilename();
+
+//        png로 다 저장할껀데 안되는 거 있으면 이름 꺼내서 구분자 기준으로 왼쪽 지우고 번호 넣기로 다시 구현
+//        String fileName = file.getOriginalFilename();
+        String fileName = portfolioSeq + ".png";
 
         File directory = new File(uploadDir);
         String filePath = uploadDir + fileName;
@@ -77,6 +80,26 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
         file.transferTo(destFile);
         log.info("서비스 >>> 파일 저장 성공! filePath : " + filePath);
         return fileName;
+    }
+
+    @Override
+    public int firstPostPortfolioImage(int designerSeq) {
+        Designer designer = designerRepository.getDesignerBySeq(designerSeq);
+
+        DesignerPortfolio designerPortfolio = new DesignerPortfolio(designer);
+        designerPortfolio.setCreatedDate(LocalDateTime.now());
+
+        int imgSeq = -1;
+
+        try{
+            DesignerPortfolio designerPortfolioReturn = designerDetailRepository.save(designerPortfolio);
+            imgSeq = designerPortfolioReturn.getSeq();
+        } catch (Exception e){
+            e.printStackTrace();
+            return -1;
+        }
+
+        return imgSeq;
     }
 
     @Override
@@ -110,29 +133,14 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
     }
 
     @Override
-    public int postPortfolioImage(int designerSeq, String img, String uploadName) {
+    @Transactional
+    public void postPortfolioImage(int portfolioSeq, String imgName) {
 
-        // 디자이너 정보 가져오기
-        Designer designer = designerRepository.getDesignerBySeq(designerSeq);
+        DesignerPortfolio designerPortfolio = designerDetailRepository.findDesignerPortfolioBySeq(portfolioSeq);
         ImagePath imagePath = new ImagePath();
-        imagePath.setSavedImgName(uploadName);
-
-//        String newFileName = designerSeq + "_" + uploadName;
-        imagePath.setUploadImgName(uploadName);
-
-        DesignerPortfolio designerPortfolio = new DesignerPortfolio(designer, imagePath);
-        designerPortfolio.setCreatedDate(LocalDateTime.now());
-        int imgSeq = -1;
-
-        try{
-            DesignerPortfolio designerPortfolioReturn = designerDetailRepository.save(designerPortfolio);
-            imgSeq = designerPortfolioReturn.getSeq();
-        } catch (Exception e){
-            e.printStackTrace();
-            return -1;
-        }
-
-        return imgSeq;
+        imagePath.setSavedImgName(imgName);
+        imagePath.setUploadImgName(imgName);
+        designerPortfolio.setImagePath(imagePath);
     }
 
     @Override
