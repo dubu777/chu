@@ -33,3 +33,13 @@ export const getPortfolioShow = async (designerSeq) => {
       throw new Error("예약페이지 포트폴리오 조회 실패;;;");
     }
 }
+
+// 고객 상담 결과 보기
+export const getCunsultingResult = async (consultingSeq) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/consulting/result/${consultingSeq}`)
+    return response.data.result;
+  } catch (error) {
+    throw new Error("상담결과보기 조회 실패", error)
+  }
+}

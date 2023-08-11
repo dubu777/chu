@@ -2,10 +2,10 @@
 
 import { styled } from "styled-components";
 import { AnimatePresence, motion, useScroll } from "framer-motion";
-import { useMatch, useNavigate } from "react-router-dom";
+import { useMatch, useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useQuery } from "react-query";
-import { getCustomerMyPage } from "../../apis";
+import { getCustomerMyPage, getCunsultingResult } from "../../apis";
 
 const Container = styled.div`
   display: flex;
@@ -201,16 +201,32 @@ function ReserveList() {
     ["customerMyPage", customerSeq],
     () => getCustomerMyPage(customerSeq)
   );
+  const [modalData, setModalData] = useState(null);
+  const [modalConsulting, setModalConsulting] = useState(null);
   const {scrollY} = useScroll();
-  const bigModalMatch = useMatch("customermypage/result/:consultingSeq");
-  console.log(bigModalMatch)
+  const bigModalMatch = useMatch("customermypage/:customerSeq/:consultingSeq");
+  
+  console.log(bigModalMatch, "하하하하")
   const navigate = useNavigate();
+  const fetchModalData = async (consultingSeq) => {
+    try {
+      const result = await getCunsultingResult(consultingSeq);
+      setModalData(result); // 데이터를 받아온 후 state에 저장
+    } catch (error) {
+      console.error("모달 데이터 실패", error);
+    }
+  }
   const onBoxClicked = (consultingSeq) => {
-    navigate(`result/${consultingSeq}`);
+    setModalConsulting(consultingSeq);
+    fetchModalData(consultingSeq);
   };
   const onOverlayClick = () => {
-    navigate(`/customermypage/${customerSeq}`);
+    setModalConsulting(null);
+    // navigate(`/customermypage/${customerSeq}`);
   };
+
+
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -218,6 +234,9 @@ function ReserveList() {
   if (isError) {
     return <div>An error occurred while fetching data.</div>;
   }
+
+  console.log(data, "마이페이지 데이터");
+  console.log(modalData, "모달 데이터");
 
   return (
     <Container>
@@ -250,15 +269,6 @@ function ReserveList() {
                     </StarBox>
                     </ReviewBox>
                   </Box>
-                  {/* <DetailBox >
-                    <ResultBtn 
-                    onClick={() =>onBoxClicked(data.consultingSeq + "")}
-                    layoutId={data.consultingSeq}
-                    variants={ResultBtnVariants}
-                    initial="nomal"
-                    whileHover="hover"
-                    >상담 결과 보기</ResultBtn>
-                  </DetailBox> */}
                 </InfoBox>
               </Box>
             </Wrapper>
@@ -270,7 +280,7 @@ function ReserveList() {
               </Box>
               <DetailBox >
                     <ResultBtn 
-                    onClick={() =>onBoxClicked(data.consultingSeq + "")}
+                    onClick={() =>onBoxClicked(data.consultingSeq)}
                     layoutId={data.consultingSeq}
                     variants={ResultBtnVariants}
                     initial="nomal"
@@ -285,7 +295,7 @@ function ReserveList() {
       ))}
       </AnimatePresence> 
       <AnimatePresence>
-        { bigModalMatch ? (
+        { modalConsulting && modalData ? (
           <>
             <Overlay 
               onClick={onOverlayClick}
@@ -294,7 +304,7 @@ function ReserveList() {
               exit={{ opacity: 0 }}
               />
               <BigModal 
-                layoutId={bigModalMatch.params.consultingSeq}
+                layoutId={modalData.consultingSeq}
                 style={{ top: scrollY.get() + 110 }}
                 initial={{ opacity: 0, y: "50%" }}
                 animate={{ opacity: 1, y: "0%" }}
@@ -302,9 +312,9 @@ function ReserveList() {
                 transition={{ duration: 0.3}}>
                 <BigModalBox>
                   <InfoBox>
-                    <InfoText>상담사명 : {data.name} 디자이너</InfoText>
-                    <InfoText>상담일시 : {data.consultingDate} {data.consultingStartTime}</InfoText>
-                    <InfoText>스타일 진단 : {data.hairStyle.map((tag) => (
+                    <InfoText>상담사명 : {modalData.name} 디자이너</InfoText>
+                    <InfoText>상담일시 : {modalData.consultingDate} {modalData.consultingStartTime}</InfoText>
+                    <InfoText>스타일 진단 : {modalData.hairStyle.map((tag) => (
                       <HashTag
                       key={tag}
                       >
@@ -313,7 +323,7 @@ function ReserveList() {
                     ))}</InfoText>
                     <ResultWrap>
                       <ResultBox>
-                        상담 결과 <br/><ResultHr/> {data.reviewResult}
+                        상담 결과 <br/><ResultHr/> {modalData.reviewResult}
                       </ResultBox>
                       <ReviewImg src="/icon/designerimg.png" />
                     </ResultWrap>
