@@ -209,7 +209,7 @@ function ReserveList() {
     navigate(`result/${consultingSeq}`);
   };
   const onOverlayClick = () => {
-    navigate('/customermypage');
+    navigate(`/customermypage/${customerSeq}`);
   };
   if (isLoading) {
     return <div>Loading...</div>;
