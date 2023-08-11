@@ -9,7 +9,7 @@ import { getSessionId } from "../../apis/openvidu"
 import { TrySharp } from "@mui/icons-material";
 
 function ViduRoomWrapper() {
-    const [isReady, setIsReady] = useState(false);
+    // const [isReady, setIsReady] = useState(false);
     // loginResultState에 담겨있는 로그인 회원 정보를 조회해온 뒤 사용(토큰)
     // 로그인 시에는 seq와 토큰만 들어옴
     // 회원 정보를 어디서 가져왕..? => home 에서의 useQuery~~~~
@@ -50,7 +50,7 @@ function ViduRoomWrapper() {
             console.log('ttttttttt', ttt)
             console.log('rrrrrrr', rrr)
 
-            setIsReady(true);
+            // setIsReady(true);
         } catch (error) {
             console.log(error)
         }
@@ -60,13 +60,13 @@ function ViduRoomWrapper() {
         getSession(consultingSeq);
     }, [])
 
-    useEffect(() => {
-        console.log('ttttttttt', ttt);
-        console.log('rrrrrrr', rrr);
-      }, [ttt, rrr]);
+    // useEffect(() => {
+    //     console.log('ttttttttt', ttt);
+    //     console.log('rrrrrrr', rrr);
+    //   }, [ttt, rrr]);
 
 
-    return isReady ? <ViduRoom sessionId={id} userName={username} userType={usertype} resultimgs={rrr} targetimgs={ttt} /> : <div>Loading...</div>;
+    return ttt && rrr ? <ViduRoom sessionId={id} userName={username} userType={usertype} resultimgs={rrr} targetimgs={ttt} /> : <div>Loading...</div>;
 }
 
 export default ViduRoomWrapper;
