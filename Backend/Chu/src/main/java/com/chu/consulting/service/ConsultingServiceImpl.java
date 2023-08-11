@@ -74,7 +74,7 @@ public class ConsultingServiceImpl implements ConsultingService {
             int seq = consulting.getSeq();
 
             // SessionId 설정
-            String url = seq + "@" + consulting.getCustomer().getSeq() + "&" + consulting.getDesigner().getSeq();
+            String url = Integer.toString(seq);
 
             // 생성한 SessionId db에 업데이트하기
             consultingRepository.updateConsultingUrl(seq, url);
