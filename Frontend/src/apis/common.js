@@ -97,7 +97,7 @@ export const createNotification = async (consultingSeq, userType) => {
       "consultingSeq": consultingSeq,
       "userType": userType,
     })
-    return response.data.result;
+    return response.data.status;
   } catch (error) {
     throw new Error("알림 생성 실패", error)
   }
@@ -106,7 +106,7 @@ export const createNotification = async (consultingSeq, userType) => {
 // 상담 취소
 export const reservationCancel = async (consultingSeq) => {
   try {
-    const response = await axios.post(`${BASE_URL}/consulting/${consultingSeq}`)
+    const response = await axios.put(`${BASE_URL}/consulting/cancel/${consultingSeq}`)
     console.log(response.data.status);
     return response.data.status;
   } catch (error) {
