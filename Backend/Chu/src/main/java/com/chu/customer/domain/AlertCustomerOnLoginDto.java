@@ -12,4 +12,8 @@ public class AlertCustomerOnLoginDto {
     boolean check;
     LocalDateTime pushDate;
     String designerName;
+
+    String consultingDate;
+
+    String consultingTime;
 }

@@ -142,6 +142,8 @@ public class CustomerServiceImpl implements CustomerService{
             dto.setCheck(c.getIsCheck());
             dto.setPushDate(consulting.getCancelDate());
             dto.setDesignerName(consulting.getDesigner().getName());
+            dto.setConsultingDate(consulting.getConsultingDate().getDate());
+            dto.setConsultingTime(consulting.getConsultingDate().getTime());
 
             list.add(dto);
         }

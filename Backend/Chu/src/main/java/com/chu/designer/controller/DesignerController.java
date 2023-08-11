@@ -7,6 +7,7 @@ import com.chu.global.domain.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,6 +24,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000")
 public class DesignerController {
+
     private final DesignerService designerService;
     private final DesignerDetailService designerDetailService;
 
@@ -46,14 +48,14 @@ public class DesignerController {
     @PostMapping(value = "/sign-up/img/{designer-seq}")
     public ResponseEntity<HttpResponseDto> signUpImg(@PathVariable("designer-seq") int designerSeq, @RequestPart("img") MultipartFile file){
         String uploadFileName = "";
-        
+
         try {
             // 여기서 디비에 폴더경로 가져오기, 실제 파일 서버 저장 함수
-            
+
             // 이게 사실상 그냥 저장하는거임 filePath는 쓸 일도 없음 왜냐면 디비에 그냥 똑같이 저장할꺼임 머리 아파서
-            
+
             // 원래 여기서 https://i9b111.q.ssafy.io/designer-profile/  fileName 으로 저장해놓으면 프론트에서 편할껀데
-            
+
             // 이미 내가 프론트에서 저거 roor로 파일명만 넣어놔서 이거 또 바꾸면 할 일이 또 많아져서 그냥 냅둘게
             uploadFileName = designerDetailService.getSavedImgFilePathDesignerProfile(file);
 

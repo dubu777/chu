@@ -19,6 +19,7 @@ public class RequestDesignerInfoUpdateDto {
     private String address;
     private Double latitude;
     private Double longitude;
+    private String introduction;
 
     private List<Integer> myHairStyleTag;
 

@@ -3,6 +3,7 @@ package com.chu.designer.service;
 import com.chu.customer.domain.RequestCustomerChangePwdDto;
 import com.chu.designer.domain.*;
 import com.chu.global.domain.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,6 +19,7 @@ public interface DesignerService {
 
     // 디자이너 회원가입
     int signUp(Designer designer);
+
 
     // 디자이너 로그인
     ResponseUserLoginToken signIn(RequestSignInDto requestSignInDto);

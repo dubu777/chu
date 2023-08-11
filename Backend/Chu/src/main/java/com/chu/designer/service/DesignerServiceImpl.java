@@ -21,14 +21,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 
-import java.util.Date;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Slf4j
@@ -325,6 +324,8 @@ public class DesignerServiceImpl implements DesignerService{
             dto.setCheck(c.getIsCheck());
             dto.setPushDate(consulting.getCancelDate());
             dto.setCustomerName(consulting.getCustomer().getName());
+            dto.setConsultingDate(consulting.getConsultingDate().getDate());
+            dto.setConsultingTime(consulting.getConsultingDate().getTime());
 
             list.add(dto);
         }
@@ -349,25 +350,31 @@ public class DesignerServiceImpl implements DesignerService{
 
         try{
             // 디자이너 포트폴리오 setting
-            List<String> designerPortfolio = new ArrayList<>();
+            List<ResponsePortfolioDto> designerPortfolio = new ArrayList<>();
 
             List<DesignerPortfolio> portfolios = designerPortfolioRepository.findByDesignerSeq(designerSeq);
 
             for(DesignerPortfolio dp : portfolios){
-                designerPortfolio.add(dp.getImagePath().getUploadImgName());
+                ResponsePortfolioDto dto = new ResponsePortfolioDto();
+                dto.setImgSeq(dp.getSeq());
+                dto.setImgName(dp.getImagePath().getUploadImgName());
+                designerPortfolio.add(dto);
             }
 
             response.setDesignerPortfolio(designerPortfolio);
 
 
             // 랜덤 포트폴리오 setting
-            List<String> randomPortfolio = new ArrayList<>();
+            List<ResponsePortfolioDto> randomPortfolio = new ArrayList<>();
 
             List<DesignerPortfolio> randportfolios = new ArrayList<>();
             randportfolios = designerPortfolioRepository.getRandom();
 
             for(DesignerPortfolio dp : randportfolios){
-                randomPortfolio.add(dp.getImagePath().getUploadImgName());
+                ResponsePortfolioDto dto = new ResponsePortfolioDto();
+                dto.setImgSeq(dp.getSeq());
+                dto.setImgName(dp.getImagePath().getUploadImgName());
+                randomPortfolio.add(dto);
             }
 
             response.setRandomPortfolio(randomPortfolio);
