@@ -53,7 +53,7 @@ export const postReserveInfo = async(combinedData) => {
     const response = await axios.post(
       `${BASE_URL}/consulting`, combinedData
     );
-    console.log("먀먀",response.data)
+    console.log("예약정보 보내기!!!!!!!!!!!!!!!!!!!!!!!",response.data)
     return response.data.result;
 
   } catch(error) {

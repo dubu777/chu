@@ -100,35 +100,35 @@ function ScheduleListImg(){
   if (isError) {
     return <div>An error occurred while fetching data.</div>;
   }
-
+  console.log(data, "고객 마이페이지 조회`");
   return (
     <>
-      {/* {data &&
+      {data &&
         data.responseFutureConsultingDtoList &&
-        data.responseFutureConsultingDtoList.map((data) => ( */}
+        data.responseFutureConsultingDtoList.map((data) => (
           <Container>
             <Wrap>
               <Wrapper>
                 <Box>
                   <DesignerImg
                     src="/icon/designerimg.png" 
-                    // onClick={() => navigate(`/designerdetail/${data.designerSeq}`)}
+                    onClick={() => navigate(`/designerdetail/${data.designerSeq}`)}
                   />
                 </Box>
                 <InfoBox>
                   <Name
-                    // onClick={() => navigate(`/designerdetail/${data.designerSeq}`)}
+                    onClick={() => navigate(`/designerdetail/${data.designerSeq}`)}
                   >
-                    지윤
+                    {data.name}
                   </Name>
-                  <DateText>08.21 금 08:30~07:00</DateText>
+                  <DateText>{data.consultingDate} {data.consultingStartTime}</DateText>
                   <Box>
                     <ReservBtn
                       variants={ReservBtnVariant}
                       initial="nomal"
                       whileHover="hover"
-                    // onClick={() => moveToWrapper(item.consultingSeq)}
-                    onClick={() => moveToWrapper(1)}>
+                    onClick={() => moveToWrapper(data.consultingSeq)}
+                    >
                       상담 참여
                     </ReservBtn>
                     <ReservBtn
@@ -143,7 +143,7 @@ function ScheduleListImg(){
               </Wrapper>
             </Wrap>
           </Container>
-        {/* ))} */}
+        ))}
     </>
   );
 };
