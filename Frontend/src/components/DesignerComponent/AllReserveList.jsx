@@ -4,10 +4,11 @@ import { styled } from "styled-components";
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useRecoilState, useRecoilValue} from "recoil";
-import {sessionIdState} from "../../recoil/openvidu";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { sessionIdState } from "../../recoil/openvidu";
 import { useQuery } from "react-query";
-import {getSessionId, getAllReserveList} from "../../apis"
+import { getAllReserveList } from "../../apis"
+import { getSessionId } from "../../apis/openvidu"
 import { BASE_URL } from "../../apis/rootUrl";
 
 
@@ -163,59 +164,65 @@ const CloseButton = styled.button`
   cursor: pointer;
   margin-top: 10px;
 `;
-function AllReserveList(){
+function AllReserveList() {
   const navigate = useNavigate();
   const { designerSeq } = useParams();
-  console.log("상담 예약 목록 조회의 디자이너 seq",designerSeq);
-    
-    // 모달 상태 관리
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedItem, setSelectedItem] = useState(null);
-    const [sessionId, setSessionId] = useRecoilState(sessionIdState);
+  console.log("상담 예약 목록 조회의 디자이너 seq", designerSeq);
 
-    const openModal = (item) => {    // 모달 열기
-      setSelectedItem(item);
-      setIsModalOpen(true);
-    };
+  // 모달 상태 관리
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [sessionId, setSessionId] = useRecoilState(sessionIdState);
 
-    const closeModal = () => {  // 모달 닫기
-      setIsModalOpen(false);
-    };
-
-    // sessoionId API 호출
-    // const consultSeq = 1;
-    const getSession = async (consultSeq) => {
-    try {
-      const response  = await getSessionId(consultSeq);
-      console.log('가져왔다',response);
-      setSessionId(response.url);
-
-    } catch(error){
-      console.log(error)
-    }
+  const openModal = (item) => {    // 모달 열기
+    setSelectedItem(item);
+    setIsModalOpen(true);
   };
-  useEffect(() => {
-    if (sessionId) {
-      console.log("나이거보내고싶어", sessionId);
-      navigate(`/viduroom/${sessionId}`);
-    }
-  }, [sessionId]);
+
+  const closeModal = () => {  // 모달 닫기
+    setIsModalOpen(false);
+  };
+
+  // sessoionId API 호출
+  // const consultSeq = 1;
+  const moveToWrapper = (consultingSeq) => {
+    console.log("나이거보내고싶어", consultingSeq);
+      navigate(`/viduroom/${consultingSeq}`);
+  }
+
+  // const getSession = async (consultSeq) => {
+  //   console.log('여기 왔다1', consultSeq);
+  //   try {
+  //     const response = await getSessionId(consultSeq);
+  //     console.log('가져왔다', response);
+  //     setSessionId(consultSeq);
+
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // };
+  // useEffect(() => {
+  //   if (sessionId) {
+  //     console.log("나이거보내고싶어", sessionId);
+  //     navigate(`/viduroom/${sessionId}`);
+  //   }
+  // }, [sessionId]);
 
   const { data, isError, isLoading } = useQuery(
     ['allReserveList', designerSeq],
-     () => getAllReserveList(designerSeq)
+    () => getAllReserveList(designerSeq)
   );
-  console.log('이게 데이터다',data)
+  console.log('이게 데이터다', data)
 
-    if (isLoading) {
-      return <div>Loading...{data}</div>;
-    }
-    if (isError) {
-      return <div>홈 페이지 에러{data}</div>;
-    }
+  if (isLoading) {
+    return <div>Loading...{data}</div>;
+  }
+  if (isError) {
+    return <div>홈 페이지 에러{data}</div>;
+  }
 
-    return(
-        <Container>
+  return (
+    <Container>
       <Wrap>
         <TitleBox>
           <Box></Box>
@@ -225,64 +232,64 @@ function AllReserveList(){
           <Box>상세 보기</Box>
           <Box>상담 입장</Box>
         </TitleBox>
-      <Wrapper>
-      {data.map((item) => (
-                <ReserveBox key={item.consultingSeq}>
-                      <Box>
-                        {/* <CustomerImg src="./icon/user.png"/> */}
-                        <CustomerImg src={`${BASE_URL}/consulting-images/origin/${item.originImg}`}/>
-                        
-                      </Box>
-                      <Box>
-                        <Name>{item.name} </Name>
-                      </Box>
-                      <Box>
-                        <Text>{item.gender}</Text>
-                      </Box>
-                      <Box>
-                        <Text>{item.consultingDate} {item.time}</Text>
-                      </Box>
-                      <Box> 
-                        <ModalBtn onClick={()=>openModal(item)}>상세 보기</ModalBtn>
-                      </Box>
-                      <Box>
-                        <EnterBtn onClick={()=>getSession(item.consultingSeq)}>
-                          {/* <Link to={{ pathname: '/viduroom', state: { sessionData: 'sessionId' } }}>상담 입장</Link> */}
-                        상담입장</EnterBtn>
-                      </Box>
-                        {/* 모달 */}
-      {isModalOpen && selectedItem && (
-        <Modal>
-          <ModalContent>
-            {/* 여기에 모달에 표시할 내용을 추가 */}
-            <div>
-              <ImgBox>
-                  {selectedItem.virtualImg.map((img, index) => (
-                    <VirtualImg key={index} src={`${BASE_URL}/consulting-images/confusion/${img}`}></VirtualImg>
-                  ))}
-              </ImgBox>
-              <hr />
-              <ul>
-                {selectedItem.hairCondition.map((condition, index) => (
-                  <HashTag key={index}>{condition}</HashTag>
-                ))}<FaceTag>{selectedItem.faceLabel}</FaceTag>
-              </ul>
-              <Memo>{selectedItem.consultingMemo}</Memo>
-            </div>
-            <CloseDiv>
-              <CloseButton onClick={closeModal}>닫기</CloseButton>
-            </CloseDiv>
-          </ModalContent>
-        </Modal>
-      )}
-      </ReserveBox>
-                
-            ))}
-      </Wrapper>
+        <Wrapper>
+          {data.map((item) => (
+            <ReserveBox key={item.consultingSeq}>
+              <Box>
+                {/* <CustomerImg src="./icon/user.png"/> */}
+                <CustomerImg src={`${BASE_URL}/consulting-images/origin/${item.originImg}`} />
+
+              </Box>
+              <Box>
+                <Name>{item.name} </Name>
+              </Box>
+              <Box>
+                <Text>{item.gender}</Text>
+              </Box>
+              <Box>
+                <Text>{item.consultingDate} {item.time}</Text>
+              </Box>
+              <Box>
+                <ModalBtn onClick={() => openModal(item)}>상세 보기</ModalBtn>
+              </Box>
+              <Box>
+                <EnterBtn onClick={() => moveToWrapper(item.consultingSeq)}>
+                  {/* <Link to={{ pathname: '/viduroom', state: { sessionData: 'sessionId' } }}>상담 입장</Link> */}
+                  상담입장</EnterBtn>
+              </Box>
+              {/* 모달 */}
+              {isModalOpen && selectedItem && (
+                <Modal>
+                  <ModalContent>
+                    {/* 여기에 모달에 표시할 내용을 추가 */}
+                    <div>
+                      <ImgBox>
+                        {selectedItem.virtualImg.map((img, index) => (
+                          <VirtualImg key={index} src={`${BASE_URL}/consulting-images/confusion/${img}`}></VirtualImg>
+                        ))}
+                      </ImgBox>
+                      <hr />
+                      <ul>
+                        {selectedItem.hairCondition.map((condition, index) => (
+                          <HashTag key={index}>{condition}</HashTag>
+                        ))}<FaceTag>{selectedItem.faceLabel}</FaceTag>
+                      </ul>
+                      <Memo>{selectedItem.consultingMemo}</Memo>
+                    </div>
+                    <CloseDiv>
+                      <CloseButton onClick={closeModal}>닫기</CloseButton>
+                    </CloseDiv>
+                  </ModalContent>
+                </Modal>
+              )}
+            </ReserveBox>
+
+          ))}
+        </Wrapper>
       </Wrap>
     </Container>
 
-    );
+  );
 }
 
 export default AllReserveList;

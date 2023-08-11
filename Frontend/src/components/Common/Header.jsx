@@ -95,9 +95,10 @@ function Header() {
   // 로그 아웃 함수(토큰 삭제)
   const handleLogout = useRecoilCallback(({ snapshot }) => async () => {
     setToken(null);
-    localStorage.removeItem("userType");
-    localStorage.removeItem("userSeq");
-    navigate("/");
+    localStorage.removeItem('userType');
+    localStorage.removeItem('userSeq');
+    localStorage.removeItem('userName');
+    navigate('/')
   });
   
   // 통신되면 열기

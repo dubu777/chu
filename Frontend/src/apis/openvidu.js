@@ -5,7 +5,7 @@ const BASE_URL = 'https://i9b111.q.ssafy.io/api';
 
 
 // session ID get요청
-export const getSessionId = async(consultingSeq, setSessionId)=> {
+export const getSessionId = async(consultingSeq)=> {
 
     try {
         console.log("try접근")

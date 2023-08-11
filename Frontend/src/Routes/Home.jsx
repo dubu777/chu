@@ -124,12 +124,23 @@ function Home() {
   const { data, isError, isLoading } = useQuery(['loginData', userSeq], () => fetchLogInData(userSeq));
   console.log(data, "메인 데이터");
   // const { isLoading, data, isError } = useQuery(["noLogInMain"], fetchMain);
+
   if (isLoading) {
     return <div>Loading...{data}</div>;
   }
   if (isError) {
     return <div>홈 페이지 에러{data}</div>;
   }
+
+  if( localStorage.getItem("userType") == 'customer'){
+    localStorage.setItem("userName", data.customerInfo.name);
+  } 
+
+  else if( localStorage.getItem("userType") == 'designer'){
+    localStorage.setItem("userName", data.designerInfo.name);
+  }
+  
+
   return (
     <Wrapper>
       <Main src="/img/banner-lmg.png"></Main>
