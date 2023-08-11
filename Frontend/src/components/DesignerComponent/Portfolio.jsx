@@ -95,7 +95,7 @@ function Portfolio(){
   // 해당 이미지를 제외한 나머지 이미지들로 배열 업데이트
   const handleDelete = async (imgSeq) => {
     try {
-      const result = await deletePortfolio(seq, imgSeq);
+      const result = await deletePortfolio(designerSeq, imgSeq);
       console.log(result)
       // 받아오는 결과 형태 잘 확인하기
       if (result){
@@ -116,7 +116,7 @@ function Portfolio(){
 
     try {
       // 이미지를 서버에 업로드하고 imgSeq를 받아옴
-      const response = await postPortfolio(seq, formData);
+      const response = await postPortfolio(designerSeq, formData);
         const newImg = {
           imgSeq: response, // 서버에서 받아온 imgSeq 사용
           imgName: file.name,
@@ -137,7 +137,7 @@ function Portfolio(){
       {data.imgs.map((img) => (
       <ImgBox key={img.imgSeq}>
         <Img src={`https://i9b111.q.ssafy.io/api/portfolio/${img.imgName}`}
-alt="Image" />
+alt="Image" /> 
         <DeleteBtn onClick={() => handleDelete(img.imgSeq)}>
           <DeleteImg src={"./icon/bin.png"}></DeleteImg>
         </DeleteBtn>
