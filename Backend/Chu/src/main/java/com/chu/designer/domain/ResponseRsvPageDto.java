@@ -3,9 +3,10 @@ package com.chu.designer.domain;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Map;
 
 @Data
 public class ResponseRsvPageDto {
-    List<String> designerPortfolio;
-    List<String> randomPortfolio;
+    List<ResponsePortfolioDto> designerPortfolio;
+    List<ResponsePortfolioDto> randomPortfolio;
 }
