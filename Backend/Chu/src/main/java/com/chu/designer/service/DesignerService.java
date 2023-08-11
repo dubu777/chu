@@ -18,7 +18,8 @@ public interface DesignerService {
     boolean checkEmail(String email);
 
     // 디자이너 회원가입
-    void signUp(Designer designer, MultipartFile img);
+    int signUp(Designer designer);
+
 
     // 디자이너 로그인
     ResponseUserLoginToken signIn(RequestSignInDto requestSignInDto);

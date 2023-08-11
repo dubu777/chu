@@ -55,9 +55,12 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
 
 
     @Override
-    public String getSavedImgFilePath(MultipartFile file) throws IOException {
+    public String getSavedImgFilePath(MultipartFile file, int portfolioSeq) throws IOException {
         String uploadDir = "/chu/upload/images/designer/portfolio/";
-        String fileName = file.getOriginalFilename();
+
+//        png로 다 저장할껀데 안되는 거 있으면 이름 꺼내서 구분자 기준으로 왼쪽 지우고 번호 넣기로 다시 구현
+//        String fileName = file.getOriginalFilename();
+        String fileName = portfolioSeq + ".png";
 
         File directory = new File(uploadDir);
         String filePath = uploadDir + fileName;
@@ -76,52 +79,16 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
 
         file.transferTo(destFile);
         log.info("서비스 >>> 파일 저장 성공! filePath : " + filePath);
-        return filePath;
+        return fileName;
     }
 
     @Override
-    public String getSavedImgFilePathDesignerProfile(MultipartFile file) throws IOException {
-        String uploadDir = "/chu/upload/images/designer/";
-        String fileName = file.getOriginalFilename();
-
-        File directory = new File(uploadDir);
-        String filePath = uploadDir + fileName;
-
-        File destFile = new File(filePath);
-        System.out.println(filePath);
-
-        if (!directory.exists()) {
-            boolean mkdirsResult = directory.mkdirs();
-            if (mkdirsResult) {
-                System.out.println("디렉토리 생성 성공");
-            } else {
-                System.out.println("디렉토리 생성 실패");
-            }
-        }
-
-        file.transferTo(destFile);
-        return filePath;
-    }
-
-    @Override
-    public String getUploadImgFilePath(MultipartFile file) throws IOException {
-        String uploadName = file.getOriginalFilename();
-        return uploadName;
-    }
-
-    @Override
-    public int postPortfolioImage(int designerSeq, String img, String uploadName) {
-
-        // 디자이너 정보 가져오기
+    public int firstPostPortfolioImage(int designerSeq) {
         Designer designer = designerRepository.getDesignerBySeq(designerSeq);
-        ImagePath imagePath = new ImagePath();
-        imagePath.setSavedImgName(uploadName);
 
-//        String newFileName = designerSeq + "_" + uploadName;
-        imagePath.setUploadImgName(uploadName);
-
-        DesignerPortfolio designerPortfolio = new DesignerPortfolio(designer, imagePath);
+        DesignerPortfolio designerPortfolio = new DesignerPortfolio(designer);
         designerPortfolio.setCreatedDate(LocalDateTime.now());
+
         int imgSeq = -1;
 
         try{
@@ -133,6 +100,47 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
         }
 
         return imgSeq;
+    }
+
+    @Override
+    public String getSavedImgFilePathDesignerProfile(MultipartFile file) throws IOException {
+        String uploadDir = "/chu/upload/images/designer/";
+        String fileName = file.getOriginalFilename();
+
+        File directory = new File(uploadDir);
+        String filePath = uploadDir + fileName;
+
+        File destFile = new File(filePath);
+        System.out.println(fileName);
+
+        if (!directory.exists()) {
+            boolean mkdirsResult = directory.mkdirs();
+            if (mkdirsResult) {
+                System.out.println("디렉토리 생성 성공");
+            } else {
+                System.out.println("디렉토리 생성 실패");
+            }
+        }
+
+        file.transferTo(destFile);
+        return fileName;
+    }
+
+    @Override
+    public String getUploadImgFilePath(MultipartFile file) throws IOException {
+        String uploadName = file.getOriginalFilename();
+        return uploadName;
+    }
+
+    @Override
+    @Transactional
+    public void postPortfolioImage(int portfolioSeq, String imgName) {
+
+        DesignerPortfolio designerPortfolio = designerDetailRepository.findDesignerPortfolioBySeq(portfolioSeq);
+        ImagePath imagePath = new ImagePath();
+        imagePath.setSavedImgName(imgName);
+        imagePath.setUploadImgName(imgName);
+        designerPortfolio.setImagePath(imagePath);
     }
 
     @Override
@@ -211,13 +219,10 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
 
     //
     @Override
+    @Transactional
     public boolean patchImg(int designerSeq, String fileName) {
 
         Designer designer = designerRepository.getDesignerBySeq(designerSeq);
-
-        // fileName 고유하게 변경
-        String newFileName = designer.getSeq() + fileName;
-        log.info("new File Name: "+ newFileName);
 
         ImagePath imagePath = new ImagePath();
         imagePath.setUploadImgName(fileName);

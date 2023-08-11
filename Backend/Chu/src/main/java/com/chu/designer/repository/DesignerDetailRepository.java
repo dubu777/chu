@@ -46,6 +46,7 @@ public interface DesignerDetailRepository extends JpaRepository<DesignerPortfoli
 //
 //    ArrayList<ImageDto> getConfusionImages(int consultinSeq);
 //
+    DesignerPortfolio findDesignerPortfolioBySeq(int portfolioSeq);
 
     @Query(value = "SELECT dp FROM DesignerPortfolio dp WHERE dp.designer.seq = :designerSeq")
     List<DesignerPortfolio> getPortfolioByDesignerPortfolio(int designerSeq);
