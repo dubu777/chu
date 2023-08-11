@@ -26,6 +26,7 @@ export const getDesignerDetail = async (designerSeq, customerSeq) => {
   try {
     const response = await axios.get(`${BASE_URL}/designer/search/detail/${designerSeq}`, 
     { params: { customerSeq }});
+    console.log(response.data);
     return response.data.result;
   } catch (error) {
     console.error('There was a problem with the axios operation:', error.message);

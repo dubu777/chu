@@ -380,7 +380,7 @@ function DesignerDetail() {
                 <PofolImg
                   key={index}
                   // src={item}
-                  src={`${BASE_URL}/portfolio/${item.imaName}`}
+                  src={`${BASE_URL}/portfolio/${item.imgName}`}
                   variants={pofolVariants}
                   initial="nomal"
                   whileHover="hover"
