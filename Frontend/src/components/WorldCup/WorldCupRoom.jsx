@@ -458,7 +458,14 @@ class WorldCupRoom extends Component {
                         let newClickCount = { ...this.state.clickCount };
                         newClickCount[payload.index] = newClickCount[payload.index] + 1;
                         this.setState({ clickCount: newClickCount });
-                        console.log(this.state.clickCount);
+                        console.log("clickCount: " , this.state.clickCount);
+                        console.log("round: ", this.state.round);
+                        console.log("leftIndex: ", this.state.curLeftIndex);
+                        console.log("rigthIndex: ", this.state.curRightIndex);
+                        console.log("useImagesIndex: ", this.state.useImages);
+                        console.log("frontUseImagesIndex: ", this.state.frontUseImages);
+                        console.log("stageTwoImagesIndex: ", this.state.stageTwoImages);
+                        console.log("stageThreeImagesIndex: ", this.state.stageThreeImages);
 
                         // 일단 한 라운드 종료
                         if (newClickCount[payload.index] > 2) {
