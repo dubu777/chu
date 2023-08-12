@@ -61,6 +61,7 @@ function Event() {
         formData.append("inputImg", inputImageFile);
         formData.append("targetImg", targetImageFile);
 
+        // FormData 내용 확인
         formData.forEach((value, key) => {
             console.log(key, value);
         });
@@ -77,6 +78,7 @@ function Event() {
     // 입력 이미지 첨부
     const handleInputImageChange = (event) => {
         const file = event.target.files[0];
+        console.log(file); // 파일 객체 확인
         setInputImageFile(file); // 상태로 파일 저장
         // 입력 이미지 미리보기
         const reader = new FileReader();
@@ -89,6 +91,7 @@ function Event() {
     // 타겟 이미지 첨부
     const handleTargetImageChange = (event) => {
         const file = event.target.files[0];
+        console.log(file); // 파일 객체 확인
         setTargetImageFile(file); // 상태로 파일 저장
         // 타겟 이미지 미리보기
         const reader = new FileReader();
