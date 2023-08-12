@@ -1,8 +1,9 @@
-package com.chu.event.repository;
+package com.chu.event.service;
 
 import com.chu.consulting.domain.Consulting;
 import com.chu.event.domain.Event;
 import com.chu.event.domain.ResponseEventDto;
+import com.chu.event.repository.EventRepository;
 import com.chu.event.service.EventService;
 import com.chu.global.domain.ImagePath;
 import lombok.RequiredArgsConstructor;
