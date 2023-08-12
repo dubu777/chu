@@ -8,6 +8,13 @@ const Container = styled.div`
 `;
 
 function Event(){
+
+    const customerSeq = localStorage.getItem('userSeq');
+
+    useEffect(() => {
+        getSession(customerSeq);
+      }, [customerSeq]);
+
     return(
         <Container>
             <p>여기는 추가 기능 이벤트 페이지</p>
