@@ -4,6 +4,7 @@ import { styled } from "styled-components";
 import { useState, useEffect } from "react";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css'; // css import
+import { motion, AnimatePresence, useAnimation } from "framer-motion";
 
 const Container = styled.div`
     /* text-align: center; */
@@ -40,6 +41,22 @@ const TimeBox = styled.div`
     flex-wrap: wrap;
     justify-content: space-around;
 `;
+const timeBtnVariants = {
+  nomal: {
+    backgroundColor: "rgb(255, 251, 235)",
+    borderColor: "#fcd34d",
+  },
+  hover: {
+    backgroundColor: "rgb(242,234,211)",
+    borderColor: "#f59e0b",
+    color: "#f59e0b",
+  },
+  active: {
+    backgroundColor: "rgb(242,234,211)",
+    borderColor: "#f59e0b",
+    color: "#f59e0b",
+  },
+};
 const BtnBox = styled.div`
   text-align: center;
   
@@ -76,14 +93,20 @@ const Icon = styled.img`
   height: 20px;
   margin-right: 10px;
 `;
-const TimeButton = styled.button`
-  border-radius:1.0rem;
-  width: 65px;
+// 
+const TimeButton = styled(motion.button)`
+  border-radius: 1.0rem;
+  width: 62px;
   height: 35px;
   margin: 3px;
   border: ${props => props.selected ? 'none' : '1px solid lightgray'};
   background-color: ${props => props.selected ? '#7D705F' : 'white'}; 
   color: ${props => props.selected ? 'white' : 'black'}; 
+  cursor: pointer;
+  :hover {
+    border: orange;
+    color: orange;
+  }
 `;
 const OkBtn = styled.button`
 margin-top: 20px;
@@ -94,6 +117,7 @@ margin-top: 20px;
   color: white;
   border-radius: 0.2rem;
 `;
+
 function formatDateString(date) {
   const year = date.getFullYear();
   const month = (date.getMonth() + 1).toString().padStart(2, "0");
@@ -101,64 +125,64 @@ function formatDateString(date) {
   const clickdate = `${year}-${month}-${day}`;
   // console.log(clickdate)
   return `${year}-${month}-${day}`;
-  }
-
-  function generateTimeButtons(selectedDate, selectedTimes, setSelectedTimes) {
-    const timeButtons = [];
-    const startDate = new Date(selectedDate);
-    startDate.setHours(9, 0, 0, 0); // 선택된 날짜의 시작 시간
-
-    const endDate = new Date(selectedDate);
-    endDate.setHours(22, 30, 0, 0); // 선택된 날짜의 종료 시간
-
-
-    let currentTime = new Date(startDate);
-
-    while (currentTime <= endDate) {
-      const formattedTime = `${currentTime.getHours().toString().padStart(2, '0')}:${currentTime.getMinutes().toString().padStart(2, '0')}`;
-      const isSelected = selectedTimes[selectedDate.toISOString()]?.includes(formattedTime) || false;
-
-        timeButtons.push(
-            <TimeButton
-                key={formattedTime}
-                selected={isSelected}
-                onClick={() => handleTimeButtonClick(selectedDate, formattedTime, isSelected, setSelectedTimes)}
-            >
-                {formattedTime}
-            </TimeButton>
-        );
-
-        currentTime.setMinutes(currentTime.getMinutes() + 30); // 30분 간격으로 시간 증가
-    }
-
-    return timeButtons;
-}
-function handleTimeButtonClick(selectedDate, formattedTime, isSelected, setSelectedTimes) {
-  setSelectedTimes(prevSelectedTimes => {
-    const updatedSelectedTimes = { ...prevSelectedTimes };
-    if (!updatedSelectedTimes[selectedDate.toISOString()]) {
-        updatedSelectedTimes[selectedDate.toISOString()] = [];
-    }
-    if (isSelected) {
-        updatedSelectedTimes[selectedDate.toISOString()] = updatedSelectedTimes[selectedDate.toISOString()].filter(time => time !== formattedTime);
-    } else {
-        updatedSelectedTimes[selectedDate.toISOString()] = [...updatedSelectedTimes[selectedDate.toISOString()], formattedTime];
-    }
-    return updatedSelectedTimes;
-});
 }
 
 function ReserveCalendar(){
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [selectedTimes, setSelectedTimes] = useState({});
+  const [selectedTimes, setSelectedTimes] = useState([]);
+  const [selectedTime, setSelectedTime] = useState(null);
   const selectedDateString = formatDateString(selectedDate);
-     // 백엔드로 선택된 시간 보내는 함수
-     const sendSelectedTimesToBackend = () => {
-      // 선택된 시간들(selectedTimes)을 서버로 전송
-      // 예를 들어, axios 또는 fetch를 사용하여 POST 요청 보내기
-      // 서버로 전송하는 로직을 구현하기 위해서는 백엔드 API와의 연결 필요
-      console.log("전송할 시간들:", selectedTimes);
-      };
+  const formattedSelectedDate = formatDateString(selectedDate);
+
+  const generateTimeButtons = () => {
+    const timeButtons = [];
+    const startTime = 9; // 시작 시간 (9:00)
+    const endTime = 22.5; // 종료 시간 (22:30)
+
+    for (let i = startTime; i <= endTime; i += 0.5) {
+      const hour = Math.floor(i);
+      const minute = (i - hour) * 60;
+      const second = Math.floor(((i - hour) * 60 - minute) * 60);
+      const formatTime = `${hour.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")}`;
+      const formattedTime = `${hour.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")}:${second.toString().padStart(2, "0")}`;
+      timeButtons.push(
+        <TimeButton
+          key={formattedTime}
+          variants = {timeBtnVariants}
+          onClick={() => handleTimeButtonClick(formattedTime)}
+          selected={selectedTimes[selectedDateString]?.includes(formattedTime)} // 변경된 부분
+          style={{
+            backgroundColor: selectedTimes[selectedDateString]?.includes(formattedTime) ? "rgb(100, 93, 81)" : "white",
+            color: selectedTimes[selectedDateString]?.includes(formattedTime) ? "white" : "black",
+          }}
+        >
+          {formatTime}
+        </TimeButton>
+      );
+    }
+    return timeButtons;
+  };
+
+  const handleTimeButtonClick = (time) => {
+    setSelectedTimes((prevSelectedTimes) => {
+      const newSelectedTimes = { ...prevSelectedTimes };
+      if (!newSelectedTimes[selectedDateString]) {
+        newSelectedTimes[selectedDateString] = [];
+      }
+      if (newSelectedTimes[selectedDateString].includes(time)) {
+        newSelectedTimes[selectedDateString] = newSelectedTimes[selectedDateString].filter((t) => t !== time);
+      } else {
+        newSelectedTimes[selectedDateString] = [...newSelectedTimes[selectedDateString], time];
+      }
+      return newSelectedTimes;
+    });
+  };
+
+
+  const sendSelectedTimesToBackend = () => {
+    console.log("전송할 시간들:", selectedTimes);
+  };
+
     return (
       <Container>
         <Title>예약 시간 캘린더</Title>
@@ -185,7 +209,7 @@ function ReserveCalendar(){
                   <Hr></Hr>
                     <BtnBox>
                     {/* 시간 선택 박스 */}
-                    {generateTimeButtons(selectedDate, selectedTimes, setSelectedTimes)}
+                    {generateTimeButtons()}
                     </BtnBox>
                     <OkBtn onClick={() => console.log(selectedTimes)}>적용</OkBtn> {/* 확인 버튼 추가 */}
                 </TimeBox>
