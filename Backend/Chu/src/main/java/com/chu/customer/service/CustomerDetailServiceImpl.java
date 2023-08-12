@@ -182,7 +182,15 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
             dto.setConsultingDate(c.getConsultingDate().getDate().toString());
             dto.setConsultingStartTime(c.getConsultingDate().getTime().toString());
             dto.setUrl(c.getUrl());
-            dto.setCancelDate(c.getCancelDate().toString());
+
+            LocalDateTime cancelDate = c.getCancelDate();
+
+            if(cancelDate == null){
+                dto.setCancelDate(null);
+            }
+            else{
+                dto.setCancelDate(cancelDate.toString());
+            }
 
             list8.add(dto);
         }
