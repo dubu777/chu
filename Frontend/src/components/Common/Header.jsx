@@ -151,6 +151,7 @@ function Header() {
       </Col>
       <Col>
         <Link to="/checkreserve">kakao pay</Link>
+        <Link to="/event">📷 Event</Link>
       </Col>
       <Col>
       <Link to="/worldcuproom/1">worldcuproom</Link>

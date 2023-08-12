@@ -29,6 +29,7 @@ import ViduRoomWrapper from "./components/OpenVidu/ViduRoomWrapper";
 import LikeDesigner from "./components/CustomerComponent/LikeDesigner";
 import MapView from "./Routes/ViewPage/MapView";
 import WorldCupRoomWrapper from "./components/WorldCup/WorldCupRoomWrapper";
+import Event from "./Routes/EventPage/Event";
 
 
 function App() {
@@ -58,6 +59,7 @@ function App() {
         <Route path="designermypage/:designerSeq" element={<DesignerMyPage/>} />
         <Route path="listview" element={<ListView/>} />
         <Route path="mapview" element={<MapView/>} />
+        <Route path="event" element={<Event/> } />
         <Route path="editdesignerinfo/:designerSeq" element={<EditDesignerInfo/>} />
         <Route path="consultresultpage" element={<ConsultResultPage/>} />
         <Route path="reservation/:designerSeq" element={<Reservation/>} />

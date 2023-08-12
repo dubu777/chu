@@ -71,14 +71,14 @@ const Chat = styled.div`
 const VideoContainer = styled.div`
   width: 90%;
   display: flex;
-  /* flex-direction: column; */
+  flex-direction: column;
   /* overflow: hidden; */
   justify-content: center;
   text-align: center;
   /* border: 2px solid lightgray; */
 `;
 const LeftBox = styled.div`
-  /* display: flex; */
+  display: flex;
   /* flex-direction: column; */
   /* justify-content: center;
   align-items: center; */
@@ -92,8 +92,9 @@ const RightBox = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  /* align-items: center; */
   padding: 20px;
-  margin-left: 50px;
+  margin-top: 50px;
   border-radius: 0.4rem;
   background-color: #fffdf6;
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
@@ -116,9 +117,58 @@ const Show = styled.div`
   width: 100px;
   height: 100px;
 `;
-const ImageBox = styled.div`
+const StageText = styled.div`
+  font-size  : 25px;
+  width: 150px;
+  height: 40px;
+  border: 0;
+  padding-top: 5px;
+  background-color: #ffc549;
+  border-radius: 1rem;
+  text-align: center;
+  align-items: center;
+`;
+const RoundText = styled.div`
+      font-size  : 18px;
+`;
+const HeartBox = styled.div`
+    margin: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`;
+const Heart = styled.img`
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
+`;
+const ClickNumText = styled.div`
+      font-size  : 20px;
+`;
+const EndImageBox = styled.div`
     display: flex;
     justify-content: space-between;
+    /* margin-left: 100px; */
+`;
+const ImgWrapper = styled.div`
+  display  : flex;
+  justify-content: center;
+  /* justify-content: space-around; */
+`;
+const LeftImageBox = styled.div`
+    display: flex;
+    justify-content: space-between;
+    padding: 60px 100px 40px 100px;
+    flex-direction: column;
+    /* background-color: aliceblue; */
+    /* padding-left: 100px; */
+`;
+const RightImageBox = styled.div`
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    padding: 60px 100px 40px 100px;
+    /* background-color: #c4e4d8; */
     /* margin-left: 100px; */
 `;
 const Img = styled.img`
@@ -126,15 +176,32 @@ const Img = styled.img`
     height: 130px;
     margin: 0px 5px;
 `;
+const EndImg = styled.img`
+    width: 100px;
+    height: 130px;
+    margin: 0px 5px;
+    border-radius: 0.4rem;
+`;
+
 const ResultImg = styled.img`
     width: 100%;
-    height: 350px;
+  height: 350px;
+  border-radius: 0.4rem;
+  animation: rotate_image 6s linear infinite;
+  transform-origin: 50% 50%;
+  cursor: pointer;
+  transition: transform 0.3s ease; /* 추가: 확대/축소에 적용할 전환 효과 */
+
+  &:hover {
+    transform: scale(1.05); /* 이미지를 조금 확대함 */
+  }
 `;
+
 const StreamContainerWrapper = styled.div`
   /* display: grid; */
   /* place-items: center; */
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   margin-left: 20px;
   margin-top: 10px;
   padding-top: 10px;
@@ -645,7 +712,7 @@ class WorldCupRoom extends Component {
         return (
             <Container>
                 <Header>
-                    <StudyTitle>Hair Consulting</StudyTitle>
+                    <StudyTitle>Chu WorldCup 🏆</StudyTitle>
                 </Header>
                 <Hr />
                 <div className="container">
@@ -697,31 +764,41 @@ class WorldCupRoom extends Component {
                             <RightBox>
 
                                 {this.state.isGameOver ? (
-                                    <ImageBox>
-                                        <ResultImg src={`https://i9b111.q.ssafy.io/api/consulting-images/confusion/${this.state.resultimgs[this.state.LastWinImage]}`}
+                                    <EndImageBox>
+                                        <EndImg src={`https://i9b111.q.ssafy.io/api/consulting-images/confusion/${this.state.resultimgs[this.state.LastWinImage]}`}
                                             alt="Current"
                                             // 클릭하면 박수치게
                                         />
-                                    </ImageBox>
+                                    </EndImageBox>
                                 ) : (
                                     <>
-                                        <div>Stage : {this.state.stage}</div>
-                                        <div>Round : {this.state.round}</div>
-                                        <ImageBox>
-                                            <div>{this.state.clickCount[this.state.useImages[this.state.curLeftIndex]]}</div>
-                                            <ResultImg src={`https://i9b111.q.ssafy.io/api/consulting-images/confusion/${this.state.resultimgs[this.state.useImages[this.state.curLeftIndex]]}`}
+                                    {/* 월드컵 진행 과정 */}
+                                        <StageText>Stage {this.state.stage}</StageText>
+                                        <RoundText>Round : {this.state.round}</RoundText>
+                                        <ImgWrapper>
+                                        <LeftImageBox>
+                                            <ResultImg 
+                                            src={`https://i9b111.q.ssafy.io/api/consulting-images/confusion/${this.state.resultimgs[this.state.useImages[this.state.curLeftIndex]]}`}
                                                 alt="Current"
                                                 onClick={() => this.handleWinClickEvent(this.state.useImages[this.state.curLeftIndex])}
                                             />
-                                        </ImageBox>
-                                        <Hr></Hr>
-                                        <ImageBox>
-                                            <div>{this.state.clickCount[this.state.useImages[this.state.curRightIndex]]}</div>
+                                            <HeartBox>
+                                                <Heart src="/icon/hearto.png"></Heart>
+                                                <ClickNumText>{this.state.clickCount[this.state.useImages[this.state.curLeftIndex]]}</ClickNumText>   
+                                            </HeartBox>
+                                        </LeftImageBox>
+                                            {/* <Hr/> */}
+                                        <RightImageBox>
                                             <ResultImg src={`https://i9b111.q.ssafy.io/api/consulting-images/confusion/${this.state.resultimgs[this.state.useImages[this.state.curRightIndex]]}`}
                                                 alt="Current"
                                                 onClick={() => this.handleWinClickEvent(this.state.useImages[this.state.curRightIndex])}
                                             />
-                                        </ImageBox>
+                                            <HeartBox>
+                                                <Heart src="/icon/hearto.png"></Heart>
+                                                <ClickNumText>{this.state.clickCount[this.state.useImages[this.state.curRightIndex]]}</ClickNumText>
+                                            </HeartBox>
+                                        </RightImageBox>
+                                        </ImgWrapper>
                                     </>
                                 )}
 
