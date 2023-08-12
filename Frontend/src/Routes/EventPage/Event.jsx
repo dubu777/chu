@@ -2,6 +2,7 @@
 
 import { styled } from "styled-components";
 import { useState, useEffect } from "react";
+import { getEventInfo } from "../../apis/event";
 
 const Container = styled.div`
     margin: 40px;
@@ -12,7 +13,7 @@ function Event(){
     const customerSeq = localStorage.getItem('userSeq');
 
     useEffect(() => {
-        getSession(customerSeq);
+        getEventInfo(customerSeq);
       }, [customerSeq]);
 
     return(
