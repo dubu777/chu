@@ -176,11 +176,13 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
                 dto.setDesignerImg(designer.getImagePath().getUploadImgName());
             else
                 dto.setDesignerImg(null);
+
             dto.setReviewScore(designer.getReviewScore());
             dto.setName(designer.getName());
             dto.setConsultingDate(c.getConsultingDate().getDate().toString());
             dto.setConsultingStartTime(c.getConsultingDate().getTime().toString());
             dto.setUrl(c.getUrl());
+            dto.setCancelDate(c.getCancelDate().toString());
 
             list8.add(dto);
         }

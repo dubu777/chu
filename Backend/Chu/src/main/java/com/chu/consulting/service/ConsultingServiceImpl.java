@@ -60,6 +60,9 @@ public class ConsultingServiceImpl implements ConsultingService {
             // requestConsultingDto -> entity 만들기
             Consulting consulting = requestConsultingDto.toConsultingEntity();
 
+            Review review = new Review();
+            review.setReviewScore(5.0);
+            consulting.setReview(review);
             consulting.setCreatedDate(LocalDateTime.now());
             // 상담 예약하기
             Consulting consultingResponse = consultingRepository.save(consulting);
