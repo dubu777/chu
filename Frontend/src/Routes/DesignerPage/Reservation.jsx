@@ -294,13 +294,14 @@ function Reservation() {
   const [pofolnum, setPofolNum] = useState(null);
   const { designerSeq } = useParams();
   const [requestFile, setRequestFile] = useState(null);
+  const [imgSeqArray, setImgSeqArray] = useState(null)
   const combinedData = {
     customerSeq: customerSeq,
     designerSeq: designerSeq,
     date: formattedSelectedDate,
     time: selectedTime,
     consultingMemo: note,
-    portfolios: selectedImgSeqs,
+    portfolios: imgSeqArray,
   };
 
   // const formData = new FormData();
@@ -308,6 +309,7 @@ function Reservation() {
 
   // 넘기고 싶은 데이터 모으기
   const handleButtonClick = async() => {
+
     console.log('보내기 전 info', combinedData)
     // 예약정보 보내기
     try {
@@ -443,32 +445,34 @@ function Reservation() {
   const handleNoteChange = (event) => {
     setNote(event.target.value);
   };
-  // console.log('전달메세지 모냐', note)
 
-  // const [selectedImgs, setSelectedImgs] = useState([]);
-  console.log('선택한 사진', selectedImgs)
-  console.log('사진 번호', selectedImgSeqs )
   const handleImageClick = (item) => {
-    if (selectedImgs.includes(item.imgSeq)) {
+    if (selectedImgs.includes(item)) {
       // 이미 선택된 이미지를 다시 클릭하면 선택 해제
-      setSelectedImgs((prevImgs) => prevImgs.filter((imgName) => imgName !== item.imgName));
-      setSelectedImgSeqs((prevImgSeqs) => prevImgSeqs.filter((imgSeq) => imgSeq !== item.imgSeq));
+      setSelectedImgs((prev) => prev.filter((imgName) => imgName !== item));
     } else {
       // 새로운 이미지를 선택
-      setSelectedImgs((prevImgs) => [...prevImgs, item.imgName]);
-      setSelectedImgSeqs((prevImgSeqs) => [...prevImgSeqs, item.imgSeq]);
+      setSelectedImgs((prev) => [...prev, item]);
     }
+    console.log('선택한 사진', selectedImgs)
+    const SeqArray = [...imgData.designerPortfolio, ...imgData.randomPortfolio]
+    .filter(image => selectedImgs.includes(image.imgName))
+    .map(image => image.imgSeq);
+    
+    console.log('번호는?', SeqArray)
+    setImgSeqArray(SeqArray)
+    console.log('선택한 사진 번호 나와?', imgSeqArray); 
+    console.log('번호번호',imgSeqArray)
   };
-  // console.log('우와 시간 나옴?', formattedSelectedDate, selectedTime)
-
-
-  if (imgLoading) {
-    return <div>Loading...{data}</div>;
+  // console.log('원하는 사진명:', selectedImgs)
+        
+        if (imgLoading) {
+          return <div>Loading...{data}</div>;
+        }
+        if (imgError) {
+          return <div>홈 페이지 에러{data}</div>;
   }
-  if (imgError) {
-    return <div>홈 페이지 에러{data}</div>;
-  }
-
+  // console.log('데이터가 무슨이름으로 들어오니', imgData.designerPortfolio)
   // console.log('최종 예약 이미지',formData)
 
   return (
@@ -481,9 +485,6 @@ function Reservation() {
             <CalendarContainer>
               {/* <Calendar onChange={onChange} value={value} onClick={handleCalendarClick}/> */}
               <Calendar onChange={date => setSelectedDate(date)} value={selectedDate} />
-              <div>
-                <p>{formattedSelectedDate}</p>
-              </div>
             </CalendarContainer>
           </ResevBox>
           <ResevBox>
@@ -497,6 +498,7 @@ function Reservation() {
             <SubTitle>전달사항</SubTitle>
             <Hr />
             <TextArea 
+
               placeholder="내용을 입력해주세요." 
               value={note} 
               onChange={handleNoteChange}
@@ -521,7 +523,7 @@ function Reservation() {
                     variants={pofolVariants}
                     initial="nomal"
                     whileHover="hover"
-                    onClick={() => handleImageClick(item)}
+                    onClick={() => handleImageClick(item.imgName)}
                   />
                 ))}
               </StyledSlider>
@@ -539,7 +541,7 @@ function Reservation() {
                     variants={pofolVariants}
                     initial="nomal"
                     whileHover="hover"
-                    onClick={() => handleImageClick(item)}
+                    onClick={() => handleImageClick(item.imgName)}
                   />
                 ))}
               </StyledSlider>
@@ -561,8 +563,8 @@ function Reservation() {
                     >
                       {/* 수정 필요 코드 */}
                       {/* <SImg src={item} /> */}
-                      <SImg src={`${BASE_URL}/portfolio/${item.imgName}`} />
-                      <p>{item.imgName}</p>
+                      <SImg src={`${BASE_URL}/portfolio/${item}`} />
+                      {/* <p>{item}</p> */}
                     </SImgBox>
                   ))}
                 </AnimatePresence>

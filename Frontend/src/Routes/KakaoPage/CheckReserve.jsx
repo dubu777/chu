@@ -16,6 +16,10 @@ const Reservwrap = styled.div`
 
   width: 60%;
 `;
+const LogoBox = styled.div`
+  margin-top: 50px;
+  margin-bottom: 100px;
+`;
 const TitleBox = styled.div`
   display: flex;
   margin-top: 40px;
@@ -99,9 +103,10 @@ function CheckReserve() {
   return (
     <Container>
       <Reservwrap>
-        
-        <TitleBox>
+        <LogoBox>
           <KaKaoImg src="/icon/kakaopay.png"/>
+        </LogoBox>
+        <TitleBox>
           <Title>결제 수단 선택</Title>
         </TitleBox>
         <Hr/>
