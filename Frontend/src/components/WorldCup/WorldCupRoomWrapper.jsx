@@ -13,10 +13,6 @@ function WorldCupRoomWrapper() {
     const [id, setId] = useState(null);
     const [rrr, setRrr] = useState(null);
   
-    // 따로 이미 갖고 있는 데이터
-    const username = localStorage.getItem('userName');
-    const usertype = localStorage.getItem('userType');
-  
     const getSession = async (consultingSeq) => {
       try {
         const response = await getSessionId(consultingSeq);
