@@ -7,6 +7,15 @@ import { getEventInfo } from "../../apis/event";
 const Container = styled.div`
     margin: 40px;
 `;
+const SubmitImg = styled.input`
+  margin: 15px 0px;
+`;
+const SText = styled.span`
+  font-size: 10px;
+  font-weight: 600;
+  display: flex;
+  justify-content: start;
+`;
 
 function Event() {
 
@@ -18,18 +27,20 @@ function Event() {
     const [inputImageFile, setInputImageFile] = useState(null);
     const [targetImageFile, setTargetImageFile] = useState(null);
 
+    const formData = new FormData();
+
     const getInfo = async (customerSeq) => {
         try {
             const response = await getEventInfo(customerSeq);
             console.log(response);
-            if (response.data.result == null) {
-                console.log("null 처리 잘 하네~.~");
+            if (response.state == 0) {
+                console.log("0 처리 잘 하네~.~");
             }
             else {
-                setInputImagePath(response.data.result.inputImgPath);
-                setOutputImagePath(response.data.result.targetImgPath);
+                setInputImagePath(response.inputImgPath);
+                setTargetImagePath(response.targetImgPath);
                 if (response.confusionImgPath != null) {
-                    setConfusionImagePath(response.data.result.confusionImgPath);
+                    setConfusionImagePath(response.confusionImgPath);
                 }
             }
         } catch (error) {
@@ -37,23 +48,20 @@ function Event() {
         }
     };
 
-    // 입력 이미지 첨부
-    const handleInputImageChange = (event) => {
-        // const file = event.target.files[0];
-        // setSelectedFile(file);
-        const file = event.target.files[0];
-        // 사진만 넣는 로직으로 바꿔야함
-        setInputImageFile(file);
-    };
 
-            // 입력 이미지 첨부
-    const handleTargetImageChange = (event) => {
-        // const file = event.target.files[0];
-        // setSelectedFile(file);
-        const file = event.target.files[0];
-        // 사진만 넣는 로직으로 바꿔야함
-        setTargetImageFile(file);
-    };
+// 입력 이미지 첨부
+const handleInputImageChange = (event) => {
+    const file = event.target.files[0];
+    formData.append("inputImg", file); // "inputImg" 키 사용
+    setInputImageFile(file);
+  };
+  
+  // 타겟 이미지 첨부
+  const handleTargetImageChange = (event) => {
+    const file = event.target.files[0];
+    formData.append("targetImg", file); // "targetImg" 키 사용
+    setTargetImageFile(file);
+  };
 
 
     useEffect(() => {
@@ -64,6 +72,21 @@ function Event() {
         <Container>
             <p>여기는 추가 기능 이벤트 페이지</p>
             <p>파이팅🔥</p>
+
+            {/* 만약  */}
+
+            <SubmitImg
+                type="file"
+                accept="image/*"
+                onChange={handleInputImageChange}
+            />
+            <SText>- 이마가 보이는 사진을 업로드해 주세요.</SText>
+            <SubmitImg
+                type="file"
+                accept="image/*"
+                onChange={handleTargetImageChange}
+            />
+            <SText>- 체험을 원하는 머리 사진을 업로드해 주세요.</SText>
         </Container>
     );
 }

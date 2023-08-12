@@ -11,8 +11,8 @@ export const getEventInfo = async(customerSeq)=> {
         console.log("try접근")
         // const response = await axios.get(`${BASE_URL}/consulting/${consultingSeq}`)
         const response = await axios.get(`${BASE_URL}/event/${customerSeq}`)
-        console.log(response);
-        return response;
+        console.log(response.data.result);
+        return response.data.result;
     } catch(error) {
         throw new Error('가져오기 실패')
     }
