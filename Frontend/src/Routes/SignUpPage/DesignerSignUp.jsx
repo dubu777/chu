@@ -311,11 +311,12 @@ function DesignerSignUp() {
   const onSubmit = async (dd) => {
     if (isIdAvailable || isEmailAvailable) return;
     
-    if (!selectedFile) {
+    if (!requestFile) {
       setError("profileImage", {
         type: "manual",
         message: "프로필 이미지를 첨부해주세요."
       });
+      swal("Error", "프로필 이미지를 첨부해주세요.", "error");
       return;
     }
     try {
