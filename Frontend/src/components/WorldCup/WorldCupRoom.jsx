@@ -307,6 +307,7 @@ class WorldCupRoom extends Component {
             LastWinImage: 0, // 최종 우승 머리, 스테이지 끝나면 추가됨
             useImages: [0, 1, 2, 3, 4, 5, 6, 7], // 첫번째 스테이지에서 쓰일 이미지들 인덱스 스테이지 끝날때마다 다른 녀석으로 바뀜
             frontUseImages: [], // 다음에 쓸게 널
+            isGameOver: false,
         };
 
         this.joinSession = this.joinSession.bind(this);
@@ -458,28 +459,21 @@ class WorldCupRoom extends Component {
                         let newClickCount = { ...this.state.clickCount };
                         newClickCount[payload.index] = newClickCount[payload.index] + 1;
                         this.setState({ clickCount: newClickCount });
-                        console.log("clickCount: " , this.state.clickCount);
-                        console.log("round: ", this.state.round);
-                        console.log("leftIndex: ", this.state.curLeftIndex);
-                        console.log("rigthIndex: ", this.state.curRightIndex);
-                        console.log("useImagesIndex: ", this.state.useImages);
-                        console.log("frontUseImagesIndex: ", this.state.frontUseImages);
-                        console.log("stageTwoImagesIndex: ", this.state.stageTwoImages);
-                        console.log("stageThreeImagesIndex: ", this.state.stageThreeImages);
 
                         // 일단 한 라운드 종료
                         if (newClickCount[payload.index] > 2) {
                             let newRound = this.state.round + 1;
                             let newCurLeftIndex = this.state.curLeftIndex + 2;
                             let newCurRightIndex = this.state.curRightIndex + 2;
+                            let newStage = this.state.stage;
+                            let newIsGameOver = this.state.isGameOver;
+                            let newLastWinImage = this.state.LastWinImage;
+
                             let nextUseImages = [...this.state.useImages];
                             let nextFrontUseImages = [...this.state.frontUseImages];
-                            let nextLastWinImage = this.state.LastWinImage;
-                            let newStage = this.state.stage;
 
                             if (newStage === 1) {
-                                nextFrontUseImages = this.state.stageTwoImages;
-                                nextUseImages.push(payload.index);
+                                nextFrontUseImages.push(payload.index);
                                 if (newRound === 5) {
                                     newClickCount = [0, 0, 0, 0, 0, 0, 0, 0];
                                     newRound = 1;
@@ -492,8 +486,7 @@ class WorldCupRoom extends Component {
                             }
 
                             else if (newStage === 2) {
-                                nextFrontUseImages = this.state.stageThreeImages;
-                                nextUseImages.push(payload.index);
+                                nextFrontUseImages.push(payload.index);
                                 if (newRound === 3) {
                                     newClickCount = [0, 0, 0, 0, 0, 0, 0, 0];
                                     newRound = 1;
@@ -505,9 +498,8 @@ class WorldCupRoom extends Component {
                                 }
                             }
                             else if (newStage === 3) {
-                                newClickCount = [0, 0, 0, 0, 0, 0, 0, 0];
-                                nextLastWinImage = payload.index;
-                                newStage++;
+                                newIsGameOver = true;
+                                newLastWinImage = payload.index;
                             }
 
 
@@ -517,11 +509,20 @@ class WorldCupRoom extends Component {
                                 curLeftIndex: newCurLeftIndex,
                                 curRightIndex: newCurRightIndex,
                                 useImages: nextUseImages,
-                                LastWinImage: nextLastWinImage,
+                                LastWinImage: newLastWinImage,
                                 stage: newStage,
                                 useImages: nextUseImages,
                                 frontUseImages: nextFrontUseImages,
+                                isGameOver: newIsGameOver,
                             });
+                            console.log("clickCount: " , this.state.clickCount);
+                            console.log("round: ", this.state.round);
+                            console.log("leftIndex: ", this.state.curLeftIndex);
+                            console.log("rigthIndex: ", this.state.curRightIndex);
+                            console.log("useImagesIndex: ", this.state.useImages);
+                            console.log("frontUseImagesIndex: ", this.state.frontUseImages);
+                            console.log("stageTwoImagesIndex: ", this.state.stageTwoImages);
+                            console.log("stageThreeImagesIndex: ", this.state.stageThreeImages);
                         }
                     }
                 });
@@ -694,21 +695,36 @@ class WorldCupRoom extends Component {
                                 </LeftBox>
                             ) : null}
                             <RightBox>
-                                <ImageBox>
-                                    <div>{this.state.clickCount[this.state.curLeftIndex]}</div>
-                                    <ResultImg src={`https://i9b111.q.ssafy.io/api/consulting-images/confusion/${this.state.resultimgs[this.state.useImages[this.state.curLeftIndex]]}`}
-                                        alt="Current"
-                                        onClick={() => this.handleWinClickEvent(this.state.curLeftIndex)}
-                                    />
-                                </ImageBox>
-                                <Hr></Hr>
-                                <ImageBox>
-                                    <div>{this.state.clickCount[this.state.curRightIndex]}</div>
-                                    <ResultImg src={`https://i9b111.q.ssafy.io/api/consulting-images/confusion/${this.state.resultimgs[this.state.useImages[this.state.curRightIndex]]}`}
-                                        alt="Current"
-                                        onClick={() => this.handleWinClickEvent(this.state.curRightIndex)}
-                                    />
-                                </ImageBox>
+
+                                {this.state.isGameOver ? (
+                                    <ImageBox>
+                                        <ResultImg src={`https://i9b111.q.ssafy.io/api/consulting-images/confusion/${this.state.resultimgs[this.state.useImages[this.state.LastWinImage]]}`}
+                                            alt="Current"
+                                            // 클릭하면 박수치게
+                                        />
+                                    </ImageBox>
+                                ) : (
+                                    <>
+                                        <div>Stage : {this.state.stage}</div>
+                                        <div>Round : {this.state.round}</div>
+                                        <ImageBox>
+                                            <div>{this.state.clickCount[this.state.useImages[this.state.curLeftIndex]]}</div>
+                                            <ResultImg src={`https://i9b111.q.ssafy.io/api/consulting-images/confusion/${this.state.resultimgs[this.state.useImages[this.state.curLeftIndex]]}`}
+                                                alt="Current"
+                                                onClick={() => this.handleWinClickEvent(this.state.useImages[this.state.curLeftIndex])}
+                                            />
+                                        </ImageBox>
+                                        <Hr></Hr>
+                                        <ImageBox>
+                                            <div>{this.state.clickCount[this.state.useImages[this.state.curRightIndex]]}</div>
+                                            <ResultImg src={`https://i9b111.q.ssafy.io/api/consulting-images/confusion/${this.state.resultimgs[this.state.useImages[this.state.curRightIndex]]}`}
+                                                alt="Current"
+                                                onClick={() => this.handleWinClickEvent(this.state.useImages[this.state.curRightIndex])}
+                                            />
+                                        </ImageBox>
+                                    </>
+                                )}
+
                                 {/* 이건 상담 코드다 */}
                                 {/* <ImageBox>
                                     {this.state.targetimgs.map((imgName, index) => (
