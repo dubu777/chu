@@ -71,6 +71,8 @@ public class DesignerServiceImpl implements DesignerService{
         newDesigner.setCreatedDate(LocalDateTime.now());
         // 기본 가격 세팅
         newDesigner.setCost(5000);
+        // 기본 평점 세팅
+        newDesigner.setReviewScore(5.0);
         Designer designerReturn = designerRepository.save(designer);
         return designerReturn.getSeq();
     }
