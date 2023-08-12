@@ -29,7 +29,7 @@ public class EventServiceImpl implements EventService {
         ResponseEventDto responseEventDto = new ResponseEventDto();
 
         if(event == null){
-            return null;
+            responseEventDto.setState(0);
         }
         else {
             if (event.getState() == 1) {
