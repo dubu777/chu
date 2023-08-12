@@ -42,10 +42,12 @@ public class EventController {
 
         try{
             // 입력이미지
+            log.info("이미지 왔니?");
             // 서버에 실제 저장, 저장한 이미지 이름 가져오기 왜? 앞으로 디비에 넣을꺼니까
             String inputImgFileName = eventService.getSavedImgFileEventOriginFile(customerSeq, inputImgFile);
             String targetImgFileName = eventService.getSavedImgFileEventTargetFile(customerSeq, targetImgFile);
-
+            log.info("inputImgFile: ", inputImgFile);
+            log.info("targetImgFile: ", targetImgFile);
             eventService.updateImgNamesAndState(customerSeq, inputImgFileName, targetImgFileName, 1);
 
             // GPU 서버로 전달 로직
