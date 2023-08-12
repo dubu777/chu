@@ -8,5 +8,5 @@ import java.util.Map;
 @Data
 public class RequestUpdatePossibleRsvTime {
 
-    List<RsvDateAndTimes> dateAndTimes;
+    Map<String, List<String>> dateAndTimes;
 }

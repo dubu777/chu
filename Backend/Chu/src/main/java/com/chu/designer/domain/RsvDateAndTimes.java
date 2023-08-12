@@ -7,7 +7,5 @@ import java.util.Map;
 
 @Data
 public class RsvDateAndTimes {
-    String date;
-    List<String> times;
-
+    Map<String, List<String>> map;
 }

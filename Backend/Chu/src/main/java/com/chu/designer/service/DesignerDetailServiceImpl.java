@@ -322,33 +322,61 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
     public void updatePossibleRsvTime(int designerSeq, RequestUpdatePossibleRsvTime requestUpdatePossibleRsvTime) {
 
         try{
-            List<RsvDateAndTimes> list = requestUpdatePossibleRsvTime.getDateAndTimes();
+            Map<String, List<String>> map = requestUpdatePossibleRsvTime.getDateAndTimes();
 
-            for(RsvDateAndTimes dat : list){
+            if(map != null && !map.isEmpty()){
+                for(Map.Entry<String, List<String>> entrySet : map.entrySet()){
 
-                String date = dat.getDate();
+                    String date = entrySet.getKey();;
 
-                // reservation_available_slot 테이블에서 기존 날짜 삭제하기
-                reservationAvailableSlotRepository.deleteAllByDesignerSeqAndDate(designerSeq, date);
+                    // reservation_available_slot 테이블에서 기존 날짜 삭제하기
+                    reservationAvailableSlotRepository.deleteAllByDesignerSeqAndDate(designerSeq, date);
 
-                // 새로운 날짜 추가하기
-                List<String> times = dat.getTimes();
+                    // 새로운 날짜 추가하기
+                    List<String> times = entrySet.getValue();
 
-                for(String time : times){
-                    ReservationAvailableSlot dto = new ReservationAvailableSlot();
+                    for(String time : times){
+                        ReservationAvailableSlot dto = new ReservationAvailableSlot();
 
-                    dto.setDate(date);
-                    dto.setTime(time);
-                    dto.setState('P');
-                    dto.setCreatedDate(LocalDateTime.now());
+                        dto.setDate(date);
+                        dto.setTime(time);
+                        dto.setState('P');
+                        dto.setCreatedDate(LocalDateTime.now());
 
-                    Designer d = designerRepository.getDesignerBySeq(designerSeq);
-                    dto.setDesigner(d);
+                        Designer d = designerRepository.getDesignerBySeq(designerSeq);
+                        dto.setDesigner(d);
 
-                    reservationAvailableSlotRepository.save(dto);
+                        reservationAvailableSlotRepository.save(dto);
+                    }
                 }
-
             }
+
+//            for(RsvDateAndTimes dat : list){
+//
+//                String date = dat.getDate();
+//
+//
+//                // reservation_available_slot 테이블에서 기존 날짜 삭제하기
+//                reservationAvailableSlotRepository.deleteAllByDesignerSeqAndDate(designerSeq, date);
+//
+//                // 새로운 날짜 추가하기
+//                List<String> times = dat.getTimes();
+//
+//                for(String time : times){
+//                    ReservationAvailableSlot dto = new ReservationAvailableSlot();
+//
+//                    dto.setDate(date);
+//                    dto.setTime(time);
+//                    dto.setState('P');
+//                    dto.setCreatedDate(LocalDateTime.now());
+//
+//                    Designer d = designerRepository.getDesignerBySeq(designerSeq);
+//                    dto.setDesigner(d);
+//
+//                    reservationAvailableSlotRepository.save(dto);
+//                }
+//
+//            }
 
         } catch(Exception e){
             e.printStackTrace();
