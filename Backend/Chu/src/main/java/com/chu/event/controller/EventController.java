@@ -37,16 +37,14 @@ public class EventController {
     }
 
     @PostMapping("/{customer_seq}")
-    public ResponseEntity<HttpResponseDto> postEvent(@PathVariable("customer_seq") int customerSeq, @RequestPart("img") MultipartFile[] files){
+    public ResponseEntity<HttpResponseDto> postEvent(@PathVariable("customer_seq") int customerSeq, @RequestPart("inputImg") MultipartFile inputImgFile,
+                                                     @RequestPart("targetImg") MultipartFile targetImgFile){
 
         try{
-            MultipartFile inputImgFile = files[0];
-            MultipartFile targetImgFIle = files[1];
-
             // 입력이미지
             // 서버에 실제 저장, 저장한 이미지 이름 가져오기 왜? 앞으로 디비에 넣을꺼니까
             String inputImgFileName = eventService.getSavedImgFileEventOriginFile(customerSeq, inputImgFile);
-            String targetImgFileName = eventService.getSavedImgFileEventTargetFile(customerSeq, targetImgFIle);
+            String targetImgFileName = eventService.getSavedImgFileEventTargetFile(customerSeq, targetImgFile);
 
             eventService.updateImgNamesAndState(customerSeq, inputImgFileName, targetImgFileName, 1);
 
