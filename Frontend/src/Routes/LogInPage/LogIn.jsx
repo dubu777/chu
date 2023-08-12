@@ -8,8 +8,7 @@ import swal from "sweetalert";
 import { useForm } from "react-hook-form";
 
 const Container = styled.div`
-  background: url("./img/login.jpg");
-  filter: invert(5%);
+  background-image: url("./img/login.jpg");
   background-size: cover;
   width: 100vw;
   height: 100vh;

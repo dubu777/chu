@@ -116,3 +116,15 @@ export const readCustomerNotification = async (alertSeq) => {
     throw new Error("고객 알림 조회 실패", error)
   }
 }
+
+// 고객 상담 만족도 조사 모달
+export const sendSurvey = async (requestData) => {
+  try {
+    const response = await axios.post(`${BASE_URL}/consulting/review`, requestData)
+    console.log(requestData,"만족도 조사 리퀘스트 데이터");
+    console.log(response.data.status);
+    return response.data.status;
+  } catch (error) {
+    throw new Error ("만족도 조사 실패", error)
+  }
+}

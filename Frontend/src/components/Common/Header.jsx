@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import { motion } from "framer-motion";
+import { motion, useAnimation, useScroll } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilCallback } from "recoil";
 import { accessTokenState, loginState } from "../../recoil";
@@ -9,7 +9,7 @@ import {
   readCustomerNotification,
   readDesignerNotification,
 } from "../../apis";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "react-query";
 import { Dropdown, Badge } from "react-bootstrap";
 
@@ -17,15 +17,14 @@ const Nav = styled(motion.nav)`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* position: fixed; */
+  position: fixed;
   width: 100%;
   height: 45px;
   top: 0;
   font-size: 18px;
   padding: 20px 60px;
   color: white;
-  background-color: rgb(100, 93, 81);
-  font-family: "Sandol-B";
+  font-family: sans-serif;
 `;
 
 const Col = styled.div`
@@ -59,6 +58,14 @@ const Item = styled(motion.li)`
     color: ${(props) => props.theme.white.lighter};
   }
 `;
+const TestDiv = styled.div`
+
+`;
+const TestUl = styled.ul`
+`;
+
+const TestLi = styled.li`
+`;
 
 const logoVariants = {
   normal: {
@@ -72,24 +79,25 @@ const logoVariants = {
     },
   },
 };
+const navVariants = {
+  top: {
+    backgroundColor: "rgba(0,0,0,0)",
+  },
+  scroll: {
+    backgroundColor: "rgba(100, 93, 81, 1)"
+  },
+};
 
 function Header() {
   const userSeq = localStorage.getItem("userSeq") || 0;
   const userType = localStorage.getItem("userType") || "guest";
   const navigate = useNavigate();
+  const navAnimation = useAnimation();
   const [isLogIn, setIsLogIn] = useRecoilState(loginState);
   const [token, setToken] = useRecoilState(accessTokenState);
   const [show, setShow] = useState(false);
-  //통신되면 해보기(알림 조회)
-  // const {
-  //   data: notifications = [],
-  //   isLoading,
-  //   isError,
-  // } = useQuery(["notificationsData", userSeq], () =>
-  //   getDesignerNotification(userSeq)
-  // );
+  const {scrollY} = useScroll();
 
-  // 유저 타입에 따른 마이페이지 router
   const handleNavigation = () => {
     if (localStorage.getItem("userType") === "customer") {
       const customerSeq = userSeq;
@@ -109,6 +117,7 @@ function Header() {
     navigate("/");
   });
 
+  // 알림 조회
   const { data: notifications = [], refetch } = useQuery(
     ["notifications", userType, userSeq],
     async () => {
@@ -120,6 +129,8 @@ function Header() {
       retry: false,
     }
   );
+
+  // 알림 읽기
   const handleReadNotification = async (alertSeq) => {
     try {
       if (userType === "designer") await readDesignerNotification(alertSeq);
@@ -129,9 +140,23 @@ function Header() {
       console.error("Error reading notification", error);
     }
   };
-  console.log(notifications, "알람 제발 !!! 됐다!!");
+  useEffect(() => {
+    scrollY.onChange(() => {
+      if (scrollY.get() > 80){
+      navAnimation.start("scroll");
+    } else {
+      navAnimation.start("top");
+    }
+    });
+  },[scrollY, navAnimation])
+
+  console.log(notifications, "알림");
   return (
-    <Nav>
+    <Nav
+      variants={navVariants}
+      animate={navAnimation} 
+      initial={"top"}
+    >
       <Col>
         <Logo
           onClick={() => navigate("/")}
@@ -175,7 +200,7 @@ function Header() {
               My Page
             </Item>
 
-            <Dropdown show={show} onToggle={() => setShow(!show)}>
+            {/* <Dropdown show={show} onToggle={() => setShow(!show)}>
               <Dropdown.Toggle variant="success">
                 알림
                 {notifications.length > 0 && (
@@ -199,8 +224,24 @@ function Header() {
                   </Dropdown.Item>
                 ))}
               </Dropdown.Menu>
-            </Dropdown>
+            </Dropdown> */}
 
+            <TestDiv>
+              <TestUl>
+                {notifications.map((notification) => (
+                  <TestLi key={notification.id}>
+                    <p>{notification.message}</p>
+                    <span
+                      onClick={() =>
+                        handleReadNotification(notification.alertSeq)
+                      }
+                    >
+                      읽기
+                    </span>
+                  </TestLi>
+                ))}
+              </TestUl>
+            </TestDiv>
           </>
         ) : (
           <>

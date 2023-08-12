@@ -63,6 +63,7 @@ table {
   box-sizing: border-box;
 }
 body {
+  margin: 0;
   font-weight: 300;
   font-family: 'Source Sans Pro', sans-serif;
   color:black;

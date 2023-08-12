@@ -108,13 +108,12 @@ const EditBox = styled.div`
   margin-top: 5px;
   display: flex;
 `;
-const TextArea = styled.textarea`
+const TextArea = styled.span`
   border: none;
   width: 400px;
   height: 40px;
   border-radius: 0.3rem;
   margin-bottom: 7px;
-  background-color: white;
   resize: none;
 `;
 const EditBtn = styled.button`
@@ -211,13 +210,7 @@ function DesignerMyPage() {
   //     }
   //   }
   // };
-  const handleEditButtonClick = () => {
-    setIsEditing(true);
-  };
-  const handleSaveButtonClick = async () => {
-    mutation.mutate({ designerSeq, introduction });
-    setIsEditing(false);
-  };
+
   // 누른 버튼에 따라
   const handleBtnClick = (btnType) => {
     setActiveBtn(btnType);
@@ -253,23 +246,11 @@ function DesignerMyPage() {
           <Text>{data.cost}</Text>
           <Text>{data.email}</Text>
           <introductionWrapper>
-            {isEditing ? (
               <EditBox>
-                <TextArea
-                  contentEditable
-                  placeholder="소개글을 작성해주세요"
-                  onBlur={(e) => setIntroduction(e.target.value)}
-                >
-                  {introduction || data.introduction}
+                <TextArea>
+                  {data.introduction || "소개글이 없습니다."}
                 </TextArea>
-                <EditBtn onClick={handleSaveButtonClick}>완료</EditBtn>
               </EditBox>
-            ) : (
-              <EditBox>
-                <Text>{data.introduction || "소개글이 없습니다."}</Text>
-                <EditBtn onClick={handleEditButtonClick}>수정</EditBtn>
-              </EditBox>
-            )}
           </introductionWrapper>
           {data.hairStyleTag.map((word, index) => (
             <HashTag key={index}> #{word} </HashTag>

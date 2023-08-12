@@ -3,35 +3,37 @@ import css from "../font/font.css";
 import MainView from "../components/HomeComponent/MainView";
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
-import { loginState, loginResultState } from ".././recoil/auth";
-import { useRecoilState } from 'recoil';
-import { accessTokenState } from '.././recoil';
 import { useQuery } from "react-query";
 import { BASE_URL } from '../apis/rootUrl';
 import { fetchMain, customerMain, designerMain } from "../apis";
+import { useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
 `;
-const Main = styled.img`
+// src=""
+const Main = styled.div`
+  background-image: url('/img/banner-lmg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   width: 100vw;
-  height: 120vh;
+  height: 100vh;
 `;
 const MainWrapper = styled.div`
   margin-top: 40px;
   margin-left: 170px;
   margin-right: 170px;
 `;
-const ImgText = styled.h2`
-  font-family: "Amiri";
+const ImgText = styled.p`
+  font-family: sans-serif;
+  top: 400px;
+  left: 100px;
   font-size: 40px;
+  font-weight: 700;
   color: white;
   position: absolute;
-  top: 50%;
-  left: 40%;
-  overflow: hidden;
-  animation: fadein 7s ease-in-out;
 `;
 
 const DesignerBox = styled.div`
@@ -107,7 +109,7 @@ const Name = styled.p`
 `;
 
 function Home() {
-  
+  const navigate = useNavigate();
   const userSeq = localStorage.getItem('userSeq') || 0
   const fetchLogInData = async (userSeq) => {
     const userType = localStorage.getItem('userType') || 'guest';
@@ -143,8 +145,9 @@ function Home() {
 
   return (
     <Wrapper>
-      <Main src="/img/banner-lmg.png"></Main>
-      <ImgText>Change Hair & U</ImgText>
+      <Main>
+        <ImgText>변화의 즐거움 <br/>Change hair & you</ImgText>
+      </Main>
       <MainWrapper>
       <Title>이주의 인기! Weekly Best Disigner ✨</Title>
       <DesignerBox>
@@ -154,7 +157,9 @@ function Home() {
           key={item.designerIdx}
           variants={pofolVariants}
 					initial="nomal"
-					whileHover="hover">
+					whileHover="hover"
+          onClick={() => navigate(`/designerdetail/${item.designerSeq}`)}
+          >
           <ImgBox>
             <ProfileImg src={`${BASE_URL}/designer-profile/${item.img}`}></ProfileImg>
           </ImgBox>

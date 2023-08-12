@@ -59,7 +59,7 @@ function App() {
         <Route path="listview" element={<ListView/>} />
         <Route path="mapview" element={<MapView/>} />
         <Route path="editdesignerinfo/:designerSeq" element={<EditDesignerInfo/>} />
-        <Route path="consultresultpage" element={<ConsultResultPage/>} />
+        <Route path="consultresultpage/:consultingseq" element={<ConsultResultPage/>} />
         <Route path="reservation/:designerSeq" element={<Reservation/>} />
         <Route path="checkreserve"  element={<CheckReserve/>} />
         <Route path="paysuccess"  element={<PaySuccess/>} />

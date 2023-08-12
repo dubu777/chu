@@ -121,7 +121,9 @@ function ScheduleListImg(){
     <>
       {data &&
         data.responseFutureConsultingDtoList &&
-        data.responseFutureConsultingDtoList.map((data) => (
+        data.responseFutureConsultingDtoList
+        .filter(item => item.cancelDate === null)
+        .map((data) => (
           <Container>
             <Wrap>
               <Wrapper>
