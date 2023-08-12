@@ -106,7 +106,7 @@ public class ConsultingController {
     }
 
     // 상담 후기 등록
-    @PatchMapping("/review")
+    @PostMapping("/review")
     public ResponseEntity<HttpResponseDto> updateConsultingReview(@RequestBody RequestConsultingReviewDto requestConsultingReviewDto){
 
         try{
@@ -120,7 +120,7 @@ public class ConsultingController {
     }
 
     // 상담 결과 등록
-    @PatchMapping("/result")
+    @PostMapping("/result")
     public ResponseEntity<HttpResponseDto> updateConsultingResult(@RequestBody RequestConsultingResultDto requestConsultingResultDto){
 
         try{
