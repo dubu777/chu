@@ -28,21 +28,21 @@ public class EventServiceImpl implements EventService {
         Event event = eventRepository.findByCustomerSeq(customerSeq);
         ResponseEventDto responseEventDto = new ResponseEventDto();
 
-        if(event.getState() == 0){
-            responseEventDto.setState(event.getState());
+        if(event == null){
+            return null;
         }
-        else if(event.getState() == 1){
-            responseEventDto.setState(event.getState());
-            responseEventDto.setInputImgPath(event.getInputImgPath());
-            responseEventDto.setTargetImgPath(event.getTargetImgPath());
+        else {
+            if (event.getState() == 1) {
+                responseEventDto.setState(event.getState());
+                responseEventDto.setInputImgPath(event.getInputImgPath());
+                responseEventDto.setTargetImgPath(event.getTargetImgPath());
+            } else if (event.getState() == 2) {
+                responseEventDto.setInputImgPath(event.getInputImgPath());
+                responseEventDto.setTargetImgPath(event.getTargetImgPath());
+                responseEventDto.setConfusionImgPath(event.getConfusionImgPath());
+                responseEventDto.setState(event.getState());
+            }
         }
-        else if(event.getState() == 2){
-            responseEventDto.setInputImgPath(event.getInputImgPath());
-            responseEventDto.setTargetImgPath(event.getTargetImgPath());
-            responseEventDto.setConfusionImgPath(event.getConfusionImgPath());
-            responseEventDto.setState(event.getState());
-        }
-
         return responseEventDto;
     }
 
