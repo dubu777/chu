@@ -5,7 +5,7 @@ const BASE_URL = 'https://i9b111.q.ssafy.io/api';
 
 
 // session ID get요청
-export const getEventInfo = async(customerSeq)=> {
+export const getEventInfo = async (customerSeq) => {
 
     try {
         console.log("try접근")
@@ -13,7 +13,28 @@ export const getEventInfo = async(customerSeq)=> {
         const response = await axios.get(`${BASE_URL}/event/${customerSeq}`)
         console.log(response.data.result);
         return response.data.result;
-    } catch(error) {
+    } catch (error) {
         throw new Error('가져오기 실패')
     }
 };
+
+export const postEventInfo = async (customerSeq, formData) => {
+    formData.forEach((value, key) => {
+        console.log(key, value);
+      });
+    try {
+        const response = await axios.post(
+            `${BASE_URL}/event/${customerSeq}`,
+            formData,
+            {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            }
+        );
+        console.log("성공");
+        return response.data.result;
+    } catch (error) {
+        throw new Error("이벤트 등록 실패");
+    }
+}
