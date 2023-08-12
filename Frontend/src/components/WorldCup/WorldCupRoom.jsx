@@ -698,7 +698,7 @@ class WorldCupRoom extends Component {
 
                                 {this.state.isGameOver ? (
                                     <ImageBox>
-                                        <ResultImg src={`https://i9b111.q.ssafy.io/api/consulting-images/confusion/${this.state.resultimgs[this.state.useImages[this.state.LastWinImage]]}`}
+                                        <ResultImg src={`https://i9b111.q.ssafy.io/api/consulting-images/confusion/${this.state.resultimgs[this.state.LastWinImage]}`}
                                             alt="Current"
                                             // 클릭하면 박수치게
                                         />
