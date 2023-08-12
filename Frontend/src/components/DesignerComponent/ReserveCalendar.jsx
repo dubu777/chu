@@ -5,7 +5,8 @@ import { useState, useEffect } from "react";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css'; // css import
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
-
+import {postReserveCalendar} from "../../apis/designer"
+import { useParams } from "react-router-dom";
 const Container = styled.div`
     /* text-align: center; */
 `;
@@ -133,6 +134,10 @@ function ReserveCalendar(){
   const [selectedTime, setSelectedTime] = useState(null);
   const selectedDateString = formatDateString(selectedDate);
   const formattedSelectedDate = formatDateString(selectedDate);
+  const [dateAndTimes, setDateAndTimes] = useState({}); // 변경된 부분
+  const[finalSelect, setFinalSelect] = useState({});
+  const {designerSeq} = useParams();
+  console.log('ds',designerSeq)
 
   const generateTimeButtons = () => {
     const timeButtons = [];
@@ -163,6 +168,46 @@ function ReserveCalendar(){
     return timeButtons;
   };
 
+  // 캘린더의 시간 버튼 클릭 이벤트
+  // const handleTimeButtonClick = (time) => {
+  //   setDateAndTimes((prevDateAndTimes) => {
+  //     const newDateAndTimes = { ...prevDateAndTimes };
+  //     if (!newDateAndTimes[selectedDateString]) {
+  //       newDateAndTimes[selectedDateString] = {
+  //         date: selectedDateString,
+  //         times: []
+  //       };
+  //     }
+
+  //     const selectedTimeIndex = newDateAndTimes[selectedDateString].times.indexOf(time);
+  //     if (selectedTimeIndex !== -1) {
+  //       newDateAndTimes[selectedDateString].times.splice(selectedTimeIndex, 1);
+  //     } else {
+  //       newDateAndTimes[selectedDateString].times.push(time);
+  //     }
+
+  //     return newDateAndTimes;
+  //   });
+  // };
+
+  // const handleTimeButtonClick = (time) => {
+  //   setSelectedTimes((prevSelectedTimes) => {
+  //     const newSelectedTimes = { ...prevSelectedTimes };
+  //     if (!newSelectedTimes[selectedDateString]) {
+  //       newSelectedTimes[selectedDateString] = [];
+  //     }
+  //     if (newSelectedTimes[selectedDateString].includes(time)) {
+  //       newSelectedTimes[selectedDateString] = newSelectedTimes[selectedDateString].filter((t) => t !== time);
+  //     } else {
+  //       newSelectedTimes[selectedDateString] = [...newSelectedTimes[selectedDateString], time];
+  //     }
+  //     return newSelectedTimes;
+  //   });
+  //   setFinalSelcet(selectedTimes)
+  // };
+
+  // 
+  
   const handleTimeButtonClick = (time) => {
     setSelectedTimes((prevSelectedTimes) => {
       const newSelectedTimes = { ...prevSelectedTimes };
@@ -178,10 +223,25 @@ function ReserveCalendar(){
     });
   };
 
+  const handleApplyButtonClick = async() => {
+    const updatedDateAndTimes = { ...dateAndTimes };
+    updatedDateAndTimes[selectedDateString] = selectedTimes[selectedDateString] || [];
+    setDateAndTimes(updatedDateAndTimes);
 
-  const sendSelectedTimesToBackend = () => {
-    console.log("전송할 시간들:", selectedTimes);
-  };
+    if(updatedDateAndTimes) {
+    try {
+      console.log('날짜 시간 결과 보여줜',dateAndTimes)
+      const response = await postReserveCalendar(designerSeq, dateAndTimes);
+      console.log(response)
+    } catch (error) {
+      console.error("캘린더 통신 실패", error)
+      // swal("Error", "시간 설정에 실패했습니다.", "error");
+    }
+  }
+};
+// console.log('날짜 시간 결과 보여줜111',dateAndTimes)
+
+  // postReserveCalendar
 
     return (
       <Container>
@@ -211,7 +271,7 @@ function ReserveCalendar(){
                     {/* 시간 선택 박스 */}
                     {generateTimeButtons()}
                     </BtnBox>
-                    <OkBtn onClick={() => console.log(selectedTimes)}>적용</OkBtn> {/* 확인 버튼 추가 */}
+                    <OkBtn onClick={handleApplyButtonClick}>적용</OkBtn> {/* 확인 버튼 추가 */}
                 </TimeBox>
             </Wrapper>
         </Container>
