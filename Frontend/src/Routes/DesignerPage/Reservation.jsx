@@ -465,7 +465,6 @@ function Reservation() {
     console.log('번호번호',imgSeqArray)
   };
   // console.log('원하는 사진명:', selectedImgs)
-  
         
         if (imgLoading) {
           return <div>Loading...{data}</div>;
