@@ -155,6 +155,9 @@ public class ConsultingController {
 //            response = REST_TEMPLATE.postForObject(url, requestEntity, JsonNode.class);
 //            response = REST_TEMPLATE.exchange(url, HttpMethod.POST, requestEntity, String.class);
             response = REST_TEMPLATE.postForEntity(url, requestEntity, byte[].class);
+
+            log.info("응답 왔음");
+
             // 압축파일의 바이너리 데이터
             byte[] imageBytes = response.getBody();
 
