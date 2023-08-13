@@ -109,11 +109,13 @@ export const attachDesignerImage = async (seq, formData) => {
 };
 
 // 디자이너 상담 캘린더
-export const postReserveCalendar = async (designerSeq, dateAndTimes) => {
+export const postReserveCalendar = async (designerSeq, selectedTimes) => {
   try { 
     console.log("try문 진입");
-    console.log("try 시간 보여?", dateAndTimes)
-    const response = await axios.post(`${BASE_URL}/designer/detail/time/${designerSeq}`, dateAndTimes);
+    console.log("try 시간 보여?", selectedTimes)
+    const response = await axios.post(`${BASE_URL}/designer/detail/time/${designerSeq}`, {
+     "dateAndTimes" : selectedTimes,
+    });
     console.log('캘린더 정보',response.data)
     return response.data.result;
 
@@ -121,16 +123,7 @@ export const postReserveCalendar = async (designerSeq, dateAndTimes) => {
     throw new Error("상담 캘린더 보내기 실패");
   }
 };
-// export const signUpRequest = async (customerData) => {
-//   console.log(customerData);
-//   try {
-//     const response = await axios.post(`${BASE_URL}/customer/sign-up`, customerData);
-//     console.log(response.data);
-//     return response.data;
-//   } catch (error) {
-//     throw error;
-//   }
-// };
+
 
 
 // 디자이너 모든 예약 내역 조회(마이페이지 탭2)
