@@ -13,6 +13,14 @@ public interface EventService {
 
     String getSavedImgFileEventTargetFile(int customerSeq, MultipartFile file) throws IOException;
 
-    void updateImgNamesAndState(int customerSeq, String inputImgName, String targetImgName, int state);
+    String getSavedImgFileEventConfusionFile(int customerSeq, MultipartFile file) throws IOException;
+
+    void updateState(int customerSeq, int state);
+
+    void updateInputImageNameAndState(int customerSeq, String inputImgName, int state);
+
+    void updateTargetImageNameAndState(int customerSeq, String targetImgName, int state);
+
+    void updateConfusionImageNameAndState(int customerSeq, String confusionImgName, int state);
 
 }

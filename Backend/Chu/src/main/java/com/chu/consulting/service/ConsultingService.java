@@ -19,6 +19,8 @@ public interface ConsultingService {
 
     void postConsultingOriginImage(int consultingSeq, String uploadFileName);
 
+    List<Integer> getTargetNumbers(int consultingSeq);
+
     // 상담 취소하기
     void cancelConsulting(int consultingSeq);
 
@@ -59,12 +61,4 @@ public interface ConsultingService {
 //    // 상담 결과 수정
 //    boolean updateConsultingResult(RequestConsultingUpdateDto requestConsultingUpdateDto);
 
-
-
-
-
-
- 
-
-    
 }
