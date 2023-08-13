@@ -164,6 +164,47 @@ const CloseButton = styled.button`
   cursor: pointer;
   margin-top: 10px;
 `;
+const Loading = styled.div`
+  padding-top: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+const P = styled.p`
+  font-size: 23px;
+`;
+const Loading_spinner_box = styled.div`
+  margin-left: 3px;
+  width: 11px;
+  height: 11px;
+  border: 1.5px solid $gray-4;
+  border-top: 1.5px solid $gray-10;
+  border-radius: 50%;
+
+  -webkit-animation: spin 1s linear infinite;
+  animation: spin 1s linear infinite;
+  @-webkit-keyframes spin {
+                0% {
+                  -webkit-transform: rotate(0deg);
+                }
+                100% {
+                  -webkit-transform: rotate(360deg);
+                }
+              }
+
+              @keyframes spin {
+                0% {
+                  transform: rotate(0deg);
+                }
+                100% {
+                  transform: rotate(360deg);
+                }
+              }
+`;
+
+
+
+
 function AllReserveList() {
   const navigate = useNavigate();
   const { designerSeq } = useParams();
@@ -223,6 +264,8 @@ function AllReserveList() {
 
   return (
     <Container>
+      { data ? (
+      <>
       <Wrap>
         <TitleBox>
           <Box></Box>
@@ -287,6 +330,16 @@ function AllReserveList() {
           ))}
         </Wrapper>
       </Wrap>
+      </>
+        ) : (
+          <Loading>
+            <Loading_spinner_box>
+              <loading_spinner/>
+            </Loading_spinner_box>
+            <P>...loading</P>
+          </Loading>
+        
+  )}
     </Container>
 
   );

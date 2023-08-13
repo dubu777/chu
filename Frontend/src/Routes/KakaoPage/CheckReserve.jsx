@@ -98,6 +98,8 @@ function CheckReserve() {
     if (!agreeFirst || !agreeSecond) {
       swal("약관 동의 필요", "모든 약관에 동의해야 합니다.", "warning");
       return;
+    } else {
+      handleKakaoPayReady();
     }
   };
   return (

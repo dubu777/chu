@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css"; // css import
 // import Calendar from "../../components/ReservationComponent/Calendar";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery, useMutation } from "react-query";
 import { useRecoilState } from 'recoil';
 import { useNavigate, useParams } from "react-router";
@@ -296,21 +296,34 @@ function Reservation() {
   const { designerSeq } = useParams();
   const [requestFile, setRequestFile] = useState(null);
   const [imgSeqArray, setImgSeqArray] = useState(null)
-  const combinedData = {
-    customerSeq: customerSeq,
-    designerSeq: designerSeq,
-    date: formattedSelectedDate,
-    time: selectedTime,
-    consultingMemo: note,
-    portfolios: imgSeqArray,
-  };
-
+  // const combinedData = {
+  //   customerSeq: customerSeq,
+  //   designerSeq: designerSeq,
+  //   date: formattedSelectedDate,
+  //   time: selectedTime,
+  //   consultingMemo: note,
+  //   portfolios: selectedImgSeqs,
+  // };
+  
   // const formData = new FormData();
   // formData.append('img', selectedFile)
 
   // 넘기고 싶은 데이터 모으기
   const handleButtonClick = async() => {
-
+    const selectedImgSeqs = selectedImgs.map((item) => {
+      const selectedImage = imgData.designerPortfolio.find((image) => image.imgName === item);
+      return selectedImage ? selectedImage.imgSeq : null;
+    });
+  
+    console.log("선택한 이미지들의 imgSeq 배열:", selectedImgSeqs);
+    const combinedData = {
+      customerSeq: customerSeq,
+      designerSeq: designerSeq,
+      date: formattedSelectedDate,
+      time: selectedTime,
+      consultingMemo: note,
+      portfolios: selectedImgSeqs,
+    };
     console.log('보내기 전 info', combinedData)
     // 예약정보 보내기
     try {
@@ -341,24 +354,6 @@ function Reservation() {
       
     } catch(error){
       console.log(error)
-    }
-  };
-
-  // 상담 이미지 첨부
-  const handleFileChange = (event) => {
-    // const file = event.target.files[0];
-    // setSelectedFile(file);
-    const file = event.target.files[0];
-    setRequestFile(file);
-    if (file && file.type.includes("image")) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setSelectedFile(reader.result);
-      };
-      reader.readAsDataURL(file);
-      // setRequestFile(file);
-    } else {
-      swal("⚠️ Image 파일 형식을 선택해주세요 :)");
     }
   };
 
@@ -457,7 +452,7 @@ function Reservation() {
     setNote(event.target.value);
   };
 
-  const handleImageClick = (item) => {
+  const handleImageClick = (item) => { // imgName이 선택된 배열에 포함되어있으면 
     if (selectedImgs.includes(item)) {
       // 이미 선택된 이미지를 다시 클릭하면 선택 해제
       setSelectedImgs((prev) => prev.filter((imgName) => imgName !== item));
@@ -465,15 +460,23 @@ function Reservation() {
       // 새로운 이미지를 선택
       setSelectedImgs((prev) => [...prev, item]);
     }
-    console.log('선택한 사진', selectedImgs)
-    const SeqArray = [...imgData.designerPortfolio, ...imgData.randomPortfolio]
-    .filter(image => selectedImgs.includes(image.imgName))
-    .map(image => image.imgSeq);
-    
-    console.log('번호는?', SeqArray)
-    setImgSeqArray(SeqArray)
-    console.log('선택한 사진 번호 나와?', imgSeqArray); 
-    console.log('번호번호',imgSeqArray)
+  };
+
+
+  // 상담 이미지 첨부
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setRequestFile(file);
+    if (file && file.type.includes("image")) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setSelectedFile(reader.result);
+      };
+      reader.readAsDataURL(file);
+      // setRequestFile(file);
+    } else {
+      swal("⚠️ Image 파일 형식을 선택해주세요 :)");
+    }
   };
   // console.log('원하는 사진명:', selectedImgs)
         
@@ -500,7 +503,7 @@ function Reservation() {
                       onChange={date => {
                         setSelectedDate(date);
                         const selectedDateString = formatDateString(date);
-                        ClickCalendarDate(designerSeq, selectedDateString)
+                        ClickCalendarDate(designerSeq, selectedDateString);
                       }} 
                       value={selectedDate} 
                       />
