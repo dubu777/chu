@@ -18,19 +18,16 @@ import org.springframework.http.client.ClientHttpRequestExecution;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.client.RestTemplate;
 
-import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.ZipEntry;
@@ -46,7 +43,6 @@ public class ConsultingController {
 
     private final ConsultingService consultingService;
     private final DesignerSearchService designerSearchService;
-
     private final DesignerDetailService designerDetailService;
 
     @GetMapping("/{consulting_seq}")
@@ -68,17 +64,35 @@ public class ConsultingController {
     @PostMapping("")
     public ResponseEntity<HttpResponseDto> postConsulting(@RequestBody RequestConsultingDto requestConsultingDto) {
 
+        int consultingSeq = -1;
         try {
-            // 이미지 처리
-
-            consultingService.postConsulting(requestConsultingDto);
-        } catch (Exception e) {
+            consultingSeq = consultingService.postConsulting(requestConsultingDto);
+        } catch(Exception e){
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), null));
+        return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), consultingSeq));
     }
+
+    @PostMapping("/img/{consulting-seq}")
+    public ResponseEntity<HttpResponseDto> postConsultingOriginImage(@PathVariable("consulting-seq") int consultingSeq, @RequestPart("img") MultipartFile file) throws IOException {
+
+        String fileName = "";
+        try {
+            // 여기서 디비에 폴더경로 가져오기, 실제 파일 서버 저장 함수
+            fileName = consultingService.getSavedImgFilePathConsultingOriginFile(consultingSeq, file);
+            consultingService.postConsultingOriginImage(consultingSeq, fileName);
+        } catch (Exception e) {
+            e.printStackTrace();
+            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+            return ResponseEntity.ok(httpResponseDto);
+        }
+
+        HttpResponseDto httpResponseDto = new HttpResponseDto(200, fileName);
+        return ResponseEntity.ok(httpResponseDto);
+    }
+
 
     // 상담 취소하기
     @PutMapping("/cancel/{consultingSeq}")
@@ -108,8 +122,8 @@ public class ConsultingController {
     }
 
     // 상담 후기 등록
-    @PatchMapping("/review")
-    public ResponseEntity<HttpResponseDto> updateConsultingReview(@RequestBody RequestConsultingReviewDto requestConsultingReviewDto) {
+    @PostMapping("/review")
+    public ResponseEntity<HttpResponseDto> updateConsultingReview(@RequestBody RequestConsultingReviewDto requestConsultingReviewDto){
 
         try {
             consultingService.updateConsultingReview(requestConsultingReviewDto);
@@ -122,8 +136,8 @@ public class ConsultingController {
     }
 
     // 상담 결과 등록
-    @PatchMapping("/result")
-    public ResponseEntity<HttpResponseDto> updateConsultingResult(@RequestBody RequestConsultingResultDto requestConsultingResultDto) {
+    @PostMapping("/result")
+    public ResponseEntity<HttpResponseDto> updateConsultingResult(@RequestBody RequestConsultingResultDto requestConsultingResultDto){
 
         try {
             consultingService.updateConsultingResult(requestConsultingResultDto);
@@ -137,7 +151,7 @@ public class ConsultingController {
 
     // 상담 결과 조회
     @GetMapping("/result/{consulting-seq}")
-    public ResponseEntity<HttpResponseDto> getConsultingResult(@PathVariable("consulting-seq") int consultingSeq) {
+    public ResponseEntity<HttpResponseDto> getConsultingResult(@PathVariable("consulting-seq") int consultingSeq){
 
         ResponseConsultingResultDto response = new ResponseConsultingResultDto();
 
@@ -234,7 +248,8 @@ public class ConsultingController {
         REST_TEMPLATE = new RestTemplate(factory);
     }
 
-    @PostMapping("/img/{customer-seq}")
+    // 헤어모델 api와 이미지 주고받는 컨트롤러
+    @PostMapping("/create-img/{customer-seq}")
     public ResponseEntity<HttpResponseDto> uploadImg(@PathVariable("customer-seq") int customerSeq,
                                                      @RequestPart("img") MultipartFile file) throws IOException {
 

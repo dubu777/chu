@@ -12,4 +12,5 @@ public class ResponseFutureConsultingDto {
     String consultingDate;
     String consultingStartTime;
     String url;
+    String cancelDate;
 }

@@ -15,35 +15,20 @@ import com.chu.designer.repository.DesignerRepository;
 import com.chu.designer.repository.ReservationAvailableSlotRepository;
 import com.chu.global.domain.FaceDict;
 import com.chu.global.domain.HairStyleDict;
+import com.chu.global.domain.ImagePath;
 import com.chu.global.repository.HairStyleDictRepository;
-import com.fasterxml.jackson.databind.JsonNode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.http.*;
-import org.springframework.http.client.ClientHttpRequestExecution;
-import org.springframework.http.client.ClientHttpResponse;
-import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
 
 import com.chu.consulting.repository.ConsultingVirtualImgRepository;
 import com.chu.global.domain.ImageDto;
 import com.chu.global.exception.Exception;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.StreamUtils;
-import org.springframework.web.client.HttpStatusCodeException;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
@@ -68,16 +53,21 @@ public class ConsultingServiceImpl implements ConsultingService {
     // 상담 예약하기
     @Override
     @Transactional
-    public void postConsulting(RequestConsultingDto requestConsultingDto) {
+    public int postConsulting(RequestConsultingDto requestConsultingDto) {
+
+        int consultingSeq = -1;
 
         try {
             // requestConsultingDto -> entity 만들기
             Consulting consulting = requestConsultingDto.toConsultingEntity();
 
+            Review review = new Review();
+            review.setReviewScore(5.0);
+            consulting.setReview(review);
             consulting.setCreatedDate(LocalDateTime.now());
             // 상담 예약하기
-            consultingRepository.save(consulting);
-
+            Consulting consultingResponse = consultingRepository.save(consulting);
+            consultingSeq = consultingResponse.getSeq();
             // 예약 완료 후 ‘reservation_available_slot’ 테이블 ‘state’ 컬럼 ‘R’로 바꾸기
             String date = consulting.getConsultingDate().getDate();
             String time = consulting.getConsultingDate().getTime();
@@ -88,7 +78,7 @@ public class ConsultingServiceImpl implements ConsultingService {
             int seq = consulting.getSeq();
 
             // SessionId 설정
-            String url = seq + "@" + consulting.getCustomer().getSeq() + "&" + consulting.getDesigner().getSeq();
+            String url = Integer.toString(seq);
 
             // 생성한 SessionId db에 업데이트하기
             consultingRepository.updateConsultingUrl(seq, url);
@@ -112,6 +102,20 @@ public class ConsultingServiceImpl implements ConsultingService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        return consultingSeq;
+    }
+
+    @Override
+    @Transactional
+    public void postConsultingOriginImage(int consultingSeq, String uploadFileName) {
+        Consulting consulting = consultingRepository.getConsultingBySeq(consultingSeq);
+
+        ImagePath imagePath = new ImagePath();
+        imagePath.setSavedImgName(uploadFileName);
+        imagePath.setUploadImgName(uploadFileName);
+
+        consulting.setImagePath(imagePath);
     }
 
     @Override
@@ -297,6 +301,31 @@ public class ConsultingServiceImpl implements ConsultingService {
             e.printStackTrace();
         }
         return response;
+    }
+
+    @Override
+    public String getSavedImgFilePathConsultingOriginFile(int consultingSeq, MultipartFile file) throws IOException {
+        String uploadDir = "/chu/upload/images/consulting/origin/";
+        String fileName = consultingSeq + ".png";
+
+        File directory = new File(uploadDir);
+        String filePath = uploadDir + fileName;
+
+        File destFile = new File(filePath);
+        System.out.println(filePath);
+
+        if (!directory.exists()) {
+            boolean mkdirsResult = directory.mkdirs();
+            if (mkdirsResult) {
+                System.out.println("디렉토리 생성 성공");
+            } else {
+                System.out.println("디렉토리 생성 실패");
+            }
+        }
+
+        file.transferTo(destFile);
+        log.info("서비스 >>> 파일 저장 성공! filePath : " + filePath);
+        return fileName;
     }
 
 

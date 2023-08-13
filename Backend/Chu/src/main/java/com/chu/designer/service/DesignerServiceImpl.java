@@ -24,12 +24,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 
-import java.util.Date;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Slf4j
@@ -65,7 +63,7 @@ public class DesignerServiceImpl implements DesignerService{
 
     // 회원가입
     @Override
-    public void signUp(Designer designer, MultipartFile img) {
+    public int signUp(Designer designer) {
         Designer newDesigner = designer;
         // 비밀번호 암호화
         newDesigner.hashPassword(bCryptPasswordEncoder);
@@ -73,14 +71,10 @@ public class DesignerServiceImpl implements DesignerService{
         newDesigner.setCreatedDate(LocalDateTime.now());
         // 기본 가격 세팅
         newDesigner.setCost(5000);
-
-        String imgName = img.getOriginalFilename();
-        ImagePath imagePath = new ImagePath();
-        imagePath.setUploadImgName(imgName);
-
-        newDesigner.setImagePath(imagePath);
-        designerRepository.save(designer);
-
+        // 기본 평점 세팅
+        newDesigner.setReviewScore(5.0);
+        Designer designerReturn = designerRepository.save(designer);
+        return designerReturn.getSeq();
     }
 
     // 로그인
@@ -358,25 +352,31 @@ public class DesignerServiceImpl implements DesignerService{
 
         try{
             // 디자이너 포트폴리오 setting
-            List<String> designerPortfolio = new ArrayList<>();
+            List<ResponsePortfolioDto> designerPortfolio = new ArrayList<>();
 
             List<DesignerPortfolio> portfolios = designerPortfolioRepository.findByDesignerSeq(designerSeq);
 
             for(DesignerPortfolio dp : portfolios){
-                designerPortfolio.add(dp.getImagePath().getUploadImgName());
+                ResponsePortfolioDto dto = new ResponsePortfolioDto();
+                dto.setImgSeq(dp.getSeq());
+                dto.setImgName(dp.getImagePath().getUploadImgName());
+                designerPortfolio.add(dto);
             }
 
             response.setDesignerPortfolio(designerPortfolio);
 
 
             // 랜덤 포트폴리오 setting
-            List<String> randomPortfolio = new ArrayList<>();
+            List<ResponsePortfolioDto> randomPortfolio = new ArrayList<>();
 
             List<DesignerPortfolio> randportfolios = new ArrayList<>();
             randportfolios = designerPortfolioRepository.getRandom();
 
             for(DesignerPortfolio dp : randportfolios){
-                randomPortfolio.add(dp.getImagePath().getUploadImgName());
+                ResponsePortfolioDto dto = new ResponsePortfolioDto();
+                dto.setImgSeq(dp.getSeq());
+                dto.setImgName(dp.getImagePath().getUploadImgName());
+                randomPortfolio.add(dto);
             }
 
             response.setRandomPortfolio(randomPortfolio);
