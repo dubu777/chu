@@ -19,6 +19,8 @@ public interface ConsultingService {
 
     void postConsultingOriginImage(int consultingSeq, String uploadFileName);
 
+    List<Integer> getTargetNumbers(int consultingSeq);
+
     // 상담 취소하기
     void cancelConsulting(int consultingSeq);
 

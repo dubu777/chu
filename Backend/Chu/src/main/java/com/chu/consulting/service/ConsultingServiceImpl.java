@@ -119,6 +119,22 @@ public class ConsultingServiceImpl implements ConsultingService {
     }
 
     @Override
+    public List<Integer> getTargetNumbers(int consultingSeq) {
+        List<ConsultingTargetInfo> consultingTargetInfos = new ArrayList<>();
+        List<Integer> resultList = new ArrayList<>();
+        try{
+             consultingTargetInfos = consultingTargetInfoRepository.findAllByConsultingSeq(consultingSeq);
+            for (ConsultingTargetInfo c : consultingTargetInfos) {
+                resultList.add(c.getDesignerPortfolio().getSeq());
+            }
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return resultList;
+    }
+
+    @Override
     public List<ImageDto> getConfusionImageList(int consultingSeq) {
 
         List<ImageDto> imageList = new ArrayList<>();
