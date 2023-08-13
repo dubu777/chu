@@ -119,6 +119,20 @@ public class ConsultingServiceImpl implements ConsultingService {
     }
 
     @Override
+    @Transactional
+    public void postConsultingConfusionImage(int consultingSeq, int portfolioNum) {
+        ConsultingVirtualImg consultingVirtualImg = new ConsultingVirtualImg();
+
+        consultingVirtualImg.setConsulting(consultingRepository.findBySeq(consultingSeq));
+
+        ImagePath imagePath = new ImagePath();
+        imagePath.setUploadImgName(consultingSeq + "_" + portfolioNum);
+        imagePath.setSavedImgName(consultingSeq + "_" + portfolioNum);
+        consultingVirtualImg.setImagePath(imagePath);
+        consultingVirtualImg.setDesignerPortfolio(designerPortfolioRepository.findBySeq(portfolioNum));
+    }
+
+    @Override
     public List<Integer> getTargetNumbers(int consultingSeq) {
         List<ConsultingTargetInfo> consultingTargetInfos = new ArrayList<>();
         List<Integer> resultList = new ArrayList<>();

@@ -143,6 +143,8 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
         designerPortfolio.setImagePath(imagePath);
     }
 
+
+
     @Override
     public List<ImageDto> getPortfolio(int designerSeq) {
 

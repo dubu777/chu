@@ -177,6 +177,7 @@ public class ConsultingController {
 
                         Files.write(Path.of("/chu/upload/images/consulting/confusion/" + consultingSeq+ "_"+portfolioNums.get(n)+".png"), fileData);
 
+                        consultingService.postConsultingConfusionImage(consultingSeq, portfolioNums.get(n));
                         // 파일 처리 로직을 적용하고 예시로 콘솔에 출력
                         log.info("Filename: {}",filename);
                         log.info("File size: {} bytes", bytesRead);
