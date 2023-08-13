@@ -5,8 +5,10 @@ import { useState, useEffect } from "react";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css'; // css import
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
-import {postReserveCalendar} from "../../apis/designer"
+import {postReserveCalendar} from "../../apis/designer";
+import {getPossibleTimeApi} from "../../apis/reservation"
 import { useParams } from "react-router-dom";
+import { useQuery, useMutation } from "react-query";
 const Container = styled.div`
     /* text-align: center; */
 `;
@@ -123,8 +125,8 @@ function formatDateString(date) {
   const year = date.getFullYear();
   const month = (date.getMonth() + 1).toString().padStart(2, "0");
   const day = date.getDate().toString().padStart(2, "0");
-  const clickdate = `${year}-${month}-${day}`;
-  // console.log(clickdate)
+  const Calendar = `${year}-${month}-${day}`;
+  // console.log(Calendar)
   return `${year}-${month}-${day}`;
 }
 
@@ -168,46 +170,18 @@ function ReserveCalendar(){
     return timeButtons;
   };
 
-  // 캘린더의 시간 버튼 클릭 이벤트
-  // const handleTimeButtonClick = (time) => {
-  //   setDateAndTimes((prevDateAndTimes) => {
-  //     const newDateAndTimes = { ...prevDateAndTimes };
-  //     if (!newDateAndTimes[selectedDateString]) {
-  //       newDateAndTimes[selectedDateString] = {
-  //         date: selectedDateString,
-  //         times: []
-  //       };
-  //     }
-
-  //     const selectedTimeIndex = newDateAndTimes[selectedDateString].times.indexOf(time);
-  //     if (selectedTimeIndex !== -1) {
-  //       newDateAndTimes[selectedDateString].times.splice(selectedTimeIndex, 1);
-  //     } else {
-  //       newDateAndTimes[selectedDateString].times.push(time);
-  //     }
-
-  //     return newDateAndTimes;
-  //   });
-  // };
-
-  // const handleTimeButtonClick = (time) => {
-  //   setSelectedTimes((prevSelectedTimes) => {
-  //     const newSelectedTimes = { ...prevSelectedTimes };
-  //     if (!newSelectedTimes[selectedDateString]) {
-  //       newSelectedTimes[selectedDateString] = [];
-  //     }
-  //     if (newSelectedTimes[selectedDateString].includes(time)) {
-  //       newSelectedTimes[selectedDateString] = newSelectedTimes[selectedDateString].filter((t) => t !== time);
-  //     } else {
-  //       newSelectedTimes[selectedDateString] = [...newSelectedTimes[selectedDateString], time];
-  //     }
-  //     return newSelectedTimes;
-  //   });
-  //   setFinalSelcet(selectedTimes)
-  // };
-
-  // 
-  
+    // 시간 데이터 호출
+    const ClickCalendarDate = async(designerSeq, selectedDateString) => {
+      console.log('디자이너', designerSeq, '날짜', selectedDateString)
+      try{
+        console.log('try 페이지에 들어온 seq', selectedDateString)
+        const response  = await getPossibleTimeApi(designerSeq, selectedDateString);
+        console.log('시간 데이터 조회 성공', response)
+      }catch(error){
+        console.error("API Error:", error);
+      }
+    };
+    
   const handleTimeButtonClick = (time) => {
     setSelectedTimes((prevSelectedTimes) => {
       const newSelectedTimes = { ...prevSelectedTimes };
@@ -222,16 +196,12 @@ function ReserveCalendar(){
       return newSelectedTimes;
     });
   };
-
   const handleApplyButtonClick = async() => {
-    const updatedDateAndTimes = { ...dateAndTimes };
-    updatedDateAndTimes[selectedDateString] = selectedTimes[selectedDateString] || [];
-    setDateAndTimes(updatedDateAndTimes);
 
-    if(updatedDateAndTimes) {
+    if(selectedTimes) {
     try {
-      console.log('날짜 시간 결과 보여줜',dateAndTimes)
-      const response = await postReserveCalendar(designerSeq, dateAndTimes);
+      console.log('날짜 시간 결과 보여줜',selectedTimes)
+      const response = await postReserveCalendar(designerSeq, selectedTimes);
       console.log(response)
     } catch (error) {
       console.error("캘린더 통신 실패", error)
@@ -239,10 +209,6 @@ function ReserveCalendar(){
     }
   }
 };
-// console.log('날짜 시간 결과 보여줜111',dateAndTimes)
-
-  // postReserveCalendar
-
     return (
       <Container>
         <Title>예약 시간 캘린더</Title>
@@ -256,8 +222,15 @@ function ReserveCalendar(){
                     </IconBox>
                     <Hr></Hr>
                   </IconWrap>
-                      <StyledCalendar onChange={date => setSelectedDate(date)} value={selectedDate} />
-                      {selectedDateString}
+                      <StyledCalendar 
+                      onChange={date => {
+                        setSelectedDate(date);
+                        const selectedDateString = formatDateString(date);
+                        ClickCalendarDate(designerSeq, selectedDateString);
+                      }} 
+                      value={selectedDate} 
+                      />
+                      {/* {selectedDateString} */}
                 </CalendarBox>
                 <TimeBox>
                 <IconWrap>
