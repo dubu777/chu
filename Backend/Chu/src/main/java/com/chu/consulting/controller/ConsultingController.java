@@ -89,12 +89,12 @@ public class ConsultingController {
             portfolioNums = consultingService.getTargetNumbers(consultingSeq);
 
             for (int i : portfolioNums) {
-                log.info("포트폴리오 넘버다", i);
+                log.info("포트폴리오 넘버다: {}", i);
             }
 
             List<String> targetFileUrls = new ArrayList<>();
             for (int portfolioNum : portfolioNums) {
-                targetFileUrls.add("file:///" + "/chu/upload/images/designer/portfolio/" + portfolioNum + ".png");
+                targetFileUrls.add("/chu/upload/images/designer/portfolio/" + portfolioNum + ".png");
             }
 
 
