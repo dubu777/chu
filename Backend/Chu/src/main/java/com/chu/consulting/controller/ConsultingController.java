@@ -94,7 +94,7 @@ public class ConsultingController {
 
             List<String> targetFileUrls = new ArrayList<>();
             for (int portfolioNum : portfolioNums) {
-                targetFileUrls.add("/chu/upload/images/designer/portfolio/" + portfolioNum + ".jpeg");
+                targetFileUrls.add("/chu/upload/images/designer/portfolio/" + portfolioNum + ".png");
             }
 
 
