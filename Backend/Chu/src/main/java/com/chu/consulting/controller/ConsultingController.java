@@ -98,7 +98,8 @@ public class ConsultingController {
                 String tmp = pnumTmp.toString();
                 log.info("문자열 제대로 바뀌었다: {}", tmp);
 //                targetFileUrls.add("file:////chu/upload/images/designer/portfolio/" + tmp + ".png");
-                targetFileUrls.add("/chu/upload/images/designer/portfolio/" + tmp + ".png");
+//                targetFileUrls.add("/chu/upload/images/designer/portfolio/" + tmp + ".png");
+                targetFileUrls.add("https://i9b111.q.ssafy.io/api/portfolio/" + tmp + ".png");
             }
 
 
