@@ -244,17 +244,7 @@ function DesignerDetail() {
     const newLikeStatus = !currentLikeStatus;
     mutation.mutate({ designerSeq, customerSeq, isLike: newLikeStatus });
   };
-  const OPofolImgs = [
-    "/img/opofol1.jpg",
-    "/img/opofol2.jpg",
-    "/img/opofol3.jpg",
-    "/img/opofol4.jpg",
-    "/img/opofol5.jpg",
-    "/img/opofol6.jpg",
-    "/img/opofol7.jpg",
-    "/img/opofol8.jpg",
-    "/img/opofol9.jpg",
-  ];
+
   const settings = {
     className: "center",
     infinite: true,
@@ -291,6 +281,7 @@ function DesignerDetail() {
   };
 
   const [selectedTime, setSelectedTime] = useState(null);
+  const usertype = localStorage.getItem('userType');
 
   const hours = Array.from({ length: 14 }, (_, index) => index + 9);
   const minutes = ["00", "30"];
@@ -352,13 +343,16 @@ function DesignerDetail() {
                     <CostIcon src="/icon/money.png" />
                     <Text>{data.cost}</Text>
                   </Box>
-                  <ReservBox
-                    onClick={() => navigate(`/reservation/${designerSeq}`)}
-                    whileHover={{ backgroundColor: "rgb(244,153,26)" }}
-                  >
-                    <Icon src="/icon/reservBtn.png" />
-                    <Text>예약</Text>
-                  </ReservBox>
+                  {/* 회원유형에 따라 예약버튼 활성화 */}
+                  {usertype === 'designer' ? null : (
+                    <ReservBox
+                      onClick={() => navigate(`/reservation/${designerSeq}`)}
+                      whileHover={{ backgroundColor: "rgb(244,153,26)" }}
+                    >
+                      <Icon src="/icon/reservBtn.png" />
+                      <Text>예약</Text>
+                    </ReservBox>
+                  )}
                 </Box>
               </DesignerNameWrap>
             </DesignerInfoBox>
