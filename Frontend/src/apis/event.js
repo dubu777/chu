@@ -18,19 +18,47 @@ export const getEventInfo = async (customerSeq) => {
     }
 };
 
-export const postEventInfo = async (customerSeq, formData) => {
-    formData.forEach((value, key) => {
-        console.log(key, value);
-      });
+export const postInputImage = async (customerSeq, formData) => {
     try {
         const response = await axios.post(
-            `${BASE_URL}/event/${customerSeq}`,
+            `${BASE_URL}/event/inputImage/${customerSeq}`,
             formData,
             {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
             }
+        );
+        console.log("성공");
+        return response.data.result;
+    } catch (error) {
+        throw new Error("이벤트 등록 실패");
+    }
+}
+
+export const postTargetImage = async (customerSeq, formData) => {
+    try {
+        const response = await axios.post(
+            `${BASE_URL}/event/targetImage/${customerSeq}`,
+            formData,
+            {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            }
+        );
+        console.log("성공");
+        return response.data.result;
+    } catch (error) {
+        throw new Error("이벤트 등록 실패");
+    }
+}
+
+
+export const postEventInfo = async (customerSeq) => {
+    try {
+        const response = await axios.post(
+            `${BASE_URL}/event/${customerSeq}`,
         );
         console.log("성공");
         return response.data.result;
