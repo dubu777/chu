@@ -190,7 +190,9 @@ public class DesignerServiceImpl implements DesignerService{
                 Consulting consulting = consultingRepository.getConsultingBySeq(c.getSeq());
 
                 // 받아온 customer seq로 고객 정보 받아오기
-                consulting.setCustomer(customerRepository.getCustomerBySeq(consulting.getCustomer().getSeq()));
+                if(consulting.getCustomer() != null){
+                    consulting.setCustomer(customerRepository.getCustomerBySeq(consulting.getCustomer().getSeq()));
+                }
 
                 // AlertDesignerOnLoginDto 객체 생성
                 AlertDesignerOnLoginDto dto = new AlertDesignerOnLoginDto();
@@ -317,7 +319,9 @@ public class DesignerServiceImpl implements DesignerService{
             Consulting consulting = consultingRepository.getConsultingBySeq(c.getSeq());
 
             // 받아온 customer seq로 고객 정보 받아오기
-            consulting.setCustomer(customerRepository.getCustomerBySeq(consulting.getCustomer().getSeq()));
+            if(consulting.getCustomer() != null){
+                consulting.setCustomer(customerRepository.getCustomerBySeq(consulting.getCustomer().getSeq()));
+            }
 
             // AlertDesignerOnLoginDto 객체 생성
             AlertDesignerOnLoginDto dto = new AlertDesignerOnLoginDto();
