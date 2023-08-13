@@ -241,7 +241,9 @@ public class DesignerSearchServiceImpl implements DesignerSearchService {
         for (DesignerTagInfo tag : hairStyleTagSeqs) {
             Integer seq = tag.getSeq();
             HairStyleDict hairStyleDict = hairStyleDictRepository.findBySeq(seq);
-            hairStyleLabels.add(hairStyleDict.getHairStyleLabel());
+
+            if(hairStyleDict != null)
+                hairStyleLabels.add(hairStyleDict.getHairStyleLabel());
         }
         // 디자이너 포트폴리오 사진
         List<DesignerPortfolio> portfolios = designerPortfolioRepository.findByDesignerSeq(designer.getSeq());
