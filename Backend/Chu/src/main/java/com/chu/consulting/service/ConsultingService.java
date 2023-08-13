@@ -54,13 +54,4 @@ public interface ConsultingService {
 //    // 상담 결과 수정
 //    boolean updateConsultingResult(RequestConsultingUpdateDto requestConsultingUpdateDto);
 
-
-
-
-// ===================== 민지
-    void createVirtualImgFile(MultipartFile file) throws IOException;
-
- 
-
-    
 }

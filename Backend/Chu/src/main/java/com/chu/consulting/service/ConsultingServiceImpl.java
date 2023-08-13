@@ -16,31 +16,37 @@ import com.chu.designer.repository.ReservationAvailableSlotRepository;
 import com.chu.global.domain.FaceDict;
 import com.chu.global.domain.HairStyleDict;
 import com.chu.global.repository.HairStyleDictRepository;
+import com.fasterxml.jackson.databind.JsonNode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.*;
+import org.springframework.http.client.ClientHttpRequestExecution;
+import org.springframework.http.client.ClientHttpResponse;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
+
 import com.chu.consulting.repository.ConsultingVirtualImgRepository;
 import com.chu.global.domain.ImageDto;
 import com.chu.global.exception.Exception;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
+import org.springframework.util.StreamUtils;
+import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 
 @Slf4j
@@ -64,7 +70,7 @@ public class ConsultingServiceImpl implements ConsultingService {
     @Transactional
     public void postConsulting(RequestConsultingDto requestConsultingDto) {
 
-        try{
+        try {
             // requestConsultingDto -> entity 만들기
             Consulting consulting = requestConsultingDto.toConsultingEntity();
 
@@ -90,7 +96,7 @@ public class ConsultingServiceImpl implements ConsultingService {
             // 고객이 선택한 포트폴리오 번호 consulting_target_info에 저장하기4
             List<Integer> portfolios = requestConsultingDto.getPortfolios();
 
-            for(int p : portfolios){
+            for (int p : portfolios) {
                 ConsultingTargetInfo cti = new ConsultingTargetInfo();
 
                 cti.setConsulting(consulting);
@@ -103,7 +109,7 @@ public class ConsultingServiceImpl implements ConsultingService {
             }
 
 
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -112,9 +118,9 @@ public class ConsultingServiceImpl implements ConsultingService {
     public List<ImageDto> getConfusionImageList(int consultingSeq) {
 
         List<ImageDto> imageList = new ArrayList<>();
-        try{
+        try {
             imageList = consultingVirtualImgRepository.getVirtualImagesInfoBySeq(consultingSeq);
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -126,7 +132,7 @@ public class ConsultingServiceImpl implements ConsultingService {
     @Transactional
     public void updateConsultingReview(RequestConsultingReviewDto requestConsultingReviewDto) {
 
-        try{
+        try {
             // consulting seq
             int consultingSeq = requestConsultingReviewDto.getConsultingSeq();
             Consulting consulting = consultingRepository.getConsultingBySeq(consultingSeq);
@@ -134,13 +140,13 @@ public class ConsultingServiceImpl implements ConsultingService {
             int designerSeq = consulting.getDesigner().getSeq();
 
             // 좋아요 눌렀으면 update
-            if(requestConsultingReviewDto.getIsLike()){
+            if (requestConsultingReviewDto.getIsLike()) {
                 // designer_like 테이블에 (고객 seq, 디자이너 seq) 쌍 존재하는지 확인
                 DesignerLike entity = null;
                 entity = designerLikeRepository.findByCustomerSeqAndDesignerSeq(customerSeq, designerSeq);
 
                 // 테이블에 데이터 존재하지 않으면 삽입
-                if(entity == null){
+                if (entity == null) {
 
                     Customer customer = customerRepository.getCustomerBySeq(customerSeq);
                     Designer designer = designerRepository.getDesignerBySeq(designerSeq);
@@ -148,12 +154,12 @@ public class ConsultingServiceImpl implements ConsultingService {
                     //designerLike.setDesigner(designer);
                     //designerLike.setLikeStatus(true);
                     //designerLike.setCreateDate(LocalDateTime.now());
-                    DesignerLike designerLike = new DesignerLike(customer, designer,true, LocalDateTime.now());
+                    DesignerLike designerLike = new DesignerLike(customer, designer, true, LocalDateTime.now());
 
                     designerLikeRepository.save(designerLike);
                 }
                 // 데이터 존재하면 status만 바꾸기
-                else{
+                else {
                     designerLikeRepository.updateStatusTrue(customerSeq, designerSeq);
                 }
             }
@@ -169,7 +175,7 @@ public class ConsultingServiceImpl implements ConsultingService {
             // 평점 업데이트하기
             designerRepository.updateReviewScore(reviewScore, designerSeq);
 
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -179,13 +185,12 @@ public class ConsultingServiceImpl implements ConsultingService {
     @Transactional
     public void updateConsultingResult(RequestConsultingResultDto requestConsultingResultDto) {
 
-        try{
+        try {
             // 1) 상담 결과 내용 상담 테이블에 update 하기
             int consultingSeq = requestConsultingResultDto.getConsultingSeq();
             String result = requestConsultingResultDto.getReviewResult();
 
             consultingRepository.updateConsultingResult(consultingSeq, result);
-
 
 
             // 2) consulting_result 테이블에 헤어스타일 seq 추가하기
@@ -201,7 +206,7 @@ public class ConsultingServiceImpl implements ConsultingService {
 
             // 2-4) 받아온 faceSeq + 헤어스타일Seq + 상담Seq : consulting_result 테이블에 저장하기
             int[] selectedHairStyle = requestConsultingResultDto.getSelectedHairStyle();
-            for(int hairStyleSeq : selectedHairStyle){
+            for (int hairStyleSeq : selectedHairStyle) {
 
                 // consulting_seq 세팅
                 ConsultingResult consultingResult = new ConsultingResult();
@@ -222,18 +227,16 @@ public class ConsultingServiceImpl implements ConsultingService {
             }
 
 
-
             // 3) consulting_virtual_img : isSelected 업데이트하기
             int[] selectedImgs = requestConsultingResultDto.getSelectedImgs();
-            for(int imgSeq : selectedImgs){
+            for (int imgSeq : selectedImgs) {
 
                 consultingVirtualImgRepository.updateIsSelected(imgSeq);
 
             }
 
 
-
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -242,9 +245,9 @@ public class ConsultingServiceImpl implements ConsultingService {
     @Override
     public ResponseConsultingResultDto getConsultingResult(int consultingSeq) {
 
-        ResponseConsultingResultDto  response = new ResponseConsultingResultDto();
+        ResponseConsultingResultDto response = new ResponseConsultingResultDto();
 
-        try{
+        try {
             Consulting consulting = consultingRepository.findBySeq(consultingSeq);
             int designerSeq = consulting.getDesigner().getSeq();
             Designer designer = designerRepository.getDesignerBySeq(designerSeq);
@@ -258,7 +261,7 @@ public class ConsultingServiceImpl implements ConsultingService {
             List<String> list = new ArrayList<>();
             // consulting_result 테이블에서 상담 seq로 다 받아오기
             List<ConsultingResult> result = consultingResultRepository.findAllByConsultingSeq(consultingSeq);
-            for(ConsultingResult cr : result){
+            for (ConsultingResult cr : result) {
                 // hairStyleDict 받아오기
                 HairStyleDict hd = hairStyleDictRepository.findBySeq(cr.getHairStyleDict().getSeq());
 
@@ -276,10 +279,10 @@ public class ConsultingServiceImpl implements ConsultingService {
             // consulting_virtual_img 테이블에서 consulting_seq로 다 받아오기
             List<ConsultingVirtualImg> imgs = consultingVirtualImgRepository.findAllByConsultingSeq(consultingSeq);
 
-            for(ConsultingVirtualImg i : imgs){
+            for (ConsultingVirtualImg i : imgs) {
 
                 // 상담 결과로 선택된 사진이면
-                if(i.getIsSelected()){
+                if (i.getIsSelected()) {
 
                     // 이미지 이름 받아오기
                     String img = i.getImagePath().getUploadImgName();
@@ -290,7 +293,7 @@ public class ConsultingServiceImpl implements ConsultingService {
 
             response.setReviewImgs(reviewImgs);
 
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return response;
@@ -302,7 +305,7 @@ public class ConsultingServiceImpl implements ConsultingService {
     @Transactional
     public void cancelConsulting(int consultingSeq) {
 
-        try{
+        try {
             // 1) consulting 테이블 cancel_date 컬럼 업데이트하기
             LocalDateTime now = LocalDateTime.now();
             consultingRepository.updateCancelDate(consultingSeq, now);
@@ -318,7 +321,7 @@ public class ConsultingServiceImpl implements ConsultingService {
             // 2-3) reservation_available_slot 테이블 state 컬럼 P로 update
             reservationAvailableSlotRepository.updateReserveSlotStateToP(date, time, designerSeq);
 
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -337,7 +340,7 @@ public class ConsultingServiceImpl implements ConsultingService {
 
         ResponseParticipantConsulting response = new ResponseParticipantConsulting();
 
-        try{
+        try {
             Consulting consulting = consultingRepository.getConsultingBySeq(consultingSeq);
 
             response.setUrl(consulting.getUrl());
@@ -349,13 +352,13 @@ public class ConsultingServiceImpl implements ConsultingService {
             // 상담 타겟 이미지 정보 리스트
             List<ConsultingTargetInfo> targetInfos = consultingTargetInfoRepository.findAllByConsultingSeq(consultingSeq);
 
-            for(ConsultingTargetInfo info : targetInfos){
+            for (ConsultingTargetInfo info : targetInfos) {
 
                 // 포트폴리오 사진 seq 구하기
                 int portfolioSeq = info.getDesignerPortfolio().getSeq();
 
                 // 포트폴리오 사진 seq로 타겟 이미지 이름(upload img name) 구하기
-                DesignerPortfolio portfolio= designerPortfolioRepository.findBySeq(portfolioSeq);
+                DesignerPortfolio portfolio = designerPortfolioRepository.findBySeq(portfolioSeq);
                 String uploadName = portfolio.getImagePath().getUploadImgName();
 
                 targetHair.add(uploadName);
@@ -370,7 +373,7 @@ public class ConsultingServiceImpl implements ConsultingService {
             // consultingSeq로 고객 상담 합성 사진 가져오기
             List<ConsultingVirtualImg> virtualImgs = consultingVirtualImgRepository.findAllByConsultingSeq(consultingSeq);
 
-            for(ConsultingVirtualImg virtualImg : virtualImgs){
+            for (ConsultingVirtualImg virtualImg : virtualImgs) {
 
                 String uploadName = virtualImg.getImagePath().getUploadImgName();
 
@@ -379,13 +382,12 @@ public class ConsultingServiceImpl implements ConsultingService {
 
             response.setConfusionHair(confusionHair);
 
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         return response;
     }
-
 
 
 //    @Override
@@ -422,7 +424,7 @@ public class ConsultingServiceImpl implements ConsultingService {
 //            return false;
 //        }
 //        return true;
-    
+
 
 //    @Override
 //    public ResponseConsultingResultDto getConsultingResult(int consultingSeq) {
@@ -434,7 +436,7 @@ public class ConsultingServiceImpl implements ConsultingService {
 //    public boolean updateConsultingReview(RequestConsultingReviewDto requestConsultingReviewDto) {
 //
 //        boolean isSuccess = true;
-        // 로직
+    // 로직
 
 //        // 해당 상담 번호로 리뷰 등록
 //        consultingRepository.updateReviewContent(requestConsultingReviewDto);
@@ -469,41 +471,4 @@ public class ConsultingServiceImpl implements ConsultingService {
 ////    }
 //    }
 
-
-    // ============================== 민지: 이미지 파일 전송 테스트
-    public void createVirtualImgFile(MultipartFile file) throws IOException {
-
-        RestTemplate restTemplate = new RestTemplate();
-
-        String url = "http://3.34.80.231:5000/save-img";
-        // 파일 객체를 바이트 배열로 변환
-        byte[] fileData = file.getBytes();
-        log.info("파일 객체 바이트 배열로 변환 완료");
-
-        // 요청 헤더 설정
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
-
-        // 요청 바디 설정
-        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
-        body.add("file", fileData); // 파일 데이터 추가
-
-        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
-
-        // POST 요청 보내기
-        ResponseEntity<String> response = restTemplate.postForEntity(url, requestEntity, String.class);
-
-        // 응답 처리
-        if (response.getStatusCode().is2xxSuccessful()) {
-            // 요청 성공
-            String responseBody = response.getBody();
-            // 파이썬 서버의 응답 처리 작업
-        } else {
-            // 요청 실패
-            log.info("실패 왜 ,,");
-            String errorMessage = response.getStatusCode().getReasonPhrase();
-            // 에러 처리 작업
-        }
-
-    }
 }
