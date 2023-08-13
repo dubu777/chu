@@ -322,13 +322,12 @@ public class ConsultingController {
                         String filename = entry.getName();
                         byte[] fileData = new byte[(int) entry.getSize()];
                         int bytesRead = zipStream.read(fileData);
-                        Files.write(Path.of("output"+n+".png"), fileData);
+//                        Files.write(Path.of("output"+n+".png"), fileData);
 
                         // 파일 처리 로직을 적용하고 예시로 콘솔에 출력
-
-                        System.out.println("Filename: " + filename);
-                        System.out.println("File size: " + bytesRead + " bytes");
-                        n++;
+//                        System.out.println("Filename: " + filename);
+//                        System.out.println("File size: " + bytesRead + " bytes");
+//                        n++;
                     }
                     zipStream.closeEntry();
                 }
