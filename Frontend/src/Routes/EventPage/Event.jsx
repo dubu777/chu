@@ -2,7 +2,7 @@
 
 import { styled } from "styled-components";
 import { useState, useEffect } from "react";
-import { getEventInfo, postEventInfo } from "../../apis/event";
+import { getEventInfo, postEventInfo, postInputImage, postTargetImage } from "../../apis/event";
 
 const Container = styled.div`
     margin: 40px;
