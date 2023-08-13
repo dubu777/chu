@@ -130,6 +130,8 @@ public class ConsultingServiceImpl implements ConsultingService {
         imagePath.setSavedImgName(consultingSeq + "_" + portfolioNum);
         consultingVirtualImg.setImagePath(imagePath);
         consultingVirtualImg.setDesignerPortfolio(designerPortfolioRepository.findBySeq(portfolioNum));
+
+        consultingVirtualImgRepository.save(consultingVirtualImg);
     }
 
     @Override
