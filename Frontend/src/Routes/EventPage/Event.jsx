@@ -54,18 +54,18 @@ function Event() {
             // 타겟 이미지까지 서버랑 통신한 상태
             else if (response.state == 2) {
                 setInputImagePath(`https://i9b111.q.ssafy.io/api/customer-profile/event/origin/${response.inputImgPath}`);
-                setTargetImagePath(`https://i9b111.q.ssafy.io/api/customer-profile/event/origin/${response.targetImagePath}`);
+                setTargetImagePath(`https://i9b111.q.ssafy.io/api/customer-profile/event/target/${response.targetImgPath}`);
             }
             // 버튼 누르고 대기 상태
             else if (response.state == 3) {
                 setInputImagePath(`https://i9b111.q.ssafy.io/api/customer-profile/event/origin/${response.inputImgPath}`);
-                setTargetImagePath(`https://i9b111.q.ssafy.io/api/customer-profile/event/origin/${response.targetImagePath}`);
+                setTargetImagePath(`https://i9b111.q.ssafy.io/api/customer-profile/event/target/${response.targetImgPath}`);
             }
             // 사진 완성 상태
             else if (response.state == 4) {
                 setInputImagePath(`https://i9b111.q.ssafy.io/api/customer-profile/event/origin/${response.inputImgPath}`);
-                setTargetImagePath(`https://i9b111.q.ssafy.io/api/customer-profile/event/origin/${response.targetImagePath}`);
-                setConfusionImagePath(`https://i9b111.q.ssafy.io/api/customer-profile/event/origin/${response.confusionImagePath}`);
+                setTargetImagePath(`https://i9b111.q.ssafy.io/api/customer-profile/event/target/${response.targetImgPath}`);
+                setConfusionImagePath(`https://i9b111.q.ssafy.io/api/customer-profile/event/confusion/${response.confusionImgPath}`);
             }
         } catch (error) {
             console.log(error);
