@@ -35,12 +35,21 @@ public class EventServiceImpl implements EventService {
             if (event.getState() == 1) {
                 responseEventDto.setState(event.getState());
                 responseEventDto.setInputImgPath(event.getInputImgPath());
-                responseEventDto.setTargetImgPath(event.getTargetImgPath());
             } else if (event.getState() == 2) {
                 responseEventDto.setInputImgPath(event.getInputImgPath());
                 responseEventDto.setTargetImgPath(event.getTargetImgPath());
-                responseEventDto.setConfusionImgPath(event.getConfusionImgPath());
                 responseEventDto.setState(event.getState());
+            }
+            else if(event.getState() == 3){
+                responseEventDto.setState(event.getState());
+                responseEventDto.setInputImgPath(event.getInputImgPath());
+                responseEventDto.setTargetImgPath(event.getTargetImgPath());
+            }
+            else if(event.getState() == 4){
+                responseEventDto.setState(event.getState());
+                responseEventDto.setInputImgPath(event.getInputImgPath());
+                responseEventDto.setTargetImgPath(event.getTargetImgPath());
+                responseEventDto.setConfusionImgPath(event.getConfusionImgPath());
             }
         }
         return responseEventDto;
@@ -99,14 +108,73 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    @Transactional
-    public void updateImgNamesAndState(int customerSeq, String inputImgName, String targetImgName, int state) {
+    public String getSavedImgFileEventConfusionFile(int customerSeq, MultipartFile file) throws IOException {
+        String uploadDir = "/chu/upload/images/customer/event/confusion/";
 
+        String fileName = file.getOriginalFilename();
+
+        File directory = new File(uploadDir);
+        String filePath = uploadDir + fileName;
+
+        File destFile = new File(filePath);
+        System.out.println(filePath);
+
+        if (!directory.exists()) {
+            boolean mkdirsResult = directory.mkdirs();
+            if (mkdirsResult) {
+                System.out.println("디렉토리 생성 성공");
+            } else {
+                System.out.println("디렉토리 생성 실패");
+            }
+        }
+
+        file.transferTo(destFile);
+        log.info("서비스 >>> 파일 저장 성공! filePath : " + filePath);
+        return fileName;
+    }
+
+    @Override
+    @Transactional
+    public void updateState(int customerSeq, int state) {
+        try{
+            Event event = eventRepository.findByCustomerSeq(customerSeq);
+            event.setState(3);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    @Transactional
+    public void updateInputImageNameAndState(int customerSeq, String inputImgName, int state) {
         try{
             Event event = eventRepository.findByCustomerSeq(customerSeq);
             event.setInputImgPath(inputImgName);
-            event.setTargetImgPath(targetImgName);
             event.setState(1);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    @Transactional
+    public void updateTargetImageNameAndState(int customerSeq, String targetImgName, int state) {
+        try{
+            Event event = eventRepository.findByCustomerSeq(customerSeq);
+            event.setTargetImgPath(targetImgName);
+            event.setState(2);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    @Transactional
+    public void updateConfusionImageNameAndState(int customerSeq, String confusionImgName, int state) {
+        try{
+            Event event = eventRepository.findByCustomerSeq(customerSeq);
+            event.setConfusionImgPath(confusionImgName);
+            event.setState(4);
         } catch (Exception e){
             e.printStackTrace();
         }
