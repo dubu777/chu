@@ -32,6 +32,7 @@ public class EventServiceImpl implements EventService {
             responseEventDto.setState(0);
             Event saveEvent = new Event();
             saveEvent.setCustomerSeq(customerSeq);
+            saveEvent.setState(0);
             eventRepository.save(saveEvent);
         }
         else {
