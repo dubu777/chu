@@ -11,13 +11,16 @@ server:
       enabled: true
 
 
-
 # DB_USERNAME=111;DB_PASSWORD=151;DB_URL=jdbc:mysql://13.125.135.111:3306/chu?serverTimezone=UTC&useUnicode=yes&characterEncoding=UTF-8;
 spring:
   datasource:
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
     URL: jdbc:mysql://${PUBLIC_IP}:3306/chu?serverTimezone=UTC&useUnicode=yes&characterEncoding=UTF-8
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
 
   jpa:
     hibernate:
