@@ -121,6 +121,7 @@ function Header() {
   const [isLogIn, setIsLogIn] = useRecoilState(loginState);
   const [token, setToken] = useRecoilState(accessTokenState);
   const [show, setShow] = useState(false);
+  const [showNotificationList, setShowNotificationList] = useState(false);
   const { scrollY } = useScroll();
   const handleNavigation = () => {
     if (localStorage.getItem("userType") === "customer") {
@@ -141,73 +142,34 @@ function Header() {
     navigate("/");
   });
 
-  // // 알림 조회
-  // const { data: notifications = [], refetch } = useQuery(
-  //   ["notifications", userType, userSeq],
-  //   async () => {
-  //     if (userType === "guest") return [];
-  //     if (userType === "designer") return getDesignerNotification(userSeq);
-  //     if (userType === "customer") return getCustomerNotification(userSeq);
-  //   },
-  //   {
-  //     retry: false,
-  //   }
-  // );
-
-  // // 알림 읽기
-  // const handleReadNotification = async (alertSeq) => {
-  //   try {
-  //     if (userType === "designer") await readDesignerNotification(alertSeq);
-  //     if (userType === "customer") await readCustomerNotification(alertSeq);
-  //     refetch();
-  //   } catch (error) {
-  //     console.error("Error reading notification", error);
-  //   }
-  // };
-  const fetchNotifications = async () => {
-    if (!userSeq) {
-      return;
-    }
+  // 알림 토글
   
-    if (userType === "customer") {
-      return await getCustomerNotification(userSeq);
-    } else if (userType === "designer") {
-      return await getDesignerNotification(userSeq);
-    } 
+  const toggleNotificationList = () => {
+    setShowNotificationList(prev => !prev);
   };
-
-  // 알림 조회를 위한 useQuery 훅
-  const {
-    data: notifications = [],
-    isError,
-    isLoading,
-    refetch,
-  } = useQuery("notifications", fetchNotifications, {
-    enabled: Boolean(localStorage.getItem("userType")), // localStorage에 userType이 없으면 쿼리를 실행하지 않음
-    retry: false,
-  });
-  const readNotification = async (alertSeq) => {
-    const userType = localStorage.getItem("userType") || "guest";
-
-    if (userType === "customer") {
-      return await readCustomerNotification(alertSeq);
-    } else if (userType === "designer") {
-      return await readDesignerNotification(alertSeq);
-    } else {
-      throw new Error("Invalid user type for reading notifications");
-    }
-  };
-  const mutation = useMutation(readNotification, {
-    onSuccess: () => {
-      refetch(); // 알림 읽기가 성공하면, 알림 데이터를 다시 가져옴
+  // 알림 조회
+  const { data: notifications = [], refetch, isError, isLoading } = useQuery(
+    ["notifications", userType, userSeq],
+    async () => {
+      if (!userType) {
+        return;
+      }
+      if (userType === "designer") return getDesignerNotification(userSeq);
+      if (userType === "customer") return getCustomerNotification(userSeq);
     },
-  });
-  const handleNotificationClick = async (alertSeq) => {
+    {
+      retry: false,
+    }
+  );
+
+  // 알림 읽기
+  const handleReadNotification = async (alertSeq) => {
     try {
-      await mutation.mutateAsync(alertSeq);
-      toast.success("Notification marked as read.");
+      if (userType === "designer") await readDesignerNotification(alertSeq);
+      if (userType === "customer") await readCustomerNotification(alertSeq);
+      refetch();
     } catch (error) {
-      toast.error("Failed to mark the notification as read.");
+      console.error("Error reading notification", error);
     }
   };
   useEffect(() => {
@@ -271,7 +233,7 @@ function Header() {
                     <NotificationItem
                       key={notification.alertSeq}
                       onClick={() =>
-                        handleNotificationClick(notification.alertSeq)
+                        handleReadNotification(notification.alertSeq)
                       }
                     >
                       {notification.message}

@@ -5,6 +5,8 @@ import { kakaoPayReady } from "../../apis/kakao";
 import { motion } from "framer-motion";
 import Form from 'react-bootstrap/Form';
 import swal from 'sweetalert';
+import { useRecoilState } from 'recoil';
+import {reserveInfo, imgFileState} from "../../recoil"
 
 const Container = styled.div`
   display: flex;
@@ -94,6 +96,8 @@ function CheckReserve() {
   };
   const [agreeFirst, setAgreeFirst] = useState(false);
   const [agreeSecond, setAgreeSecond] = useState(false);
+  const [info, setInfo] = useRecoilState(reserveInfo);
+  const [requestFile, setRequestFile] = useRecoilState(imgFileState);
   const handlePayment = () => {
     if (!agreeFirst || !agreeSecond) {
       swal("약관 동의 필요", "모든 약관에 동의해야 합니다.", "warning");
@@ -102,6 +106,9 @@ function CheckReserve() {
       handleKakaoPayReady();
     }
   };
+
+  console.log(requestFile, "결제 준비 이미지 데이터");
+  console.log(info, "결제 준비 예약 정보 인포");
   return (
     <Container>
       <Reservwrap>

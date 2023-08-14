@@ -495,6 +495,7 @@ function Reservation() {
       swal("⚠️ Image 파일 형식을 선택해주세요 :)");
     }
   };
+  console.log(requestFile);
   // console.log('원하는 사진명:', selectedImgs)
         
         if (imgLoading) {

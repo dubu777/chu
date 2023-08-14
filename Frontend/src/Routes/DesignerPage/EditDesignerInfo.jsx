@@ -323,9 +323,9 @@ function EditDesignerInfo() {
       const requestData = {
         cost: formData.cost,
         pwd: watchedPassword || null,
-        salonName: "제발!!!!!!",
+        salonName: formData.salonName,
         introduction: watchIntro || null,
-        address: "대전광역시 서구",
+        address: formData.address,
         myHairStyleTag: combinedHairStyles,
       };
       await changeDesignerData(designerSeq, requestData);
@@ -493,17 +493,21 @@ function EditDesignerInfo() {
                     })}
                   />
                 </SearchBox2>
-                <InfoText>소속 미용실명</InfoText>
+              </Box>
+              <ErrorMessage>{errors?.salonName?.message}</ErrorMessage>
+              <Hr />
+              <Box>
+                <InfoText>도로명 주소</InfoText>
                 <SearchBox2>
                   <SearchInput
-                    placeholder="소속 미용실"
-                    {...register("salonName", {
-                      required: "소속 미용실을 입력해주세요.",
+                    placeholder="도로명 주소"
+                    {...register("address", {
+                      required: "도로명 주소를 입력해주세요.",
                     })}
                   />
                 </SearchBox2>
               </Box>
-              <ErrorMessage>{errors?.salonName?.message}</ErrorMessage>
+              <ErrorMessage>{errors?.address?.message}</ErrorMessage>
               <Hr />
               <Box>
                 <InfoText>한 줄 소개글</InfoText>
