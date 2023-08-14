@@ -151,6 +151,11 @@ function Header() {
   },[scrollY, navAnimation])
 
   console.log(notifications, "알림");
+
+  const handleMap = () => {
+    window.open(`/map`, '안녕')
+    // window.open(`/mapsearch`, '안녕', 'width=600, height=600')
+  }
   return (
     <Nav
       variants={navVariants}
@@ -158,6 +163,7 @@ function Header() {
       initial={"top"}
     >
       <Col>
+        <button onClick={handleMap}>지도검색</button>
         <Logo
           onClick={() => navigate("/")}
           variants={logoVariants}
@@ -176,7 +182,6 @@ function Header() {
       </Col>
       <Col>
         <Link to="/checkreserve">kakao pay</Link>
-        <Link to="/event">📷 Event</Link>
       </Col>
       <Col>
       <Link to="/worldcuproom/1">worldcuproom</Link>

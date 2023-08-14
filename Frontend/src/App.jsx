@@ -30,7 +30,7 @@ import LikeDesigner from "./components/CustomerComponent/LikeDesigner";
 import MapView from "./Routes/ViewPage/MapView";
 import WorldCupRoomWrapper from "./components/WorldCup/WorldCupRoomWrapper";
 import Event from "./Routes/EventPage/Event";
-
+import Map from "./Routes/ViewPage/Map";
 
 function App() {
   return (
@@ -59,6 +59,7 @@ function App() {
         <Route path="designermypage/:designerSeq" element={<DesignerMyPage/>} />
         <Route path="listview" element={<ListView/>} />
         <Route path="mapview" element={<MapView/>} />
+        <Route path="map" element={<Map/>} />
         <Route path="event" element={<Event/> } />
         <Route path="editdesignerinfo/:designerSeq" element={<EditDesignerInfo/>} />
         <Route path="consultresultpage/:consultingseq" element={<ConsultResultPage/>} />

@@ -14,7 +14,18 @@ const Container = styled.div`
   justify-content: center;
   width: 80%;
   margin: 0 auto;
-  
+`;
+const ReservBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  margin: 10px auto;
+  &:last-child{
+    & .separator {
+      display: none;
+    }
+  }
 `;
 const Hr = styled.div`
   margin: 20px 0 20px 0;
@@ -38,7 +49,6 @@ const Box = styled.div`
 const DesignerImg = styled.img`
   width: 100px;
 `;
-
 const InfoBox = styled.div`
   display: flex;
   flex-direction: column;
@@ -85,7 +95,7 @@ function ScheduleListImg(){
   const userType = localStorage.getItem('userType')
   const navigate = useNavigate();
   const [sessionId, setSessionId] = useRecoilState(sessionIdState);
-  const { data, isLoading, isError } = useQuery(
+  const { data, isLoading, isError, refetch } = useQuery(
     ["customerMyPage", customerSeq],
     () => getCustomerMyPage(customerSeq)
   );
@@ -104,7 +114,7 @@ function ScheduleListImg(){
       // 상담 취소
       const reservationResult = await reservationCancel(consultingSeq);
       console.log(reservationResult, "상담취소");
-  
+      // refetch();
     } catch (error) {
       console.error("API 호출 실패", error);
     }
@@ -118,13 +128,13 @@ function ScheduleListImg(){
   }
   console.log(data, "고객 마이페이지 조회`");
   return (
-    <>
+    <Container>
       {data &&
         data.responseFutureConsultingDtoList &&
         data.responseFutureConsultingDtoList
         .filter(item => item.cancelDate === null)
         .map((data) => (
-          <Container>
+          <ReservBox>
             <Wrap>
               <Wrapper>
                 <Box>
@@ -161,9 +171,10 @@ function ScheduleListImg(){
                 </InfoBox>
               </Wrapper>
             </Wrap>
-          </Container>
+            <Hr className='separator'/>
+          </ReservBox>
         ))}
-    </>
+    </Container>
   );
 };
 

@@ -28,7 +28,6 @@ const InfoWrapper = styled.div`
   display: flex;
   justify-content: space-around;
   width: 100%;
-  height: 270px;
   background-color: #f8f1d9;
 `;
 const ImgBox = styled.div`
@@ -78,10 +77,10 @@ const ReserveWrapper = styled.div`
   display: flex;
   border: 2px solid gray;
   margin: 160px auto 50px auto;
-  height: 150px;
   width: 60%;
   border-radius: 0.7rem;
   background-color: #f9f5f0;
+  padding: 10px 0;
 `;
 
 const Wrapper = styled.div`
@@ -92,10 +91,13 @@ const FaceBox = styled.div``;
 const FaceImg = styled.img``;
 
 const Box = styled.div`
-  height: 500px;
   border: 0;
   border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 15px;
   background-color: #f9f5f0;
+  margin-bottom: 20px;
+  padding-bottom: 30px;
 `;
 
 const ClickBtn = styled.button`

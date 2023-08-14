@@ -7,6 +7,7 @@ import { useQuery } from "react-query";
 import { BASE_URL } from '../apis/rootUrl';
 import { fetchMain, customerMain, designerMain } from "../apis";
 import { useNavigate } from "react-router-dom";
+import swal from "sweetalert";
 
 const Wrapper = styled.div`
   display: flex;
@@ -107,12 +108,17 @@ const Name = styled.p`
   font-size: 13px;
   color: white;
 `;
+const EventBox = styled.div`
+  width: 80px;
+  height: 40px;
+  background-color: red;
+`;
 
 function Home() {
   const navigate = useNavigate();
   const userSeq = localStorage.getItem('userSeq') || 0
+  const userType = localStorage.getItem('userType') || 'guest';
   const fetchLogInData = async (userSeq) => {
-    const userType = localStorage.getItem('userType') || 'guest';
     switch(userType) {
       case 'customer':
         return await customerMain(userSeq);
@@ -123,6 +129,13 @@ function Home() {
         return await fetchMain(userSeq);  // seq 0을 넘겨줌
     }
   };
+  const handleEvent = () => {
+    if (userType !== 'customer') {
+      swal("Error", "이벤트는 일반 회원만 가능합니다.", "error");
+      return
+    }
+    navigate(`/event`)
+  }
   const { data, isError, isLoading } = useQuery(['loginData', userSeq], () => fetchLogInData(userSeq));
   console.log(data, "메인 데이터");
   // const { isLoading, data, isError } = useQuery(["noLogInMain"], fetchMain);
@@ -149,8 +162,9 @@ function Home() {
         <ImgText>변화의 즐거움 <br/>Change hair & you</ImgText>
       </Main>
       <MainWrapper>
-      <Title>이주의 인기! Weekly Best Disigner ✨</Title>
+      <Title>이주의 인기! Weekly Best Designer ✨</Title>
       <DesignerBox>
+
       {/* 이부분 나중에 img로 태그 변경하기 */}
       {data.bestDesigner.map((item)=> (
         <ProfileBox 
@@ -168,8 +182,12 @@ function Home() {
       ))
       }
       </DesignerBox>
+      <EventBox onClick={handleEvent}>
+        📷 Event
+      </EventBox>
       </MainWrapper>
       <MainView />
+
     </Wrapper>
   );
 }

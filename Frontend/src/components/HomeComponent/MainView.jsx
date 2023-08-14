@@ -91,7 +91,7 @@ function MainView(){
           </Link>
         </Box>
       </Wrapper>
-      <Recommend/>
+      {/* <Recommend/> */}
   </Container>
   )
 }

@@ -76,7 +76,7 @@ a {
   color:inherit;
 }
 `;
-const client = new QueryClient();
+export const client = new QueryClient();
 
 ReactDOM.render(
   <React.StrictMode>

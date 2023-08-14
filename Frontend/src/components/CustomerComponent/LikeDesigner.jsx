@@ -13,6 +13,12 @@ const Container = styled.div`
   justify-content: center;
   width: 80%;
   margin: 0 auto;
+    &:last-child {
+    & .separator {
+      display: none;
+    }
+  }
+  padding-top: 20px;
 `;
 const Hr = styled.div`
   margin: 20px 0 20px 0;
@@ -22,6 +28,7 @@ const Wrap = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top:20px;
 `;
 const Wrapper = styled.div`
   display: flex;
@@ -142,7 +149,6 @@ function LikeDesigner() {
         data.designerList &&
         data.designerList.map((data) => (
           <Container>
-            <Hr />
             <Wrap>
               <Wrapper>
                 <Box>
@@ -190,6 +196,7 @@ function LikeDesigner() {
         <Text>{data.likeCnt}</Text>
         </HeartBox>
             </Wrap>
+            <Hr className="separator" />
           </Container>
         ))}
     </>

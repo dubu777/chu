@@ -282,6 +282,7 @@ function formatDateString(date) {
 
 function Reservation() {
   const customerSeq = localStorage.getItem('userSeq')
+  const userType = localStorage.getItem('userType')
   const [info, setInfo] = useRecoilState(reserveInfo); // 예약 정보 담는 recoil
   const [selectedDate, setSelectedDate] = useState(new Date());
   const formattedSelectedDate = formatDateString(selectedDate);
@@ -310,7 +311,10 @@ function Reservation() {
   // 넘기고 싶은 데이터 모으기
   const handleButtonClick = async() => {
 
-    console.log('보내기 전 info', combinedData)
+    if (userType !== 'customer') {
+      swal("Error", "예약은 일반회원만 가능합니다.", "error");
+      return;
+    }
     // 예약정보 보내기
     try {
       console.log('페이지 try')

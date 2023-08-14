@@ -18,6 +18,7 @@ const Container = styled.div`
 const Hr = styled.div`
   /* margin: 20px 0 20px 0; */
   border-bottom : 2px solid rgba(0, 0, 0, 0.1);
+
 `;
 const Wrap = styled.div`
   display: flex;
@@ -28,6 +29,11 @@ const BigWrap = styled.div`
   /* align-items: center; */
   flex-direction: column;
   margin-top: 20px;
+  &:last-child {
+    & .separator {
+      display: none;
+    }
+  }
 `;
 const Wrapper = styled.div`
   display: flex;
@@ -241,7 +247,6 @@ function ReserveList() {
   return (
     <Container>
       <AnimatePresence>
-      <Hr/>
       {data.responsePastConsultingDtoList.map((data) => (
         <BigWrap>
           <Wrap>
@@ -290,7 +295,7 @@ function ReserveList() {
                   </ReviewBox>
             </Box>
           </Wrap>
-          <Hr/>
+          <Hr className="separator"/>
         </BigWrap>
       ))}
       </AnimatePresence> 

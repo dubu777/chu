@@ -28,3 +28,15 @@ export const kakaoPayInfo = async (pg_token) => {
         throw error;
     }
 }
+
+// 카카오맵 API
+export const getDesignerInfo = async () => {
+    try{
+        
+        const response = await axios.get(`${BASE_URL}/designer/search/around`);
+        console.log('try 진입성공',response.data.result)
+        return response.data.result
+    } catch(error){
+        throw error;
+    }
+}
