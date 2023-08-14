@@ -374,7 +374,7 @@ public class DesignerServiceImpl implements DesignerService{
             List<ResponsePortfolioDto> randomPortfolio = new ArrayList<>();
 
             List<DesignerPortfolio> randportfolios = new ArrayList<>();
-            randportfolios = designerPortfolioRepository.getRandom();
+            randportfolios = designerPortfolioRepository.getRandom(designerSeq);
 
             for(DesignerPortfolio dp : randportfolios){
                 ResponsePortfolioDto dto = new ResponsePortfolioDto();
