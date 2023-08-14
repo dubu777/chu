@@ -99,7 +99,7 @@ public class Consumer implements Runnable {
 
                     Files.write(Path.of("/chu/upload/images/customer/event/confusion/" + task.getCustomerSeq() + ".png"), fileData);
 
-                    eventService.updateConfusionImageNameAndState(task.getConsultingSeq(), task.getCustomerSeq() + ".png", 4);
+                    eventService.updateConfusionImageNameAndState(task.getCustomerSeq(), task.getCustomerSeq() + ".png", 4);
                     // 파일 처리 로직을 적용하고 예시로 콘솔에 출력
                     log.info("Filename: {}",filename);
                     log.info("File size: {} bytes", bytesRead);
