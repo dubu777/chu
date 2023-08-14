@@ -15,7 +15,7 @@ import { toggleLikeButton } from "../../apis";
 import Swal from 'sweetalert2';
 
 const Container = styled.div`
-margin-top: 20;
+  margin-top: 20;
   display: flex;
   justify-content: center;
   align-items: center;

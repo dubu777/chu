@@ -10,9 +10,8 @@ import {
   readDesignerNotification,
 } from "../../apis";
 import { useState, useEffect } from "react";
-import { useQuery } from "react-query";
-import { Dropdown, Badge } from "react-bootstrap";
-import { ToastContainer, toast } from 'react-toastify';
+import { useQuery, useMutation } from "react-query";
+import { ToastContainer, toast } from "react-toastify";
 
 const Nav = styled(motion.nav)`
   display: flex;
@@ -54,27 +53,45 @@ const Item = styled(motion.li)`
   justify-content: center;
   flex-direction: column;
   font-weight: 500;
+  cursor: pointer;
 `;
 const NotificationBadge = styled.div`
-  /* 원하는 스타일을 추가하세요 */
+  position: relative;
+  display: inline-block;
+`;
+
+const Badge = styled.span`
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  padding: 5px 10px;
   border-radius: 50%;
   background-color: red;
   color: white;
-  padding: 5px 10px;
-  position: relative;
-  top: -10px;
-  right: -10px;
+  font-size: 12px;
 `;
 
+const NotificationList = styled.div`
+  position: absolute;
+  width: 300px;
+  background-color: white;
+  border: 1px solid #ccc;
+  overflow: auto;
+  max-height: 300px;
+  z-index: 1000;
+`;
 const NotificationItem = styled.div`
-  /* 알림 아이템 스타일을 추가하세요 */
   padding: 10px;
+  border-bottom: 1px solid #eee;
   cursor: pointer;
   &:hover {
-    background-color: #f7f7f7;
+    background-color: #f0f0f0;
   }
 `;
-
+const Img = styled.img`
+  width: 28px;
+  height: 28px;
+`;
 const logoVariants = {
   normal: {
     color: "black",
@@ -92,7 +109,7 @@ const navVariants = {
     backgroundColor: "rgba(0,0,0,0)",
   },
   scroll: {
-    backgroundColor: "#f9f9f9"
+    backgroundColor: "#f9f9f9",
   },
 };
 
@@ -104,8 +121,7 @@ function Header() {
   const [isLogIn, setIsLogIn] = useRecoilState(loginState);
   const [token, setToken] = useRecoilState(accessTokenState);
   const [show, setShow] = useState(false);
-  const {scrollY} = useScroll();
-  const [notifications, setNotifications] = useState([]);
+  const { scrollY } = useScroll();
   const handleNavigation = () => {
     if (localStorage.getItem("userType") === "customer") {
       const customerSeq = userSeq;
@@ -148,66 +164,79 @@ function Header() {
   //     console.error("Error reading notification", error);
   //   }
   // };
-  useEffect(() => {
-    // 알림을 조회하는 함수
-    const fetchNotifications = async () => {
-      let fetchedNotifications = [];
-
-      if (userType === 'designer') {
-        fetchedNotifications = await getDesignerNotification(userSeq);
-      } else {
-        fetchedNotifications = await getCustomerNotification(userSeq);
-      }
-
-      setNotifications(fetchedNotifications);
-    };
-
-    fetchNotifications();
-  }, [userSeq, userType]);
-
-  // 알림 클릭 시 동작
-  const handleNotificationClick = async (alertSeq) => {
-    if (userType === 'designer') {
-      await readDesignerNotification(alertSeq);
-    } else {
-      await readCustomerNotification(alertSeq);
+  const fetchNotifications = async () => {
+    if (!userSeq) {
+      return;
     }
-
-    // 알림 제거
-    const updatedNotifications = notifications.filter(notif => notif.alertSeq !== alertSeq);
-    setNotifications(updatedNotifications);
+  
+    if (userType === "customer") {
+      return await getCustomerNotification(userSeq);
+    } else if (userType === "designer") {
+      return await getDesignerNotification(userSeq);
+    } 
   };
 
+  // 알림 조회를 위한 useQuery 훅
+  const {
+    data: notifications = [],
+    isError,
+    isLoading,
+    refetch,
+  } = useQuery("notifications", fetchNotifications, {
+    enabled: Boolean(localStorage.getItem("userType")), // localStorage에 userType이 없으면 쿼리를 실행하지 않음
+    retry: false,
+  });
+  const readNotification = async (alertSeq) => {
+    const userType = localStorage.getItem("userType") || "guest";
+
+    if (userType === "customer") {
+      return await readCustomerNotification(alertSeq);
+    } else if (userType === "designer") {
+      return await readDesignerNotification(alertSeq);
+    } else {
+      throw new Error("Invalid user type for reading notifications");
+    }
+  };
+  const mutation = useMutation(readNotification, {
+    onSuccess: () => {
+      refetch(); // 알림 읽기가 성공하면, 알림 데이터를 다시 가져옴
+    },
+  });
+  const handleNotificationClick = async (alertSeq) => {
+    try {
+      await mutation.mutateAsync(alertSeq);
+      toast.success("Notification marked as read.");
+    } catch (error) {
+      toast.error("Failed to mark the notification as read.");
+    }
+  };
   useEffect(() => {
     scrollY.onChange(() => {
-      if (scrollY.get() > 80){
-      navAnimation.start("scroll");
-    } else {
-      navAnimation.start("top");
-    }
+      if (scrollY.get() > 80) {
+        navAnimation.start("scroll");
+      } else {
+        navAnimation.start("top");
+      }
     });
-  },[scrollY, navAnimation])
+  }, [scrollY, navAnimation]);
 
   console.log(notifications, "알림");
-
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error loading notifications</div>;
 
   return (
-    <Nav
-      variants={navVariants}
-      animate={navAnimation} 
-      initial={"top"}
-    >
+    <Nav variants={navVariants} animate={navAnimation} initial={"top"}>
       <Col>
-      <Items>
-        <Logo
-          onClick={() => navigate("/")}
-          variants={logoVariants}
-          whileHover="active"
-          initial="nomal"
-        >
-          Chu
-        </Logo>
-        
+        <Items>
+          <Logo
+            onClick={() => navigate("/")}
+            variants={logoVariants}
+            whileHover="active"
+            initial="nomal"
+          >
+            Chu
+          </Logo>
+
           <Link to="/">
             <Item variants={logoVariants} whileHover="active" initial="nomal">
               Home
@@ -234,33 +263,25 @@ function Header() {
             >
               My Page
             </Item>
-
-            {/* <Dropdown show={show} onToggle={() => setShow(!show)}>
-              <Dropdown.Toggle variant="success">
-                알림
-                {notifications.length > 0 && (
-                  <Badge pill bg="primary">
-                    {notifications.length}
-                  </Badge>
-                )}
-              </Dropdown.Toggle>
-
-              <Dropdown.Menu>
-                {notifications.map((notification) => (
-                  <Dropdown.Item key={notification.id}>
-                    <p>{notification.message}</p>
-                    <button
+            <NotificationBadge>
+              <Badge>{notifications.length}</Badge>
+              <Img src="/icon/notification.png" alt="Alarm Icon" />
+              <NotificationList>
+                {notifications
+                  .filter((notification) => !notification.check)
+                  .map((notification) => (
+                    <NotificationItem
+                      key={notification.alertSeq}
                       onClick={() =>
-                        handleReadNotification(notification.alertSeq)
+                        handleNotificationClick(notification.alertSeq)
                       }
                     >
-                      읽기
-                    </button>
-                  </Dropdown.Item>
-                ))}
-              </Dropdown.Menu>
-            </Dropdown> */}
-
+                      {notification.message}
+                    </NotificationItem>
+                  ))}
+              </NotificationList>
+              <ToastContainer autoClose={3000} />
+            </NotificationBadge>
           </>
         ) : (
           <>
