@@ -1,6 +1,7 @@
 package com.chu.event.service;
 
 import com.chu.event.domain.ResponseEventDto;
+import com.chu.global.domain.ImageMakeDto;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
