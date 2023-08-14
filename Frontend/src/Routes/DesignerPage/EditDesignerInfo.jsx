@@ -485,19 +485,23 @@ function EditDesignerInfo() {
               <Hr />
               <Box>
                 <InfoText>소속 미용실명</InfoText>
+                <SearchBox2>
                   <SearchInput
                     placeholder="소속 미용실"
                     {...register("salonName", {
                       required: "소속 미용실을 입력해주세요.",
                     })}
                   />
+                </SearchBox2>
                 <InfoText>소속 미용실명</InfoText>
+                <SearchBox2>
                   <SearchInput
                     placeholder="소속 미용실"
                     {...register("salonName", {
                       required: "소속 미용실을 입력해주세요.",
                     })}
                   />
+                </SearchBox2>
               </Box>
               <ErrorMessage>{errors?.salonName?.message}</ErrorMessage>
               <Hr />

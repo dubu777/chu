@@ -263,7 +263,6 @@ function DesignerMyPage() {
           </ChangeBtn>
         </ChangeBox>
       </ProfileWrapper>
-
       {/* 여기는 탭 작동 */}
       <Wrapper>
         <ClickBtn
