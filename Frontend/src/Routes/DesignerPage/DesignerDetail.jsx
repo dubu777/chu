@@ -12,8 +12,10 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { BASE_URL } from '../../apis/rootUrl';
 import { toggleLikeButton } from "../../apis";
+import swal from "sweetalert";
 
 const Container = styled.div`
+margin-top: 20;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -344,15 +346,23 @@ function DesignerDetail() {
                     <Text>{data.cost}</Text>
                   </Box>
                   {/* 회원유형에 따라 예약버튼 활성화 */}
-                  {usertype === 'designer' ? null : (
-                    <ReservBox
-                      onClick={() => navigate(`/reservation/${designerSeq}`)}
-                      whileHover={{ backgroundColor: "rgb(244,153,26)" }}
-                    >
-                      <Icon src="/icon/reservBtn.png" />
-                      <Text>예약</Text>
-                    </ReservBox>
-                  )}
+
+                  <ReservBox
+                    onClick={() => {
+                      if (usertype === 'designer') {
+                        swal('회원 전용 기능입니다 :)');
+                      } else if (usertype !== 'customer') {
+                        swal('예약 서비스는 로그인 후 이용 가능합니다 :)');
+                        navigate(-1)
+                      } else {
+                        navigate(`/reservation/${designerSeq}`);
+                      }
+                    }}
+                    whileHover={{ backgroundColor: "rgb(244,153,26)" }}
+                  >
+                    <Icon src="/icon/reservBtn.png" />
+                    <Text>예약</Text>
+                  </ReservBox>
                 </Box>
               </DesignerNameWrap>
             </DesignerInfoBox>

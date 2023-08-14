@@ -180,6 +180,9 @@ function ScheduleListImg(){
                       onClick={() => handleCancel(data.consultingSeq)}
                       >
                       상담 취소
+                      </ReservBtn>
+                    <ReservBtn>
+                      onClick={() => navigate(`/worldcuproom/${data.consultingSeq}`)}
                     </ReservBtn>
                   </Box>
                 </InfoBox>
