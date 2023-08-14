@@ -72,9 +72,9 @@ function Event() {
         }
     };
     // goToConfusionWolrd 함수 내에서 formData 생성
-    const goToConfusionWolrd = async (customerSeq) => {
+    const goToConfusionWolrd = (customerSeq) => {
         try {
-            const response = await postEventInfo(customerSeq);
+            const response = postEventInfo(customerSeq);
             console.log(response);
             alert("사진이 만들어지는 동안 대기해주세요~");
             setResponseState(3);
