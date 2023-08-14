@@ -186,7 +186,6 @@ function DesignerMyPage() {
     formData.append("img", file);
 
     try {
-      // 이미지를 서버에 업로드하고 imgSeq를 받아옴
       const response = await attachDesignerImage(designerSeq, formData);
       console.log(response)
       setSelectedFile(`https://i9b111.q.ssafy.io/api/designer-profile/${file.name}`);
@@ -194,22 +193,6 @@ function DesignerMyPage() {
       console.error(error);
     }
   };
-
-  // const handleSubmitImage = async (e) => {
-  //   e.preventDefault();
-  //   if (fileInputRef.current.files[0]) {
-  //     const formData = new FormData();
-  //     formData.append("img", fileInputRef.current.files[0]);
-  //     for (const keyValue of formData) console.log(keyValue);
-
-  //     try {
-  //       const file = await attachDesignerImage(seq, formData);
-  //       console.log(file);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
-  // };
 
   // 누른 버튼에 따라
   const handleBtnClick = (btnType) => {

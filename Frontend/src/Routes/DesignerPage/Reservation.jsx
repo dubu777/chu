@@ -302,7 +302,6 @@ function Reservation() {
 
   // 넘기고 싶은 데이터 모으기
   const handleButtonClick = async() => {
-
     if (userType !== 'customer') {
       swal("Error", "예약은 일반회원만 가능합니다.", "error");
       return;
@@ -353,6 +352,7 @@ function Reservation() {
       console.log(error)
     }
   };
+
 
   const settings = {
     className: "center",
