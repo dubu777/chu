@@ -297,17 +297,7 @@ function Reservation() {
   const { designerSeq } = useParams();
   const [requestFile, setRequestFile] = useState(null);
   const [imgSeqArray, setImgSeqArray] = useState(null)
-  // const combinedData = {
-  //   customerSeq: customerSeq,
-  //   designerSeq: designerSeq,
-  //   date: formattedSelectedDate,
-  //   time: selectedTime,
-  //   consultingMemo: note,
-  //   portfolios: selectedImgSeqs,
-  // };
-  
-  // const formData = new FormData();
-  // formData.append('img', selectedFile)
+
 
   // 넘기고 싶은 데이터 모으기
   const handleButtonClick = async() => {
@@ -398,17 +388,13 @@ function Reservation() {
     ],
   };
 
-  // 시간 데이터 호출
-  // const { data: data, isError: Error, isLoading: Loading } = useQuery(
-  //   ['possibleTime', designerSeq],
-  //   () => getPossibleTimeApi(designerSeq)
-  // );
   const ClickCalendarDate = async(designerSeq, selectedDateString) => {
     console.log('디자이너', designerSeq, '날짜', selectedDateString)
     try{
       console.log('try 페이지에 들어온 seq', selectedDateString)
       const data  = await getPossibleTimeApi(designerSeq, selectedDateString);
       console.log('시간 데이터 조회 성공', data)
+      generateTimeButtons(data)
     }catch(error){
       console.error("API Error:", error);
     }
@@ -421,7 +407,8 @@ function Reservation() {
   );
     console.log('포트폴리오 왔니' , imgData)
 
-  const generateTimeButtons = () => {
+  const generateTimeButtons = (data) => {
+    console.log('들어왔?',data)
     const timeButtons = [];
     const startTime = 9; // 시작 시간 (9:00)
     const endTime = 22.5; // 종료 시간 (22:30)
@@ -432,6 +419,7 @@ function Reservation() {
       const second = Math.floor(((i - hour) * 60 - minute) * 60);
       const formatTime = `${hour.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")}`;
       const formattedTime = `${hour.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")}:${second.toString().padStart(2, "0")}`;
+      
       timeButtons.push(
         <TimeButton
           key={formattedTime}
@@ -467,7 +455,6 @@ function Reservation() {
       setSelectedImgs((prev) => [...prev, item]);
     }
   };
-
 
   // 상담 이미지 첨부
   const handleFileChange = (event) => {

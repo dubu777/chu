@@ -23,7 +23,7 @@ const Nav = styled(motion.nav)`
   top: 0;
   font-size: 18px;
   padding: 20px 60px;
-  color: white;
+  color: #353432;
   font-family: sans-serif;
 `;
 
