@@ -304,6 +304,7 @@ function DesignerDetail() {
     ["designerDetail", designerSeq, customerSeq],
     () => getDesignerDetail(designerSeq, customerSeq)
   );
+  console.log('디테일 데이터', data)
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error loading designer details</div>;
