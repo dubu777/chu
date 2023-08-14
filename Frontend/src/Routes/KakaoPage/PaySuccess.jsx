@@ -1,11 +1,7 @@
 import { styled } from "styled-components";
 import { useState, useEffect } from "react";
-import { useQuery, useMutation } from "react-query";
 import { kakaoPayInfo } from "../../apis/kakao";
 import { useNavigate } from "react-router";
-import { useRecoilState } from 'recoil';
-import {reserveInfo, imgFileState} from "../../recoil"
-import {getPossibleTimeApi, getPortfolioShow, postReserveImg, postReserveInfo } from "../../apis"
 
 const Container = styled.div`
   display: flex;
@@ -16,47 +12,25 @@ const Container = styled.div`
 `;
 const SuccessBox = styled.div`
   display: flex;
-
 `;
 
 const Text = styled.span`
   font-size: 20px;
   font-weight: 600;
 `;
-
-
+const CompleteBtn = styled.button`
+  background-color: white;
+  border-radius: 5px;
+  border: 1px solid blue;
+`;
 function PaySuccess() {
-  const [info, setInfo] = useRecoilState(reserveInfo);
-  const customerSeq = localStorage.getItem('userSeq')
   const navigate = useNavigate();
-  // const [consultingSeq, setConsultingSeq] = useState(null);
-  const [requestFile, setRequestFile] = useRecoilState(imgFileState);
-
-  const handleComplete = async () => {
-    try{
-      const response  = await postReserveInfo(info);
-      console.log('정보보보',response);
-      // setConsultingSeq(response)
-      //예약 정보 이미지 보내기
-      if (response) {
-        console.log('response왔어?', response)
-        const formData = new FormData();
-        formData.append("img", requestFile);
-
-        try{
-          console.log('try 페이지에 들어온 seq', response)
-          const response1  = await postReserveImg(response, formData);
-          console.log('이미지미지', response1);
-          navigate(`/customermypage/${customerSeq}`)
-        }catch(error){
-          console.error("Img Send Error:", error);
-        }
-      }
-  }catch(error){
-    console.error("Img Send Error:", error);
-  }
-  }
-
+  const customerSeq = localStorage.getItem('userSeq')
+  const handleComplete = () => {
+    try {
+      navigate(`/customermypage/${customerSeq}`);
+    } catch (error) {}
+  };
 
   const handleKakaoPayInfo = async (token) => {
     try {
@@ -78,11 +52,10 @@ function PaySuccess() {
 
   return (
     <Container>
-        <Text>결제가 완료되었습니다.</Text>
-
-        <button onClick={handleComplete}>예약 확정 하기</button>
+      <Text>결제가 완료되었습니다.</Text>
+      <button onClick={handleComplete}>예약 확정 하기</button>
     </Container>
-  )
+  );
 }
 
 export default PaySuccess;
