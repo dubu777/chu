@@ -34,6 +34,7 @@ const Logo = styled(motion.div)`
   margin-right: 10px;
   width: 95px;
   height: 25px;
+  color: #353432;
   font-size: 20px;
   font-weight: bold;
   cursor: pointer;
@@ -174,12 +175,6 @@ function Header() {
             </Item>
           </Link>
         </Items>
-      </Col>
-      <Col>
-        <Link to="/checkreserve">kakao pay</Link>
-      </Col>
-      <Col>
-      <Link to="/worldcuproom/1">worldcuproom</Link>
       </Col>
       <Col>
         {isLogIn ? (

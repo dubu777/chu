@@ -14,6 +14,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { BASE_URL } from "../../apis/rootUrl";
 import swal from "sweetalert";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
@@ -596,7 +597,9 @@ function Reservation() {
                     />
                   <SText>- 이마가 보이는 사진을 업로드해 주세요.</SText>
                 <Hr />
-                <ReservBtn onClick={handleButtonClick}>상담 예약하기</ReservBtn>
+                <Link to="/checkreserve">
+                  <ReservBtn onClick={handleButtonClick}>상담 예약하기</ReservBtn>
+                </Link>
                   <SText>
                     {" "}
                     - 예약취소 시, 24시간 이전에만 예약금 환불이 가능합니다.
