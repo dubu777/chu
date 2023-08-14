@@ -16,9 +16,10 @@ public class RequestDesignerInfoUpdateDto {
     private Integer cost;
     private String pwd;
     private String salonName;
+    // address 바로 넣지 말고 kakao에서 받아온 정보 넣기
     private String address;
-    private Double latitude;
-    private Double longitude;
+//    private Double latitude;
+//    private Double longitude;
     private String introduction;
 
     private List<Integer> myHairStyleTag;

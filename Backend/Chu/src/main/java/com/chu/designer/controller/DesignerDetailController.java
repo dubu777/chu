@@ -41,18 +41,28 @@ public class DesignerDetailController {
         }
     }
 
+    // 디자이너 회원 정보 수정
     @PutMapping("/{designer-seq}")
-    public ResponseEntity<HttpResponseDto> updateDesignerInfo(@PathVariable("designer-seq") int designerSeq, @RequestBody RequestDesignerInfoUpdateDto requestDesignerInfoUpdateDto) {
+    public ResponseEntity<HttpResponseDto> updateDesignerInfo(@PathVariable("designer-seq") int designerSeq,
+                                                              @RequestBody RequestDesignerInfoUpdateDto requestDesignerInfoUpdateDto) {
 
-        boolean isSuccess = designerDetailService.updateDesignerInfo(designerSeq, requestDesignerInfoUpdateDto);
-
-        if (isSuccess) {
-            HttpResponseDto httpResponseDto = new HttpResponseDto(200, null);
-            return ResponseEntity.ok(httpResponseDto);
-        } else {
-            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
-            return ResponseEntity.ok(httpResponseDto);
+//        boolean isSuccess = designerDetailService.updateDesignerInfo(designerSeq, requestDesignerInfoUpdateDto);
+//
+//        if (isSuccess) {
+//            HttpResponseDto httpResponseDto = new HttpResponseDto(200, null);
+//            return ResponseEntity.ok(httpResponseDto);
+//        } else {
+//            HttpResponseDto httpResponseDto = new HttpResponseDto(204, null);
+//            return ResponseEntity.ok(httpResponseDto);
+//        }
+        try{
+            designerDetailService.updateDesignerInfo(designerSeq, requestDesignerInfoUpdateDto);
+        } catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));
         }
+
+        return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), null));
     }
 
     @GetMapping("/mypage/{designer-seq}")
