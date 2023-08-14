@@ -305,6 +305,7 @@ function DesignerDetail() {
     () => getDesignerDetail(designerSeq, customerSeq)
   );
   const userType = localStorage.getItem('userType')
+  console.log('디테일 데이터', data)
 
   const handleReservBoxClick = () => {
     if (userType === 'designer') {

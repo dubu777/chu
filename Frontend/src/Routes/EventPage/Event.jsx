@@ -4,8 +4,56 @@ import { styled } from "styled-components";
 import { useState, useEffect } from "react";
 import { getEventInfo, postEventInfo, postInputImage, postTargetImage } from "../../apis/event";
 
+const Imgbox = styled.div`
+`;
+const P = styled.p`
+	text-align: right;
+	margin-right: 10px;
+	margin-bottom: 5px;
+`;
+const Text = styled.p`
+	margin-top: 10px;
+`;
+const Borderbox = styled.div`
+	border: dashed 2px;
+	border-color: #988b60;
+	margin: 10px 20px;
+	border-radius: 0.5rem;
+`;
+
+const Box = styled.div`
+  width: 40%;
+	height: 350px;
+	background-color: #f7f6e6;
+	margin: auto;
+	border-radius: 0.6rem;
+`;
+const Input = styled.input`
+	font-family: "Blue-road";
+	margin: 15px;
+`;
+
+const DefaultImg = styled.img`
+	width: 50px;
+	height: 50px;
+	margin-top: 20%;
+	margin-bottom: 10px;
+`;
+const DeleteBtn = styled.button`
+	border: 0;
+	height: 20px;
+	width: 40px;
+	border-radius: 0.8rem;
+	background-color: #f6be4e;
+	font-size: 10px;
+`;
+const Img = styled.img`
+    width: 200px;
+    height: 200px;
+`;
+
 const Container = styled.div`
-    margin: 40px;
+    margin-top: 100px;
 `;
 const SubmitImg = styled.input`
   margin: 15px 0px;
@@ -116,16 +164,19 @@ function Event() {
         };
         reader.readAsDataURL(file);
     };
-
+    function handleFileRemoveButton(){
+        // 파일 선택을 초기화
+        document.getElementById('file').value = '';
+        setInputImageFile(null);
+        setInputImagePath(null);
+            // setFileName('');
+      };
     useEffect(() => {
         getInfo(customerSeq);
     }, [customerSeq]);
 
     return (
         <Container>
-            <p>여기는 추가 기능 이벤트 페이지</p>
-            <p>파이팅🔥</p>
-
             {/* 만약  */}
             <Profile
                 src={inputImagePath}
