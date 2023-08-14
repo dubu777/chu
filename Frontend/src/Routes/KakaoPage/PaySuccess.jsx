@@ -33,11 +33,9 @@ function PaySuccess() {
   const [requestFile, setRequestFile] = useRecoilState(imgFileState);
 
   const handleComplete = async () => {
-    console.log(requestFile, "이미지 데이터");
-    console.log(info, "예약 정보 인포");
     try{
       const response  = await postReserveInfo(info);
-      console.log('정보 보내기',response);
+      console.log('정보보보',response);
       // setConsultingSeq(response)
       //예약 정보 이미지 보내기
       if (response) {
@@ -88,3 +86,4 @@ function PaySuccess() {
 }
 
 export default PaySuccess;
+

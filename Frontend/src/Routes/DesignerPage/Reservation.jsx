@@ -246,7 +246,7 @@ const selectedVariants = {
   initial: {
     scale: 0,
     opacity: 0,
-  },
+  }, 
   selected: {
     scale: 1,
     opacity: 1,
@@ -272,6 +272,7 @@ const EmtyBox = styled.div`
 const SubmitImg = styled.input`
   margin: 15px 0px;
 `;
+
 function formatDateString(date) {
   const year = date.getFullYear();
   const month = (date.getMonth() + 1).toString().padStart(2, "0");
@@ -316,7 +317,7 @@ function Reservation() {
         return selectedFromRandomPortfolio.imgSeq;
       }
       
-      return null; // 해당 이미지를 찾지 못한 경우
+      return ""; // 해당 이미지를 찾지 못한 경우
     });
     
     console.log("선택한 이미지들의 imgSeq 배열:", selectedImgSeqs);
@@ -343,10 +344,13 @@ function Reservation() {
     console.log('보내기 전 info', combinedData)
     // 예약정보 보내기
       console.log('페이지 try')
-      setInfo(combinedData);
+      setInfo((combinedData) => ({
+        ...combinedData,
+      }));
+      console.log('최종 예약',info)
       navigate('/checkreserve')
     };
-    console.log(info, "리코일데이터");
+
       // const response  = await postReserveInfo(combinedData);
       // console.log('정보보보',response);
       // setConsultingSeq(response)
@@ -495,7 +499,6 @@ function Reservation() {
       swal("⚠️ Image 파일 형식을 선택해주세요 :)");
     }
   };
-  console.log(requestFile);
   // console.log('원하는 사진명:', selectedImgs)
         
         if (imgLoading) {
@@ -505,8 +508,6 @@ function Reservation() {
           return <div>홈 페이지 에러{imgData}</div>;
   }
   
-  // console.log('데이터가 무슨이름으로 들어오니', imgData.designerPortfolio)
-  // console.log('최종 예약 이미지',formData)
 
   return (
     <Container>
@@ -538,7 +539,8 @@ function Reservation() {
             </TimeBox>
             <SubTitle>전달사항</SubTitle>
             <Hr />
-            <TextArea
+            <TextArea 
+
               placeholder="내용을 입력해주세요." 
               value={note} 
               onChange={handleNoteChange}
