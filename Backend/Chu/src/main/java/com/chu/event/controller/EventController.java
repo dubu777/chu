@@ -92,8 +92,8 @@ public class EventController {
 
             // GPU 서버로 이미지 만들어주세요 이미지 전달 로직
             List<String> targetFileUrls = new ArrayList<>();
-            targetFileUrls.add("/chu/upload/images/customer/event/target/" + customerSeq + ".png");
             targetFileUrls.add("/chu/upload/images/customer/event/origin/" + customerSeq + ".png");
+            targetFileUrls.add("/chu/upload/images/customer/event/target/" + customerSeq + ".png");
 
             ImageMakeDto imageMakeDto = new ImageMakeDto();
             imageMakeDto.setFileList(targetFileUrls);
