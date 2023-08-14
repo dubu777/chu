@@ -140,10 +140,11 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
             int s = ch.getHairConditionDict().getSeq();
             // 라벨링
 
-            HairStyleDict dict = hairStyleDictRepository.findBySeq(s);
+            HairConditionDict dict = hairConditionDictRepository.findBySeq(s);
+            //HairStyleDict dict = hairStyleDictRepository.findBySeq(s);
             String label = "";
             if(dict != null)
-                label = dict.getHairStyleLabel();
+                label = dict.getLabel();
 
             list.add(label);
         }
