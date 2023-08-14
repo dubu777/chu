@@ -8,7 +8,7 @@ import { useRecoilState } from 'recoil';
 import { useNavigate, useParams } from "react-router";
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
 import {getPossibleTimeApi, getPortfolioShow, postReserveImg, postReserveInfo } from "../../apis"
-import {reserveInfo, consultImg} from "../../recoil"
+import {reserveInfo, imgFileState} from "../../recoil"
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -296,18 +296,19 @@ function Reservation() {
   const [consultingSeq, setConsultingSeq] = useState(null);
   const [pofolnum, setPofolNum] = useState(null);
   const { designerSeq } = useParams();
-  const [requestFile, setRequestFile] = useState(null);
+  const [requestFile, setRequestFile] = useRecoilState(imgFileState);
   const [imgSeqArray, setImgSeqArray] = useState(null)
+  const navigate = useNavigate();
 
 
   // 넘기고 싶은 데이터 모으기
-  const handleButtonClick = async() => {
+  const handleButtonClick = () => {
 
     if (userType !== 'customer') {
       swal("Error", "예약은 일반회원만 가능합니다.", "error");
       return;
     }
-    const selectedImgSeqs = selectedImgs.map((item) => {
+      const selectedImgSeqs = selectedImgs.map((item) => {
       const selectedImage = imgData.designerPortfolio.find((image) => image.imgName === item);
       return selectedImage ? selectedImage.imgSeq : null;
     });
@@ -323,36 +324,32 @@ function Reservation() {
     };
     console.log('보내기 전 info', combinedData)
     // 예약정보 보내기
-    try {
       console.log('페이지 try')
-      await setInfo((prevInfo) => ({
+      setInfo((prevInfo) => ({
         ...prevInfo,
         ...combinedData,
       }));
+      navigate('/checkreserve')
+    };
 
-      const response  = await postReserveInfo(combinedData);
-      console.log('정보보보',response);
-      setConsultingSeq(response)
-      //예약 정보 이미지 보내기
-      if (response) {
-        console.log('response왔어?', response)
-        const formData = new FormData();
-        formData.append("img", requestFile);
+      // const response  = await postReserveInfo(combinedData);
+      // console.log('정보보보',response);
+      // setConsultingSeq(response)
+      // //예약 정보 이미지 보내기
+      // if (response) {
+      //   console.log('response왔어?', response)
+      //   const formData = new FormData();
+      //   formData.append("img", requestFile);
 
-        try{
-          console.log('try 페이지에 들어온 seq', response)
-          const response1  = await postReserveImg(response, formData);
-          console.log('이미지미지', response1);
-          swal("Success", "결제페이지로 이동합니다.", "success")
-        }catch(error){
-          console.error("Img Send Error:", error);
-        }
-      }
-      
-    } catch(error){
-      console.log(error)
-    }
-  };
+      //   try{
+      //     console.log('try 페이지에 들어온 seq', response)
+      //     const response1  = await postReserveImg(response, formData);
+      //     console.log('이미지미지', response1);
+      //     swal("Success", "결제페이지로 이동합니다.", "success")
+      //   }catch(error){
+      //     console.error("Img Send Error:", error);
+      //   }
+      // }
 
   const settings = {
     className: "center",
@@ -597,9 +594,7 @@ function Reservation() {
                     />
                   <SText>- 이마가 보이는 사진을 업로드해 주세요.</SText>
                 <Hr />
-                <Link to="/checkreserve">
                   <ReservBtn onClick={handleButtonClick}>상담 예약하기</ReservBtn>
-                </Link>
                   <SText>
                     {" "}
                     - 예약취소 시, 24시간 이전에만 예약금 환불이 가능합니다.

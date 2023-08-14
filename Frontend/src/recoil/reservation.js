@@ -1,4 +1,4 @@
-import { atom, useRecoilState } from 'recoil';
+import { atom } from 'recoil';
 
 // 예약 정보를 각각 Atom에 정의(예약일, 시간, 메모)
 export const reserveInfo = atom({
@@ -13,8 +13,8 @@ export const reserveInfo = atom({
     },
   });
 
-const consultImg = atom({
-  key: 'selectedFile',
+
+export const imgFileState = atom({
+  key: 'imgFile',
   default: null,
 });
-

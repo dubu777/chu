@@ -139,7 +139,7 @@ function Portfolio(){
         <Img src={`https://i9b111.q.ssafy.io/api/portfolio/${img.imgName}`}
 alt="Image" /> 
         <DeleteBtn onClick={() => handleDelete(img.imgSeq)}>
-          <DeleteImg src={"./icon/bin.png"}></DeleteImg>
+          <DeleteImg src={"/icon/bin.png"}></DeleteImg>
         </DeleteBtn>
       </ImgBox>
     ))}

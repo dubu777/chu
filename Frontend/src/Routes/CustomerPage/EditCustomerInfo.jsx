@@ -265,7 +265,7 @@ function EditCustomerInfo(){
           <Title>회원정보 수정</Title>
             <Wrapper>
             <BackBox>
-              <BackBtn src='icon/backBtn.png' onClick={() => navigate(-1)}/>
+              <BackBtn src='/icon/backBtn.png' onClick={() => navigate(-1)}/>
             </BackBox>
               <Form onSubmit={handleSubmit(onValid)}>
                 <InputWrap>

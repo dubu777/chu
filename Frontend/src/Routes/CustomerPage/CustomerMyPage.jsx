@@ -73,15 +73,15 @@ const ChangeBtn = styled(motion.button)`
   color: #272626;
   height: 35px;
 `;
-const ReserveWrapper = styled.div`
-  display: flex;
-  border: 2px solid gray;
-  margin: 160px auto 50px auto;
-  width: 60%;
-  border-radius: 0.7rem;
-  background-color: #f9f5f0;
-  padding: 10px 0;
-`;
+// const ReserveWrapper = styled.div`
+//   display: flex;
+//   border: 2px solid gray;
+//   margin: 160px auto 50px auto;
+//   width: 60%;
+//   border-radius: 0.7rem;
+//   background-color: #f9f5f0;
+//   padding: 10px 0;
+// `;
 
 const Wrapper = styled.div`
   width: 60%;
@@ -470,9 +470,7 @@ function CustomerMyPage() {
         </InfoWrapper>
       </InfoContainer>
       {/* 예약 정보 확인하기 */}
-      <ReserveWrapper>
         <ScheduleListImg />
-      </ReserveWrapper>
       {/* 여기는 탭 작동 */}
       <Wrapper>
         <ClickBtn

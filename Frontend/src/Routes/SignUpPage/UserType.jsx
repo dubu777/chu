@@ -129,16 +129,6 @@ function UserTypeComponet() {
         <Title>회원 유형 선택</Title>
         <Wrapper>
           <Box
-            onClick={() => navigate('/designersignup')}
-            variants={boxVariants} 
-            initial="nomal" 
-            whileHover="hover">
-            <DesignerImg src="./icon/hair-cutting.png"/>
-            <Text>디자이너</Text>
-            <SubText>디자이너가 홈페이지에 가입하는 경우</SubText>
-            <Btn onClick={() => navigate('/designersignup')}>회원가입</Btn>
-          </Box>
-          <Box
             onClick={() => navigate('/customersignup')}
             variants={boxVariants} 
             initial="nomal" 
@@ -147,6 +137,16 @@ function UserTypeComponet() {
             <Text>일반 회원</Text>
             <SubText>일반 회원이 홈페이지에 가입하는 경우</SubText>
             <Btn onClick={() => navigate('/customersignup')}>회원가입</Btn>
+          </Box>
+          <Box
+            onClick={() => navigate('/designersignup')}
+            variants={boxVariants} 
+            initial="nomal" 
+            whileHover="hover">
+            <DesignerImg src="./icon/hair-cutting.png"/>
+            <Text>디자이너</Text>
+            <SubText>디자이너가 홈페이지에 가입하는 경우</SubText>
+            <Btn onClick={() => navigate('/designersignup')}>회원가입</Btn>
           </Box>
         </Wrapper>
       </TypeWrapper>
