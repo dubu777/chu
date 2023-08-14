@@ -297,13 +297,17 @@ function Reservation() {
   const [consultingSeq, setConsultingSeq] = useState(null);
   const [pofolnum, setPofolNum] = useState(null);
   const { designerSeq } = useParams();
-  const [requestFile, setRequestFile] = useRecoilState(imgFileState);
+  const [requestFile, setRequestFile] = useState(null);
   const [imgSeqArray, setImgSeqArray] = useState(null)
-  const navigate = useNavigate();
 
 
   // 넘기고 싶은 데이터 모으기
-  const handleButtonClick = () => {
+  const handleButtonClick = async() => {
+
+    if (userType !== 'customer') {
+      swal("Error", "예약은 일반회원만 가능합니다.", "error");
+      return;
+    }
     const selectedImgSeqs = selectedImgs.map((item) => {
       // designerPortfolio 배열에서 이미지 검색
       const selectedFromDesignerPortfolio = imgData.designerPortfolio.find((image) => image.imgName === item);
@@ -317,21 +321,10 @@ function Reservation() {
         return selectedFromRandomPortfolio.imgSeq;
       }
       
-      return ""; // 해당 이미지를 찾지 못한 경우
+      return 1; // 해당 이미지를 찾지 못한 경우
     });
-    
-    console.log("선택한 이미지들의 imgSeq 배열:", selectedImgSeqs);
-      
-    if (userType !== 'customer') {
-      swal("Error", "예약은 일반회원만 가능합니다.", "error");
-      return;
-    }
-    //   const selectedImgSeqs = selectedImgs.map((item) => {
-    //   const selectedImage = imgData.designerPortfolio.find((image) => image.imgName === item);
-    //   return selectedImage ? selectedImage.imgSeq : null;
-    // });
   
-    // console.log("선택한 이미지들의 imgSeq 배열:", selectedImgSeqs);
+    console.log("선택한 이미지들의 imgSeq 배열:", selectedImgSeqs);
     const combinedData = {
       customerSeq: customerSeq,
       designerSeq: designerSeq,
@@ -340,36 +333,38 @@ function Reservation() {
       consultingMemo: note,
       portfolios: selectedImgSeqs,
     };
-    console.log("최종 imgSeq 배열:", selectedImgSeqs);
     console.log('보내기 전 info', combinedData)
     // 예약정보 보내기
+    try {
       console.log('페이지 try')
-      setInfo((combinedData) => ({
+      await setInfo((prevInfo) => ({
+        ...prevInfo,
         ...combinedData,
       }));
-      console.log('최종 예약',info)
-      navigate('/checkreserve')
-    };
 
-      // const response  = await postReserveInfo(combinedData);
-      // console.log('정보보보',response);
-      // setConsultingSeq(response)
-      // //예약 정보 이미지 보내기
-      // if (response) {
-      //   console.log('response왔어?', response)
-      //   const formData = new FormData();
-      //   formData.append("img", requestFile);
+      const response  = await postReserveInfo(combinedData);
+      console.log('정보보보',response);
+      setConsultingSeq(response)
+      //예약 정보 이미지 보내기
+      if (response) {
+        console.log('response왔어?', response)
+        const formData = new FormData();
+        formData.append("img", requestFile);
 
-      //   try{
-      //     console.log('try 페이지에 들어온 seq', response)
-      //     const response1  = await postReserveImg(response, formData);
-      //     console.log('이미지미지', response1);
-      //     swal("Success", "결제페이지로 이동합니다.", "success")
-      //   }catch(error){
-      //     console.error("Img Send Error:", error);
-      //   }
-      // }
-
+        try{
+          console.log('try 페이지에 들어온 seq', response)
+          const response1  = await postReserveImg(response, formData);
+          console.log('이미지미지', response1);
+          swal("Success", "결제페이지로 이동합니다.", "success")
+        }catch(error){
+          console.error("Img Send Error:", error);
+        }
+      }
+      
+    } catch(error){
+      console.log(error)
+    }
+  };
 
   const settings = {
     className: "center",
@@ -413,7 +408,6 @@ function Reservation() {
       const data  = await getPossibleTimeApi(designerSeq, selectedDateString);
       console.log('시간 데이터 조회 성공', data)
       generateTimeButtons(data)
-
     }catch(error){
       console.error("API Error:", error);
     }
@@ -474,15 +468,8 @@ function Reservation() {
     } else {
       // 새로운 이미지를 선택
       setSelectedImgs((prev) => [...prev, item]);
-    }  
-    // const selectedImgSeqs = selectedImgs.map((item) => {
-    // const selectedImage = imgData.designerPortfolio.find((image) => image.imgName === item);
-    //   return selectedImage ? selectedImage.imgSeq : null;
-    // });
-    // console.log("선택한 이미지들의 imgSeq 배열:", selectedImgSeqs);
+    }
   };
-  
- 
 
   // 상담 이미지 첨부
   const handleFileChange = (event) => {
@@ -507,7 +494,8 @@ function Reservation() {
         if (imgError) {
           return <div>홈 페이지 에러{imgData}</div>;
   }
-  
+  // console.log('데이터가 무슨이름으로 들어오니', imgData.designerPortfolio)
+  // console.log('최종 예약 이미지',formData)
 
   return (
     <Container>
@@ -623,7 +611,9 @@ function Reservation() {
                     />
                   <SText>- 이마가 보이는 사진을 업로드해 주세요.</SText>
                 <Hr />
+                <Link to="/checkreserve">
                   <ReservBtn onClick={handleButtonClick}>상담 예약하기</ReservBtn>
+                </Link>
                   <SText>
                     {" "}
                     - 예약취소 시, 24시간 이전에만 예약금 환불이 가능합니다.
