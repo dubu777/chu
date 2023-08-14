@@ -35,7 +35,7 @@ const Logo = styled(motion.div)`
   margin-right: 50px;
   width: 95px;
   height: 25px;
-  color: white;
+  color: #353432;
   font-size: 20px;
   font-weight: bold;
   cursor: pointer;
@@ -69,7 +69,7 @@ const TestLi = styled.li`
 
 const logoVariants = {
   normal: {
-    color: "white",
+    color: "#353432",
   },
   active: {
     color: "rgb(244,153,26)",
@@ -163,7 +163,6 @@ function Header() {
       initial={"top"}
     >
       <Col>
-        <button onClick={handleMap}>지도검색</button>
         <Logo
           onClick={() => navigate("/")}
           variants={logoVariants}
@@ -179,12 +178,6 @@ function Header() {
             </Item>
           </Link>
         </Items>
-      </Col>
-      <Col>
-        <Link to="/checkreserve">kakao pay</Link>
-      </Col>
-      <Col>
-      <Link to="/worldcuproom/1">worldcuproom</Link>
       </Col>
       <Col>
         {isLogIn ? (

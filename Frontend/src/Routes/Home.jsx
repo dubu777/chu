@@ -33,7 +33,7 @@ const ImgText = styled.p`
   left: 100px;
   font-size: 40px;
   font-weight: 700;
-  color: white;
+  color: #353432;
   position: absolute;
 `;
 
@@ -73,9 +73,10 @@ const pofolVariants = {
 	},
 }
 const Title = styled.h1`
-  font-family: "omyu_pretty";
+  font-family: sans-serif;
+  /* font-family: "omyu_pretty"; */
   font-size: 25px;
-  font-family: "Blue-road";
+  /* font-family: "Blue-road"; */
   font-weight: bold;
 `;
 const ImgBox = styled.div`
@@ -111,7 +112,8 @@ const Name = styled.p`
 const EventBox = styled.div`
   width: 80px;
   height: 40px;
-  background-color: red;
+  background-color: #ffd46f;
+  border-radius: 0.5rem;
 `;
 
 function Home() {
