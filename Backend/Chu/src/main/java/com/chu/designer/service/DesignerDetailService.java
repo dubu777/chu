@@ -26,7 +26,7 @@ public interface DesignerDetailService {
     ResponseDesignerMyPageUpdateShowDto getDesignerMyPageUpdateInfo(int designerSeq);
 
     // 디자이너 정보 수정
-    boolean updateDesignerInfo(int designerSeq, RequestDesignerInfoUpdateDto requestDesignerInfoUpdateDto);
+    void updateDesignerInfo(int designerSeq, RequestDesignerInfoUpdateDto requestDesignerInfoUpdateDto);
 //
     // 디자이너 상담 가능 시간 수정
     void updatePossibleRsvTime(int designerSeq, RequestUpdatePossibleRsvTime requestUpdatePossibleRsvTime);

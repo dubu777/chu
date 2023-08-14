@@ -18,20 +18,34 @@ import com.chu.designer.repository.DesignerRepository;
 import com.chu.global.domain.*;
 import com.chu.global.repository.FaceDictRepository;
 import com.chu.global.repository.HairStyleDictRepository;
+
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.JsonNode;
+
+import com.mashape.unirest.http.Unirest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.minidev.json.JSONArray;
+import net.minidev.json.JSONObject;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
+
 import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.List;
-
 
 import static java.util.stream.IntStream.builder;
 
@@ -283,7 +297,7 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
 
     @Override
     @Transactional
-    public boolean updateDesignerInfo(int designerSeq, RequestDesignerInfoUpdateDto updateDto) {
+    public void updateDesignerInfo(int designerSeq, RequestDesignerInfoUpdateDto updateDto) {
 
         try{
             Designer designer = designerRepository.getDesignerBySeq(designerSeq);
@@ -291,10 +305,26 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
             designer.setPwd(updateDto.getPwd());
             designer.hashPassword(bCryptPasswordEncoder);    // 비밀번호 암호화
             designer.setSalonName(updateDto.getSalonName());
-            designer.setLatitude(updateDto.getLatitude());
-            designer.setLongitude(updateDto.getLongitude());
-            designer.setAddress(updateDto.getAddress());
+//            designer.setLatitude(updateDto.getLatitude());
+//            designer.setLongitude(updateDto.getLongitude());
+
+//            Double[] coordinate = getLatLongData(updateDto.getAddress());
+//            designer.setLatitude(coordinate[0]);
+//            designer.setLongitude(coordinate[1]);
+
+            //designer.setAddress(updateDto.getAddress());
             designer.setIntroduction(updateDto.getIntroduction());
+
+            KakaoGeoRes bodyJson = getLatLongData(updateDto.getAddress());
+            Double longitude = bodyJson.getDocuments().get(0).getX();
+            Double latitude = bodyJson.getDocuments().get(0).getY();
+
+            designer.setLongitude(longitude);
+            designer.setLatitude(latitude);
+            String address = bodyJson.getDocuments().get(0).getRoad_address().get("address_name").toString();
+//            System.out.println(">>>>>"+address);
+//            System.out.println(latitude + " " + longitude);
+            designer.setAddress(address);
 
             // 해당 디자이너가 들어있는 데이터를 전부 삭제한다
             designerTagInfoRepository.deleteByDesignerSeq(designerSeq);
@@ -311,10 +341,39 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
                 designerTagInfoRepository.save(dti);
             }
         } catch(Exception e) {
-            return false;
+            e.printStackTrace();
         }
-        return true;
 
+    }
+
+    public KakaoGeoRes getLatLongData(String roadFullAddr){
+        String APIKey = "KakaoAK 69be6d9c142a03f5304472265767af1f";
+
+        HashMap<String, Object> map = new HashMap<>(); //결과를 담을 map
+        KakaoGeoRes bodyJson = null;
+
+        try {
+            String apiURL = "https://dapi.kakao.com/v2/local/search/address.json?query="
+                    + URLEncoder.encode(roadFullAddr, "UTF-8");
+
+            HttpResponse<JsonNode> response = Unirest.get(apiURL)
+                    .header("Authorization", APIKey)
+                    .asJson();
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+
+            bodyJson = objectMapper.readValue(response.getBody().toString(), KakaoGeoRes.class);
+
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return bodyJson;
     }
 
     @Override
