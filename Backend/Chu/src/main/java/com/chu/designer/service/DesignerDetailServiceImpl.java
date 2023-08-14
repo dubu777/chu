@@ -74,7 +74,7 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
 
 //        png로 다 저장할껀데 안되는 거 있으면 이름 꺼내서 구분자 기준으로 왼쪽 지우고 번호 넣기로 다시 구현
 //        String fileName = file.getOriginalFilename();
-        String fileName = portfolioSeq + ".png";
+        String fileName = "p_" + portfolioSeq + ".png";
 
         File directory = new File(uploadDir);
         String filePath = uploadDir + fileName;
