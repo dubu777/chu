@@ -33,9 +33,10 @@ function PaySuccess() {
   const [requestFile, setRequestFile] = useRecoilState(imgFileState);
 
   const handleComplete = async () => {
+    console.log(requestFile);
     try{
       const response  = await postReserveInfo(info);
-      console.log('정보보보',response);
+      console.log('정보 보내기',response);
       // setConsultingSeq(response)
       //예약 정보 이미지 보내기
       if (response) {

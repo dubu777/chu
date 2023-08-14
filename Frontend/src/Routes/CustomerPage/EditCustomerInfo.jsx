@@ -200,7 +200,7 @@ function EditCustomerInfo(){
   const { data, isError, isLoading } = useQuery(['customerEditData', customerSeq], () => getCustomerEditData(customerSeq));
   const [selectedFaceType, setSelectedFaceType] = useState(null);
   const [selectedHairTypes, setSelectedHairTypes] = useState([]);
-  const face = ['face1.png', 'face2.png', 'face3.png', 'face4.png', 'face5.png', 'normal.png' ]
+  const face = ['face1.png', 'face2.png', 'face3.png', 'face4.png', 'face5.png', 'noImg.png' ]
   const handleFaceClick = (seq) => {
     setSelectedFaceType(seq);
   };

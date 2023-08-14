@@ -267,9 +267,7 @@ function Header() {
               <Badge>{notifications.length}</Badge>
               <Img src="/icon/notification.png" alt="Alarm Icon" />
               <NotificationList>
-                {notifications
-                  .filter((notification) => !notification.check)
-                  .map((notification) => (
+                {notifications.map((notification) => (
                     <NotificationItem
                       key={notification.alertSeq}
                       onClick={() =>
@@ -278,9 +276,9 @@ function Header() {
                     >
                       {notification.message}
                     </NotificationItem>
+                    
                   ))}
               </NotificationList>
-              <ToastContainer autoClose={3000} />
             </NotificationBadge>
           </>
         ) : (

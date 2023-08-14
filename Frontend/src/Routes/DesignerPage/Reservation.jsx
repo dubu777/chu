@@ -343,13 +343,10 @@ function Reservation() {
     console.log('보내기 전 info', combinedData)
     // 예약정보 보내기
       console.log('페이지 try')
-      setInfo((prevInfo) => ({
-        ...prevInfo,
-        ...combinedData,
-      }));
+      setInfo(combinedData);
       navigate('/checkreserve')
     };
-
+    console.log(info, "리코일데이터");
       // const response  = await postReserveInfo(combinedData);
       // console.log('정보보보',response);
       // setConsultingSeq(response)
@@ -540,8 +537,7 @@ function Reservation() {
             </TimeBox>
             <SubTitle>전달사항</SubTitle>
             <Hr />
-            <TextArea 
-
+            <TextArea
               placeholder="내용을 입력해주세요." 
               value={note} 
               onChange={handleNoteChange}
