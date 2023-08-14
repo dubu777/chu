@@ -7,6 +7,7 @@ import com.chu.global.domain.HairStyleDto;
 import com.chu.designer.service.DesignerSearchService;
 import com.chu.global.domain.HttpResponseDto;
 import com.chu.global.domain.ImageDto;
+import com.chu.global.domain.ImageMakeDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -29,7 +30,9 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -44,6 +47,7 @@ public class ConsultingController {
     private final ConsultingService consultingService;
     private final DesignerSearchService designerSearchService;
     private final DesignerDetailService designerDetailService;
+    private final Queue<ImageMakeDto> q = new LinkedList<>();
 
     @GetMapping("/{consulting_seq}")
     public ResponseEntity<HttpResponseDto> participantConsulting(@PathVariable("consulting_seq") int consultingSeq) {
