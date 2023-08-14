@@ -205,9 +205,11 @@ function DesignerList(props) {
               <Icon src="/icon/money.png"/>
               <Text>{data.cost}</Text>
             </CostBox>
-            <ReservBox whileHover={{backgroundColor: "rgb(244,153,26)"}}>
+            <ReservBox 
+              onClick={() => navigate(`/reservation/${data.designerSeq}`)}
+              whileHover={{backgroundColor: "rgb(244,153,26)"}}>
               <Icon src="/icon/reservBtn.png"/>
-              <Text onClick={() => navigate(`/reservation/${data.designerSeq}`)}>예약</Text>
+              <Text>예약</Text>
             </ReservBox>
           </Box>
         </InfoBox>
