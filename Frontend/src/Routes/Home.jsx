@@ -14,7 +14,7 @@ const Wrapper = styled.div`
 `;
 // src=""
 const Main = styled.div`
-  background-image: url('/img/banner-lmg.png');
+  background-image: url('/img/password.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -148,8 +148,9 @@ function Home() {
       <Main>
         <ImgText>변화의 즐거움 <br/>Change hair & you</ImgText>
       </Main>
+
       <MainWrapper>
-      <Title>이주의 인기! Weekly Best Disigner ✨</Title>
+      <Title>이주의 인기! Weekly Best Designer ✨</Title>
       <DesignerBox>
       {/* 이부분 나중에 img로 태그 변경하기 */}
       {data.bestDesigner.map((item)=> (
@@ -169,6 +170,7 @@ function Home() {
       }
       </DesignerBox>
       </MainWrapper>
+      
       <MainView />
     </Wrapper>
   );

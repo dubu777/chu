@@ -152,6 +152,7 @@ function ReserveCalendar(){
       const second = Math.floor(((i - hour) * 60 - minute) * 60);
       const formatTime = `${hour.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")}`;
       const formattedTime = `${hour.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")}:${second.toString().padStart(2, "0")}`;
+      
       timeButtons.push(
         <TimeButton
           key={formattedTime}
@@ -176,26 +177,54 @@ function ReserveCalendar(){
       try{
         console.log('try 페이지에 들어온 seq', selectedDateString)
         const response  = await getPossibleTimeApi(designerSeq, selectedDateString);
-        console.log('시간 데이터 조회 성공', response)
+        console.log('시간 조회', response)
+        
+        setSelectedTimes((prevSelectedTimes) => {
+          const newSelectedTimes = { ...prevSelectedTimes };
+          
+          // 기존에 추가된 중복 시간을 필터링
+          if (newSelectedTimes[selectedDateString]) {
+            newSelectedTimes[selectedDateString] = newSelectedTimes[selectedDateString].filter(time =>
+              response.some(item => item.state === 'P' && item.time === time)
+            );
+          }
+          
+          // 받아온 시간 데이터를 selectedTimes에 추가
+          response.forEach(item => {
+            if (item.state === 'P') {
+              if (!newSelectedTimes[selectedDateString]) {
+                newSelectedTimes[selectedDateString] = [];
+              }
+              if (!newSelectedTimes[selectedDateString].includes(item.time)) {
+                newSelectedTimes[selectedDateString].push(item.time);
+              }
+            }
+          });
+    
+          return newSelectedTimes;
+        });
       }catch(error){
         console.error("API Error:", error);
       }
+      
     };
     
-  const handleTimeButtonClick = (time) => {
-    setSelectedTimes((prevSelectedTimes) => {
-      const newSelectedTimes = { ...prevSelectedTimes };
-      if (!newSelectedTimes[selectedDateString]) {
-        newSelectedTimes[selectedDateString] = [];
-      }
-      if (newSelectedTimes[selectedDateString].includes(time)) {
-        newSelectedTimes[selectedDateString] = newSelectedTimes[selectedDateString].filter((t) => t !== time);
-      } else {
-        newSelectedTimes[selectedDateString] = [...newSelectedTimes[selectedDateString], time];
-      }
-      return newSelectedTimes;
-    });
-  };
+    const handleTimeButtonClick = (time) => {
+      setSelectedTimes((prevSelectedTimes) => {
+        const newSelectedTimes = { ...prevSelectedTimes };
+        if (!newSelectedTimes[selectedDateString]) {
+          newSelectedTimes[selectedDateString] = [];
+        }
+        if (newSelectedTimes[selectedDateString].includes(time)) {
+          newSelectedTimes[selectedDateString] = newSelectedTimes[selectedDateString].filter((t) => t !== time);
+        } else {
+          newSelectedTimes[selectedDateString] = [...newSelectedTimes[selectedDateString], time];
+        }
+        return newSelectedTimes;
+      });
+    };
+
+  // 선택한 시간을 등록
   const handleApplyButtonClick = async() => {
 
     if(selectedTimes) {
