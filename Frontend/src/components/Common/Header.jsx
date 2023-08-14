@@ -23,7 +23,6 @@ const Nav = styled(motion.nav)`
   top: 0;
   font-size: 18px;
   padding: 20px 60px;
-  color: #353432;
   font-family: sans-serif;
 `;
 
@@ -32,10 +31,9 @@ const Col = styled.div`
   align-items: center;
 `;
 const Logo = styled(motion.div)`
-  margin-right: 50px;
+  margin-right: 10px;
   width: 95px;
   height: 25px;
-  color: white;
   font-size: 20px;
   font-weight: bold;
   cursor: pointer;
@@ -48,15 +46,12 @@ const Items = styled.ul`
 
 const Item = styled(motion.li)`
   margin-right: 20px;
-  color: ${(props) => props.theme.white.darker};
   transition: color 0.3s ease-in-out;
   position: relative;
   display: flex;
   justify-content: center;
   flex-direction: column;
-  &:hover {
-    color: ${(props) => props.theme.white.lighter};
-  }
+  font-weight: 500;
 `;
 const TestDiv = styled.div`
 
@@ -69,7 +64,7 @@ const TestLi = styled.li`
 
 const logoVariants = {
   normal: {
-    color: "white",
+    color: "black",
   },
   active: {
     color: "rgb(244,153,26)",
@@ -84,7 +79,7 @@ const navVariants = {
     backgroundColor: "rgba(0,0,0,0)",
   },
   scroll: {
-    backgroundColor: "rgba(100, 93, 81, 1)"
+    backgroundColor: "#f9f9f9"
   },
 };
 
@@ -163,7 +158,7 @@ function Header() {
       initial={"top"}
     >
       <Col>
-        <button onClick={handleMap}>지도검색</button>
+      <Items>
         <Logo
           onClick={() => navigate("/")}
           variants={logoVariants}
@@ -172,7 +167,7 @@ function Header() {
         >
           Chu
         </Logo>
-        <Items>
+        
           <Link to="/">
             <Item variants={logoVariants} whileHover="active" initial="nomal">
               Home

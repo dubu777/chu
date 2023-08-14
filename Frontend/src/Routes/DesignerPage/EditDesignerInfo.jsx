@@ -325,8 +325,6 @@ function EditDesignerInfo() {
         pwd: watchedPassword || null,
         salonName: "제발!!!!!!",
         introduction: watchIntro || null,
-        latitude: 234.2563, // 예제로 고정값
-        longitude: 234.2563, // 예제로 고정값
         address: "대전광역시 서구",
         myHairStyleTag: combinedHairStyles,
       };
@@ -486,9 +484,9 @@ function EditDesignerInfo() {
               <ErrorMessage>{errors?.cost?.message}</ErrorMessage>
               <Hr />
               <Box>
-                <InfoText>소속 미용실(활동지역)</InfoText>
+                <InfoText>소속 미용실</InfoText>
                 <SearchBox2>
-                  <SearchImg src="./icon/search.png" />
+                  <SearchImg src="/icon/search.png" />
                   <SearchInput
                     placeholder="소속 미용실"
                     {...register("salonName", {

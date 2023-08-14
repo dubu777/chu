@@ -375,7 +375,9 @@ function DesignerSignUp() {
                   // hasFile={selectedFile !== null}
                 />
                 <ClickBox>
-                  <Btn onClick={handleImageClick}>프로필 이미지 첨부</Btn>
+                  <Btn 
+                    type="button"
+                    onClick={handleImageClick}>프로필 이미지 첨부</Btn>
                   <ErrorMessage>디자이너 프로필에 사용될 사진을 첨부해주세요</ErrorMessage>
                 </ClickBox>
               </ProfileBox>
