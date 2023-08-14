@@ -5,15 +5,26 @@ import com.chu.event.domain.Event;
 import com.chu.event.domain.ResponseEventDto;
 import com.chu.event.repository.EventRepository;
 import com.chu.event.service.EventService;
+import com.chu.global.domain.ImageMakeDto;
 import com.chu.global.domain.ImagePath;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 @Slf4j
 @Service
@@ -21,7 +32,7 @@ import java.io.IOException;
 public class EventServiceImpl implements EventService {
 
     private final EventRepository eventRepository;
-
+    private final Queue<ImageMakeDto> q = new LinkedList<>();
 
     @Override
     public ResponseEventDto checkCanMake(int customerSeq) {

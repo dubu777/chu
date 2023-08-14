@@ -4,6 +4,8 @@ import com.chu.consulting.domain.ResponseParticipantConsulting;
 import com.chu.event.domain.ResponseEventDto;
 import com.chu.event.service.EventService;
 import com.chu.global.domain.HttpResponseDto;
+import com.chu.global.domain.ImageMakeDto;
+import com.chu.global.service.ImageQueueService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.FileSystemResource;
@@ -33,6 +35,7 @@ import java.util.zip.ZipInputStream;
 public class EventController {
 
     private final EventService eventService;
+    private final ImageQueueService imageQueueService;
 
     @GetMapping("/{customer_seq}")
     public ResponseEntity<HttpResponseDto> participantEvent(@PathVariable("customer_seq") int customerSeq) {
@@ -84,83 +87,25 @@ public class EventController {
 
         try{
             eventService.updateState(customerSeq,3);
-
-            // GPU 서버로 이미지 만들어주세요 이미지 전달 로직
-
             String inputImageName = eventService.getInputImageName(customerSeq);
             String targetImageName = eventService.getTargetImageName(customerSeq);
 
+            // GPU 서버로 이미지 만들어주세요 이미지 전달 로직
             List<String> targetFileUrls = new ArrayList<>();
             targetFileUrls.add("/chu/upload/images/customer/event/target/" + customerSeq + ".png");
+            targetFileUrls.add("/chu/upload/images/customer/event/origin/" + customerSeq + ".png");
 
-            LinkedMultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
-            String url = "http://3.34.80.231:5000/save-img2";
-            HttpStatus httpStatus = HttpStatus.CREATED;
+            ImageMakeDto imageMakeDto = new ImageMakeDto();
+            imageMakeDto.setFileList(targetFileUrls);
+            imageMakeDto.setFlag('E');
+            imageMakeDto.setCustomerSeq(customerSeq);
 
-//            JsonNode response;
-//        ResponseEntity<String> response;
-            ResponseEntity<byte[]> response;
-
-            String pathToFile = "/chu/upload/images/customer/event/origin/" + customerSeq + ".png";
-            body.add("file", new FileSystemResource(pathToFile));
-            // 타겟사진 고른 개수 리스트 길이만큼 반복하면 될듯
-            for (String destUrl : targetFileUrls) {
-                body.add("file", new FileSystemResource(destUrl));
-            }
-            System.out.println("요청 바디 >>>>>>>>> " + body);
-
-            // 요청 헤더 설정
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.MULTIPART_FORM_DATA);
-            // 요청 설정
-            HttpEntity<LinkedMultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
-
-            response = REST_TEMPLATE.postForEntity(url, requestEntity, byte[].class);
-
-            // 압축파일의 바이너리 데이터
-            byte[] imageBytes = response.getBody();
-            // 이부분은 서비스가서 처리하기
-            try (ByteArrayInputStream byteStream = new ByteArrayInputStream(imageBytes);
-                 ZipInputStream zipStream = new ZipInputStream(byteStream)) {
-
-                // 여기서 entry가 파일 하나. 이걸 ec2서버에 저장하는 로직을 구현하면 될 것 같다. (다른 이미지 처리하는 것과 동일하게)
-                ZipEntry entry;
-                int n = 0;
-                while ((entry = zipStream.getNextEntry()) != null) {
-                    if (!entry.isDirectory()) {  // 디렉토리가 아닌 경우만 처리
-                        String filename = entry.getName();
-                        byte[] fileData = new byte[(int) entry.getSize()];
-                        int bytesRead = zipStream.read(fileData);
-
-                        Files.write(Path.of("/chu/upload/images/customer/event/confusion/" + customerSeq + ".png"), fileData);
-
-                        eventService.updateConfusionImageNameAndState(customerSeq, customerSeq + ".png", 4);
-                        // 파일 처리 로직을 적용하고 예시로 콘솔에 출력
-                        log.info("Filename: {}",filename);
-                        log.info("File size: {} bytes", bytesRead);
-                        n++;
-                    }
-                    zipStream.closeEntry();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            imageQueueService.sendImageToQueue(imageMakeDto);
 
         } catch (Exception e){
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new HttpResponseDto(HttpStatus.NO_CONTENT.value(), null));
         }
         return ResponseEntity.status(HttpStatus.OK).body(new HttpResponseDto(HttpStatus.OK.value(), null));
-    }
-
-    private static final RestTemplate REST_TEMPLATE;
-
-    static {
-        // RestTemplate 기본 설정을 위한 Factory 생성
-        SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
-        factory.setConnectTimeout(3000);
-        factory.setReadTimeout(180*60*1000);
-        factory.setBufferRequestBody(false); // 파일 전송은 이 설정을 꼭 해주자.
-        REST_TEMPLATE = new RestTemplate(factory);
     }
 }
