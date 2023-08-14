@@ -99,6 +99,7 @@ public class ConsultingController {
                 log.info("문자열 제대로 바뀌었다: {}", tmp);
 //                targetFileUrls.add("file:////chu/upload/images/designer/portfolio/" + tmp + ".png");
                 targetFileUrls.add("/chu/upload/images/designer/portfolio/" + tmp + ".png");
+//                targetFileUrls.add("https://i9b111.q.ssafy.io/api/portfolio/" + tmp + ".png");
             }
 
 
@@ -154,6 +155,9 @@ public class ConsultingController {
 //            response = REST_TEMPLATE.postForObject(url, requestEntity, JsonNode.class);
 //            response = REST_TEMPLATE.exchange(url, HttpMethod.POST, requestEntity, String.class);
             response = REST_TEMPLATE.postForEntity(url, requestEntity, byte[].class);
+
+            log.info("응답 왔음");
+
             // 압축파일의 바이너리 데이터
             byte[] imageBytes = response.getBody();
 
@@ -170,12 +174,14 @@ public class ConsultingController {
                         String filename = entry.getName();
                         byte[] fileData = new byte[(int) entry.getSize()];
                         int bytesRead = zipStream.read(fileData);
-//                        Files.write(Path.of("output"+n+".png"), fileData);
 
+                        Files.write(Path.of("/chu/upload/images/consulting/confusion/" + consultingSeq+ "_"+portfolioNums.get(n)+".png"), fileData);
+
+                        consultingService.postConsultingConfusionImage(consultingSeq, portfolioNums.get(n));
                         // 파일 처리 로직을 적용하고 예시로 콘솔에 출력
-//                        System.out.println("Filename: " + filename);
-//                        System.out.println("File size: " + bytesRead + " bytes");
-//                        n++;
+                        log.info("Filename: {}",filename);
+                        log.info("File size: {} bytes", bytesRead);
+                        n++;
                     }
                     zipStream.closeEntry();
                 }

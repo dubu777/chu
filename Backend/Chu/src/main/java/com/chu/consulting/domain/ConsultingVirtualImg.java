@@ -1,5 +1,6 @@
 package com.chu.consulting.domain;
 
+import com.chu.designer.domain.DesignerPortfolio;
 import com.chu.global.domain.HairStyleDict;
 import com.chu.global.domain.ImagePath;
 import lombok.Getter;
@@ -23,7 +24,7 @@ public class ConsultingVirtualImg {
     private Consulting consulting;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "hair_style_seq")
-    private HairStyleDict hairStyleDict;
+    @JoinColumn(name = "portfolio_seq")
+    private DesignerPortfolio designerPortfolio;
 
 }

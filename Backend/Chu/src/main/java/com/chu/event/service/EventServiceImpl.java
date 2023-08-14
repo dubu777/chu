@@ -63,7 +63,7 @@ public class EventServiceImpl implements EventService {
     public String getSavedImgFileEventOriginFile(int customerSeq, MultipartFile file) throws IOException {
         String uploadDir = "/chu/upload/images/customer/event/origin/";
 
-        String fileName = file.getOriginalFilename();
+        String fileName = customerSeq + ".png";
 
         File directory = new File(uploadDir);
         String filePath = uploadDir + fileName;
@@ -89,7 +89,7 @@ public class EventServiceImpl implements EventService {
     public String getSavedImgFileEventTargetFile(int customerSeq, MultipartFile file) throws IOException {
         String uploadDir = "/chu/upload/images/customer/event/target/";
 
-        String fileName = file.getOriginalFilename();
+        String fileName = customerSeq + ".png";
 
         File directory = new File(uploadDir);
         String filePath = uploadDir + fileName;
@@ -115,7 +115,7 @@ public class EventServiceImpl implements EventService {
     public String getSavedImgFileEventConfusionFile(int customerSeq, MultipartFile file) throws IOException {
         String uploadDir = "/chu/upload/images/customer/event/confusion/";
 
-        String fileName = file.getOriginalFilename();
+        String fileName = customerSeq + ".png";
 
         File directory = new File(uploadDir);
         String filePath = uploadDir + fileName;
@@ -135,6 +135,20 @@ public class EventServiceImpl implements EventService {
         file.transferTo(destFile);
         log.info("서비스 >>> 파일 저장 성공! filePath : " + filePath);
         return fileName;
+    }
+
+    @Override
+    public String getInputImageName(int customerSeq) {
+        Event event = eventRepository.findByCustomerSeq(customerSeq);
+
+        return event.getInputImgPath();
+    }
+
+    @Override
+    public String getTargetImageName(int customerSeq){
+        Event event = eventRepository.findByCustomerSeq(customerSeq);
+
+        return event.getTargetImgPath();
     }
 
     @Override

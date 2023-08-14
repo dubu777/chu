@@ -15,6 +15,9 @@ public interface EventService {
 
     String getSavedImgFileEventConfusionFile(int customerSeq, MultipartFile file) throws IOException;
 
+    String getInputImageName(int customerSeq);
+
+    String getTargetImageName(int customerSeq);
     void updateState(int customerSeq, int state);
 
     void updateInputImageNameAndState(int customerSeq, String inputImgName, int state);
