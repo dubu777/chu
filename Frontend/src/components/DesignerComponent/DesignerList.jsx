@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { BASE_URL } from '../../apis/rootUrl'
 import { useQueryClient, useMutation } from "react-query";
 import { toggleLikeButton } from "../../apis";
-import swal from "sweetalert";
+import Swal from 'sweetalert2';
 
 const Container = styled.div`
   display: flex;
@@ -125,7 +125,7 @@ const LikeBtn = styled.img`
 `;
 function DesignerList(props) {
   const { data, sortOrder } = props;
-  const usertype = localStorage.getItem('userType');
+  const userType = localStorage.getItem('userType');
   const customerSeq = localStorage.getItem("userSeq");
   const designerSeq = localStorage.getItem("userSeq");
   // const designerSeq = localStorage.getItem('userSeq')
@@ -145,7 +145,31 @@ function DesignerList(props) {
     mutation.mutate({designerSeq, customerSeq, isLike: newLikeStatus});
   };
 
-
+  const handleReservBoxClick = () => {
+    if (userType === 'designer') {
+      Swal.fire({
+        title: '알림',
+        text: '예약서비스는 일반회원 전용 기능입니다.',
+        icon: 'info',
+        confirmButtonText: '확인'
+      });
+    } else if (!userType) {
+      Swal.fire({
+        title: '알림',
+        text: '예약 서비스는 로그인 후 이용 가능합니다.',
+        icon: 'info',
+        showCancelButton: true,
+        confirmButtonText: '로그인 하러가기',
+        cancelButtonText: '현재 페이지로 돌아가기'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate('/login');  // 로그인 페이지의 경로로 변경하세요.
+        }
+      });
+    } else {
+      navigate(`/reservation/${designerSeq}`);
+    }
+  };
   // 필터에 따라 내림차순으로 정렬하는 함수
   const sortByLikeCnt = (designers) => {
     return designers.slice().sort((a, b) => b.likeCnt - a.likeCnt);
@@ -211,15 +235,7 @@ function DesignerList(props) {
               <Text>{data.cost}</Text>
             </CostBox>
             <ReservBox
-              onClick={() => {
-                if (usertype === 'designer') {
-                  swal('회원 전용 기능입니다 :)');
-                } else if (usertype !== 'customer') {
-                  swal('예약 서비스는 로그인 후 이용 가능합니다 :)');
-                } else {
-                  navigate(`/reservation/${designerSeq}`);
-                }
-              }}
+              onClick={handleReservBoxClick}
               whileHover={{ backgroundColor: "rgb(244,153,26)" }}
               >
               <Icon src="/icon/reservBtn.png" />

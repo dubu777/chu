@@ -12,7 +12,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { BASE_URL } from '../../apis/rootUrl';
 import { toggleLikeButton } from "../../apis";
-import swal from "sweetalert";
+import Swal from 'sweetalert2';
 
 const Container = styled.div`
 margin-top: 20;
@@ -304,7 +304,33 @@ function DesignerDetail() {
     ["designerDetail", designerSeq, customerSeq],
     () => getDesignerDetail(designerSeq, customerSeq)
   );
+  const userType = localStorage.getItem('userType')
 
+  const handleReservBoxClick = () => {
+    if (userType === 'designer') {
+      Swal.fire({
+        title: '알림',
+        text: '예약서비스는 일반회원 전용 기능입니다.',
+        icon: 'info',
+        confirmButtonText: '확인'
+      });
+    } else if (!userType) {
+      Swal.fire({
+        title: '알림',
+        text: '예약 서비스는 로그인 후 이용 가능합니다.',
+        icon: 'info',
+        showCancelButton: true,
+        confirmButtonText: '로그인 하러가기',
+        cancelButtonText: '현재 페이지로 돌아가기'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate('/login');  // 로그인 페이지의 경로로 변경하세요.
+        }
+      });
+    } else {
+      navigate(`/reservation/${designerSeq}`);
+    }
+  };
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error loading designer details</div>;
 
@@ -348,16 +374,7 @@ function DesignerDetail() {
                   {/* 회원유형에 따라 예약버튼 활성화 */}
 
                   <ReservBox
-                    onClick={() => {
-                      if (usertype === 'designer') {
-                        swal('회원 전용 기능입니다 :)');
-                      } else if (usertype !== 'customer') {
-                        swal('예약 서비스는 로그인 후 이용 가능합니다 :)');
-                        navigate(-1)
-                      } else {
-                        navigate(`/reservation/${designerSeq}`);
-                      }
-                    }}
+                    onClick={handleReservBoxClick}
                     whileHover={{ backgroundColor: "rgb(244,153,26)" }}
                   >
                     <Icon src="/icon/reservBtn.png" />

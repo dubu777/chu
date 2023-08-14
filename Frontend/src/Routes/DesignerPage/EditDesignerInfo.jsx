@@ -484,9 +484,17 @@ function EditDesignerInfo() {
               <ErrorMessage>{errors?.cost?.message}</ErrorMessage>
               <Hr />
               <Box>
-                <InfoText>소속 미용실</InfoText>
+                <InfoText>소속 미용실명</InfoText>
                 <SearchBox2>
-                  <SearchImg src="/icon/search.png" />
+                  <SearchInput
+                    placeholder="소속 미용실"
+                    {...register("salonName", {
+                      required: "소속 미용실을 입력해주세요.",
+                    })}
+                  />
+                </SearchBox2>
+                <InfoText>소속 미용실명</InfoText>
+                <SearchBox2>
                   <SearchInput
                     placeholder="소속 미용실"
                     {...register("salonName", {

@@ -73,7 +73,7 @@ function MainView(){
 					initial="nomal"
 					whileHover="hover">
           <Link to="/listview">
-          <ClickImg src="./img/listview.jpg"></ClickImg>
+          <ClickImg src="/img/listview.jpg"></ClickImg>
           <P>헤어스타일 상담 예약 바로가기</P>
           </Link>
         </Box>
@@ -85,7 +85,7 @@ function MainView(){
 					whileHover="hover"
           >
           <Link to="/worlducupimgupload">
-          <ClickImg src="./img/worldcupimg.png"></ClickImg>
+          <ClickImg src="/img/worldcupimg.png"></ClickImg>
           {/* <WorldcupImg src="worldcup1.jpg"></WorldcupImg> */}
           <P>스타일 월드컵은 어때요?</P>
           </Link>
