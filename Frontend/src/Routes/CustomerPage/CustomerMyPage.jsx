@@ -444,7 +444,7 @@ function CustomerMyPage() {
                 onClick={handleImageClick}
                 // src={selectedFile || './icon/profile2.png'}
                 // src={selectedFile || `${BASE_URL}/customer-profile/${data.img}`}
-                src={`${BASE_URL}/customer-profile/${data.img}`}
+                src={selectedFile||`${BASE_URL}/customer-profile/${data.img}`}
                 alt="Profile"
                 // hasFile={selectedFile !== null}
               />

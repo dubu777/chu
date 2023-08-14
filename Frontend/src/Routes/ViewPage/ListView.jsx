@@ -157,6 +157,15 @@ const SearchImg = styled.img`
 `;
 const SubmitBtn = styled.button`
 `;
+const Loading = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+const P = styled.p`
+  font-size: 25px;
+`;
+
 function ListView() {
   const userType = localStorage.getItem('userType')
   const userSeqFromStorage = localStorage.getItem('userSeq')
@@ -330,7 +339,9 @@ function ListView() {
           <DesignerList data={sendData} sortOrder={sortOrder} />
         </>
         ) : (
-        <p>...loading</p>
+        <Loading>
+          <P>...loading</P>
+        </Loading>
   )}
   </Container>
 )};

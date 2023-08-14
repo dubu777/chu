@@ -6,18 +6,19 @@ const BASE_URL = 'https://i9b111.q.ssafy.io/api';
 // const BASE_URL = "http://localhost:9090/api";
 
 // 예약페이지-상담 가능 시간 조회
-export const getPossibleTimeApi = async (designerSeq) => {
+export const getPossibleTimeApi = async (designerSeq, selectedDateString) => {
     try {
-        // console.log('try진입!!');
+        console.log('try진입!!');
         const response = await axios.get(
           `${BASE_URL}/designer/date/${designerSeq}`, {
           params: {
-            date : "2023-08-02"
+            "date" : selectedDateString
           },
     });
+      console.log('결과?',response.data)
         return response.data.result;
       } catch (error) {
-        throw new Error("예약 리스트 조회 실패;;;");
+        throw new Error("시간 조회 실패;;;");
       }
 }
 

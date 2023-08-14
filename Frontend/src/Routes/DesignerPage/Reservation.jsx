@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css"; // css import
 // import Calendar from "../../components/ReservationComponent/Calendar";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery, useMutation } from "react-query";
 import { useRecoilState } from 'recoil';
 import { useNavigate, useParams } from "react-router";
@@ -153,6 +153,7 @@ const TimeButton = styled(motion.button)`
 const TimeBox = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
 `;
 
 const TextArea = styled.textarea`
@@ -296,15 +297,15 @@ function Reservation() {
   const { designerSeq } = useParams();
   const [requestFile, setRequestFile] = useState(null);
   const [imgSeqArray, setImgSeqArray] = useState(null)
-  const combinedData = {
-    customerSeq: customerSeq,
-    designerSeq: designerSeq,
-    date: formattedSelectedDate,
-    time: selectedTime,
-    consultingMemo: note,
-    portfolios: imgSeqArray,
-  };
-
+  // const combinedData = {
+  //   customerSeq: customerSeq,
+  //   designerSeq: designerSeq,
+  //   date: formattedSelectedDate,
+  //   time: selectedTime,
+  //   consultingMemo: note,
+  //   portfolios: selectedImgSeqs,
+  // };
+  
   // const formData = new FormData();
   // formData.append('img', selectedFile)
 
@@ -315,6 +316,21 @@ function Reservation() {
       swal("Error", "예약은 일반회원만 가능합니다.", "error");
       return;
     }
+    const selectedImgSeqs = selectedImgs.map((item) => {
+      const selectedImage = imgData.designerPortfolio.find((image) => image.imgName === item);
+      return selectedImage ? selectedImage.imgSeq : null;
+    });
+  
+    console.log("선택한 이미지들의 imgSeq 배열:", selectedImgSeqs);
+    const combinedData = {
+      customerSeq: customerSeq,
+      designerSeq: designerSeq,
+      date: formattedSelectedDate,
+      time: selectedTime,
+      consultingMemo: note,
+      portfolios: selectedImgSeqs,
+    };
+    console.log('보내기 전 info', combinedData)
     // 예약정보 보내기
     try {
       console.log('페이지 try')
@@ -344,24 +360,6 @@ function Reservation() {
       
     } catch(error){
       console.log(error)
-    }
-  };
-
-  // 상담 이미지 첨부
-  const handleFileChange = (event) => {
-    // const file = event.target.files[0];
-    // setSelectedFile(file);
-    const file = event.target.files[0];
-    setRequestFile(file);
-    if (file && file.type.includes("image")) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setSelectedFile(reader.result);
-      };
-      reader.readAsDataURL(file);
-      // setRequestFile(file);
-    } else {
-      swal("⚠️ Image 파일 형식을 선택해주세요 :)");
     }
   };
 
@@ -401,10 +399,20 @@ function Reservation() {
   };
 
   // 시간 데이터 호출
-  const { data: data, isError: Error, isLoading: Loading } = useQuery(
-    ['possibleTime', designerSeq],
-    () => getPossibleTimeApi(designerSeq)
-  );
+  // const { data: data, isError: Error, isLoading: Loading } = useQuery(
+  //   ['possibleTime', designerSeq],
+  //   () => getPossibleTimeApi(designerSeq)
+  // );
+  const ClickCalendarDate = async(designerSeq, selectedDateString) => {
+    console.log('디자이너', designerSeq, '날짜', selectedDateString)
+    try{
+      console.log('try 페이지에 들어온 seq', selectedDateString)
+      const data  = await getPossibleTimeApi(designerSeq, selectedDateString);
+      console.log('시간 데이터 조회 성공', data)
+    }catch(error){
+      console.error("API Error:", error);
+    }
+  };
   
   // 포트폴리오 이미지 호출
   const { data: imgData, isError: imgError, isLoading: imgLoading } = useQuery(
@@ -450,7 +458,7 @@ function Reservation() {
     setNote(event.target.value);
   };
 
-  const handleImageClick = (item) => {
+  const handleImageClick = (item) => { // imgName이 선택된 배열에 포함되어있으면 
     if (selectedImgs.includes(item)) {
       // 이미 선택된 이미지를 다시 클릭하면 선택 해제
       setSelectedImgs((prev) => prev.filter((imgName) => imgName !== item));
@@ -458,23 +466,31 @@ function Reservation() {
       // 새로운 이미지를 선택
       setSelectedImgs((prev) => [...prev, item]);
     }
-    console.log('선택한 사진', selectedImgs)
-    const SeqArray = [...imgData.designerPortfolio, ...imgData.randomPortfolio]
-    .filter(image => selectedImgs.includes(image.imgName))
-    .map(image => image.imgSeq);
-    
-    console.log('번호는?', SeqArray)
-    setImgSeqArray(SeqArray)
-    console.log('선택한 사진 번호 나와?', imgSeqArray); 
-    console.log('번호번호',imgSeqArray)
+  };
+
+
+  // 상담 이미지 첨부
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setRequestFile(file);
+    if (file && file.type.includes("image")) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setSelectedFile(reader.result);
+      };
+      reader.readAsDataURL(file);
+      // setRequestFile(file);
+    } else {
+      swal("⚠️ Image 파일 형식을 선택해주세요 :)");
+    }
   };
   // console.log('원하는 사진명:', selectedImgs)
         
         if (imgLoading) {
-          return <div>Loading...{data}</div>;
+          return <div>Loading...{imgData}</div>;
         }
         if (imgError) {
-          return <div>홈 페이지 에러{data}</div>;
+          return <div>홈 페이지 에러{imgData}</div>;
   }
   // console.log('데이터가 무슨이름으로 들어오니', imgData.designerPortfolio)
   // console.log('최종 예약 이미지',formData)
@@ -488,7 +504,15 @@ function Reservation() {
             <Hr />
             <CalendarContainer>
               {/* <Calendar onChange={onChange} value={value} onClick={handleCalendarClick}/> */}
-              <Calendar onChange={date => setSelectedDate(date)} value={selectedDate} />
+              {/* <Calendar onChange={date => setSelectedDate(date)} value={selectedDate} /> */}
+              <Calendar 
+                      onChange={date => {
+                        setSelectedDate(date);
+                        const selectedDateString = formatDateString(date);
+                        ClickCalendarDate(designerSeq, selectedDateString);
+                      }} 
+                      value={selectedDate} 
+                      />
             </CalendarContainer>
           </ResevBox>
           <ResevBox>
