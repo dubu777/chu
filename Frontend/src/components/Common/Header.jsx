@@ -12,6 +12,7 @@ import {
 import { useState, useEffect } from "react";
 import { useQuery } from "react-query";
 import { Dropdown, Badge } from "react-bootstrap";
+import { ToastContainer, toast } from 'react-toastify';
 
 const Nav = styled(motion.nav)`
   display: flex;
@@ -54,13 +55,24 @@ const Item = styled(motion.li)`
   flex-direction: column;
   font-weight: 500;
 `;
-const TestDiv = styled.div`
-
+const NotificationBadge = styled.div`
+  /* 원하는 스타일을 추가하세요 */
+  border-radius: 50%;
+  background-color: red;
+  color: white;
+  padding: 5px 10px;
+  position: relative;
+  top: -10px;
+  right: -10px;
 `;
-const TestUl = styled.ul`
-`;
 
-const TestLi = styled.li`
+const NotificationItem = styled.div`
+  /* 알림 아이템 스타일을 추가하세요 */
+  padding: 10px;
+  cursor: pointer;
+  &:hover {
+    background-color: #f7f7f7;
+  }
 `;
 
 const logoVariants = {
@@ -93,7 +105,7 @@ function Header() {
   const [token, setToken] = useRecoilState(accessTokenState);
   const [show, setShow] = useState(false);
   const {scrollY} = useScroll();
-
+  const [notifications, setNotifications] = useState([]);
   const handleNavigation = () => {
     if (localStorage.getItem("userType") === "customer") {
       const customerSeq = userSeq;
@@ -113,29 +125,59 @@ function Header() {
     navigate("/");
   });
 
-  // 알림 조회
-  const { data: notifications = [], refetch } = useQuery(
-    ["notifications", userType, userSeq],
-    async () => {
-      if (userType === "guest") return [];
-      if (userType === "designer") return getDesignerNotification(userSeq);
-      if (userType === "customer") return getCustomerNotification(userSeq);
-    },
-    {
-      retry: false,
-    }
-  );
+  // // 알림 조회
+  // const { data: notifications = [], refetch } = useQuery(
+  //   ["notifications", userType, userSeq],
+  //   async () => {
+  //     if (userType === "guest") return [];
+  //     if (userType === "designer") return getDesignerNotification(userSeq);
+  //     if (userType === "customer") return getCustomerNotification(userSeq);
+  //   },
+  //   {
+  //     retry: false,
+  //   }
+  // );
 
-  // 알림 읽기
-  const handleReadNotification = async (alertSeq) => {
-    try {
-      if (userType === "designer") await readDesignerNotification(alertSeq);
-      if (userType === "customer") await readCustomerNotification(alertSeq);
-      refetch();
-    } catch (error) {
-      console.error("Error reading notification", error);
+  // // 알림 읽기
+  // const handleReadNotification = async (alertSeq) => {
+  //   try {
+  //     if (userType === "designer") await readDesignerNotification(alertSeq);
+  //     if (userType === "customer") await readCustomerNotification(alertSeq);
+  //     refetch();
+  //   } catch (error) {
+  //     console.error("Error reading notification", error);
+  //   }
+  // };
+  useEffect(() => {
+    // 알림을 조회하는 함수
+    const fetchNotifications = async () => {
+      let fetchedNotifications = [];
+
+      if (userType === 'designer') {
+        fetchedNotifications = await getDesignerNotification(userSeq);
+      } else {
+        fetchedNotifications = await getCustomerNotification(userSeq);
+      }
+
+      setNotifications(fetchedNotifications);
+    };
+
+    fetchNotifications();
+  }, [userSeq, userType]);
+
+  // 알림 클릭 시 동작
+  const handleNotificationClick = async (alertSeq) => {
+    if (userType === 'designer') {
+      await readDesignerNotification(alertSeq);
+    } else {
+      await readCustomerNotification(alertSeq);
     }
+
+    // 알림 제거
+    const updatedNotifications = notifications.filter(notif => notif.alertSeq !== alertSeq);
+    setNotifications(updatedNotifications);
   };
+
   useEffect(() => {
     scrollY.onChange(() => {
       if (scrollY.get() > 80){
@@ -148,10 +190,7 @@ function Header() {
 
   console.log(notifications, "알림");
 
-  const handleMap = () => {
-    window.open(`/map`, '안녕')
-    // window.open(`/mapsearch`, '안녕', 'width=600, height=600')
-  }
+
   return (
     <Nav
       variants={navVariants}
@@ -222,22 +261,6 @@ function Header() {
               </Dropdown.Menu>
             </Dropdown> */}
 
-            <TestDiv>
-              <TestUl>
-                {notifications.map((notification) => (
-                  <TestLi key={notification.id}>
-                    <p>{notification.message}</p>
-                    <span
-                      onClick={() =>
-                        handleReadNotification(notification.alertSeq)
-                      }
-                    >
-                      읽기
-                    </span>
-                  </TestLi>
-                ))}
-              </TestUl>
-            </TestDiv>
           </>
         ) : (
           <>

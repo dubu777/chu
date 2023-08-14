@@ -29,14 +29,14 @@ function PaySuccess() {
   const [info, setInfo] = useRecoilState(reserveInfo);
   const customerSeq = localStorage.getItem('userSeq')
   const navigate = useNavigate();
-  const [consultingSeq, setConsultingSeq] = useState(null);
+  // const [consultingSeq, setConsultingSeq] = useState(null);
   const [requestFile, setRequestFile] = useRecoilState(imgFileState);
 
   const handleComplete = async () => {
     try{
       const response  = await postReserveInfo(info);
       console.log('정보보보',response);
-      setConsultingSeq(response)
+      // setConsultingSeq(response)
       //예약 정보 이미지 보내기
       if (response) {
         console.log('response왔어?', response)

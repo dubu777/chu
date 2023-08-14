@@ -48,9 +48,7 @@ export const getCunsultingResult = async (consultingSeq) => {
 }
 // 예약 정보 보내기 
 export const postReserveInfo = async(combinedData) => {
-  console.log('넘어온 정보 확인',combinedData)
   try{
-    console.log('API TRY')
     const response = await axios.post(
       `${BASE_URL}/consulting`, combinedData
     );
@@ -65,7 +63,6 @@ export const postReserveInfo = async(combinedData) => {
 // 예약 정보 이미지 보내기
 export const postReserveImg = async (consultingSeq, formData) => {
   try { 
-    console.log("try문 진입");
     const response = await axios.post(
       `${BASE_URL}/consulting/img/${consultingSeq}`,
       formData,
@@ -75,10 +72,9 @@ export const postReserveImg = async (consultingSeq, formData) => {
         },
       }
     );
-    console.log('사진 정보',response.data)
-    console.log(response)
+    console.log('예약 정보 이미지 보내기 성공',response.data)
     return response.data.result;
   } catch (error) {
-    throw new Error("이미지 보내기 실패");
+    throw new Error("예약 정보 이미지 보내기 실패");
   }
 };

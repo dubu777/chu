@@ -127,8 +127,6 @@ function DesignerList(props) {
   const { data, sortOrder } = props;
   const userType = localStorage.getItem('userType');
   const customerSeq = localStorage.getItem("userSeq");
-  const designerSeq = localStorage.getItem("userSeq");
-  // const designerSeq = localStorage.getItem('userSeq')
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
@@ -145,7 +143,7 @@ function DesignerList(props) {
     mutation.mutate({designerSeq, customerSeq, isLike: newLikeStatus});
   };
 
-  const handleReservBoxClick = () => {
+  const handleReservBoxClick = (designerSeq) => {
     if (userType === 'designer') {
       Swal.fire({
         title: '알림',
@@ -170,6 +168,7 @@ function DesignerList(props) {
       navigate(`/reservation/${designerSeq}`);
     }
   };
+  console.log(data, "리스트 데이터");
   // 필터에 따라 내림차순으로 정렬하는 함수
   const sortByLikeCnt = (designers) => {
     return designers.slice().sort((a, b) => b.likeCnt - a.likeCnt);
@@ -235,7 +234,7 @@ function DesignerList(props) {
               <Text>{data.cost}</Text>
             </CostBox>
             <ReservBox
-              onClick={handleReservBoxClick}
+              onClick={() => handleReservBoxClick(data.designerSeq)}
               whileHover={{ backgroundColor: "rgb(244,153,26)" }}
               >
               <Icon src="/icon/reservBtn.png" />
