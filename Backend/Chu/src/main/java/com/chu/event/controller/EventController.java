@@ -102,11 +102,7 @@ public class EventController {
             ResponseEntity<byte[]> response;
 
             String pathToFile = "/chu/upload/images/designer/customer/event/origin/" + customerSeq + ".png";
-            Resource fileResource = new FileSystemResource(pathToFile);
-
-            if (fileResource.exists()) {
-                body.add("file", fileResource);
-            }
+            body.add("file", new FileSystemResource(pathToFile));
             // 타겟사진 고른 개수 리스트 길이만큼 반복하면 될듯
             for (String destUrl : targetFileUrls) {
                 body.add("file", new FileSystemResource(destUrl));
