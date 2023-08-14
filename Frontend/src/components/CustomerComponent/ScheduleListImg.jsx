@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { sessionIdState } from "../../recoil/openvidu";
+import Swal from 'sweetalert2';
 
 const Container = styled.div`
   display: flex;
@@ -107,17 +108,30 @@ function ScheduleListImg(){
 
   const handleCancel = async (consultingSeq) => {
     try {
-      // 알림 생성
-      const notificationResult = await createNotification(consultingSeq, userType);
-      console.log(notificationResult, "알림생성");
+      const result = await Swal.fire({
+        title: '상담을 취소하시겠습니까?',
+        text: "취소한 상담은 복구할 수 없습니다.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: '네',
+        cancelButtonText: '아니요'
+      });
   
-      // 상담 취소
-      const reservationResult = await reservationCancel(consultingSeq);
-      console.log(reservationResult, "상담취소");
-      // refetch();
-    } catch (error) {
-      console.error("API 호출 실패", error);
-    }
+      // '네' 버튼을 눌렀을 경우에만 로직을 실행
+      if (result.isConfirmed) {
+        // 알림 생성
+        const notificationResult = await createNotification(consultingSeq, userType);
+        console.log(notificationResult, "알림생성");
+    
+        // 상담 취소
+        const reservationResult = await reservationCancel(consultingSeq);
+        console.log(reservationResult, "상담취소");
+        refetch();
+      }
+      } catch (error) {
+        console.error("API 호출 실패", error);
+      }
+    
   }
 
   if (isLoading) {
