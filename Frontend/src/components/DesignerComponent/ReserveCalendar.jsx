@@ -9,6 +9,9 @@ import {postReserveCalendar} from "../../apis/designer";
 import {getPossibleTimeApi} from "../../apis/reservation"
 import { useParams } from "react-router-dom";
 import { useQuery, useMutation } from "react-query";
+import swal from "sweetalert";
+
+
 const Container = styled.div`
     /* text-align: center; */
 `;
@@ -232,6 +235,7 @@ function ReserveCalendar(){
       console.log('날짜 시간 결과 보여줜',selectedTimes)
       const response = await postReserveCalendar(designerSeq, selectedTimes);
       console.log(response)
+      swal("success", "상담 캘린더 등록이 완료되었습니다🕓" )
     } catch (error) {
       console.error("캘린더 통신 실패", error)
       // swal("Error", "시간 설정에 실패했습니다.", "error");
@@ -273,7 +277,7 @@ function ReserveCalendar(){
                     {/* 시간 선택 박스 */}
                     {generateTimeButtons()}
                     </BtnBox>
-                    <OkBtn onClick={handleApplyButtonClick}>적용</OkBtn> {/* 확인 버튼 추가 */}
+                    <OkBtn onClick={handleApplyButtonClick}>적용</OkBtn> 
                 </TimeBox>
             </Wrapper>
         </Container>

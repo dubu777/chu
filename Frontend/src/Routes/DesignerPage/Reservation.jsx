@@ -303,17 +303,34 @@ function Reservation() {
 
   // 넘기고 싶은 데이터 모으기
   const handleButtonClick = () => {
-
+    const selectedImgSeqs = selectedImgs.map((item) => {
+      // designerPortfolio 배열에서 이미지 검색
+      const selectedFromDesignerPortfolio = imgData.designerPortfolio.find((image) => image.imgName === item);
+      // randomPortfolio 배열에서 이미지 검색
+      const selectedFromRandomPortfolio = imgData.randomPortfolio.find((image) => image.imgName === item);
+      
+      // 이미지가 designerPortfolio 또는 randomPortfolio 어느 배열에서나 찾아진 경우
+      if (selectedFromDesignerPortfolio) {
+        return selectedFromDesignerPortfolio.imgSeq;
+      } else if (selectedFromRandomPortfolio) {
+        return selectedFromRandomPortfolio.imgSeq;
+      }
+      
+      return null; // 해당 이미지를 찾지 못한 경우
+    });
+    
+    console.log("선택한 이미지들의 imgSeq 배열:", selectedImgSeqs);
+      
     if (userType !== 'customer') {
       swal("Error", "예약은 일반회원만 가능합니다.", "error");
       return;
     }
-      const selectedImgSeqs = selectedImgs.map((item) => {
-      const selectedImage = imgData.designerPortfolio.find((image) => image.imgName === item);
-      return selectedImage ? selectedImage.imgSeq : null;
-    });
+    //   const selectedImgSeqs = selectedImgs.map((item) => {
+    //   const selectedImage = imgData.designerPortfolio.find((image) => image.imgName === item);
+    //   return selectedImage ? selectedImage.imgSeq : null;
+    // });
   
-    console.log("선택한 이미지들의 imgSeq 배열:", selectedImgSeqs);
+    // console.log("선택한 이미지들의 imgSeq 배열:", selectedImgSeqs);
     const combinedData = {
       customerSeq: customerSeq,
       designerSeq: designerSeq,
@@ -322,6 +339,7 @@ function Reservation() {
       consultingMemo: note,
       portfolios: selectedImgSeqs,
     };
+    console.log("최종 imgSeq 배열:", selectedImgSeqs);
     console.log('보내기 전 info', combinedData)
     // 예약정보 보내기
       console.log('페이지 try')
@@ -350,6 +368,7 @@ function Reservation() {
       //     console.error("Img Send Error:", error);
       //   }
       // }
+
 
   const settings = {
     className: "center",
@@ -393,6 +412,7 @@ function Reservation() {
       const data  = await getPossibleTimeApi(designerSeq, selectedDateString);
       console.log('시간 데이터 조회 성공', data)
       generateTimeButtons(data)
+
     }catch(error){
       console.error("API Error:", error);
     }
@@ -401,9 +421,11 @@ function Reservation() {
   // 포트폴리오 이미지 호출
   const { data: imgData, isError: imgError, isLoading: imgLoading } = useQuery(
     ['portfolio', designerSeq],
-    () => getPortfolioShow(designerSeq)
+    () => getPortfolioShow(designerSeq),
+    {
+      stale: true, // 데이터가 변경되어도 캐시된 데이터를 사용
+    }
   );
-    console.log('포트폴리오 왔니' , imgData)
 
   const generateTimeButtons = (data) => {
     console.log('들어왔?',data)
@@ -451,8 +473,15 @@ function Reservation() {
     } else {
       // 새로운 이미지를 선택
       setSelectedImgs((prev) => [...prev, item]);
-    }
+    }  
+    // const selectedImgSeqs = selectedImgs.map((item) => {
+    // const selectedImage = imgData.designerPortfolio.find((image) => image.imgName === item);
+    //   return selectedImage ? selectedImage.imgSeq : null;
+    // });
+    // console.log("선택한 이미지들의 imgSeq 배열:", selectedImgSeqs);
   };
+  
+ 
 
   // 상담 이미지 첨부
   const handleFileChange = (event) => {
@@ -477,6 +506,7 @@ function Reservation() {
         if (imgError) {
           return <div>홈 페이지 에러{imgData}</div>;
   }
+  
   // console.log('데이터가 무슨이름으로 들어오니', imgData.designerPortfolio)
   // console.log('최종 예약 이미지',formData)
 

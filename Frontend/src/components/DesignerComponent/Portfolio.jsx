@@ -75,21 +75,24 @@ function Portfolio(){
   const [data, setData] = useState();
   const { designerSeq } = useParams();
   const [loginState, setLoginResultState] = useRecoilState(loginResultState);
+  const [selectedImage, setSelectedImage] = useState(null); 
   // 지금은 로그인 안된 상태라 에러 발생
   // const seq = 2;
   // 마운트 될 때 실행
-  useEffect(()=> {
-    async function fetchData() { 
+  
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
       try {
         const response = await getPortfolio(designerSeq);
         setData(response)
         console.log(response);
       } catch(error){
-        console.log('프로필 사진 조회 실패:', error)
+        console.log('포트폴리오 사진 조회 실패:', error)
       }
-    }
-    fetchData();
-  }, []);
+    };
 
   // imgSeq와 일치하는 이미지 삭제
   // 해당 이미지를 제외한 나머지 이미지들로 배열 업데이트
@@ -117,12 +120,19 @@ function Portfolio(){
     try {
       // 이미지를 서버에 업로드하고 imgSeq를 받아옴
       const response = await postPortfolio(designerSeq, formData);
+      
         const newImg = {
           imgSeq: response, // 서버에서 받아온 imgSeq 사용
           imgName: file.name,
 
         }
-        setData({ ...data, imgs: [...data.imgs, newImg] });
+        // setData({ ...data, imgs: [...data.imgs, newImg] });
+        setData((prevData) => ({
+          ...prevData,
+          imgs: [...prevData.imgs, newImg],
+        }));
+        fetchData();
+
       } catch (error) {
         console.error(error);
     }
@@ -136,10 +146,9 @@ function Portfolio(){
       <ImgWrapper>
       {data.imgs.map((img) => (
       <ImgBox key={img.imgSeq}>
-        <Img src={`https://i9b111.q.ssafy.io/api/portfolio/${img.imgName}`}
-alt="Image" /> 
+        <Img src={`https://i9b111.q.ssafy.io/api/portfolio/${img.imgName}`}alt="Image" /> 
         <DeleteBtn onClick={() => handleDelete(img.imgSeq)}>
-          <DeleteImg src={"/icon/bin.png"}></DeleteImg>
+          <DeleteImg src="/icon/bin.png"></DeleteImg>
         </DeleteBtn>
       </ImgBox>
     ))}
@@ -148,7 +157,7 @@ alt="Image" />
     {data.imgs.length === 0 || (null && (
           <MessageBox>
             {/* <IconImg src={"./icon/file.png"}></IconImg> */}
-            <IconImg src={"/icon/file.png"}></IconImg>
+            <IconImg src="/icon/file.png"></IconImg>
             <UploadText>포트폴리오 사진을 업로드 해주세요 :)</UploadText>
           </MessageBox>
     ))}

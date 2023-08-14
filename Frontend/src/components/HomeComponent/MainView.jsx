@@ -50,7 +50,7 @@ const pofolVariants = {
 	},
 }
 const Title = styled.h1`
-  font-family: 'omyu_pretty'; 
+  /* font-family: 'omyu_pretty';  */
   font-size: 25px;
   /* font-family: "Blue-road";   */
   font-weight: bold;
