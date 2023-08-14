@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { BASE_URL } from '../../apis/rootUrl'
 import { useQueryClient, useMutation } from "react-query";
 import { toggleLikeButton } from "../../apis";
+import swal from "sweetalert";
 
 const Container = styled.div`
   display: flex;
@@ -124,9 +125,13 @@ const LikeBtn = styled.img`
 `;
 function DesignerList(props) {
   const { data, sortOrder } = props;
-  const customerSeq = localStorage.getItem('userSeq')
+  const usertype = localStorage.getItem('userType');
+  const customerSeq = localStorage.getItem("userSeq");
+  const designerSeq = localStorage.getItem("userSeq");
+  // const designerSeq = localStorage.getItem('userSeq')
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+
 
   //designerList를 키로 가진 query를 무효화 하여 새로운 데이터를 받아오게함
   const mutation = useMutation(toggleLikeButton, {
@@ -205,10 +210,19 @@ function DesignerList(props) {
               <Icon src="/icon/money.png"/>
               <Text>{data.cost}</Text>
             </CostBox>
-            <ReservBox 
-              onClick={() => navigate(`/reservation/${data.designerSeq}`)}
-              whileHover={{backgroundColor: "rgb(244,153,26)"}}>
-              <Icon src="/icon/reservBtn.png"/>
+            <ReservBox
+              onClick={() => {
+                if (usertype === 'designer') {
+                  swal('회원 전용 기능입니다 :)');
+                } else if (usertype !== 'customer') {
+                  swal('예약 서비스는 로그인 후 이용 가능합니다 :)');
+                } else {
+                  navigate(`/reservation/${designerSeq}`);
+                }
+              }}
+              whileHover={{ backgroundColor: "rgb(244,153,26)" }}
+              >
+              <Icon src="/icon/reservBtn.png" />
               <Text>예약</Text>
             </ReservBox>
           </Box>
