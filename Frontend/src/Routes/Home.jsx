@@ -190,7 +190,7 @@ function Home() {
       </EventBox>
       </MainWrapper>
       
-      <MainView />
+      {/* <MainView /> */}
 
     </Wrapper>
   );
