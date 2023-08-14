@@ -369,8 +369,8 @@ function DesignerSignUp() {
                 />
                 <Profile
                 // src={selectedFile}
-                  // src={selectedFile || "./icon/designerr.png"}
-                  src={`${BASE_URL}/designer-profile/${selectedFile}`}
+                  src={selectedFile || "./icon/designerr.png"}
+                  // src={`${BASE_URL}/designer-profile/${selectedFile}`}
                   alt="Profile"
                   // hasFile={selectedFile !== null}
                 />
