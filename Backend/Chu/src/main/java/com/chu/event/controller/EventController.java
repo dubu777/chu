@@ -159,7 +159,7 @@ public class EventController {
         // RestTemplate 기본 설정을 위한 Factory 생성
         SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
         factory.setConnectTimeout(3000);
-        factory.setReadTimeout(3000);
+        factory.setReadTimeout(180*60*1000);
         factory.setBufferRequestBody(false); // 파일 전송은 이 설정을 꼭 해주자.
         REST_TEMPLATE = new RestTemplate(factory);
     }
