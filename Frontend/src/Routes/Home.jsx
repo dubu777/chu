@@ -13,13 +13,13 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
 `;
-// src=""
+
 const Main = styled.div`
   background-image: url('/img/password.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  width: 100vw;
+  /* width: 100vw; */
   height: 100vh;
 `;
 const MainWrapper = styled.div`
