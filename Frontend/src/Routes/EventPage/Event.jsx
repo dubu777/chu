@@ -3,9 +3,10 @@
 import { styled } from "styled-components";
 import { useState, useEffect } from "react";
 import { getEventInfo, postEventInfo, postInputImage, postTargetImage } from "../../apis/event";
+import { useNavigate } from "react-router-dom";
 
 const Marginbox = styled.div`
-    height: 100px;
+    height: 50px;
 `
 const Container = styled.div`
     background-image: url('/img/password.jpg');
@@ -15,8 +16,15 @@ const Container = styled.div`
     justify-content: space-around;
     align-items: center;
 `;
+const BackImg = styled.img`
+  width : 30px;
+  height: 30px;
+  margin-left: 30px;
+  margin-top: 30px;
+`;
 const MainWrapper = styled.div`
-    background-color: rgba(0, 0, 0, 0.7);
+    margin-top: 50px;
+    background-color: rgba(255, 255, 255, 0.669);
     /* filter: invert(7%); */
 `;
 const Imgbox = styled.div`
@@ -37,8 +45,8 @@ const Text = styled.p`
 
 const Borderbox = styled.div`
 	border: dashed 2px;
-	border-color: #696865da;
-	margin: 20px;
+	border-color: #00000080;
+	margin: 10px;
     padding: 20px;
 	border-radius: 0.5rem;
 `;
@@ -46,7 +54,7 @@ const Borderbox = styled.div`
 const Box = styled.div`
     /* width: 22%; */
 	height: 350px;
-	background-color:rgba(246, 243, 228, 0.708);
+	background-color:rgba(91, 91, 89, 0.791);
 	/* margin: auto; */
     margin: 20px;
 	border-radius: 0.6rem;
@@ -67,11 +75,15 @@ const TextBtn = styled.button`
     font-size: 14px;
 	width: 130px;
 	border-radius: 0.8rem;
-	background-color: #f6be4e;
+	background-color: #f9c45b;
+`;
+const Hr = styled.hr`
+  width : 50% ;
+  color: #877d6d;
 `;
 const Img = styled.img`
-    width: 200px;
-    height: 200px;
+    width: 220px;
+    height: 220px;
     border-radius: 0.4rem;
 `;
 
@@ -83,7 +95,9 @@ const ImgWrapper = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin-bottom: 100px;
+    margin-bottom: 130px;
+    margin-left: 30px;
+    margin-right: 30px;
 `;
 const ClickBtn = styled.button`
     font-size: 18px;
@@ -125,7 +139,7 @@ const Profile = styled.img`
 `;
 
 function Event() {
-
+    const navigate = useNavigate();
     const customerSeq = localStorage.getItem('userSeq');
     // const [inputImagePath, setInputImagePath] = useState(`https://i9b111.q.ssafy.io/api/customer-profile/event/origin/user.png`);
     // const [targetImagePath, setTargetImagePath] = useState(`https://i9b111.q.ssafy.io/api/customer-profile/event/target/user.png`);
@@ -233,7 +247,12 @@ function Event() {
     return (
         <Container>
             <MainWrapper>
-            <Marginbox />
+            <Marginbox>
+                <BackImg 
+                    src="/icon/backBtn.png"
+                    onClick={() => navigate(-1)}
+                    />
+            </Marginbox>
               <ResultBox>
             {
                 // 상태가 2라는건 타겟이미지가 넘어갔다는 것, 입력 이미지도 넣었다는 것
@@ -246,6 +265,7 @@ function Event() {
                             />
                             <ClickBtn onClick={() => goToConfusionWolrd(customerSeq, formData)}>한장한장 체험하기👆🏻</ClickBtn>
                             <SText>버튼을 누르면 합성사진 체험이 가능합니다 :)</SText>
+                            <Hr/>
                         </>
                     )
                     : (
