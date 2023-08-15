@@ -1,6 +1,7 @@
 import { styled } from "styled-components";
 import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css"; // css import
+import '../../components/ReservationComponent/Calendar.css'
+// import "react-calendar/dist/Calendar.css"; 
 // import Calendar from "../../components/ReservationComponent/Calendar";
 import { useState, useEffect } from "react";
 import { useQuery, useMutation } from "react-query";

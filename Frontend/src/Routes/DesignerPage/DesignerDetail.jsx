@@ -19,6 +19,7 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: rgba(230, 227, 227, 0.3);
 `;
 
 const Wrapper = styled.div`
@@ -26,6 +27,12 @@ const Wrapper = styled.div`
   justify-content: center;
   width: 50vw;
   margin: 40px 0;
+  border-radius: 10px;
+  padding: 30px 20px;
+  background-color: white;
+  /* box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+    2px 4px 30px -4px rgb(0 0 0 / 0.1); */
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 `;
 const Wrap = styled.div`
   display: flex;
@@ -165,6 +172,7 @@ const SubTitle = styled.span`
 const PofolImg = styled(motion.img)`
   width: 120px;
   height: 150px;
+  object-fit: cover;
 `;
 const ReviewWrap = styled.div`
   display: flex;

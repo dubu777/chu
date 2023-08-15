@@ -172,8 +172,8 @@ const EventBox = styled(motion.div)`
   margin-bottom: 30px;
   font-size: 22px;
   cursor: pointer;
-  /* background: linear-gradient(90deg, #c17d00 50%, #605b52 50%); */
-  background: linear-gradient(90deg, #bda67f 50%, #605b52 50%);
+  background: linear-gradient(90deg, #d48a02 50%, #605b52 50%);
+  /* background: linear-gradient(90deg, #bda67f 50%, #605b52 50%); */
   background-size: 200% 100%;
   background-position: right;
   transition: background 0.5s;
@@ -224,7 +224,6 @@ const pofolVariants = {
     y: 0,
     transition: {
       duration: 0.5,
-      delay: 0.2,
     },
   },
   hover: {
