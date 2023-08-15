@@ -28,7 +28,8 @@ const MainWrapper = styled.div`
   margin-right: 170px;
 `;
 const ImgText = styled.p`
-  font-family: sans-serif;
+  /* font-family: sans-serif; */
+  font-family: 'Abril Fatface';
   top: 400px;
   left: 100px;
   font-size: 40px;
@@ -45,7 +46,7 @@ const DesignerBox = styled.div`
 `;
 const ProfileBox = styled(motion.div)`
   background-color: #ffffff;
-  border: 2px solid orange;
+  border: 2px solid #BD9A7F;
   width: 160px;
   height: 190px;
   border-radius: 0.3rem;
@@ -109,11 +110,50 @@ const Name = styled.p`
   font-size: 13px;
   color: white;
 `;
+
+const EventWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+const EventText = styled.p`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+const EventTitle = styled.p`
+  font-size: 60px;
+  margin-bottom: 20px;
+  
+`;
+const EventIntro = styled.p`
+  font-size: 22px;
+  margin-bottom: 5px;
+  
+`;
+const EventImg = styled.img`
+  width: 270px;
+  height: 400px;
+  border-radius: 0.1rem;
+  /* margin-right: 30px; */
+`;
+const EventImg1 = styled.img`
+  width: 600px;
+  height: 400px;
+  border-radius: 0.1rem;
+`;
+
 const EventBox = styled.div`
-  width: 80px;
-  height: 40px;
-  background-color: #ffd46f;
-  border-radius: 0.5rem;
+  width: 200px;
+  height: 50px;
+  background-color: #605b52;
+  border-radius: 0.1rem;
+  color: white;
+  text-align: center;
+  align-items: center;
+  margin-top: 25px;
+  padding-top: 15px;
+  font-size: 22px;
+  cursor: pointer;
 `;
 
 function Home() {
@@ -185,9 +225,20 @@ function Home() {
       ))
       }
       </DesignerBox>
-      <EventBox onClick={handleEvent}>
-        📷 Event
-      </EventBox>
+
+      <EventWrapper>
+        <EventText>
+          <EventTitle>For You</EventTitle>
+          <EventIntro>Chu만의 헤어스타일 합성 서비스</EventIntro>
+          <EventIntro>#헤어스타일 체험 #마이 헤어</EventIntro>
+          <EventBox onClick={handleEvent}>
+            Go 한장 한장
+          </EventBox>  
+        </EventText>
+        <EventImg src="/img/hairtool.jpg" />
+        <EventImg1 src="/img/hair3.jpeg" />
+      </EventWrapper>
+      
       </MainWrapper>
       
       {/* <MainView /> */}
