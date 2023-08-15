@@ -12,11 +12,11 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   width: 65vw;
-  margin: 0 auto;
+  margin: 5px auto;
 `;
 const Hr = styled.div`
   margin: 20px 0 20px 0;
-  border-bottom : 2px solid rgba(0, 0, 0, 0.1);
+  border-bottom : 1.5px solid rgba(146, 132, 104, 0.231);
 `;
 const Wrap = styled.div`
   display: flex;
@@ -35,6 +35,7 @@ const Box = styled.div`
 `;
 const DesignerImg = styled.img`
   width: 100px;
+  border-radius: 0.2rem;
   cursor: pointer;
 `;
 
@@ -235,9 +236,9 @@ function DesignerList(props) {
             </CostBox>
             <ReservBox
               onClick={() => handleReservBoxClick(data.designerSeq)}
-              whileHover={{ backgroundColor: "rgb(244,153,26)" }}
+              whileHover={{ backgroundColor: "rgb(237, 179, 99)" }}
               >
-              <Icon src="/icon/reservBtn.png" />
+              {/* <Icon src="/icon/reservBtn.png" /> */}
               <Text>예약</Text>
             </ReservBox>
           </Box>

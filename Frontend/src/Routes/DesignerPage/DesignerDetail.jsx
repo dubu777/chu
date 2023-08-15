@@ -15,10 +15,11 @@ import { toggleLikeButton } from "../../apis";
 import Swal from 'sweetalert2';
 
 const Container = styled.div`
-  margin-top: 20;
+  margin-top: 60px;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: rgba(230, 227, 227, 0.3);
 `;
 
 const Wrapper = styled.div`
@@ -26,6 +27,12 @@ const Wrapper = styled.div`
   justify-content: center;
   width: 50vw;
   margin: 40px 0;
+  border-radius: 10px;
+  padding: 30px 20px;
+  background-color: white;
+  /* box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+    2px 4px 30px -4px rgb(0 0 0 / 0.1); */
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 `;
 const Wrap = styled.div`
   display: flex;
@@ -69,8 +76,6 @@ const LikeBox = styled.div`
   padding: 5px 10px;
   // border: 2px solid rgb(244, 153, 26);
   border-radius: 5px;
-  background-color: ${(props) =>
-    props.isLike ? "rgba(244,153,26,0.43)" : "white"};
 `;
 const Icon = styled.img`
   width: 15px;
@@ -82,6 +87,10 @@ const Text = styled.span`
   font-size: 14px;
   font-weight: 600;
 `;
+const ReviewText = styled(Text)`
+  font-size:15px;
+  margin: 5px 10px 7px 3px;
+`
 const Box = styled.div`
   display: flex;
   align-items: center;
@@ -93,8 +102,19 @@ const CostIcon = styled.img`
   width: 21px;
   height: 21px;
   margin-right: 3px;
-  margin-right: 5px;
 `;
+const GpsIcon = styled.img`
+  width: 24px;
+  height: 24px;
+`
+const AddressBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 5px;
+  margin-left: 5px;
+`
 const Hr = styled.div`
   /* color: #383838; */
   border: 1px solid rgb(197, 197, 197);
@@ -108,13 +128,14 @@ const InfoBox = styled.div`
   margin-bottom:10px;
 `;
 const Address = styled.span`
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
-  color: gray;
-  margin: 5px 0 5px 5px;
+  color: #4a4848;
+  margin: 5px;
 `;
 const HashBox = styled.div`
   display: flex;
+  margin-left: 5px;
 `;
 const HashTag = styled.span`
   font-size: 12px;
@@ -151,10 +172,11 @@ const SubTitle = styled.span`
 const PofolImg = styled(motion.img)`
   width: 120px;
   height: 150px;
+  object-fit: cover;
 `;
 const ReviewWrap = styled.div`
   display: flex;
-  justify-content: space-between;
+  flex-direction: row;
 `;
 const ReviewInfoBox = styled.div`
   display: flex;
@@ -163,8 +185,11 @@ const ReviewInfoBox = styled.div`
 const ReviewIdBox = styled.div`
   font-size: 15px;
   font-weight: 500;
-  margin-bottom: 5px;
 `;
+const ReviewDate = styled.span`
+  margin-left: 20px;
+  color: gray;
+`
 const SIcon = styled.img`
   width: 15px;
   height: 15px;
@@ -188,6 +213,11 @@ const ReservBox = styled(motion.div)`
   margin-right: 5px;
   cursor: pointer;
 `;
+const ReviewInfoDetailBox = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: start;
+`
 const StyledSlider = styled(Slider)`
   .slick-slide > div {
     margin: 0 10px;
@@ -395,7 +425,10 @@ function DesignerDetail() {
               </DesignerNameWrap>
             </DesignerInfoBox>
             <InfoBox>
-              <Address>{data.address}</Address>
+              <AddressBox>
+                <GpsIcon src="/icon/gps_pin_icon.png" />
+                <Address>{data.salonName}</Address>
+              </AddressBox>
               <HashBox>
                 {data.hairStyleLabel.map((tag, index) => (
                   <HashTag key={index}>#{tag}</HashTag>
@@ -424,26 +457,26 @@ function DesignerDetail() {
             <SubTitle>별점</SubTitle>
             <Box>
               <Icon src="/icon/star.png" />
-              <Text>{data.allReviewScore}</Text>
+              <Text>{data.allReviewScore.toFixed(1)}</Text>
             </Box>
           </InfoBox>
           <InfoBox>
-            <SubTitle>상담후기</SubTitle>
+            <SubTitle>상담후기 ({data.review.length})</SubTitle>
             <Hr />
           </InfoBox>
           {data.review.map((review, index) => (
             <ReviewInfoBox key={index}>
               <ReviewWrap>
-                <ReviewInfoBox>
+                <ReviewInfoDetailBox>
                   <Box>
                     <ReviewIdBox>{review.customerId}</ReviewIdBox>
                     <SIcon src="/icon/star.png" />
-                    <Text>{review.review_score}</Text>
+                    <Text>{review.reviewScore.toFixed(1)}</Text>
                   </Box>
-                  <Text>{review.reviewContent}</Text>
-                </ReviewInfoBox>
-                <Text>{review.consulting_date}</Text>
+                  <ReviewDate>{review.date}</ReviewDate>
+                </ReviewInfoDetailBox>
               </ReviewWrap>
+              <ReviewText>{review.reviewContent}</ReviewText>
               <Hr />
             </ReviewInfoBox>
           ))}

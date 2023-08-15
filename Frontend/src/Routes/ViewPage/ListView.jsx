@@ -15,7 +15,7 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   width: 65vw;
-  margin: 0 auto;
+  margin: 30px auto;
 `;
 const Wrapper = styled.div`
   display: flex;
@@ -51,9 +51,9 @@ const HashTag = styled(motion.span)`
   margin-bottom: 20px;
   margin-top: 10px;
   border: 1px solid gray;
-  background-color: ${props => props.selected ?"rgb(100,93,81)" :"rgb(255, 255, 254)" };
-  color: ${props => props.selected ?"rgb(255, 255, 255)" :"rgb(0,0,0)" };
-  border-radius: 5px;
+  /* background-color: ${props => props.selected ?"rgb(100,93,81)" :"rgb(255, 255, 254)" };
+  color: ${props => props.selected ?"rgb(255, 255, 255)" :"rgb(0,0,0)" }; */
+  border-radius: 3px;
   cursor: pointer;
 `;
 const SelectTag = styled(motion.span)`
@@ -63,10 +63,10 @@ const SelectTag = styled(motion.span)`
   margin-right: 10px;
   margin-bottom: 20px;
   margin-top: 10px;
-  border: 1px solid lightgray;
-  background-color: ${props => props.selected ?"rgb(182, 171, 153)" :"rgb(255, 255, 254)" };
-  color: ${props => props.selected ?"rgb(255, 255, 255)" :"rgb(0,0,0)" };
-  border-radius: 5px;
+  border: 1px solid gray;
+  /* background-color: ${props => props.selected ?"rgb(182, 171, 153)" :"rgb(255, 255, 254)" };
+  color: ${props => props.selected ?"rgb(255, 255, 255)" :"rgb(0,0,0)" }; */
+  border-radius: 3px;
   cursor: pointer;
 `;
 const SelectText = styled.span`
@@ -90,10 +90,11 @@ const Grid = styled.div`
   gap: 5px;
   grid-template-columns: repeat(7, minmax(0, 1fr));
   div:nth-child(2),
-  div:nth-child(4),
-  div:nth-child(6),
-  div:nth-child(8) {
+  div:nth-child(4) {
     grid-column: span 6;
+  }
+  div:nth-child(6) {
+    grid-column: span 5;
   }
   margin-top: 20px;
   width: 70%;
@@ -106,24 +107,24 @@ const Grid = styled.div`
 
 const BtnBox = styled.div`
   display: flex;
-  margin-top: 20px;
-  
+  margin-top: 25px;
 `;
+
 const Btn = styled(motion.button)`
   border-radius: 5px;
   border: 1px solid rgb(220, 220, 220);
-  padding: 6px 15px;
+  padding: 7px 18px;
   margin-right: 10px;
   font-weight: 600;
   font-size: 13px;
-  background-color: ${props => (props.active ? 'rgb(244,153,26)' : 'white')};
+  background-color: ${props => (props.active ? 'rgb(235, 179, 102)' : 'white')};
 `;
 const MapBtn = styled.button`
   border-radius: 5px;
   border: 1px solid rgb(220, 220, 220);
   font-weight: 600;
   font-size: 13px;
-  padding: 6px 15px;
+  padding: 7px 18px;
   background-color: ${props => (props.handleMap ? 'rgb(244,153,26)' : 'white')};
 `;
 
@@ -156,6 +157,12 @@ const SearchImg = styled.img`
   margin: 0 10px;
 `;
 const SubmitBtn = styled.button`
+  background-color: black;
+  color: white;
+  border-radius: 3px;
+  padding: 5px 10px;
+  margin: 12px 0;
+  font-size: 15px;
 `;
 const Loading = styled.div`
   display: flex;
@@ -165,7 +172,18 @@ const Loading = styled.div`
 const P = styled.p`
   font-size: 25px;
 `;
-
+const typeBtnVariants = {
+  normal: {},
+  hover: {
+    borderColor: "rgb(238, 117, 5)",
+    color: "rgb(252, 156, 1)",
+  },
+  active: {
+    borderColor: "rgb(0,0,0)",
+    color: "rgb(255,255,255)",
+    backgroundColor: "#605b52",
+  },
+};
 function ListView() {
   const userType = localStorage.getItem('userType')
   const userSeqFromStorage = localStorage.getItem('userSeq')
@@ -220,8 +238,8 @@ function ListView() {
       setSortOrder(btnName); // 버튼 클릭시 해당 버튼명을 정렬 기준으로 설정
     }
   };
-  const handleBtnClick = async (btnName) => {
-    await handleSortClick(btnName); // 버튼을 클릭하면 정렬 기준이 변경되도록 함
+  const handleBtnClick = (btnName) => {
+    handleSortClick(btnName); // 버튼을 클릭하면 정렬 기준이 변경되도록 함
     setActiveBtn(btnName); // 클릭한 버튼을 활성화 상태로 변경
 };
   const [handleMap, setHandleMap] = useState(false);
@@ -267,6 +285,14 @@ function ListView() {
               selected={selectedStyle.some(
                 (selectedTag) => selectedTag.hairStyleSeq === tag.hairStyleSeq
               )}
+              variants={typeBtnVariants}
+              initial="normal"
+              whileHover="hover"
+              animate={
+                selectedStyle.some((selectedTag) => selectedTag.hairStyleSeq === tag.hairStyleSeq)
+                ? "active"
+                : "normal"
+              }
             >#{tag.hairStyleLabel}
             </HashTag>
             ))}
@@ -280,6 +306,14 @@ function ListView() {
             selected={selectedStyle.some(
               (selectedTag) => selectedTag.hairStyleSeq === tag.hairStyleSeq
             )}
+            variants={typeBtnVariants}
+            initial="normal"
+            whileHover="hover"
+            animate={
+              selectedStyle.some((selectedTag) => selectedTag.hairStyleSeq === tag.hairStyleSeq)
+                ? "active"
+                : "normal"
+            }
           >#{tag.hairStyleLabel}
           </HashTag>
           ))}
@@ -293,12 +327,19 @@ function ListView() {
               selected={selectedStyle.some(
                 (selectedTag) => selectedTag.hairStyleSeq === tag.hairStyleSeq
               )}
+              variants={typeBtnVariants}
+              initial="normal"
+              whileHover="hover"
+              animate={
+                selectedStyle.some((selectedTag) => selectedTag.hairStyleSeq === tag.hairStyleSeq)
+                  ? "active"
+                  : "normal"
+              }
               >#{tag.hairStyleLabel}
             </SelectTag>
               ))}
-              <SubmitBtn onClick={submitFilter}>조회</SubmitBtn>
       </SelectedBox>
-        <SelectedText></SelectedText>
+      <SubmitBtn onClick={submitFilter}>Search</SubmitBtn>
           <SelectedBox>
             </SelectedBox>
             </Grid>

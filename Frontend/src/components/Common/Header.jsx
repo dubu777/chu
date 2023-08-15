@@ -11,10 +11,7 @@ import {
 } from "../../apis";
 import { useState, useEffect } from "react";
 import { useQuery, useMutation } from "react-query";
-import Dropdown from "react-bootstrap/Dropdown";
-import DropdownButton from "react-bootstrap/DropdownButton";
-import Toast from "react-bootstrap/Toast";
-import Button from "react-bootstrap/Button";
+
 
 const Nav = styled(motion.nav)`
   display: flex;
@@ -26,6 +23,7 @@ const Nav = styled(motion.nav)`
   top: 0;
   font-size: 18px;
   padding: 0 40px;
+  z-index: 1000;
 `;
 
 const Col = styled.div`
@@ -164,6 +162,7 @@ function Header() {
     localStorage.removeItem("userType");
     localStorage.removeItem("userSeq");
     localStorage.removeItem("userName");
+    localStorage.removeItem("consultingSeq");
     navigate("/");
   });
 
@@ -309,11 +308,6 @@ function Header() {
               ) : null}
             </NotificationBadge>
 
-            {/* <DropdownButton id="dropdown-basic-button" title="Dropdown button">
-              <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-              <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-              <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-            </DropdownButton> */}
           </>
         ) : (
           <>
