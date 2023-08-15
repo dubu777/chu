@@ -28,7 +28,7 @@ const MainWrapper = styled.div`
   margin-left: 170px;
   margin-right: 170px;
 `;
-const ImgText = styled.p`
+const ImgText = styled(motion.p)`
   /* font-family: sans-serif; */
   font-family: "Abril Fatface";
   top: 400px;
