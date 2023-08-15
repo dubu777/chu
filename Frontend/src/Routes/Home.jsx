@@ -1,13 +1,14 @@
 import { styled } from "styled-components";
 import css from "../font/font.css";
 import MainView from "../components/HomeComponent/MainView";
-import React, { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence, useAnimation } from "framer-motion";
+import React, { useEffect, useRef } from "react";
+import { motion } from "framer-motion";
 import { useQuery } from "react-query";
-import { BASE_URL } from '../apis/rootUrl';
+import { BASE_URL } from "../apis/rootUrl";
 import { fetchMain, customerMain, designerMain } from "../apis";
 import { useNavigate } from "react-router-dom";
 import swal from "sweetalert";
+import { useInView } from "react-intersection-observer";
 
 const Wrapper = styled.div`
   display: flex;
@@ -15,7 +16,7 @@ const Wrapper = styled.div`
 `;
 // src=""
 const Main = styled.div`
-  background-image: url('/img/password.jpg');
+  background-image: url("/img/password.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -61,22 +62,10 @@ const ProfileBox = styled(motion.div)`
     transform: scale(1.02);
   }
 `;
-const pofolVariants = {
-	nomal: {
-		scale: 1,
-	},
-	hover: {
-		scale: 1.05,
-		transition: {
-			duration: 0.2
-		},
-	},
-}
-const Title = styled.h1`
+
+const Title = styled(motion.div)`
   font-family: sans-serif;
-  /* font-family: "omyu_pretty"; */
   font-size: 25px;
-  /* font-family: "Blue-road"; */
   font-weight: bold;
 `;
 const ImgBox = styled.div`
@@ -97,6 +86,7 @@ const ProfileImg = styled.img`
   /* margin-top: 35%; */
   background-color: white;
   border-radius: 50%;
+  object-fit: cover;
 `;
 const Name = styled.p`
   /* margin-top: 45%; */
@@ -115,33 +105,68 @@ const EventBox = styled.div`
   background-color: #ffd46f;
   border-radius: 0.5rem;
 `;
-
+const pofolVariants = {
+  nomal: {
+    scale: 1,
+    opacity: 1,
+    y: -5,
+    transition: {
+      duration: 0.7,
+      delay: 0.2
+    }
+  },
+  hover: {
+    scale: 1.03,
+    transition: {
+      duration: 0.2,
+    },
+  },
+  hidden: { 
+    opacity: 0,
+    y: 20,
+  },
+};
+const fadeInUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: -5 },
+};
 function Home() {
   const navigate = useNavigate();
-  const userSeq = localStorage.getItem('userSeq') || 0
-  const userType = localStorage.getItem('userType') || 'guest';
+  const userSeq = localStorage.getItem("userSeq") || 0;
+  const userType = localStorage.getItem("userType") || "guest";
+  const [inViewRef, inView] = useInView({
+    // triggerOnce: true,  // 애니메이션을 한 번만 실행합니다.
+    threshold: 0.1, // 요소의 10%가 뷰포트에 들어왔을 때 애니메이션을 시작합니다.
+  });
+
+
   const fetchLogInData = async (userSeq) => {
-    switch(userType) {
-      case 'customer':
+    switch (userType) {
+      case "customer":
         return await customerMain(userSeq);
-      case 'designer':
+      case "designer":
         return await designerMain(userSeq);
-      case 'guest':
+      case "guest":
       default:
-        return await fetchMain(userSeq);  // seq 0을 넘겨줌
+        return await fetchMain(userSeq); // seq 0을 넘겨줌
     }
   };
   const handleEvent = () => {
-    if (userType !== 'customer') {
+    if (userType !== "customer") {
       swal("Error", "이벤트는 일반 회원만 가능합니다.", "error");
-      return
+      return;
     }
-    navigate(`/event`)
-  }
-  const { data, isError, isLoading } = useQuery(['loginData', userSeq], () => fetchLogInData(userSeq));
-  console.log(data, "메인 데이터");
-  // const { isLoading, data, isError } = useQuery(["noLogInMain"], fetchMain);
-
+    navigate(`/event`);
+  };
+  const { data, isError, isLoading } = useQuery(["loginData", userSeq], () =>
+    fetchLogInData(userSeq)
+  );
+  // 인덱스에 따른 딜레이 애니메이션
+  const getDelayByIndex = (index) => {
+    const baseDelay = 0.2; // 기본 딜레이
+    const increment = 0.1; // 각 항목에 추가되는 딜레이 양
+    return baseDelay + index * increment;
+  };
   if (isLoading) {
     return <div>Loading...{data}</div>;
   }
@@ -149,49 +174,68 @@ function Home() {
     return <div>홈 페이지 에러{data}</div>;
   }
 
-  if( localStorage.getItem("userType") == 'customer'){
+  if (localStorage.getItem("userType") == "customer") {
     localStorage.setItem("userName", data.customerInfo.name);
-  } 
-
-  else if( localStorage.getItem("userType") == 'designer'){
+  } else if (localStorage.getItem("userType") == "designer") {
     localStorage.setItem("userName", data.designerInfo.name);
   }
-  
 
   return (
     <Wrapper>
       <Main>
-        <ImgText>변화의 즐거움 <br/>Change hair & you</ImgText>
+        <ImgText>
+          변화의 즐거움 <br />
+          Change hair & you
+        </ImgText>
       </Main>
 
       <MainWrapper>
-      <Title>이주의 인기! Weekly Best Designer ✨</Title>
-      <DesignerBox>
-
-      {/* 이부분 나중에 img로 태그 변경하기 */}
-      {data.bestDesigner.map((item)=> (
-        <ProfileBox 
-          key={item.designerIdx}
-          variants={pofolVariants}
-					initial="nomal"
-					whileHover="hover"
-          onClick={() => navigate(`/designerdetail/${item.designerSeq}`)}
-          >
-          <ImgBox>
-            <ProfileImg src={`${BASE_URL}/designer-profile/${item.img}`}></ProfileImg>
-          </ImgBox>
-          <Name>{item.name}디자이너</Name>
-        </ProfileBox>
-      ))
+        <Title
+          ref={inViewRef}
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
+          variants={fadeInUp}
+          transition={{ duration: 0.7 }}
+        >
+          이주의 인기! Weekly Best Designer ✨
+        </Title>
+        <DesignerBox>
+  {data.bestDesigner.map((item, index) => {
+    const delayForItem = getDelayByIndex(index);
+    
+    const itemVariants = {
+      ...pofolVariants,
+      nomal: {
+        ...pofolVariants.nomal,
+        transition: {
+          ...pofolVariants.nomal.transition,
+          delay: delayForItem,
+        }
       }
-      </DesignerBox>
-      <EventBox onClick={handleEvent}>
-        📷 Event
-      </EventBox>
-      </MainWrapper>
-      
-      {/* <MainView /> */}
+    };
 
+    return (
+      <ProfileBox
+        key={index}
+        ref={inViewRef}
+        initial="hidden"
+        animate={inView ? "nomal" : "hidden"}
+        whileHover="hover"
+        variants={itemVariants}
+        onClick={() => navigate(`/designerdetail/${item.designerSeq}`)}
+      >
+        <ImgBox>
+          <ProfileImg src={`${BASE_URL}/designer-profile/${item.img}`}></ProfileImg>
+        </ImgBox>
+        <Name>{item.name}디자이너</Name>
+      </ProfileBox>
+    );
+  })}
+</DesignerBox>
+        <EventBox onClick={handleEvent}>📷 Event</EventBox>
+      </MainWrapper>
+
+      {/* <MainView /> */}
     </Wrapper>
   );
 }
