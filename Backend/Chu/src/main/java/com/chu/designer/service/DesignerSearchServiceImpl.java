@@ -268,7 +268,7 @@ public class DesignerSearchServiceImpl implements DesignerSearchService {
             Double reviewScore = consulting.getReview().getReviewScore();
             String reviewContent = consulting.getReview().getReviewContent();
 
-            Customer customer = customerRepository.getCustomerBySeq(customerSeq);
+            Customer customer = consulting.getCustomer();
             String customerId = customer.getId();
             String date = consulting.getConsultingDate().getDate();
 
