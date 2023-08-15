@@ -6,12 +6,22 @@ import axios from "axios";
 import { useState, useEffect, useRef } from "react";
 import { getDesignerInfo } from "../../apis/kakao";
 import { useNavigate } from 'react-router-dom';
+import { styled } from "styled-components";
+
 const { kakao } = window;
 // const Container = styled.div`
 
 const BASE_URL = 'https://i9b111.q.ssafy.io/api';
 // const BASE_URL = 'http://localhost:9090/api';
 // `;
+
+const Container = styled.div`
+  margin-top: 45px;
+`;
+const Wrapper = styled.div`
+  width: 100vw;
+  height: 100vh;
+`;
 
 function MapView() {
 	const navigate = useNavigate();
@@ -169,14 +179,11 @@ function MapView() {
 
 
   return (
-    <div>
-      <p>여기는 주변 디자이너 찾기 지도 페이지</p>
-      <div id="map" style={{
-        width: "1400px",
-        height: "650px"
-      }}>
-      </div>
-    </div>
+    <Container>
+      <Wrapper id="map">
+
+      </Wrapper>
+    </Container>
 
   );
 };

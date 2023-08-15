@@ -11,7 +11,10 @@ import {
 } from "../../apis";
 import { useState, useEffect } from "react";
 import { useQuery, useMutation } from "react-query";
-import { ToastContainer, toast } from "react-toastify";
+import Dropdown from "react-bootstrap/Dropdown";
+import DropdownButton from "react-bootstrap/DropdownButton";
+import Toast from "react-bootstrap/Toast";
+import Button from "react-bootstrap/Button";
 
 const Nav = styled(motion.nav)`
   display: flex;
@@ -74,23 +77,42 @@ const Badge = styled.span`
 const NotificationList = styled.div`
   position: absolute;
   width: 300px;
+  right: -10px;
   background-color: white;
   border: 1px solid #ccc;
   overflow: auto;
   max-height: 300px;
   z-index: 1000;
+  border-radius: 7px;
 `;
 const NotificationItem = styled.div`
   padding: 10px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #979797;
+  font-size: 18px;
   cursor: pointer;
   &:hover {
     background-color: #f0f0f0;
   }
+  &:last-child {
+    border-bottom: none;
+  }
 `;
+const DateWrap = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 const Img = styled.img`
   width: 28px;
   height: 28px;
+`;
+const Hr = styled.div`
+  border: 1px solid #eee;
+  width: 100%;
+  margin: 10px 0;
+`;
+const ReadBtn = styled.p`
+  font-size: 16px;
 `;
 const logoVariants = {
   normal: {
@@ -122,6 +144,10 @@ function Header() {
   const [token, setToken] = useRecoilState(accessTokenState);
   const [show, setShow] = useState(false);
   const [showNotificationList, setShowNotificationList] = useState(false);
+  const [showA, setShowA] = useState(true);
+  const [showB, setShowB] = useState(true);
+  const toggleShowA = () => setShowA(!showA);
+  const toggleShowB = () => setShowB(!showB);
   const { scrollY } = useScroll();
   const handleNavigation = () => {
     if (localStorage.getItem("userType") === "customer") {
@@ -142,35 +168,71 @@ function Header() {
     navigate("/");
   });
 
-  // 알림 토글
-  
-  const toggleNotificationList = () => {
-    setShowNotificationList(prev => !prev);
-  };
-  // 알림 조회
-  const { data: notifications = [], refetch, isError, isLoading } = useQuery(
-    ["notifications", userType, userSeq],
-    async () => {
-      if (!userType) {
-        return;
-      }
-      if (userType === "designer") return getDesignerNotification(userSeq);
-      if (userType === "customer") return getCustomerNotification(userSeq);
+  // // 알림 토글
+
+  // const toggleNotificationList = () => {
+  //   setShowNotificationList((prev) => !prev);
+  // };
+  // // 알림 조회
+  // const {
+  //   data: notifications = [],
+  //   refetch,
+  //   isError,
+  //   isLoading,
+  // } = useQuery(
+  //   ["notifications", userType, userSeq],
+  //   async () => {
+  //     if (!userType) {
+  //       return;
+  //     }
+  //     if (userType === "designer") return getDesignerNotification(userSeq);
+  //     if (userType === "customer") return getCustomerNotification(userSeq);
+  //   },
+  //   {
+  //     retry: false,
+  //   }
+  // );
+
+  // // 알림 읽기
+  // const handleReadNotification = async (alertSeq) => {
+  //   try {
+  //     if (userType === "designer") await readDesignerNotification(alertSeq);
+  //     if (userType === "customer") await readCustomerNotification(alertSeq);
+  //     refetch();
+  //   } catch (error) {
+  //     console.error("Error reading notification", error);
+  //   }
+  // };
+  const notifications = [
+    {
+      alertSeq: 1,
+      consultingSeq: 1,
+      check: false,
+      checkedDate: null,
+      pushDate: "2023-07-19",
+      designerName: "재현",
     },
     {
-      retry: false,
-    }
-  );
-
-  // 알림 읽기
-  const handleReadNotification = async (alertSeq) => {
-    try {
-      if (userType === "designer") await readDesignerNotification(alertSeq);
-      if (userType === "customer") await readCustomerNotification(alertSeq);
-      refetch();
-    } catch (error) {
-      console.error("Error reading notification", error);
-    }
+      alertSeq: 2,
+      consultingSeq: 2,
+      check: true,
+      checkedDate: "2023-07-18",
+      pushDate: "2023-07-19",
+      designerName: "재현",
+    },
+    {
+      alertSeq: 3,
+      userType: "customer",
+      consultingSeq: 3,
+      check: false,
+      checkedDate: null,
+      pushDate: "2023-07-19",
+      designerName: "재현",
+    },
+  ];
+  const [alert, setAlert] = useState(false);
+  const toggleAlert = () => {
+    setAlert((prev) => !prev);
   };
   useEffect(() => {
     scrollY.onChange(() => {
@@ -183,8 +245,8 @@ function Header() {
   }, [scrollY, navAnimation]);
 
   console.log(notifications, "알림");
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error loading notifications</div>;
+  // if (isLoading) return <div>Loading...</div>;
+  // if (isError) return <div>Error loading notifications</div>;
 
   return (
     <Nav variants={navVariants} animate={navAnimation} initial={"top"}>
@@ -226,22 +288,33 @@ function Header() {
               My Page
             </Item>
             <NotificationBadge>
-              <Badge>{notifications.length}</Badge>
-              <Img src="/icon/notification.png" alt="Alarm Icon" />
-              <NotificationList>
-                {notifications.map((notification) => (
-                    <NotificationItem
-                      key={notification.alertSeq}
-                      onClick={() =>
-                        handleReadNotification(notification.alertSeq)
-                      }
-                    >
-                      {notification.message}
+              <Badge>{notifications.filter(notification => !notification.check).length}</Badge>
+              <Img onClick={toggleAlert} src="/icon/calendar.png" />
+              {alert ? (
+                <NotificationList>
+                  {notifications
+                    .filter(notification => !notification.check) 
+                    .map((notification) => (
+                    <NotificationItem key={notification.alertSeq}>
+                      <DateWrap>
+                      {notification.pushDate}
+                      <ReadBtn>읽기</ReadBtn>
+                      </DateWrap>
+                      <Hr/>
+                      {notification.designerName} 님의 상담이 취소되었습니다.
+                      {/* <Hr/> */}
                     </NotificationItem>
                     
                   ))}
-              </NotificationList>
+                </NotificationList>
+              ) : null}
             </NotificationBadge>
+
+            {/* <DropdownButton id="dropdown-basic-button" title="Dropdown button">
+              <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
+              <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
+              <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+            </DropdownButton> */}
           </>
         ) : (
           <>
