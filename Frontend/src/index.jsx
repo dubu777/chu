@@ -66,7 +66,7 @@ table {
 body {
   margin: 0;
   font-weight: 300;
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: 'Pretendard-Regular';
   color:black;
   line-height: 1.2;
   color: ${props => props.theme.black.darker};

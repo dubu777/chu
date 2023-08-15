@@ -11,7 +11,7 @@ import {
   checkDuplicateEmail,
   designerSignUpImg,
 } from "../../apis/auth";
-import { BASE_URL } from "../../apis/rootUrl";
+import emailjs from "emailjs-com";
 
 const Container = styled.div`
   text-align: center;
@@ -207,11 +207,16 @@ const InputWrap = styled.div`
   display: flex;
   justify-content: space-around;
 `;
+const Emailbtn = styled.button`
+  width: 80px;
+  height: 50px;
+`;
 function DesignerSignUp() {
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const [requestFile, setRequestFile] = useState(null);
+  const [authEmail, setAuthEmail] = useState(false);
   useEffect(() => {
     setSelectedFile("profile2.png");
   }, []);
@@ -251,13 +256,14 @@ function DesignerSignUp() {
   const [isIdAvailable, setIsIdAvailable] = useState(false);
   const [isEmailAvailable, setIsEmailAvailable] = useState(false);
   const [responseSeq, setResponseSeq] =useState(null);
-
+  const [confirmNumber, setConfirmNumber] = useState(null);
   const password = watch("pwd");
   const name = watch("name");
   const id = watch("id");
   const email = watch("email");
   const gender = watch("gender");
   const certificationNum = watch("certificationNum")
+  const authNum = watch("authNum")
   const designerData = {
     name: name,
     id: id,
@@ -268,7 +274,7 @@ function DesignerSignUp() {
   };
 
   console.log(designerData, "deisgner");
-
+  //아이디 중복체크
   const handleIdCheck = async () => {
     const currentId = getValues("id");
     try {
@@ -287,6 +293,7 @@ function DesignerSignUp() {
       return;
     }
   };
+  //이메일 중복체크
   const handleEmailCheck = async () => {
     const currentEmail = getValues("email");
     try {
@@ -306,6 +313,30 @@ function DesignerSignUp() {
       console.error("Email Check Error:", error);
       swal("Error", "이메일 중복 체크에 실패했습니다.", "error");
       return;
+    }
+  };
+   //이메일 인증
+    const handleCheckEmail = async () => {
+    let confirmNumber = Math.floor(Math.random() * 900001) + 100000;
+
+    let templateParams = {
+      user_email: email,
+      sys_code: confirmNumber,
+    };
+    emailjs.init("c0nz-ynLc-qYrorYn");
+    emailjs.send("service_chu", "template_chu", templateParams);
+    setConfirmNumber(confirmNumber);
+    swal("Success", "인증번호가 발송되었습니다.", "success");
+  };
+
+  //이메일 인증번호 확인
+  const handleCheckAuthNum = () => {
+    if (confirmNumber == authNum) {
+      setAuthEmail(true)
+      swal("Success", "인증 되었습니다..", "success");
+    } else {
+      swal("Error", "인증에 실패했습니다.", "error");
+      setAuthEmail(false)
     }
   };
   const onSubmit = async (dd) => {
@@ -442,12 +473,36 @@ function DesignerSignUp() {
                         }}
                         onBlur={handleEmailCheck}
                       />
+                                            <Emailbtn type="button" onClick={handleCheckEmail}>
+                        이메일 인증
+                      </Emailbtn>
                     </SignUpInputWrapper>
                     {errors?.email?.type === "pattern" && (
                       <ErrorMessage>{errors?.email?.message}</ErrorMessage>
                     )}
                     {errors?.email?.type === "required" && (
                       <ErrorMessage>이메일을 입력해주세요.</ErrorMessage>
+                    )}
+                    <SignUpInputWrapper>
+                      <SignUpTextBox>
+                        <SignUpText>인증번호</SignUpText>
+                      </SignUpTextBox>
+                      <SignUpInput
+                        placeholder="인증번호를 입력해주세요"
+                        {...register("authNum", {
+                          required: "인증번호를 입력해주세요",
+                        })}
+                        onChange={(e) => {
+                          setValue("authNum", e.target.value);
+                          clearErrors("authNum");
+                        }}
+                      />
+                      <Emailbtn type="button" onClick={handleCheckAuthNum}>
+                        인증번호 확인
+                      </Emailbtn>
+                    </SignUpInputWrapper>
+                    {errors.authNum?.type === "required" && (
+                      <ErrorMessage>인증번호를 입력해주세요.</ErrorMessage>
                     )}
                     <SignUpInputWrapper>
                       <SignUpTextBox>

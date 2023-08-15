@@ -6,8 +6,7 @@ import axios from 'axios';
 import styled from "styled-components";
 
 const Container = styled.div`
-  text-align: center;
-	font-family: "Blue-road";        
+	text-align: center;      
 `;
 const Title = styled.h1`
 	margin-bottom: 50px;
@@ -40,7 +39,6 @@ const Box = styled.div`
 	border-radius: 0.6rem;
 `;
 const Input = styled.input`
-	font-family: "Blue-road";
 	margin: 15px;
 `;
 

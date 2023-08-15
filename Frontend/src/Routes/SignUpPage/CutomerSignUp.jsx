@@ -9,8 +9,8 @@ import {
   checkDuplicateId,
   checkDuplicateEmail,
 } from "../../apis/auth";
-
 import { useForm } from "react-hook-form";
+import emailjs from "emailjs-com";
 
 const Container = styled.div`
   text-align: center;
@@ -198,6 +198,10 @@ const CheckBtn = styled.button`
   color: white;
   border-radius: 5px;
 `;
+const Emailbtn = styled.button`
+  width: 80px;
+  height: 50px;
+`;
 function CustomerSignUp() {
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
@@ -238,13 +242,15 @@ function CustomerSignUp() {
   const userType = "customer";
   const [isIdAvailable, setIsIdAvailable] = useState(false);
   const [isEmailAvailable, setIsEmailAvailable] = useState(false);
-
+  const [userInputAuthNum, setUserInputAuthNum] = useState("");
+  const [confirmNumber, setConfirmNumber] = useState(null);
+  const [authEmail, setAuthEmail] = useState(false);
   const password = watch("pwd");
   const name = watch("name");
   const id = watch("id");
   const email = watch("email");
   const gender = watch("gender");
-
+  const authNum = watch("authNum");
   const customerData = {
     name: name,
     id: id,
@@ -254,7 +260,7 @@ function CustomerSignUp() {
   };
 
   console.log(customerData);
-
+  //아이디 중복체크
   const handleIdCheck = async () => {
     const currentId = getValues("id");
     try {
@@ -273,6 +279,7 @@ function CustomerSignUp() {
       return;
     }
   };
+  // 이메일 중복체크
   const handleEmailCheck = async () => {
     const currentEmail = getValues("email");
     try {
@@ -294,9 +301,33 @@ function CustomerSignUp() {
       return;
     }
   };
+  //이메일 인증
+  const handleCheckEmail = async () => {
+    let confirmNumber = Math.floor(Math.random() * 900001) + 100000;
+
+    let templateParams = {
+      user_email: email,
+      sys_code: confirmNumber,
+    };
+    emailjs.init("c0nz-ynLc-qYrorYn");
+    emailjs.send("service_chu", "template_chu", templateParams);
+    setConfirmNumber(confirmNumber);
+    swal("Success", "인증번호가 발송되었습니다.", "success");
+  };
+
+  //이메일 인증번호 확인
+  const handleCheckAuthNum = () => {
+    if (confirmNumber == authNum) {
+      setAuthEmail(true)
+      swal("Success", "인증 되었습니다..", "success");
+    } else {
+      swal("Error", "인증에 실패했습니다.", "error");
+      setAuthEmail(false)
+    }
+  };
   const onSubmit = async (formData) => {
     if (isIdAvailable || isEmailAvailable) return;
-
+    if (!authEmail) return;
     try {
       // 회원가입 API 요청
       console.log("formDATA: ", formData);
@@ -364,7 +395,6 @@ function CustomerSignUp() {
                         onBlur={handleIdCheck}
                       />
                     </SignUpInputWrapper>
-                    <span>{errors.id?.type}</span>
                     {errors.id?.type === "required" && (
                       <ErrorMessage>아이디를 입력해주세요.</ErrorMessage>
                     )}
@@ -388,12 +418,36 @@ function CustomerSignUp() {
                         }}
                         onBlur={handleEmailCheck}
                       />
+                      <Emailbtn type="button" onClick={handleCheckEmail}>
+                        이메일 인증
+                      </Emailbtn>
                     </SignUpInputWrapper>
                     {errors?.email?.type === "pattern" && (
                       <ErrorMessage>{errors?.email?.message}</ErrorMessage>
                     )}
                     {errors?.email?.type === "required" && (
                       <ErrorMessage>이메일을 입력해주세요.</ErrorMessage>
+                    )}
+                    <SignUpInputWrapper>
+                      <SignUpTextBox>
+                        <SignUpText>인증번호</SignUpText>
+                      </SignUpTextBox>
+                      <SignUpInput
+                        placeholder="인증번호를 입력해주세요"
+                        {...register("authNum", {
+                          required: "인증번호를 입력해주세요",
+                        })}
+                        onChange={(e) => {
+                          setValue("authNum", e.target.value);
+                          clearErrors("authNum");
+                        }}
+                      />
+                      <Emailbtn type="button" onClick={handleCheckAuthNum}>
+                        인증번호 확인
+                      </Emailbtn>
+                    </SignUpInputWrapper>
+                    {errors.authNum?.type === "required" && (
+                      <ErrorMessage>인증번호를 입력해주세요.</ErrorMessage>
                     )}
                     <RadioContainer>
                       <GenderLabel>

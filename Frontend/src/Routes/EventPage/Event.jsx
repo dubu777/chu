@@ -60,7 +60,6 @@ const Box = styled.div`
 	border-radius: 0.6rem;
 `;
 const Input = styled.input`
-	font-family: "Blue-road";
 	margin: 0px 10px 10px 30px;
 `;
 

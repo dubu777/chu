@@ -5,8 +5,6 @@
 // import { Link } from "react-router-dom";
 
 // const InfoContainer = styled.div`
-//   /* font-family: "Apple-B";   */
-//   font-family: "Blue-road";
 // `;
 // // 고정 프로필바
 // const InfoWrapper = styled.div`
@@ -15,8 +13,6 @@
 // 	width: 100%;
 // 	height: 270px;
 // 	background-color: #f8f1d9;
-//   /* font-family: "Blue-road"; */
-//   /* font-family: "Apple-B";   */
     
 // `;
 // const ImgBox = styled.div`
