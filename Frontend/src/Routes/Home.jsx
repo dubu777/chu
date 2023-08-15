@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 import css from "../font/font.css";
 import MainView from "../components/HomeComponent/MainView";
 import React, { useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import { motion, useAnimation } from "framer-motion";
 import { useQuery } from "react-query";
 import { BASE_URL } from "../apis/rootUrl";
 import { fetchMain, customerMain, designerMain } from "../apis";
@@ -36,7 +36,7 @@ const ImgText = styled(motion.p)`
   font-weight: 700;
   color: #353432;
   position: absolute;
-  font-family: 'Abril Fatface';
+  font-family: "Abril Fatface";
 `;
 const ImgText2 = styled.p`
   font-family: "Abril Fatface";
@@ -46,7 +46,7 @@ const ImgText2 = styled.p`
   font-weight: 700;
   color: #353432;
   position: absolute;
-  font-family: 'Abril Fatface';
+  font-family: "Abril Fatface";
 `;
 
 const DesignerBox = styled.div`
@@ -78,7 +78,7 @@ const ProfileBox = styled(motion.div)`
 const Title = styled(motion.div)`
   font-size: 35px;
   font-weight: bold;
-  font-family: 'Apple-B';
+  font-family: "Apple-B";
 `;
 
 const ImgBox = styled.div`
@@ -106,14 +106,14 @@ const Name = styled.p`
   border: 0;
   font-size: 17px;
   color: #4d4a46;
-  font-family: 'Pretendard-Regular';
+  font-family: "Pretendard-Regular";
 `;
 const Desinger = styled.p`
   border: 0;
   margin-bottom: 5px;
   font-size: 18px;
   color: #3e3c39;
-  font-family: 'Abril Fatface';
+  font-family: "Abril Fatface";
 `;
 
 const EventWrapper = styled.div`
@@ -125,36 +125,36 @@ const EventText = styled.p`
   flex-direction: column;
   justify-content: center;
 `;
-const EventTitle = styled.p`
+const EventTitle = styled(motion.p)`
   font-size: 60px;
   margin-bottom: 25px;
-  font-family: 'Abril Fatface';
+  font-family: "Abril Fatface";
 `;
-const EventIntro = styled.p`
+const EventIntro = styled(motion.p)`
   font-size: 22px;
   margin-bottom: 5px;
 `;
-const EventIntroTag = styled.p`
+const EventIntroTag = styled(motion.p)`
   font-size: 17px;
   margin-bottom: 5px;
 `;
-const EventImg = styled.img`
+const EventImg = styled(motion.img)`
   width: 270px;
   height: 400px;
   border-radius: 0.1rem;
   /* margin-right: 30px; */
+  object-fit: cover;
 `;
-const EventImg1 = styled.img`
+const EventImg1 = styled(motion.img)`
   width: 600px;
   height: 400px;
   border-radius: 0.1rem;
 `;
 
-const EventBox = styled.div`
+const EventBox = styled(motion.div)`
   display: flex;
   width: 200px;
   height: 50px;
-  background-color: #605b52;
   border-radius: 0.1rem;
   color: white;
   justify-content: center;
@@ -162,14 +162,27 @@ const EventBox = styled.div`
   margin-top: 25px;
   font-size: 22px;
   cursor: pointer;
+  background: linear-gradient(90deg, #c17d00 50%, #605b52 50%);
+  background-size: 200% 100%;
+  background-position: right;
+  transition: background 0.5s;
+
+  &:hover {
+    background-position: left;
+  }
 `;
+const ReserveTitle = styled.p`
+  font-size: 25px;
+  font-family: "Abril Fatface";
+`;
+
 const pofolVariants = {
   nomal: {
     scale: 1,
     opacity: 1,
-    y: -5,
+    y: 0,
     transition: {
-      duration: 0.7,
+      duration: 0.5,
       delay: 0.2,
     },
   },
@@ -181,22 +194,48 @@ const pofolVariants = {
   },
   hidden: {
     opacity: 0,
-    y: 20,
+    y: 30,
   },
 };
 const fadeInUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: -5 },
+  hidden: { opacity: 0, y: 80 },
+  visible: { opacity: 1, y: 0 },
+};
+const fromLeft = {
+  hidden: { opacity: 0, x: -70 },
+  visible: { opacity: 1, x: 0 },
+};
+const fromBottom = {
+  hidden: { opacity: 0, y: 80 },
+  visible: { opacity: 1, y: 0 },
+};
+const fromBottomBtn = {
+  hidden: { opacity: 0, y: 80 },
+  visible: { opacity: 1, y: 0 },
 };
 function Home() {
   const navigate = useNavigate();
   const userSeq = localStorage.getItem("userSeq") || 0;
   const userType = localStorage.getItem("userType") || "guest";
   const [inViewRef, inView] = useInView({
-    // triggerOnce: true,  // 애니메이션을 한 번만 실행합니다.
     threshold: 0.1, // 요소의 10%가 뷰포트에 들어왔을 때 애니메이션을 시작합니다.
   });
+  const [titleRef, titleInView] = useInView({
+    threshold: 0.3,
+  });
 
+  const [introRef, introInView] = useInView({
+    threshold: 0.1,
+  });
+  const [tagRef, tagInView] = useInView({
+    threshold: 0.1,
+  });
+  const [btnRef, btnInView] = useInView({
+    threshold: 0.1,
+  });
+  const [onePickRef, onPickInView] = useInView({
+    threshold: 0.4,
+  });
   const fetchLogInData = async (userSeq) => {
     switch (userType) {
       case "customer":
@@ -224,6 +263,7 @@ function Home() {
     const increment = 0.1; // 각 항목에 추가되는 딜레이 양
     return baseDelay + index * increment;
   };
+
   if (isLoading) {
     return <div>Loading...{data}</div>;
   }
@@ -250,14 +290,13 @@ function Home() {
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
           variants={fadeInUp}
-          transition={{ duration: 0.7 }}
+          transition={{ duration: 0.5 }}
         >
           Weekly Best Designer
         </Title>
         <DesignerBox>
           {data.bestDesigner.map((item, index) => {
             const delayForItem = getDelayByIndex(index);
-
             const itemVariants = {
               ...pofolVariants,
               nomal: {
@@ -280,9 +319,9 @@ function Home() {
                 onClick={() => navigate(`/designerdetail/${item.designerSeq}`)}
               >
                 {/* <ImgBox> */}
-                  <ProfileImg
-                    src={`${BASE_URL}/designer-profile/${item.img}`}
-                  ></ProfileImg>
+                <ProfileImg
+                  src={`${BASE_URL}/designer-profile/${item.img}`}
+                ></ProfileImg>
                 {/* </ImgBox> */}
                 <Desinger>Desginer</Desinger>
                 <Name>{item.name}</Name>
@@ -290,21 +329,71 @@ function Home() {
             );
           })}
         </DesignerBox>
-
         {/* 한장한장 이벤트 */}
         <EventWrapper>
           <EventText>
-            <EventTitle>For You</EventTitle>
-            <EventIntro>Chu만의 헤어스타일 합성 서비스</EventIntro>
-            <EventIntroTag> #헤어스타일 체험 #마이 헤어</EventIntroTag>
-            <EventBox onClick={handleEvent}>Go 한장 한장</EventBox>
+            <EventTitle
+              ref={titleRef}
+              initial="hidden"
+              animate={titleInView ? "visible" : "hidden"}
+              variants={fromLeft}
+              transition={{ duration: 0.7 }}
+            >
+              For You
+            </EventTitle>
+            <EventIntro
+              ref={introRef}
+              initial="hidden"
+              animate={introInView ? "visible" : "hidden"}
+              variants={fromBottom}
+              transition={{ duration: 0.5 }}
+            >
+              Chu만의 헤어스타일 합성 서비스
+            </EventIntro>
+            <EventIntroTag
+              ref={tagRef}
+              initial="hidden"
+              animate={tagInView ? "visible" : "hidden"}
+              variants={fromBottom}
+              transition={{ duration: 0.5 }}
+            >
+              #헤어스타일 체험 #마이 헤어
+            </EventIntroTag>
+            <EventBox
+              onClick={handleEvent}
+              ref={btnRef}
+              initial="hidden"
+              animate={btnInView ? "visible" : "hidden"}
+              variants={fromBottomBtn}
+              transition={{ duration: 0.5 }}
+            >
+              Go 한장 한장
+            </EventBox>
           </EventText>
-          <EventImg src="/img/hairtool.jpg" />
-          <EventImg1 src="/img/hair3.jpeg" />
+          <EventImg
+            src="/img/hairtool.jpg"
+            ref={onePickRef}
+            initial="hidden"
+            animate={onPickInView ? "visible" : "hidden"}
+            variants={fromBottomBtn}
+            transition={{ duration: 0.5 }}
+          />
+          <EventImg1
+            src="/img/hair3.jpeg"
+            ref={onePickRef}
+            initial="hidden"
+            animate={onPickInView ? "visible" : "hidden"}
+            variants={fromBottomBtn}
+            transition={{ duration: 0.5 }}
+          />
+        </EventWrapper>
+        <EventWrapper>
+          <EventText>
+            <ReserveTitle>Customized HairStyle Service</ReserveTitle>
+            <EventTitle>Personal</EventTitle>
+          </EventText>
         </EventWrapper>
       </MainWrapper>
-
-      {/* <MainView /> */}
       {/* <MainView /> */}
     </Wrapper>
   );
