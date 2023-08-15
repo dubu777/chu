@@ -119,7 +119,7 @@ const Desinger = styled.p`
 const EventWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-bottom: 150px;
+  margin-bottom: 100px;
 `;
 const EventText = styled.p`
   display: flex;
@@ -131,6 +131,14 @@ const EventTitle = styled(motion.p)`
   margin-bottom: 25px;
   font-family: "Abril Fatface";
 `;
+const CenterTitle = styled.p`
+  text-align: center;
+  font-size: 30px;
+  /* font-family: "Apple-B"; */
+  color: #272522;
+  margin-bottom: 10px;
+  font-family: "Abril Fatface";
+`
 
 const IntroTitle = styled(motion.p)`
   font-size: 35px;
@@ -142,6 +150,7 @@ const EventIntro = styled(motion.p)`
   font-size: 22px;
   margin-bottom: 5px;
   font-family: 'Pretendard-Regular';
+  text-align: center;
 `;
 const EventIntroTag = styled(motion.p)`
   font-size: 17px;
@@ -188,6 +197,7 @@ const ReserveTitle = styled(motion.p)`
   color: #806f4e;
 `;
 const ReserveWrapper = styled.div`
+  margin-top: 50px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -212,10 +222,11 @@ const ReserveImg2 = styled.img`
 const WorldcupWrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  margin-top: 50px;
 `;
 const WorldcupImg = styled.img`
-  width: 600px;
-  height: 400px;
+  width: 800px;
+  height: 500px;
 `;
 const pofolVariants = {
   nomal: {
@@ -453,18 +464,14 @@ function Home() {
             transition={{ duration: 0.3 }}
           />
         </EventWrapper>
-        <EventWrapper>
-          <EventText>
-            <ReserveTitle
+            <CenterTitle>・</CenterTitle>
+            <CenterTitle>・</CenterTitle>
+            <CenterTitle>Find Our Style with Chu</CenterTitle>
+            <EventIntro>Chu에서 선보이는 원하는 디자이너 포트폴리오 가상체험</EventIntro>
+            <CenterTitle>・</CenterTitle>
+            <CenterTitle>・</CenterTitle>
+    
 
-            >
-              Customized HairStyle Service
-            </ReserveTitle>
-            <EventTitle>Personal</EventTitle>
-          </EventText>
-        </EventWrapper>
-
-        {/*  */}
         <ReserveWrapper>
           <ReserveImgBox>
             <ReserveImg src="/img/worldcup4.jpg"/>
@@ -498,6 +505,7 @@ function Home() {
             >
               퍼스널 컨설팅 서비스
             </IntroTitle>
+            <br />
             <EventIntro
               ref={consultingRef}
               initial="hidden"
@@ -505,7 +513,7 @@ function Home() {
               variants={fromBottom}
               transition={{ duration: 0.3 }}              
             >
-              예약제 펄스널 맞춤 헤어스타일 서비스입니다.
+              예약제 퍼스널 맞춤 헤어스타일 서비스입니다. 
             </EventIntro>
           </EventText>
           <EventBox
@@ -522,7 +530,24 @@ function Home() {
         
         {/* 월드컵 */}
           <WorldcupWrapper>
-            <WorldcupImg src="" />
+            <WorldcupImg src="/img/main6.png" />
+            <EventText>
+              <EventTitle>Look & Find</EventTitle>
+              <EventIntro>나만의 헤어스타일 Worldcup 바로가기</EventIntro>
+              <EventIntroTag>#이상형월드컵 #지인들과 함께 #새로운 나</EventIntroTag>
+              <br />
+              <EventBox
+              onClick={() => navigate(`/listview`)}
+              ref={reserveBtnRef}
+              initial="hidden"
+              animate={reserveBtnInView ? "visible" : "hidden"}
+              variants={fromBottomBtn}
+              transition={{ duration: 0.3 }}              
+          >
+            스타일 월드컵 입장
+          </EventBox>
+          <EventIntroTag>상담 예약 후 스타일 월드컵을 이용하실 수 있습니다.</EventIntroTag>
+            </EventText>
           </WorldcupWrapper>
 
       </MainWrapper>
