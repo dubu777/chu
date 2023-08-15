@@ -15,7 +15,6 @@ const Container = styled.div`
   justify-content: center;
   flex-direction: column;
   padding-left: 150px;
-  font-family: "Cormorant Garamond";
 `; 
 
 const Wrapper = styled.div`
@@ -35,7 +34,6 @@ const Input = styled.input`
   padding-left: 10px;
   margin-left: 10px;
   font-size: 18px;
-  font-family: "Cormorant Garamond";
 `;
 const Box = styled.div`
   justify-content: center;

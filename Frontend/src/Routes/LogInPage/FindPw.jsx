@@ -8,16 +8,15 @@ import { setFindPwd, setExistPwState, setAuthNumber } from "../../recoil/auth";
 import emailjs from "emailjs-com";
 
 const Container = styled.div`
-  background: url("./img/password.jpg");
-  filter: invert(7%);
-  background-size: cover;
-  width: 100vw;
+	background: url('./img/password.jpg');
+	filter: invert(7%);
+	background-size: cover ;
+	width: 100vw;
   height: 100vh;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  padding-left: 150px;
-  font-family: "Cormorant Garamond";
+	display:flex;
+	justify-content: center; 
+	flex-direction: column;
+	padding-left: 150px;
 `;
 
 const Wrapper = styled.div`
@@ -34,15 +33,14 @@ const Title = styled.h1`
   font-size: 30px;
 `;
 const Input = styled.input`
-  width: 75%;
-  height: 50px;
-  border: 0;
-  border-radius: 0.4rem;
-  background-color: white;
-  padding-left: 10px;
-  margin-top: 7px;
-  font-size: 18px;
-  font-family: "Cormorant Garamond";
+	width: 75%;
+	height: 50px;
+	border: 0;
+	border-radius: 0.4rem;
+	background-color: white;
+	padding-left: 10px;
+	margin-top: 7px;
+	font-size: 18px;
 `;
 const Box = styled.div`
   /* justify-content: center; */

@@ -29,14 +29,14 @@ const MainWrapper = styled.div`
   margin-right: 170px;
 `;
 const ImgText = styled(motion.p)`
-  /* font-family: sans-serif; */
   font-family: "Abril Fatface";
   top: 400px;
   left: 100px;
-  font-size: 40px;
+  font-size: 45px;
   font-weight: 700;
   color: #353432;
   position: absolute;
+  font-family: 'Abril Fatface';
 `;
 
 const DesignerBox = styled.div`
@@ -64,11 +64,14 @@ const ProfileBox = styled(motion.div)`
   }
 `;
 
+
+
 const Title = styled(motion.div)`
-  font-family: sans-serif;
   font-size: 25px;
   font-weight: bold;
+  font-family: 'Apple-B';
 `;
+
 const ImgBox = styled.div`
   width: 80%;
   height: 80%;
@@ -221,7 +224,8 @@ function Home() {
     <Wrapper>
       <Main>
         <ImgText>
-          변화의 즐거움 <br />
+          변화의 즐거움
+          <br />
           Change hair & you
         </ImgText>
       </Main>
@@ -234,7 +238,7 @@ function Home() {
           variants={fadeInUp}
           transition={{ duration: 0.7 }}
         >
-          이주의 인기! Weekly Best Designer ✨
+          Weekly Best Designer
         </Title>
         <DesignerBox>
           {data.bestDesigner.map((item, index) => {

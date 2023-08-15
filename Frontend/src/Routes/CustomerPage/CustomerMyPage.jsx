@@ -21,7 +21,6 @@ const Container = styled.div`
 `;
 
 const InfoContainer = styled.div`
-  font-family: "Blue-road";
 `;
 // 고정 프로필바
 const InfoWrapper = styled.div`
