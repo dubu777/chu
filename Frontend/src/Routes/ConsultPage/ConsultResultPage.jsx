@@ -267,7 +267,7 @@ function ConsultResultPage(){
       <Wrapper>
         <CutBox>
           <TextBox>
-            <Circle src="./icon/orangecircle.png"></Circle>
+            <Circle src="/icon/orangecircle.png"></Circle>
             <Text>Cut Style 진단</Text>
           </TextBox>
           {data.CutHairStyle.map((item) => (
@@ -285,7 +285,7 @@ function ConsultResultPage(){
         <Hr></Hr>
         <PermBox>
           <TextBox>
-            <Circle src="./icon/darkcircle.png"></Circle>
+            <Circle src="/icon/darkcircle.png"></Circle>
             <Text>Perm Style 진단</Text>
           </TextBox>
         {data.PermHairStyle.map((item) => (
@@ -302,7 +302,7 @@ function ConsultResultPage(){
         </PermBox>
           <Hr></Hr>
           <TextBox>
-            <Circle src="./icon/orangecircle.png"></Circle>
+            <Circle src="/icon/orangecircle.png"></Circle>
             <Text>추천 스타일 이미지 선택</Text>
           </TextBox>  
           <ImgBox>
@@ -318,7 +318,7 @@ function ConsultResultPage(){
           </ImgBox>
           <Hr></Hr>
           <TextBox>
-            <Circle src="./icon/darkcircle.png"></Circle>
+            <Circle src="/icon/darkcircle.png"></Circle>
             <Text>상담 상세 결과 작성</Text>
           </TextBox>
           <ConsultBox placeholder="상세 내용을 작성해주세요 :)"></ConsultBox>

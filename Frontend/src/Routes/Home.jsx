@@ -132,7 +132,7 @@ const EventTitle = styled(motion.p)`
   font-family: "Abril Fatface";
 `;
 
-const IntroTitle = styled.p`
+const IntroTitle = styled(motion.p)`
   font-size: 35px;
   font-weight: 700px;
   color: #6a6251;
@@ -169,6 +169,7 @@ const EventBox = styled(motion.div)`
   justify-content: center;
   align-items: center;
   margin-top: 25px;
+  margin-bottom: 30px;
   font-size: 22px;
   cursor: pointer;
   background: linear-gradient(90deg, #c17d00 50%, #605b52 50%);
@@ -180,7 +181,7 @@ const EventBox = styled(motion.div)`
     background-position: left;
   }
 `;
-const ReserveTitle = styled.p`
+const ReserveTitle = styled(motion.p)`
   font-size: 30px;
   font-family: 'Abril Fatface';
   color: #806f4e;
@@ -232,17 +233,30 @@ const fadeInUp = {
   visible: { opacity: 1, y: 0 },
 };
 const fromLeft = {
-  hidden: { opacity: 0, x: -70 },
-  visible: { opacity: 1, x: 0 },
+  hidden: { 
+    opacity: 0,
+    x: -120 
+  },
+  visible: { 
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.5,
+    }
+  },
 };
 const fromBottom = {
   hidden: { opacity: 0, y: 80 },
   visible: { opacity: 1, y: 0 },
 };
 const fromBottomBtn = {
-  hidden: { opacity: 0, y: 80 },
+  hidden: { opacity: 0, y: 60 },
   visible: { opacity: 1, y: 0 },
 };
+// const fromTop = {
+//   hidden: { opacity: 0, y: 80 },
+//   visible: { opacity: 1, y: 0 },
+// };
 function Home() {
   const navigate = useNavigate();
   const userSeq = localStorage.getItem("userSeq") || 0;
@@ -264,7 +278,20 @@ function Home() {
     threshold: 0.1,
   });
   const [onePickRef, onPickInView] = useInView({
-    threshold: 0.2,
+    // triggerOnce: true,
+    threshold: 0.1,
+  });
+  const [reserveRef, reserveInView] = useInView({
+    // triggerOnce: true,
+    threshold: 0.1,
+  });
+  const [consultingRef, consutingInView] = useInView({
+    // triggerOnce: true,
+    threshold: 0.1,
+  });
+  const [reserveBtnRef, reserveBtnInView] = useInView({
+    // triggerOnce: true,
+    threshold: 0.1,
   });
   const fetchLogInData = async (userSeq) => {
     switch (userType) {
@@ -367,7 +394,7 @@ function Home() {
               initial="hidden"
               animate={titleInView ? "visible" : "hidden"}
               variants={fromLeft}
-              transition={{ duration: 0.7 }}
+              transition={{ duration: 0.3 }}
             >
               For You
             </EventTitle>
@@ -394,7 +421,7 @@ function Home() {
               ref={btnRef}
               initial="hidden"
               animate={btnInView ? "visible" : "hidden"}
-              variants={fromBottomBtn}
+              variants={fromBottom}
               transition={{ duration: 0.5 }}
             >
               Go 한장 한장
@@ -405,8 +432,8 @@ function Home() {
             ref={onePickRef}
             initial="hidden"
             animate={onPickInView ? "visible" : "hidden"}
-            variants={fromBottomBtn}
-            transition={{ duration: 0.5 }}
+            variants={fromBottom}
+            transition={{ duration: 0.3 }}
           />
           <EventImg1
             src="/img/hair3.jpeg"
@@ -414,12 +441,16 @@ function Home() {
             initial="hidden"
             animate={onPickInView ? "visible" : "hidden"}
             variants={fromBottomBtn}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.3 }}
           />
         </EventWrapper>
         <EventWrapper>
           <EventText>
-            <ReserveTitle>Customized HairStyle Service</ReserveTitle>
+            <ReserveTitle
+
+            >
+              Customized HairStyle Service
+            </ReserveTitle>
             <EventTitle>Personal</EventTitle>
           </EventText>
         </EventWrapper>
@@ -431,12 +462,53 @@ function Home() {
             <ReserveImg2 src="/img/worldcup1.jpg"/>
           </ReserveImgBox>
           <EventText>
-            <ReserveTitle>"Customized HairStyle Service"</ReserveTitle>
-            <EventTitle>Personal</EventTitle>
-            <IntroTitle>퍼스널 컨설팅 서비스</IntroTitle>
-            <EventIntro>예약제 펄스널 맞춤 헤어스타일 서비스입니다.</EventIntro>
+            <ReserveTitle
+              ref={reserveRef}
+              initial="hidden"
+              animate={reserveInView ? "visible" : "hidden"}
+              variants={fromBottom}
+              transition={{ duration: 0.3 }}
+            >
+              "Customized HairStyle Service"
+            </ReserveTitle>
+            <EventTitle
+              ref={reserveRef}
+              initial="hidden"
+              animate={reserveInView ? "visible" : "hidden"}
+              variants={fromBottom}
+              transition={{ duration: 0.3 }}
+            >
+              Personal
+            </EventTitle>
+            <IntroTitle
+              ref={consultingRef}
+              initial="hidden"
+              animate={consutingInView ? "visible" : "hidden"}
+              variants={fromBottom}
+              transition={{ duration: 0.3 }}            
+            >
+              퍼스널 컨설팅 서비스
+            </IntroTitle>
+            <EventIntro
+              ref={consultingRef}
+              initial="hidden"
+              animate={consutingInView ? "visible" : "hidden"}
+              variants={fromBottom}
+              transition={{ duration: 0.3 }}              
+            >
+              예약제 펄스널 맞춤 헤어스타일 서비스입니다.
+            </EventIntro>
           </EventText>
-          <EventBox>예약하러 가기</EventBox>
+          <EventBox
+              onClick={() => navigate(`/listview`)}
+              ref={reserveBtnRef}
+              initial="hidden"
+              animate={reserveBtnInView ? "visible" : "hidden"}
+              variants={fromBottomBtn}
+              transition={{ duration: 0.3 }}              
+          >
+            예약하러 가기
+          </EventBox>
         </ReserveWrapper>
         
       </MainWrapper>

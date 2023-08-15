@@ -19,8 +19,18 @@ const Container = styled.div`
   margin-top: 45px;
 `;
 const Wrapper = styled.div`
+  padding-top: -10px;
   width: 100vw;
   height: 100vh;
+`;
+const Img = styled.img`
+  width: 20px;
+  height: 20px;
+  margin-left: 20px;
+  margin-top: 10px;
+`;
+const Text = styled.span`
+  
 `;
 
 function MapView() {
@@ -180,8 +190,11 @@ function MapView() {
 
   return (
     <Container>
+      <Img 
+      src="/icon/backBtn.png"
+      onClick={() => navigate(-1)}
+      /> <span>뒤로가기</span>
       <Wrapper id="map">
-
       </Wrapper>
     </Container>
 

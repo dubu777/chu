@@ -21,6 +21,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   width: 100vw;
+  margin-top: 40px;
 `;
 
 const LeftWrap = styled.div`
@@ -29,6 +30,7 @@ const LeftWrap = styled.div`
   width: 30%;
   height: 100%;
   margin: 40px 10px;
+
 `;
 const CalendarContainer = styled.div`
   /* ~~~ container styles ~~~ */
@@ -47,6 +49,7 @@ const RigthWrap = styled.div`
   width: 38%;
   height: 100%;
   margin: 40px 10px;
+
 `;
 
 const Hr = styled.div`
@@ -108,6 +111,8 @@ const StyledSlider = styled(Slider)`
 const PofolImg = styled(motion.img)`
   width: 100px;
   height: 125px;
+  border-radius: 5px;
+  object-fit: cover;
 `;
 
 const ReservWrap = styled.div`
@@ -298,7 +303,7 @@ function Reservation() {
   const { designerSeq } = useParams();
   const [requestFile, setRequestFile] = useState(null);
   const [imgSeqArray, setImgSeqArray] = useState(null)
-
+  const navigate = useNavigate();
 
   // 넘기고 싶은 데이터 모으기
   const handleButtonClick = async() => {
@@ -319,7 +324,6 @@ function Reservation() {
       } else if (selectedFromRandomPortfolio) {
         return selectedFromRandomPortfolio.imgSeq;
       }
-      
       return 1; // 해당 이미지를 찾지 못한 경우
     });
   
@@ -359,7 +363,7 @@ function Reservation() {
           console.error("Img Send Error:", error);
         }
       }
-      
+      navigate('/checkreserve')
     } catch(error){
       console.log(error)
     }
@@ -609,10 +613,8 @@ function Reservation() {
                       onChange={handleFileChange}
                     />
                   <SText>- 이마가 보이는 사진을 업로드해 주세요.</SText>
-                <Hr />
-                <Link to="/checkreserve">
+                <Hr/>
                   <ReservBtn onClick={handleButtonClick}>상담 예약하기</ReservBtn>
-                </Link>
                   <SText>
                     {" "}
                     - 예약취소 시, 24시간 이전에만 예약금 환불이 가능합니다.
