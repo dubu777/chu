@@ -7,6 +7,9 @@ import { useState } from "react";
 import { motion,AnimatePresence,useAnimation } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import swal from "sweetalert";
+import { useQuery } from "react-query";
+import { getResult, postResult } from "../../apis";
+import { BASE_URL } from "../../apis";
 
 const Container = styled.div`
   background: url('./img/password.jpg')no-repeat center center/cover, rgba(0, 0, 0, 0.7);
@@ -121,7 +124,7 @@ const ImgBox = styled.div`
   display: flex;
   justify-content: space-between;
 `;
-const Img = styled(motion.div)`
+const Img = styled(motion.img)`
   width: 100px;
   height: 150px;
   border: 2px solid;
@@ -182,67 +185,72 @@ function ConsultResultPage(){
   const navigate = useNavigate();
   const [selectedCut, setSelectedCut] = useState([]);
   const [selectedPerm, setSelectedPerm] = useState([]);
-  const [data, setdata] = useState(
-    {
-      "CutHairStyle" : [
-          {
-              "hairStyleSeq" : 1,
-              "hairStyleLabel" : "레이어드컷"
-          },
-          {
-              "hairStyleSeq" : 2,
-              "hairStyleLabel" : "중단발"
-          },
-          {
-              "hairStyleSeq" : 3,
-              "hairStyleLabel" : "단발"
-          }
-      ],
-      "PermHairStyle" : [
-          {
-              "hairStyleSeq" : 10,
-              "hairStyleLabel" : "열펌"
-          },
-          {
-              "hairStyleSeq" : 11,
-              "hairStyleLabel" : "히피펌"
-          },
-          {
-              "hairStyleSeq" : 12,
-              "hairStyleLabel" : "열펌"
-          }
-      ],
-      "imgs" : [
-          {
-              "imgSeq" : 1,
-              "img" : "img1.png"
-          },
-          {
-              "imgSeq" : 2,
-              "img" : "img2.png"
-          },
-          {
-              "imgSeq" : 3,
-              "img" : "img3.png"
-          }
-      ]
-  });
+  const [selectedHairStyle, setSelectedHairStyle] = useState([]);
+  const [reviewResult, setReviewResult] = useState("");
+  const consultingSeq = localStorage.getItem("consultingSeq");
+  const designerSeq = localStorage.getItem('userSeq');
   
-  const toggleCutType = (item) => {
-      if (selectedCut.includes(item)) {
-        setSelectedCut((prev) => prev.filter((resist) => resist !== item))
+
+  // const [data, setdata] = useState(
+  //   {
+  //     "CutHairStyle" : [
+  //         {
+  //             "hairStyleSeq" : 1,
+  //             "hairStyleLabel" : "레이어드컷"
+  //         },
+  //         {
+  //             "hairStyleSeq" : 2,
+  //             "hairStyleLabel" : "중단발"
+  //         },
+  //         {
+  //             "hairStyleSeq" : 3,
+  //             "hairStyleLabel" : "단발"
+  //         }
+  //     ],
+  //     "PermHairStyle" : [
+  //         {
+  //             "hairStyleSeq" : 10,
+  //             "hairStyleLabel" : "열펌"
+  //         },
+  //         {
+  //             "hairStyleSeq" : 11,
+  //             "hairStyleLabel" : "히피펌"
+  //         },
+  //         {
+  //             "hairStyleSeq" : 12,
+  //             "hairStyleLabel" : "열펌"
+  //         }
+  //     ],
+  //     "imgs" : [
+  //         {
+  //             "imgSeq" : 1,
+  //             "img" : "img1.png"
+  //         },
+  //         {
+  //             "imgSeq" : 2,
+  //             "img" : "img2.png"
+  //         },
+  //         {
+  //             "imgSeq" : 3,
+  //             "img" : "img3.png"
+  //         }
+  //     ]
+  // });
+  const {data, isError, isLoading} = useQuery(["resultData", consultingSeq], () => getResult(consultingSeq));
+
+
+    const toggleHairStyle = (item) => {
+      if (selectedHairStyle.includes(item.hairStyleSeq)) {
+        setSelectedHairStyle((prev) => prev.filter((hairStyleSeq) => hairStyleSeq !== item.hairStyleSeq));
       } else {
-        setSelectedCut((prev) => [...prev, item]);
+        setSelectedHairStyle((prev) => [...prev, item.hairStyleSeq]);
       }
     };
-    const togglePermType = (item) => {
-      if (selectedPerm.includes(item)) {
-        setSelectedPerm((prev) => prev.filter((resist) => resist !== item))
-      } else {
-        setSelectedPerm((prev) => [...prev, item]);
-      }
-    };
-      // 사진 선택 코드
+    console.log('헤어헤어', selectedHairStyle)
+    // const hairStyleSeqArray = selectedHairStyle.map(item => item.hairStyleSeq);
+    // console.log('헤어헤어', hairStyleSeqArray);
+
+    // 사진 선택 코드
 	const [selectedImgs, setSelectedImgs] = useState([]);
 	const handleImageClick = (item) => {
     if (selectedImgs.includes(item.imgSeq)) {
@@ -253,11 +261,31 @@ function ConsultResultPage(){
         setSelectedImgs((prev) => [...prev, item.imgSeq]);
       }
   };
-  const handleClick = () => {
-    // alert 창 보여주고 페이지 이동
-    swal('상담결과 작성 완료! \n 마이페이지로 이동합니다🙂');
-    navigate('/designermypage');
+  console.log('선택한 이미지 번호',selectedImgs)
+
+  const handleReviewChange = (event) => {
+    setReviewResult(event.target.value);
   };
+  console.log('리뷰당',reviewResult)
+
+  const handleClick = async() => {
+    try {
+      const response = await postResult(consultingSeq, selectedHairStyle, selectedImgs, reviewResult);
+      console.log(response)
+      // alert 창 보여주고 페이지 이동
+      swal('상담결과 작성 완료! \n 마이페이지로 이동합니다🙂');
+      navigate(`/designermypage/${designerSeq}`);
+    } catch (error) {
+      console.error("상담 결과 통신 실패", error)
+      // swal("Error", "시간 설정에 실패했습니다.", "error");
+    }
+  };
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+  if (isError) {
+    return <div>An error occurred while fetching data.</div>;
+  }
   return(
     <Container>
       <TitleBox>
@@ -270,14 +298,14 @@ function ConsultResultPage(){
             <Circle src="/icon/orangecircle.png"></Circle>
             <Text>Cut Style 진단</Text>
           </TextBox>
-          {data.CutHairStyle.map((item) => (
+          {data.cutHairStyle.map((item) => (
             <HashTag
             key={item.hairStyleSeq}
-            onClick={() => toggleCutType(item)}
+            onClick={() => toggleHairStyle(item)}
             variants={typeBtnVariants}
             initial="normal"
             whileHover="hover"
-            animate={selectedCut.includes(item) ? "active" : "normal"}
+            animate={selectedHairStyle.includes(item.hairStyleSeq) ? "active" : "normal"}
             >#{item.hairStyleLabel}</HashTag>
             ))
           }
@@ -288,14 +316,14 @@ function ConsultResultPage(){
             <Circle src="/icon/darkcircle.png"></Circle>
             <Text>Perm Style 진단</Text>
           </TextBox>
-        {data.PermHairStyle.map((item) => (
+        {data.permHairStyle.map((item) => (
             <HashTag
             key={item.hairStyleSeq}
-            onClick={() => togglePermType(item)}
+            onClick={() => toggleHairStyle(item)}
             variants={typeBtnVariants1}
             initial="normal"
             whileHover="hover"
-            animate={selectedPerm.includes(item) ? "active" : "normal"}
+            animate={selectedHairStyle.includes(item.hairStyleSeq) ? "active" : "normal"}
             >#{item.hairStyleLabel}</HashTag>
             ))
           }
@@ -310,18 +338,23 @@ function ConsultResultPage(){
               <Img 
                 key={item.imgSeq}
                 variants={Variants}
-								initial="nomal"
+								src={`${BASE_URL}/designer-profile/${item.img}`}
+                initial="nomal"
 								whileHover="hover"
                 onClick={() => handleImageClick(item)}
                 className={selectedImgs.includes(item.imgSeq) ? "selected" : ""}
-                >{item.img}</Img>))}
+                />))}
           </ImgBox>
           <Hr></Hr>
           <TextBox>
             <Circle src="/icon/darkcircle.png"></Circle>
             <Text>상담 상세 결과 작성</Text>
           </TextBox>
-          <ConsultBox placeholder="상세 내용을 작성해주세요 :)"></ConsultBox>
+          <ConsultBox 
+            placeholder="상세 내용을 작성해주세요 :)"
+            value={reviewResult}
+            onChange={handleReviewChange} 
+            />
           <TitleBox>
             <SubmitBtn onClick={handleClick}>완료</SubmitBtn>
           </TitleBox>

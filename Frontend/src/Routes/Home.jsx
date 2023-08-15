@@ -172,7 +172,8 @@ const EventBox = styled(motion.div)`
   margin-bottom: 30px;
   font-size: 22px;
   cursor: pointer;
-  background: linear-gradient(90deg, #c17d00 50%, #605b52 50%);
+  /* background: linear-gradient(90deg, #c17d00 50%, #605b52 50%); */
+  background: linear-gradient(90deg, #bda67f 50%, #605b52 50%);
   background-size: 200% 100%;
   background-position: right;
   transition: background 0.5s;
@@ -206,6 +207,15 @@ const ReserveImg2 = styled.img`
   margin-top: 40px;
   width: 770px;
   height: 550px;
+`;
+
+const WorldcupWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+const WorldcupImg = styled.img`
+  width: 600px;
+  height: 400px;
 `;
 const pofolVariants = {
   nomal: {
@@ -511,6 +521,11 @@ function Home() {
           </EventBox>
         </ReserveWrapper>
         
+        {/* 월드컵 */}
+          <WorldcupWrapper>
+            <WorldcupImg src="" />
+          </WorldcupWrapper>
+
       </MainWrapper>
       
         

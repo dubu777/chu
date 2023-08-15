@@ -20,7 +20,7 @@ function ViduRoomWrapper() {
     const username = localStorage.getItem('userName');
     const usertype = localStorage.getItem('userType');
     const userSeq = localStorage.getItem('userSeq');
-
+    localStorage.setItem("consultingSeq", consultingSeq)
     const getSession = async (consultingSeq) => {
       try {
         const response = await getSessionId(consultingSeq);

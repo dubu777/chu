@@ -162,6 +162,7 @@ function Header() {
     localStorage.removeItem("userType");
     localStorage.removeItem("userSeq");
     localStorage.removeItem("userName");
+    localStorage.removeItem("consultingSeq");
     navigate("/");
   });
 
