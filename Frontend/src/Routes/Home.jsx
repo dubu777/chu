@@ -30,10 +30,11 @@ const MainWrapper = styled.div`
 const ImgText = styled.p`
   top: 400px;
   left: 100px;
-  font-size: 40px;
+  font-size: 45px;
   font-weight: 700;
   color: #353432;
   position: absolute;
+  font-family: 'Abril Fatface';
 `;
 
 const DesignerBox = styled.div`
@@ -72,8 +73,9 @@ const pofolVariants = {
 	},
 }
 const Title = styled.h1`
-  font-size: 25px;
+  font-size: 35px;
   font-weight: bold;
+  font-family: 'Apple-B';
 `;
 const ImgBox = styled.div`
   width: 80%;
@@ -196,11 +198,15 @@ function Home() {
   return (
     <Wrapper>
       <Main>
-        <ImgText>변화의 즐거움 <br/>Change hair & you</ImgText>
+        <ImgText>
+          변화의 즐거움
+          <br />
+          Change hair & you
+        </ImgText>
       </Main>
 
       <MainWrapper>
-      <Title>이주의 인기! Weekly Best Designer ✨</Title>
+      <Title>Weekly Best Designer</Title>
       <DesignerBox>
 
       {/* 이부분 나중에 img로 태그 변경하기 */}
