@@ -35,3 +35,4 @@ export * from './customer';
 export * from './designer';
 export * from './post';
 export * from './reservation';
+export * from './rootUrl';

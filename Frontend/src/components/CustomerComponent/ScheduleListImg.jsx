@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { sessionIdState } from "../../recoil/openvidu";
 import Swal from 'sweetalert2';
+import { BASE_URL } from "../../apis";
+
 const ReserveWrapper = styled.div`
   display: flex;
   border: 2px solid gray;
@@ -163,7 +165,7 @@ function ScheduleListImg(){
                 <Wrapper>
                   <Box>
                     <DesignerImg
-                      src="/icon/designerimg.png" 
+                      src={`${BASE_URL}/designer-profile/${data.designerImg}`}
                       onClick={() => navigate(`/designerdetail/${data.designerSeq}`)}
                     />
                   </Box>

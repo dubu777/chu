@@ -22,10 +22,10 @@ const Nav = styled(motion.nav)`
   align-items: center;
   position: fixed;
   width: 100%;
-  height: 45px;
+  height: 60px;
   top: 0;
   font-size: 18px;
-  padding: 20px 60px;
+  padding: 0 40px;
 `;
 
 const Col = styled.div`
@@ -66,7 +66,7 @@ const Badge = styled.span`
   position: absolute;
   top: -10px;
   right: -10px;
-  padding: 5px 10px;
+  padding: 5px 7px;
   border-radius: 50%;
   background-color: red;
   color: white;
