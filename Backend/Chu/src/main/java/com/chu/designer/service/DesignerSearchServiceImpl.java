@@ -3,6 +3,8 @@ package com.chu.designer.service;
 import com.chu.consulting.domain.Consulting;
 import com.chu.consulting.domain.Review;
 import com.chu.consulting.repository.ConsultingRepository;
+import com.chu.customer.domain.Customer;
+import com.chu.customer.repository.CustomerRepository;
 import com.chu.designer.domain.*;
 import com.chu.designer.repository.DesignerLikeRepository;
 import com.chu.designer.repository.DesignerPortfolioRepository;
@@ -32,6 +34,7 @@ public class DesignerSearchServiceImpl implements DesignerSearchService {
     private final HairStyleDictRepository hairStyleDictRepository;
     private final DesignerPortfolioRepository designerPortfolioRepository;
     private final DesignerRepository designerRepository;
+    private final CustomerRepository customerRepository;
 
     // 1. 헤어스타일 목록 가져오기
     @Override
@@ -259,10 +262,24 @@ public class DesignerSearchServiceImpl implements DesignerSearchService {
         }
         // 디자이너 리뷰
         List<Consulting> consultings = consultingRepository.findByDesignerSeq(designerSeq);
-        List<Review> reviews = new ArrayList<>();
+        List<DesignerReview> reviews = new ArrayList<>();
         for(Consulting consulting : consultings) {
             if(consulting.getReview() == null) continue;
-            reviews.add(new Review(consulting.getReview().getReviewScore(), consulting.getReview().getReviewContent()));
+            Double reviewScore = consulting.getReview().getReviewScore();
+            String reviewContent = consulting.getReview().getReviewContent();
+
+            Customer customer = customerRepository.getCustomerBySeq(customerSeq);
+            String customerId = customer.getId();
+            String date = consulting.getConsultingDate().getDate();
+
+            DesignerReview review = new DesignerReview();
+            review.setReviewScore(reviewScore);
+            review.setReviewContent(reviewContent);
+            review.setCustomerId(customerId);
+            review.setDate(date);
+
+            reviews.add(review);
+            //reviews.add(new Review(consulting.getReview().getReviewScore(), consulting.getReview().getReviewContent()));
         }
 
         result = ResponseDesignerDetailInfoDto.builder()

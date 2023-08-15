@@ -9,8 +9,8 @@ import java.util.List;
 
 @Data
 public class ResponseConsultingReviewInfoDto {
-    List<HairStyleDto> CutHairStyle;
+    List<HairStyleDto> cutHairStyle;
     // 전체 펌 헤어스타일 리스트
-    List<HairStyleDto> PermHairStyle;
+    List<HairStyleDto> permHairStyle;
     List<ImageDto> imgs;
 }
