@@ -426,6 +426,7 @@ function Reservation() {
     }
   );
 
+  const [selectedTimes, setSelectedTimes] = useState({}); 
   const generateTimeButtons = (data) => {
     console.log('들어왔?',data)
     const timeButtons = [];
