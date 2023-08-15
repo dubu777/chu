@@ -27,7 +27,6 @@ const Container = styled.div`
   margin-left: 170px;
   margin-right: 170px;
   margin-top: 50px;
-  /* font-family: "Blue-road";   */
 `;
 
 const Wrapper = styled.div`
@@ -50,9 +49,7 @@ const pofolVariants = {
 	},
 }
 const Title = styled.h1`
-  /* font-family: 'omyu_pretty';  */
   font-size: 25px;
-  /* font-family: "Blue-road";   */
   font-weight: bold;
 
 `;

@@ -10,8 +10,6 @@ const Container = styled.div`
   justify-content: center;
   width: 65vw;
   margin: 0 auto;
-  
-
 `;
 const StepWrapper = styled.div`
   margin-top: 40px;
@@ -53,16 +51,13 @@ const Box = styled(motion.div)`
 
 const Title = styled.span`
   font-size: 30px;
-  font-family: "Sandol-B";   
   font-weight: bolder;
   margin: 40px 0 30px 0;
-  /* font-family: "Apple-H";     */
 `;
 const Text = styled.span`
   font-size: 22px;
   font-weight: bold;
-  margin-top: 15px;
-  font-family: "Apple-H";    
+  margin-top: 15px;  
 `;
 const SubText = styled.span`
   font-size: 15px;

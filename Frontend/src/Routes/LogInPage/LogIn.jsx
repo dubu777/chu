@@ -16,8 +16,6 @@ const Container = styled.div`
   justify-content: center;
   flex-direction: column;
   padding-left: 150px;
-  font-family: "Cormorant Garamond";
-  /* font-family: "Apple-B";  */
 `;
 
 const Wrapper = styled.div`
@@ -41,7 +39,6 @@ const Input = styled.input`
   background-color: white;
   padding-left: 10px;
   font-size: 18px;
-  font-family: "Cormorant Garamond";
 `;
 const P = styled.p`
   margin-top: -15px;
@@ -63,7 +60,6 @@ const SubmitBox = styled.div`
 const Btn = styled.button`
   border: 0;
   border-radius: 0.4rem;
-  /* font-family: 'Cormorant Garamond'; */
   font-size: 15px;
   width: 60px;
 `;

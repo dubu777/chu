@@ -12,12 +12,11 @@ const Container = styled.div`
 	filter: invert(7%);
 	background-size: cover ;
 	width: 100vw;
-  	height: 100vh;
+  height: 100vh;
 	display:flex;
 	justify-content: center; 
 	flex-direction: column;
 	padding-left: 150px;
-	font-family: 'Cormorant Garamond';
 `;
 
 const Wrapper = styled.div`
@@ -42,7 +41,6 @@ const Input = styled.input`
 	padding-left: 10px;
 	margin-top: 7px;
 	font-size: 18px;
-	font-family: 'Cormorant Garamond';
 `;
 const Box = styled.div`
 	/* justify-content: center; */

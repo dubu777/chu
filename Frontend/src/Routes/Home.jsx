@@ -28,8 +28,6 @@ const MainWrapper = styled.div`
   margin-right: 170px;
 `;
 const ImgText = styled.p`
-  /* font-family: sans-serif; */
-  font-family: 'Abril Fatface';
   top: 400px;
   left: 100px;
   font-size: 40px;
@@ -74,10 +72,7 @@ const pofolVariants = {
 	},
 }
 const Title = styled.h1`
-  font-family: sans-serif;
-  /* font-family: "omyu_pretty"; */
   font-size: 25px;
-  /* font-family: "Blue-road"; */
   font-weight: bold;
 `;
 const ImgBox = styled.div`

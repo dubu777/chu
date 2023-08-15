@@ -13,7 +13,6 @@ const Container = styled.div`
 	justify-content: center;
 	flex-direction: column;
 	padding-left: 150px;
-	font-family: "San Francisco";
 `;
 
 const Wrapper = styled.div`
@@ -34,9 +33,6 @@ const Title = styled.h1`
 const Text = styled.h3`
 	margin: 5px 0px;
 	font-size: 20px;
-	/* font-family: "Blue-road"; */
-	font-family: 'Pretendard-Regular';
-	/* font-family: 'NanumSquareNeo-Variable'; */
 `;
 const TopBox = styled.div`
 	/* justify-content: center; */
@@ -59,10 +55,6 @@ const Btn = styled.button`
 	color: white;
 	cursor: pointer;
 	margin: 40px 10px;
-	/* font-family: 'Cormorant Garamond'; */
-	/* font-family: 'Pretendard-Regular'; */
-	font-family: "San Francisco";
-	/* font-family: 'NanumSquareNeo-Variable'; */
 	font-size: 15px;
 `;
 
