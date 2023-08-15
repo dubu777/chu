@@ -242,12 +242,12 @@ public class ConsultingController {
         ResponseConsultingReviewInfoDto responseConsultingReviewInfoDto = new ResponseConsultingReviewInfoDto();
 
         try {
-            List<HairStyleDto> allCutHairStyle = designerSearchService.showCategoryView(1);
-            List<HairStyleDto> allPermHairStyle = designerSearchService.showCategoryView(2);
+            List<HairStyleDto> allPermHairStyle = designerSearchService.showCategoryView(1);
+            List<HairStyleDto> allCutHairStyle = designerSearchService.showCategoryView(2);
             List<ImageDto> imgs = consultingService.getConfusionImageList(consultingSeq);
 
-            responseConsultingReviewInfoDto.setCutHairStyle(allCutHairStyle);
             responseConsultingReviewInfoDto.setPermHairStyle(allPermHairStyle);
+            responseConsultingReviewInfoDto.setCutHairStyle(allCutHairStyle);
             responseConsultingReviewInfoDto.setImgs(imgs);
 
         } catch (Exception e) {
