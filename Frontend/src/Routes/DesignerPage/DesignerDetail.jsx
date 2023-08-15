@@ -41,37 +41,40 @@ const DesignerInfoBox = styled.div`
   justify-content: start;
 `;
 const DesignerImg = styled.img`
-  width: 100px;
+  width: 150px;
   margin-right: 10px;
+  margin-left: 5px;
 `;
 const DesignerNameWrap = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: end;
+  width: 100%;
 `;
 const DesignerNameBox = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
 `;
 const DesignerName = styled.span`
-  font-size: 16px;
+  font-size: 20px;
   font-weight: bold;
-  margin: 0 5px;
+  margin: 10px;
+  
 `;
 const LikeBox = styled.div`
   display: flex;
-  margin-right: 20px;
+  margin-right:100px;
   align-items: center;
   padding: 5px 10px;
-  border: 2px solid rgb(244, 153, 26);
+  // border: 2px solid rgb(244, 153, 26);
   border-radius: 5px;
   background-color: ${(props) =>
     props.isLike ? "rgba(244,153,26,0.43)" : "white"};
 `;
 const Icon = styled.img`
-  width: 20px;
-  height: 20px;
+  width: 15px;
+  height: 15px;
   margin-right: 5px;
   cursor: pointer;
 `;
@@ -82,6 +85,9 @@ const Text = styled.span`
 const Box = styled.div`
   display: flex;
   align-items: center;
+  margin-left: 5px;
+  margin-right: 3px;
+  justify-content: space-between;
 `;
 const CostIcon = styled.img`
   width: 21px;
@@ -93,12 +99,13 @@ const Hr = styled.div`
   /* color: #383838; */
   border: 1px solid rgb(197, 197, 197);
   width: 100%;
-  margin: 10px 0;
+  margin-bottom: 10px;
 `;
 const InfoBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: start;
+  margin-bottom:10px;
 `;
 const Address = styled.span`
   font-size: 12px;
@@ -119,25 +126,27 @@ const HashTag = styled.span`
   margin-top: 3px;
 `;
 const IntroTextArea = styled.span`
-  padding: 20px 60px 20px 20px;
+  padding: 20px 20px 20px 20px;
   background-color: rgb(248, 245, 240);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
   border-radius: 10px;
   margin-top: 10px;
-  width: 90%;
-  height: 100px;
+  width: 100%;
 `;
 const PofolWrap = styled.div`
   display: flex;
   flex-direction: column;
-  width: 90%;
+  width: 100%;
   margin-bottom: 10px;
+  margin-top: 10px;
 `;
 const SubTitle = styled.span`
-  font-size: 15px;
+  font-size: 20px;
   font-weight: 700;
-  margin: 8px 0;
+  font-family: 'Apple-B'; 
+  margin-top: 10px;
+  margin-bottom: 5px;
 `;
 const PofolImg = styled(motion.img)`
   width: 120px;
@@ -154,7 +163,7 @@ const ReviewInfoBox = styled.div`
 const ReviewIdBox = styled.div`
   font-size: 15px;
   font-weight: 500;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 `;
 const SIcon = styled.img`
   width: 15px;
@@ -162,20 +171,21 @@ const SIcon = styled.img`
   margin: 0 5px;
 `;
 const LikeBtn = styled.img`
-  width: 27px;
-  height: 27px;
-  margin-right: 10px;
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
   cursor: pointer;
 `;
 const ReservBox = styled(motion.div)`
-  width: 70px;
+  width: 50%;
   height: 35px;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid rgb(244, 153, 26);
+  border: 1px solid rgb(150, 150, 150);
   border-radius: 5px;
-  margin-left: 10px;
+  margin-left: 30px;
+  margin-right: 5px;
   cursor: pointer;
 `;
 const StyledSlider = styled(Slider)`
@@ -378,8 +388,8 @@ function DesignerDetail() {
                     onClick={handleReservBoxClick}
                     whileHover={{ backgroundColor: "rgb(244,153,26)" }}
                   >
-                    <Icon src="/icon/reservBtn.png" />
-                    <Text>예약</Text>
+                    {/* <Icon src="/icon/reservBtn.png" /> */}
+                    <Text>상담 예약하기</Text>
                   </ReservBox>
                 </Box>
               </DesignerNameWrap>
@@ -416,9 +426,11 @@ function DesignerDetail() {
               <Icon src="/icon/star.png" />
               <Text>{data.allReviewScore}</Text>
             </Box>
-            <SubTitle>상담후기</SubTitle>
           </InfoBox>
-          <Hr />
+          <InfoBox>
+            <SubTitle>상담후기</SubTitle>
+            <Hr />
+          </InfoBox>
           {data.review.map((review, index) => (
             <ReviewInfoBox key={index}>
               <ReviewWrap>
