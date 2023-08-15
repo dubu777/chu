@@ -31,6 +31,7 @@ import MapView from "./Routes/ViewPage/MapView";
 import WorldCupRoomWrapper from "./components/WorldCup/WorldCupRoomWrapper";
 import Event from "./Routes/EventPage/Event";
 import Map from "./Routes/ViewPage/Map";
+import Footer from "./components/Common/Footer";
 
 function App() {
   return (
@@ -70,10 +71,8 @@ function App() {
         <Route path="/modaltest" element={<Survey/>}>
           <Route path="/modaltest/1" element={<Survey/>}/>
         </Route>
-        {/* <Route path="/result" element={<Result/>}>
-          <Route path="/result/1" element={<Result/>}/>
-        </Route> */}
       </Routes>
+      <Footer/>
     </Router>
   )
 };

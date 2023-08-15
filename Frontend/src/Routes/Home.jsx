@@ -30,9 +30,19 @@ const MainWrapper = styled.div`
 `;
 const ImgText = styled(motion.p)`
   font-family: "Abril Fatface";
-  top: 400px;
+  top: 420px;
   left: 100px;
   font-size: 45px;
+  font-weight: 700;
+  color: #353432;
+  position: absolute;
+  font-family: 'Abril Fatface';
+`;
+const ImgText2 = styled.p`
+  font-family: "Abril Fatface";
+  top: 480px;
+  left: 100px;
+  font-size: 60px;
   font-weight: 700;
   color: #353432;
   position: absolute;
@@ -43,14 +53,15 @@ const DesignerBox = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 100px;
 `;
 const ProfileBox = styled(motion.div)`
   background-color: #ffffff;
   border: 2px solid #bd9a7f;
-  width: 160px;
-  height: 190px;
-  border-radius: 0.3rem;
+  width: 200px;
+  height: 250px;
+  /* border-radius: 0.3rem; */
+  border-radius: 40% 60% 65% 35% / 40% 45% 55% 60%;
   display: flex;
   flex-direction: column;
   /* justify-content: center; */
@@ -64,10 +75,8 @@ const ProfileBox = styled(motion.div)`
   }
 `;
 
-
-
 const Title = styled(motion.div)`
-  font-size: 25px;
+  font-size: 35px;
   font-weight: bold;
   font-family: 'Apple-B';
 `;
@@ -75,33 +84,36 @@ const Title = styled(motion.div)`
 const ImgBox = styled.div`
   width: 80%;
   height: 80%;
-  background-color: #fdf8e9;
-  border-radius: 0.4rem;
-  margin-top: 10px;
+  /* background-color: #fdf8e9; */
+  border-radius: 40% 60% 65% 35% / 40% 45% 55% 60%;
+  /* margin-top: 10px; */
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
-    2px 4px 10px -4px rgb(0 0 0 / 0.2);
+  /* box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+    2px 4px 10px -4px rgb(0 0 0 / 0.2); */
 `;
 const ProfileImg = styled.img`
-  width: 90px;
-  height: 90px;
-  /* margin-top: 35%; */
+  width: 130px;
+  height: 130px;
+  margin-top: 35px;
+  margin-bottom: 5px;
   background-color: white;
   border-radius: 50%;
   object-fit: cover;
 `;
 const Name = styled.p`
-  /* margin-top: 45%; */
   border: 0;
-  background-color: #68655b;
-  padding: 5px 15px;
-  margin-top: -10px;
-  margin-bottom: 10px;
-  border-radius: 0.4rem;
-  font-size: 13px;
-  color: white;
+  font-size: 17px;
+  color: #4d4a46;
+  font-family: 'Pretendard-Regular';
+`;
+const Desinger = styled.p`
+  border: 0;
+  margin-bottom: 5px;
+  font-size: 18px;
+  color: #3e3c39;
+  font-family: 'Abril Fatface';
 `;
 
 const EventWrapper = styled.div`
@@ -115,10 +127,15 @@ const EventText = styled.p`
 `;
 const EventTitle = styled.p`
   font-size: 60px;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
+  font-family: 'Abril Fatface';
 `;
 const EventIntro = styled.p`
   font-size: 22px;
+  margin-bottom: 5px;
+`;
+const EventIntroTag = styled.p`
+  font-size: 17px;
   margin-bottom: 5px;
 `;
 const EventImg = styled.img`
@@ -134,15 +151,15 @@ const EventImg1 = styled.img`
 `;
 
 const EventBox = styled.div`
+  display: flex;
   width: 200px;
   height: 50px;
   background-color: #605b52;
   border-radius: 0.1rem;
   color: white;
-  text-align: center;
+  justify-content: center;
   align-items: center;
   margin-top: 25px;
-  padding-top: 15px;
   font-size: 22px;
   cursor: pointer;
 `;
@@ -223,11 +240,8 @@ function Home() {
   return (
     <Wrapper>
       <Main>
-        <ImgText>
-          변화의 즐거움
-          <br />
-          Change hair & you
-        </ImgText>
+        <ImgText>변화의 즐거움</ImgText>
+        <ImgText2>Change hair & you</ImgText2>
       </Main>
 
       <MainWrapper>
@@ -265,23 +279,24 @@ function Home() {
                 variants={itemVariants}
                 onClick={() => navigate(`/designerdetail/${item.designerSeq}`)}
               >
-                <ImgBox>
+                {/* <ImgBox> */}
                   <ProfileImg
                     src={`${BASE_URL}/designer-profile/${item.img}`}
                   ></ProfileImg>
-                </ImgBox>
-                <Name>{item.name}디자이너</Name>
+                {/* </ImgBox> */}
+                <Desinger>Desginer</Desinger>
+                <Name>{item.name}</Name>
               </ProfileBox>
             );
           })}
         </DesignerBox>
-        <EventBox onClick={handleEvent}>📷 Event</EventBox>
 
+        {/* 한장한장 이벤트 */}
         <EventWrapper>
           <EventText>
             <EventTitle>For You</EventTitle>
             <EventIntro>Chu만의 헤어스타일 합성 서비스</EventIntro>
-            <EventIntro>#헤어스타일 체험 #마이 헤어</EventIntro>
+            <EventIntroTag> #헤어스타일 체험 #마이 헤어</EventIntroTag>
             <EventBox onClick={handleEvent}>Go 한장 한장</EventBox>
           </EventText>
           <EventImg src="/img/hairtool.jpg" />
