@@ -20,7 +20,7 @@ public class ResponseDesignerDetailInfoDto {
     private Boolean isLike;
     private List<String> hairStyleLabel;
     private List<ResponsePortfolioDto> portfolio;
-    private List<Review> review;
+    private List<DesignerReview> review;
     private Integer cost;
 
 }
