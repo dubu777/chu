@@ -235,15 +235,20 @@ public class DesignerSearchServiceImpl implements DesignerSearchService {
         Optional<DesignerLike> designerLikeOptional = Optional
                 .ofNullable(designerLikeRepository.findByCustomerSeqAndDesignerSeq(customerSeq, designer.getSeq()));
         Boolean isLike = designerLikeOptional.map(DesignerLike::getLikeStatus).orElse(false);
-        // 헤어스타일 라벨링
-        List<DesignerTagInfo> hairStyleTagSeqs = designerTagInfoRepository.findByDesignerSeq(designer.getSeq());
-        List<String> hairStyleLabels = new ArrayList<>();
-        for (DesignerTagInfo tag : hairStyleTagSeqs) {
-            Integer seq = tag.getSeq();
-            HairStyleDict hairStyleDict = hairStyleDictRepository.findBySeq(seq);
-
-            if(hairStyleDict != null)
-                hairStyleLabels.add(hairStyleDict.getHairStyleLabel());
+//        // 헤어스타일 라벨링
+//        List<DesignerTagInfo> hairStyleTagSeqs = designerTagInfoRepository.findByDesignerSeq(designer.getSeq());
+//        List<String> hairStyleLabels = new ArrayList<>();
+//        for (DesignerTagInfo tag : hairStyleTagSeqs) {
+//            Integer seq = tag.getSeq();
+//            HairStyleDict hairStyleDict = hairStyleDictRepository.findBySeq(seq);
+//
+//            if(hairStyleDict != null)
+//                hairStyleLabels.add(hairStyleDict.getHairStyleLabel());
+//        }
+        // 디자이너가 잘하는 머리 스타일
+        List<String> designerTags = new ArrayList<>();
+        for( DesignerTagInfo dti : designerTagInfoRepository.findByDesignerSeqWithHairStyleDict(designerSeq)) {
+            designerTags.add(dti.getHairStyleDict() != null ? dti.getHairStyleDict().getHairStyleLabel() : null);
         }
         // 디자이너 포트폴리오 사진
         List<DesignerPortfolio> portfolios = designerPortfolioRepository.findByDesignerSeq(designer.getSeq());
@@ -270,7 +275,7 @@ public class DesignerSearchServiceImpl implements DesignerSearchService {
                 .allReviewScore(designer.getReviewScore())
                 .likeCnt(likeCnt)
                 .isLike(isLike)
-                .hairStyleLabel(hairStyleLabels)
+                .hairStyleLabel(designerTags)
                 .portfolio(portfolioDto)
                 .review(reviews)
                 .cost(designer.getCost())
