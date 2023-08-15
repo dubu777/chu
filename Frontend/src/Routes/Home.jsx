@@ -119,6 +119,7 @@ const Desinger = styled.p`
 const EventWrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  margin-bottom: 150px;
 `;
 const EventText = styled.p`
   display: flex;
@@ -130,9 +131,16 @@ const EventTitle = styled.p`
   margin-bottom: 25px;
   font-family: 'Abril Fatface';
 `;
+const IntroTitle = styled.p`
+  font-size: 35px;
+  font-weight: 700px;
+  color: #6a6251;
+  margin-bottom: 10px;
+`;
 const EventIntro = styled.p`
   font-size: 22px;
   margin-bottom: 5px;
+  font-family: 'Pretendard-Regular';
 `;
 const EventIntroTag = styled.p`
   font-size: 17px;
@@ -162,6 +170,32 @@ const EventBox = styled.div`
   margin-top: 25px;
   font-size: 22px;
   cursor: pointer;
+`;
+const ReserveTitle = styled.p`
+  font-size: 30px;
+  font-family: 'Abril Fatface';
+  color: #806f4e;
+`;
+const ReserveWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+`;
+const ReserveImgBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 40px;
+`;
+const ReserveImg = styled.img`
+  width: 400px;
+  height: 550px;
+`;
+const ReserveImg2 = styled.img`
+  margin-top: 40px;
+  width: 770px;
+  height: 550px;
 `;
 const pofolVariants = {
   nomal: {
@@ -302,7 +336,27 @@ function Home() {
           <EventImg src="/img/hairtool.jpg" />
           <EventImg1 src="/img/hair3.jpeg" />
         </EventWrapper>
+
+        {/*  */}
+        <ReserveWrapper>
+          <ReserveImgBox>
+            <ReserveImg src="/img/worldcup4.jpg"/>
+            <ReserveImg2 src="/img/worldcup1.jpg"/>
+          </ReserveImgBox>
+          <EventText>
+            <ReserveTitle>"Customized HairStyle Service"</ReserveTitle>
+            <EventTitle>Personal</EventTitle>
+            <IntroTitle>퍼스널 컨설팅 서비스</IntroTitle>
+            <EventIntro>예약제 펄스널 맞춤 헤어스타일 서비스입니다.</EventIntro>
+          </EventText>
+          <EventBox>예약하러 가기</EventBox>
+        </ReserveWrapper>
+        
       </MainWrapper>
+      
+        
+
+
 
       {/* <MainView /> */}
       {/* <MainView /> */}
