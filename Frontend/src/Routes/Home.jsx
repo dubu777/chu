@@ -264,7 +264,7 @@ function Home() {
     threshold: 0.1,
   });
   const [onePickRef, onPickInView] = useInView({
-    threshold: 0.4,
+    threshold: 0.2,
   });
   const fetchLogInData = async (userSeq) => {
     switch (userType) {
