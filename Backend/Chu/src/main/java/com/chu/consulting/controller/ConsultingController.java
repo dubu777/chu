@@ -99,7 +99,7 @@ public class ConsultingController {
                 Integer pnumTmp = new Integer(portfolioNum);
                 String tmp = pnumTmp.toString();
 //                log.info("문자열 제대로 바뀌었다: {}", tmp);
-                targetFileUrls.add("/chu/upload/images/designer/portfolio/" + tmp + ".png");
+                targetFileUrls.add("/chu/upload/images/designer/portfolio/p_" + tmp + ".png");
             }
 
             ImageMakeDto imageMakeDto = new ImageMakeDto();
