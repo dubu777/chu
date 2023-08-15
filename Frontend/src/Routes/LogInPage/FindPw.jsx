@@ -20,17 +20,17 @@ const Container = styled.div`
 `;
 
 const Wrapper = styled.div`
-	border: 0;
-	border-radius: 0.8rem;
-	width: 35%;
-	height: 45%;
-	background-color: rgb(33, 25, 25, 0.4);
-	color: black;
+  border: 0;
+  border-radius: 0.8rem;
+  width: 35%;
+  height: 45%;
+  background-color: rgb(33, 25, 25, 0.4);
+  color: black;
 `;
 const Title = styled.h1`
-margin-top: 10px;
-margin-bottom: 15px;
-font-size: 30px;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  font-size: 30px;
 `;
 const Input = styled.input`
 	width: 75%;
@@ -43,23 +43,23 @@ const Input = styled.input`
 	font-size: 18px;
 `;
 const Box = styled.div`
-	/* justify-content: center; */
-	display: flex;
-	align-items: center;
-	margin-left: 10%;
-	margin-right: 10%;
-	flex-direction: column;
-	margin-top: 20px;
+  /* justify-content: center; */
+  display: flex;
+  align-items: center;
+  margin-left: 10%;
+  margin-right: 10%;
+  flex-direction: column;
+  margin-top: 20px;
 `;
 const Btn = styled.button`
-	border: 0;
-	border-radius: 0.3rem;
-	background-color: rgb(45, 28, 20);
-	width:30%;
-	height: 40px;
-	margin-top: 15px;
-	color: white;
-	cursor: pointer;
+  border: 0;
+  border-radius: 0.3rem;
+  background-color: rgb(45, 28, 20);
+  width: 30%;
+  height: 40px;
+  margin-top: 15px;
+  color: white;
+  cursor: pointer;
 `;
 const RadioContainer = styled.div`
   display: flex;
@@ -85,106 +85,101 @@ const TypeLabel = styled.label`
   cursor: pointer;
 `;
 
-
 function FindPw() {
-	const [userId, setUserId] = useState("");
-	const [username, setUsername] = useState("");
-	const [useremail, setuseremail] = useState("");
-	const [userType, setUserType] = useState("");
+  const [userId, setUserId] = useState("");
+  const [username, setUsername] = useState("");
+  const [useremail, setuseremail] = useState("");
+  const [userType, setUserType] = useState("");
 
-	const [findPwResult, setFindPwResult] = useRecoilState(setFindPwd);
-	const [existPwState, setExistsPwState] = useRecoilState(setExistPwState);
-	const [authNum, setAuthNumberResult] = useRecoilState(setAuthNumber);
+  const [findPwResult, setFindPwResult] = useRecoilState(setFindPwd);
+  const [existPwState, setExistsPwState] = useRecoilState(setExistPwState);
+  const [authNum, setAuthNumberResult] = useRecoilState(setAuthNumber);
 
-	const navigate = useNavigate(); 
-	
+  const navigate = useNavigate();
+
   const handleUserTypeChange = (event) => {
     setUserType(event.target.value);
   };
 
   const handleFindPw = async () => {
-	if(userId != null && username != null && useremail != null){
-		if (userType === "customer") {
-			try {
-				const result = await customerFindPw(userId, username, useremail);
-				console.log(result);
-				setFindPwResult(result.seq);
-				setExistsPwState(userType);
-				// 여기서 이메일 보내기
+    if (userId != null && username != null && useremail != null) {
+      if (userType === "customer") {
+        try {
+          const result = await customerFindPw(userId, username, useremail);
+          console.log(result);
+          setFindPwResult(result.seq);
+          setExistsPwState(userType);
+          // 여기서 이메일 보내기
 
-				let confirmNumber = Math.floor(Math.random() * 900001) + 100000;
+          let confirmNumber = Math.floor(Math.random() * 900001) + 100000;
 
-				let templateParams = {
-					user_email: useremail,
-					sys_code: confirmNumber,
-				};
-				emailjs.init("c0nz-ynLc-qYrorYn");
-				emailjs.send("service_chu", "template_chu", templateParams);
-				setAuthNumberResult(confirmNumber);
-				navigate("/authnum");
-			} catch (error) {
-				console.error(error);
-			}
-		}
-	
-		else if (userType === "designer") {
-			try {
-				const result = await designerFindPw(userId, username, useremail);
-				console.log(result);
-				setFindPwResult(result.seq);
-				setExistsPwState(userType);
-				// 여기서 이메일 보내기
+          let templateParams = {
+            user_email: useremail,
+            sys_code: confirmNumber,
+          };
+          emailjs.init("c0nz-ynLc-qYrorYn");
+          emailjs.send("service_chu", "template_chu", templateParams);
+          setAuthNumberResult(confirmNumber);
+          navigate("/authnum");
+        } catch (error) {
+          console.error(error);
+        }
+      } else if (userType === "designer") {
+        try {
+          const result = await designerFindPw(userId, username, useremail);
+          console.log(result);
+          setFindPwResult(result.seq);
+          setExistsPwState(userType);
+          // 여기서 이메일 보내기
 
-				let confirmNumber = Math.floor(Math.random() * 900001) + 100000;
+          let confirmNumber = Math.floor(Math.random() * 900001) + 100000;
 
-				let templateParams = {
-					user_email: useremail,
-					sys_code: confirmNumber,
-				};
-				emailjs.init("c0nz-ynLc-qYrorYn");
-				emailjs.send("service_chu", "template_chu", templateParams);
-				setAuthNumberResult(confirmNumber);
-				
-				navigate("/authnum");
-			} catch (error) {
-				console.error(error);
-			}
-		}
-	
-		else{
-			alert("당신은 고객입니까 디자이너입니까 지윤입니까")
-		}
-	}
-	else{
-		alert("아이디와 이름, 이메일을 모두 입력해주세요!");
-	}
-	
-  }
+          let templateParams = {
+            user_email: useremail,
+            sys_code: confirmNumber,
+          };
+          emailjs.init("c0nz-ynLc-qYrorYn");
+          emailjs.send("service_chu", "template_chu", templateParams);
+          setAuthNumberResult(confirmNumber);
 
-	return(
-		<Container>
-			<Wrapper>
-				<Box>
-					<Title>Find Password</Title>
-					<Input
+          navigate("/authnum");
+        } catch (error) {
+          console.error(error);
+        }
+      } else {
+        alert("당신은 고객입니까 디자이너입니까 지윤입니까");
+      }
+    } else {
+      alert("아이디와 이름, 이메일을 모두 입력해주세요!");
+    }
+  };
+
+  return (
+    <Container>
+      <Wrapper>
+        <Box>
+          <Title>Find Password</Title>
+          <Input
             placeholder="ID"
             value={userId}
             onChange={(e) => setUserId(e.target.value)}
           ></Input>
-					<Input
+          <Input
             placeholder="Name"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           ></Input>
-					<Input
+          <Input
             type="email"
             placeholder="e-mail"
             value={useremail}
             onChange={(e) => setuseremail(e.target.value)}
           ></Input>
-			<Btn type="submit" onClick={handleFindPw}>email 인증</Btn>
-				</Box>
-				<RadioContainer>
+          <Btn type="submit" onClick={handleFindPw}>
+            email 인증
+          </Btn>
+        </Box>
+        <RadioContainer>
           <TypeLabel>
             <CustomRadio
               type="radio"
@@ -204,9 +199,9 @@ function FindPw() {
             디자이너
           </TypeLabel>
         </RadioContainer>
-			</Wrapper>
-		</Container>
-	);
+      </Wrapper>
+    </Container>
+  );
 }
 
 export default FindPw;
