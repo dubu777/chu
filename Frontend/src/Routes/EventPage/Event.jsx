@@ -76,6 +76,9 @@ const ImgWrapper = styled.div`
     flex-direction: column;
     justify-content: center;
 `;
+const ClickBtn = styled.button`
+    
+`;
 const SubmitImg = styled.input`
   margin: 15px 0px;
 `;
@@ -288,23 +291,13 @@ function Event() {
             <SText>- 체험을 원하는 머리 사진을 업로드해 주세요.</SText> */}
 
 
-
-
-
-
-
-
-
-
-
-
             {
                 // 상태가 2라는건 타겟이미지가 넘어갔다는 것, 입력 이미지도 넣었다는 것
                 responseState == 2 && setInputImagePath != `https://i9b111.q.ssafy.io/api/customer-profile/event/origin/user.png`
                     ? (
                         <>
-                            <button onClick={() => goToConfusionWolrd(customerSeq, formData)}>체험해보기!</button>
-                            <SText>체험해보려면 버튼을 클릭해주세요!</SText>
+                            <ClickBtn onClick={() => goToConfusionWolrd(customerSeq, formData)}>???</ClickBtn>
+                            <SText>버튼을 누르면 합성사진 체험이 가능합니다 :)</SText>
                             <Profile
                                 src={confusionImagePath}
                                 alt="Profile"
@@ -315,7 +308,6 @@ function Event() {
                         <div></div>
                     )
             }
-
             {
                 // 상태가 3이라면 로딩중이라는 것
                 responseState == 3
