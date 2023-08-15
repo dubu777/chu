@@ -14,13 +14,13 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
 `;
-// src=""
+
 const Main = styled.div`
   background-image: url("/img/password.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  width: 100vw;
+  /* width: 100vw; */
   height: 100vh;
 `;
 const MainWrapper = styled.div`
@@ -29,7 +29,8 @@ const MainWrapper = styled.div`
   margin-right: 170px;
 `;
 const ImgText = styled.p`
-  font-family: sans-serif;
+  /* font-family: sans-serif; */
+  font-family: "Abril Fatface";
   top: 400px;
   left: 100px;
   font-size: 40px;
@@ -46,7 +47,7 @@ const DesignerBox = styled.div`
 `;
 const ProfileBox = styled(motion.div)`
   background-color: #ffffff;
-  border: 2px solid orange;
+  border: 2px solid #bd9a7f;
   width: 160px;
   height: 190px;
   border-radius: 0.3rem;
@@ -99,11 +100,48 @@ const Name = styled.p`
   font-size: 13px;
   color: white;
 `;
+
+const EventWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+const EventText = styled.p`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+const EventTitle = styled.p`
+  font-size: 60px;
+  margin-bottom: 20px;
+`;
+const EventIntro = styled.p`
+  font-size: 22px;
+  margin-bottom: 5px;
+`;
+const EventImg = styled.img`
+  width: 270px;
+  height: 400px;
+  border-radius: 0.1rem;
+  /* margin-right: 30px; */
+`;
+const EventImg1 = styled.img`
+  width: 600px;
+  height: 400px;
+  border-radius: 0.1rem;
+`;
+
 const EventBox = styled.div`
-  width: 80px;
-  height: 40px;
-  background-color: #ffd46f;
-  border-radius: 0.5rem;
+  width: 200px;
+  height: 50px;
+  background-color: #605b52;
+  border-radius: 0.1rem;
+  color: white;
+  text-align: center;
+  align-items: center;
+  margin-top: 25px;
+  padding-top: 15px;
+  font-size: 22px;
+  cursor: pointer;
 `;
 const pofolVariants = {
   nomal: {
@@ -112,8 +150,8 @@ const pofolVariants = {
     y: -5,
     transition: {
       duration: 0.7,
-      delay: 0.2
-    }
+      delay: 0.2,
+    },
   },
   hover: {
     scale: 1.03,
@@ -121,7 +159,7 @@ const pofolVariants = {
       duration: 0.2,
     },
   },
-  hidden: { 
+  hidden: {
     opacity: 0,
     y: 20,
   },
@@ -138,7 +176,6 @@ function Home() {
     // triggerOnce: true,  // 애니메이션을 한 번만 실행합니다.
     threshold: 0.1, // 요소의 10%가 뷰포트에 들어왔을 때 애니메이션을 시작합니다.
   });
-
 
   const fetchLogInData = async (userSeq) => {
     switch (userType) {
@@ -200,41 +237,55 @@ function Home() {
           이주의 인기! Weekly Best Designer ✨
         </Title>
         <DesignerBox>
-  {data.bestDesigner.map((item, index) => {
-    const delayForItem = getDelayByIndex(index);
-    
-    const itemVariants = {
-      ...pofolVariants,
-      nomal: {
-        ...pofolVariants.nomal,
-        transition: {
-          ...pofolVariants.nomal.transition,
-          delay: delayForItem,
-        }
-      }
-    };
+          {data.bestDesigner.map((item, index) => {
+            const delayForItem = getDelayByIndex(index);
 
-    return (
-      <ProfileBox
-        key={index}
-        ref={inViewRef}
-        initial="hidden"
-        animate={inView ? "nomal" : "hidden"}
-        whileHover="hover"
-        variants={itemVariants}
-        onClick={() => navigate(`/designerdetail/${item.designerSeq}`)}
-      >
-        <ImgBox>
-          <ProfileImg src={`${BASE_URL}/designer-profile/${item.img}`}></ProfileImg>
-        </ImgBox>
-        <Name>{item.name}디자이너</Name>
-      </ProfileBox>
-    );
-  })}
-</DesignerBox>
+            const itemVariants = {
+              ...pofolVariants,
+              nomal: {
+                ...pofolVariants.nomal,
+                transition: {
+                  ...pofolVariants.nomal.transition,
+                  delay: delayForItem,
+                },
+              },
+            };
+
+            return (
+              <ProfileBox
+                key={index}
+                ref={inViewRef}
+                initial="hidden"
+                animate={inView ? "nomal" : "hidden"}
+                whileHover="hover"
+                variants={itemVariants}
+                onClick={() => navigate(`/designerdetail/${item.designerSeq}`)}
+              >
+                <ImgBox>
+                  <ProfileImg
+                    src={`${BASE_URL}/designer-profile/${item.img}`}
+                  ></ProfileImg>
+                </ImgBox>
+                <Name>{item.name}디자이너</Name>
+              </ProfileBox>
+            );
+          })}
+        </DesignerBox>
         <EventBox onClick={handleEvent}>📷 Event</EventBox>
+
+        <EventWrapper>
+          <EventText>
+            <EventTitle>For You</EventTitle>
+            <EventIntro>Chu만의 헤어스타일 합성 서비스</EventIntro>
+            <EventIntro>#헤어스타일 체험 #마이 헤어</EventIntro>
+            <EventBox onClick={handleEvent}>Go 한장 한장</EventBox>
+          </EventText>
+          <EventImg src="/img/hairtool.jpg" />
+          <EventImg1 src="/img/hair3.jpeg" />
+        </EventWrapper>
       </MainWrapper>
 
+      {/* <MainView /> */}
       {/* <MainView /> */}
     </Wrapper>
   );

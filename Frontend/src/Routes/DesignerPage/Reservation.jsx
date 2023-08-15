@@ -8,7 +8,7 @@ import { useRecoilState } from 'recoil';
 import { useNavigate, useParams } from "react-router";
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
 import {getPossibleTimeApi, getPortfolioShow, postReserveImg, postReserveInfo } from "../../apis"
-import {reserveInfo, imgFileState} from "../../recoil"
+import {reserveInfo, consultImg} from "../../recoil"
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
