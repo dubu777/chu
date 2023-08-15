@@ -171,7 +171,8 @@ const EventBox = styled(motion.div)`
   margin-top: 25px;
   font-size: 22px;
   cursor: pointer;
-  background: linear-gradient(90deg, #c17d00 50%, #605b52 50%);
+  /* background: linear-gradient(90deg, #c17d00 50%, #605b52 50%); */
+  background: linear-gradient(90deg, #bda67f 50%, #605b52 50%);
   background-size: 200% 100%;
   background-position: right;
   transition: background 0.5s;
@@ -205,6 +206,15 @@ const ReserveImg2 = styled.img`
   margin-top: 40px;
   width: 770px;
   height: 550px;
+`;
+
+const WorldcupWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+const WorldcupImg = styled.img`
+  width: 600px;
+  height: 400px;
 `;
 const pofolVariants = {
   nomal: {
@@ -417,12 +427,6 @@ function Home() {
             transition={{ duration: 0.5 }}
           />
         </EventWrapper>
-        <EventWrapper>
-          <EventText>
-            <ReserveTitle>Customized HairStyle Service</ReserveTitle>
-            <EventTitle>Personal</EventTitle>
-          </EventText>
-        </EventWrapper>
 
         {/*  */}
         <ReserveWrapper>
@@ -436,9 +440,14 @@ function Home() {
             <IntroTitle>퍼스널 컨설팅 서비스</IntroTitle>
             <EventIntro>예약제 펄스널 맞춤 헤어스타일 서비스입니다.</EventIntro>
           </EventText>
-          <EventBox>예약하러 가기</EventBox>
+          <EventBox onClick={() => navigate("/listview")}>예약하러 가기</EventBox>
         </ReserveWrapper>
         
+        {/* 월드컵 */}
+          <WorldcupWrapper>
+            <WorldcupImg src="" />
+          </WorldcupWrapper>
+
       </MainWrapper>
       
         
