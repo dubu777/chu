@@ -289,7 +289,7 @@ function Header() {
             </Item>
             <NotificationBadge>
               <Badge>{notifications.filter(notification => !notification.check).length}</Badge>
-              <Img onClick={toggleAlert} src="/icon/notification.png" />
+              <Img onClick={toggleAlert} src="/icon/calendar.png" />
               {alert ? (
                 <NotificationList>
                   {notifications
