@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import OpenViduVideoComponent from './OvVideo';
-import './UserVideo.css';
+import './ConsultVideo.css';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -8,7 +8,7 @@ const Container = styled.div`
     height:100%;
 `;
 const Video = styled.div`
-  width : 300px;
+  width : 500px;
   border-radius: 0.3rem;
 `; 
 
