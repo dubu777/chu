@@ -11,7 +11,6 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   background-color: #605b52c5;
-  margin-top: 100px;
 `;
 const TextBox = styled.div`
   display: flex;
