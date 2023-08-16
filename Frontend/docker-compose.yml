@@ -1,0 +1,10 @@
+version: '3'
+services:
+        react-app:
+                build:
+                        context: .
+                        dockerfile: Dockerfile
+                image: chu-front
+                container_name: chu-front
+                ports:
+                        - "3002:3002"
