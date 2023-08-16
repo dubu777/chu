@@ -14,14 +14,22 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 65vw;
-  margin: 60px auto; 
+  width: 70vw;
+  margin: 65px auto; 
+  background-color: rgba(146, 132, 104, 0.07);
+  padding: 30px;
 `;
-
+const TitleText = styled.span`
+  font-family: 'Abril Fatface';
+  font-size: 50px;
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+`;
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  margin: 20px 0;
 `;
 const BtnWrapper = styled.div`
   display: flex;
@@ -32,7 +40,7 @@ const SelectBox = styled.div`
   flex-wrap: wrap;
   align-items: center;
   justify-content: flex-start;
-  margin-bottom: 10px;
+  // margin-bottom: 10px;
   border-bottom: 1px solid rgb(220, 220, 220);
   
 `;
@@ -40,17 +48,13 @@ const SelectedBox = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
-  /* margin-bottom: 5px;
-  padding-bottom: 5px; */
+  justify-content: flex-start;
 `;
 const HashTag = styled(motion.span)`
   font-size: 12px;
   font-weight: 500;
   padding: 5px 10px;
-  margin-right: 10px;
-  margin-bottom: 20px;
-  margin-top: 10px;
+  margin: 10px 10px 10px 0;
   border: 1px solid gray;
   /* background-color: ${props => props.selected ?"rgb(100,93,81)" :"rgb(255, 255, 254)" };
   color: ${props => props.selected ?"rgb(255, 255, 255)" :"rgb(0,0,0)" }; */
@@ -76,15 +80,13 @@ const SelectText = styled.span`
   font-weight: 800;
   text-align: center;
   height: 79%;
-  /* border-bottom: 1px solid rgb(220, 220, 220); */
-  margin-bottom: 10px;
-  padding-bottom: 10px;
 `;
 const SelectedText = styled.span`
+  margin-top: 10px;
   font-size: 16px;
   font-weight: 800;
   text-align: center;
-  height: 85%;
+  height: 79%;
 `;
 const Grid = styled.div`
   display: grid;
@@ -97,12 +99,11 @@ const Grid = styled.div`
   div:nth-child(6) {
     grid-column: span 5;
   }
-  margin-top: 20px;
   width: 70%;
   border: 1px solid rgb(148, 148, 148);
   /* box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); */
   /* box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25); */
-  padding: 10px 20px;
+  padding: 10px 20px 0 20px;
   border-radius: 10px;
 `;
 
@@ -118,7 +119,7 @@ const Btn = styled(motion.button)`
   margin-right: 10px;
   font-weight: 600;
   font-size: 13px;
-  background-color: ${props => (props.active ? 'rgb(235, 179, 102)' : 'white')};
+  background-color: ${props => (props.active ? 'rgb(235, 179, 102)' : '#e5e3dc')};
 `;
 const MapBtn = styled.button`
   border-radius: 5px;
@@ -126,7 +127,7 @@ const MapBtn = styled.button`
   font-weight: 600;
   font-size: 13px;
   padding: 7px 18px;
-  background-color: ${props => (props.handleMap ? 'rgb(244,153,26)' : 'white')};
+  background-color: ${props => (props.handleMap ? 'rgb(244,153,26)' : '#e5e3dc')};
 `;
 
 const Box = styled.div`
@@ -138,15 +139,18 @@ const Box = styled.div`
 const SearchBox = styled.div`
   display: flex;
   align-items: center;
+  justify-content: center;
   border: 2px solid rgb(91, 89, 89);
   border-radius: 10px;
-  width: 300px;
+  width: 40%;
   height: 35px;
   margin-top: 30px;
 `;
 const Input = styled.input`
+  font-size: 14px;
   border: 0;
   width: 260px;
+  background-color: transparent;  //투명도100
   &:focus {
     outline: none;
     border: none;
@@ -158,12 +162,13 @@ const SearchImg = styled.img`
   margin: 0 10px;
 `;
 const SubmitBtn = styled.button`
-  background-color: black;
-  color: white;
-  border-radius: 3px;
+  background-color: #e5e3dc;
+  color: #605b52;
+  border-radius: 10px;
   padding: 5px 10px;
   margin: 12px 0;
-  font-size: 15px;
+  font-size: 14px;
+  border: none;
 `;
 const Loading = styled.div`
   display: flex;
@@ -262,13 +267,16 @@ function ListView() {
 
   return (
     <Container>
+      <TitleText>
+        Designer List
+      </TitleText>
       { sendData ? (
       <>
       <Box>
         <SearchBox>
           <SearchImg src="/icon/search.png"/>
           <Input 
-            placeholder="Search" 
+            placeholder="디자이너의 이름을 검색해주세요" 
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
@@ -277,7 +285,7 @@ function ListView() {
       </Box>
       <Wrapper>
         <Grid>
-          <SelectText>커트</SelectText>
+          <SelectText>펌</SelectText>
           <SelectBox>
             {data.allCutHairStyle.map((tag) => (
             <HashTag
@@ -298,7 +306,7 @@ function ListView() {
             </HashTag>
             ))}
           </SelectBox>
-          <SelectText>펌</SelectText>
+          <SelectText>커트</SelectText>
         <SelectBox>
           {data.allPermHairStyle.map((tag) => (
           <HashTag

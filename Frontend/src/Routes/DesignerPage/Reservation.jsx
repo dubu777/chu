@@ -19,13 +19,25 @@ import { Link } from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100vw;
   margin-top: 60px;
-  background-color: rgba(230, 227, 227, 0.3);
+  background-color: rgba(146, 132, 104, 0.07);
 `;
+const TitleText = styled.span`
+  font-family: 'Abril Fatface';
+  font-size: 50px;
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+`;
+const AllWrap = styled.div`
+  display: flex;
+  justify-content: center;
 
+`;
 const LeftWrap = styled.div`
   display: flex;
   flex-direction: column;
@@ -37,7 +49,7 @@ const LeftWrap = styled.div`
 const RightWrap = styled.div`
   display: flex;
   flex-direction: column;
-  width: 38%;
+  width: 500px;
   height: 900px;
   margin: 40px 10px;
 
@@ -73,6 +85,7 @@ const SubTitle = styled.span`
   // letter-spacing: 0.5px;
 `;
 const StyledSlider = styled(Slider)`
+  
   .slick-slide > div {
     margin: 0 10px;
   }
@@ -110,6 +123,7 @@ const StyledSlider = styled(Slider)`
     }
   }
 `;
+
 const PofolImg = styled(motion.img)`
   width: 100px;
   height: 125px;
@@ -514,6 +528,12 @@ function Reservation() {
 
   return (
     <Container>
+      <TitleText>
+        Reservation
+      </TitleText>
+      <AllWrap>
+
+      
       <LeftWrap>
         <ReservWrap>
           <ResevBox>
@@ -558,8 +578,8 @@ function Reservation() {
               <StartBox>
                 <SubTitle>디자이너 포트폴리오</SubTitle>
               </StartBox>
-              <Hr />
-              <StyledSlider {...settings}>
+                <Hr />
+                <StyledSlider {...settings}>
                 {imgData.designerPortfolio.map((item, index) => (
                   <PofolImg
                     key={index}
@@ -572,12 +592,14 @@ function Reservation() {
                   />
                 ))}
               </StyledSlider>
+              
             </PofolWrap>
-            <PofolWrap>
+              <PofolWrap>
+              
               <StartBox>
                 <SubTitle>다른 디자이너 포트폴리오</SubTitle>
               </StartBox>
-              <Hr />
+                <Hr />
               <StyledSlider {...settings}>
                 {imgData.randomPortfolio.map((item, index) => (
                   <PofolImg
@@ -589,7 +611,7 @@ function Reservation() {
                     onClick={() => handleImageClick(item.imgName)}
                   />
                 ))}
-              </StyledSlider>
+                  </StyledSlider>
             </PofolWrap>
             <PofolWrap>
               <SelectedBox>
@@ -639,6 +661,7 @@ function Reservation() {
             </ResevBox>
           </ReservWrap>
         </RightWrap>
+        </AllWrap>
     </Container>
   );
 }

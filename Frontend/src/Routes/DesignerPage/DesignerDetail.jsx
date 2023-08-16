@@ -20,14 +20,14 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: rgba(230, 227, 227, 0.3);
+  background-color: rgba(146, 132, 104, 0.07);
 `;
 
 const TitleText = styled.span`
   font-family: 'Abril Fatface';
-  font-size: 30px;
+  font-size: 40px;
   margin-top: 30px;
-`
+`;
 
 const Wrapper = styled.div`
   display: flex;
