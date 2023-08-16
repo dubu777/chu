@@ -111,7 +111,7 @@ const Hr = styled.div`
   margin: 10px 0;
 `;
 const LogoImg = styled(motion.img)`
-  width: 100px;  // 원하는 크기로 조절하세요
+  width: 130px;  // 원하는 크기로 조절하세요
   height: auto;
   cursor: pointer;
 `;
