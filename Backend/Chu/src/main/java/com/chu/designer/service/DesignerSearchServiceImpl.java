@@ -167,9 +167,12 @@ public class DesignerSearchServiceImpl implements DesignerSearchService {
             List<DesignerTagInfo> hairStyleTagSeqs = designerTagInfoRepository.findByDesignerSeq(designer.getSeq());
             List<String> hairStyleLabels = new ArrayList<>();
             for (DesignerTagInfo tag : hairStyleTagSeqs) {
-                Integer seq = tag.getSeq();
-                HairStyleDict hairStyleDict = hairStyleDictRepository.findBySeq(seq);
-                hairStyleLabels.add(hairStyleDict.getHairStyleLabel());
+//                Integer seq = tag.getSeq();
+//                Integer seq = tag.getHairStyleDict().getSeq();
+//                HairStyleDict hairStyleDict = hairStyleDictRepository.findBySeq(seq);
+                HairStyleDict hairStyleDict = tag.getHairStyleDict();
+                if(hairStyleDict != null)
+                    hairStyleLabels.add(hairStyleDict.getHairStyleLabel());
             }
             // 평점
             Double reviewScoreByDesigner = (reviewScoreSeq < reviewScore.size() && (reviewScore.get(reviewScoreSeq)[1] != null)) ? (Double) reviewScore.get(reviewScoreSeq)[1] : 0.0;
