@@ -22,17 +22,19 @@ const ProfileWrapper = styled.div`
   width: 100%;
   height: 270px;
   background-color: #f8f1d9;
+  /* background-color: #726f65b6; */
 `;
 const ImgBox = styled.div`
   text-align: center;
-  margin-top: 110px;
+  margin-top: 105px;
 `;
 
 const NameText = styled.h1`
   font-size: 25px;
+  margin-bottom: 5px;
 `;
 const Text = styled.p`
-  margin-bottom: 20px;
+  margin-bottom: 18px;
   font-size: large;
 `;
 const HashTag = styled.button`
@@ -46,7 +48,7 @@ const HashTag = styled.button`
 `;
 const InfoBox = styled.div`
   width: 30%;
-  margin-top: 140px;
+  margin-top: 155px;
   margin-left: -120px;
 `;
 const ChangeBox = styled.div`

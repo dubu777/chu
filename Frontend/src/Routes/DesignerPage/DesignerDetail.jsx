@@ -46,11 +46,13 @@ const InfoWrapper = styled.div`
 const DesignerInfoBox = styled.div`
   display: flex;
   justify-content: start;
+  margin-bottom: 20px;
 `;
 const DesignerImg = styled.img`
   width: 150px;
   margin-right: 10px;
   margin-left: 5px;
+  border-radius: 40% 60% 65% 35% / 40% 45% 55% 60%;
 `;
 const DesignerNameWrap = styled.div`
   display: flex;
@@ -118,7 +120,7 @@ const AddressBox = styled.div`
 const Hr = styled.div`
   /* color: #383838; */
   border: 1px solid rgb(197, 197, 197);
-  width: 100%;
+  width: 97%;
   margin-bottom: 10px;
 `;
 const InfoBox = styled.div`
@@ -142,7 +144,7 @@ const HashTag = styled.span`
   font-weight: 600;
   padding: 5px 10px;
   margin-right: 5px;
-  background-color: rgba(196, 192, 192, 0.5);
+  background-color: rgb(227, 208, 173);
   border-radius: 5px;
   margin-top: 3px;
 `;
@@ -173,6 +175,7 @@ const PofolImg = styled(motion.img)`
   width: 120px;
   height: 150px;
   object-fit: cover;
+  border-radius: 0.2rem;
 `;
 const ReviewWrap = styled.div`
   display: flex;
@@ -461,6 +464,7 @@ function DesignerDetail() {
             </Box>
           </InfoBox>
           <InfoBox>
+            <br/>
             <SubTitle>상담후기 ({data.review.length})</SubTitle>
             <Hr />
           </InfoBox>
