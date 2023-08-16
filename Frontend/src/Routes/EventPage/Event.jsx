@@ -6,10 +6,19 @@ import { getEventInfo, postEventInfo, postInputImage, postTargetImage } from "..
 import { useNavigate } from "react-router-dom";
 
 const Marginbox = styled.div`
-    height: 50px;
-`
+    height: 60px;
+    width: 150px;
+`;
+
+const Title = styled.p`
+    margin-top: 5px;
+    font-size: 35px;
+    font-family: "Abril Fatface";
+    text-align: center;
+`;
 const Container = styled.div`
-    background-image: url('/img/password.jpg');
+    /* background-image: url('/img/password.jpg'); */
+    background-color: #f1e9d43f;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -19,12 +28,12 @@ const Container = styled.div`
 const BackImg = styled.img`
   width : 30px;
   height: 30px;
-  margin-left: 30px;
-  margin-top: 30px;
+  margin-left: 50px;
+  margin-top: 70px;
 `;
 const MainWrapper = styled.div`
-    margin-top: 50px;
-    background-color: rgba(255, 255, 255, 0.669);
+    /* margin-top: 50px; */
+    /* background-color: rgba(96, 94, 94, 0.669); */
     /* filter: invert(7%); */
 `;
 const Imgbox = styled.div`
@@ -45,19 +54,22 @@ const Text = styled.p`
 
 const Borderbox = styled.div`
 	border: dashed 2px;
-	border-color: #00000080;
+	border-color: #78766d74;
 	margin: 10px;
     padding: 20px;
 	border-radius: 0.5rem;
 `;
 
 const Box = styled.div`
-    /* width: 22%; */
-	height: 350px;
-	background-color:rgba(91, 91, 89, 0.791);
+    width: 80%;
+	height: 370px;
+	background-color:rgba(255, 255, 255, 0.791);
 	/* margin: auto; */
-    margin: 20px;
+    /* margin: 20px; */
 	border-radius: 0.6rem;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+    2px 4px 30px -4px rgb(0 0 0 / 0.1);
+    margin-bottom: 20px;
 `;
 const Input = styled.input`
 	margin: 0px 10px 10px 30px;
@@ -73,9 +85,12 @@ const TextBtn = styled.button`
 	border: 0;
 	height: 35px;
     font-size: 14px;
-	width: 130px;
-	border-radius: 0.8rem;
-	background-color: #f9c45b;
+	width: 150px;
+	border-radius: 0.3rem;
+	background-color: #716b60;
+    margin-bottom: 20px;
+    margin-top: 10px;
+    color: white;
 `;
 const Hr = styled.hr`
   width : 50% ;
@@ -90,21 +105,22 @@ const Img = styled.img`
 const Wrapper = styled.div`
     display: flex;
     justify-content: center;
+    margin-top: 100px;
 `;
 const ImgWrapper = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
     margin-bottom: 130px;
-    margin-left: 30px;
-    margin-right: 30px;
+    /* margin-left: 30px; */
+    /* margin-right: 30px; */
 `;
 const ClickBtn = styled.button`
     font-size: 18px;
     border: 2.5px solid #5d594d;
     border-radius: 2rem;
     background-color: white;
-    margin-top: 50px;
+    margin-top: 20px;
     margin-bottom: 20px;
     padding: 10px 20px;
     cursor: pointer;
@@ -147,7 +163,7 @@ function Event() {
 
     const [inputImagePath, setInputImagePath] = useState(`https://i9b111.q.ssafy.io/api/customer-profile/event/origin/user.png`);
     const [targetImagePath, setTargetImagePath] = useState(`https://i9b111.q.ssafy.io/api/customer-profile/event/target/user.png`);
-    const [confusionImagePath, setConfusionImagePath] = useState('/icon/who1.png');
+    const [confusionImagePath, setConfusionImagePath] = useState('/icon/user_gray.png');
 
     const [inputImageFile, setInputImageFile] = useState(null);
     const [targetImageFile, setTargetImageFile] = useState(null);
@@ -253,7 +269,73 @@ function Event() {
                     onClick={() => navigate(-1)}
                     />
             </Marginbox>
-              <ResultBox>
+            <Title>Try to Change Your Hair</Title>
+            <Wrapper>
+            <ImgWrapper>
+            <Box>
+        	{inputImagePath ? ( // 파일 미리보기가 있을 경우에만 보여주기
+        	<Imgbox>
+				<br />
+				<Borderbox>
+          			<Img 
+                    src={inputImagePath}
+                    alt="Profile"
+                    />
+				</Borderbox>
+                <Imgbox>
+                <TextBtn>얼굴 이미지</TextBtn>
+            </Imgbox>
+        	</Imgbox>
+				) : (
+					/* 파일 이미지가 없을 때 */
+					<Imgbox>
+						<DefaultImg src="/icon/file.png"></DefaultImg>
+						<Text>이마가 보이는 사진을 업로드해 주세요 :)</Text>
+					</Imgbox>
+      	        )}      
+				</Box>
+                <Input 
+                    type="file"
+                    accept="image/*"
+                    onChange={handleInputImageChange}
+                    />
+        </ImgWrapper>
+{/* 타겟 이미지 */}
+        <ImgWrapper>
+            <Box>
+        	{targetImagePath ? ( // 파일 미리보기가 있을 경우에만 보여주기
+        	<Imgbox>
+				<br />
+				<Borderbox>
+          			<Img 
+                    src={targetImagePath}
+                    alt="Profile"
+                    />
+				</Borderbox>
+                <Imgbox>
+                    <TextBtn>헤어 이미지</TextBtn>
+                </Imgbox>
+        	</Imgbox>
+				) : (
+					/* 파일 이미지가 없을 때 */
+					<Imgbox>
+						<DefaultImg src="/icon/file.png"></DefaultImg>
+						<Text>체험을 원하는 머리 사진을 업로드해 주세요.</Text>
+					</Imgbox>
+      	        )}      
+				</Box>
+                <Input 
+                  type="file"
+                  accept="image/*"
+                  onChange={handleTargetImageChange}
+                  />
+               
+            </ImgWrapper>
+            <Marginbox>
+
+            </Marginbox>
+        <ImgWrapper>
+        <ResultBox>
             {
                 // 상태가 2라는건 타겟이미지가 넘어갔다는 것, 입력 이미지도 넣었다는 것
                 responseState == 2 && setInputImagePath != `https://i9b111.q.ssafy.io/api/customer-profile/event/origin/user.png`
@@ -263,9 +345,10 @@ function Event() {
                                 src={confusionImagePath}
                                 alt="Profile"
                             />
+                            <Hr/>
                             <ClickBtn onClick={() => goToConfusionWolrd(customerSeq, formData)}>한장한장 체험하기👆🏻</ClickBtn>
                             <SText>버튼을 누르면 합성사진 체험이 가능합니다 :)</SText>
-                            <Hr/>
+                            
                         </>
                     )
                     : (
@@ -307,67 +390,7 @@ function Event() {
                     )
             }
             </ResultBox>
-            
-            <Wrapper>
-            <ImgWrapper>
-            <Box>
-        	{inputImagePath ? ( // 파일 미리보기가 있을 경우에만 보여주기
-        	<Imgbox>
-				<br />
-				<Borderbox>
-          			<Img 
-                    src={inputImagePath}
-                    alt="Profile"
-                    />
-				</Borderbox>
-                <Input 
-                    type="file"
-                    accept="image/*"
-                    onChange={handleInputImageChange}
-                    />
-        	</Imgbox>
-				) : (
-					/* 파일 이미지가 없을 때 */
-					<Imgbox>
-						<DefaultImg src="/icon/file.png"></DefaultImg>
-						<Text>이마가 보이는 사진을 업로드해 주세요 :)</Text>
-					</Imgbox>
-      	        )}      
-				</Box>
-            <Imgbox>
-                <TextBtn>얼굴 이미지</TextBtn>
-            </Imgbox>
         </ImgWrapper>
-{/* 타겟 이미지 */}
-        <ImgWrapper>
-            <Box>
-        	{targetImagePath ? ( // 파일 미리보기가 있을 경우에만 보여주기
-        	<Imgbox>
-				<br />
-				<Borderbox>
-          			<Img 
-                    src={targetImagePath}
-                    alt="Profile"
-                    />
-				</Borderbox>
-                <Input 
-                  type="file"
-                  accept="image/*"
-                  onChange={handleTargetImageChange}
-                  />
-        	</Imgbox>
-				) : (
-					/* 파일 이미지가 없을 때 */
-					<Imgbox>
-						<DefaultImg src="/icon/file.png"></DefaultImg>
-						<Text>체험을 원하는 머리 사진을 업로드해 주세요.</Text>
-					</Imgbox>
-      	        )}      
-				</Box>
-                <Imgbox>
-                    <TextBtn>헤어 이미지</TextBtn>
-                </Imgbox>
-            </ImgWrapper>
         </Wrapper>
 
 

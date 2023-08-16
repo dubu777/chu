@@ -129,6 +129,15 @@ const EventText = styled.p`
   flex-direction: column;
   justify-content: center;
 `;
+
+const EventText1 = styled.p`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+`;
+
 const EventTitle = styled(motion.p)`
   font-size: 60px;
   margin-bottom: 25px;
@@ -180,6 +189,29 @@ const EventBox = styled(motion.div)`
   color: white;
   justify-content: center;
   align-items: center;
+  margin-top: 25px;
+  margin-bottom: 30px;
+  font-size: 22px;
+  cursor: pointer;
+  background: linear-gradient(90deg, #df9305 50%, #605b52 50%);
+  /* background: linear-gradient(90deg, #bda67f 50%, #605b52 50%); */
+  background-size: 200% 100%;
+  background-position: right;
+  transition: background 0.5s;
+
+  &:hover {
+    background-position: left;
+  }
+`;
+const EventBox1 = styled(motion.div)`
+  display: flex;
+  width: 200px;
+  height: 50px;
+  border-radius: 0.1rem;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
   margin-top: 25px;
   margin-bottom: 30px;
   font-size: 22px;
@@ -530,21 +562,7 @@ function Home() {
           />
           
         </EventWrapper>
-        <CenterTitle>・</CenterTitle>
-        <CenterTitle>・</CenterTitle>
-        <CenterTitle>Find Our Style with Chu</CenterTitle>
-        <EventIntro>
-          Chu에서 선보이는 원하는 디자이너 포트폴리오 가상체험
-        </EventIntro>
-        <CenterTitle>・</CenterTitle>
-        <CenterTitle>・</CenterTitle>
-
-        <ReserveWrapper>
-          <ReserveImgBox>
-            <ReserveImg src="/img/worldcup4.jpg" />
-            <ReserveImg2 src="/img/worldcup1.jpg" />
-          </ReserveImgBox>
-          <EventText>
+        <EventText1>
             <ReserveTitle
               ref={reserveRef}
               initial="hidden"
@@ -582,8 +600,7 @@ function Home() {
             >
               예약제 퍼스널 맞춤 헤어스타일 서비스입니다.
             </EventIntro>
-          </EventText>
-          <EventBox
+            <EventBox1
             onClick={() => navigate(`/listview`)}
             ref={reserveBtnRef}
             initial="hidden"
@@ -592,7 +609,22 @@ function Home() {
             transition={{ duration: 0.3 }}
           >
             예약하러 가기
-          </EventBox>
+          </EventBox1>
+          </EventText1>
+          
+        <ReserveWrapper>
+          <ReserveImgBox>
+            <ReserveImg src="/img/worldcup4.jpg" />
+            <ReserveImg2 src="/img/worldcup1.jpg" />
+          </ReserveImgBox>
+          <CenterTitle>・</CenterTitle>
+        <CenterTitle>・</CenterTitle>
+        <CenterTitle>Find Our Style with Chu</CenterTitle>
+        <EventIntro>
+          Chu에서 선보이는 원하는 디자이너 포트폴리오 가상체험
+        </EventIntro>
+        <CenterTitle>・</CenterTitle>
+        <CenterTitle>・</CenterTitle>
         </ReserveWrapper>
 
         {/* 월드컵 */}
