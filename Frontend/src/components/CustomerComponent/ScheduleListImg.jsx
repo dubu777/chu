@@ -10,7 +10,7 @@ import { sessionIdState } from "../../recoil/openvidu";
 import Swal from 'sweetalert2';
 import { BASE_URL } from "../../apis";
 
-const ReserveWrapper = styled.div`
+const ReserveWrapper = styled(motion.div)`
   display: flex;
   border: 2px solid gray;
   margin: 160px auto 50px auto;
@@ -102,7 +102,7 @@ const ReservBtnVariant = {
   }
 }
 
-function ScheduleListImg(){
+function ScheduleListImg({initial, animate, variants, transition}){
   const customerSeq = localStorage.getItem("userSeq");
   const userType = localStorage.getItem('userType')
   const navigate = useNavigate();
@@ -153,7 +153,12 @@ function ScheduleListImg(){
   }
   console.log(data, "고객 마이페이지 조회`");
   return (
-    <ReserveWrapper>
+    <ReserveWrapper
+    initial={initial}
+    animate={animate}
+    variants={variants}
+    transition={transition}
+    >
       <Container>
         {data &&
           data.responseFutureConsultingDtoList &&
