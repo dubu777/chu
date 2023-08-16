@@ -38,6 +38,7 @@ const ImgBox = styled.div`
 const NameText = styled.h1`
   font-size: 25px;
   font-weight: bold;
+  margin-bottom: 15px;
 `;
 const Text = styled.p`
   margin-bottom: 20px;
@@ -55,7 +56,7 @@ const HashTag = styled.button`
 `;
 const InfoBox = styled.div`
   width: 30%;
-  margin-top: 190px;
+  margin-top: 220px;
   margin-left: -120px;
 `;
 const ChangeBox = styled.div`

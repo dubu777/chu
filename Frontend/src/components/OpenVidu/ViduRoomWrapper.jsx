@@ -1,6 +1,7 @@
 import { React, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import ViduRoom from "./ViduRoom";
+import './ConsultVideo.css';
 import { loginResultState, loginState } from '../../recoil/auth';
 import { constSelector, useRecoilState, useRecoilValue } from 'recoil';
 import { useQuery } from "react-query";

@@ -6,6 +6,7 @@ import { useMatch, useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useQuery } from "react-query";
 import { getCustomerMyPage, getCunsultingResult } from "../../apis";
+import { BASE_URL } from "../../apis";
 
 const Container = styled.div`
   display: flex;
@@ -330,7 +331,7 @@ function ReserveList() {
                       <ResultBox>
                         상담 결과 <br/><ResultHr/> {modalData.reviewResult}
                       </ResultBox>
-                      <ReviewImg src="/icon/designerimg.png" />
+                      <ReviewImg  src={`${BASE_URL}/consulting-images/confusion/${modalData.reviewImgs}`} />
                     </ResultWrap>
                   </InfoBox>
                 </BigModalBox>

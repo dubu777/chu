@@ -218,3 +218,4 @@ function ScheduleListImg({initial, animate, variants, transition}){
 };
 
 export default ScheduleListImg;
+

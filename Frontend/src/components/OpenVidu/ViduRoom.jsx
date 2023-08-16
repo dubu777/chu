@@ -1,8 +1,9 @@
 import axios from "axios";
 import { OpenVidu } from "openvidu-browser";
 import React, { Component } from "react";
+import './ConsultVideo.css';
 // import './App.css';
-import UserVideoComponent from "./UserVideoComponent";
+import UserVideoComponent from "./ConsultVideoComponent"
 import { styled } from "styled-components";
 import VideocamOutlinedIcon from "@mui/icons-material/VideocamOutlined";
 import MicOutlinedIcon from "@mui/icons-material/MicOutlined";
@@ -83,6 +84,7 @@ const LeftBox = styled.div`
   /* flex-direction: column; */
   /* justify-content: center;
   align-items: center; */
+  width: 350px;
   border-radius: 0.4rem;
   padding-right: 20px;
   background-color: #3e3d3b;
