@@ -226,10 +226,21 @@ const WorldcupWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: 60px;
+
 `;
-const WorldcupImg = styled.img`
+const WorldcupImgBox = styled.div`
   width: 380px;
   height: 500px;
+  overflow: hidden;
+`;
+const WorldcupImg = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease-in-out;
+  &:hover {
+    transform: scale(1.05);
+  }
 `;
 const Info = styled(motion.div)`
   width: 100%;
@@ -597,8 +608,16 @@ function Home() {
 
         {/* 월드컵 */}
         <WorldcupWrapper>
+          <WorldcupImgBox
+          onClick={worldcupButtonClick}
+          >
           <WorldcupImg src="/img/main11.png" />
+          </WorldcupImgBox>
+          <WorldcupImgBox
+          onClick={worldcupButtonClick}
+          >
           <WorldcupImg src="/img/main10.png" />
+          </WorldcupImgBox>
           <EventText>
             <EventTitle
               ref={worldcupRef}
