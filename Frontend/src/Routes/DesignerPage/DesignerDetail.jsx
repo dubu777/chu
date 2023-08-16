@@ -55,11 +55,17 @@ const DesignerInfoBox = styled.div`
   justify-content: start;
   margin-bottom: 20px;
 `;
-const DesignerImg = styled.img`
+const DesignerImgBox = styled.div`
   width: 150px;
+  height: 180px;
   margin-right: 10px;
   margin-left: 5px;
   border-radius: 40% 60% 65% 35% / 40% 45% 55% 60%;
+  overflow: hidden;
+`;
+const DesignerImg = styled.img`
+  width: 100%;
+  height: 100%;
 `;
 const DesignerNameWrap = styled.div`
   display: flex;
@@ -394,7 +400,9 @@ function DesignerDetail() {
         <Wrap>
           <InfoWrapper>
             <DesignerInfoBox>
+            <DesignerImgBox>
             <DesignerImg src={`${BASE_URL}/designer-profile/${data.designerImg}`}/>
+            </DesignerImgBox>
               <DesignerNameWrap>
                 <DesignerNameBox>
                   <DesignerName>{data.name} 디자이너</DesignerName>

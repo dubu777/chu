@@ -114,6 +114,7 @@ const Profile = styled.img`
   height: 270px;
   border-radius: 50%;
   /* 이미지 상태에 따라 태두리 색 다르게 */
+  object-fit: cover;
   border: 7px solid ${(props) => (props.hasFile ? "lightblue" : "transparent")};
   cursor: pointer;
 `;

@@ -29,7 +29,8 @@ const TitleText = styled.span`
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
-  margin: 20px 0;
+  margin: 20px auto;
+  width: 90%;
 `;
 const BtnWrapper = styled.div`
   display: flex;
