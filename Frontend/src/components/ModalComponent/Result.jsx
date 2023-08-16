@@ -3,6 +3,7 @@ import Step from "../SignUpComponent/Step";
 import { AnimatePresence, motion, useScroll } from "framer-motion";
 import { useMatch, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { BASE_URL } from "../../apis";
 
 const BigWrapper =styled.div`
 `;
@@ -263,7 +264,8 @@ function Result() {
                       <ResultBox>
                         상담 결과 <br/><ResultHr/> {data.reviewResult}
                       </ResultBox>
-                      <ReviewImg src="/icon/designerimg.png" />
+                      
+                      <ReviewImg src={`${BASE_URL}/consulting-images/confusion/{data.reviewImgs}`} />
                     </ResultWrap>
                     {/* selectedCut.map((tag) => (
                       <HashTag

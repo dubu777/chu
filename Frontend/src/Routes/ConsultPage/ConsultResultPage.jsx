@@ -12,37 +12,62 @@ import { getResult, postResult } from "../../apis";
 import { BASE_URL } from "../../apis";
 
 const Container = styled.div`
-  background: url('./img/password.jpg')no-repeat center center/cover, rgba(0, 0, 0, 0.7);
-        background-blend-mode: multiply;
-	background-size: cover ;
-	width: 100vw;
-  height: 95vh;  
-  /* padding-top: 200px; */
   display: flex;
   flex-direction: column;
-  justify-content: end;
+  justify-content: center;
+  width: 70vw;
+  margin: 65px auto; 
+  background-color: rgba(146, 132, 104, 0.07);
+  padding: 30px;
+  /* justify-content: end; */
   text-align: center;
   align-items: center;
 `;
+// const Container = styled.div`
+//   /* background: url('./img/password.jpg')no-repeat center center/cover, rgba(0, 0, 0, 0.7);
+//         background-blend-mode: multiply; */
+//   background-color: rgba(146, 132, 104, 0.07);
+// 	background-size: cover ;
+// 	width: 100vw;
+//   height: 95vh;  
+//   /* padding-top: 200px; */
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: end;
+//   text-align: center;
+//   align-items: center;
+// `;
 const TitleBox = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+  text-align: center;
   padding: 20px;
 `;
-const Title = styled.h1`
-  font-size: 22px;
-  color: white;
+const Title = styled.p`
+    margin-top: 10px;
+    font-size: 30px;
+    font-family: "Abril Fatface";
+    text-align: center;
+    color: #2a2827;
+`;
+const InfoText = styled.p`
+  margin-top: 10px;
+  font-size: 15px;
+  color: #df45459b;
 `;
 const ResultForm = styled.div`
   height: 75%;
-  width: 35%;
+  width: 70%;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   background-color: white;
   border-radius: 2rem;
   display: flex;
   justify-content: center;
   opacity: 90%;
-  overflow-y: auto;
-  &::-webkit-scrollbar {
+  /* overflow-y: auto; */
+  /* &::-webkit-scrollbar {
     width: 5px;
     height: 10vh;
     margin-top: 20px;
@@ -50,20 +75,28 @@ const ResultForm = styled.div`
   &::-webkit-scrollbar-thumb {
     border-radius: 3px;
     background: #e2c660;
-  }
+  } */
 `;
 const Wrapper = styled.div `
   width: 80%;
   text-align: start;
   /* align-items: center; */
 `;
-const HashTag = styled(motion.span)`
+const TagBox = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 5px 10px;
+  
+`
+const HashTag = styled(motion.div)`
   font-size: 12px;
   font-weight: 500;
-  padding: 5px 10px;
-  margin-right: 10px;
-  margin-bottom: 20px;
-  margin-top: 10px;
+  padding: 7px 15px;
+  margin: 5px;
+  /* margin-right: 10px;
+  margin-bottom: 30px;
+  margin-top: 10px; */
   border: 1px solid gray;
   border-radius: 5px;
   cursor: pointer;
@@ -94,10 +127,10 @@ const typeBtnVariants1 = {
 };
 const Hr =styled.hr`
   width: 100%;
-  color: beige;
+  color: #9c9581;
   margin-top: 20px;
-  margin-bottom: 20px;
-  opacity: 50%;
+  margin-bottom: 40px;
+  /* opacity: 50%; */
 `
 const CutBox = styled.div`
   margin-top: 40px;
@@ -116,25 +149,28 @@ const Circle = styled.img`
   margin-bottom: 20px;
 `;
 const Text = styled.p`
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 500;
   margin-bottom: 20px;
+  font-family: "Apple-B";        
 `;
 const ImgBox = styled.div`
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
 `;
 const Img = styled(motion.img)`
-  width: 100px;
-  height: 150px;
-  border: 2px solid;
+  margin: 5px;
+  width: 130px;
+  height: 130px;
+  border: 2px solid white;
   border-radius: 0.2rem;
   object-fit: cover;
   &:hover {
     transform: scale(1.02);
   }
   &.selected {
-    border-color: #e2bf66;
+    border-color: #e2bf66a7;
     box-shadow: 0.5rem;
   }
 `;
@@ -190,7 +226,7 @@ function ConsultResultPage(){
   const consultingSeq = localStorage.getItem("consultingSeq");
   const designerSeq = localStorage.getItem('userSeq');
   
-
+  console.log('뭐야', consultingSeq)
   // const [data, setdata] = useState(
   //   {
   //     "CutHairStyle" : [
@@ -289,7 +325,8 @@ function ConsultResultPage(){
   return(
     <Container>
       <TitleBox>
-        <Title>퍼스널 헤어스타일 진단</Title>
+        <Title>Consult  Result  Form</Title>
+        <InfoText>상담 결과를 상세히 작성해주세요 :)</InfoText>
       </TitleBox>
       <ResultForm>
       <Wrapper>
@@ -298,6 +335,7 @@ function ConsultResultPage(){
             <Circle src="/icon/orangecircle.png"></Circle>
             <Text>Cut Style 진단</Text>
           </TextBox>
+          <TagBox>
           {data.cutHairStyle.map((item) => (
             <HashTag
             key={item.hairStyleSeq}
@@ -309,6 +347,7 @@ function ConsultResultPage(){
             >#{item.hairStyleLabel}</HashTag>
             ))
           }
+          </TagBox>
         </CutBox>
         <Hr></Hr>
         <PermBox>
@@ -316,6 +355,7 @@ function ConsultResultPage(){
             <Circle src="/icon/darkcircle.png"></Circle>
             <Text>Perm Style 진단</Text>
           </TextBox>
+          <TagBox>
         {data.permHairStyle.map((item) => (
             <HashTag
             key={item.hairStyleSeq}
@@ -327,6 +367,7 @@ function ConsultResultPage(){
             >#{item.hairStyleLabel}</HashTag>
             ))
           }
+          </TagBox>
         </PermBox>
           <Hr></Hr>
           <TextBox>
@@ -338,7 +379,7 @@ function ConsultResultPage(){
               <Img 
                 key={item.imgSeq}
                 variants={Variants}
-								src={`${BASE_URL}/designer-profile/${item.img}`}
+								src={`${BASE_URL}/consulting-images/confusion/${item.imgName}`}
                 initial="nomal"
 								whileHover="hover"
                 onClick={() => handleImageClick(item)}
@@ -358,7 +399,6 @@ function ConsultResultPage(){
           <TitleBox>
             <SubmitBtn onClick={handleClick}>완료</SubmitBtn>
           </TitleBox>
-          
       </Wrapper>
       </ResultForm>
     </Container>

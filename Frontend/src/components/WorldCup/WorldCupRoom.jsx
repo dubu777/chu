@@ -2,7 +2,7 @@ import axios from 'axios';
 import { OpenVidu } from 'openvidu-browser';
 import React, { Component } from 'react';
 // import './App.css';
-import UserVideoComponent from './UserVideoComponent';
+import UserVideoComponent from './WorldCupVideoComponent';
 import { styled } from 'styled-components';
 import VideocamOutlinedIcon from "@mui/icons-material/VideocamOutlined";
 import MicOutlinedIcon from "@mui/icons-material/MicOutlined";

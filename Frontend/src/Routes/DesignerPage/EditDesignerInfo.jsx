@@ -104,7 +104,7 @@ const SelectBox = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
   margin-bottom: 10px;
   border-bottom: 1px solid rgb(220, 220, 220);
 `;
@@ -525,7 +525,7 @@ function EditDesignerInfo() {
                   <InfoText>추천 스타일</InfoText>
                 </StartBox>
                 <Grid>
-                  <SelectText>커트</SelectText>
+                  <SelectText>펌</SelectText>
                   <SelectBox>
                     {data.allCutHairStyle.map((style) => (
                       <HashTag
@@ -544,7 +544,7 @@ function EditDesignerInfo() {
                       </HashTag>
                     ))}
                   </SelectBox>
-                  <SelectText>펌</SelectText>
+                  <SelectText>커트</SelectText>
                   <SelectBox>
                     {data.allPermHairStyle.map((style) => (
                       <HashTag

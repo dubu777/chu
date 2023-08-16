@@ -31,15 +31,6 @@ const Col = styled.div`
   display: flex;
   align-items: center;
 `;
-const Logo = styled(motion.div)`
-  margin-right: 10px;
-  width: 95px;
-  height: 25px;
-  color: #353432;
-  font-size: 20px;
-  font-weight: bold;
-  cursor: pointer;
-`;
 
 const Items = styled.ul`
   display: flex;
@@ -111,7 +102,7 @@ const Hr = styled.div`
   margin: 10px 0;
 `;
 const LogoImg = styled(motion.img)`
-  width: 100px;  // 원하는 크기로 조절하세요
+  width: 120px; // 원하는 크기로 조절하세요
   height: auto;
   cursor: pointer;
 `;
@@ -197,7 +188,6 @@ function Header() {
     }
   );
 
-
   // 알림 읽기
   const handleReadNotification = async (alertSeq) => {
     console.log(alertSeq, "알림 읽기 입장");
@@ -231,10 +221,7 @@ function Header() {
     <Nav variants={navVariants} animate={navAnimation} initial={"top"}>
       <Col>
         <Items>
-          <LogoImg
-            src="icon/logo.svg"
-            onClick={() => navigate("/")}
-          />
+          <LogoImg src="/icon/logo.svg" onClick={() => navigate("/")} />
           <Link to="/">
             <Item variants={logoVariants} whileHover="active" initial="nomal">
               Home
@@ -274,17 +261,16 @@ function Header() {
                   {notifications
                     .filter((notification) => !notification.check)
                     .map((notification) => (
-                      <NotificationItem
-                        key={notification.alertSeq}
-
-                      >
+                      <NotificationItem key={notification.alertSeq}>
                         <DateWrap>
                           {notification.pushDate}
                           <ReadBtn
-                                                  onClick={() =>
-                                                    handleReadNotification(notification.alertSeq)
-                                                  }
-                          >읽기</ReadBtn>
+                            onClick={() =>
+                              handleReadNotification(notification.alertSeq)
+                            }
+                          >
+                            읽기
+                          </ReadBtn>
                         </DateWrap>
                         <Hr />
                         {userType === "designer"
