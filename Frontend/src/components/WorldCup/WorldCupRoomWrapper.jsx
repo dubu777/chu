@@ -13,7 +13,7 @@ function WorldCupRoomWrapper() {
     const [id, setId] = useState(null);
     const [rrr, setRrr] = useState(null);
   
-    const getSession = async (consultingSeq) => {
+    const getSession = async (consultingSeq) => { 
       try {
         const response = await getSessionId(consultingSeq);
         console.log(response);
@@ -32,6 +32,7 @@ function WorldCupRoomWrapper() {
       <WorldCupRoom
         sessionId={id}
         resultimgs={rrr}
+        navigate={navigate}
       />
     ) : (
       <div>Loading...</div>

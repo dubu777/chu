@@ -676,6 +676,8 @@ class WorldCupRoom extends Component {
             userType: undefined,
         });
         {/* 상담 종료 버튼 */ }
+
+        this.props.navigate(`/`);
     }
 
     async switchCamera() {
