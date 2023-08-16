@@ -21,8 +21,7 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
-const InfoContainer = styled.div`
-`;
+const InfoContainer = styled.div``;
 // 고정 프로필바
 const InfoWrapper = styled.div`
   display: flex;
@@ -262,7 +261,7 @@ function CustomerMyPage() {
     ["customerMyPage", customerSeq],
     () => getCustomerMyPage(customerSeq)
   );
-  const [futurewRef, futureInView] = useInView({
+  const [futureRef, futureInView] = useInView({
     triggerOnce: true,
     threshold: 0.1, // 요소의 10%가 뷰포트에 들어왔을 때 애니메이션을 시작합니다.
   });
@@ -361,10 +360,10 @@ function CustomerMyPage() {
       return;
     }
     const formData = {
-      "consultingSeq": parseInt(consultingSeq, 10),
-      "isLike": handleLike,
-      "reviewScore": currentRate,
-      "reviewContent": reviewContent,
+      consultingSeq: parseInt(consultingSeq, 10),
+      isLike: handleLike,
+      reviewScore: currentRate,
+      reviewContent: reviewContent,
     };
     console.log(formData);
     try {
@@ -453,7 +452,7 @@ function CustomerMyPage() {
                 onClick={handleImageClick}
                 // src={selectedFile || './icon/profile2.png'}
                 // src={selectedFile || `${BASE_URL}/customer-profile/${data.img}`}
-                src={selectedFile||`${BASE_URL}/customer-profile/${data.img}`}
+                src={selectedFile || `${BASE_URL}/customer-profile/${data.img}`}
                 alt="Profile"
                 // hasFile={selectedFile !== null}
               />
@@ -479,20 +478,18 @@ function CustomerMyPage() {
         </InfoWrapper>
       </InfoContainer>
       {/* 예약 정보 확인하기 */}
-        <ScheduleListImg 
-              ref={futurewRef}
-              initial="hidden"
-              animate={futureInView ? "visible" : "hidden"}
-              variants={fromBottom}
-              transition={{ duration: 0.5 }}
-        />
+      <ScheduleListImg
+        initial="hidden"
+        animate="visible"
+        variants={fromBottom}
+        transition={{ duration: 0.5 }}
+      />
       {/* 여기는 탭 작동 */}
       <Wrapper
-                    ref={futurewRef}
-                    initial="hidden"
-                    animate={futureInView ? "visible" : "hidden"}
-                    variants={fromBottom}
-                    transition={{ duration: 0.5, delay: 0.6}}
+        initial="hidden"
+        animate="visible"
+        variants={fromBottom}
+        transition={{ duration: 0.5, delay:0.5 }}
       >
         <ClickBtn
           isActive={activeBtn === "recent"}
@@ -507,11 +504,10 @@ function CustomerMyPage() {
           좋아요 한 디자이너
         </ClickBtn>
         <Box
-                      ref={postRef}
-                      initial="hidden"
-                      animate={postInView ? "visible" : "hidden"}
-                      variants={fromBottom}
-                      transition={{ duration: 0.5 }}
+          initial="hidden"
+          animate="visible"
+          variants={fromBottom}
+          transition={{ duration: 0.5 }}
         >
           {/* 앞의 조건이 true일 때 뒤의 컴포넌트 보여주기 */}
           {activeBtn === "recent" && <ReserveList />}
