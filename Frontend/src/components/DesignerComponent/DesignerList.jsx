@@ -11,7 +11,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 65vw;
+  width: 100%;
   margin: 5px auto;
 `;
 const Hr = styled.div`
@@ -32,9 +32,11 @@ const Wrapper = styled.div`
 const Box = styled.div`
   display: flex;
   align-items: center;
+  margin: 5px 0;
 `;
 const DesignerImg = styled.img`
-  width: 100px;
+  width: 120px;
+  height: 100%;
   border-radius: 0.2rem;
   cursor: pointer;
 `;
@@ -52,7 +54,7 @@ const LikeBox = styled.div`
   align-items: center;
 `;
 const Name = styled.span`
-  font-size: 13px;
+  font-size: 15px;
   font-weight: bold;
   margin-right: 10px;
   cursor: pointer;
@@ -91,31 +93,33 @@ const Icon = styled.img`
 `;
 const ReservBox = styled(motion.div)`
   width: 100px;
-  height: 35px;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid rgb(244, 153, 26);
-  border-radius:5px;
-  margin-top: 10px;
-  cursor: pointer;
+  border-radius:10px;
+  padding: 5px;
+  background-color: #e5e3dc;
 `;
 const HeartBox = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 40px;
   padding-left: 90px;
 `;
 const Text = styled.span`
-  font-size: 14px;
+  font-size: 12px;
   font-weight: bold;
   text-align: center;
+`;
+
+const barogagiText = styled(Text)`
+  font-size: 16px;
+  font-weight = 16px;
 `;
 const CostBox = styled.div`
 display: flex;
 justify-content: center;
 align-items: center;
-margin-top: 10px;
 margin-right: 20px;
 `;
 const LikeBtn = styled.img`
@@ -215,10 +219,10 @@ function DesignerList(props) {
           <StarBox>
             <Name 
               onClick={() => navigate(`/designerdetail/${data.designerSeq}`)}
-            >{data.designerName}디자이너
+            >{data.designerName} 디자이너
             </Name>
             <Icon src="/icon/star.png"/>
-            <Text>{data.reviewScore}</Text>
+            <Text>{data.reviewScore.toFixed(1)}</Text>
           </StarBox>
           <Intro>{data.introduction}</Intro>
           <Reviewer>방문자 리뷰 {data.reviewCnt}</Reviewer>
@@ -239,7 +243,7 @@ function DesignerList(props) {
               whileHover={{ backgroundColor: "rgb(237, 179, 99)" }}
               >
               {/* <Icon src="/icon/reservBtn.png" /> */}
-              <Text>예약</Text>
+              <Text>상담바로가기</Text>
             </ReservBox>
           </Box>
         </InfoBox>
