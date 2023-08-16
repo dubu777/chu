@@ -11,7 +11,7 @@ import java.util.List;
 public interface ConsultingVirtualImgRepository extends JpaRepository<ConsultingVirtualImg, Integer> {
 
 
-    @Query(value = "SELECT cv.seq, cv.imagePath.savedImgName" +
+    @Query(value = "SELECT cv.seq, cv.imagePath.uploadImgName" +
             " FROM ConsultingVirtualImg cv" +
             " WHERE cv.seq = :consultingSeq")
     List<ImageDto> getVirtualImagesInfoBySeq(int consultingSeq);
