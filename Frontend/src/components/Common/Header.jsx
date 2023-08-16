@@ -110,6 +110,11 @@ const Hr = styled.div`
   width: 100%;
   margin: 10px 0;
 `;
+const LogoImg = styled(motion.img)`
+  width: 100px;  // 원하는 크기로 조절하세요
+  height: auto;
+  cursor: pointer;
+`;
 const ReadBtn = styled.p`
   font-size: 16px;
 `;
@@ -226,15 +231,10 @@ function Header() {
     <Nav variants={navVariants} animate={navAnimation} initial={"top"}>
       <Col>
         <Items>
-          <Logo
+          <LogoImg
+            src="icon/logo.svg"
             onClick={() => navigate("/")}
-            variants={logoVariants}
-            whileHover="active"
-            initial="nomal"
-          >
-            Chu
-          </Logo>
-
+          />
           <Link to="/">
             <Item variants={logoVariants} whileHover="active" initial="nomal">
               Home
