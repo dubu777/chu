@@ -187,7 +187,8 @@ public class DesignerServiceImpl implements DesignerService{
 
             for(DesignerAlert c : alertList){
                 // 상담 번호로 consulting - customer seq 받아오기
-                Consulting consulting = consultingRepository.getConsultingBySeq(c.getSeq());
+                Consulting consulting = consultingRepository.getConsultingBySeq(c.getConsulting().getSeq());
+//                Consulting consulting = consultingRepository.getConsultingBySeq(c.getSeq());
 
                 // 받아온 customer seq로 고객 정보 받아오기
                 if(consulting.getCustomer() != null){
