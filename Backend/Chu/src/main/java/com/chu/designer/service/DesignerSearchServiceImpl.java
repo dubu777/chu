@@ -81,7 +81,9 @@ public class DesignerSearchServiceImpl implements DesignerSearchService {
                 designerTags.add(dti.getHairStyleDict() != null ? dti.getHairStyleDict().getHairStyleLabel() : null);
             }
             // 평점
-            Double reviewScoreByDesigner = (reviewScoreSeq < reviewScore.size() && (reviewScore.get(reviewScoreSeq)[1] != null)) ? (Double) reviewScore.get(reviewScoreSeq)[1] : 0.0;
+            //Double reviewScoreByDesigner = (reviewScoreSeq < reviewScore.size() && (reviewScore.get(reviewScoreSeq)[1] != null)) ? (Double) reviewScore.get(reviewScoreSeq)[1] : 0.0;
+            Double reviewScoreByDesigner = designer.getReviewScore();
+
             // 고객 로그인시, 해당 디자이너의 좋아요 상태. 로그인 하지 않았으면 false를 입력.
             Optional<DesignerLike> designerLikeOptional = Optional
                     .ofNullable(designerLikeRepository.findByCustomerSeqAndDesignerSeq(customerSeq, designer.getSeq()));
