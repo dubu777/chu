@@ -228,6 +228,28 @@ const WorldcupImg = styled.img`
   width: 800px;
   height: 500px;
 `;
+const Info = styled(motion.div)`
+  width: 100%;
+  bottom: 0;
+  padding: 10px;
+  background-color: ${props => props.theme.black.lighter};
+  opacity: 0;
+  position: absolute;
+  h4 {
+    text-align: center;
+    font-size: 18px;
+  }
+`;
+const infoVariants = {
+  hover: {
+    opacity: 1,
+    transition: {
+      delay: 0.5,
+      type: "tween",
+      duration: 0.2,
+    },
+  }
+};
 const pofolVariants = {
   nomal: {
     scale: 1,
@@ -255,7 +277,7 @@ const fadeInUp = {
 const fromLeft = {
   hidden: {
     opacity: 0,
-    x: -120,
+    x: -200,
   },
   visible: {
     opacity: 1,
@@ -451,19 +473,19 @@ function Home() {
               For You
             </EventTitle>
             <EventIntro
-              ref={introRef}
+              ref={titleRef}
               initial="hidden"
-              animate={introInView ? "visible" : "hidden"}
-              variants={fromBottom}
+              animate={titleInView ? "visible" : "hidden"}
+              variants={fromLeft}
               transition={{ duration: 0.5 }}
             >
               Chu만의 헤어스타일 합성 서비스
             </EventIntro>
             <EventIntroTag
-              ref={tagRef}
+              ref={titleRef}
               initial="hidden"
-              animate={tagInView ? "visible" : "hidden"}
-              variants={fromBottom}
+              animate={titleInView ? "visible" : "hidden"}
+              variants={fromLeft}
               transition={{ duration: 0.5 }}
             >
               #헤어스타일 체험 #마이 헤어

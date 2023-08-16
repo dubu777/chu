@@ -118,8 +118,7 @@ const logoVariants = {
   active: {
     color: "rgb(244,153,26)",
     trasition: {
-      type: "tween",
-      duration: 0.05,
+      duration: 0.01,
     },
   },
 };

@@ -56,6 +56,7 @@ const DetailBox = styled.div`
 const DesignerImg = styled.img`
   width: 100px;
   margin-right: 10px;
+  object-fit: cover;
 `;
 
 const ProfileBox = styled.div`

@@ -14,6 +14,7 @@ import { useQuery } from "react-query";
 import { BASE_URL } from "../../apis/rootUrl";
 import { AnimatePresence, motion, useScroll } from "framer-motion";
 import swal from "sweetalert";
+import { useInView } from "react-intersection-observer";
 
 const Container = styled.div`
   display: flex;
@@ -166,7 +167,6 @@ const BigModal = styled(motion.div)`
   overflow: hidden;
   background-color: white;
 `;
-
 const ModalText = styled.span`
   font-size: 20px;
   font-weight: 600;
@@ -251,6 +251,10 @@ const SubmitBox = styled.div`
   margin-right: 50px;
   margin-top: 10px;
 `;
+const fromBottom = {
+  hidden: { opacity: 0, y: 80 },
+  visible: { opacity: 1, y: 0 },
+};
 function CustomerMyPage() {
   // 통신되면 열기
   const { customerSeq, consultingSeq } = useParams();
@@ -259,6 +263,10 @@ function CustomerMyPage() {
     ["customerMyPage", customerSeq],
     () => getCustomerMyPage(customerSeq)
   );
+  const [inViewRef, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1, // 요소의 10%가 뷰포트에 들어왔을 때 애니메이션을 시작합니다.
+  });
 
   // console.log(data);
 
