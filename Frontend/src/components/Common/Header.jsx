@@ -6,12 +6,13 @@ import { accessTokenState, loginState } from "../../recoil";
 import {
   getDesignerNotification,
   getCustomerNotification,
+  getNotifications,
   readCustomerNotification,
   readDesignerNotification,
 } from "../../apis";
 import { useState, useEffect } from "react";
 import { useQuery, useMutation } from "react-query";
-
+import axios from "axios";
 
 const Nav = styled(motion.nav)`
   display: flex;
@@ -189,9 +190,7 @@ function Header() {
       retry: false,
     }
   );
-  // //
-  //     if (userType === "designer") return getDesignerNotification(userSeq);
-  // const {} = useQuery(["customerNotifi", userType, userSeq], () => )
+
 
   // 알림 읽기
   const handleReadNotification = async (alertSeq) => {
@@ -219,8 +218,8 @@ function Header() {
   }, [scrollY, navAnimation]);
 
   console.log(notifications, "알림");
-  // if (isLoading) return <div>Loading...</div>;
-  // if (isError) return <div>Error loading notifications</div>;
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error loading notifications</div>;
 
   return (
     <Nav variants={navVariants} animate={navAnimation} initial={"top"}>
@@ -262,33 +261,38 @@ function Header() {
               My Page
             </Item>
             <NotificationBadge>
-              <Badge>{notifications.filter(notification => !notification.check).length}</Badge>
+              <Badge>
+                {
+                  notifications.filter((notification) => !notification.check)
+                    .length
+                }
+              </Badge>
               <Img onClick={toggleAlert} src="/icon/alert.png" />
               {alert ? (
                 <NotificationList>
                   {notifications
-                    .filter(notification => !notification.check) 
+                    .filter((notification) => !notification.check)
                     .map((notification) => (
-                    <NotificationItem 
-                      key={notification.alertSeq}
-                      onClick={() => handleReadNotification(notification.alertSeq)}
-                    >
-                      <DateWrap>
-                      {notification.pushDate}
-                      <ReadBtn
-                        
-                      >읽기</ReadBtn>
-                      </DateWrap>
-                      <Hr/>
-                      {notification.designerName} 님의 상담이 취소되었습니다.
-                      {/* <Hr/> */}
-                    </NotificationItem>
-                    
-                  ))}
+                      <NotificationItem
+                        key={notification.alertSeq}
+                        onClick={() =>
+                          handleReadNotification(notification.alertSeq)
+                        }
+                      >
+                        <DateWrap>
+                          {notification.pushDate}
+                          <ReadBtn>읽기</ReadBtn>
+                        </DateWrap>
+                        <Hr />
+                        {userType === "designer"
+                          ? `${notification.customerName} 님의 상담이 취소되었습니다.`
+                          : `${notification.designerName} 님의 상담이 취소되었습니다.`}
+                        {/* <Hr/> */}
+                      </NotificationItem>
+                    ))}
                 </NotificationList>
               ) : null}
             </NotificationBadge>
-
           </>
         ) : (
           <>
