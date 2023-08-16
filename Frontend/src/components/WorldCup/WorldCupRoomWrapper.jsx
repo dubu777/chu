@@ -7,11 +7,13 @@ import { useQuery } from "react-query";
 import { fetchMain } from "../../apis/common.js";
 import { getSessionId } from "../../apis/openvidu"
 import { TrySharp } from "@mui/icons-material";
+import { useNavigate } from 'react-router-dom';
 
 function WorldCupRoomWrapper() {
     const { consultingSeq } = useParams();
     const [id, setId] = useState(null);
     const [rrr, setRrr] = useState(null);
+    const navigate = useNavigate();
   
     const getSession = async (consultingSeq) => { 
       try {
