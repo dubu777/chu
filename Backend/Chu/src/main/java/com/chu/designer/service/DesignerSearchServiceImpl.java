@@ -119,12 +119,16 @@ public class DesignerSearchServiceImpl implements DesignerSearchService {
             Integer reviewCnt = consultingRepository.countByDesignerSeq(designer.getSeq());
             // 헤어스타일 라벨링
             List<DesignerTagInfo> hairStyleTagSeqs = designerTagInfoRepository.findByDesignerSeq(designer.getSeq());
-            List<String> hairStyleLabels = new ArrayList<>();
-            for (DesignerTagInfo tag : hairStyleTagSeqs) {
-                Integer seq = tag.getSeq();
-                HairStyleDict hairStyleDict = hairStyleDictRepository.findBySeq(seq);
-
-                hairStyleLabels.add(hairStyleDict.getHairStyleLabel());
+//            List<String> hairStyleLabels = new ArrayList<>();
+//            for (DesignerTagInfo tag : hairStyleTagSeqs) {
+//                Integer seq = tag.getSeq();
+//                HairStyleDict hairStyleDict = hairStyleDictRepository.findBySeq(seq);
+//
+//                hairStyleLabels.add(hairStyleDict.getHairStyleLabel());
+//            }
+            List<String> designerTags = new ArrayList<>();
+            for( DesignerTagInfo dti : hairStyleTagSeqs) {
+                designerTags.add(dti.getHairStyleDict() != null ? dti.getHairStyleDict().getHairStyleLabel() : null);
             }
             // 평점
             Double reviewScoreByDesigner = (reviewScoreSeq < reviewScore.size() && (reviewScore.get(reviewScoreSeq)[1] != null)) ? (Double) reviewScore.get(reviewScoreSeq)[1] : 0.0;
@@ -133,7 +137,7 @@ public class DesignerSearchServiceImpl implements DesignerSearchService {
                     .ofNullable(designerLikeRepository.findByCustomerSeqAndDesignerSeq(customerSeq, designer.getSeq()));
             Boolean isLike = designerLikeOptional.map(DesignerLike::getLikeStatus).orElse(false);
             // dto 객체에 감싸서 보낸다
-            DesignerSearchDto dto = new DesignerSearchDto(designer, likeCnt, reviewCnt, hairStyleLabels, reviewScoreByDesigner, isLike);
+            DesignerSearchDto dto = new DesignerSearchDto(designer, likeCnt, reviewCnt, designerTags, reviewScoreByDesigner, isLike);
             result.add(dto);
             reviewScoreSeq++;
         }
