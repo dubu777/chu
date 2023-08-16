@@ -351,9 +351,10 @@ public class DesignerSearchServiceImpl implements DesignerSearchService {
                 List<DesignerTagInfo> hairStyleTagSeqs = designerTagInfoRepository.findByDesignerSeq(designerSeq);
                 List<String> hairStyleLabels = new ArrayList<>();
                 for (DesignerTagInfo tag : hairStyleTagSeqs) {
-                    Integer seq = tag.getSeq();
+                    Integer seq = tag.getHairStyleDict().getSeq();
                     HairStyleDict hairStyleDict = hairStyleDictRepository.findBySeq(seq);
-                    hairStyleLabels.add(hairStyleDict.getHairStyleLabel());
+                    if(hairStyleDict != null)
+                        hairStyleLabels.add(hairStyleDict.getHairStyleLabel());
                 }
                 dto.setHairStyleLabel(hairStyleLabels);
 
