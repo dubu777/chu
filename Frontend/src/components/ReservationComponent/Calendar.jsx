@@ -16,6 +16,7 @@ const CalendarContainer = styled.div`
   max-width: 650px;
   padding: 10px;
   border-radius: 3px;
+  font-size:14px;
 `;
 
 function ReserveCalendar() {
@@ -26,11 +27,12 @@ function ReserveCalendar() {
     return (
       <CalendarContainer>
         <Calendar 
-        onChange={onChange} 
-        value={value} 
-        formatDay={(locale, date) => moment(date).format("DD")}
+          onChange={onChange} 
+          value={value}
+          // formatDay={(locale, date) => date.toLocaleString("en", {day: "numeric"})}
+          formatDay={(locale, date) => moment(date).format("DD")}
         // formatDay={(locale, date) => moment(date).format('D')}
-        />
+        ></Calendar>
           <div>
             <p>{formatDateString(value)}</p>
           </div>

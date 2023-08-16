@@ -22,14 +22,23 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   width: 100vw;
-  margin-top: 40px;
+  margin-top: 60px;
+  background-color: rgba(230, 227, 227, 0.3);
 `;
 
 const LeftWrap = styled.div`
   display: flex;
   flex-direction: column;
   width: 30%;
-  height: 100%;
+  height: 900px;
+  margin: 40px 10px;
+
+`;
+const RightWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 38%;
+  height: 900px;
   margin: 40px 10px;
 
 `;
@@ -44,32 +53,24 @@ const CalendarContainer = styled.div`
   align-items: center;
 `;
 
-const RigthWrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 38%;
-  height: 100%;
-  margin: 40px 10px;
-
-`;
-
 const Hr = styled.div`
   border: 0.5px solid rgb(197, 197, 197);
-  width: 95%;
+  width: 100%;
   margin: 7px 0;
 `;
 
 const PofolWrap = styled.div`
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
+  // align-items: center;
   width: 90%;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 `;
 const SubTitle = styled.span`
-  font-size: 15px;
-  font-weight: 700;
-  margin: 8px 0;
+  font-size: 18px;
+  margin: 10px 0 3px 0;
+  font-family: 'Sandol-B';
+  // letter-spacing: 0.5px;
 `;
 const StyledSlider = styled(Slider)`
   .slick-slide > div {
@@ -125,13 +126,15 @@ const ReservWrap = styled.div`
     2px 4px 30px -4px rgb(0 0 0 / 0.1);
   background: #fdfdfd;
   padding: 20px 0;
-  height: 800px;
+  height: 100%;
 `;
+
 const ResevBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 90%;
+  margin-top: 5px;
 `;
 const TimeSelectionContainer = styled.div`
   display: flex;
@@ -158,19 +161,19 @@ const TimeButton = styled(motion.button)`
 `;
 
 const TimeBox = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width:100%;
 `;
 
 const TextArea = styled.textarea`
   border: 1px solid rgb(207, 200, 192);
-  border-radius: 10px;
+  border-radius: 0.4rem;
   background-color: none;
-  width: 90%;
+  width: 95%;
   height: 100px;
   resize: none;
-  padding: 5px;
+  padding: 10px;
+  font-size: 13px;
+  margin-top: 5px;
   margin-bottom: 10px;
   &:focus {
     outline: 1px solid rgb(244, 153, 26);
@@ -194,7 +197,7 @@ const ReservBtn = styled.button`
   color: white;
   font-size: 14px;
   font-weight: 500;
-  width: 30%;
+  width: 50%;
   height: 40px;
   border-radius: 5px;
   margin: 10px 0 5px 0;
@@ -203,6 +206,7 @@ const ReservBtn = styled.button`
 const SText = styled.span`
   font-size: 10px;
   font-weight: 600;
+  margin-top: 5px;
   display: flex;
   justify-content: start;
 `;
@@ -269,14 +273,20 @@ const selectedVariants = {
 const SelectedBox = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 20px;
 `;
 const EmtyBox = styled.div`
   width: 100px;
   height: 80px;
 `;
 const SubmitImg = styled.input`
-  margin: 15px 0px;
+  border-radius: 5px;
+  margin: 15px 0px 5px 0px;
+  width: 90%;
+  height: 100px;
+  background-color: rgb(242,234,211);
+  font-size:13px;
+  padding: 40px 85px;
+  
 `;
 function formatDateString(date) {
   const year = date.getFullYear();
@@ -525,11 +535,11 @@ function Reservation() {
           <ResevBox>
             <SubTitle>예약시간</SubTitle>
             <Hr />
-            <TimeBox>
-              <TimeSelectionContainer>
-                {generateTimeButtons()}
-              </TimeSelectionContainer>
-            </TimeBox>
+              <TimeBox>
+                <TimeSelectionContainer>
+                  {generateTimeButtons()}
+                </TimeSelectionContainer>
+              </TimeBox>
             <SubTitle>전달사항</SubTitle>
             <Hr />
             <TextArea 
@@ -541,7 +551,7 @@ function Reservation() {
           </ResevBox>
         </ReservWrap>
       </LeftWrap>
-      <RigthWrap>
+      <RightWrap>
         <ReservWrap>
           <ResevBox>
             <PofolWrap>
@@ -580,11 +590,12 @@ function Reservation() {
                   />
                 ))}
               </StyledSlider>
+            </PofolWrap>
+            <PofolWrap>
               <SelectedBox>
                 <SubTitle>선택한 사진</SubTitle>
               </SelectedBox>
               <Hr />
-
               <StartBox>
                 <AnimatePresence>
                   {selectedImgs.map((item, index) => (
@@ -605,25 +616,29 @@ function Reservation() {
                 </AnimatePresence>
               </StartBox>
             </PofolWrap>
-            <StartBox>
-              <SubTitle>상담 사진 등록</SubTitle>
-            </StartBox>
+            <ResevBox>
+              <StartBox>
+                <SubTitle>상담 사진 등록</SubTitle>
+              </StartBox>
                 <Hr/>
-                  <SubmitImg
-                      type="file"
-                      accept="image/*"
-                      onChange={handleFileChange}
-                    />
-                  <SText>- 이마가 보이는 사진을 업로드해 주세요.</SText>
-                <Hr/>
-                  <ReservBtn onClick={handleButtonClick}>상담 예약하기</ReservBtn>
-                  <SText>
-                    {" "}
-                    - 예약취소 시, 24시간 이전에만 예약금 환불이 가능합니다.
-                  </SText>
+                <SubmitImg
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                />
+              <SText>- 이마가 보이는 사진을 업로드해 주세요.</SText>
+            </ResevBox>
+            <ResevBox>
+              <Hr/>
+                <ReservBtn onClick={handleButtonClick}>상담 예약하기</ReservBtn>
+                <SText>
+                  {" "}
+                  - 예약취소 시, 24시간 이전에만 예약금 환불이 가능합니다.
+                </SText>
+            </ResevBox>
             </ResevBox>
           </ReservWrap>
-      </RigthWrap>
+        </RightWrap>
     </Container>
   );
 }
