@@ -165,68 +165,45 @@ function Header() {
     navigate("/");
   });
 
-  // // 알림 토글
+  // 알림 토글
 
-  // const toggleNotificationList = () => {
-  //   setShowNotificationList((prev) => !prev);
-  // };
-  // // 알림 조회
-  // const {
-  //   data: notifications = [],
-  //   refetch,
-  //   isError,
-  //   isLoading,
-  // } = useQuery(
-  //   ["notifications", userType, userSeq],
-  //   async () => {
-  //     if (!userType) {
-  //       return;
-  //     }
+  const toggleNotificationList = () => {
+    setShowNotificationList((prev) => !prev);
+  };
+  // 알림 조회
+  const {
+    data: notifications = [],
+    refetch,
+    isError,
+    isLoading,
+  } = useQuery(
+    ["notifications", userType, userSeq],
+    async () => {
+      if (!userType) {
+        return;
+      }
+      if (userType === "designer") return getDesignerNotification(userSeq);
+      if (userType === "customer") return getCustomerNotification(userSeq);
+    },
+    {
+      retry: false,
+    }
+  );
+  // //
   //     if (userType === "designer") return getDesignerNotification(userSeq);
-  //     if (userType === "customer") return getCustomerNotification(userSeq);
-  //   },
-  //   {
-  //     retry: false,
-  //   }
-  // );
+  // const {} = useQuery(["customerNotifi", userType, userSeq], () => )
 
-  // // 알림 읽기
-  // const handleReadNotification = async (alertSeq) => {
-  //   try {
-  //     if (userType === "designer") await readDesignerNotification(alertSeq);
-  //     if (userType === "customer") await readCustomerNotification(alertSeq);
-  //     refetch();
-  //   } catch (error) {
-  //     console.error("Error reading notification", error);
-  //   }
-  // };
-  const notifications = [
-    {
-      alertSeq: 1,
-      consultingSeq: 1,
-      check: false,
-      checkedDate: null,
-      pushDate: "2023-07-19",
-      designerName: "재현",
-    },
-    {
-      alertSeq: 2,
-      consultingSeq: 2,
-      check: true,
-      checkedDate: "2023-07-18",
-      pushDate: "2023-07-19",
-      designerName: "재현",
-    },
-    {
-      alertSeq: 3,
-      userType: "customer",
-      consultingSeq: 3,
-      check: false,
-      checkedDate: null,
-      pushDate: "2023-07-19",
-      designerName: "재현",
-    },
-  ];
+  // 알림 읽기
+  const handleReadNotification = async (alertSeq) => {
+    console.log(alertSeq, "알림 읽기 입장");
+    try {
+      if (userType === "designer") await readDesignerNotification(alertSeq);
+      if (userType === "customer") await readCustomerNotification(alertSeq);
+      refetch();
+    } catch (error) {
+      console.error("Error reading notification", error);
+    }
+  };
   const [alert, setAlert] = useState(false);
   const toggleAlert = () => {
     setAlert((prev) => !prev);
@@ -292,10 +269,15 @@ function Header() {
                   {notifications
                     .filter(notification => !notification.check) 
                     .map((notification) => (
-                    <NotificationItem key={notification.alertSeq}>
+                    <NotificationItem 
+                      key={notification.alertSeq}
+                      onClick={() => handleReadNotification(notification.alertSeq)}
+                    >
                       <DateWrap>
                       {notification.pushDate}
-                      <ReadBtn>읽기</ReadBtn>
+                      <ReadBtn
+                        
+                      >읽기</ReadBtn>
                       </DateWrap>
                       <Hr/>
                       {notification.designerName} 님의 상담이 취소되었습니다.

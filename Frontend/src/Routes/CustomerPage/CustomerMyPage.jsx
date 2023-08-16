@@ -157,13 +157,15 @@ const Overlay = styled(motion.div)`
 const BigModal = styled(motion.div)`
   position: absolute;
   width: 40vw;
-  height: 71vh;
+  height: 81vh;
   left: 0;
   right: 0;
   margin: 0 auto;
   border-radius: 15px;
   overflow: hidden;
   background-color: white;
+  max-height: 90vh; // 뷰포트의 90%를 최대 높이로 설정
+  overflow-y: auto; // 세로 스크롤 활성화
 `;
 const ModalText = styled.span`
   font-size: 20px;
@@ -212,7 +214,7 @@ const ReviewInput = styled.textarea`
   border: 0;
   border-radius: 10px;
   width: 80%;
-  height: 200px;
+  height: 30vh;
   margin-top: 20px;
   padding: 10px;
   resize: none;
@@ -223,6 +225,7 @@ const ReviewInput = styled.textarea`
       color: rgb(244, 153, 26);
     }
   }
+  height: 25vh;
 `;
 const LikeBtn = styled.img`
   width: 27px;

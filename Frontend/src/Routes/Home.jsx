@@ -341,7 +341,7 @@ const fromLeft = {
 const fromRight = {
   hidden: {
     opacity: 0,
-    x: 200,
+    x: 150,
   },
   visible: {
     opacity: 1,
