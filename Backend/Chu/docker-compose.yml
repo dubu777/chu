@@ -1,0 +1,16 @@
+version: '3'
+services:
+        spring-boot-app:
+                build:
+                        context: .
+                        dockerfile: Dockerfile
+                image: chu-back
+                container_name: chu-back
+                ports:
+                        - "9090:9090"
+
+                volumes:
+                        - /home/ubuntu/chu/upload/images/customer:/chu/upload/images/customer/
+                        - /home/ubuntu/chu/upload/images/designer/portfolio:/chu/upload/images/designer/portfolio/
+                        - /home/ubuntu/chu/upload/images/designer:/chu/upload/images/designer/
+                        - /home/ubuntu/chu/upload/images/consulting:/chu/upload/images/consulting/
