@@ -153,9 +153,22 @@ public class ConsultingServiceImpl implements ConsultingService {
     @Override
     public List<ImageDto> getConfusionImageList(int consultingSeq) {
 
+        List<ConsultingVirtualImg> consultingVirtualImgList = new ArrayList<>();
+
+
         List<ImageDto> imageList = new ArrayList<>();
         try {
-            imageList = consultingVirtualImgRepository.getVirtualImagesInfoBySeq(consultingSeq);
+            consultingVirtualImgList = consultingVirtualImgRepository.findAllByConsultingSeq(consultingSeq);
+//            int imgSeq;
+//            String imgName;
+            for(ConsultingVirtualImg img : consultingVirtualImgList){
+                ImageDto dto = new ImageDto();
+                dto.setImgSeq(img.getSeq());
+                dto.setImgName(img.getImagePath().getUploadImgName());
+
+                imageList.add(dto);
+            }
+            //imageList = consultingVirtualImgRepository.getVirtualImagesInfoBySeq(consultingSeq);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
