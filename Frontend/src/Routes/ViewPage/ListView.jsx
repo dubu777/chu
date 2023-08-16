@@ -15,8 +15,9 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   width: 65vw;
-  margin: 30px auto;
+  margin: 60px auto; 
 `;
+
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -30,7 +31,7 @@ const SelectBox = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   margin-bottom: 10px;
   border-bottom: 1px solid rgb(220, 220, 220);
   
