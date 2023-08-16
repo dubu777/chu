@@ -10,8 +10,6 @@ const Container = styled.div`
   justify-content: center;
   width: 65vw;
   margin: 0 auto;
-  
-
 `;
 const StepWrapper = styled.div`
   margin-top: 40px;
@@ -53,21 +51,19 @@ const Box = styled(motion.div)`
 
 const Title = styled.span`
   font-size: 30px;
-  font-family: "Sandol-B";   
-  font-weight: bolder;
-  margin: 40px 0 30px 0;
-  /* font-family: "Apple-H";     */
+  font-weight: bold;
+  margin-top: 40px;
+  margin-bottom: 20px;
 `;
 const Text = styled.span`
-  font-size: 22px;
+  font-size: 24px;
   font-weight: bold;
-  margin-top: 15px;
-  font-family: "Apple-H";    
+  margin-top: 15px;  
 `;
 const SubText = styled.span`
   font-size: 15px;
   font-weight: bold;
-  margin: 10px 0 40px 0;
+  margin: 10px 0 30px 0;
   color: rgb(100,93,81);
 `;
 const Hr = styled.div`
@@ -75,19 +71,19 @@ const Hr = styled.div`
   border-bottom : 2px solid rgb(242,234,211);
 `;
 const DesignerImg = styled.img`
-  margin-left: 50px;
+  /* margin-left: 50px; */
   width: 120px;
-  height: 170px;
+  height: 120px;
 `;
 
 const CustomerImg = styled.img`
   width: 120px;
-  height: 170px;
+  height: 120px;
 `;
 
 const Btn = styled(motion.button)`
-  background-color: rgb(242,234,211);
-  color: black;
+  background-color: #574934;
+  color: white;
   padding: 10px 55px;
   border: 0;
   border-radius: 10px;
@@ -126,16 +122,17 @@ function UserTypeComponet() {
       </StepWrapper>
       <Hr/>
       <TypeWrapper>
-        <Title>회원 유형 선택</Title>
+        <Title>Sign Up</Title>
+        <SubText>가입하고자 하는 회원 유형을 선택해주세요.</SubText>
         <Wrapper>
           <Box
             onClick={() => navigate('/customersignup')}
             variants={boxVariants} 
             initial="nomal" 
             whileHover="hover">
-            <CustomerImg src="./icon/woman.png"/>
+            <CustomerImg src="./icon/member.png"/>
             <Text>일반 회원</Text>
-            <SubText>일반 회원이 홈페이지에 가입하는 경우</SubText>
+            <SubText>일반 사용자 회원가입</SubText>
             <Btn onClick={() => navigate('/customersignup')}>회원가입</Btn>
           </Box>
           <Box
@@ -143,9 +140,9 @@ function UserTypeComponet() {
             variants={boxVariants} 
             initial="nomal" 
             whileHover="hover">
-            <DesignerImg src="./icon/hair-cutting.png"/>
+            <DesignerImg src="./icon/member-card.png"/>
             <Text>디자이너</Text>
-            <SubText>디자이너가 홈페이지에 가입하는 경우</SubText>
+            <SubText>헤어디자이너 또는 미용사 자격증 소지자 회원가입</SubText>
             <Btn onClick={() => navigate('/designersignup')}>회원가입</Btn>
           </Box>
         </Wrapper>

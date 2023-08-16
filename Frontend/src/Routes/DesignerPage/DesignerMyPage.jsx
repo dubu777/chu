@@ -12,6 +12,8 @@ import { designerMyPageState } from "../../recoil";
 import { useQuery, useMutation } from "react-query";
 import { useRecoilState } from "recoil";
 import { BASE_URL } from "../../apis/rootUrl";
+import { useInView } from "react-intersection-observer";
+import { motion, useAnimation } from "framer-motion";
 
 const Container = styled.div``;
 
@@ -22,17 +24,19 @@ const ProfileWrapper = styled.div`
   width: 100%;
   height: 270px;
   background-color: #f8f1d9;
+  /* background-color: #726f65b6; */
 `;
 const ImgBox = styled.div`
   text-align: center;
-  margin-top: 110px;
+  margin-top: 105px;
 `;
 
 const NameText = styled.h1`
   font-size: 25px;
+  margin-bottom: 5px;
 `;
 const Text = styled.p`
-  margin-bottom: 20px;
+  margin-bottom: 18px;
   font-size: large;
 `;
 const HashTag = styled.button`
@@ -41,12 +45,12 @@ const HashTag = styled.button`
   background-color: #78756c;
   color: white;
   height: 30px;
-  margin-right: 10px;
+  margin: 3px;
   padding: 2px 15px;
 `;
 const InfoBox = styled.div`
   width: 30%;
-  margin-top: 140px;
+  margin-top: 155px;
   margin-left: -120px;
 `;
 const ChangeBox = styled.div`
@@ -72,7 +76,7 @@ const ReserveWrapper = styled.div`
   border-radius: 0.7rem;
 `;
 
-const Wrapper = styled.div`
+const Wrapper = styled(motion.div)`
   width: 60%;
   margin: 170px auto 10px auto;
 `;
@@ -128,10 +132,10 @@ const Profile = styled.img`
   height: 270px;
   border-radius: 50%;
   /* 이미지 상태에 따라 태두리 색 다르게 */
+  object-fit: cover;
   border: 7px solid ${(props) => (props.hasFile ? "lightblue" : "transparent")};
   cursor: pointer;
 `;
-
 function DesignerMyPage() {
   const navigate = useNavigate();
   const { designerSeq } = useParams();
@@ -149,10 +153,7 @@ function DesignerMyPage() {
   const [selectedFile, setSelectedFile] = useState(null);
   const fileInputRef = useRef(null);
   const [file, setFile] = useState();
-  const [introduction, setIntroduction] = useState(() => {
-    // 초기화 함수를 사용하여 데이터가 로드되었을 때 introduction 값을 설정합니다.
-    return data?.introduction || "";
-  });
+
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -178,7 +179,7 @@ function DesignerMyPage() {
   //     console.log(file);
   //   }
   // };
- 
+
   // 이미지 등록 - API 맞춰서 수정해야함
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
@@ -247,7 +248,13 @@ function DesignerMyPage() {
         </ChangeBox>
       </ProfileWrapper>
       {/* 여기는 탭 작동 */}
-      <Wrapper>
+      <Wrapper
+        ref={inViewRef}
+        initial="hidden"
+        animate={inView ? "visible" : "hidden"}
+        variants={fromBottom}
+        transition={{ duration: 0.5 }}
+      >
         <ClickBtn
           isActive={activeBtn === "calendar"}
           onClick={() => handleBtnClick("calendar")}

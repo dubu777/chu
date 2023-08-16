@@ -3,7 +3,30 @@
 import { styled } from "styled-components";
 import { useState, useEffect } from "react";
 import { getEventInfo, postEventInfo, postInputImage, postTargetImage } from "../../apis/event";
+import { useNavigate } from "react-router-dom";
 
+const Marginbox = styled.div`
+    height: 50px;
+`
+const Container = styled.div`
+    background-image: url('/img/password.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    justify-content: space-around;
+    align-items: center;
+`;
+const BackImg = styled.img`
+  width : 30px;
+  height: 30px;
+  margin-left: 30px;
+  margin-top: 30px;
+`;
+const MainWrapper = styled.div`
+    margin-top: 50px;
+    background-color: rgba(255, 255, 255, 0.669);
+    /* filter: invert(7%); */
+`;
 const Imgbox = styled.div`
     display: flex;
     flex-direction: column;
@@ -22,8 +45,8 @@ const Text = styled.p`
 
 const Borderbox = styled.div`
 	border: dashed 2px;
-	border-color: #988b60;
-	margin: 20px;
+	border-color: #00000080;
+	margin: 10px;
     padding: 20px;
 	border-radius: 0.5rem;
 `;
@@ -31,13 +54,12 @@ const Borderbox = styled.div`
 const Box = styled.div`
     /* width: 22%; */
 	height: 350px;
-	background-color: #f7f6e6;
+	background-color:rgba(91, 91, 89, 0.791);
 	/* margin: auto; */
     margin: 20px;
 	border-radius: 0.6rem;
 `;
 const Input = styled.input`
-	font-family: "Blue-road";
 	margin: 0px 10px 10px 30px;
 `;
 
@@ -49,22 +71,20 @@ const DefaultImg = styled.img`
 `;
 const TextBtn = styled.button`
 	border: 0;
-	height: 30px;
-    font-size: 12px;
-	width: 100px;
+	height: 35px;
+    font-size: 14px;
+	width: 130px;
 	border-radius: 0.8rem;
-	background-color: #f6be4e;
+	background-color: #f9c45b;
+`;
+const Hr = styled.hr`
+  width : 50% ;
+  color: #877d6d;
 `;
 const Img = styled.img`
-    width: 200px;
-    height: 200px;
-`;
-
-const Container = styled.div`
-    margin-top: 100px;
-    /* display: flex; */
-    justify-content: space-around;
-    align-items: center;
+    width: 220px;
+    height: 220px;
+    border-radius: 0.4rem;
 `;
 
 const Wrapper = styled.div`
@@ -75,18 +95,39 @@ const ImgWrapper = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
+    margin-bottom: 130px;
+    margin-left: 30px;
+    margin-right: 30px;
 `;
 const ClickBtn = styled.button`
-    
+    font-size: 18px;
+    border: 2.5px solid #5d594d;
+    border-radius: 2rem;
+    background-color: white;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+    :hover {
+        background-color: #9a968b;
+        color: white;
+    }
+`;
+const ResultBox = styled.div`
+  display  : flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 const SubmitImg = styled.input`
   margin: 15px 0px;
 `;
 const SText = styled.span`
-  font-size: 10px;
+  font-size: 15px;
   font-weight: 600;
   display: flex;
   justify-content: start;
+  margin-bottom: 20px;
 `;
 const Profile = styled.img`
   width: 270px;
@@ -98,11 +139,15 @@ const Profile = styled.img`
 `;
 
 function Event() {
-
+    const navigate = useNavigate();
     const customerSeq = localStorage.getItem('userSeq');
+    // const [inputImagePath, setInputImagePath] = useState(`https://i9b111.q.ssafy.io/api/customer-profile/event/origin/user.png`);
+    // const [targetImagePath, setTargetImagePath] = useState(`https://i9b111.q.ssafy.io/api/customer-profile/event/target/user.png`);
+    // const [confusionImagePath, setConfusionImagePath] = useState(`https://i9b111.q.ssafy.io/api/customer-profile/event/target/user.png`);
+
     const [inputImagePath, setInputImagePath] = useState(`https://i9b111.q.ssafy.io/api/customer-profile/event/origin/user.png`);
     const [targetImagePath, setTargetImagePath] = useState(`https://i9b111.q.ssafy.io/api/customer-profile/event/target/user.png`);
-    const [confusionImagePath, setConfusionImagePath] = useState(`https://i9b111.q.ssafy.io/api/customer-profile/event/target/user.png`);
+    const [confusionImagePath, setConfusionImagePath] = useState('/icon/who1.png');
 
     const [inputImageFile, setInputImageFile] = useState(null);
     const [targetImageFile, setTargetImageFile] = useState(null);
@@ -201,6 +246,68 @@ function Event() {
 
     return (
         <Container>
+            <MainWrapper>
+            <Marginbox>
+                <BackImg 
+                    src="/icon/backBtn.png"
+                    onClick={() => navigate(-1)}
+                    />
+            </Marginbox>
+              <ResultBox>
+            {
+                // 상태가 2라는건 타겟이미지가 넘어갔다는 것, 입력 이미지도 넣었다는 것
+                responseState == 2 && setInputImagePath != `https://i9b111.q.ssafy.io/api/customer-profile/event/origin/user.png`
+                    ? (
+                        <>
+                            <Img
+                                src={confusionImagePath}
+                                alt="Profile"
+                            />
+                            <ClickBtn onClick={() => goToConfusionWolrd(customerSeq, formData)}>한장한장 체험하기👆🏻</ClickBtn>
+                            <SText>버튼을 누르면 합성사진 체험이 가능합니다 :)</SText>
+                            <Hr/>
+                        </>
+                    )
+                    : (
+                        <div></div>
+                    )
+            }
+            
+            {
+                // 상태가 3이라면 로딩중이라는 것
+                responseState == 3
+                    ? (
+                        <>
+                            <SText>로딩중입니다!</SText>
+                            <Img
+                                src={confusionImagePath}
+                                alt="Profile"
+                            />
+                        </>
+                    )
+                    : (
+                        <div></div>
+                    )
+            }
+
+            {
+                // 상태가 4 합성 이미지 불러오기 성공이라는 것
+                responseState == 4
+                    ? (
+                        <>
+                            <SText>성공!</SText>
+                            <Profile
+                                src={confusionImagePath}
+                                alt="Profile"
+                            />
+                        </>
+                    )
+                    : (
+                        <div></div>
+                    )
+            }
+            </ResultBox>
+            
             <Wrapper>
             <ImgWrapper>
             <Box>
@@ -289,58 +396,7 @@ function Event() {
                 onChange={handleTargetImageChange}
             />
             <SText>- 체험을 원하는 머리 사진을 업로드해 주세요.</SText> */}
-
-
-            {
-                // 상태가 2라는건 타겟이미지가 넘어갔다는 것, 입력 이미지도 넣었다는 것
-                responseState == 2 && setInputImagePath != `https://i9b111.q.ssafy.io/api/customer-profile/event/origin/user.png`
-                    ? (
-                        <>
-                            <ClickBtn onClick={() => goToConfusionWolrd(customerSeq, formData)}>???</ClickBtn>
-                            <SText>버튼을 누르면 합성사진 체험이 가능합니다 :)</SText>
-                            <Profile
-                                src={confusionImagePath}
-                                alt="Profile"
-                            />
-                        </>
-                    )
-                    : (
-                        <div></div>
-                    )
-            }
-            {
-                // 상태가 3이라면 로딩중이라는 것
-                responseState == 3
-                    ? (
-                        <>
-                            <SText>로딩중입니다!</SText>
-                            <Profile
-                                src={confusionImagePath}
-                                alt="Profile"
-                            />
-                        </>
-                    )
-                    : (
-                        <div></div>
-                    )
-            }
-
-            {
-                // 상태가 4 합성 이미지 불러오기 성공이라는 것
-                responseState == 4
-                    ? (
-                        <>
-                            <SText>성공!</SText>
-                            <Profile
-                                src={confusionImagePath}
-                                alt="Profile"
-                            />
-                        </>
-                    )
-                    : (
-                        <div></div>
-                    )
-            }
+            </MainWrapper>
         </Container>
     );
 }

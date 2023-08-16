@@ -15,10 +15,11 @@ import { toggleLikeButton } from "../../apis";
 import Swal from 'sweetalert2';
 
 const Container = styled.div`
-  margin-top: 20;
+  margin-top: 60px;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: rgba(230, 227, 227, 0.3);
 `;
 
 const Wrapper = styled.div`
@@ -26,6 +27,12 @@ const Wrapper = styled.div`
   justify-content: center;
   width: 50vw;
   margin: 40px 0;
+  border-radius: 10px;
+  padding: 30px 20px;
+  background-color: white;
+  /* box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+    2px 4px 30px -4px rgb(0 0 0 / 0.1); */
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 `;
 const Wrap = styled.div`
   display: flex;
@@ -39,39 +46,42 @@ const InfoWrapper = styled.div`
 const DesignerInfoBox = styled.div`
   display: flex;
   justify-content: start;
+  margin-bottom: 20px;
 `;
 const DesignerImg = styled.img`
-  width: 100px;
+  width: 150px;
   margin-right: 10px;
+  margin-left: 5px;
+  border-radius: 40% 60% 65% 35% / 40% 45% 55% 60%;
 `;
 const DesignerNameWrap = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: end;
+  width: 100%;
 `;
 const DesignerNameBox = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
 `;
 const DesignerName = styled.span`
-  font-size: 16px;
+  font-size: 20px;
   font-weight: bold;
-  margin: 0 5px;
+  margin: 10px;
+  
 `;
 const LikeBox = styled.div`
   display: flex;
-  margin-right: 20px;
+  margin-right:100px;
   align-items: center;
   padding: 5px 10px;
-  border: 2px solid rgb(244, 153, 26);
+  // border: 2px solid rgb(244, 153, 26);
   border-radius: 5px;
-  background-color: ${(props) =>
-    props.isLike ? "rgba(244,153,26,0.43)" : "white"};
 `;
 const Icon = styled.img`
-  width: 20px;
-  height: 20px;
+  width: 15px;
+  height: 15px;
   margin-right: 5px;
   cursor: pointer;
 `;
@@ -79,73 +89,97 @@ const Text = styled.span`
   font-size: 14px;
   font-weight: 600;
 `;
+const ReviewText = styled(Text)`
+  font-size:15px;
+  margin: 5px 10px 7px 3px;
+`
 const Box = styled.div`
   display: flex;
   align-items: center;
+  margin-left: 5px;
+  margin-right: 3px;
+  justify-content: space-between;
 `;
 const CostIcon = styled.img`
   width: 21px;
   height: 21px;
   margin-right: 3px;
-  margin-right: 5px;
 `;
+const GpsIcon = styled.img`
+  width: 24px;
+  height: 24px;
+`
+const AddressBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 5px;
+  margin-left: 5px;
+`
 const Hr = styled.div`
   /* color: #383838; */
   border: 1px solid rgb(197, 197, 197);
-  width: 100%;
-  margin: 10px 0;
+  width: 97%;
+  margin-bottom: 10px;
 `;
 const InfoBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: start;
+  margin-bottom:10px;
 `;
 const Address = styled.span`
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
-  color: gray;
-  margin: 5px 0 5px 5px;
+  color: #4a4848;
+  margin: 5px;
 `;
 const HashBox = styled.div`
   display: flex;
+  margin-left: 5px;
 `;
 const HashTag = styled.span`
   font-size: 12px;
   font-weight: 600;
   padding: 5px 10px;
   margin-right: 5px;
-  background-color: rgba(196, 192, 192, 0.5);
+  background-color: rgb(227, 208, 173);
   border-radius: 5px;
   margin-top: 3px;
 `;
 const IntroTextArea = styled.span`
-  padding: 20px 60px 20px 20px;
+  padding: 20px 20px 20px 20px;
   background-color: rgb(248, 245, 240);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
   border-radius: 10px;
   margin-top: 10px;
-  width: 90%;
-  height: 100px;
+  width: 100%;
 `;
 const PofolWrap = styled.div`
   display: flex;
   flex-direction: column;
-  width: 90%;
+  width: 100%;
   margin-bottom: 10px;
+  margin-top: 10px;
 `;
 const SubTitle = styled.span`
-  font-size: 15px;
+  font-size: 20px;
   font-weight: 700;
-  margin: 8px 0;
+  font-family: 'Apple-B'; 
+  margin-top: 10px;
+  margin-bottom: 5px;
 `;
 const PofolImg = styled(motion.img)`
   width: 120px;
   height: 150px;
+  object-fit: cover;
+  border-radius: 0.2rem;
 `;
 const ReviewWrap = styled.div`
   display: flex;
-  justify-content: space-between;
+  flex-direction: row;
 `;
 const ReviewInfoBox = styled.div`
   display: flex;
@@ -154,30 +188,39 @@ const ReviewInfoBox = styled.div`
 const ReviewIdBox = styled.div`
   font-size: 15px;
   font-weight: 500;
-  margin-bottom: 10px;
 `;
+const ReviewDate = styled.span`
+  margin-left: 20px;
+  color: gray;
+`
 const SIcon = styled.img`
   width: 15px;
   height: 15px;
   margin: 0 5px;
 `;
 const LikeBtn = styled.img`
-  width: 27px;
-  height: 27px;
-  margin-right: 10px;
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
   cursor: pointer;
 `;
 const ReservBox = styled(motion.div)`
-  width: 70px;
+  width: 50%;
   height: 35px;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid rgb(244, 153, 26);
+  border: 1px solid rgb(150, 150, 150);
   border-radius: 5px;
-  margin-left: 10px;
+  margin-left: 30px;
+  margin-right: 5px;
   cursor: pointer;
 `;
+const ReviewInfoDetailBox = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: start;
+`
 const StyledSlider = styled(Slider)`
   .slick-slide > div {
     margin: 0 10px;
@@ -378,14 +421,17 @@ function DesignerDetail() {
                     onClick={handleReservBoxClick}
                     whileHover={{ backgroundColor: "rgb(244,153,26)" }}
                   >
-                    <Icon src="/icon/reservBtn.png" />
-                    <Text>예약</Text>
+                    {/* <Icon src="/icon/reservBtn.png" /> */}
+                    <Text>상담 예약하기</Text>
                   </ReservBox>
                 </Box>
               </DesignerNameWrap>
             </DesignerInfoBox>
             <InfoBox>
-              <Address>{data.address}</Address>
+              <AddressBox>
+                <GpsIcon src="/icon/gps_pin_icon.png" />
+                <Address>{data.salonName}</Address>
+              </AddressBox>
               <HashBox>
                 {data.hairStyleLabel.map((tag, index) => (
                   <HashTag key={index}>#{tag}</HashTag>
@@ -414,24 +460,27 @@ function DesignerDetail() {
             <SubTitle>별점</SubTitle>
             <Box>
               <Icon src="/icon/star.png" />
-              <Text>{data.allReviewScore}</Text>
+              <Text>{data.allReviewScore.toFixed(1)}</Text>
             </Box>
-            <SubTitle>상담후기</SubTitle>
           </InfoBox>
-          <Hr />
+          <InfoBox>
+            <br/>
+            <SubTitle>상담후기 ({data.review.length})</SubTitle>
+            <Hr />
+          </InfoBox>
           {data.review.map((review, index) => (
             <ReviewInfoBox key={index}>
               <ReviewWrap>
-                <ReviewInfoBox>
+                <ReviewInfoDetailBox>
                   <Box>
                     <ReviewIdBox>{review.customerId}</ReviewIdBox>
                     <SIcon src="/icon/star.png" />
-                    <Text>{review.review_score}</Text>
+                    <Text>{review.reviewScore.toFixed(1)}</Text>
                   </Box>
-                  <Text>{review.reviewContent}</Text>
-                </ReviewInfoBox>
-                <Text>{review.consulting_date}</Text>
+                  <ReviewDate>{review.date}</ReviewDate>
+                </ReviewInfoDetailBox>
               </ReviewWrap>
+              <ReviewText>{review.reviewContent}</ReviewText>
               <Hr />
             </ReviewInfoBox>
           ))}

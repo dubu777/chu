@@ -18,7 +18,7 @@ import { Link } from 'react-router-dom';
 const Container = styled.div`
   /* height: 100vh; */
   width: 100%;
-  background-color: #fffdf5;
+  background-color: #ffffff;
 `;
 
 const Header = styled.div`
@@ -93,8 +93,8 @@ const RightBox = styled.div`
   justify-content: center;
   align-items: center;
   /* align-items: center; */
-  padding: 20px;
-  margin-top: 50px;
+  padding: 10px;
+  margin-top: 30px;
   border-radius: 0.4rem;
   background-color: #fffdf6;
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
@@ -160,7 +160,7 @@ const LeftImageBox = styled.div`
     justify-content: space-between;
     padding: 60px 100px 40px 100px;
     flex-direction: column;
-    /* background-color: aliceblue; */
+    background-color: aliceblue;
     /* padding-left: 100px; */
 `;
 const RightImageBox = styled.div`
@@ -177,12 +177,22 @@ const Img = styled.img`
     margin: 0px 5px;
 `;
 const EndImg = styled.img`
-    width: 100px;
-    height: 130px;
+    width: 100%;
+    height: 400px;
     margin: 0px 5px;
+    animation: rotate_image 6s linear infinite;
     border-radius: 0.4rem;
-`;
+    cursor: pointer;
+    transition: transform 0.3s ease; /* 추가: 확대/축소에 적용할 전환 효과 */
 
+  &:hover {
+    transform: scale(1.05); /* 이미지를 조금 확대함 */
+  }
+`;
+const WinIcon = styled.img`
+    height: 50px;
+    width: 50px;
+`;
 const ResultImg = styled.img`
     width: 100%;
   height: 350px;
@@ -198,12 +208,12 @@ const ResultImg = styled.img`
 `;
 
 const StreamContainerWrapper = styled.div`
-  /* display: grid; */
+  display: grid;
   /* place-items: center; */
-  display: flex;
+  /* display: flex; */
   /* flex-direction: column; */
   margin-left: 20px;
-  margin-top: 10px;
+  /* margin-top: 10px; */
   padding-top: 10px;
   ${(props) =>
         props.primary
@@ -213,7 +223,7 @@ const StreamContainerWrapper = styled.div`
             : `
     grid-template-columns: repeat(4, 1fr);
     `}
-  grid-gap: 20px;
+  /* grid-gap: 20px; */
   /* height: 100px;
   padding: 10px;
   @media screen and (max-width: 800px) {
@@ -223,7 +233,7 @@ const StreamContainerWrapper = styled.div`
 `;
 
 const StreamContainer = styled.div`
-  width: 100%;
+  /* width: 100%; */
   position: relative;
   border-radius: 5px;
   /* min-height: 34vh;
@@ -666,7 +676,6 @@ class WorldCupRoom extends Component {
             userType: undefined,
         });
         {/* 상담 종료 버튼 */ }
-        <Link to="/designermypage"></Link>
     }
 
     async switchCamera() {
@@ -769,6 +778,7 @@ class WorldCupRoom extends Component {
                                             alt="Current"
                                             // 클릭하면 박수치게
                                         />
+                                        <WinIcon src="/icon/win/png"/>
                                     </EndImageBox>
                                 ) : (
                                     <>
@@ -849,7 +859,7 @@ class WorldCupRoom extends Component {
                         </Icon>
 
                         <Icon primary onClick={this.leaveSession}>
-                            <CallEndIcon />
+                        <Link to="/"><CallEndIcon /></Link>
                         </Icon>
                     </BottomBox>
                     <ChatIconBox

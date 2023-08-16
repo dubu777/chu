@@ -11,10 +11,7 @@ import {
 } from "../../apis";
 import { useState, useEffect } from "react";
 import { useQuery, useMutation } from "react-query";
-import Dropdown from "react-bootstrap/Dropdown";
-import DropdownButton from "react-bootstrap/DropdownButton";
-import Toast from "react-bootstrap/Toast";
-import Button from "react-bootstrap/Button";
+
 
 const Nav = styled(motion.nav)`
   display: flex;
@@ -22,11 +19,11 @@ const Nav = styled(motion.nav)`
   align-items: center;
   position: fixed;
   width: 100%;
-  height: 45px;
+  height: 60px;
   top: 0;
   font-size: 18px;
-  padding: 20px 60px;
-  font-family: sans-serif;
+  padding: 0 40px;
+  z-index: 1000;
 `;
 
 const Col = styled.div`
@@ -67,7 +64,7 @@ const Badge = styled.span`
   position: absolute;
   top: -10px;
   right: -10px;
-  padding: 5px 10px;
+  padding: 5px 7px;
   border-radius: 50%;
   background-color: red;
   color: white;
@@ -121,8 +118,7 @@ const logoVariants = {
   active: {
     color: "rgb(244,153,26)",
     trasition: {
-      type: "tween",
-      duration: 0.05,
+      duration: 0.01,
     },
   },
 };
@@ -165,6 +161,7 @@ function Header() {
     localStorage.removeItem("userType");
     localStorage.removeItem("userSeq");
     localStorage.removeItem("userName");
+    localStorage.removeItem("consultingSeq");
     navigate("/");
   });
 
@@ -289,7 +286,7 @@ function Header() {
             </Item>
             <NotificationBadge>
               <Badge>{notifications.filter(notification => !notification.check).length}</Badge>
-              <Img onClick={toggleAlert} src="/icon/calendar.png" />
+              <Img onClick={toggleAlert} src="/icon/alert.png" />
               {alert ? (
                 <NotificationList>
                   {notifications
@@ -310,11 +307,6 @@ function Header() {
               ) : null}
             </NotificationBadge>
 
-            {/* <DropdownButton id="dropdown-basic-button" title="Dropdown button">
-              <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-              <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-              <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-            </DropdownButton> */}
           </>
         ) : (
           <>

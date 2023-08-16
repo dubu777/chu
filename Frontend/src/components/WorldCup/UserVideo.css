@@ -1,10 +1,11 @@
 video {
-    width: 80%;
+    width: 70%;
     margin-left: 20px;
     padding-left: 500px; 
-    height: auto;
+    /* height: 150px; */
     float: left;
     cursor: pointer;
+    border-radius: 0.4rem;
 }
 /* 참가자 명 */
 .streamcomponent div {
