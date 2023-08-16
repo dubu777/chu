@@ -112,10 +112,7 @@ const Text = styled.span`
   text-align: center;
 `;
 
-const barogagiText = styled(Text)`
-  font-size: 16px;
-  font-weight = 16px;
-`;
+
 const CostBox = styled.div`
 display: flex;
 justify-content: center;
@@ -144,8 +141,11 @@ function DesignerList(props) {
   });
 
   const handleLikeClick = (designerSeq, currentLikeStatus) => {
-    const newLikeStatus = !currentLikeStatus; 
-    mutation.mutate({designerSeq, customerSeq, isLike: newLikeStatus});
+    if (userType !== 'customer') {
+      return;
+    }
+      const newLikeStatus = !currentLikeStatus; 
+      mutation.mutate({designerSeq, customerSeq, isLike: newLikeStatus});
   };
 
   const handleReservBoxClick = (designerSeq) => {

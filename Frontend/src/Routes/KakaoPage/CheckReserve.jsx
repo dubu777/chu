@@ -7,27 +7,41 @@ import Form from 'react-bootstrap/Form';
 import swal from 'sweetalert';
 import { useRecoilState } from 'recoil';
 import {reserveInfo, imgFileState} from "../../recoil"
+import { useNavigate } from "react-router";
 
+const BigContainer = styled.div`
+  display: flex;
+  background-color: rgba(118, 118, 118, 0.07);
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-height: 100vh;
+`;
 const Container = styled.div`
   display: flex;
   justify-content: center;
+  width: 100%;
+  margin-top: 40px;
+
 `;
 const Reservwrap = styled.div`
   display: flex;
   flex-direction: column;
-
   width: 60%;
+  height: 80%;
+  padding: 50px;
+  border-radius: 13px;
+  background-color: white;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 `;
-const LogoBox = styled.div`
-  margin-top: 50px;
-  margin-bottom: 100px;
-`;
+
 const TitleBox = styled.div`
   display: flex;
-  margin-top: 40px;
+  margin-top: 20px;
 `;
 const Title = styled.span`
-  font-size: 20px;
+  font-size: 25px;
   font-weight: 600;
   justify-content: flex-start;
   
@@ -40,16 +54,13 @@ const Hr = styled.div`
 
 const Box = styled.div`
   display: flex;
+  /* justify-content: center; */
   align-items: center;
-  margin-bottom: 30px;
+  margin-bottom: 50px;
 `;
-const KaKaoImg = styled.img`
-  width: 80px;
-  margin-right: 30px;
-  
-`;
+
 const BigKaKaoImg = styled.img`
-  width: 300px;
+  width: 320px;
   margin-right: 30px;
   padding: 30px 10px 20px 30px;
 `;
@@ -59,19 +70,41 @@ const BigkakaoBox = styled.div`
   
 `;
 const ReservText = styled.span`
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 600;
   margin-left: 30px;
 `;
 const CheckBox = styled.input`
   margin-bottom: 5px;
 `;
+const CheckWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 const CheckBoxWrap = styled.div`
+  margin-bottom: 10px;
 `;
 const CheckBoxLabel = styled.label`
 `;
+const grayText = styled.input`
+  font-size: 16px;
+  font-weight: 600;
+  color: #a4a2a2;
+`;
 const PayBtn = styled.button`
-  width: 80px;
+  width: 150px;
+  height: 45px;
+  background-color: #ffd323;
+  border-radius: 10px;
+  border: none;
+  font-size: 18px;
+  font-weight: 600;
+`;
+const PayBtnWrap = styled.div`
+  display: flex;
+  justify-content: space-around;
+  margin-top: 25px;
+  margin-bottom: 20px;
 `;
 const ReservBtnVariant = {
   nomal: {
@@ -98,6 +131,7 @@ function CheckReserve() {
   const [agreeSecond, setAgreeSecond] = useState(false);
   const [info, setInfo] = useRecoilState(reserveInfo);
   const [requestFile, setRequestFile] = useRecoilState(imgFileState);
+  const navigate = useNavigate();
   const handlePayment = () => {
     if (!agreeFirst || !agreeSecond) {
       swal("약관 동의 필요", "모든 약관에 동의해야 합니다.", "warning");
@@ -106,15 +140,15 @@ function CheckReserve() {
       handleKakaoPayReady();
     }
   };
-
+  const handleBack = () => {
+    navigate(-1)
+  }
   console.log(requestFile, "결제 준비 이미지 데이터");
   console.log(info, "결제 준비 예약 정보 인포");
   return (
+    <BigContainer>
     <Container>
       <Reservwrap>
-        <LogoBox>
-          <KaKaoImg src="/icon/kakaopay.png"/>
-        </LogoBox>
         <TitleBox>
           <Title>결제 수단 선택</Title>
         </TitleBox>
@@ -125,6 +159,7 @@ function CheckReserve() {
           </BigkakaoBox>
           <ReservText>카카오페이</ReservText>
         </Box>
+        <CheckWrapper>
         <CheckBoxWrap>
         <CheckBox
           type="checkbox"
@@ -143,12 +178,15 @@ function CheckReserve() {
         />
         <CheckBoxLabel htmlFor="agreeSecond">주문 상품의 명시 내용과 사용조건을 확인하였으며 취소환불 규정에 동의합니다. (필수)</CheckBoxLabel>
         </CheckBoxWrap>
-        <PayBtn onClick={handlePayment}>결제하기</PayBtn>
-        {/* <ReservText>상품 주문 및 배송정보 수집에 동의합니다. (필수)</ReservText>
-        <ReservText>주문 상품의 명시 내용과 사용조건을 확인하였으며 취소환불 규정에 동의합니다. (필수)</ReservText> */}
-        {/* <ReservText></ReservText> */}
+        </CheckWrapper>
+        <Hr/>
+        <PayBtnWrap>
+          <PayBtn onClick={handleBack}>뒤로가기</PayBtn>
+          <PayBtn onClick={handlePayment}>결제하기</PayBtn>
+        </PayBtnWrap>
       </Reservwrap>
     </Container>
+    </BigContainer>
   );
 }
 

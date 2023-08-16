@@ -59,7 +59,7 @@ const ChangeBox = styled.div`
   text-align: right;
 `;
 
-const ChangeBtn = styled.button`
+const ChangeBtn = styled(motion.button)`
   border: 0;
   border-radius: 0.4rem;
   background-color: #f9bd4f;
@@ -258,7 +258,10 @@ function DesignerMyPage() {
         </InfoBox>
 
         <ChangeBox>
-          <ChangeBtn onClick={() => navigate(`/editdesignerinfo/${designerSeq}`)}>
+          <ChangeBtn 
+            onClick={() => navigate(`/editdesignerinfo/${designerSeq}`)}
+            whileHover={{ backgroundColor: "#574934", color: "white" }}
+          >
             회원 정보 변경
           </ChangeBtn>
         </ChangeBox>

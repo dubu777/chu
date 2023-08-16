@@ -299,6 +299,9 @@ function DesignerDetail() {
   });
 
   const handleLikeClick = (designerSeq, currentLikeStatus) => {
+    if (userType !== 'customer') {
+      return;
+    }
     const newLikeStatus = !currentLikeStatus;
     mutation.mutate({ designerSeq, customerSeq, isLike: newLikeStatus });
   };
@@ -406,6 +409,8 @@ function DesignerDetail() {
               <DesignerNameWrap>
                 <DesignerNameBox>
                   <DesignerName>{data.name} 디자이너</DesignerName>
+                  { userType === 'customer' ?
+                  
                   <LikeBox isLike={data.isLike}>
                     {data.isLike ? (
                       // 좋아요가 눌려있을 때 빨간색 하트 아이콘
@@ -425,7 +430,13 @@ function DesignerDetail() {
                       />
                     )}
                     <Text>{data.likeCnt}</Text>
-                  </LikeBox>
+                  </LikeBox> : <LikeBtn
+                        src="/icon/heartx.png"
+                        onClick={() =>
+                          handleLikeClick(data.designerSeq, data.isLike)
+                        }
+                      />
+                  }
                 </DesignerNameBox>
                 <Hr />
                 <Box>
