@@ -4,6 +4,7 @@ import { styled } from "styled-components";
 import { useState, useEffect } from "react";
 import { getEventInfo, postEventInfo, postInputImage, postTargetImage } from "../../apis/event";
 import { useNavigate } from "react-router-dom";
+import swal from "sweetalert";
 
 const Marginbox = styled.div`
     height: 60px;
@@ -11,8 +12,8 @@ const Marginbox = styled.div`
 `;
 
 const Title = styled.p`
-    margin-top: 5px;
-    font-size: 35px;
+    margin-top: 10px;
+    font-size: 40px;
     font-family: "Abril Fatface";
     text-align: center;
 `;
@@ -24,6 +25,7 @@ const Container = styled.div`
     background-repeat: no-repeat;
     justify-content: space-around;
     align-items: center;
+    height: 100vh;
 `;
 const BackImg = styled.img`
   width : 30px;
@@ -209,7 +211,7 @@ function Event() {
         try {
             const response = postEventInfo(customerSeq);
             console.log(response);
-            alert("사진이 만들어지는 동안 대기해주세요~");
+            swal("", "사진이 만들어지는 동안 대기해주세요~", "success");
             setResponseState(3);
         } catch (error) {
             console.log(error);
