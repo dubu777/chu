@@ -13,6 +13,8 @@ import { useInView } from "react-intersection-observer";
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  /* justify-content: center;
+  align-items: center; */
 `;
 
 const Main = styled.div`
@@ -25,8 +27,8 @@ const Main = styled.div`
 `;
 const MainWrapper = styled.div`
   margin-top: 40px;
-  margin-left: 170px;
-  margin-right: 170px;
+  margin-left: 150px;
+  margin-right: 150px;
 `;
 const ImgText = styled(motion.p)`
   font-family: "Abril Fatface";
@@ -58,8 +60,8 @@ const DesignerBox = styled.div`
 const ProfileBox = styled(motion.div)`
   background-color: #ffffff;
   border: 2px solid #bd9a7f;
-  width: 200px;
-  height: 250px;
+  width: 180px;
+  height: 230px;
   /* border-radius: 0.3rem; */
   border-radius: 40% 60% 65% 35% / 40% 45% 55% 60%;
   display: flex;
@@ -94,12 +96,13 @@ const ImgBox = styled.div`
     2px 4px 10px -4px rgb(0 0 0 / 0.2); */
 `;
 const ProfileImg = styled.img`
-  width: 130px;
-  height: 130px;
-  margin-top: 35px;
+  width: 125px;
+  height: 125px;
+  margin-top: 30px;
   margin-bottom: 5px;
   background-color: white;
-  border-radius: 50%;
+  /* border-radius: 50%; */
+  border-radius: 45% 60% 65% 35% / 40% 45% 55% 60%;
   object-fit: cover;
 `;
 const Name = styled.p`
@@ -225,7 +228,7 @@ const WorldcupWrapper = styled.div`
   margin-top: 60px;
 `;
 const WorldcupImg = styled.img`
-  width: 800px;
+  width: 380px;
   height: 500px;
 `;
 const Info = styled(motion.div)`
@@ -250,6 +253,11 @@ const infoVariants = {
     },
   }
 };
+const Hr = styled.hr`
+  width: 68%;
+  color: #605b52;
+  align-items: center;
+`
 const pofolVariants = {
   nomal: {
     scale: 1,
@@ -360,13 +368,7 @@ function Home() {
     // triggerOnce: true,
     threshold: 0.1,
   });
-  const handleWorldCup = () => {
-    if (userType !== "customer") {
-      swal("Error", "스타일 월드컵은 일반 회원만 가능합니다.", "error");
-      return;
-    }
-    navigate(`/customermypage/${userSeq}`);
-  };
+
   const fetchLogInData = async (userSeq) => {
     switch (userType) {
       case "customer":
@@ -385,6 +387,15 @@ function Home() {
     }
     navigate(`/event`);
   };
+
+  const worldcupButtonClick = () => {
+    if (userType === 'customer') {
+      navigate(`/customermypage/${userSeq}`);
+    } else {
+      swal("", "상담 예약을 먼저 진행해주세요 :)", "info");
+    }
+  };
+
   const { data, isError, isLoading } = useQuery(["loginData", userSeq], () =>
     fetchLogInData(userSeq)
   );
@@ -517,6 +528,7 @@ function Home() {
             variants={fromBottomBtn}
             transition={{ duration: 0.3 }}
           />
+          
         </EventWrapper>
         <CenterTitle>・</CenterTitle>
         <CenterTitle>・</CenterTitle>
@@ -585,7 +597,8 @@ function Home() {
 
         {/* 월드컵 */}
         <WorldcupWrapper>
-          <WorldcupImg src="/img/main6.png" />
+          <WorldcupImg src="/img/main11.png" />
+          <WorldcupImg src="/img/main10.png" />
           <EventText>
             <EventTitle
               ref={worldcupRef}
@@ -616,7 +629,7 @@ function Home() {
             </EventIntroTag>
             <br />
             <EventBox
-              onClick={handleWorldCup}
+              onClick={worldcupButtonClick}
               ref={worldcupRef}
               initial="hidden"
               animate={worldcupInView ? "visible" : "hidden"}
@@ -636,9 +649,9 @@ function Home() {
             </EventIntroTag>
           </EventText>
         </WorldcupWrapper>
+        <Hr/>  
       </MainWrapper>
 
-      {/* <MainView /> */}
       {/* <MainView /> */}
     </Wrapper>
   );
