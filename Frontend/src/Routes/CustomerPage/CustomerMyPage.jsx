@@ -157,7 +157,7 @@ const Overlay = styled(motion.div)`
 const BigModal = styled(motion.div)`
   position: absolute;
   width: 40vw;
-  height: 71vh;
+  height: 81vh;
   left: 0;
   right: 0;
   margin: 0 auto;

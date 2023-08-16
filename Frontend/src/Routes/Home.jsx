@@ -245,13 +245,13 @@ const ReserveImgBox = styled.div`
   margin-bottom: 40px;
 `;
 const ReserveImg = styled.img`
-  width: 400px;
-  height: 550px;
+  width: 370px;
+  height: 500px;
 `;
 const ReserveImg2 = styled.img`
   margin-top: 40px;
-  width: 770px;
-  height: 550px;
+  width: 700px;
+  height: 500px;
 `;
 
 const WorldcupWrapper = styled.div`
@@ -508,7 +508,7 @@ function Home() {
                   src={`${BASE_URL}/designer-profile/${item.img}`}
                 ></ProfileImg>
                 {/* </ImgBox> */}
-                <Desinger>Desginer</Desinger>
+                <Desinger>Designer</Desinger>
                 <Name>{item.name}</Name>
               </ProfileBox>
             );
