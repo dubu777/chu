@@ -11,6 +11,7 @@ import {
 } from "../../apis/auth";
 import { useForm } from "react-hook-form";
 import emailjs from "emailjs-com";
+import { useInView } from "react-intersection-observer";
 
 const Container = styled.div`
   text-align: center;
@@ -206,6 +207,7 @@ function CustomerSignUp() {
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
   const [selectedFile, setSelectedFile] = useState(null);
+
 
   // 사진을 클릭하면 파일 선택 다이얼로그를 나타내는 함수
   const handleImageClick = () => {

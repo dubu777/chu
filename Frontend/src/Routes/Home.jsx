@@ -138,7 +138,7 @@ const CenterTitle = styled.p`
   color: #272522;
   margin-bottom: 10px;
   font-family: "Abril Fatface";
-`
+`;
 
 const IntroTitle = styled(motion.p)`
   font-size: 35px;
@@ -149,7 +149,7 @@ const IntroTitle = styled(motion.p)`
 const EventIntro = styled(motion.p)`
   font-size: 22px;
   margin-bottom: 5px;
-  font-family: 'Pretendard-Regular';
+  font-family: "Pretendard-Regular";
   text-align: center;
 `;
 const EventIntroTag = styled(motion.p)`
@@ -181,7 +181,7 @@ const EventBox = styled(motion.div)`
   margin-bottom: 30px;
   font-size: 22px;
   cursor: pointer;
-  background: linear-gradient(90deg, #d48a02 50%, #605b52 50%);
+  background: linear-gradient(90deg, #df9305 50%, #605b52 50%);
   /* background: linear-gradient(90deg, #bda67f 50%, #605b52 50%); */
   background-size: 200% 100%;
   background-position: right;
@@ -193,7 +193,7 @@ const EventBox = styled(motion.div)`
 `;
 const ReserveTitle = styled(motion.p)`
   font-size: 30px;
-  font-family: 'Abril Fatface';
+  font-family: "Abril Fatface";
   color: #806f4e;
 `;
 const ReserveWrapper = styled.div`
@@ -222,7 +222,7 @@ const ReserveImg2 = styled.img`
 const WorldcupWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-top: 50px;
+  margin-top: 60px;
 `;
 const WorldcupImg = styled.img`
   width: 800px;
@@ -253,16 +253,29 @@ const fadeInUp = {
   visible: { opacity: 1, y: 0 },
 };
 const fromLeft = {
-  hidden: { 
+  hidden: {
     opacity: 0,
-    x: -120 
+    x: -120,
   },
-  visible: { 
+  visible: {
     opacity: 1,
     x: 0,
     transition: {
       duration: 0.5,
-    }
+    },
+  },
+};
+const fromRight = {
+  hidden: {
+    opacity: 0,
+    x: 200,
+  },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.5,
+    },
   },
 };
 const fromBottom = {
@@ -313,6 +326,25 @@ function Home() {
     // triggerOnce: true,
     threshold: 0.1,
   });
+  const [worldcupRef, worldcupInView] = useInView({
+    // triggerOnce: true,
+    threshold: 0.1,
+  });
+  const [worldcupBtnRef, worldcupBtnInView] = useInView({
+    // triggerOnce: true,
+    threshold: 0.1,
+  });
+  const [textRef, textInView] = useInView({
+    // triggerOnce: true,
+    threshold: 0.1,
+  });
+  const handleWorldCup = () => {
+    if (userType !== "customer") {
+      swal("Error", "스타일 월드컵은 일반 회원만 가능합니다.", "error");
+      return;
+    }
+    navigate(`/customermypage/${userSeq}`);
+  };
   const fetchLogInData = async (userSeq) => {
     switch (userType) {
       case "customer":
@@ -464,18 +496,19 @@ function Home() {
             transition={{ duration: 0.3 }}
           />
         </EventWrapper>
-            <CenterTitle>・</CenterTitle>
-            <CenterTitle>・</CenterTitle>
-            <CenterTitle>Find Our Style with Chu</CenterTitle>
-            <EventIntro>Chu에서 선보이는 원하는 디자이너 포트폴리오 가상체험</EventIntro>
-            <CenterTitle>・</CenterTitle>
-            <CenterTitle>・</CenterTitle>
-    
+        <CenterTitle>・</CenterTitle>
+        <CenterTitle>・</CenterTitle>
+        <CenterTitle>Find Our Style with Chu</CenterTitle>
+        <EventIntro>
+          Chu에서 선보이는 원하는 디자이너 포트폴리오 가상체험
+        </EventIntro>
+        <CenterTitle>・</CenterTitle>
+        <CenterTitle>・</CenterTitle>
 
         <ReserveWrapper>
           <ReserveImgBox>
-            <ReserveImg src="/img/worldcup4.jpg"/>
-            <ReserveImg2 src="/img/worldcup1.jpg"/>
+            <ReserveImg src="/img/worldcup4.jpg" />
+            <ReserveImg2 src="/img/worldcup1.jpg" />
           </ReserveImgBox>
           <EventText>
             <ReserveTitle
@@ -501,7 +534,7 @@ function Home() {
               initial="hidden"
               animate={consutingInView ? "visible" : "hidden"}
               variants={fromBottom}
-              transition={{ duration: 0.3 }}            
+              transition={{ duration: 0.3 }}
             >
               퍼스널 컨설팅 서비스
             </IntroTitle>
@@ -511,50 +544,77 @@ function Home() {
               initial="hidden"
               animate={consutingInView ? "visible" : "hidden"}
               variants={fromBottom}
-              transition={{ duration: 0.3 }}              
+              transition={{ duration: 0.3 }}
             >
-              예약제 퍼스널 맞춤 헤어스타일 서비스입니다. 
+              예약제 퍼스널 맞춤 헤어스타일 서비스입니다.
             </EventIntro>
           </EventText>
           <EventBox
-              onClick={() => navigate(`/listview`)}
-              ref={reserveBtnRef}
-              initial="hidden"
-              animate={reserveBtnInView ? "visible" : "hidden"}
-              variants={fromBottomBtn}
-              transition={{ duration: 0.3 }}              
+            onClick={() => navigate(`/listview`)}
+            ref={reserveBtnRef}
+            initial="hidden"
+            animate={reserveBtnInView ? "visible" : "hidden"}
+            variants={fromBottomBtn}
+            transition={{ duration: 0.3 }}
           >
             예약하러 가기
           </EventBox>
         </ReserveWrapper>
-        
+
         {/* 월드컵 */}
-          <WorldcupWrapper>
-            <WorldcupImg src="/img/main6.png" />
-            <EventText>
-              <EventTitle>Look & Find</EventTitle>
-              <EventIntro>나만의 헤어스타일 Worldcup 바로가기</EventIntro>
-              <EventIntroTag>#이상형월드컵 #지인들과 함께 #새로운 나</EventIntroTag>
-              <br />
-              <EventBox
-              onClick={() => navigate(`/listview`)}
-              ref={reserveBtnRef}
+        <WorldcupWrapper>
+          <WorldcupImg src="/img/main6.png" />
+          <EventText>
+            <EventTitle
+              ref={worldcupRef}
               initial="hidden"
-              animate={reserveBtnInView ? "visible" : "hidden"}
-              variants={fromBottomBtn}
-              transition={{ duration: 0.3 }}              
-          >
-            스타일 월드컵 입장
-          </EventBox>
-          <EventIntroTag>상담 예약 후 스타일 월드컵을 이용하실 수 있습니다.</EventIntroTag>
-            </EventText>
-          </WorldcupWrapper>
-
+              animate={worldcupInView ? "visible" : "hidden"}
+              variants={fromRight}
+              transition={{ duration: 0.3 }}
+            >
+              Look & Find
+            </EventTitle>
+            <EventIntro
+              ref={worldcupRef}
+              initial="hidden"
+              animate={worldcupInView ? "visible" : "hidden"}
+              variants={fromRight}
+              transition={{ duration: 0.3 }}
+            >
+              나만의 헤어스타일 Worldcup 바로가기
+            </EventIntro>
+            <EventIntroTag
+              ref={worldcupRef}
+              initial="hidden"
+              animate={worldcupInView ? "visible" : "hidden"}
+              variants={fromRight}
+              transition={{ duration: 0.3 }}
+            >
+              #이상형월드컵 #지인들과 함께 #새로운 나
+            </EventIntroTag>
+            <br />
+            <EventBox
+              onClick={handleWorldCup}
+              ref={worldcupRef}
+              initial="hidden"
+              animate={worldcupInView ? "visible" : "hidden"}
+              variants={fromRight}
+              transition={{ duration: 0.3 }}
+            >
+              스타일 월드컵 입장
+            </EventBox>
+            <EventIntroTag
+              ref={textRef}
+              initial="hidden"
+              animate={textInView ? "visible" : "hidden"}
+              variants={fromBottom}
+              transition={{ duration: 0.4 }}
+            >
+              상담 예약 후 스타일 월드컵을 이용하실 수 있습니다.
+            </EventIntroTag>
+          </EventText>
+        </WorldcupWrapper>
       </MainWrapper>
-      
-        
-
-
 
       {/* <MainView /> */}
       {/* <MainView /> */}
