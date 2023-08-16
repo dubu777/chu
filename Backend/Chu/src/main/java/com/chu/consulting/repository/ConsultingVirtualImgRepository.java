@@ -13,7 +13,7 @@ public interface ConsultingVirtualImgRepository extends JpaRepository<Consulting
 
     @Query(value = "SELECT cv.seq, cv.imagePath.uploadImgName" +
             " FROM ConsultingVirtualImg cv" +
-            " WHERE cv.seq = :consultingSeq")
+            " WHERE cv.consulting.seq = :consultingSeq")
     List<ImageDto> getVirtualImagesInfoBySeq(int consultingSeq);
 
     @Modifying
