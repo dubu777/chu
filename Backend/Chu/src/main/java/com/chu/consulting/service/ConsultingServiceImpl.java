@@ -130,6 +130,7 @@ public class ConsultingServiceImpl implements ConsultingService {
         imagePath.setSavedImgName(consultingSeq + "_" + portfolioNum + ".png");
         consultingVirtualImg.setImagePath(imagePath);
         consultingVirtualImg.setDesignerPortfolio(designerPortfolioRepository.findBySeq(portfolioNum));
+        consultingVirtualImg.setIsSelected(false);
 
         consultingVirtualImgRepository.save(consultingVirtualImg);
     }
@@ -331,6 +332,7 @@ public class ConsultingServiceImpl implements ConsultingService {
             for (ConsultingVirtualImg i : imgs) {
 
                 // 상담 결과로 선택된 사진이면
+
                 if (i.getIsSelected()) {
 
                     // 이미지 이름 받아오기
