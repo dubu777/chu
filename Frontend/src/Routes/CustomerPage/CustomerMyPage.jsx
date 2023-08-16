@@ -21,14 +21,14 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
-const InfoContainer = styled.div`
-`;
+const InfoContainer = styled.div``;
 // 고정 프로필바
 const InfoWrapper = styled.div`
   display: flex;
   justify-content: space-around;
   width: 100%;
   background-color: #f8f1d9;
+  height: 300px;
 `;
 const ImgBox = styled.div`
   text-align: center;
@@ -83,14 +83,12 @@ const ChangeBtn = styled(motion.button)`
 //   padding: 10px 0;
 // `;
 
-const Wrapper = styled.div`
+const Wrapper = styled(motion.div)`
   width: 60%;
   margin: 30px auto 10px auto;
 `;
-const FaceBox = styled.div``;
-const FaceImg = styled.img``;
 
-const Box = styled.div`
+const Box = styled(motion.div)`
   border: 0;
   border-top-right-radius: 15px;
   border-bottom-right-radius: 15px;
@@ -263,11 +261,14 @@ function CustomerMyPage() {
     ["customerMyPage", customerSeq],
     () => getCustomerMyPage(customerSeq)
   );
-  const [inViewRef, inView] = useInView({
+  const [futureRef, futureInView] = useInView({
     triggerOnce: true,
     threshold: 0.1, // 요소의 10%가 뷰포트에 들어왔을 때 애니메이션을 시작합니다.
   });
-
+  const [postRef, postInView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1, // 요소의 10%가 뷰포트에 들어왔을 때 애니메이션을 시작합니다.
+  });
   // console.log(data);
 
   const [activeBtn, setActiveBtn] = useState("recent"); // 'recent' or 'designer'
@@ -359,10 +360,10 @@ function CustomerMyPage() {
       return;
     }
     const formData = {
-      "consultingSeq": parseInt(consultingSeq, 10),
-      "isLike": handleLike,
-      "reviewScore": currentRate,
-      "reviewContent": reviewContent,
+      consultingSeq: parseInt(consultingSeq, 10),
+      isLike: handleLike,
+      reviewScore: currentRate,
+      reviewContent: reviewContent,
     };
     console.log(formData);
     try {
@@ -451,7 +452,7 @@ function CustomerMyPage() {
                 onClick={handleImageClick}
                 // src={selectedFile || './icon/profile2.png'}
                 // src={selectedFile || `${BASE_URL}/customer-profile/${data.img}`}
-                src={selectedFile||`${BASE_URL}/customer-profile/${data.img}`}
+                src={selectedFile || `${BASE_URL}/customer-profile/${data.img}`}
                 alt="Profile"
                 // hasFile={selectedFile !== null}
               />
@@ -477,9 +478,19 @@ function CustomerMyPage() {
         </InfoWrapper>
       </InfoContainer>
       {/* 예약 정보 확인하기 */}
-        <ScheduleListImg />
+      <ScheduleListImg
+        initial="hidden"
+        animate="visible"
+        variants={fromBottom}
+        transition={{ duration: 0.5 }}
+      />
       {/* 여기는 탭 작동 */}
-      <Wrapper>
+      <Wrapper
+        initial="hidden"
+        animate="visible"
+        variants={fromBottom}
+        transition={{ duration: 0.5, delay:0.5 }}
+      >
         <ClickBtn
           isActive={activeBtn === "recent"}
           onClick={() => handleBtnClick("recent")}
@@ -492,7 +503,12 @@ function CustomerMyPage() {
         >
           좋아요 한 디자이너
         </ClickBtn>
-        <Box>
+        <Box
+          initial="hidden"
+          animate="visible"
+          variants={fromBottom}
+          transition={{ duration: 0.5 }}
+        >
           {/* 앞의 조건이 true일 때 뒤의 컴포넌트 보여주기 */}
           {activeBtn === "recent" && <ReserveList />}
           {activeBtn === "designer" && <LikeDesigner />}

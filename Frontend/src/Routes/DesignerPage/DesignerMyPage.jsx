@@ -14,7 +14,6 @@ import { useRecoilState } from "recoil";
 import { BASE_URL } from "../../apis/rootUrl";
 import { useInView } from "react-intersection-observer";
 import { motion, useAnimation } from "framer-motion";
-
 const Container = styled.div``;
 
 // 고정 프로필바
@@ -24,19 +23,17 @@ const ProfileWrapper = styled.div`
   width: 100%;
   height: 270px;
   background-color: #f8f1d9;
-  /* background-color: #726f65b6; */
 `;
 const ImgBox = styled.div`
   text-align: center;
-  margin-top: 105px;
+  margin-top: 110px;
 `;
 
 const NameText = styled.h1`
   font-size: 25px;
-  margin-bottom: 5px;
 `;
 const Text = styled.p`
-  margin-bottom: 18px;
+  margin-bottom: 20px;
   font-size: large;
 `;
 const HashTag = styled.button`
@@ -48,9 +45,12 @@ const HashTag = styled.button`
   margin: 3px;
   padding: 2px 15px;
 `;
+const HashTagWrap = styled(motion.div)`
+
+`;
 const InfoBox = styled.div`
   width: 30%;
-  margin-top: 155px;
+  margin-top: 140px;
   margin-left: -120px;
 `;
 const ChangeBox = styled.div`
@@ -136,6 +136,10 @@ const Profile = styled.img`
   border: 7px solid ${(props) => (props.hasFile ? "lightblue" : "transparent")};
   cursor: pointer;
 `;
+const fromBottom = {
+  hidden: { opacity: 0, y: 80 },
+  visible: { opacity: 1, y: 0 },
+};
 function DesignerMyPage() {
   const navigate = useNavigate();
   const { designerSeq } = useParams();
@@ -153,6 +157,11 @@ function DesignerMyPage() {
   const [selectedFile, setSelectedFile] = useState(null);
   const fileInputRef = useRef(null);
   const [file, setFile] = useState();
+
+  const [inViewRef, inView] = useInView({
+  triggerOnce: true,
+  threshold: 0.1, // 요소의 10%가 뷰포트에 들어왔을 때 애니메이션을 시작합니다.
+  });
 
 
   if (isLoading) {
@@ -236,9 +245,17 @@ function DesignerMyPage() {
                 </TextArea>
               </EditBox>
           </introductionWrapper>
+          <HashTagWrap
+                  ref={inViewRef}
+                  initial="hidden"
+                  animate={inView ? "visible" : "hidden"}
+                  variants={fromBottom}
+                  transition={{ duration: 0.5 }}
+          >
           {data.hairStyleTag.map((word, index) => (
             <HashTag key={index}> #{word} </HashTag>
           ))}
+          </HashTagWrap>
         </InfoBox>
 
         <ChangeBox>
@@ -253,7 +270,7 @@ function DesignerMyPage() {
         initial="hidden"
         animate={inView ? "visible" : "hidden"}
         variants={fromBottom}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.5, delay: 0.4 }}
       >
         <ClickBtn
           isActive={activeBtn === "calendar"}
