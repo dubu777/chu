@@ -18,22 +18,43 @@ import { Link } from 'react-router-dom';
 const Container = styled.div`
   /* height: 100vh; */
   width: 100%;
-  background-color: #ffffff;
+  background-color: #fbfaf8;
+  padding-top: 40px;
 `;
 
 const Header = styled.div`
   height: 6vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   padding: 0 50px;
   justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 10px;
+`;
+const Title = styled.p`
+    margin-top: 10px;
+    font-size: 30px;
+    font-family: "Abril Fatface";
+    text-align: center;
+    color: #2a2827;
 `;
 
-const StudyTitle = styled.p`
-  color: #4f4d4b;
-  font-size: 20px;
-  font-weight: 500;
+const TitleVerse = styled.p`
+    display: flex;
+    justify-content: center;
+    /* margin-top: 10px; */
+    font-size: 50px;
+    font-family: "Abril Fatface";
+    text-align: center;
+    align-items: center;
+    color: #2a2827;
 `;
+// const Title = styled.p`
+//   color: #4f4d4b;
+//   font-size: 20px;
+//   font-weight: 500;
+// `;
 
 const Middle = styled.div`
   width: 100%;
@@ -69,22 +90,27 @@ const Chat = styled.div`
 
 // 중심 
 const VideoContainer = styled.div`
-  width: 90%;
+  width: 100%;
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   /* overflow: hidden; */
-  justify-content: center;
+  justify-content: space-around;
   text-align: center;
   /* border: 2px solid lightgray; */
+  border-radius: 0.4rem;
+  padding: 20px 10px 20px 0px;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+    2px 4px 30px -4px rgb(0 0 0 / 0.1);
 `;
 const LeftBox = styled.div`
   display: flex;
+  width: 240px;
   /* flex-direction: column; */
   /* justify-content: center;
   align-items: center; */
   border-radius: 0.4rem;
-  padding-right: 20px;
-  background-color: #3e3d3b;
+  /* padding-right: 20px; */
+  background-color: rgba(146, 132, 104, 0.1);
 `;
 const RightBox = styled.div`
   /* border: 2px solid red; */
@@ -92,13 +118,12 @@ const RightBox = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* align-items: center; */
-  padding: 10px;
-  margin-top: 30px;
+  /* padding: 10px; */
+  margin-top: 5px;
   border-radius: 0.4rem;
-  background-color: #fffdf6;
-  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
-    2px 4px 30px -4px rgb(0 0 0 / 0.1);
+  /* background-color: #fffdf6; */
+  /* box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+    2px 4px 30px -4px rgb(0 0 0 / 0.1); */
 `;
 const ConsultBox = styled.div`
   width : 90%;
@@ -110,29 +135,62 @@ const ConsultBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 20px;
+  margin-top: 10px;
 `;
 const Show = styled.div`
   background-color: white;
   width: 100px;
   height: 100px;
 `;
+const TextWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+`;
+const InfoTitle = styled.div`
+  display: flex;
+  border: 2px solid #8c86749e;
+  width: 720px;
+  height: 100px;
+  padding: 10px 20px;
+  border-radius: 0.5rem;
+  align-items: center;
+
+`;
 const StageText = styled.div`
-  font-size  : 25px;
-  width: 150px;
-  height: 40px;
+  display: flex;
+  justify-content: center;
+  font-size  : 20px;
+  width: 100px;
+  height: 100px;
   border: 0;
-  padding-top: 5px;
-  background-color: #ffc549;
-  border-radius: 1rem;
+  background-color: #dbccac;
+  border-radius: 50%;
   text-align: center;
   align-items: center;
+  font-family: "Apple-B";
+  margin-top: -35px;
+  margin-left: -70px;
+  margin-bottom: 5px;
 `;
 const RoundText = styled.div`
-      font-size  : 18px;
+    display: flex;
+    justify-content: center;
+    border-radius: 50%;
+    width: 75px;
+    height: 75px;
+    text-align: center;
+    align-items: center;
+    font-size  : 15px;
+    font-family: "Apple-B"; 
+    background-color: #777267;
+    color: white;
+    margin-top: 55px;
+    margin-left: -50px;
+    /* margin-bottom: 30px; */
 `;
 const HeartBox = styled.div`
-    margin: 10px;
+    margin: 20px 10px 10px 10px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -151,25 +209,35 @@ const EndImageBox = styled.div`
     /* margin-left: 100px; */
 `;
 const ImgWrapper = styled.div`
+    width: 100%;
+/* border: 2px solid black; */
   display  : flex;
-  justify-content: center;
-  /* justify-content: space-around; */
+  justify-content: space-around;
 `;
 const LeftImageBox = styled.div`
+    margin-right: 20px;
     display: flex;
-    justify-content: space-between;
-    padding: 60px 100px 40px 100px;
+    justify-content: space-around;
+    padding: 20px;
     flex-direction: column;
-    background-color: aliceblue;
+    background-color: #ffffffcc;
+    border-radius: 0.4rem;
     /* padding-left: 100px; */
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+    2px 4px 30px -4px rgb(0 0 0 / 0.1);
 `;
 const RightImageBox = styled.div`
+    margin-left: 20px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
+    padding: 20px;
     flex-direction: column;
-    padding: 60px 100px 40px 100px;
-    /* background-color: #c4e4d8; */
-    /* margin-left: 100px; */
+    border-radius: 0.4rem;
+    background-color: #ffffffcc;
+    /* padding-left: 100px; */
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+    2px 4px 30px -4px rgb(0 0 0 / 0.1);
+
 `;
 const Img = styled.img`
     width: 100px;
@@ -195,7 +263,7 @@ const WinIcon = styled.img`
 `;
 const ResultImg = styled.img`
     width: 100%;
-  height: 350px;
+  height: 300px;
   border-radius: 0.4rem;
   animation: rotate_image 6s linear infinite;
   transform-origin: 50% 50%;
@@ -208,13 +276,14 @@ const ResultImg = styled.img`
 `;
 
 const StreamContainerWrapper = styled.div`
-  display: grid;
+  /* display: grid; */
+
   /* place-items: center; */
-  /* display: flex; */
-  /* flex-direction: column; */
-  margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+  /* margin-left: 20px; */
   /* margin-top: 10px; */
-  padding-top: 10px;
+  padding: 22px 10px 10px 30px;
   ${(props) =>
         props.primary
             ? `
@@ -248,6 +317,7 @@ const Bottom = styled.div`
   justify-content: center;
   position: relative;
   align-items: center;
+  /* background-color: #dbccac; */
 `;
 
 const BottomBox = styled.div`
@@ -308,9 +378,9 @@ const JoinInput = styled.input`
     }
 `;
 const Hr = styled.hr`
-  color  : beige;
-  opacity: 50%;
-  width: 80%;
+  border: 1px solid;
+  color  : #b6ae96;
+  width: 25%;
 `;
 const StartText = styled.h1`
     margin-bottom: 40px;
@@ -349,6 +419,12 @@ const JoinBox = styled.div`
 `;
 const MarginBox = styled.div`
   height: 10px;
+`;
+
+const EndHr = styled.hr`
+  margin-top: 30px;
+  width: 99%;
+  border: 1px solid #99917eb2;
 `;
 
 // 로컬 미디어 서버 주소
@@ -723,9 +799,10 @@ class WorldCupRoom extends Component {
         return (
             <Container>
                 <Header>
-                    <StudyTitle>Chu WorldCup 🏆</StudyTitle>
+                    <Title>Chu WorldCup</Title>
+                    <Hr />
                 </Header>
-                <Hr />
+                
                 <div className="container">
                     {this.state.session === undefined ? (
                         <Backdrop show={true}>
@@ -780,13 +857,16 @@ class WorldCupRoom extends Component {
                                             alt="Current"
                                             // 클릭하면 박수치게
                                         />
-                                        <WinIcon src="/icon/win/png"/>
+                                        <WinIcon src="/icon/win.png"/>
                                     </EndImageBox>
                                 ) : (
                                     <>
                                     {/* 월드컵 진행 과정 */}
+                                      <TextWrapper>
+                                        <InfoTitle>지인들과 함께 가장 어울리는 헤어스타일을 찾아보세요 :)</InfoTitle>
                                         <StageText>Stage {this.state.stage}</StageText>
-                                        <RoundText>Round : {this.state.round}</RoundText>
+                                        <RoundText>Round:{this.state.round}</RoundText>
+                                      </TextWrapper>
                                         <ImgWrapper>
                                         <LeftImageBox>
                                             <ResultImg 
@@ -799,7 +879,7 @@ class WorldCupRoom extends Component {
                                                 <ClickNumText>{this.state.clickCount[this.state.useImages[this.state.curLeftIndex]]}</ClickNumText>   
                                             </HeartBox>
                                         </LeftImageBox>
-                                            {/* <Hr/> */}
+                                           <TitleVerse>Vs</TitleVerse>
                                         <RightImageBox>
                                             <ResultImg src={`https://i9b111.q.ssafy.io/api/consulting-images/confusion/${this.state.resultimgs[this.state.useImages[this.state.curRightIndex]]}`}
                                                 alt="Current"
@@ -811,6 +891,7 @@ class WorldCupRoom extends Component {
                                             </HeartBox>
                                         </RightImageBox>
                                         </ImgWrapper>
+                                        <EndHr/>
                                     </>
                                 )}
 

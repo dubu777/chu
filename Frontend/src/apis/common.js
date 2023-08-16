@@ -97,6 +97,7 @@ export const createNotification = async (consultingSeq, userType) => {
       "consultingSeq": consultingSeq,
       "userType": userType,
     })
+    console.log("알림 생성",consultingSeq,userType );
     return response.data.status;
   } catch (error) {
     throw new Error("알림 생성 실패", error)

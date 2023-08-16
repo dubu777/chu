@@ -58,7 +58,7 @@ function MapView() {
         const container = document.getElementById('map');
 
         const options = {
-          center: new kakao.maps.LatLng(36.3472301, 127.2957758539), // 지도 중심좌표
+          center: new kakao.maps.LatLng(36.3549467, 127.2998099),
           level: 3
         };
 

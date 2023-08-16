@@ -233,7 +233,6 @@ function ReserveList() {
   };
 
 
-
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -255,7 +254,7 @@ function ReserveList() {
               <Box>
                 <ProfileBox>
                   {/* <DesignerImg src={data.designerImg}/> */}
-                  <DesignerImg src= {`https://i9b111.q.ssafy.io/api/designer-profile/${data.designerImg}}`}/>
+                  <DesignerImg src= {`https://i9b111.q.ssafy.io/api/designer-profile/${data.designerImg}`}/>
                   <StarBox>
                     <Icon src="/icon/star.png"/>
                     <BoldText>{data.allReviewScore}</BoldText>

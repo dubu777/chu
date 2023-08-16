@@ -163,7 +163,6 @@ function DesignerMyPage() {
   threshold: 0.1, // 요소의 10%가 뷰포트에 들어왔을 때 애니메이션을 시작합니다.
   });
 
-
   if (isLoading) {
     return <div>Loading...</div>;
   }

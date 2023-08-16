@@ -10,7 +10,8 @@ import { useQuery } from "react-query";
 import { getAllReserveList } from "../../apis"
 import { getSessionId } from "../../apis/openvidu"
 import { BASE_URL } from "../../apis/rootUrl";
-
+import { createNotification, getCustomerMyPage, reservationCancel } from "../../apis";
+import Swal from 'sweetalert2';
 
 const Container = styled.div`
   /* display: flex; */
@@ -214,7 +215,7 @@ function AllReserveList() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [sessionId, setSessionId] = useRecoilState(sessionIdState);
-
+  const userType = localStorage.getItem('userType')
   const openModal = (item) => {    // 모달 열기
     setSelectedItem(item);
     setIsModalOpen(true);
@@ -248,8 +249,34 @@ function AllReserveList() {
   //     navigate(`/viduroom/${sessionId}`);
   //   }
   // }, [sessionId]);
-
-  const { data, isError, isLoading } = useQuery(
+  const handleCancel = async (consultingSeq) => {
+    try {
+      const result = await Swal.fire({
+        title: '상담을 취소하시겠습니까?',
+        text: "취소한 상담은 복구할 수 없습니다.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: '네',
+        cancelButtonText: '아니요'
+      });
+  
+      // '네' 버튼을 눌렀을 경우에만 로직을 실행
+      if (result.isConfirmed) {
+        // 알림 생성
+        const notificationResult = await createNotification(consultingSeq, userType);
+        console.log(notificationResult, "알림생성");
+    
+        // 상담 취소
+        const reservationResult = await reservationCancel(consultingSeq);
+        console.log(reservationResult, "상담취소");
+        refetch();
+      }
+      } catch (error) {
+        console.error("API 호출 실패", error);
+      }
+    
+  }
+  const { data, isError, isLoading, refetch } = useQuery(
     ['allReserveList', designerSeq],
     () => getAllReserveList(designerSeq)
   );
@@ -299,6 +326,9 @@ function AllReserveList() {
                 <EnterBtn onClick={() => moveToWrapper(item.consultingSeq)}>
                   {/* <Link to={{ pathname: '/viduroom', state: { sessionData: 'sessionId' } }}>상담 입장</Link> */}
                   상담입장</EnterBtn>
+              </Box>
+              <Box>
+                <ModalBtn onClick={() => handleCancel(item.consultingSeq)}>상담 취소</ModalBtn>
               </Box>
               {/* 모달 */}
               {isModalOpen && selectedItem && (
