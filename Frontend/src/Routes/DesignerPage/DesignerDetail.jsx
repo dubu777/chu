@@ -17,16 +17,23 @@ import Swal from 'sweetalert2';
 const Container = styled.div`
   margin-top: 60px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: rgba(230, 227, 227, 0.3);
 `;
 
+const TitleText = styled.span`
+  font-family: 'Abril Fatface';
+  font-size: 30px;
+  margin-top: 30px;
+`
+
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   width: 50vw;
-  margin: 40px 0;
+  margin: 20px 0;
   border-radius: 10px;
   padding: 30px 20px;
   background-color: white;
@@ -380,6 +387,9 @@ function DesignerDetail() {
 
   return (
     <Container>
+      <TitleText>
+        Designer Detail
+      </TitleText>
       <Wrapper>
         <Wrap>
           <InfoWrapper>
