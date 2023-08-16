@@ -76,7 +76,7 @@ const NotificationList = styled.div`
   position: absolute;
   width: 300px;
   right: -10px;
-  background-color: white;
+  background-color: #f2f2f2;
   border: 1px solid #ccc;
   overflow: auto;
   max-height: 300px;
@@ -86,7 +86,7 @@ const NotificationList = styled.div`
 const NotificationItem = styled.div`
   padding: 10px;
   border-bottom: 1px solid #979797;
-  font-size: 18px;
+  font-size: 16px;
   cursor: pointer;
   &:hover {
     background-color: #f0f0f0;
@@ -98,6 +98,7 @@ const NotificationItem = styled.div`
 const DateWrap = styled.div`
   display: flex;
   justify-content: space-between;
+  font-size: 15px;
 `;
 
 const Img = styled.img`
@@ -275,13 +276,15 @@ function Header() {
                     .map((notification) => (
                       <NotificationItem
                         key={notification.alertSeq}
-                        onClick={() =>
-                          handleReadNotification(notification.alertSeq)
-                        }
+
                       >
                         <DateWrap>
                           {notification.pushDate}
-                          <ReadBtn>읽기</ReadBtn>
+                          <ReadBtn
+                                                  onClick={() =>
+                                                    handleReadNotification(notification.alertSeq)
+                                                  }
+                          >읽기</ReadBtn>
                         </DateWrap>
                         <Hr />
                         {userType === "designer"
