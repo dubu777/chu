@@ -11,7 +11,7 @@ export const customerlogIn = async (username, password) => {
       "pwd" : password
     });
     // 서버로부터 받은 토큰을 반환
-    console.log("Server Response:", response.data);
+    // console.log("Server Response:", response.data);
     return response.data.result;
   } catch (error) {
     throw new Error('로그인 실패'); 

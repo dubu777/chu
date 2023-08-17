@@ -120,7 +120,7 @@ function LogIn() {
         result = await designerlogIn(username, password);
       }
 
-      console.log("Result:", result);
+      // console.log("Result:", result);
       setAccessToken(result.token.accessToken);
       localStorage.setItem("userSeq", result.userSeq.toString());
       localStorage.setItem("userType", userType);
