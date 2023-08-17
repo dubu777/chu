@@ -458,6 +458,14 @@ public class DesignerDetailServiceImpl implements DesignerDetailService {
             dto.setConsultingDate(c.getConsultingDate().getDate());
             dto.setConsultingMemo(c.getMemo());
             dto.setOriginImg(c.getImagePath().getUploadImgName());
+//            dto.setCancelDate(c.getCancelDate().toString());
+
+            String cancelDate = null;
+            if(c.getCancelDate() == null)
+                cancelDate = null;
+            else cancelDate = c.getCancelDate().toString();
+            dto.setCancelDate(cancelDate);
+
 
             Customer customer = customerRepository.getCustomerBySeq(c.getCustomer().getSeq());
 
