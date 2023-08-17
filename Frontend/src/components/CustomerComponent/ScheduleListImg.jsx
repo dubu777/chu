@@ -108,6 +108,13 @@ const ReservBtnVariant = {
   }
 }
 
+const None = styled.div`
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+`;
 function ScheduleListImg({initial, animate, variants, transition}){
   const customerSeq = localStorage.getItem("userSeq");
   const userType = localStorage.getItem('userType')
@@ -159,68 +166,68 @@ function ScheduleListImg({initial, animate, variants, transition}){
   }
   console.log(data, "고객 마이페이지 조회`");
   return (
-    <ReserveWrapper
-    initial={initial}
-    animate={animate}
-    variants={variants}
-    transition={transition}
-    >
-      <Container>
-        {data &&
-          data.responseFutureConsultingDtoList &&
-          data.responseFutureConsultingDtoList
-          .filter(item => item.cancelDate === null)
-          .map((data) => (
-            <ReservBox>
-              <Wrap>
-                <Wrapper>
+    <ReserveWrapper 
+    initial={initial} 
+    animate={animate} 
+    variants={variants} 
+    transition={transition}>
+  <Container>
+    {data && data.responseFutureConsultingDtoList && data.responseFutureConsultingDtoList.length > 0 ? (
+      data.responseFutureConsultingDtoList
+        .filter(item => item.cancelDate === null)
+        .map((data) => (
+          <ReservBox key={data.consultingSeq}>
+            <Wrap>
+              <Wrapper>
+                <Box>
+                  <DesignerImg
+                    src={`${BASE_URL}/designer-profile/${data.designerImg}`}
+                    onClick={() => navigate(`/designerdetail/${data.designerSeq}`)}
+                  />
+                </Box>
+                <InfoBox>
+                  <Name
+                    onClick={() => navigate(`/designerdetail/${data.designerSeq}`)}
+                  >
+                    {data.name}
+                  </Name>
+                  <DateText>{data.consultingDate} {data.consultingStartTime}</DateText>
                   <Box>
-                    <DesignerImg
-                      src={`${BASE_URL}/designer-profile/${data.designerImg}`}
-                    />
-                  </Box>
-                  <InfoBox>
-                    <Name
-                    >
-                      {data.name}
-                    </Name>
-                    <DateBox>
-                    <DateText>{data.consultingDate}</DateText>
-                    <DateText>{`${data.consultingStartTime.slice(0, 2)}시 ${data.consultingStartTime.slice(3, 5)}분`}</DateText>
-                    </DateBox>
-                    <Box>
-                      <ReservBtn
-                        variants={ReservBtnVariant}
-                        initial="nomal"
-                        whileHover="hover"
+                    <ReservBtn
+                      variants={ReservBtnVariant}
+                      initial="nomal"
+                      whileHover="hover"
                       onClick={() => moveToWrapper(data.consultingSeq)}
-                      >
-                        상담 참여
-                      </ReservBtn>
-                      <ReservBtn
-                        variants={ReservBtnVariant}
-                        initial="nomal"
-                        whileHover="hover"
-                        onClick={() => handleCancel(data.consultingSeq)}
-                        >
-                        상담 취소
-                        </ReservBtn>
-                      <ReservBtn
-                        variants={ReservBtnVariant}
-                        initial="nomal"
-                        whileHover="hover"
-                        onClick={() => navigate(`/worldcuproom/${data.consultingSeq}`)}>
-                        헤어스타일 월드컵
-                      </ReservBtn>
-                    </Box>
-                  </InfoBox>
-                </Wrapper>
-              </Wrap>
-              <Hr className='separator'/>
-            </ReservBox>
-          ))}
-      </Container>
-    </ReserveWrapper>
+                    >
+                      상담 참여
+                    </ReservBtn>
+                    <ReservBtn
+                      variants={ReservBtnVariant}
+                      initial="nomal"
+                      whileHover="hover"
+                      onClick={() => handleCancel(data.consultingSeq)}
+                    >
+                      상담 취소
+                    </ReservBtn>
+                    <ReservBtn
+                      variants={ReservBtnVariant}
+                      initial="nomal"
+                      whileHover="hover"
+                      onClick={() => navigate(`/worldcuproom/${data.consultingSeq}`)}>
+                      헤어스타일 월드컵
+                    </ReservBtn>
+                  </Box>
+                </InfoBox>
+              </Wrapper>
+            </Wrap>
+            <Hr className='separator'/>
+          </ReservBox>
+        ))
+    ) : (
+      <None>예약내역이 존재하지 않습니다.</None>
+    )}
+  </Container>
+</ReserveWrapper>
   );
 };
 

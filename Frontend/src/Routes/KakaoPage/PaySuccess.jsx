@@ -10,7 +10,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 70vw;
+  width: 60vw;
   height: 700px;
   margin: 65px auto; 
   background-color: rgba(146, 132, 104, 0.07);
@@ -20,15 +20,17 @@ const EventText = styled.p`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 `;
 const EventTitle = styled.p`
-  font-size: 60px;
+  font-size: 50px;
   margin-bottom: 25px;
   font-family: "Abril Fatface";
 `;
 const EventIntroTag = styled.p`
-  font-size: 17px;
-  margin-bottom: 5px;
+  font-size: 15px;
+  margin-top: 10px;
+  /* margin-bottom: 5px; */
 `;
 
 const EventBox = styled(motion.div)`
@@ -39,7 +41,7 @@ const EventBox = styled(motion.div)`
   color: white;
   justify-content: center;
   align-items: center;
-  margin-top: 25px;
+  margin-top: 5px;
   margin-bottom: 30px;
   font-size: 22px;
   cursor: pointer;
@@ -55,7 +57,7 @@ const EventBox = styled(motion.div)`
 `;
 const EventIntro = styled(motion.p)`
   font-size: 22px;
-  margin-bottom: 5px;
+  margin-bottom: 25px;
   font-family: "Pretendard-Regular";
   text-align: center;
 `;
@@ -67,7 +69,11 @@ const MainWrapper = styled.div`
 
   /* box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); */
 `;
-
+const Img  = styled.img`
+  width: 50px;
+  height: 50px;
+  margin-bottom: 20px;
+`;
 const SuccessBox = styled.div`
   display: flex;
 `;
@@ -112,7 +118,8 @@ function PaySuccess() {
     <Container>
       <MainWrapper>
         <EventText>
-          <EventTitle>Success Reservation</EventTitle>
+          <EventTitle>Complete <br/> Reservation</EventTitle>
+          <Img src="/icon/complete.png"/>
           <EventIntro>결제완료</EventIntro>
           <EventIntroTag>상담 예약이 확정되었습니다.</EventIntroTag>
           <EventBox onClick={handleComplete}>예약 확인 하기</EventBox>
