@@ -235,7 +235,7 @@ function DesignerMyPage() {
         </ImgBox>
 
         <InfoBox>
-          <Text>{data.cost}</Text>
+          <Text>{data.cost} ₩</Text>
           <Text>{data.email}</Text>
           <introductionWrapper>
               <EditBox>
