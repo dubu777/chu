@@ -80,7 +80,7 @@ const Title = styled.p`
   margin-bottom: 15px;
 `;
 const Name = styled.span`
-  font-size: 15px;
+  font-size: 16px;
   font-weight: bold;
 `;
 
@@ -120,7 +120,7 @@ const ResultBtn = styled(motion.button)`
 const Text = styled.span`
   font-size: 14px;
   /* font-weight: bold; */
-  text-align: center;
+  /* text-align: center; */
   margin-right: 5px;
 `;
 const BoldText = styled.span`
@@ -131,7 +131,7 @@ const BoldText = styled.span`
 const CommentBox = styled.div`
 width: 350px;
 display: flex;
-/* justify-content: center; */
+justify-content: start;
 align-items: center;
 margin: 20px 0px 10px 0px;
 `;
@@ -293,7 +293,7 @@ function ReserveList() {
                   <Box>
                     <ReviewBox>
                     <CommentBox>
-                      <Text>"{data.reviewContent}"</Text>
+                      <Text>{data.reviewContent}</Text>
                     </CommentBox>
                     <StarBox>
                       <Text>나의 평점 </Text>
