@@ -170,8 +170,10 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
         List<Consulting> futureConsulting = new ArrayList<>();
 
         for(Consulting c : allConsultings){
-            if(c.getReview() == null)
+            if(c.getReview().getReviewContent() == null){
                 futureConsulting.add(c);
+            }
+
         }
 
         for(Consulting c : futureConsulting){
@@ -215,8 +217,10 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
         // 상담 후기 있으면 과거 상담으로
         List<Consulting> pastConsulting = new ArrayList<>();
         for(Consulting c : allConsultings){
-            if(c.getReview() != null)
+            if(c.getReview().getReviewContent() != null){
                 pastConsulting.add(c);
+            }
+
         }
 
         for(Consulting c : pastConsulting){
