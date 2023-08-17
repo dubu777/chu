@@ -56,7 +56,7 @@ const DesignerInfoBox = styled.div`
   margin-bottom: 20px;
 `;
 const DesignerImgBox = styled.div`
-  width: 150px;
+  width: 180px;
   height: 180px;
   margin-right: 10px;
   margin-left: 5px;
