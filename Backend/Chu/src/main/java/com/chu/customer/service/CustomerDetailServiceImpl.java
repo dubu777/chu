@@ -164,7 +164,15 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
         // 8) futureConsulting setting
         List<ResponseFutureConsultingDto> list8 = new ArrayList<>();
 
-        List<Consulting> futureConsulting = consultingRepository.getFutureConsulting(LocalDate.now().toString(), customerSeq);
+        // 상담 후기 없으면 미래 상담으로
+        //List<Consulting> futureConsulting = consultingRepository.getFutureConsulting(LocalDate.now().toString(), customerSeq);
+        List<Consulting> allConsultings = consultingRepository.getAllConsulting();
+        List<Consulting> futureConsulting = new ArrayList<>();
+
+        for(Consulting c : allConsultings){
+            if(c.getReview() == null)
+                futureConsulting.add(c);
+        }
 
         for(Consulting c : futureConsulting){
             ResponseFutureConsultingDto dto = new ResponseFutureConsultingDto();
@@ -202,7 +210,14 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
         // 9) past consulting setting
         List<ResponsePastConsultingDto> list9 = new ArrayList<>();
 
-        List<Consulting> pastConsulting = consultingRepository.getPastConsulting(LocalDate.now().toString(), customerSeq);
+        //List<Consulting> pastConsulting = consultingRepository.getPastConsulting(LocalDate.now().toString(), customerSeq);
+
+        // 상담 후기 있으면 과거 상담으로
+        List<Consulting> pastConsulting = new ArrayList<>();
+        for(Consulting c : allConsultings){
+            if(c.getReview() != null)
+                pastConsulting.add(c);
+        }
 
         for(Consulting c : pastConsulting){
             ResponsePastConsultingDto dto = new ResponsePastConsultingDto();
