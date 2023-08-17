@@ -166,7 +166,7 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
 
         // 상담 후기 없으면 미래 상담으로
         //List<Consulting> futureConsulting = consultingRepository.getFutureConsulting(LocalDate.now().toString(), customerSeq);
-        List<Consulting> allConsultings = consultingRepository.getAllConsulting();
+        List<Consulting> allConsultings = consultingRepository.getAllConsulting(customerSeq);
         List<Consulting> futureConsulting = new ArrayList<>();
 
         for(Consulting c : allConsultings){
