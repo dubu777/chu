@@ -121,18 +121,20 @@ s
 
 /* 오늘 날짜 */
 .react-calendar__tile--now {
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 50px;
   background: #7d7c786f;
   color: white;
-  border-radius: 100%;
+  border-radius: 50%;
 }
 
 .react-calendar__tile--now:enabled:hover,
 .react-calendar__tile--now:enabled:focus {
-  background: #7d7c78;
+  width: 30px;
+  height: 50px;
+  background: #a9a49c;
   color: white;
-  border-radius: 100%;
+  border-radius: 50%;
 }
 
 .react-calendar__tile--hasActive {
@@ -142,11 +144,11 @@ s
 .react-calendar__tile--hasActive:enabled:hover,
 .react-calendar__tile--hasActive:enabled:focus {
   background: #f9e5b6;
-  border-radius: 100%;
+  border-radius: 50%;
 }
 
 .react-calendar__tile--active {
-  border-radius: 100%;
+  border-radius: 50%;
   border: 3px solid ;
   border-color: #febf00;
   background-color: white;
@@ -155,7 +157,7 @@ s
 
 .react-calendar__tile--active:enabled:hover,
 .react-calendar__tile--active:enabled:focus {
-  border-radius: 100%;
+  border-radius: 50%;
   border: 3px solid ;
   border-color: #ffe598c5;
   background-color: rgb(255, 236, 201);
