@@ -60,6 +60,10 @@ public interface ConsultingRepository extends JpaRepository<Consulting, Integer>
     @Query("SELECT c FROM Consulting c WHERE c.consultingDate.date < :now and c.customer.seq = :customerSeq")
     List<Consulting> getPastConsulting(String now, int customerSeq);
 
+    // 모든 상담 받아오기
+    @Query("SELECT c FROM Consulting c")
+    List<Consulting> getAllConsulting();
+
 
 //    String participantConsulting(int consultingSeq);
 //
