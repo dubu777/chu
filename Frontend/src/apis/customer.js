@@ -31,6 +31,7 @@ export const attachCustomerImage = async (seq, formData) => {
 // 고객 마이페이지 조회(최근 상담 내역 포함)
 export const getCustomerMyPage = async (customerSeq) => {
   try {
+    console.log('고객마이페이지')
     const response = await axios.get(
       `${BASE_URL}/customer/detail/mypage/${customerSeq}`
     );
