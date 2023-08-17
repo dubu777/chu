@@ -90,6 +90,7 @@ const Wrapper = styled(motion.div)`
 `;
 
 const Box = styled(motion.div)`
+
   border: 0;
   border-top-right-radius: 15px;
   border-bottom-right-radius: 15px;
@@ -102,8 +103,8 @@ const Box = styled(motion.div)`
 const ClickBtn = styled.button`
   height: 40px;
   padding: 0px 15px;
-  border-bottom-color: white;
-  border: 2px solid white;
+  border-bottom-color: #f9f5f0;
+  border: 2px solid #f9f5f0;
   background-color: ${({ isActive }) => (isActive ? "#F9F5F0" : "#F2EAD3")};
   border-left-color: ${({ isActive }) => (isActive ? "#645D51" : "#F2EAD3")};
   border-top-color: ${({ isActive }) => (isActive ? "#645D51" : "#F2EAD3")};

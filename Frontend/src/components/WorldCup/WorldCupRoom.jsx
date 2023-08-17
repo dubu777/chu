@@ -938,10 +938,11 @@ class WorldCupRoom extends Component {
                         >
                             {this.state.isSpeaker ? <HeadsetIcon /> : <HeadsetOffIcon />}
                         </Icon>
-
-                        <Icon primary onClick={this.leaveSession}>
-                        <Link to="/"><CallEndIcon /></Link>
-                        </Icon>
+                        <Link to="/">
+                            <Icon primary onClick={this.leaveSession}>
+                                <CallEndIcon />
+                            </Icon>
+                        </Link>
                     </BottomBox>
                     <ChatIconBox
                         onClick={() => this.setState({ isChat: !this.state.isChat })}

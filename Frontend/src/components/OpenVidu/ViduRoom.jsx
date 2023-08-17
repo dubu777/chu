@@ -22,13 +22,22 @@ const Container = styled.div`
   width: 100%;
   background-color: #fffdf5;
 `;
-
+const Title = styled.div`
+    margin-top: 45px;
+    margin-bottom: 20px;
+    padding-top: 10px;
+    font-size: 30px;
+    font-family: "Abril Fatface";
+    text-align: center;
+    color: #2a2827;
+`;
 const Header = styled.div`
   height: 6vh;
   display: flex;
   align-items: center;
   padding: 0 50px;
   justify-content: center;
+  margin-bottom: 10px;
 `;
 
 const StudyTitle = styled.p`
@@ -103,7 +112,7 @@ const RightBox = styled.div`
     2px 4px 30px -4px rgb(0 0 0 / 0.1);
 `;
 const ConsultBox = styled.div`
-  width: 90%;
+  width: 60%;
   height: 350px;
   background-color: black;
   /* margin-left: 100px; */
@@ -237,6 +246,7 @@ const Hr = styled.hr`
   color: beige;
   opacity: 50%;
   width: 80%;
+  text-align: center;
 `;
 const StartText = styled.h1`
   margin-bottom: 40px;
@@ -613,7 +623,7 @@ class ViduRoom extends Component {
     return (
       <Container>
         <Header>
-          <StudyTitle>Hair Consulting</StudyTitle>
+          <Title>Chu Hair Consulting</Title>
         </Header>
         <Hr />
         <div className="container">

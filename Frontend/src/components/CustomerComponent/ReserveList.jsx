@@ -18,7 +18,8 @@ const Container = styled.div`
 `;
 const Hr = styled.div`
   /* margin: 20px 0 20px 0; */
-  border-bottom : 2px solid rgba(0, 0, 0, 0.1);
+  border-bottom : 1px solid rgba(0, 0, 0, 0.1);
+  width: 100%;
 
 `;
 const Wrap = styled.div`
@@ -44,6 +45,8 @@ const Wrapper = styled.div`
 `;
 const Box = styled.div`
   display: flex;
+`;const DateBox = styled.div`
+display: flex;
 `;
 const ReviewBox =styled.div`
   display: flex;
@@ -67,8 +70,15 @@ const ProfileBox = styled.div`
   margin: 0 10px;
   align-items: center;
 `;
+
+const Title = styled.p`
+  text-align: center;
+  font-family: 'Abril Fatface';
+  font-size: 40px;
+  margin-bottom: 15px;
+`;
 const Name = styled.span`
-  font-size: 13px;
+  font-size: 15px;
   font-weight: bold;
 `;
 
@@ -83,16 +93,17 @@ const StarBox = styled(motion.div)`
   align-items: center;
 `;
 const Time = styled.span`
-  margin-top: 10px;
+  margin-top: 20px;
   font-size: 14px;
   font-weight: bold;
   text-align: center;
 `;
 const Day = styled.span`
-  margin-top: 10px;
+  margin-top: 20px;
   font-size: 14px;
   font-weight: bold;
   text-align: center;
+  margin-right: 10px;
 `;
 const ResultBtn = styled(motion.button)`
   font-size: 16px;
@@ -116,6 +127,7 @@ const BoldText = styled.span`
   text-align: center;
 `;
 const CommentBox = styled.div`
+width: 350px;
 display: flex;
 /* justify-content: center; */
 align-items: center;
@@ -130,23 +142,23 @@ const Overlay = styled(motion.div)`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.6);
+  background-color: rgba(0, 0, 0, 0.723);
   /* opacity: 0; */
 `;
 const BigModal = styled(motion.div)`
   position: absolute;
   width: 40vw;
-  height: 45vh;
+  height: 56vh;
   left: 0;
   right: 0;
   margin: 0 auto;
-  border-radius: 15px;
+  border-radius: 0.4rem;
   overflow: hidden;
-  background-color: rgb(242,234,211);
+  background-color: rgb(247, 242, 227);
 `;
 const InfoText = styled.span`
   font-size: 14px;
-  margin-bottom: 10px;
+  margin-bottom: 13px;
   font-weight: bold;
 `;
 const InfoBox = styled.div`
@@ -163,6 +175,7 @@ const HashTag = styled(motion.span)`
   font-size: 12px;
   font-weight: 500;
   padding: 5px 10px;
+  margin-left: 5px;
   margin-right: 10px;
   margin-bottom: 20px;
   margin-top: 10px;
@@ -178,9 +191,9 @@ const ResultWrap = styled.div`
 `;
 
 const ResultBox = styled.span`
-  background-color: rgb(79, 71, 47);
+  background-color: rgba(70, 64, 49, 0.703);
   padding: 20px;
-  border-radius: 10px;
+  border-radius: 0.4rem;
   width: 70%;
   color: white;
   font-size: 14px;
@@ -190,7 +203,8 @@ const ResultHr = styled.hr`
   color: white;
 `;
 const ReviewImg = styled.img`
-  width: 23%;
+  width: 27%;
+  border-radius: 0.3rem;
 `;
 const ResultBtnVariants = {
   nomal: {
@@ -281,8 +295,8 @@ function ReserveList() {
             <Box>
               <ReviewBox>
                 <Box>
-              <Day>{data.consultingDate}({data.consultingDateDay })</Day>
-              <Time> {data.consultingStartTime} ~ {data.consultingEndTime}</Time>
+              <Day>{data.consultingDate } </Day>
+              <Time> { data.consultingStartTime} ~ </Time>
               </Box>
               <DetailBox >
                     <ResultBtn 
@@ -317,6 +331,8 @@ function ReserveList() {
                 exit={{ opacity: 0, y: "50%" }}
                 transition={{ duration: 0.3}}>
                 <BigModalBox>
+                  <Title>Result</Title>
+                  <Hr></Hr>
                   <InfoBox>
                     <InfoText>상담사명 : {modalData.name} 디자이너</InfoText>
                     <InfoText>상담일시 : {modalData.consultingDate} {modalData.consultingStartTime}</InfoText>
