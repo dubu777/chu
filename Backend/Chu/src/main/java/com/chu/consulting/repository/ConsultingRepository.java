@@ -61,8 +61,8 @@ public interface ConsultingRepository extends JpaRepository<Consulting, Integer>
     List<Consulting> getPastConsulting(String now, int customerSeq);
 
     // 모든 상담 받아오기
-    @Query("SELECT c FROM Consulting c")
-    List<Consulting> getAllConsulting();
+    @Query("SELECT c FROM Consulting c WHERE c.customer.seq = :customerSeq")
+    List<Consulting> getAllConsulting(int customerSeq);
 
 
 //    String participantConsulting(int consultingSeq);
