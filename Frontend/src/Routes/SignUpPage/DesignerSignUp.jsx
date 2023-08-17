@@ -1,16 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
-import Step from '../../components/SignUpComponent/Step';
+import Step from "../../components/SignUpComponent/Step";
 import DesignerUserInfo from "../../components/SignUpComponent/DesignerUserInfo";
+import swal from "sweetalert";
+import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import {
+  designerSignUpRequest,
+  checkDuplicateId,
+  checkDuplicateEmail,
+  designerSignUpImg,
+} from "../../apis/auth";
+import emailjs from "emailjs-com";
 
 const Container = styled.div`
   text-align: center;
-	
+  justify-content: space-between;
   flex-direction: column;
   display: flex;
   width: 65vw;
-  margin: 0 auto;    
+  margin: 0 auto;
 `;
 const StepWrapper = styled.div`
   margin-top: 40px;
@@ -23,175 +32,564 @@ const Title = styled.span`
   font-size: 30px;
   font-weight: bold;
   margin-top: 40px;
+  margin-bottom: 20px;
 `;
-
-const Text = styled.p`
-	margin-top: 10px;
-  font-size: 14px;
-  margin-left: 15px;
-`;
-const Box = styled.div`
-`;
-const ProfileBox = styled.div`
+const SignupBox = styled.div`
   display: flex;
   justify-content: center;
 `;
-const FileBox = styled.div`
+const InfoBox = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  margin-left: 15px;
-`;
-
-const ImgBox = styled.div`
-  display: flex;
   justify-content: center;
-  align-items: center;
-  width: 190px;
-  height: 200px;
-  background-color: rgb(100,93,81);
-  border-radius: 10px;
+  text-align: center;
+  margin-bottom: 100px;
 `;
-
-const Borderbox = styled.div`
-	border: dashed 2px;
-	border-color: #988b60;
-	margin: 10px 20px;
-	border-radius: 0.5rem;
-`;
-
 const Wrapper = styled.div`
+  padding: 0px 20px;
   display: flex;
-  margin-top: 30px;
   flex-direction: column;
-  align-items: center;
-`;
-const Input = styled.input`
-	font-family: "Blue-road";
-	margin: 15px;
-`;
-
-const DefaultImg = styled.img`
-	width: 100px;
-	height: 100px;
-`;
-
-const Img = styled.img`
-    width: 200px;
-    height: 200px;
-`;
-const DeleteBtn = styled.button`
-	border: 0;
-	height: 20px;
-	width: 40px;
-	border-radius: 0.8rem;
-	background-color: #f6be4e;
-	font-size: 10px;
-`;
-const Btn = styled.button`
-	border: 0;
-  font-weight: bold;
-	height: 30px;
-	width: 180px;
-	border-radius: 0.4rem;
-	background-color: rgba(244,153,26,0.7);
-	margin: 20px 10px;
-	cursor: pointer;
-  transition: background-color 0.3s ease;
-  &:hover {
-  background-color: rgba(244,153,26,1);
-  color: #f7f5e1;
-  }
-`;
-const Div = styled.div`
-	/* width: 300px; */
-	display: flex;
-	justify-content: right;
-	margin-right: 10px;
-`;
-
-const P = styled.p`
-	text-align: right;
-	margin-right: 10px;
-	margin-bottom: 5px;
+  /* align-content: center; */
+  justify-content: center;
+  width: 70vh;
+  height: 100%;
+  border-radius: 51px;
+  background: #fdfdfd;
+  /* box-shadow: 0px 4px 15px 0px rgba(0, 0, 0, 0.30); */
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+    2px 4px 30px -4px rgb(0 0 0 / 0.1);
 `;
 const Hr = styled.div`
   margin-top: 20px;
-  border-bottom : 2px solid rgb(242,234,211);
+  border-bottom: 2px solid rgb(242, 234, 211);
+`;
+
+const ProfileBox = styled.div`
+  display: flex;
+  justify-content: center;
+  /* margin-top: 20px; */
+`;
+
+const ClickBox = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+const Text = styled.p`
+  margin-left: 30px;
+  font-size: 10px;
+`;
+const Btn = styled.button`
+  font-size: 15px;
+  height: 35px;
+  width: 150px;
+  border: solid 2px;
+  border-color: #9e9994;
+  border-radius: 0.5rem;
+  background-color: white;
+  margin-top: 70px;
+  margin-left: -35px;
+  margin-bottom: 20px;
+  transition: background-color 0.3s ease;
+  &:hover {
+    /* background-color: #f3ece2; */
+    border-color: #c0b692;
+  }
+  cursor: pointer;
+`;
+const Profile = styled.img`
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  /* 이미지 상태에 따라 태두리 색 다르게 */
+  border: 7px solid ${(props) => (props.hasFile ? "beige" : "transparent")};
+  cursor: pointer;
+`;
+const InputBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* text-align: center; */
+  width: 70%;
+  margin: 15px auto;
+`;
+const SubmitBtn = styled.button`
+  text-align: center;
+  border-radius: 7px;
+  background: #574934;
+  color: #f1efed;
+  padding: 10px 25px;
+  margin-top: 50px;
+  border: 0;
+  font-size: 14px;
+  width: 180px;
+  /* font-weight: bold; */
+  transition: background-color, 0.3s ease;
+  &:hover {
+    background-color: #f0aa48;
+    color: #f7f5e1;
+    border-color: #574934;
+  }
+`;
+
+const RadioContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 10px 10px;
+`;
+
+const CustomRadio = styled.input`
+  width: 15px;
+  height: 15px;
+  margin-right: 10px;
+  border-radius: 50%;
+  border: 2px solid #333;
+  background-color: ${(props) => (props.checked ? "#333" : "transparent")};
+  cursor: pointer;
+`;
+
+const GenderLabel = styled.label`
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+  cursor: pointer;
+`;
+
+const CenterBox = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+`;
+const SignUpInputBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 80%;
+  margin: 15px 0;
+`;
+const SignUpInputWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+  flex-direction: column;
+`;
+const SignUpTextBox = styled.div`
+  display: flex;
+  justify-content: start;
+  margin: 0 0 5px 8px;
+`;
+const SignUpText = styled.span`
+  font-size: 14px;
+  font-weight: bold;
+`;
+const SignUpInput = styled.input`
+  height: 45px;
+  width: 100%;
+  border: solid 1px;
+  border-color: #d5d5d4;
+  border-radius: 5.5px;
+  padding-left: 20px;
+  margin-top: 5px;
+  outline: none; /* 포커스된 상태의 외곽선을 제거 */
+  &:focus {
+    border: 2px solid rgb(244, 153, 26);
+    + span {
+      color: rgb(244, 153, 26);
+    }
+  }
+`;
+const ErrorMessage = styled.span`
+  font-size: 10px;
+  color: red;
+`;
+const Form = styled.form``;
+const InputWrap = styled.div`
+  display: flex;
+  justify-content: space-around;
+`;
+const Emailbtn = styled.button`
+  width: 80px;
+  height: 50px;
 `;
 function DesignerSignUp() {
-  const [file, setFile] = useState(null); // 파일
-  const [filePreview, setFilePreview] = useState(null); // 파일 미리보기를 위한 URL
-	const [fileName, setFileName] = useState(''); // 파일 이름
+  const navigate = useNavigate();
+  const fileInputRef = useRef(null);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [requestFile, setRequestFile] = useState(null);
+  const [authEmail, setAuthEmail] = useState(false);
+  useEffect(() => {
+    setSelectedFile("profile2.png");
+  }, []);
 
-  const handleChangeFile = (event) => {
-    // 선택한 파일 정보 가져오기
-    const selectedFile = event.target.files[0];
-
-    // 파일 미리보기를 위한 URL 생성
-    const filePreviewUrl = URL.createObjectURL(selectedFile);
-    setFilePreview(filePreviewUrl);
-
-    // 선택한 파일 설정
-    setFile(selectedFile);
-		setFileName(selectedFile.name); // 파일 이름 설정
+  const handleImageClick = () => {
+    fileInputRef.current.click();
   };
-
-  function Send() {
-    // 선택한 파일 사용하여 필요한 작업 수행
-    // 예: 파일 업로드, 서버에 데이터 전송 등
+  
+  function handleFileChange(event) {
+    const file = event.target.files[0];
+    setRequestFile(file);
+    if (file && file.type.includes("image")) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setSelectedFile(reader.result);
+        clearErrors("profileImage"); // 이미지 선택 후 오류 초기화
+      };
+      reader.readAsDataURL(file);
+      // setRequestFile(file);
+    } else {
+      swal("⚠️ Image 파일 형식을 선택해주세요 :)");
+    }
   }
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    getValues,
+    setError,
+    clearErrors,
+    formState: { errors },
+  } = useForm({ mode: "onBlur" });
 
-  // 파일 삭제 및 초기화 버튼을 누를 때 호출되는 함수
-  const handleFileRemoveButton = () => {
-    // 파일 선택을 초기화합니다.
-    document.getElementById('file').value = '';
-    setFile(null);
-    setFilePreview(null);
-		setFileName('');
+  const userType = "designer";
+
+  const [isIdAvailable, setIsIdAvailable] = useState(false);
+  const [isEmailAvailable, setIsEmailAvailable] = useState(false);
+  const [responseSeq, setResponseSeq] =useState(null);
+  const [confirmNumber, setConfirmNumber] = useState(null);
+  const password = watch("pwd");
+  const name = watch("name");
+  const id = watch("id");
+  const email = watch("email");
+  const gender = watch("gender");
+  const certificationNum = watch("certificationNum")
+  const authNum = watch("authNum")
+  const designerData = {
+    name: name,
+    id: id,
+    email: email,
+    gender: gender,
+    pwd: password,
+    certificationNum: certificationNum
   };
 
+  console.log(designerData, "deisgner");
+  //아이디 중복체크
+  const handleIdCheck = async () => {
+    const currentId = getValues("id");
+    try {
+      const idCheckResult = await checkDuplicateId(currentId, userType);
+      if (idCheckResult) {
+        swal("Error", "이미 사용 중인 아이디입니다.", "error");
+        setIsIdAvailable(idCheckResult);
+        return;
+      } else {
+        setIsIdAvailable(idCheckResult);
+        return;
+      }
+    } catch (error) {
+      console.error("ID Check Error:", error);
+      swal("Error", "아이디 중복 체크에 실패했습니다.", "error");
+      return;
+    }
+  };
+  //이메일 중복체크
+  const handleEmailCheck = async () => {
+    const currentEmail = getValues("email");
+    try {
+      const emailCheckResult = await checkDuplicateEmail(
+        currentEmail,
+        userType
+      );
+      if (emailCheckResult) {
+        swal("Error", "이미 사용 중인 이메일입니다.", "error");
+        setIsEmailAvailable(emailCheckResult);
+        return;
+      } else {
+        setIsEmailAvailable(emailCheckResult);
+        return;
+      }
+    } catch (error) {
+      console.error("Email Check Error:", error);
+      swal("Error", "이메일 중복 체크에 실패했습니다.", "error");
+      return;
+    }
+  };
+   //이메일 인증
+    const handleCheckEmail = async () => {
+    let confirmNumber = Math.floor(Math.random() * 900001) + 100000;
+
+    let templateParams = {
+      user_email: email,
+      sys_code: confirmNumber,
+    };
+    emailjs.init("c0nz-ynLc-qYrorYn");
+    emailjs.send("service_chu", "template_chu", templateParams);
+    setConfirmNumber(confirmNumber);
+    swal("Success", "인증번호가 발송되었습니다.", "success");
+  };
+
+  //이메일 인증번호 확인
+  const handleCheckAuthNum = () => {
+    if (confirmNumber == authNum) {
+      setAuthEmail(true)
+      swal("Success", "인증 되었습니다..", "success");
+    } else {
+      swal("Error", "인증에 실패했습니다.", "error");
+      setAuthEmail(false)
+    }
+  };
+  const onSubmit = async (dd) => {
+    if (isIdAvailable || isEmailAvailable) return;
+    
+    if (!requestFile) {
+      setError("profileImage", {
+        type: "manual",
+        message: "프로필 이미지를 첨부해주세요."
+      });
+      swal("Error", "프로필 이미지를 첨부해주세요.", "error");
+      return;
+    }
+    try {
+      // 회원가입 API 요청
+      console.log("formDATA: ", dd);
+      const Seq = await designerSignUpRequest(designerData, "deisgner");
+      setResponseSeq(Seq)
+      console.log(Seq)
+      console.log("회원정보 등록 success:", Seq);
+      
+    if (Seq) {
+      console.log('받았어?', Seq)
+      const formData = new FormData();
+      formData.append("img", requestFile);
+      try{
+        console.log('try', Seq);
+        const response = await designerSignUpImg(Seq, formData, "deisgner");
+        console.log('이미지 들어갔니', response)
+        swal("Success", "회원가입이 완료되었습니다.", "success");
+        navigate("/login");
+      } catch (error) {
+        console.error("프로필 사진 등록 실패:", error)
+        swal("Error", "회원가입에 실패했습니다.", "error");
+      }
+    }
+  } catch (error) {
+    console.error("정보등록 error:", error);
+  }
+};
   return (
     <Container>
       <StepWrapper>
         <Step top="step1" bottom="회원 유형 선택" />
         <Step top="step2" bottom="약관 동의" />
-        <Step top="step3" bottom="회원 정보 입력" />
+        <Step top="step3" bottom="회원 정보 입력" bgcolor="rgb(244,153,26)" />
         <Step top="step4" bottom="가입 완료" />
       </StepWrapper>
-      <Hr/>
-      <Title>회원 정보 입력</Title>
-      <Wrapper>
-      {filePreview ? ( // 파일 미리보기가 있을 경우에만 보여주기
-        <Box>
-          <Text>이미지 미리보기</Text>
-          <Borderbox>
-            <Img src={filePreview} alt="Preview"/>
-            <Div>
-              <P>{fileName}</P>
-              <DeleteBtn onClick={handleFileRemoveButton}>삭제</DeleteBtn>
-            </Div>	
-          </Borderbox>
-          <Btn onClick={() => Send()}>사진 업로드</Btn>
-        </Box>
-				
-				) : (
-					/* 파일 이미지가 없을 때 */
-        <ProfileBox>
-          <ImgBox>
-            <DefaultImg src="/icon/profileicon.png"></DefaultImg>
-          </ImgBox>
-          <FileBox>
-            <Box>
-              <Input type="file" id="file" onChange={handleChangeFile} multiple="multiple"></Input>
-            </Box>
-            <Text>디자이너 프로필에 사용될 사진을 첨부해주세요</Text>
-            <Btn onClick={() => Send()}>사진 업로드</Btn>
-          </FileBox>
-        </ProfileBox>			
-        )}
-			</Wrapper>
-      <DesignerUserInfo/>
+      <Hr />
+      <SignupBox>
+        <InfoBox>
+          <Title>Sign Up</Title>
+          <Wrapper>
+            <Form onSubmit={handleSubmit(onSubmit)}>
+              <ProfileBox>
+                <input
+                  type="file"
+                  style={{ display: "none" }}
+                  ref={fileInputRef}
+                  onChange={handleFileChange}
+                />
+                <Profile
+                // src={selectedFile}
+                  src={selectedFile || "./icon/designerr.png"}
+                  // src={`${BASE_URL}/designer-profile/${selectedFile}`}
+                  alt="Profile"
+                  // hasFile={selectedFile !== null}
+                />
+                <ClickBox>
+                  <Btn 
+                    type="button"
+                    onClick={handleImageClick}>프로필 이미지 첨부</Btn>
+                  <ErrorMessage>디자이너 프로필에 사용될 사진을 첨부해주세요</ErrorMessage>
+                </ClickBox>
+              </ProfileBox>
+              <InputBox>
+                <InputWrap>
+                  <SignUpInputBox>
+                    <SignUpInputWrapper>
+                      <SignUpTextBox>
+                        <SignUpText>이름</SignUpText>
+                      </SignUpTextBox>
+                      <SignUpInput
+                        placeholder="이름"
+                        {...register("name", {
+                          required: "이름을 입력해주세요.",
+                        })}
+                        onChange={(e) => {
+                          setValue("name", e.target.value);
+                          clearErrors("name");
+                        }}
+                      />
+                    </SignUpInputWrapper>
+                    {errors.name?.type === "required" && (
+                      <ErrorMessage>이름을 입력해주세요.</ErrorMessage>
+                    )}
+                    <SignUpInputWrapper>
+                      <SignUpTextBox>
+                        <SignUpText>아이디</SignUpText>
+                      </SignUpTextBox>
+                      <SignUpInput
+                        placeholder="아이디"
+                        {...register("id", {
+                          required: "아이디를 입력해주세요.",
+                        })}
+                        onChange={(e) => {
+                          setValue("id", e.target.value);
+                          clearErrors("id");
+                        }}
+                        onBlur={handleIdCheck}
+                      />
+                    </SignUpInputWrapper>
+                    <span>{errors.id?.type}</span>
+                    {errors.id?.type === "required" && (
+                      <ErrorMessage>아이디를 입력해주세요.</ErrorMessage>
+                    )}
+                    <SignUpInputWrapper>
+                      <SignUpTextBox>
+                        <SignUpText>이메일</SignUpText>
+                      </SignUpTextBox>
+                      <SignUpInput
+                        placeholder="이메일"
+                        {...register("email", {
+                          required: "이메일을 입력해주세요.",
+                          pattern: {
+                            value:
+                              /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
+                            message: "올바른 이메일 형식이 아닙니다.",
+                          },
+                        })}
+                        onChange={(e) => {
+                          setValue("email", e.target.value);
+                          clearErrors("email");
+                        }}
+                        onBlur={handleEmailCheck}
+                      />
+                                            <Emailbtn type="button" onClick={handleCheckEmail}>
+                        이메일 인증
+                      </Emailbtn>
+                    </SignUpInputWrapper>
+                    {errors?.email?.type === "pattern" && (
+                      <ErrorMessage>{errors?.email?.message}</ErrorMessage>
+                    )}
+                    {errors?.email?.type === "required" && (
+                      <ErrorMessage>이메일을 입력해주세요.</ErrorMessage>
+                    )}
+                    <SignUpInputWrapper>
+                      <SignUpTextBox>
+                        <SignUpText>인증번호</SignUpText>
+                      </SignUpTextBox>
+                      <SignUpInput
+                        placeholder="인증번호를 입력해주세요"
+                        {...register("authNum", {
+                          required: "인증번호를 입력해주세요",
+                        })}
+                        onChange={(e) => {
+                          setValue("authNum", e.target.value);
+                          clearErrors("authNum");
+                        }}
+                      />
+                      <Emailbtn type="button" onClick={handleCheckAuthNum}>
+                        인증번호 확인
+                      </Emailbtn>
+                    </SignUpInputWrapper>
+                    {errors.authNum?.type === "required" && (
+                      <ErrorMessage>인증번호를 입력해주세요.</ErrorMessage>
+                    )}
+                    <SignUpInputWrapper>
+                      <SignUpTextBox>
+                        <SignUpText>자격증 번호</SignUpText>
+                      </SignUpTextBox>
+                      <SignUpInput
+                        placeholder="자격증 번호"
+                        {...register("certificationNum", {
+                          required: "자격증 번호를 입력해주세요.",
+                        })}
+                        onChange={(e) => {
+                          setValue("certificationNum", e.target.value);
+                          clearErrors("certificationNum");
+                        }}
+                      />
+                    </SignUpInputWrapper>
+                    {errors.certificationNum?.type === "required" && (
+                      <ErrorMessage>자격증 번호를 입력해주세요.</ErrorMessage>
+                    )}
+                    <RadioContainer>
+                      <GenderLabel>
+                        <CustomRadio
+                          type="radio"
+                          value="M"
+                          {...register("gender")}
+                          checked={watch("gender") === "M"}
+                        />
+                        남자
+                      </GenderLabel>
+                      <GenderLabel>
+                        <CustomRadio
+                          type="radio"
+                          value="F"
+                          {...register("gender")}
+                          checked={watch("gender") === "F"}
+                        />
+                        여자
+                      </GenderLabel>
+                    </RadioContainer>
+                    <SignUpInputWrapper>
+                      {/* 여기에 다음 입력 항목이 오면 됩니다. */}
+                    </SignUpInputWrapper>
+                    <SignUpInputWrapper>
+                      <SignUpTextBox>
+                        <SignUpText>비밀번호</SignUpText>
+                      </SignUpTextBox>
+                      <SignUpInput
+                        placeholder="8~16자리의 비밀번호를 입력해주세요"
+                        type="password"
+                        {...register("pwd", {
+                          required: "비밀번호를 입력해주세요.",
+                          pattern: {
+                            value:
+                              /(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}/,
+                            message:
+                              "영문, 숫자, 특수문자를 포함한 8자 이상의 비밀번호를 입력해주세요.",
+                          },
+                        })}
+                      />
+                      <ErrorMessage>{errors?.pwd?.message}</ErrorMessage>
+                    </SignUpInputWrapper>
+                    <SignUpInputWrapper>
+                      <SignUpTextBox>
+                        <SignUpText>비밀번호 확인</SignUpText>
+                      </SignUpTextBox>
+                      <SignUpInput
+                        placeholder="비밀번호 확인 ✔"
+                        type="password"
+                        {...register("pwd1", {
+                          required: "비밀번호 확인을 입력해주세요.",
+                          validate: (value) =>
+                            value === password ||
+                            "비밀번호가 일치하지 않습니다.",
+                        })}
+                      />
+                      <ErrorMessage>{errors?.pwd1?.message}</ErrorMessage>
+                    </SignUpInputWrapper>
+                  </SignUpInputBox>
+                </InputWrap>
+                <CenterBox>
+                  <SubmitBtn type="submit">회원 가입하기</SubmitBtn>
+                </CenterBox>
+              </InputBox>
+            </Form>
+          </Wrapper>
+        </InfoBox>
+      </SignupBox>
     </Container>
   );
 }

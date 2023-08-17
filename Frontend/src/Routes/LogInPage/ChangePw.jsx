@@ -1,6 +1,10 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import swal from "sweetalert";
+import { useState } from "react";
+import { useRecoilState } from "recoil";
+import { changePwdCustomer, changePwdDesigner } from "../../apis/auth";
+import { setFindPwd, setExistPwState } from "../../recoil/auth";
 
 
 const Container = styled.div`
@@ -8,12 +12,11 @@ const Container = styled.div`
 	filter: invert(7%);
 	background-size: cover ;
 	width: 100vw;
-  	height: 100vh;
+  height: 100vh;
 	display:flex;
 	justify-content: center;
 	flex-direction: column;
 	padding-left: 150px;
-	font-family: 'Cormorant Garamond';
 `;
 
 const Wrapper = styled.div`
@@ -38,7 +41,6 @@ const Input = styled.input`
 	padding-left: 10px;
 	margin-top: 12px;
 	font-size: 18px;
-	font-family: 'Cormorant Garamond';
 `;
 const Box = styled.div`
 	display: flex;
@@ -60,16 +62,69 @@ const Btn = styled.button`
 
 
 function ChangePw() {
+
+	// 여기에 seq 저장되어 있음
+	const [seq, setFindPwResult] = useRecoilState(setFindPwd);
+	const [usertype, setExistsPwState] = useRecoilState(setExistPwState);
+
+	const [newPassword, setNewPassword] = useState('');
+	const [checkNewPassword, setCheckNewPassword] = useState('');
+
+	const navigate = useNavigate();
+
+	const handleNewPassword = (event) => {
+		setNewPassword(event.target.value);
+	};
+
+	const handleCheckNewPassword = (event) => {
+		setCheckNewPassword(event.target.value);
+	}
+
+	const handleChangePassword = async () => {
+		if(newPassword == checkNewPassword) {
+
+			if(usertype === "customer"){
+				try{
+					const result = await changePwdCustomer(seq, newPassword);
+					console.log(result);
+					swal("  비밀번호 변경 성공 \n 새롭게 로그인을 시도해 주세요 🙂")
+					navigate("/login");
+				} catch (error){
+					console.log(error);
+				}
+			}
+
+			else if(usertype === "designer"){
+				try{
+					const result = await changePwdDesigner(seq, newPassword);
+					console.log(result);
+					swal("  비밀번호 변경 성공 \n 새롭게 로그인을 시도해 주세요 🙂")
+					navigate("/login");
+				} catch (error){
+					console.log(error);
+				}
+			}
+
+			else{
+				alert("완전히 잘못되버림");
+				navigate("/login");
+			}
+		}
+		else{
+			alert("비밀번호와 비밀번호 확인란을 한번 더 체크해주세요!");
+		}
+	}
+
 	return(
 		<Container>
 			<Wrapper>
 				<Box>
 					<Title>Change Password</Title>
 					<br></br>
-					<Input placeholder="New password" type="password"></Input>
-					<Input placeholder="Check password" type="password"></Input>
+					<Input placeholder="New password" type="password" value={newPassword} onChange={handleNewPassword}></Input>
+					<Input placeholder="Check password" type="password" value={checkNewPassword} onChange={handleCheckNewPassword}></Input>
 					<br></br>
-					<Btn onClick={()=> swal("  비밀번호 변경 성공 \n 새롭게 로그인을 시도해 주세요 🙂")}><Link to="/login">변경하기</Link></Btn>
+					<Btn type="submit" onClick={handleChangePassword}>변경하기</Btn>
 				</Box>
 			</Wrapper>
 		</Container>

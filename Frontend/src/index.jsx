@@ -6,6 +6,7 @@ import App from "./App";
 import { createGlobalStyle } from "styled-components";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { theme } from "./theme";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>;
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>;
@@ -63,8 +64,9 @@ table {
   box-sizing: border-box;
 }
 body {
+  margin: 0;
   font-weight: 300;
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: 'Pretendard-Regular';
   color:black;
   line-height: 1.2;
   color: ${props => props.theme.black.darker};
@@ -75,7 +77,7 @@ a {
   color:inherit;
 }
 `;
-const client = new QueryClient();
+export const client = new QueryClient();
 
 ReactDOM.render(
   <React.StrictMode>

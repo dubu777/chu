@@ -5,14 +5,13 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-family: 'Cormorant Garamond';
 `;
 
 const Circle = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgb(249,245,240);
+  background-color: ${(props) => props.bgcolor || "rgb(249,245,240)"};
   width: 60px;
   height: 60px;
   border-radius: 50px;
@@ -35,10 +34,10 @@ const Text = styled.span`
   font-weight: bold;
 `;
 
-function Step({top, bottom}) {
+function Step({top, bottom, bgcolor}) {
   return (
       <Wrapper>
-        <Circle>
+        <Circle bgcolor={bgcolor} >
           <StepText>{top}</StepText>
         </Circle>
         <Text>{bottom}</Text>

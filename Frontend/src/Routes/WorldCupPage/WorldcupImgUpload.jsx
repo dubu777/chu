@@ -6,8 +6,7 @@ import axios from 'axios';
 import styled from "styled-components";
 
 const Container = styled.div`
-  text-align: center;
-	font-family: "Blue-road";        
+	text-align: center;      
 `;
 const Title = styled.h1`
 	margin-bottom: 50px;
@@ -40,7 +39,6 @@ const Box = styled.div`
 	border-radius: 0.6rem;
 `;
 const Input = styled.input`
-	font-family: "Blue-road";
 	margin: 15px;
 `;
 
@@ -90,13 +88,19 @@ function WorldcupImgUpload() {
   const [filePreview, setFilePreview] = useState(null); // 파일 미리보기를 위한 URL
 	const [fileName, setFileName] = useState(''); // 파일 이름
 
-  const handleChangeFile = (event) => {
+  function handleChangeFile(event){
     // 선택한 파일 정보 가져오기
     const selectedFile = event.target.files[0];
 
     // 파일 미리보기를 위한 URL 생성
-    const filePreviewUrl = URL.createObjectURL(selectedFile);
-    setFilePreview(filePreviewUrl);
+    // const filePreviewUrl = URL.createObjectURL(selectedFile);
+    // setFilePreview(filePreviewUrl);
+
+		const reader = new FileReader();
+    reader.readAsDataURL(selectedFile);
+    reader.onloadend = () => {
+      setFilePreview(reader.result);
+    };
 
     // 선택한 파일 설정
     setFile(selectedFile);
@@ -109,8 +113,8 @@ function WorldcupImgUpload() {
   }
 
   // 파일 삭제 및 초기화 버튼을 누를 때 호출되는 함수
-  const handleFileRemoveButton = () => {
-    // 파일 선택을 초기화합니다.
+  function handleFileRemoveButton(){
+    // 파일 선택을 초기화
     document.getElementById('file').value = '';
     setFile(null);
     setFilePreview(null);
@@ -121,28 +125,25 @@ function WorldcupImgUpload() {
     <Container>
         <Title>File Upload</Title>
 				<Box>
-        {filePreview ? ( // 파일 미리보기가 있을 경우에만 보여주기
+        	{filePreview ? ( // 파일 미리보기가 있을 경우에만 보여주기
         	<Imgbox>
-						<br />
+					<br />
           	<Text>이미지 미리보기</Text>
-						<Borderbox>
+							<Borderbox>
 							<br />
-          		<Img src={filePreview} alt="Preview"/>
-							<Div>
-								<P>{fileName}</P>
-								<DeleteBtn onClick={handleFileRemoveButton}>삭제</DeleteBtn>
-							</Div>
-						</Borderbox>
+          			<Img src={filePreview} alt="Preview"/>
+									<Div>
+										<P>{fileName}</P>
+											<DeleteBtn onClick={handleFileRemoveButton}>삭제</DeleteBtn>
+									</Div>
+							</Borderbox>
         	</Imgbox>
-				
 				) : (
 					/* 파일 이미지가 없을 때 */
 					<Imgbox>
-						<DefaultImg src="/img/file.png"></DefaultImg>
+						<DefaultImg src="/icon/file.png"></DefaultImg>
 						<Text>Style worldcup에 사용할 사진을 업로드 해주세요 :)</Text>
 					</Imgbox>
-						
-					
       	)}
 				</Box>
         <Imgbox>

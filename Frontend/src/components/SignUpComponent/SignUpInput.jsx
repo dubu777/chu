@@ -1,18 +1,19 @@
 import { styled } from "styled-components";
 
-const InputWrapper = styled.div`
+const SignUpInputWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: self-start;
-  margin: 10px;
+  margin: 10px 0;
   flex-direction: column;
 `;
 
 const Input = styled.input`
-  height: 35px;
-  width: 250px;
-  border: 0;
-  border-radius: 5px;
+  height: 45px;
+  width: 100%;
+  border: solid 1px;
+  border-color: #d5d5d4;
+  border-radius: 5.5px;
+  padding-left: 20px;
   margin-top: 5px;
   outline: none; /* 포커스된 상태의 외곽선을 제거 */
   &:focus {
@@ -23,19 +24,32 @@ const Input = styled.input`
   }
 `;
 
-const Text = styled.span`
+const SignUpText = styled.span`
   font-size: 14px;
   font-weight: bold;
 `;
+const SignUpWord = styled.span`
+ font-size : 10px;
+ color: red;
+ margin-left: 10px;
+ margin-top: 5px;
+`;
+const SignUpTextBox = styled.div`
+  display: flex;
+  justify-content: start;
+  margin: 0 0 5px 8px;
+`;
 
 
-
-function SignUpInput({text, placeholder }) {
+function SignUpInput({text, word, placeholder}) {
   return (
-    <InputWrapper>
-      <Text>{text}</Text>
+    <SignUpInputWrapper>
+    <SignUpTextBox>
+      <SignUpText>{text}</SignUpText>
+      <SignUpWord>{word}</SignUpWord>
+    </SignUpTextBox>
       <Input placeholder={placeholder}/>
-    </InputWrapper>
+    </SignUpInputWrapper>
   )
 }
 export default SignUpInput;
