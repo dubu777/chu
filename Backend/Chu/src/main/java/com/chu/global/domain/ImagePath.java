@@ -1,6 +1,8 @@
 package com.chu.global.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Embeddable;
@@ -12,7 +14,7 @@ public class ImagePath {
     private String uploadImgName;
     private String savedImgName;
 
-    protected ImagePath() {
+    public ImagePath() {
 
     }
 

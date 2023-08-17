@@ -3,15 +3,16 @@ package com.chu.designer.domain;
 import com.chu.global.domain.ImagePath;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Getter @Setter
+@Getter @Setter @ToString
 public class DesignerPortfolio {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer seq;
 
     @Embedded
@@ -22,7 +23,14 @@ public class DesignerPortfolio {
     private LocalDateTime createdDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "seq")
+    @JoinColumn(name = "designer_seq")
     private Designer designer;
 
+    public DesignerPortfolio(Designer designer) {
+        this.designer = designer;
+    }
+
+    public DesignerPortfolio() {
+        
+    }
 }

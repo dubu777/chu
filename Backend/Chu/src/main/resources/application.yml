@@ -1,0 +1,67 @@
+server:
+  port: 9090
+
+  #  ssl:
+  #    key-store: ${SSL_KEY_PATH}keystore.p12
+  #    key-store-type: PKCS12
+  #    key-store-password: ${SSL_PASSWORD}
+  servlet:
+    context-path: /api
+    multipart:
+      enabled: true
+
+
+# DB_USERNAME=111;DB_PASSWORD=151;DB_URL=jdbc:mysql://13.125.135.111:3306/chu?serverTimezone=UTC&useUnicode=yes&characterEncoding=UTF-8;
+spring:
+  datasource:
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    URL: jdbc:mysql://${PUBLIC_IP}:3306/chu?serverTimezone=UTC&useUnicode=yes&characterEncoding=UTF-8
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    generate-ddl: true
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: false
+    open-in-view: false
+#logging.level:
+#  org.hibernate.SQL: debug
+#logging.level.org.hibernate.SQL=debug
+
+
+# think it must be below spring
+# need to set on environment variable
+#redis:
+#  host: localhost
+#  port: 6379
+
+redis:
+  host: ${PUBLIC_IP}
+  port: 6379
+
+jwt:
+  token:
+    access-token-key: teamElevenHappyHappyChuChuElevenHappyChuTeamIntelliJDataGripSamsungCherryTeam
+    access-token-expire: 300000
+    refresh-token-key: HappyHappyChuChuTeamElevenIntelliJDataGripHappyChuTeamElevenSamsungTeamCherry;
+    refresh-token-expire: 6000000
+
+#jwt.token.access-token-key=teamElevenHappyHappyChuChuElevenHappyChuTeamIntelliJDataGripSamsungCherryTeam;
+#jwt.token.access-token-expire=300000;
+#jwt.token.refresh-token-key=HappyHappyChuChuTeamElevenIntelliJDataGripHappyChuTeamElevenSamsungTeamCherry;
+#jwt.token.refresh-token-expire=6000000;
+
+#OPENVIDU:
+#  PASSWORD: ${OPENVIDU_PASSWORD}
+#  URL: ${OPENVIDU_URL}
+
+custom:
+  path:
+    upload-images: "/chu/upload/images/customer/"

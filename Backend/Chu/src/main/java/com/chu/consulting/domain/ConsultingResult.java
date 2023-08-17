@@ -12,19 +12,19 @@ import javax.persistence.*;
 @Getter @Setter
 public class ConsultingResult {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer seq;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "seq")
-    private Designer designer;
+    @JoinColumn(name = "consulting_seq")
+    private Consulting consulting;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "seq")
+    @JoinColumn(name = "hair_style_seq")
     private HairStyleDict hairStyleDict;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "seq")
+    @JoinColumn(name = "face_seq")
     private FaceDict faceDict;
 
 }

@@ -3,7 +3,11 @@ package com.chu.customer.domain;
 import com.chu.global.domain.FaceDict;
 import com.chu.global.domain.ImagePath;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.annotations.ColumnDefault;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -12,7 +16,7 @@ import java.time.LocalDateTime;
 @Getter @Setter
 public class Customer {
 
-   @Id @GeneratedValue
+   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Integer seq;
 
    private String id;
@@ -27,10 +31,26 @@ public class Customer {
 
    private LocalDateTime createdDate;
 
+   @Enumerated(EnumType.STRING)
+   private Role role;
+
+   @Embedded
    private ImagePath imagePath;
 
    @OneToOne(fetch = FetchType.LAZY)
-   @JoinColumn(name="seq")
+   @JoinColumn(name="face_seq")
    private FaceDict faceDict;
 
+   private String RefreshToken;
+
+   public Customer() {
+      this.faceDict = new FaceDict();
+      this.imagePath = new ImagePath();
+   }
+
+   public Customer hashPassword(PasswordEncoder passwordEncoder){
+      this.pwd = passwordEncoder.encode(this.pwd);
+
+      return this;
+   }
 }

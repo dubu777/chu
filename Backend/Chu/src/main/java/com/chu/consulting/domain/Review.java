@@ -1,22 +1,22 @@
 package com.chu.consulting.domain;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.Embeddable;
 
 @Embeddable
-@Getter @Setter
+@Getter @Setter @ToString
+@NoArgsConstructor
 public class Review {
 
-    private Float reviewScore;
+    private Double reviewScore;
     private String reviewContent;
 
-    protected Review() {
 
-    }
-
-    public Review(Float reviewScore, String reviewContent) {
+    public Review(Double reviewScore, String reviewContent) {
         this.reviewScore = reviewScore;
         this.reviewContent = reviewContent;
     }

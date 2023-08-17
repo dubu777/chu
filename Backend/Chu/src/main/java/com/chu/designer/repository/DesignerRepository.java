@@ -2,34 +2,77 @@ package com.chu.designer.repository;
 
 import com.chu.designer.domain.*;
 import com.chu.global.domain.*;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.List;
 
-public interface DesignerRepository {
-    boolean checkId(String id);
+public interface DesignerRepository extends JpaRepository<Designer, Integer> {
 
-    boolean checkEmail(String email);
+    Designer getDesignerBySeq(int seq);
 
-    boolean signUp(RequestDesignerSignUpDto requestDesignerSignUpDto);
+    boolean existsBySeq(Integer designerSeq);
 
-    boolean signIn(RequestSignInDto requestSignInDto);
+    // ID 중복검사
+    boolean existsById(String Id);
 
-    Designer getDesignerInfo(String id);
+    // email 중복검사
+    boolean existsByEmail(String email);
 
-    String findId(RequestFindIdDto requestFindIdDto);
+    Designer findById(String Id);
 
-    int isValidUser(RequestFindPwdDto requestFindPwdDto);
+    // 아이디 찾기
+    Designer findByNameAndEmail(String name, String email);
 
-    boolean changePwd(RequestChangePwdDto requestChangePwdDto);
+    // 비밀번호 찾기
+    Designer findByNameAndEmailAndId(String name, String email, String id);
 
-    ArrayList<ResponseTimeStateDto> getTimeStateList(int designerSeq, Date date);
+    // 비밀번호 변경
+    @Modifying
+    @Query("UPDATE Designer d SET d.pwd = :pwd WHERE d.seq = :seq")
+    void changePwd(int seq, String pwd);
 
-    ArrayList<ResponseAlertDesignerDto> getAlertList(int designerSeq);
+    // 평점 업데이트
+    @Modifying
+    @Query("UPDATE Designer d SET d.reviewScore = :score WHERE d.seq = :seq")
+    void updateReviewScore(double score, int seq);
 
-    boolean createAlert(RequestAlertCreateDto requestAlertCreateDto);
+    @Modifying
+    @Query("UPDATE Designer d SET d.RefreshToken = :token WHERE d.seq = :seq")
+    void updateRefreshToken(int seq, String token);
 
-    boolean readAlert(RequestAlertReadDto requestAlertReadDto);
+    Designer findBySeq(int seq);
 
-    ArrayList<ResponseBestDesignerDto> getBestDesigners();
+    // 디자이너 뷰 - 이름으로 검색하기
+    @Query("SELECT d FROM Designer d WHERE d.name LIKE %:name%")
+    List<Designer> findByName(@Param("name") String name);
+
+
+//    boolean signUp(RequestDesignerSignUpDto requestDesignerSignUpDto);
+//
+//    boolean signIn(RequestSignInDto requestSignInDto);
+//
+//    Designer getDesignerInfo(String id);
+//
+//    String findId(RequestFindIdDto requestFindIdDto);
+//
+//    int isValidUser(RequestFindPwdDto requestFindPwdDto);
+//
+//    boolean changePwd(RequestChangePwdDto requestChangePwdDto);
+//
+//    ArrayList<ResponseTimeStateDto> getTimeStateList(int designerSeq, Date date);
+//
+//    ArrayList<ResponseAlertDesignerDto> getAlertList(int designerSeq);
+//
+//    boolean createAlert(RequestAlertCreateDto requestAlertCreateDto);
+//
+//    boolean readAlert(RequestAlertReadDto requestAlertReadDto);
+//
+//    ArrayList<ResponseBestDesignerDto> getBestDesigners();
+//
+
 }

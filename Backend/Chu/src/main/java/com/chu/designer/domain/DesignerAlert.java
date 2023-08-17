@@ -11,21 +11,21 @@ import java.time.LocalDateTime;
 @Getter @Setter
 public class DesignerAlert {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer seq;
 
-    private boolean isCheck;
+    private Boolean isCheck;
 
     private LocalDateTime createdDate;
 
     private LocalDateTime checkedDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "seq")
+    @JoinColumn(name = "designer_seq")
     private Designer designer;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "seq")
+    @JoinColumn(name = "consulting_seq")
     private Consulting consulting;
 
 }

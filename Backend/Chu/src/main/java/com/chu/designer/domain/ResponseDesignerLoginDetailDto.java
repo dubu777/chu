@@ -2,17 +2,17 @@ package com.chu.designer.domain;
 
 import com.chu.global.domain.ResponseBestDesignerDto;
 import com.chu.global.domain.FaceImageNameDto;
+import com.chu.global.domain.TokenDto;
+import lombok.Data;
 
 import java.util.ArrayList;
+import java.util.List;
 
+@Data
 public class ResponseDesignerLoginDetailDto {
-    //        "designerSeq" : 1,
-
-//            "name" : "김싸피",
-    ArrayList<ResponseBestDesignerDto> bestDesigner;
-
-    ArrayList<FaceImageNameDto> statistics;
-
-    ArrayList<AlertDesignerOnLoginDto> alert;
-//    "profileImg" : "profileImg1.png"
+    String userType = "designer";
+    ResponseDesignerLoginInfoDto designerInfo;
+    List<ResponseBestDesignerDto> bestDesigner;
+    List<FaceImageNameDto> statisticsImg;
+    List<AlertDesignerOnLoginDto> alert;
 }

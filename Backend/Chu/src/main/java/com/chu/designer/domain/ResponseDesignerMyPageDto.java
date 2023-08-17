@@ -2,26 +2,24 @@ package com.chu.designer.domain;
 
 import com.chu.global.domain.ResponseHairStyleLabelDto;
 import com.chu.global.domain.TimeDto;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.util.ArrayList;
+import java.util.List;
 
+@Builder
+@Getter @Setter @ToString
 public class ResponseDesignerMyPageDto {
-//        "name" : "재현",
-//                "cost" : "5000",
-//                "email" : "ssafy@ssafy.com",
-//                "introduction" : " 남자 펌 전문 !",
-//                "img" : "img1.png",
-    ArrayList<ResponseHairStyleLabelDto> hairStyleTag;
-//                "hairStyleTag" : [
-//                "시스루펌",
-//                "아이롱펌",
-//                "레이어드"
-//                ],
-    ArrayList<TimeDto> selectTime;
-//                // 본인이 오늘 상담 가능하다고 선택했던 시간들
-//                "selectTime" : [
-//                "10:00",
-//                "10:30",
-//                "14:00"
-//                ]
+
+    private String name;
+    private Integer cost;
+    private String email;
+    private String introduction;
+    private String img;     //저장이미지명
+    private List<String> hairStyleTag;
+    private List<String> selectTime;
+
 }

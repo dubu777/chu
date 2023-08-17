@@ -6,6 +6,4 @@ import lombok.Data;
 public class RequestAlertCreateDto {
     int consultingSeq;
     String userType;
-//        "consultingSeq" : 10,
-//                "userType" : "designer"
 }
