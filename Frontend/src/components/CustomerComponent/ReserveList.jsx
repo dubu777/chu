@@ -294,7 +294,7 @@ function ReserveList() {
               <ReviewBox>
                 <Box>
               <Day>{data.consultingDate}</Day>
-              <Time>{`${data.consultingStartTime.slice(0, 2)}시 ${data.consultingStartTime.slice(3, 5)}분`}</Time>
+              <Time>{`${data?.consultingStartTime?.slice(0, 2)}시 ${data?.consultingStartTime?.slice(3, 5)}분`}</Time>
               </Box>
               <DetailBox >
                     <ResultBtn 

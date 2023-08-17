@@ -191,7 +191,7 @@ function ScheduleListImg({initial, animate, variants, transition}){
                   >
                     {data.name}
                   </Name>
-                  <DateText>{data.consultingDate} {data.consultingStartTime}</DateText>
+                  <DateText>{data?.consultingDate} {data?.consultingStartTime}</DateText>
                   <Box>
                     <ReservBtn
                       variants={ReservBtnVariant}
