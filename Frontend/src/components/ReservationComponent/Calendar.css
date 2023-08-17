@@ -10,7 +10,7 @@
 }
 .react-calendar__navigation__label > span {
   color: var(--festie-gray-800, #3a3a3a);
-  font-size: 13px;
+  font-size: 17px;
   font-weight: 500;
   line-height: 140%;
 }
@@ -56,6 +56,7 @@
 
 .react-calendar__navigation button {
   min-width: 44px;
+  font-size: 20px;
   background: none;
 }
 
@@ -89,7 +90,7 @@ s
 
 /* 주말 글씨 */
 .react-calendar__month-view__days__day--weekend {
-  color: #fd900ad3;
+  color: #fd900ad8;
 }
 
 .react-calendar__month-view__days__day--neighboringMonth {
@@ -103,6 +104,7 @@ s
 }
 
 .react-calendar__tile {
+  height: 50px;
   max-width: 100%;
   padding: 10px 6.6667px;
   background: none;
@@ -116,15 +118,16 @@ s
 
 .react-calendar__tile:enabled:hover,
 .react-calendar__tile:enabled:focus {
-  background-color: #e6e6e6;
+  background-color: #f6e7d3;
+  border-radius: 50%;
 }
 
 /* 오늘 날짜 */
 .react-calendar__tile--now {
   width: 30px;
   height: 50px;
-  background: #7d7c786f;
-  color: white;
+  background: #c2c0b96f;
+  color: rgba(86, 83, 81, 0.784);
   border-radius: 50%;
 }
 
@@ -132,7 +135,7 @@ s
 .react-calendar__tile--now:enabled:focus {
   width: 30px;
   height: 50px;
-  background: #a9a49c;
+  background: #5a554b;
   color: white;
   border-radius: 50%;
 }
@@ -159,8 +162,9 @@ s
 .react-calendar__tile--active:enabled:focus {
   border-radius: 50%;
   border: 3px solid ;
-  border-color: #ffe598c5;
-  background-color: rgb(255, 236, 201);
+  border-color: #e09f1cc5;
+  /* background-color: rgb(255, 236, 201); */
+  background-color: white;
   color: rgb(83, 80, 75);
 }
 
