@@ -31,6 +31,7 @@ export const attachCustomerImage = async (seq, formData) => {
 // 고객 마이페이지 조회(최근 상담 내역 포함)
 export const getCustomerMyPage = async (customerSeq) => {
   try {
+    console.log('고객마이페이지')
     const response = await axios.get(
       `${BASE_URL}/customer/detail/mypage/${customerSeq}`
     );
@@ -99,7 +100,7 @@ export const changePassword = async (customerSeq, requestData) => {
 export const getCustomerNotification = async (userSeq) => {
   try {
     const response = await axios.get(`${BASE_URL}/customer/alert/${userSeq}`)
-    console.log(response.data.result);
+    // console.log(response.data.result);
     return response.data.result;
   } catch (error) {
     throw new Error("고객 알림 조회 실패", error)

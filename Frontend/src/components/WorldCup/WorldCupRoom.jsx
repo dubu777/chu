@@ -13,6 +13,7 @@ import HeadsetOffIcon from "@mui/icons-material/HeadsetOff";
 import CallEndIcon from "@mui/icons-material/CallEnd";
 import ChatIcon from "@mui/icons-material/Chat";
 import { Link } from 'react-router-dom';
+import JSConfetti from 'js-confetti';
 
 // 전체 화면
 const Container = styled.div`
@@ -20,6 +21,7 @@ const Container = styled.div`
   width: 100%;
   background-color: #fbfaf8;
   padding-top: 40px;
+  min-height: 100vh;
 `;
 
 const Header = styled.div`
@@ -434,6 +436,7 @@ const OPENVIDU_SERVER_SECRET = "sunjin";
 class WorldCupRoom extends Component {
     constructor(props) {
         super(props);
+        this.confetti = new JSConfetti();
         console.log('으악세션', this.props.sessionId);
         console.log('이미지', this.props.resultimgs);
 
@@ -475,7 +478,12 @@ class WorldCupRoom extends Component {
         this.handleWinClickEvent = this.handleWinClickEvent.bind(this);
         // this.handleCheckRound = this.handleCheckRound.bind(this);
     }
-
+    componentDidUpdate(prevProps, prevState) {
+        // isGameOver 상태가 변경되면 폭죽 효과 발생
+        if (prevState.isGameOver !== this.state.isGameOver && this.state.isGameOver) {
+            this.confetti.addConfetti();
+        }
+    }
     componentDidMount() {
         window.addEventListener('beforeunload', this.onbeforeunload);
     }

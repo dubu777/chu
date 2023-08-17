@@ -22,7 +22,7 @@ const Wrapper = styled.div`
   border: 0;
   border-radius: 0.8rem;
   width: 35%;
-  height: 45%;
+  height: 50%;
   background-color: rgb(242, 234, 211, 0.5);
   color: black;
 `;
@@ -120,7 +120,7 @@ function LogIn() {
         result = await designerlogIn(username, password);
       }
 
-      console.log("Result:", result);
+      // console.log("Result:", result);
       setAccessToken(result.token.accessToken);
       localStorage.setItem("userSeq", result.userSeq.toString());
       localStorage.setItem("userType", userType);

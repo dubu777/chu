@@ -10,7 +10,7 @@ const Container = styled.div`
   height: 200px;
   justify-content: center;
   align-items: center;
-  background-color: #605b52c5;
+  background-color: #c3bdb3c5;
 `;
 const TextBox = styled.div`
   display: flex;

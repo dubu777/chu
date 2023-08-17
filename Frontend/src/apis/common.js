@@ -20,7 +20,6 @@ export const customerMain = async (customerSeq) => {
     const response = await axios.get(
       `${BASE_URL}/customer/main/${customerSeq}`
     );
-    console.log("고객 로그인");
     return response.data.result;
   } catch (error) {
     throw new Error("메인페이지 고객 데이터 에러");

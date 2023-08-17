@@ -12,7 +12,7 @@ import {
 } from "../../apis";
 import { useState, useEffect } from "react";
 import { useQuery, useMutation } from "react-query";
-import axios from "axios";
+
 
 const Nav = styled(motion.nav)`
   display: flex;
@@ -190,7 +190,7 @@ function Header() {
 
   // 알림 읽기
   const handleReadNotification = async (alertSeq) => {
-    console.log(alertSeq, "알림 읽기 입장");
+    // console.log(alertSeq, "알림 읽기 입장");
     try {
       if (userType === "designer") await readDesignerNotification(alertSeq);
       if (userType === "customer") await readCustomerNotification(alertSeq);
@@ -213,7 +213,7 @@ function Header() {
     });
   }, [scrollY, navAnimation]);
 
-  console.log(notifications, "알림");
+  // console.log(notifications, "알림");
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error loading notifications</div>;
 

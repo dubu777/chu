@@ -80,7 +80,7 @@ const Title = styled.p`
   margin-bottom: 15px;
 `;
 const Name = styled.span`
-  font-size: 15px;
+  font-size: 16px;
   font-weight: bold;
 `;
 
@@ -120,7 +120,7 @@ const ResultBtn = styled(motion.button)`
 const Text = styled.span`
   font-size: 14px;
   /* font-weight: bold; */
-  text-align: center;
+  /* text-align: center; */
   margin-right: 5px;
 `;
 const BoldText = styled.span`
@@ -131,7 +131,7 @@ const BoldText = styled.span`
 const CommentBox = styled.div`
 width: 350px;
 display: flex;
-/* justify-content: center; */
+justify-content: start;
 align-items: center;
 margin: 20px 0px 10px 0px;
 `;
@@ -150,23 +150,38 @@ const Overlay = styled(motion.div)`
 const BigModal = styled(motion.div)`
   position: absolute;
   width: 40vw;
-  height: 56vh;
+  height: 60vh;
   left: 0;
   right: 0;
   margin: 0 auto;
   border-radius: 0.4rem;
   overflow: hidden;
+  overflow: scroll;
   background-color: rgb(247, 242, 227);
+  
 `;
-const InfoText = styled.span`
+const InfoText = styled.p`
   font-size: 14px;
   margin-bottom: 13px;
   font-weight: bold;
+  width: 250px;
+`;
+const InfoTextBox = styled.div`
+  display: flex;
+  /* flex-direction: column; */
 `;
 const InfoBox = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 10px;
+`;
+const InfoBox2 = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  /* justify-content: flex-start; */
+  /* flex-direction: column; */
+  /* margin-top: 5px; */
+  margin-left: -120px;
 `;
 const BigModalBox = styled.div`
   display: flex;
@@ -179,8 +194,8 @@ const HashTag = styled(motion.span)`
   padding: 5px 10px;
   margin-left: 5px;
   margin-right: 10px;
-  margin-bottom: 20px;
-  margin-top: 10px;
+  margin-bottom: 10px;
+  /* margin-top: 10px; */
   background-color: rgba(175,149,113, 0.75);
   color: black;
   border-radius: 5px;
@@ -278,7 +293,7 @@ function ReserveList() {
                   <Box>
                     <ReviewBox>
                     <CommentBox>
-                      <Text>"{data.reviewContent}"</Text>
+                      <Text>{data.reviewContent}</Text>
                     </CommentBox>
                     <StarBox>
                       <Text>나의 평점 </Text>
@@ -334,13 +349,12 @@ function ReserveList() {
                   <InfoBox>
                     <InfoText>상담사명 : {modalData.name} 디자이너</InfoText>
                     <InfoText>상담일시 : {modalData.consultingDate} {modalData.consultingStartTime}</InfoText>
-                    <InfoText>스타일 진단 : {modalData.hairStyle.map((tag) => (
-                      <HashTag
-                      key={tag}
-                      >
-                      #{tag}
-                    </HashTag>
-                    ))}</InfoText>
+                    <InfoTextBox>
+                      <InfoText>스타일 진단 : </InfoText>
+                      <InfoBox2>{modalData.hairStyle.map((tag) => (
+                        <HashTag key={tag}>#{tag}</HashTag>))}
+                      </InfoBox2>
+                    </InfoTextBox>
                     <ResultWrap>
                       <ResultBox>
                         상담 결과 <br/><ResultHr/> {modalData.reviewResult}

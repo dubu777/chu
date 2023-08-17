@@ -56,9 +56,10 @@ const UploadBox = styled.div`
   margin-top: 50px;
 `;
 const MessageBox = styled.div`
+  margin-top: 60px;
   width: 55%;
   height: 200px;
-  border: 3px dotted orange;
+  border: 2px dotted lightsalmon;
   border-radius: 0.5rem;
   display: flex;
   flex-direction: column;
@@ -88,7 +89,7 @@ function Portfolio(){
       try {
         const response = await getPortfolio(designerSeq);
         setData(response)
-        console.log(response);
+        console.log('포폴data', response);
       } catch(error){
         console.log('포트폴리오 사진 조회 실패:', error)
       }
@@ -140,37 +141,46 @@ function Portfolio(){
 
   return(
     <Container>
-      { data ? (
-        <>
-      
-      <Wrapper>
-      <ImgWrapper>
-      {data.imgs.map((img) => (
-      <ImgBox key={img.imgSeq}>
-        <Img src={`https://i9b111.q.ssafy.io/api/portfolio/${img.imgName}`}alt="Image" /> 
-        <DeleteBtn onClick={() => handleDelete(img.imgSeq)}>
-          <DeleteImg src="/icon/bin.png"></DeleteImg>
-        </DeleteBtn>
-      </ImgBox>
-    ))}
-    </ImgWrapper>
-    </Wrapper>
-    {data.imgs.length === 0 || (null && (
+    {data ? (
+      <>
+        {data.imgs && data.imgs.length > 0 ? (
+          <Wrapper>
+            <ImgWrapper>
+              {data.imgs.map((img) => (
+                <ImgBox key={img.imgSeq}>
+                  <Img src={`https://i9b111.q.ssafy.io/api/portfolio/${img.imgName}`} alt="Image" /> 
+                  <DeleteBtn onClick={() => handleDelete(img.imgSeq)}>
+                    <DeleteImg src="/icon/bin.png"></DeleteImg>
+                  </DeleteBtn>
+                </ImgBox>
+              ))}
+            </ImgWrapper>
+          </Wrapper>
+        ) : (
           <MessageBox>
-            {/* <IconImg src={"./icon/file.png"}></IconImg> */}
             <IconImg src="/icon/file.png"></IconImg>
             <UploadText>포트폴리오 사진을 업로드 해주세요 :)</UploadText>
           </MessageBox>
-    ))}
-    <UploadBox>
-        <input type="file" onChange={handleFileChange} />
-    </UploadBox>
-    </>
-      ) : (
+        )}
+        <UploadBox>
+          <input type="file" onChange={handleFileChange} />
+        </UploadBox>
+      </>
+    ) : (
       <p>...loading</p>
     )}
-    </Container>
+  </Container>
+  
   
 )}
 
 export default Portfolio;
+
+
+// {data.imgs.length === 0 || (null && (
+//   <MessageBox>
+//     {/* <IconImg src={"./icon/file.png"}></IconImg> */}
+//     <IconImg src="/icon/file.png"></IconImg>
+//     <UploadText>포트폴리오 사진을 업로드 해주세요 :)</UploadText>
+//   </MessageBox>
+// ))}

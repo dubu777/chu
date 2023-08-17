@@ -271,7 +271,6 @@ const pofolVariants = {
 function AllReserveList() {
   const navigate = useNavigate();
   const { designerSeq } = useParams();
-  console.log("상담 예약 목록 조회의 디자이너 seq", designerSeq);
 
   // 모달 상태 관리
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -290,7 +289,6 @@ function AllReserveList() {
   // sessoionId API 호출
   // const consultSeq = 1;
   const moveToWrapper = (consultingSeq) => {
-    console.log("나이거보내고싶어", consultingSeq);
       navigate(`/viduroom/${consultingSeq}`);
   }
   const settings = {
@@ -375,7 +373,7 @@ function AllReserveList() {
     ['allReserveList', designerSeq],
     () => getAllReserveList(designerSeq)
   );
-  console.log('이게 데이터다', data)
+  console.log('디자이너 상담 예약 관리', data)
 
   if (isLoading) {
     return <div>Loading...{data}</div>;
@@ -390,7 +388,7 @@ function AllReserveList() {
       <>
       <Wrap>
         <Wrapper>
-          {data.map((item) => (
+        {data.filter(item => !item.cancelDate).map((item) => (
             <ReserveBox key={item.consultingSeq}>
               <Box>
                 {/* <CustomerImg src="./icon/user.png"/> */}
