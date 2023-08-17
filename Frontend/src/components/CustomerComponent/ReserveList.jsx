@@ -14,10 +14,10 @@ const Container = styled.div`
   justify-content: center;
   width: 80%;
   margin: 0 auto;
-  padding-top: 20px;
+  padding: 10px 0;
 `;
 const Hr = styled.div`
-  /* margin: 20px 0 20px 0; */
+  margin-top: 20px;
   border-bottom : 2px solid rgba(0, 0, 0, 0.1);
 
 `;
@@ -56,8 +56,10 @@ const DetailBox = styled.div`
 `;
 const DesignerImg = styled.img`
   width: 100px;
+  height: 110px;
   margin-right: 10px;
   object-fit: cover;
+  border-radius:2px;
 `;
 
 const ProfileBox = styled.div`
@@ -85,14 +87,15 @@ const StarBox = styled(motion.div)`
 const Time = styled.span`
   margin-top: 10px;
   font-size: 14px;
-  font-weight: bold;
+  font-weight: 500;
   text-align: center;
 `;
 const Day = styled.span`
   margin-top: 10px;
   font-size: 14px;
-  font-weight: bold;
+  font-weight: 500;
   text-align: center;
+  margin-right: 10px;
 `;
 const ResultBtn = styled(motion.button)`
   font-size: 16px;
@@ -256,10 +259,6 @@ function ReserveList() {
                 <ProfileBox>
                   {/* <DesignerImg src={data.designerImg}/> */}
                   <DesignerImg src= {`https://i9b111.q.ssafy.io/api/designer-profile/${data.designerImg}`}/>
-                  <StarBox>
-                    <Icon src="/icon/star.png"/>
-                    <BoldText>{data.allReviewScore}</BoldText>
-                  </StarBox>
                 </ProfileBox>
                 <InfoBox>
                   <Name>{data.name} 디자이너</Name>
@@ -281,8 +280,8 @@ function ReserveList() {
             <Box>
               <ReviewBox>
                 <Box>
-              <Day>{data.consultingDate}({data.consultingDateDay })</Day>
-              <Time> {data.consultingStartTime} ~ {data.consultingEndTime}</Time>
+              <Day>{data.consultingDate}</Day>
+              <Time>{`${data.consultingStartTime.slice(0, 2)}시 ${data.consultingStartTime.slice(3, 5)}분`}</Time>
               </Box>
               <DetailBox >
                     <ResultBtn 

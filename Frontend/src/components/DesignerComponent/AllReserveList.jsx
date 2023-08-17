@@ -22,6 +22,7 @@ const Container = styled.div`
   /* justify-content: space-between; */
   /* width: 65vw; */
   /* margin: 0 auto; */
+  padding-top: 30px;
   padding-left: 40px;
   padding-right: 50px;
 `;
@@ -33,10 +34,12 @@ const TitleBox = styled.div`
 `;
 const ReserveBox = styled.div`
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-around;
-  border: 1px solid lightgray;
+  border: 1px solid gray;
   padding: 10px;
   margin-bottom: 10px;
+  padding: 20px;
   border-radius: 0.4rem;
 `;
 const Hr = styled.div`
@@ -64,11 +67,12 @@ const Box = styled.div`
   
 `;
 const CustomerImg = styled.img`
-  width: 40px;
+  width: 60px;
+  object-fit: cover;
 `;
 
 const Name = styled.span`
-  font-size: 13px;
+  font-size: 15px;
   font-weight: bold;
   cursor: pointer;
 `;
@@ -120,18 +124,18 @@ const Memo = styled.div`
 `;
 const EnterBtn = styled.button`
   border: 0;
-  background-color: #83807a;
-  width: 100px;
-  height: 30px;
-  border-radius: 0.3rem;
-  color: white;
+  background-color: #e5e3dc;
+  width: 120px;
+  height: 32px;
+  border-radius: 0.2rem;
+  color: black;
 `;
 const ModalBtn = styled.button`
   border: 0;
-  background-color: #83807a;
-  width: 100px;
-  height: 30px;
-  border-radius: 0.3rem;
+  background-color: #605b52;
+  width: 120px;
+  height: 32px;
+  border-radius: 0.2rem;
   color: white;
 `;
 const Modal = styled.div`
@@ -385,14 +389,6 @@ function AllReserveList() {
       { data ? (
       <>
       <Wrap>
-        <TitleBox>
-          <Box></Box>
-          <Box>예약자명</Box>
-          <Box>성별</Box>
-          <Box> 상담 일시 </Box>
-          <Box>상세 보기</Box>
-          <Box>상담 입장</Box>
-        </TitleBox>
         <Wrapper>
           {data.map((item) => (
             <ReserveBox key={item.consultingSeq}>
@@ -404,7 +400,7 @@ function AllReserveList() {
                 <Name>{item.name} </Name>
               </Box>
               <Box>
-                <Text>{item.gender}</Text>
+                <Text>{item.gender === "F" ? "여성" : "남성"}</Text>
               </Box>
               <Box>
                 <Text>{item.consultingDate} {item.time}</Text>
@@ -413,12 +409,12 @@ function AllReserveList() {
                 <ModalBtn onClick={() => openModal(item)}>상세 보기</ModalBtn>
               </Box>
               <Box>
-                <EnterBtn onClick={() => moveToWrapper(item.consultingSeq)}>
+                <ModalBtn onClick={() => moveToWrapper(item.consultingSeq)}>
                   {/* <Link to={{ pathname: '/viduroom', state: { sessionData: 'sessionId' } }}>상담 입장</Link> */}
-                  상담입장</EnterBtn>
+                  상담입장</ModalBtn>
               </Box>
               <Box>
-                <ModalBtn onClick={() => handleCancel(item.consultingSeq)}>상담 취소</ModalBtn>
+                <EnterBtn onClick={() => handleCancel(item.consultingSeq)}>상담 취소</EnterBtn>
               </Box>
               {/* 모달 */}
               {isModalOpen && selectedItem && (

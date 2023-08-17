@@ -60,6 +60,9 @@ const Box = styled.div`
 `;
 const DesignerImg = styled.img`
   width: 100px;
+  height: 120px;
+  object-fit: cover;
+  border-radius:2px;
 `;
 const InfoBox = styled.div`
   display: flex;
@@ -76,9 +79,12 @@ const DateText = styled.span`
   font-size: 16px;
   font-weight: 600;
   margin-top: 5px;
-  color: #2d2d2d;
+  color: #454545;
+  margin-right: 10px;
 `;
-
+const DateBox = styled.div`
+  display: flex;
+`;
 
 const ReservBtn = styled(motion.button)`
   display: flex;
@@ -171,16 +177,17 @@ function ScheduleListImg({initial, animate, variants, transition}){
                   <Box>
                     <DesignerImg
                       src={`${BASE_URL}/designer-profile/${data.designerImg}`}
-                      onClick={() => navigate(`/designerdetail/${data.designerSeq}`)}
                     />
                   </Box>
                   <InfoBox>
                     <Name
-                      onClick={() => navigate(`/designerdetail/${data.designerSeq}`)}
                     >
                       {data.name}
                     </Name>
-                    <DateText>{data.consultingDate} {data.consultingStartTime}</DateText>
+                    <DateBox>
+                    <DateText>{data.consultingDate}</DateText>
+                    <DateText>{`${data.consultingStartTime.slice(0, 2)}시 ${data.consultingStartTime.slice(3, 5)}분`}</DateText>
+                    </DateBox>
                     <Box>
                       <ReservBtn
                         variants={ReservBtnVariant}

@@ -80,7 +80,7 @@ const NotificationItem = styled.div`
   font-size: 16px;
   cursor: pointer;
   &:hover {
-    background-color: #f0f0f0;
+    background-color: #e7e7e7;
   }
   &:last-child {
     border-bottom: none;
@@ -220,14 +220,25 @@ function Header() {
   return (
     <Nav variants={navVariants} animate={navAnimation} initial={"top"}>
       <Col>
-        <Items>
-          <LogoImg src="/icon/logo.svg" onClick={() => navigate("/")} />
-          <Link to="/">
-            <Item variants={logoVariants} whileHover="active" initial="nomal">
-              Home
-            </Item>
-          </Link>
-        </Items>
+        <LogoImg 
+          src="/icon/logo.svg" 
+          onClick={() => navigate("/")} 
+        />
+          <Item 
+            variants={logoVariants} 
+            whileHover="active" 
+            initial="nomal"
+            onClick={() => navigate('/')}>
+            Home
+          </Item>
+        <Item 
+          variants={logoVariants} 
+          whileHover="active" 
+          initial="nomal"
+          onClick={() => navigate('/listview')}
+        >
+          Designer List
+        </Item>
       </Col>
       <Col>
         {isLogIn ? (
@@ -263,7 +274,7 @@ function Header() {
                     .map((notification) => (
                       <NotificationItem key={notification.alertSeq}>
                         <DateWrap>
-                          {notification.pushDate}
+                          {notification.pushDate.slice(0, 10)}
                           <ReadBtn
                             onClick={() =>
                               handleReadNotification(notification.alertSeq)
@@ -274,8 +285,8 @@ function Header() {
                         </DateWrap>
                         <Hr />
                         {userType === "designer"
-                          ? `${notification.customerName} 님의 상담이 취소되었습니다.`
-                          : `${notification.designerName} 님의 상담이 취소되었습니다.`}
+                          ? `${notification.customerName} 고객님의 상담이 취소되었습니다.`
+                          : `${notification.designerName} 디자이너님의 상담이 취소되었습니다.`}
                         {/* <Hr/> */}
                       </NotificationItem>
                     ))}
