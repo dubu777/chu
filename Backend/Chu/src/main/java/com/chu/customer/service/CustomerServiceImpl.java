@@ -130,7 +130,8 @@ public class CustomerServiceImpl implements CustomerService{
 
         for(CustomerAlert c : alertList){
             // 상담 번호로 consulting - designer seq 받아오기
-            Consulting consulting = consultingRepository.getConsultingBySeq(c.getSeq());
+//            Consulting consulting = consultingRepository.getConsultingBySeq(c.getSeq());
+            Consulting consulting = consultingRepository.getConsultingBySeq(c.getConsulting().getSeq());
 
             // 받아온 designer seq로 디자이너 정보 받아오기
             consulting.setDesigner(designerRepository.getDesignerBySeq(consulting.getDesigner().getSeq()));
