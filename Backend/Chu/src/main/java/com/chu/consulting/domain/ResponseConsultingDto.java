@@ -19,4 +19,5 @@ public class ResponseConsultingDto {
     List<String> hairCondition;
     List<String> virtualImg;
     String time;
+    String cancelDate;
 }
