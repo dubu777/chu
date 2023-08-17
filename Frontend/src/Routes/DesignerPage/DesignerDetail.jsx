@@ -66,6 +66,7 @@ const DesignerImgBox = styled.div`
 const DesignerImg = styled.img`
   width: 100%;
   height: 100%;
+  object-fit: cover;
 `;
 const DesignerNameWrap = styled.div`
   display: flex;

@@ -42,6 +42,9 @@ const Box = styled.div`
 `;
 const DesignerImg = styled.img`
   width: 100px;
+  height: 130px;
+  object-fit: cover;
+  border-radius:2px;
 `;
 
 const InfoBox = styled.div`
@@ -142,7 +145,6 @@ function LikeDesigner() {
   if (isError) {
     return <div>An error occurred while fetching data.</div>;
   }
-  console.log(data,"좋아요한 디자이너 됐다!");
   return (
     <>
       {data &&
@@ -153,7 +155,6 @@ function LikeDesigner() {
               <Wrapper>
                 <Box>
                   <DesignerImg
-                    // src="/icon/designerimg.png" 
                     src= {`https://i9b111.q.ssafy.io/api/designer-profile/${data.designerImg}`}
                     onClick={() => navigate(`/designerdetail/${data.designerSeq}`)}
                   />

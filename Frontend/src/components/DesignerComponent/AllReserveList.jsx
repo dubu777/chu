@@ -12,6 +12,9 @@ import { getSessionId } from "../../apis/openvidu"
 import { BASE_URL } from "../../apis/rootUrl";
 import { createNotification, getCustomerMyPage, reservationCancel } from "../../apis";
 import Swal from 'sweetalert2';
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const Container = styled.div`
   /* display: flex; */
@@ -19,6 +22,7 @@ const Container = styled.div`
   /* justify-content: space-between; */
   /* width: 65vw; */
   /* margin: 0 auto; */
+  padding-top: 30px;
   padding-left: 40px;
   padding-right: 50px;
 `;
@@ -30,10 +34,12 @@ const TitleBox = styled.div`
 `;
 const ReserveBox = styled.div`
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-around;
-  border: 1px solid lightgray;
+  border: 1px solid gray;
   padding: 10px;
   margin-bottom: 10px;
+  padding: 20px;
   border-radius: 0.4rem;
 `;
 const Hr = styled.div`
@@ -61,11 +67,12 @@ const Box = styled.div`
   
 `;
 const CustomerImg = styled.img`
-  width: 40px;
+  width: 60px;
+  object-fit: cover;
 `;
 
 const Name = styled.span`
-  font-size: 13px;
+  font-size: 15px;
   font-weight: bold;
   cursor: pointer;
 `;
@@ -117,18 +124,18 @@ const Memo = styled.div`
 `;
 const EnterBtn = styled.button`
   border: 0;
-  background-color: #83807a;
-  width: 100px;
-  height: 30px;
-  border-radius: 0.3rem;
-  color: white;
+  background-color: #e5e3dc;
+  width: 120px;
+  height: 32px;
+  border-radius: 0.2rem;
+  color: black;
 `;
 const ModalBtn = styled.button`
   border: 0;
-  background-color: #83807a;
-  width: 100px;
-  height: 30px;
-  border-radius: 0.3rem;
+  background-color: #605b52;
+  width: 120px;
+  height: 32px;
+  border-radius: 0.2rem;
   color: white;
 `;
 const Modal = styled.div`
@@ -137,7 +144,7 @@ const Modal = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -145,9 +152,9 @@ const Modal = styled.div`
 
 const ModalContent = styled.div`
   background-color: white;
-  width: 500px;
+  width: 550px;
   /* height: 300px; */
-  padding: 20px;
+  padding: 20px 40px;
   border-radius: 0.6rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 `;
@@ -173,6 +180,52 @@ const Loading = styled.div`
 `;
 const P = styled.p`
   font-size: 23px;
+`;
+const PofolImg = styled(motion.img)`
+  width: 100px;
+  /* height: 125px; */
+  border-radius: 5px;
+  object-fit: cover;
+`;
+
+const StyledSlider = styled(Slider)`
+  
+  .slick-slide > div {
+    margin: 0 10px;
+  }
+  .slick-list {
+    margin: 0 -10px;
+    height: 100%;
+  }
+  .slick-prev {
+    z-index: 1;
+    left: -26px;
+  }
+
+  .slick-next {
+    right: -23px;
+  }
+
+  .slick-prev:before,
+  .slick-next:before {
+    font-size: 25px;
+    opacity: 0.5;
+    color: #a1a1a1;
+  }
+
+  .slick-dots {
+    display: flex;
+    justify-content: center;
+    bottom: -13px;
+
+    li button:before {
+      color: #acaaa9;
+    }
+
+    li.slick-active button:before {
+      color: #353535;
+    }
+  }
 `;
 const Loading_spinner_box = styled.div`
   margin-left: 3px;
@@ -202,8 +255,17 @@ const Loading_spinner_box = styled.div`
                 }
               }
 `;
-
-
+const pofolVariants = {
+  nomal: {
+    scale: 1,
+  },
+  hover: {
+    scale: 1.05,
+    transition: {
+      duration: 0.2,
+    },
+  },
+};
 
 
 function AllReserveList() {
@@ -231,7 +293,40 @@ function AllReserveList() {
     console.log("나이거보내고싶어", consultingSeq);
       navigate(`/viduroom/${consultingSeq}`);
   }
-
+  const settings = {
+    className: "center",
+    infinite: true,
+    slidesToShow: 4,
+    slidesToScroll: 4,
+    swipeToSlide: true,
+    dots: true,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          infinite: true,
+          dots: true,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          initialSlide: 2,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
   // const getSession = async (consultSeq) => {
   //   console.log('여기 왔다1', consultSeq);
   //   try {
@@ -294,27 +389,18 @@ function AllReserveList() {
       { data ? (
       <>
       <Wrap>
-        <TitleBox>
-          <Box></Box>
-          <Box>예약자명</Box>
-          <Box>성별</Box>
-          <Box> 상담 일시 </Box>
-          <Box>상세 보기</Box>
-          <Box>상담 입장</Box>
-        </TitleBox>
         <Wrapper>
           {data.map((item) => (
             <ReserveBox key={item.consultingSeq}>
               <Box>
                 {/* <CustomerImg src="./icon/user.png"/> */}
                 <CustomerImg src={`${BASE_URL}/consulting-images/origin/${item.originImg}`} />
-
               </Box>
               <Box>
                 <Name>{item.name} </Name>
               </Box>
               <Box>
-                <Text>{item.gender}</Text>
+                <Text>{item.gender === "F" ? "여성" : "남성"}</Text>
               </Box>
               <Box>
                 <Text>{item.consultingDate} {item.time}</Text>
@@ -323,12 +409,12 @@ function AllReserveList() {
                 <ModalBtn onClick={() => openModal(item)}>상세 보기</ModalBtn>
               </Box>
               <Box>
-                <EnterBtn onClick={() => moveToWrapper(item.consultingSeq)}>
+                <ModalBtn onClick={() => moveToWrapper(item.consultingSeq)}>
                   {/* <Link to={{ pathname: '/viduroom', state: { sessionData: 'sessionId' } }}>상담 입장</Link> */}
-                  상담입장</EnterBtn>
+                  상담입장</ModalBtn>
               </Box>
               <Box>
-                <ModalBtn onClick={() => handleCancel(item.consultingSeq)}>상담 취소</ModalBtn>
+                <EnterBtn onClick={() => handleCancel(item.consultingSeq)}>상담 취소</EnterBtn>
               </Box>
               {/* 모달 */}
               {isModalOpen && selectedItem && (
@@ -336,11 +422,16 @@ function AllReserveList() {
                   <ModalContent>
                     {/* 여기에 모달에 표시할 내용을 추가 */}
                     <div>
-                      <ImgBox>
-                        {selectedItem.virtualImg.map((img, index) => (
-                          <VirtualImg key={index} src={`${BASE_URL}/consulting-images/confusion/${img}`}></VirtualImg>
-                        ))}
-                      </ImgBox>
+                      <StyledSlider {...settings}>
+                      {selectedItem.virtualImg.map((img, index) => (
+                  <PofolImg
+                  key={index} src={`${BASE_URL}/consulting-images/confusion/${img}`}
+                    variants={pofolVariants}
+                    initial="nomal"
+                    whileHover="hover"
+                  />
+                ))}
+              </StyledSlider>
                       <hr />
                       <ul>
                         {selectedItem.hairCondition.map((condition, index) => (
