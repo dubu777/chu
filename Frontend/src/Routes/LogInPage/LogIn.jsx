@@ -28,7 +28,7 @@ const Wrapper = styled.div`
 `;
 const Title = styled.h1`
   margin-top: 10px;
-  margin-bottom: 18px;
+  margin-bottom: 30px;
   font-size: 30px;
 `;
 const Input = styled.input`
@@ -39,6 +39,7 @@ const Input = styled.input`
   background-color: white;
   padding-left: 10px;
   font-size: 18px;
+  margin-bottom: 20px;
 `;
 const P = styled.p`
   margin-top: -15px;
@@ -55,6 +56,7 @@ const SubmitBox = styled.div`
   justify-content: space-between;
   margin-left: 12%;
   margin-right: 12%;
+  margin-top: 23px;
   color: white;
 `;
 const Btn = styled.button`
@@ -67,6 +69,7 @@ const Btn = styled.button`
 const FindBox = styled.div`
   text-align: right;
   margin-right: 12%;
+  margin-top: 10px;
   color: white;
 `;
 
@@ -74,7 +77,7 @@ const RadioContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
-  margin: 10px 10px;
+  margin-left: 58px;
 `;
 
 const CustomRadio = styled.input`
@@ -144,27 +147,13 @@ function LogIn() {
               onChange={(e) => setUsername(e.target.value)}
               placeholder="ID"
             />
-            <br />
             <Input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Password"
             />
-            <br />
           </LogInBox>
-          <br />
-          <SubmitBox>
-            <P>
-              <Link to="/usertype">Sign up</Link>
-            </P>
-            <P>
-              <Btn type="submit" onClick={handleLogin}>
-                Log in
-              </Btn>
-            </P>
-          </SubmitBox>
-          <br></br>
           <RadioContainer>
             <TypeLabel>
               <CustomRadio
@@ -185,11 +174,22 @@ function LogIn() {
               디자이너
             </TypeLabel>
           </RadioContainer>
-          <FindBox>
-            <Link to="/findid">Find id</Link>
+          <SubmitBox>
+            <P onClick={() => navigate('/signup')}>
+              Sign up
+            </P>
+            <P>
+              <Btn type="submit" onClick={handleLogin}>
+                Log in
+              </Btn>
+            </P>
+          </SubmitBox>
+          
+          <FindBox onClick={() => navigate('/findid')}>
+            Find id
           </FindBox>
-          <FindBox>
-            <Link to="/findpw">Find Password</Link>
+          <FindBox onClick={() => '/findpw'}>
+            Find Password
           </FindBox>
         </Form>
       </Wrapper>
