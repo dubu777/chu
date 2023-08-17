@@ -29,9 +29,9 @@ function ReserveCalendar() {
         <Calendar 
           onChange={onChange} 
           value={value}
-          // formatDay={(locale, date) => date.toLocaleString("en", {day: "numeric"})}
-          formatDay={(locale, date) => moment(date).format("DD")}
-        // formatDay={(locale, date) => moment(date).format('D')}
+          formatDay={(locale, date) => date.toLocaleString("en", {day: "numeric"})}
+          // formatDay={(locale, date) => moment(date).format("DD")}
+          // formatDay={(date) => moment(date).format('D')}
         ></Calendar>
           <div>
             <p>{formatDateString(value)}</p>

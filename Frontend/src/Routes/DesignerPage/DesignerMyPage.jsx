@@ -26,7 +26,10 @@ const ProfileWrapper = styled.div`
 `;
 const ImgBox = styled.div`
   text-align: center;
-  margin-top: 110px;
+  margin-top: 105px;
+  /* display: flex; */
+  /* justify-content: center; */
+  /* align-items: center; */
 `;
 
 const NameText = styled.h1`
@@ -212,7 +215,7 @@ function DesignerMyPage() {
     <Container>
       <ProfileWrapper>
         <ImgBox>
-          <NameText>{data.name}디자이너</NameText>
+          <NameText>{data.name} 디자이너</NameText>
           <div>
             {/* 버튼을 클릭하면 파일 선택 다이얼로그를 나타내는 input 요소 */}
             <input
@@ -235,7 +238,7 @@ function DesignerMyPage() {
         </ImgBox>
 
         <InfoBox>
-          <Text>{data.cost} ₩</Text>
+          <Text>{data.cost}</Text>
           <Text>{data.email}</Text>
           <introductionWrapper>
               <EditBox>
