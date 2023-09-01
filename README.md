@@ -43,10 +43,10 @@
 (etc>readmeImg 아래 넣어놓기)
 (기능 간단하게 소개하기)
 ### 메인화면
-<img src="./Etc/Readme_images/메인페이지.gif" width="600px" alt="메인페이지" />
+<img src="./Etc/Readme_images/메인페이지.gif" width="800px" alt="메인페이지" />
 
 ### 로그인 페이지
-<img src= "./Etc/Readme_images/디자이너_로그인.gif"/>
+<img src= "./Etc/Readme_images/디자이너_로그인.gif" width="800px" />
 
 ### 디자이너 회원가입
 <img src= ""/>
@@ -57,10 +57,10 @@
 
 ### 디자이너 리스트뷰
 (좋아요 클릭, 필터 적용, 스타일 필터 적용, 이름 검색) → 주변 디자이너 지도 (얘를 따로 뺄도 좋을 것 같구? 카카오지도 API 사용)
-<img src= "./Etc/Readme_images/디자이너_리스트뷰.gif" width="600px" />
+<img src= "./Etc/Readme_images/디자이너_리스트뷰.gif" width="800px" />
 
 ### 디자이너 상세 뷰
-<img src= "./Etc/Readme_images/디자이너_상세뷰.gif" width="600px" />
+<img src= "./Etc/Readme_images/디자이너_상세뷰.gif" width="800px" />
 
 ### 예약 페이지
 
