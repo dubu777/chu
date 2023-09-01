@@ -49,10 +49,11 @@
 <img src= "./Etc/Readme_images/디자이너_로그인.gif" width="800px" />
 
 ### 디자이너 회원가입
-<img src= ""/>
+<img src= "./Etc/Readme_images/디자이너_회원가입.gif" width="800px" />
 
 ### 디자이너 마이페이지
 (프로필 사진 바꾸기, 상담 캘린더 등록, 예약 목록 확인, 포트폴리오 등록)
+<img src= "./Etc/Readme_images/디자이너_마이페이지.gif" width="800px" />
 
 
 ### 디자이너 리스트뷰
@@ -67,6 +68,7 @@
 
 ### 고객 마이페이지
 (예약 목록 확인, 예약 내역 확인, 좋아요 한 디자이너(확인 및 취소), 회원 정보 수정 통해서 상태 등록하기)
+<img src= "./Etc/Readme_images/고객_마이페이지.gif" width="800px" />
 
 ### 상담 화면
 
