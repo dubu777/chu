@@ -12,15 +12,17 @@
 
 ## 📍 개발 환경 및 문서
 
-### 기술 스택 (캡쳐본)
+### 기술 스택
 
-### 개발 환경 (정리한 표 or 캡쳐본)
+### 개발 환경
+<img src="./Etc/Docs/개발환경.png" width="800px" alt="개발환경" />
 
-### 시스템 아키텍처 (캡쳐본)
+### 시스템 아키텍처
+<img src="./Etc/Docs/시스템아키텍처.png" width="800px" alt="시스템아키텍처" />
 
-(하단은 링크로 첨부하기)
 
 ### 간트 차트
+https://docs.google.com/spreadsheets/d/1UO3vgIUSMZs43wtq_wPPuFaHoJF-0uUxJ5GngYCNq4I/edit#gid=0
 
 ### 기능 명세서
 
