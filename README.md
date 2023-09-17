@@ -2,13 +2,17 @@
 
 ## 📍  프로젝트 개요
 
-기간
+### 기간
+2023.06.26 ~ 2023.08.18
 
-목적
+### 목적
+AI 모델을 활용한 화상 퍼스널 헤어 컨설팅 서비스
 
-참여 인원 및 역할 (깃허브 링크걸기 )
+### 참여 인원 및 역할
+| <a href="https://github.com/sunjinb"><img src="https://avatars.githubusercontent.com/u/76803020?v=4" width="150px"></a> | <a href="https://github.com/hajin618"><img src="https://avatars.githubusercontent.com/u/88872527?v=4?v=4?v=4" width="150px"></a> | <a href="https://github.com/mxnzx"><img src="https://avatars.githubusercontent.com/u/77240765?v=4" width="150px"></a> |  <a href="https://github.com/wldbs8241"><img src="https://avatars.githubusercontent.com/u/87288924?v=4" width="150px"></a> |  <a href="https://github.com/dubu777"><img src="https://avatars.githubusercontent.com/u/122436486?v=4" width="150px"></a> |
+| :--: |:--: |:--: |:--: |:--: |
+| [김선진](https://github.com/sunjinb) | [김하진](https://github.com/hajin618) | [류민지](https://github.com/mxnzx) | [송지윤](https://github.com/wldbs8241) | [원재현](https://github.com/dubu777) 
 
-목차 (하단 목차 작성)
 
 ## 📍 개발 환경 및 문서
 
