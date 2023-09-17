@@ -95,7 +95,15 @@
 
 <img src= "./Etc/Readme_images/디자이너_상세뷰.gif" width="800px" />
 
+
 ## 예약 페이지
+- 상담 예약 시간 선택
+- 상담 예약 시 전달 사항 작성
+- 원하는 헤어 포트폴리오 이미지 선택(최대8장)
+- 본인 얼굴 이미지 첨부
+- 카카오페이 결제 및 예약 확정
+  
+![readme_예약](https://github.com/mxnzx/chu/assets/87288924/4a549172-9082-4a97-958d-bd10d22f5352)
 
 
 ## 고객 마이페이지
@@ -105,14 +113,30 @@
   
 <img src= "./Etc/Readme_images/고객_마이페이지.gif" width="800px" />
 
-## 상담 화면
 
-## 알림 화면
+## 상담 및 후기 작성
+- OpenVidu를 활용한 상담 진행
+- 상담 종료 후 고객 후기 작성
+- 별점, 한줄평 작성
 
-## 후기 작성
+[디자이너]   
+![readme_디자이너상담](https://github.com/mxnzx/chu/assets/87288924/d2f34ddf-a92c-4a31-8a64-996d1802a682)  
+
+[고객]  
+![readme_고객상담](https://github.com/mxnzx/chu/assets/87288924/528ab91f-18b4-4406-80fd-3edec7b96810)
+
+## 알림 화면  
+- 고객 상담 취소 시 디자이너 알림 생성
+  
+![readme_알림](https://github.com/mxnzx/chu/assets/87288924/c9ef72f3-4876-429b-b656-ad0c946627db)
+
 
 ## 이상형 월드컵 
+- 상담 예약 확정 후 월드컵 방 생성
+- 입장 후 지인들과 url 공유
+- 최대 4명 구성으로 월드컵 진행
+    
+![readme_월드컵](https://github.com/mxnzx/chu/assets/87288924/883cdad8-b4d1-4a48-b0cd-11d312c503b0)
 
 ## 한 장 한 장
 
-# 📍 디렉토리 구조
