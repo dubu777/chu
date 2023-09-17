@@ -23,28 +23,28 @@
 
 
 ## 간트 차트
-[간트차트](./Etc/Docs/간트차트.md)
+[간트 차트](./Etc/Docs/간트차트.md)
 
 ## 기능 명세서
-[기능명세서](./Etc/Docs/11팀_요구사항정의서.xlsx)
+[기능 명세서](./Etc/Docs/11팀_요구사항정의서.xlsx)
 
 ## ERD
 [ERD](./Etc/Docs/ERD.md)
 
 ## API 연동 규격서
-[api연동규격서](./Etc/Docs/api명세서.md)
+[API 연동 규격서](./Etc/Docs/api명세서.md)
 
 ## 라우팅 명세서
-[라우팅명세서](./Etc/Docs/라우팅명세서.md)
+[라우팅 명세서](./Etc/Docs/라우팅명세서.md)
 
 ## 와이어 프레임
 [Wireframe](./Etc/Docs/Wireframe.md)
 
 ## 포팅 메뉴얼
-[PortingManual](./Exec/포팅메뉴얼.pdf)
+[포팅 메뉴얼](./Exec/포팅메뉴얼.pdf)
 
 ## 발표 자료 (Etc 디렉토리에 파일 추가)
-[발표자료](./Etc/Docs/발표자료.pptx)
+[발표 자료](./Etc/Docs/발표자료.pptx)
 
 ## UCC (youtube 업로드 후 링크)
 
