@@ -16,35 +16,35 @@
 <img src="./Etc/Readme_images/기술스택.png" width="800px" alt="기술스택" />
 
 ## 개발 환경
-[개발환경](./Etc/docs/개발환경.md)
+[개발환경](./Etc/Docs/개발환경.md)
 
 ### 시스템 아키텍처
 <img src="./Etc/Docs/시스템아키텍처.png" width="800px" alt="시스템아키텍처" />
 
 
 ## 간트 차트
-[간트차트](./Etc/docs/간트차트.md)
+[간트차트](./Etc/Docs/간트차트.md)
 
 ## 기능 명세서
-[기능명세서](./Etc/docs/11팀_요구사항정의서.xlsx)
+[기능명세서](./Etc/Docs/11팀_요구사항정의서.xlsx)
 
 ## ERD
-[ERD](./Etc/docs/ERD.md)
+[ERD](./Etc/Docs/ERD.md)
 
 ## API 연동 규격서
-[api연동규격서](./Etc/docs/api명세서.md)
+[api연동규격서](./Etc/Docs/api명세서.md)
 
 ## 라우팅 명세서
-[라우팅명세서](./Etc/docs/라우팅명세서.md)
+[라우팅명세서](./Etc/Docs/라우팅명세서.md)
 
 ## 와이어 프레임
-[Wireframe](./Etc/docs/Wireframe.md)
+[Wireframe](./Etc/Docs/Wireframe.md)
 
 ## 포팅 메뉴얼
 [PortingManual](./Exec/포팅메뉴얼.pdf)
 
 ## 발표 자료 (Etc 디렉토리에 파일 추가)
-[발표자료](./Etc/docs/발표자료.pptx)
+[발표자료](./Etc/Docs/발표자료.pptx)
 
 ## UCC (youtube 업로드 후 링크)
 
